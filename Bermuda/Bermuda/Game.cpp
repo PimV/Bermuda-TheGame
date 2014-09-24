@@ -6,19 +6,16 @@
 
 Game::Game(void)
 {
-	//Start Gameloop
-
+	//Start Thread
+	gameLoopThread = std::thread(&Game::gameLoop);
+	//Detach gameLoopThread from Main Thread
+	gameLoopThread.detach();
 }
 
 
 Game::~Game(void)
 {
-
-}
-
-void Game::runGameThread() {
-	std::thread gameLoopThread(&Game::gameLoop);
-	gameLoopThread.detach();
+	//Delete Thread
 }
 
 /*
