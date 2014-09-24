@@ -82,10 +82,12 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="StartHere.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="header_loader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StartHere.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
