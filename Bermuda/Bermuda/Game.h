@@ -2,10 +2,12 @@
 class Game
 {
 private:
-	void gameLoop();
+	
 
 public:
 	Game(void);
 	~Game(void);
+	static void gameLoop();
+	static void runGameThread();
 };
 
