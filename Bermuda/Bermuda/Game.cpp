@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "GameStateManager.h"
+
 #include <Windows.h>
 #include <iostream>
 #include <chrono>
@@ -6,6 +8,9 @@
 
 Game::Game(void)
 {
+	gsm = new GameStateManager();
+
+	
 	//Start Thread
 	gameLoopThread = std::thread(&Game::gameLoop);
 	//Detach gameLoopThread from Main Thread
@@ -61,7 +66,6 @@ void Game::gameLoop() {
 		}
 
 		//UPDATE SHIT
-
 
 		//Get time after loop
 		QueryPerformanceCounter(&afterLoopTime);

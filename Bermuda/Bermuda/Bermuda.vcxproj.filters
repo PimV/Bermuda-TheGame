@@ -43,6 +43,12 @@
     <Filter Include="Header Files\Helper">
       <UniqueIdentifier>{c840ca7c-a372-4f2b-9303-d9ed5475b080}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Entity">
+      <UniqueIdentifier>{2f1dc3b9-f3ca-4675-9c90-bda368bc2a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity">
+      <UniqueIdentifier>{f7295384-109d-4821-9399-eae776c694dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -51,12 +57,48 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="IMovable.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="IAggressive.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateManager.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="IMovable.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="IAggressive.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateManager.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
