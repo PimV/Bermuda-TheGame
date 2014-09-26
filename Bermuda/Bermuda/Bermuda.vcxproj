@@ -84,22 +84,28 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="IGameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="header_loader.h" />
     <ClInclude Include="IAggressive.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="IAggressive.cpp" />
     <ClCompile Include="IMovable.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayState.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

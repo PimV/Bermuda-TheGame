@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Model\Entity">
       <UniqueIdentifier>{f7295384-109d-4821-9399-eae776c694dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\GameState">
+      <UniqueIdentifier>{e93a9f76-4a81-4201-bc87-81ecf97ce84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\GameState">
+      <UniqueIdentifier>{a9a7d415-def3-4751-8149-ddc8aecb45c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -73,7 +79,16 @@
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="GameStateManager.cpp">
-      <Filter>Source Files\Model</Filter>
+      <Filter>Source Files\Model\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="IGameState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +114,16 @@
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="GameStateManager.h">
-      <Filter>Header Files\Model</Filter>
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameState.h">
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

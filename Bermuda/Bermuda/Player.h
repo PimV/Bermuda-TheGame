@@ -7,7 +7,7 @@ class Player :
 	public IMovable
 {
 public:
-	Player(int id);
+	Player(int id, double moveSpeed);
 	virtual void move();
 	~Player(void);
 };

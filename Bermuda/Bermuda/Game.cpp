@@ -10,9 +10,8 @@ Game::Game(void)
 {
 	gsm = new GameStateManager();
 
-	
 	//Start Thread
-	gameLoopThread = std::thread(&Game::gameLoop);
+	gameLoopThread = std::thread(&Game::gameLoop, gsm);
 	//Detach gameLoopThread from Main Thread
 	gameLoopThread.detach();
 }
@@ -28,7 +27,7 @@ Game::~Game(void)
 *
 */
 
-void Game::gameLoop() {
+void Game::gameLoop(GameStateManager *gsm) {
 	double TARGET_FPS = 60;
 	double OPTIMAL_TIME = 1000 / TARGET_FPS;
 
@@ -43,6 +42,7 @@ void Game::gameLoop() {
 	//Instantiate FPS variables and set to 0
 	long lastFpsTime = 0;
 	int fps = 0;
+	int gameState = 0;
 
 	while (true) {		
 		//Take current Time
@@ -66,6 +66,7 @@ void Game::gameLoop() {
 		}
 
 		//UPDATE SHIT
+		gsm->update(delta);
 
 		//Get time after loop
 		QueryPerformanceCounter(&afterLoopTime);

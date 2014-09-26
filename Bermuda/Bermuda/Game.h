@@ -10,7 +10,7 @@ private:
 	std::thread gameLoopThread;
 public:
 	Game(void);
-	static void gameLoop();
+	static void gameLoop(GameStateManager *gsm);
 	~Game(void);
 
 };
