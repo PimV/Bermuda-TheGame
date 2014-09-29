@@ -4,11 +4,18 @@ class MenuState :
 	public IGameState
 {
 public:
-	void init();
-	void update(double dt);
-	void draw();
-	void handleInput();
 	MenuState(void);
-	virtual ~MenuState(void);
+	void init() ;
+	void cleanup();
+
+	void pause();
+	void resume();
+
+	void handleEvents( GameStateManager *gsm) ;
+	void update( GameStateManager *gsm, double dt) ;
+	void draw( GameStateManager *gsm) ;
+
+
+	~MenuState(void);
 };
 

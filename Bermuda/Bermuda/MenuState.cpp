@@ -10,15 +10,28 @@ void MenuState::init() {
 
 }
 
-void MenuState::handleInput() {
+void MenuState::cleanup() {
 
 }
 
-void MenuState::update(double dt) {
+void MenuState::pause() {
+
+}
+
+void MenuState::resume() {
+
+}
+
+
+void MenuState::handleEvents( GameStateManager *gsm) {
+
+}
+
+void MenuState::update( GameStateManager *gsm, double dt) {
 	std::cout << "Pim rocks" << std::endl;
 }
 
-void MenuState::draw() {
+void MenuState::draw( GameStateManager *gsm) {
 
 }
 

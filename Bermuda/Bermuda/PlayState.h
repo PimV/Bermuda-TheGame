@@ -5,10 +5,16 @@ class PlayState :
 {
 public:
 	void init();
-	void update(double dt);
-	void draw();
-	void handleInput();
+	void cleanup();
+
+	void pause();
+	void resume();
+
+	void handleEvents( GameStateManager *gsm) ;
+	void update( GameStateManager *gsm, double dt);
+	void draw( GameStateManager *gsm);
+
 	PlayState(void);
-	virtual ~PlayState(void);
+	~PlayState(void);
 };
 

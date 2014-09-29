@@ -11,15 +11,28 @@ void PlayState::init() {
 
 }
 
-void PlayState::handleInput() {
+void PlayState::cleanup() {
 
 }
 
-void PlayState::update(double dt) {
-	std::cout << "Bas sucks" << std::endl;
+void PlayState::pause() {
+
 }
 
-void PlayState::draw() {
+void PlayState::resume() {
+
+}
+
+
+void PlayState::handleEvents( GameStateManager *gsm) {
+
+}
+
+void PlayState::update(GameStateManager *gsm, double dt) {
+	std::cout << "Bas Sucks" << std::endl;
+}
+
+void PlayState::draw( GameStateManager *gsm) {
 
 }
 

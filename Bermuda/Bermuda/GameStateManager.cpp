@@ -3,6 +3,7 @@
 #include "PlayState.h"
 #include <iostream>
 
+
 GameStateManager::GameStateManager(void) {
 	this->init();
 }
@@ -15,12 +16,16 @@ void GameStateManager::init() {
 }
 
 void GameStateManager::update(double deltaTime) {
-	this->currentState->update(deltaTime);
+	this->currentState->update(this, deltaTime);
 
 }
 
+void GameStateManager::changeGameState(IGameState* gameState) {
+	this->currentState = gameState;
+}
+
 void GameStateManager::switchGameState(int index) {
-	this->currentState = gameStates[index];
+
 }
 
 GameStateManager::~GameStateManager(void) {
