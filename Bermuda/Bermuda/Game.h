@@ -6,11 +6,11 @@
 class Game
 {
 private:
-	GameStateManager *gsm;
+	GameStateManager* gsm;
 	std::thread gameLoopThread;
 public:
 	Game(void);
-	static void gameLoop(GameStateManager *gsm);
+	static void gameLoop(GameStateManager* gsm);
 	~Game(void);
 
 };

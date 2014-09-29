@@ -3,13 +3,28 @@
 #include "MenuState.h"
 #include "PlayState.h"
 #include <iostream>
-
+#include <Windows.h>
 
 GameStateManager::GameStateManager(void) {
-	this->init();
+	init("Bermuda", 640, 480, 0, false);
 }
 
-void GameStateManager::init() {
+void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
+	int flags = 0;
+
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	window = SDL_CreateWindow(
+		title,
+		640,
+		480,
+		width,
+		height,
+		0
+		);
+	//om ff te testen
+	renderer = SDL_CreateRenderer(window, -1, 0);
+
 	this->changeGameState(MenuState::Instance());
 	m_running = true;
 }
@@ -73,6 +88,7 @@ bool GameStateManager::running() {
 
 void GameStateManager::quit() {
 	m_running = false;
+	SDL_Quit();
 }
 
 GameStateManager::~GameStateManager(void) {

@@ -1,13 +1,19 @@
 #pragma once
 #include "igamestate.h"
+#include "header_loader.h"
 class PlayState :
 	public IGameState
 {
 private:
 	static PlayState m_PlayState;
 
-public:
+	SDL_Surface* bg;
+	int alpha;
+
 	int counter;
+
+public:
+	
 
 	void init();
 	void cleanup();

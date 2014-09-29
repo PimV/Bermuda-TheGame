@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "GameStateManager.h"
-
+#include "header_loader.h"
 #include <Windows.h>
 #include <iostream>
 #include <chrono>
@@ -9,12 +9,13 @@
 Game::Game(void)
 {
 	gsm = new GameStateManager();
-	gsm->init();
 
-	//Start Thread
-	gameLoopThread = std::thread(&Game::gameLoop, gsm);
-	//Detach gameLoopThread from Main Thread
-	gameLoopThread.detach();
+	//Non-threaded
+	this->gameLoop(gsm);
+
+	//Threaded
+	//gameLoopThread = std::thread(&Game::gameLoop, gsm);
+	//gameLoopThread.detach();
 }
 
 
@@ -28,7 +29,7 @@ Game::~Game(void)
 *
 */
 
-void Game::gameLoop(GameStateManager *gsm) {
+void Game::gameLoop(GameStateManager* gsm) {
 	double TARGET_FPS = 60;
 	double OPTIMAL_TIME = 1000 / TARGET_FPS;
 
@@ -44,8 +45,7 @@ void Game::gameLoop(GameStateManager *gsm) {
 	long lastFpsTime = 0;
 	int fps = 0;
 	int gameState = 0;
-
-	while (true) {		
+	while (gsm->running()) {		
 		//Take current Time
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
@@ -66,8 +66,10 @@ void Game::gameLoop(GameStateManager *gsm) {
 			fps = 0;
 		}
 
-		//UPDATE SHIT
+		//UPDATE SHIT	
+		gsm->handleEvents();		
 		gsm->update(delta);
+		gsm->draw();
 
 		//Get time after loop
 		QueryPerformanceCounter(&afterLoopTime);

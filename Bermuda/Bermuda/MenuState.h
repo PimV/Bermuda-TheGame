@@ -1,10 +1,15 @@
 #pragma once
 #include "igamestate.h"
+#include "header_loader.h"
 class MenuState :
 	public IGameState
 {
 private:
 	static MenuState m_MenuState;
+
+	SDL_Surface* bg;
+	int alpha;
+
 	int counter;
 
 public:
