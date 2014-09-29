@@ -1,5 +1,5 @@
 #pragma once
-class GameStateManager;
+#include "GameStateManager.h"
 
 class IGameState
 {
@@ -17,6 +17,10 @@ public:
 	virtual void handleEvents(GameStateManager* gsm) = 0;
 	virtual void update(GameStateManager* gsm, double dt) = 0;
 	virtual void draw(GameStateManager* gsm) = 0;
+
+	void ChangeState(GameStateManager* gsm, IGameState* state) {
+		gsm->changeGameState(state);
+	}
 
 	virtual ~IGameState(void);
 };

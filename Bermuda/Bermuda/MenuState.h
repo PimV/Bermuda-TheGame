@@ -3,6 +3,10 @@
 class MenuState :
 	public IGameState
 {
+private:
+	static MenuState m_MenuState;
+	int counter;
+
 public:
 	MenuState(void);
 	void init() ;
@@ -15,6 +19,9 @@ public:
 	void update( GameStateManager *gsm, double dt) ;
 	void draw( GameStateManager *gsm) ;
 
+	static MenuState* Instance() {
+		return &m_MenuState;
+	}
 
 	~MenuState(void);
 };

@@ -1,4 +1,5 @@
 #include "GameStateManager.h"
+#include "IGameState.h"
 #include "MenuState.h"
 #include "PlayState.h"
 #include <iostream>
@@ -9,10 +10,7 @@ GameStateManager::GameStateManager(void) {
 }
 
 void GameStateManager::init() {
-	this->gameStates[0] = new MenuState();
-	this->gameStates[1] = new PlayState();
-
-	this->currentState = gameStates[1];
+	this->currentState = MenuState::Instance();
 }
 
 void GameStateManager::update(double deltaTime) {
@@ -22,10 +20,6 @@ void GameStateManager::update(double deltaTime) {
 
 void GameStateManager::changeGameState(IGameState* gameState) {
 	this->currentState = gameState;
-}
-
-void GameStateManager::switchGameState(int index) {
-
 }
 
 GameStateManager::~GameStateManager(void) {

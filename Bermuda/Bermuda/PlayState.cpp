@@ -1,9 +1,13 @@
 #include "PlayState.h"
+#include "MenuState.h"
+#include "GameStateManager.h"
 #include <iostream>
 
+PlayState PlayState::m_PlayState;
 
 PlayState::PlayState(void)
 {
+	counter = 0;
 }
 
 
@@ -29,7 +33,12 @@ void PlayState::handleEvents( GameStateManager *gsm) {
 }
 
 void PlayState::update(GameStateManager *gsm, double dt) {
-	std::cout << "Bas Sucks" << std::endl;
+	counter++;
+	if (counter > 100) {
+		counter = 0;
+		gsm->changeGameState(MenuState::Instance());
+	}
+	std::cout << "Bas Sucks " << counter <<   std::endl;
 }
 
 void PlayState::draw( GameStateManager *gsm) {

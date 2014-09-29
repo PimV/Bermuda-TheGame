@@ -3,7 +3,12 @@
 class PlayState :
 	public IGameState
 {
+private:
+	static PlayState m_PlayState;
+
 public:
+	int counter;
+
 	void init();
 	void cleanup();
 
@@ -13,6 +18,10 @@ public:
 	void handleEvents( GameStateManager *gsm) ;
 	void update( GameStateManager *gsm, double dt);
 	void draw( GameStateManager *gsm);
+
+	static PlayState* Instance() {
+		return &m_PlayState;
+	}
 
 	PlayState(void);
 	~PlayState(void);
