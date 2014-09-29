@@ -10,26 +10,74 @@ GameStateManager::GameStateManager(void) {
 }
 
 void GameStateManager::init() {
-	this->currentState = MenuState::Instance();
+	this->changeGameState(MenuState::Instance());
+	m_running = true;
 }
 
-void GameStateManager::update(double deltaTime) {
-	this->currentState->update(this, deltaTime);
+void GameStateManager::cleanup() {
+	//While there are states on the stack, clean them up
+	while (!states.empty()) {
+		//Peek at top state and clean that state
+		states.back()->cleanup();
 
+		//Remove top state
+		states.pop_back();
+	}
 }
 
 void GameStateManager::changeGameState(IGameState* gameState) {
-	this->currentState = gameState;
+	if (!states.empty()) {
+		states.back()->cleanup();
+		states.pop_back();
+	}
+
+	states.push_back(gameState);
+	states.back()->init();
+}
+
+void GameStateManager::pushGameState(IGameState* gameState) {
+	if (!states.empty()) {
+		states.back()->pause();
+	}
+
+	states.push_back(gameState);
+	states.back()->init();
+}
+
+void GameStateManager::popState() {
+	if (!states.empty()) {
+		states.back()->cleanup();
+		states.pop_back();
+	}
+
+	if (!states.empty()) {
+		states.back()->resume();
+	}
+}
+
+void GameStateManager::handleEvents() {
+	states.back()->handleEvents(this);
+}
+
+void GameStateManager::update(double deltaTime) {
+	states.back()->update(this, deltaTime);
+}
+
+void GameStateManager::draw() {
+	states.back()->draw(this);
+}
+
+bool GameStateManager::running() {
+	return m_running;
+}
+
+void GameStateManager::quit() {
+	m_running = false;
 }
 
 GameStateManager::~GameStateManager(void) {
-	this->cleanupGameStates();
+
 }
 
 
-void GameStateManager::cleanupGameStates() {
-	for (IGameState *i : this->gameStates) {
-		delete i;
-	}
-	delete [] this->gameStates;
-}
+

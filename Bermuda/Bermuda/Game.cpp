@@ -9,6 +9,7 @@
 Game::Game(void)
 {
 	gsm = new GameStateManager();
+	gsm->init();
 
 	//Start Thread
 	gameLoopThread = std::thread(&Game::gameLoop, gsm);
