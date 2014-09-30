@@ -1,5 +1,6 @@
 #pragma once
 #include "header_loader.h"
+#include "SDLInitializer.h"
 #include <vector>
 
 class IGameState;
@@ -23,9 +24,8 @@ public:
 	bool running();
 	void quit();
 
-	SDL_Surface* screen;
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+	SDLInitializer* sdlInitializer;
+
 
 	~GameStateManager(void);
 private: 

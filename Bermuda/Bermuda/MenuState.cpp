@@ -62,12 +62,10 @@ void MenuState::update(GameStateManager *gsm, double dt) {
 void MenuState::draw(GameStateManager *gsm) {
 	//Create surface and textures
 	SDL_Surface* img = SDL_LoadBMP("menustate.bmp");
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->renderer, img);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);
 
 	//Add texture to renderer
-	SDL_RenderClear(gsm->renderer); //clear screen
-	SDL_RenderCopy(gsm->renderer, texture, NULL,NULL); //draw texture
-	SDL_RenderPresent(gsm->renderer); //present screen
+	gsm->sdlInitializer->drawTexture(texture);
 
 	//Clean created textures/surfaces
 	SDL_DestroyTexture(texture);  

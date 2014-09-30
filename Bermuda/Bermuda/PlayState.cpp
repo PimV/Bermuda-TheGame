@@ -58,12 +58,10 @@ void PlayState::update(GameStateManager *gsm, double dt) {
 void PlayState::draw( GameStateManager *gsm) {
 	//Create surface and textures
 	SDL_Surface* img = SDL_LoadBMP("playstate.bmp");
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->renderer, img);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);
 
 	//Add texture to renderer
-	SDL_RenderClear(gsm->renderer);
-	SDL_RenderCopy(gsm->renderer, texture, NULL,NULL);
-	SDL_RenderPresent(gsm->renderer);
+	gsm->sdlInitializer->drawTexture(texture);
 
 	//Clean created textures/surfaces
 	SDL_DestroyTexture(texture);  

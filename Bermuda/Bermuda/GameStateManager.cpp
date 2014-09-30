@@ -10,20 +10,8 @@ GameStateManager::GameStateManager(void) {
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
-	int flags = 0;
-
-	SDL_Init(SDL_INIT_EVERYTHING);
-
-	window = SDL_CreateWindow(
-		title,
-		640,
-		480,
-		width,
-		height,
-		0
-		);
-	//om ff te testen
-	renderer = SDL_CreateRenderer(window, -1, 0);
+	sdlInitializer = new SDLInitializer();
+	sdlInitializer->init(title, width, height, bpp, fullscreen);
 
 	this->changeGameState(MenuState::Instance());
 	m_running = true;
@@ -92,7 +80,7 @@ void GameStateManager::quit() {
 }
 
 GameStateManager::~GameStateManager(void) {
-
+	delete sdlInitializer;
 }
 
 
