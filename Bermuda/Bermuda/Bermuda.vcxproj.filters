@@ -55,6 +55,12 @@
     <Filter Include="Header Files\Model\GameState">
       <UniqueIdentifier>{a9a7d415-def3-4751-8149-ddc8aecb45c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\View\Component">
+      <UniqueIdentifier>{5b43c53c-206d-4ce0-a2dc-6ebb216fcbc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\Component">
+      <UniqueIdentifier>{0fd01313-c957-43cd-a8e9-cac5499436a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -93,6 +99,9 @@
     <ClCompile Include="SDLInitializer.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -130,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="SDLInitializer.h">
       <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\View\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

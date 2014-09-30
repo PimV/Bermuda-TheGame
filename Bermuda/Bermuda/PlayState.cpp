@@ -1,5 +1,6 @@
 #include "PlayState.h"
 #include "MenuState.h"
+#include "Button.h"
 #include "GameStateManager.h"
 #include <iostream>
 
@@ -32,7 +33,6 @@ void PlayState::handleEvents( GameStateManager *gsm) {
 	SDL_Event mainEvent;
 
 	if(SDL_PollEvent(&mainEvent)) {
-
 		switch(mainEvent.type) {
 		case SDL_QUIT:
 			gsm->quit();
@@ -48,6 +48,16 @@ void PlayState::handleEvents( GameStateManager *gsm) {
 				break;
 			}
 			break;
+		case SDL_MOUSEMOTION: 
+			int x,y;
+			SDL_GetMouseState(&x, &y);
+			std::cout << "X:" << x << ", Y:" << y << std::endl;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
+				gsm->changeGameState(MenuState::Instance());
+			}
+			break;
 		}
 	}
 }
@@ -60,12 +70,22 @@ void PlayState::draw( GameStateManager *gsm) {
 	SDL_Surface* img = SDL_LoadBMP("playstate.bmp");
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);
 
+	Button* b = new Button(15,15,50,50,"HOOI");
+
+
 	//Add texture to renderer
-	gsm->sdlInitializer->drawTexture(texture);
+	gsm->sdlInitializer->clearScreen();
+
+
+	gsm->sdlInitializer->drawTexture(texture, NULL);
+	gsm->sdlInitializer->drawTexture(texture, &b->getRectangle());
+
+	gsm->sdlInitializer->drawScreen();
 
 	//Clean created textures/surfaces
 	SDL_DestroyTexture(texture);  
 	SDL_FreeSurface(img); 
+	delete b;
 }
 
 PlayState::~PlayState(void)

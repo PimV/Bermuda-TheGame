@@ -1,6 +1,7 @@
 #include "header_loader.h"
 #include "MenuState.h"
 #include "PlayState.h"
+#include "Button.h"
 #include "GameStateManager.h"
 #include <iostream>
 
@@ -51,6 +52,16 @@ void MenuState::handleEvents( GameStateManager *gsm) {
 				break;
 			}
 			break;
+		case SDL_MOUSEMOTION: 
+			int x,y;
+			SDL_GetMouseState(&x, &y);
+			std::cout << "X:" << x << ", Y:" << y << std::endl;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
+				gsm->changeGameState(PlayState::Instance());
+			}
+			break;
 		}
 	}
 }
@@ -64,8 +75,19 @@ void MenuState::draw(GameStateManager *gsm) {
 	SDL_Surface* img = SDL_LoadBMP("menustate.bmp");
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);
 
+
+
+	Button* startButton = new Button(150,75,150,75,"start.bmp");
+	Button* exitButton = new Button(150,165,150,75,"exit.bmp");
+
 	//Add texture to renderer
-	gsm->sdlInitializer->drawTexture(texture);
+	gsm->sdlInitializer->clearScreen();
+
+	gsm->sdlInitializer->drawTexture(texture, NULL);
+	startButton->render(gsm->sdlInitializer->getRenderer());
+	exitButton->render(gsm->sdlInitializer->getRenderer());
+
+	gsm->sdlInitializer->drawScreen();
 
 	//Clean created textures/surfaces
 	SDL_DestroyTexture(texture);  
