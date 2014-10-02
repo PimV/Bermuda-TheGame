@@ -82,14 +82,20 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActionContainer.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ClickAction.h" />
+    <ClInclude Include="ContainerType.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="IAction.h" />
+    <ClInclude Include="IEntityContainer.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="header_loader.h" />
     <ClInclude Include="IAggressive.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
@@ -97,14 +103,19 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClInclude Include="SDLInitializer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionContainer.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="IAction.cpp" />
+    <ClCompile Include="IEntityContainer.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="IAggressive.cpp" />
     <ClCompile Include="IMovable.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainEntityContainer.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />

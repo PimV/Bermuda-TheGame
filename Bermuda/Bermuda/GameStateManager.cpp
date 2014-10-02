@@ -14,6 +14,9 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 
 	this->changeGameState(MenuState::Instance());
+
+	actionContainer = new ActionContainer();
+
 	m_running = true;
 }
 
@@ -70,6 +73,10 @@ void GameStateManager::draw() {
 	states.back()->draw(this);
 }
 
+ActionContainer* GameStateManager::getActionContainer() {
+	return actionContainer;
+}
+
 bool GameStateManager::running() {
 	return m_running;
 }
@@ -81,6 +88,8 @@ void GameStateManager::quit() {
 
 GameStateManager::~GameStateManager(void) {
 	delete sdlInitializer;
+
+	delete actionContainer;
 }
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "header_loader.h"
 #include "SDLInitializer.h"
+#include "ActionContainer.h"
 #include <vector>
 
 class IGameState;
@@ -21,6 +22,8 @@ public:
 	void handleEvents();
 	void draw();
 
+	ActionContainer* getActionContainer();
+
 	bool running();
 	void quit();
 
@@ -30,10 +33,10 @@ public:
 	~GameStateManager(void);
 private: 
 	std::vector<IGameState*> states;
-
 	IGameState *currentState;
+
+	ActionContainer* actionContainer;
+
 	bool m_running;
-
-
 };
 
