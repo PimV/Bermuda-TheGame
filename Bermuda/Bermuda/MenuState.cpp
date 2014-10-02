@@ -9,7 +9,6 @@ MenuState MenuState::m_MenuState;
 
 MenuState::MenuState(void)
 {
-	counter = 0;
 }
 
 void MenuState::init() {
@@ -55,7 +54,7 @@ void MenuState::handleEvents( GameStateManager *gsm) {
 		case SDL_MOUSEMOTION: 
 			int x,y;
 			SDL_GetMouseState(&x, &y);
-			std::cout << "X:" << x << ", Y:" << y << std::endl;
+			//std::cout << "X:" << x << ", Y:" << y << std::endl;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {

@@ -10,8 +10,6 @@ private:
 	SDL_Surface* bg;
 	int alpha;
 
-	int counter;
-
 public:
 	
 
