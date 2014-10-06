@@ -1,6 +1,7 @@
 #include "PlayState.h"
 #include "MenuState.h"
 #include "GameStateManager.h"
+#include "MapLoader.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
@@ -12,7 +13,8 @@ PlayState::PlayState(void)
 
 
 void PlayState::init() {
-
+	MapLoader mapReader;
+	mapReader.loadMap();
 }
 
 void PlayState::cleanup() {
