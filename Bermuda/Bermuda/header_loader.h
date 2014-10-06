@@ -5,4 +5,4 @@
 #include <string>
 
 static const std::string BASEPATH = SDL_GetBasePath();
-static const std::string RESOURCEPATH = BASEPATH + "Resources/";
+static const std::string RESOURCEPATH = BASEPATH + "Resources\\";

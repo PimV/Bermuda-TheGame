@@ -1,4 +1,5 @@
 #include "ImageLoader.h"
+#include <iostream>
 
 ImageLoader::ImageLoader(SDL_Renderer* renderer)
 {
@@ -8,6 +9,12 @@ ImageLoader::ImageLoader(SDL_Renderer* renderer)
 void ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 {
 	SDL_Texture* tileSet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
+	
+	if (tileSet == nullptr)
+	{
+		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
+	}
+	
 	int x = 0;
 	int y = 0;
 	int fileWidth = 0;
@@ -25,6 +32,7 @@ void ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 			crop->h = tileHeight;
 
 			images.push_back(new Image(tileSet, crop));
+			x += tileWidth;
 		}
 		x = 0;
 		y += tileHeight;
