@@ -42,7 +42,14 @@ void ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 
 Image* ImageLoader::getMapImage(int tileID)
 {
-	return images.at(tileID-1);
+	if(tileID > 0 && tileID <= images.size())
+	{
+		return images.at(tileID-1);
+	}
+	else 
+	{
+		return nullptr;
+	}
 }
 
 ImageLoader::~ImageLoader()
