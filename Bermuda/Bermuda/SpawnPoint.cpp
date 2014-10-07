@@ -2,5 +2,4 @@
 
 SpawnPoint::~SpawnPoint()
 {
-
 }
