@@ -89,12 +89,15 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Defensive.h" />
+    <ClInclude Include="Evasive.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="header_loader.h" />
-    <ClInclude Include="IAggressive.h" />
+    <ClInclude Include="Aggressive.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
@@ -105,11 +108,13 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="SDLInitializer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Aggressive.cpp" />
+    <ClCompile Include="Defensive.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Evasive.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
-    <ClCompile Include="IAggressive.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="IMovable.cpp" />
@@ -119,6 +124,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="SDLInitializer.cpp" />
+    <ClCompile Include="SpawnPoint.cpp" />
+    <ClCompile Include="SpawnPoint.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
