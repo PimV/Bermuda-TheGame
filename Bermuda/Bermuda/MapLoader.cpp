@@ -1,12 +1,10 @@
 #include "MapLoader.h"
-#include <rapidjson/document.h>
+
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
 #include <string>
 #include <iostream>
 
-using namespace std;
-using namespace rapidjson;
 
 MapLoader::MapLoader()
 {
@@ -38,23 +36,60 @@ void MapLoader::loadMap()
     Document d;
 	d.Parse(json.c_str());
 
+	extractMapInfo(d);
+}
+
+void MapLoader::extractMapInfo(Document& d)
+{
 	//Get general map information
-	int mapHeight = d["height"].GetInt();
-	int mapWidth = d["width"].GetInt();
+	int mapTileHeight = d["height"].GetInt();
+	int mapTileWidth = d["width"].GetInt();
 	int tileHeight = d["tileheight"].GetInt();
 	int tileWidth = d["tilewidth"].GetInt();
 
 	cout << "Map info:" << endl;
-	cout << "Map width: " << mapWidth << endl;
-	cout << "Map height: " << mapHeight << endl;
+	cout << "Map width: " << mapTileWidth << endl;
+	cout << "Map height: " << mapTileHeight << endl;
 	cout << "Tile size: " << tileWidth << " x " << tileHeight << endl;
 	
+	Value& tilesets = d["tilesets"];
+	createTileSets(tilesets);
+
+	cout << "\nMap:" << endl;
+	for(int i = 0; i < d["layers"].Capacity(); i++)
+	{
+		Value& layer = d["layers"][i];
+		string layerName = layer["name"].GetString();
+		
+		cout << layerName << endl;
+		if(layerName == "Tiles")
+		{
+			createTiles(layer["data"], mapTileHeight, mapTileWidth, tileHeight, tileWidth);
+		}
+		else if (layerName == "Objects")
+		{
+			createObjects(layer["objects"]);
+		}
+		else if (layerName == "SpawnPoints")
+		{
+			createSpawnPoints(layer["objects"]);
+		}
+		else
+		{
+			//Useless layer
+		}
+		cout << endl;
+	}
+}
+
+void MapLoader::createTileSets(Value& tilesets)
+{
 	cout << "\nTilesets: " << endl;
 	//TODO: Create texture loader class that loads tilesets and creates SDL_textures. 
 	//This class should keep ID's with textures in a map.
-	for(int i = 0; i < d["tilesets"].Capacity(); i++)
+	for(int i = 0; i < tilesets.Capacity(); i++)
 	{
-		Value& tileset = d["tilesets"][i];
+		Value& tileset = tilesets[i];
 		string imgName = tileset["image"].GetString();
 		int imgHeight = tileset["imageheight"].GetInt();
 		int imgWidth = tileset["imagewidth"].GetInt();
@@ -65,7 +100,6 @@ void MapLoader::loadMap()
 		cout << "\timg width: " << imgWidth << endl;
 		cout << "\tfirst ID: " << firstId << endl;
 
-		
 		if(tileset.HasMember("tileproperties"))
 		{
 			for(Value::ConstMemberIterator it=tileset["tileproperties"].MemberBegin(); it != tileset["tileproperties"].MemberEnd(); it++) {
@@ -86,54 +120,43 @@ void MapLoader::loadMap()
 			}
 		}
 	}
+}
 
-	cout << "\nMap:" << endl;
-	for(int i = 0; i < d["layers"].Capacity(); i++)
+void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, int tileHeight, int tileWidth)
+{
+	//TODO: for project, create tile objects
+	for (int j = 0; j < mapTileHeight; j++)
 	{
-		Value& layer = d["layers"][i];
-		string layerName = layer["name"].GetString();
-		
-		cout << layerName << endl;
-		if(layerName == "Tiles")
+		for (int k = 0; k < mapTileWidth; k++)
 		{
-			//TODO: for project, create tile objects
-			for (int j = 0; j < mapHeight; j++)
-			{
-				for (int k = 0; k < mapWidth; k++)
-				{
-					cout << layer["data"][(j*mapWidth)+k].GetInt() << " | ";
-				}
-				cout << endl;
-			}
-		}
-		else if (layerName == "Objects")
-		{
-			//TODO: for project, create objects
-			for(int j = 0; j < layer["objects"].Capacity(); j++)
-			{
-				Value& object = layer["objects"][j];
-				cout << "- Object ID : " << object["gid"].GetInt() << " ";
-				cout << "x: " << object["x"].GetInt() << " ";
-				cout << "y: " << object["y"].GetInt() << endl;
-			}
-			//Get the class type from map made during tileset reading
-		}
-		else if (layerName == "SpawnPoints")
-		{
-			//TODO: for project, create spawnpoint objects
-			for(int j = 0; j < layer["objects"].Capacity(); j++)
-			{
-				Value& object = layer["objects"][j];
-				cout << "- x: " << object["x"].GetInt() << " ";
-				cout << "y: " << object["y"].GetInt() << " ";
-				cout << "type: " << object["type"].GetString() << endl;
-			}
-		}
-		else
-		{
-			//Useless layer
+			cout << tiles[(j*mapTileWidth)+k].GetInt() << " | ";
 		}
 		cout << endl;
+	}
+}
+
+void MapLoader::createObjects(Value& objects)
+{
+	//TODO: for project, create objects
+	for(int j = 0; j < objects.Capacity(); j++)
+	{
+		Value& object = objects[j];
+		cout << "- Object ID : " << object["gid"].GetInt() << " ";
+		cout << "x: " << object["x"].GetInt() << " ";
+		cout << "y: " << object["y"].GetInt() << endl;
+	}
+	//Get the class type from map made during tileset reading
+}
+
+void MapLoader::createSpawnPoints(Value& spawnpoints)
+{
+	//TODO: for project, create spawnpoint objects
+	for(int j = 0; j < spawnpoints.Capacity(); j++)
+	{
+		Value& object = spawnpoints[j];
+		cout << "- x: " << object["x"].GetInt() << " ";
+		cout << "y: " << object["y"].GetInt() << " ";
+		cout << "type: " << object["type"].GetString() << endl;
 	}
 }
 
