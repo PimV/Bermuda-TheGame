@@ -1,27 +1,27 @@
 #include "Camera.h"
 
 
-Camera::Camera(int x, int y, int width, int height)
+Camera::Camera(double x, double y, double width, double height)
 	: x(x), y(y), width(width), height(height)
 {
 }
 
-int Camera::getX()
+double Camera::getX()
 {
 	return x;
 }
 
-int Camera::getY()
+double Camera::getY()
 {
 	return y;
 }
 
-int Camera::getWidth()
+double Camera::getWidth()
 {
 	return width;
 }
 
-int Camera::getHeight()
+double Camera::getHeight()
 {
 	return height;
 }

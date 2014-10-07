@@ -7,10 +7,11 @@
 class DrawableEntity :
 	public Entity
 {
-protected:
-	virtual Image* image;
+private:
+	const double DRAWBUFFER;
+	Image* image;
 public:
-	DrawableEntity(int id);
+	DrawableEntity(int id, Image* image);
 	void draw(Camera camera, SDL_Renderer* renderer);
 	virtual ~DrawableEntity();
 };
