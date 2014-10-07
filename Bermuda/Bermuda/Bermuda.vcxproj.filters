@@ -110,6 +110,12 @@
     </ClCompile>
     <ClCompile Include="SpawnPoint.cpp">
       <Filter>Source Files\Model\Entity</Filter>
+	</ClCompile>
+    <ClCompile Include="ImageLoader.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="IBehaviour.h">
       <Filter>Header Files\Model\Entity\Behaviour</Filter>
+	</ClInclude>
+    <ClInclude Include="ImageLoader.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
