@@ -6,8 +6,9 @@
 #include <iostream>
 
 
-MapLoader::MapLoader()
+MapLoader::MapLoader(ImageLoader* imgLoader)
 {
+	this->imgLoader = imgLoader;
 }
 
 void MapLoader::loadMap()
@@ -74,30 +75,35 @@ void MapLoader::extractMapInfo(Document& d)
 		{
 			createSpawnPoints(layer["objects"]);
 		}
-		else
-		{
-			//Useless layer
-		}
+		// Ignore any other layers.
 		cout << endl;
 	}
 }
 
 void MapLoader::createTileSets(Value& tilesets)
 {
+	/*
+	map_type map;
+	map["DerivedA"] = &createInstance<DerivedA>;
+	map["DerivedB"] = &createInstance<DerivedB>;
+	And then you can do
+	return map[some_string]();
+	*/
+
 	cout << "\nTilesets: " << endl;
-	//TODO: Create texture loader class that loads tilesets and creates SDL_textures. 
-	//This class should keep ID's with textures in a map.
 	for(int i = 0; i < tilesets.Capacity(); i++)
 	{
 		Value& tileset = tilesets[i];
 		string imgName = tileset["image"].GetString();
-		int imgHeight = tileset["imageheight"].GetInt();
-		int imgWidth = tileset["imagewidth"].GetInt();
+		int tileHeight = tileset["tileheight"].GetInt();
+		int tileWidth = tileset["tilewidth"].GetInt();
 		int firstId = tileset["firstgid"].GetInt();
 
+		imgLoader->loadTileset(imgName, tileWidth, tileHeight);
+
 		cout << imgName << endl;
-		cout << "\timg height: " << imgHeight << endl;
-		cout << "\timg width: " << imgWidth << endl;
+		cout << "\ttile height: " << tileHeight << endl;
+		cout << "\ttile width: " << tileWidth << endl;
 		cout << "\tfirst ID: " << firstId << endl;
 
 		if(tileset.HasMember("tileproperties"))
@@ -108,13 +114,13 @@ void MapLoader::createTileSets(Value& tilesets)
 					int objectID = firstId+stoi(it->name.GetString());
 					if (name == "Type")
 					{
-						//TODO: for project, Add object ID to map with class types
+						objectClasses[objectID] = it2->value.GetString();
 						cout << "Add ID " << objectID << " to types map with type: " << it2->value.GetString() << endl;
 					}
 					else if (name == "Collision")
 					{
-						//TODO: for project, add tile ID's to array/vector of collision tiles
-						cout << "Add ID " << it->name.GetString() << " to collision vector" << endl;
+						collisionVector.push_back(objectID);
+						cout << "Add ID " << objectID << " to collision vector" << endl;
 					}
 				}
 			}

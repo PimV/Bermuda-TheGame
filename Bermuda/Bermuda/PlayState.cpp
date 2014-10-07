@@ -12,9 +12,9 @@ PlayState::PlayState(void)
 }
 
 
-void PlayState::init() {
-	MapLoader mapReader;
-	mapReader.loadMap();
+void PlayState::init(GameStateManager *gsm) {
+	MapLoader* mapLoader = new MapLoader(gsm->getImageLoader());
+	mapLoader->loadMap();
 }
 
 void PlayState::cleanup() {

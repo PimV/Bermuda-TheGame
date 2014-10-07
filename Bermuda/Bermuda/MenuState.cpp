@@ -11,7 +11,7 @@ MenuState::MenuState(void)
 	counter = 0;
 }
 
-void MenuState::init() {
+void MenuState::init(GameStateManager *gsm) {
 	SDL_Surface* temp = SDL_LoadBMP("menustate.bmp");
 
 	bg = SDL_ConvertSurfaceFormat(temp, SDL_PIXELFORMAT_UNKNOWN, 0);

@@ -12,7 +12,7 @@ GameStateManager::GameStateManager(void) {
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
-	ImageLoader* imgLoader = new ImageLoader(sdlInitializer->getRenderer());
+	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 
 	this->changeGameState(MenuState::Instance());
 	m_running = true;
@@ -36,7 +36,7 @@ void GameStateManager::changeGameState(IGameState* gameState) {
 	}
 
 	states.push_back(gameState);
-	states.back()->init();
+	states.back()->init(this);
 }
 
 void GameStateManager::pushGameState(IGameState* gameState) {
@@ -45,7 +45,7 @@ void GameStateManager::pushGameState(IGameState* gameState) {
 	}
 
 	states.push_back(gameState);
-	states.back()->init();
+	states.back()->init(this);
 }
 
 void GameStateManager::popState() {
@@ -82,11 +82,11 @@ void GameStateManager::quit() {
 
 ImageLoader* GameStateManager::getImageLoader()
 {
-	return imageLoader;
+	return imgLoader;
 }
 
 GameStateManager::~GameStateManager(void) {
-	delete imageLoader;
+	delete imgLoader;
 	delete sdlInitializer;
 }
 
