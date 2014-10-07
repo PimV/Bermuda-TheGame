@@ -58,8 +58,15 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)SDL2.dll" "$(TargetDir)"
-copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
+      <Command>xcopy "$(SolutionDir)SDL2.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)zlib1.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libtiff-5.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libpng16-16.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libjpeg-9.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)Map.json" "$(TargetDir)"
+xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
