@@ -6,5 +6,5 @@ Aggressive::~Aggressive(void)
 
 void Aggressive::behave()
 {
-	// NPC performs and aggressive action
+	// NPC performs an aggressive action
 }
