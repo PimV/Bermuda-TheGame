@@ -32,12 +32,13 @@ void MenuState::resume() {
 }
 
 
-void MenuState::handleEvents( GameStateManager *gsm) {
+void MenuState::handleEvents(GameStateManager *gsm) {
 	SDL_Event mainEvent;
 
 	if(SDL_PollEvent(&mainEvent)) {
 		switch(mainEvent.type) {
 		case SDL_QUIT:
+	
 			gsm->quit();
 			break;
 
@@ -54,7 +55,6 @@ void MenuState::handleEvents( GameStateManager *gsm) {
 		case SDL_MOUSEMOTION: 
 			int x,y;
 			SDL_GetMouseState(&x, &y);
-			//std::cout << "X:" << x << ", Y:" << y << std::endl;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {

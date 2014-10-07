@@ -135,6 +135,12 @@
     <ClCompile Include="ClickAction.cpp">
       <Filter>Source Files\Model\Container\Action</Filter>
     </ClCompile>
+    <ClCompile Include="MoveAction.cpp">
+      <Filter>Source Files\Model\Container\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="EnumDirection.cpp">
+      <Filter>Source Files\Model\Container\Action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -193,6 +199,12 @@
     </ClInclude>
     <ClInclude Include="ContainerType.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveAction.h">
+      <Filter>Header Files\Model\Container\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumDirection.h">
+      <Filter>Header Files\Model\Container\Action</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

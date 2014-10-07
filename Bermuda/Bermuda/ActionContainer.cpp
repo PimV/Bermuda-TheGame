@@ -17,7 +17,6 @@ void ActionContainer::cleanup() {
 
 void ActionContainer::addAction(IAction* action) {
 	m_actionContainer->push_back(action);
-	std::cout << m_actionContainer->size() << std::endl;
 }
 
 void ActionContainer::deleteAction(IAction* action) {

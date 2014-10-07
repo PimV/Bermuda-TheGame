@@ -1,6 +1,7 @@
 #pragma once
 #include "igamestate.h"
 #include "header_loader.h"
+#include "Player.h"
 class PlayState :
 	public IGameState
 {
@@ -29,5 +30,8 @@ public:
 
 	PlayState(void);
 	~PlayState(void);
+
+private:
+	Player* p;
 };
 

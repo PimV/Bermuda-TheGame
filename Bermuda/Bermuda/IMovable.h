@@ -1,4 +1,5 @@
 #pragma once
+#include "EnumDirection.h"
 class IMovable
 {
 public:
@@ -16,7 +17,7 @@ public:
 	double dy;
 
 	IMovable(double mSpeed) : moveSpeed(mSpeed){};
-	virtual void move() = 0;
+	virtual void move(EnumDirection direction) = 0;
 	virtual ~IMovable(void);
 
 };
