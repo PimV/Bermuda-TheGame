@@ -12,7 +12,8 @@ PlayState::PlayState(void)
 
 
 void PlayState::init() {
-	camera = new Camera(0, 0, 600, 800);
+	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
+	camera = new Camera(0, 0, 640, 480);
 }
 
 void PlayState::cleanup() {
