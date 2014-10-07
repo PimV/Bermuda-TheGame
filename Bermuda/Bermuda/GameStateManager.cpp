@@ -12,6 +12,7 @@ GameStateManager::GameStateManager(void) {
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
+	ImageLoader* imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 
 	this->changeGameState(MenuState::Instance());
 	m_running = true;
@@ -79,7 +80,13 @@ void GameStateManager::quit() {
 	SDL_Quit();
 }
 
+ImageLoader* GameStateManager::getImageLoader()
+{
+	return imageLoader;
+}
+
 GameStateManager::~GameStateManager(void) {
+	delete imageLoader;
 	delete sdlInitializer;
 }
 
