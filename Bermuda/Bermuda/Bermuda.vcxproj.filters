@@ -55,6 +55,12 @@
     <Filter Include="Header Files\Model\GameState">
       <UniqueIdentifier>{a9a7d415-def3-4751-8149-ddc8aecb45c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Entity\Behaviour">
+      <UniqueIdentifier>{88ee9c46-ab23-4645-acf7-c7244baaf062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Behaviour">
+      <UniqueIdentifier>{c23db13e-3987-4200-841e-0c722b6bf752}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -70,9 +76,6 @@
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="IAggressive.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="NPC.cpp">
@@ -93,6 +96,21 @@
     <ClCompile Include="SDLInitializer.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
+    <ClCompile Include="Aggressive.cpp">
+      <Filter>Source Files\Model\Entity\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="Evasive.cpp">
+      <Filter>Source Files\Model\Entity\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="Defensive.cpp">
+      <Filter>Source Files\Model\Entity\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnPoint.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnPoint.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -108,9 +126,6 @@
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="IAggressive.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="NPC.h">
@@ -130,6 +145,18 @@
     </ClInclude>
     <ClInclude Include="SDLInitializer.h">
       <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="Aggressive.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="Defensive.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="Evasive.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="IBehaviour.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

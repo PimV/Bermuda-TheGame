@@ -19,5 +19,8 @@ public:
 	virtual void move() = 0;
 	virtual ~IMovable(void);
 
+
+	// move method
+	// speed
 };
 
