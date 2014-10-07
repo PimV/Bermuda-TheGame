@@ -1,6 +1,7 @@
 #pragma once
 #include "header_loader.h"
 #include "SDLInitializer.h"
+#include "ImageLoader.h"
 #include <vector>
 
 class IGameState;
@@ -25,13 +26,14 @@ public:
 	void quit();
 
 	SDLInitializer* sdlInitializer;
-
+	ImageLoader* getImageLoader();
 
 	~GameStateManager(void);
 private: 
 	std::vector<IGameState*> states;
 
 	IGameState *currentState;
+	ImageLoader* imageLoader;
 	bool m_running;
 
 

@@ -88,6 +88,7 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="header_loader.h" />
     <ClInclude Include="IAggressive.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
     <ClInclude Include="MapLoader.h" />
@@ -103,6 +104,7 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="IAggressive.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="IMovable.cpp" />
     <ClCompile Include="Main.cpp" />
