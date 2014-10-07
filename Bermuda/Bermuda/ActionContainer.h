@@ -12,7 +12,7 @@ public:
 	void addAction(IAction* action);
 	void executeAction(IAction* action);
 	void deleteAction(IAction* action);
-	void executeAllActions();
+	void executeAllActions(double dt);
 
 	std::vector<IAction*>* getVector();
 

@@ -8,7 +8,7 @@ class MoveAction :
 public:
 	MoveAction(Player* p, EnumDirection direction);
 
-	void execute();
+	void execute(double dt);
 
 	virtual ~MoveAction(void);
 private:

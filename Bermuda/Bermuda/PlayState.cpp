@@ -15,7 +15,7 @@ PlayState::PlayState(void)
 
 
 void PlayState::init() {
-	p = new Player(1, 5);
+	p = new Player(1, 3);
 }
 
 void PlayState::cleanup() {
@@ -32,8 +32,9 @@ void PlayState::resume() {
 
 
 void PlayState::handleEvents(GameStateManager *gsm) {
+	//p->handleEvents();
 	//Process Input
-	gsm->getActionContainer()->executeAllActions();
+
 
 
 	//Retrieve input
@@ -46,20 +47,48 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 		case SDL_KEYDOWN:
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
-				gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
-				/*std::cout << "Left Pressed" << std::endl;*/
+				p->movingLeft = true;
+				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
+		
 				break;
 			case SDLK_RIGHT:
-				gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
-				std::cout << "Right Pressed" << std::endl;
+				p->movingRight = true;
+				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
+		
 				break;
 			case SDLK_UP:
-				gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
-				std::cout << "Up Pressed" << std::endl;
+				p->movingUp = true;
+				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
+		
 				break;
 			case SDLK_DOWN:
-				gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::South));
-				std::cout << "Down Pressed" << std::endl;
+				p->movingDown = true;
+				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::South));
+		
+				break;
+			}
+			break;
+
+		case SDL_KEYUP:
+			switch(mainEvent.key.keysym.sym) {
+			case SDLK_LEFT:
+				p->movingLeft = false;
+				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
+		
+				break;
+			case SDLK_RIGHT:
+				p->movingRight = false;
+				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
+				
+				break;
+			case SDLK_UP:
+				p->movingUp = false;
+				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
+
+				break;
+			case SDLK_DOWN:
+				p->movingDown = false;
+
 				break;
 			}
 			break;
@@ -68,9 +97,15 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 }
 
 void PlayState::update(GameStateManager *gsm, double dt) {
+	gsm->getActionContainer()->executeAllActions(dt);
+	p->move(EnumDirection::West, dt);
 }
 
 void PlayState::draw(GameStateManager *gsm) {
+	gsm->sdlInitializer->clearScreen();
+	p->draw(gsm->sdlInitializer);
+	gsm->sdlInitializer->drawScreen();
+
 	////Create surface and textures
 	//SDL_Surface* img = SDL_LoadBMP("playstate.bmp");
 	//SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);

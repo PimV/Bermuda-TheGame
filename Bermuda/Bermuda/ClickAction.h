@@ -6,7 +6,7 @@ class ClickAction :
 public:
 	ClickAction(double x, double y);
 
-	void execute();
+	void execute(double dt);
 
 	virtual ~ClickAction(void);
 private:

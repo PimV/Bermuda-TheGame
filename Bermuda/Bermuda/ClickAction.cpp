@@ -8,7 +8,7 @@ ClickAction::ClickAction(double x, double y)
 	this->y = y;
 }
 
-void ClickAction::execute() {
+void ClickAction::execute(double dt) {
 	std::cout << "Executing Click Action on coords:" << x << ":" << y << std::endl;
 }
 

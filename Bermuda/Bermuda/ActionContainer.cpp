@@ -23,10 +23,10 @@ void ActionContainer::deleteAction(IAction* action) {
 	//IAction a = m_actionContainer->pop_back();
 }
 
-void ActionContainer::executeAllActions() {
+void ActionContainer::executeAllActions(double dt) {
 	while (m_actionContainer->size() > 0) {
 		IAction* a = m_actionContainer->back();
-		a->execute();
+		a->execute(dt);
 
 		m_actionContainer->pop_back();
 		delete a;
