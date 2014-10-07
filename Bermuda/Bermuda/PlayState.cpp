@@ -12,7 +12,7 @@ PlayState::PlayState(void)
 
 
 void PlayState::init() {
-
+	camera = new Camera(0, 0, 600, 800);
 }
 
 void PlayState::cleanup() {
@@ -70,4 +70,5 @@ void PlayState::draw( GameStateManager *gsm) {
 
 PlayState::~PlayState(void)
 {
+	delete camera;
 }
