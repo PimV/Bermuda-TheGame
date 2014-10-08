@@ -90,6 +90,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IBehaviour.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="DrawableEntity.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Defensive.h" />
@@ -112,6 +114,11 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   <ItemGroup>
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClInclude Include="Tile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DrawableEntity.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Evasive.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -128,6 +135,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Rabbit.cpp" />
     <ClCompile Include="SDLInitializer.cpp" />
     <ClCompile Include="Spawnpoint.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
