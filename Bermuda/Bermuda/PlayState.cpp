@@ -15,6 +15,9 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	MapLoader* mapLoader = new MapLoader(gsm->getImageLoader());
 	mapLoader->loadMap();
+
+	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
+	camera = new Camera(0, 0, 640, 480);
 }
 
 void PlayState::cleanup() {
@@ -72,4 +75,5 @@ void PlayState::draw( GameStateManager *gsm) {
 
 PlayState::~PlayState(void)
 {
+	delete camera;
 }

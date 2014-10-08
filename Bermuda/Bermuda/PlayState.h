@@ -1,6 +1,8 @@
 #pragma once
 #include "igamestate.h"
 #include "header_loader.h"
+#include "Camera.h"
+
 class PlayState :
 	public IGameState
 {
@@ -11,6 +13,7 @@ private:
 	int alpha;
 
 	int counter;
+	Camera* camera;
 
 public:
 	

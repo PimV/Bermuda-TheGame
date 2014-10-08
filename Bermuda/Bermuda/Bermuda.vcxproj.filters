@@ -102,6 +102,15 @@
     <ClCompile Include="Image.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -148,6 +157,15 @@
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
