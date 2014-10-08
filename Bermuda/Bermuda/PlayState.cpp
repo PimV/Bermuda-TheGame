@@ -44,27 +44,34 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 	if(SDL_PollEvent(&mainEvent)) {
 
 		switch(mainEvent.type) {
+		case SDL_MOUSEBUTTONDOWN:
+			int x,y;
+			SDL_GetMouseState(&x, &y);
+			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
+				std::cout << x << "  " << y << std::endl;
+				p->destX = x;
+				p->destY = y;
+				p->resetMovement();
+				p->moveClick = true;
+			}
+			break;
 		case SDL_KEYDOWN:
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
+				p->resetMovement();
 				p->movingLeft = true;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
-		
 				break;
 			case SDLK_RIGHT:
-				p->movingRight = true;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
-		
+				p->resetMovement();
+				p->movingRight = true;	
 				break;
 			case SDLK_UP:
-				p->movingUp = true;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
-		
+				p->resetMovement();
+				p->movingUp = true;	
 				break;
 			case SDLK_DOWN:
-				p->movingDown = true;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::South));
-		
+				p->resetMovement();
+				p->movingDown = true;	
 				break;
 			}
 			break;
@@ -72,21 +79,25 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
+				p->moveClick = false;	
 				p->movingLeft = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
 		
 				break;
 			case SDLK_RIGHT:
+				p->moveClick = false;	
 				p->movingRight = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
 				
 				break;
 			case SDLK_UP:
+				p->moveClick = false;	
 				p->movingUp = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
 
 				break;
 			case SDLK_DOWN:
+				p->moveClick = false;	
 				p->movingDown = false;
 
 				break;
@@ -98,33 +109,19 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 
 void PlayState::update(GameStateManager *gsm, double dt) {
 	gsm->getActionContainer()->executeAllActions(dt);
-	p->move(EnumDirection::West, dt);
+	p->move(dt);
 }
 
 void PlayState::draw(GameStateManager *gsm) {
 	gsm->sdlInitializer->clearScreen();
+
+	//Draw player
 	p->draw(gsm->sdlInitializer);
+
+	//Draw drawable container
+
+
 	gsm->sdlInitializer->drawScreen();
-
-	////Create surface and textures
-	//SDL_Surface* img = SDL_LoadBMP("playstate.bmp");
-	//SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);
-
-	//Button* b = new Button(15,15,50,50,"HOOI");
-
-	////Add texture to renderer
-	//gsm->sdlInitializer->clearScreen();
-
-
-	//gsm->sdlInitializer->drawTexture(texture, NULL);
-	//gsm->sdlInitializer->drawTexture(texture, &b->getRectangle());
-
-	//gsm->sdlInitializer->drawScreen();
-
-	////Clean created textures/surfaces
-	//SDL_DestroyTexture(texture);  
-	//SDL_FreeSurface(img); 
-	//delete b;
 }
 
 PlayState::~PlayState(void)

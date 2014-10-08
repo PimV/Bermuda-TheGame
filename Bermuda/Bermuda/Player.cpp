@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <iostream>
 
+
 Player::Player(int id, double moveSpeed)
 	: Entity(id), IMovable(moveSpeed)
 {
@@ -10,18 +11,41 @@ Player::Player(int id, double moveSpeed)
 	this->dy = 0;
 	this->maxSpeed = 5;
 
+	this->setWidth(50);
+	this->setHeight(50);
+
 	this->stopSpeed = 0.5;
 	//this->moveSpeed = id;
 	this->movingLeft = false;
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
+	this->moveClick = false;
 
 	this->path = "front.bmp";
 
 }
 
-void Player::move(EnumDirection direction, double dt) {
+void Player::resetMovement()
+{
+	this->movingLeft = false;
+	this->movingRight = false;
+	this->movingDown = false;
+	this->movingUp = false;
+	this->moveClick = false;
+}
+
+void Player::move(double dt) {
+	
+	if(moveClick)
+	{
+		if (getX() == destX && getY() == destY) {
+			moveClick = false;
+		} else {
+			clickMove();
+		}
+	}
+
 	if (movingLeft) {
 		dx -= moveSpeed;
 		if (dx < -maxSpeed) {
@@ -79,11 +103,10 @@ void Player::move(EnumDirection direction, double dt) {
 		dy = dy / 2;
 	}
 
-
-
 	this->setX(getX() + dx);
 	this->setY(getY() + dy);
 
+	
 	if (this->movingLeft) {
 		path = "left2.bmp";
 	}
@@ -96,28 +119,45 @@ void Player::move(EnumDirection direction, double dt) {
 	else if (this->movingDown) {
 		path = "front.bmp";
 	}
-
-
-
-
-
-	//switch(direction) {
-	//case EnumDirection::North: 
-	//	setY(getY() - (moveSpeed * dt));
-	//	break;
-	//case EnumDirection::South: 
-	//	setY(getY() + (moveSpeed * dt));
-	//	break;
-	//case EnumDirection::West: 		
-	//	setX(getX() - (moveSpeed * dt));
-	//	break;
-	//case EnumDirection::East: 
-	//	setX(getX() + (moveSpeed * dt));
-	//	break;
-
-	//}
-
 }
+
+void Player::clickMove(){
+	std::cout << destX << " - " << destY << std::endl;
+	std::cout << getX() << " get-get " << getY() << std::endl;
+
+	if (this->getX() + this->getWidth() / 2 > this->destX - 5 && this->getX() + this->getWidth() / 2  < this->destX + 5) {
+		movingRight = false;
+		movingLeft = false;
+	} else if(this->destX > this->getX() + this->getWidth() / 2)
+	{
+		movingRight = true;
+		movingLeft = false;
+	}
+	else if(this->destX < this->getX() + this->getWidth() / 2)
+	{
+		movingLeft = true;
+		movingRight = false;
+	}
+
+	if (this->getY() + this->getHeight() > this->destY - 5 && this->getY() + this->getHeight() < this->destY + 5) {
+		movingDown = false;
+		movingUp = false;
+	} else if(this->destY > this->getY() + this->getHeight())
+	{
+		movingDown = true;
+		movingUp = false;
+	}
+	else if(this->destY < this->getY() + this->getHeight())
+	{
+		movingUp = true;
+		movingDown = false;
+	}
+
+	if (!movingDown && !movingUp && !movingLeft && !movingRight) {
+		moveClick = false;
+	}
+}
+
 
 void Player::draw(SDLInitializer* sdlInitializer) {
 	//std::string path = "front.bmp";
@@ -128,8 +168,8 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(sdlInitializer->getRenderer(), img);
 
 	SDL_Rect rect;
-	rect.w = 50;
-	rect.h = 50;
+	rect.w = this->getWidth();
+	rect.h = this->getHeight();
 	rect.x = getX();
 	rect.y = getY();
 

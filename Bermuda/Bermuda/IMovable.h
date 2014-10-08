@@ -18,7 +18,7 @@ public:
 	double dy;
 
 	IMovable(double mSpeed) : moveSpeed(mSpeed){};
-	virtual void move(EnumDirection direction, double dt) = 0;
+	virtual void move(double dt) = 0;
 	virtual ~IMovable(void);
 
 };
