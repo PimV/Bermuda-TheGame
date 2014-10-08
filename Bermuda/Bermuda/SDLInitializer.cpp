@@ -19,8 +19,8 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 		height,
 		fullscreen
 		);
-	//om ff te testen
 	renderer = SDL_CreateRenderer(window, -1, 0);
+	//TODO: Willen we dit wel gebruiken? Beetje buggy. Soms last van artifacting en seems. Vanaf 1920x900 geen correcte aspect ratio (tenzij full-screen)
 	SDL_RenderSetLogicalSize(renderer, 1600, 900);
 }
 
