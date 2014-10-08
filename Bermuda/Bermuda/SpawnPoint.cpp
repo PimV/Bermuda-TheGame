@@ -1,5 +1,11 @@
-#include "SpawnPoint.h"
+#include "Spawnpoint.h"
 
-SpawnPoint::~SpawnPoint()
+
+Spawnpoint::Spawnpoint(int id) : Entity(id)
+{
+}
+
+
+Spawnpoint::~Spawnpoint()
 {
 }

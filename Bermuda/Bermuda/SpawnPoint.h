@@ -1,9 +1,11 @@
 #pragma once
-#include "entity.h"
-class SpawnPoint :
+#include "Entity.h"
+
+class Spawnpoint :
 	public Entity
 {
 public:
-	SpawnPoint(void);
-	virtual ~SpawnPoint(void);
+	Spawnpoint(int id);
+	virtual ~Spawnpoint();
 };
+

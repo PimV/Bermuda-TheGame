@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Model\Entity\Behaviour">
       <UniqueIdentifier>{c23db13e-3987-4200-841e-0c722b6bf752}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Entity\Entities">
+      <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Entities">
+      <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -105,17 +111,17 @@
     <ClCompile Include="Defensive.cpp">
       <Filter>Source Files\Model\Entity\Behaviour</Filter>
     </ClCompile>
-    <ClCompile Include="SpawnPoint.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="SpawnPoint.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-	</ClCompile>
     <ClCompile Include="ImageLoader.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Rabbit.cpp">
+      <Filter>Source Files\Model\Entity\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawnpoint.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,12 +169,18 @@
     </ClInclude>
     <ClInclude Include="IBehaviour.h">
       <Filter>Header Files\Model\Entity\Behaviour</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="ImageLoader.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Rabbit.h">
+      <Filter>Header Files\Model\Entity\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawnpoint.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

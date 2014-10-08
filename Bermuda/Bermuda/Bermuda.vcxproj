@@ -98,7 +98,9 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="Rabbit.h" />
     <ClInclude Include="SDLInitializer.h" />
+    <ClInclude Include="Spawnpoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Aggressive.cpp" />
@@ -116,9 +118,9 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="Rabbit.cpp" />
     <ClCompile Include="SDLInitializer.cpp" />
-    <ClCompile Include="SpawnPoint.cpp" />
-    <ClCompile Include="SpawnPoint.h" />
+    <ClCompile Include="Spawnpoint.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
