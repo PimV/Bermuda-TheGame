@@ -19,7 +19,7 @@ private:
 public:
 	
 
-	void init();
+	void init(GameStateManager *gsm);
 	void cleanup();
 
 	void pause();

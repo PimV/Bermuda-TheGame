@@ -8,7 +8,7 @@ protected:
 public:
 
 
-	virtual void init() = 0;
+	virtual void init(GameStateManager *gsm) = 0;
 	virtual void cleanup() = 0;
 
 	virtual void pause() = 0;

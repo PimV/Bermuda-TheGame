@@ -12,7 +12,7 @@ private:
 
 public:
 	MenuState(void);
-	void init() ;
+	void init(GameStateManager *gsm) ;
 	void cleanup();
 
 	void pause();

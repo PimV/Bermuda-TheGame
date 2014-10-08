@@ -35,7 +35,7 @@ public:
 private: 
 	std::vector<IGameState*> states;
 	IGameState *currentState;
-	ImageLoader* imageLoader;
+	ImageLoader* imgLoader;
 	bool m_running;
 
 	ActionContainer* actionContainer;

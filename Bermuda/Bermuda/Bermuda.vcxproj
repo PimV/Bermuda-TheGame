@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\SDL2_image\include;..\..\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\SDL2_image\include;..\..\SDL2\include;..\..\RapidJson\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\SDL2\lib\x86;..\..\SDL2_image\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,6 +110,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MoveAction.h" />
@@ -143,6 +144,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="IMovable.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="MainEntityContainer.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MoveAction.cpp" />

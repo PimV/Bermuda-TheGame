@@ -2,6 +2,7 @@
 #include "MenuState.h"
 #include "Button.h"
 #include "GameStateManager.h"
+#include "MapLoader.h"
 #include "ActionContainer.h"
 #include "ClickAction.h"
 #include "MoveAction.h"
@@ -14,7 +15,10 @@ PlayState::PlayState(void)
 }
 
 
-void PlayState::init() {
+void PlayState::init(GameStateManager *gsm) {
+	MapLoader* mapLoader = new MapLoader(gsm, gsm->getImageLoader());
+	mapLoader->loadMap();
+
 	p = new Player(1, 3);
 
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
