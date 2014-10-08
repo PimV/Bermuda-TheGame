@@ -13,14 +13,15 @@ SDLInitializer::~SDLInitializer(void)
 void SDLInitializer::init(const char* title, int width, int height, int bpp, bool fullscreen) {
 	window = SDL_CreateWindow(
 		title,
-		640,
-		480,
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
 		width,
 		height,
-		0
+		fullscreen
 		);
 	//om ff te testen
 	renderer = SDL_CreateRenderer(window, -1, 0);
+	SDL_RenderSetLogicalSize(renderer, 1600, 900);
 }
 
 

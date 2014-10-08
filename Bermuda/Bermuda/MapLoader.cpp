@@ -146,17 +146,11 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			tile->setWidth(tileWidth);
 			tile->setX(x*tileWidth);
 			tile->setY(y*tileHeight);
-			//Camera* camera = new Camera(0, 100, 640, 480);
-			//tile->draw(camera, gsm->sdlInitializer->getRenderer());
-			//TODO: Put tile object in drawable container
-			mec->getDrawableContainer()->push_back(tile);
 
-			cout << tileID << " | ";
+			//Put tile object in drawable container
+			mec->getDrawableContainer()->push_back(tile);
 		}
-		cout << endl;
 	}
-	//SDL_RenderPresent(gsm->sdlInitializer->getRenderer());
-	//Sleep(10000);
 }
 
 void MapLoader::createObjects(Value& objects)
