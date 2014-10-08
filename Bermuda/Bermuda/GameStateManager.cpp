@@ -5,16 +5,20 @@
 #include <iostream>
 #include <Windows.h>
 
+
 GameStateManager::GameStateManager(void) {
-	init("Bermuda", 640, 480, 0, false);
+	init("Bermuda", 1600, 900, 0, false);
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
-	ImageLoader* imgLoader = new ImageLoader(sdlInitializer->getRenderer());
+	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 
 	this->changeGameState(MenuState::Instance());
+
+	actionContainer = new ActionContainer();
+
 	m_running = true;
 }
 
@@ -36,7 +40,7 @@ void GameStateManager::changeGameState(IGameState* gameState) {
 	}
 
 	states.push_back(gameState);
-	states.back()->init();
+	states.back()->init(this);
 }
 
 void GameStateManager::pushGameState(IGameState* gameState) {
@@ -45,7 +49,7 @@ void GameStateManager::pushGameState(IGameState* gameState) {
 	}
 
 	states.push_back(gameState);
-	states.back()->init();
+	states.back()->init(this);
 }
 
 void GameStateManager::popState() {
@@ -71,6 +75,10 @@ void GameStateManager::draw() {
 	states.back()->draw(this);
 }
 
+ActionContainer* GameStateManager::getActionContainer() {
+	return actionContainer;
+}
+
 bool GameStateManager::running() {
 	return m_running;
 }
@@ -82,12 +90,14 @@ void GameStateManager::quit() {
 
 ImageLoader* GameStateManager::getImageLoader()
 {
-	return imageLoader;
+	return imgLoader;
 }
 
 GameStateManager::~GameStateManager(void) {
-	delete imageLoader;
+	delete imgLoader;
 	delete sdlInitializer;
+
+	delete actionContainer;
 }
 
 

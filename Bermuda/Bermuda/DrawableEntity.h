@@ -12,7 +12,7 @@ private:
 	Image* image;
 public:
 	DrawableEntity(int id, Image* image);
-	void draw(Camera camera, SDL_Renderer* renderer);
+	void draw(Camera* camera, SDL_Renderer* renderer);
 	virtual ~DrawableEntity();
 };
 

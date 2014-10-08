@@ -1,13 +1,19 @@
 #pragma once
 #include "igamestate.h"
 #include "header_loader.h"
+#include "Player.h"
 #include "Camera.h"
+#include "MainEntityContainer.h"
+#include "MapLoader.h"
 
 class PlayState :
 	public IGameState
 {
 private:
 	static PlayState m_PlayState;
+
+	MapLoader* mapLoader;
+	MainEntityContainer* mec;
 
 	SDL_Surface* bg;
 	int alpha;
@@ -16,9 +22,8 @@ private:
 	Camera* camera;
 
 public:
-	
 
-	void init();
+	void init(GameStateManager *gsm);
 	void cleanup();
 
 	void pause();
@@ -34,5 +39,8 @@ public:
 
 	PlayState(void);
 	~PlayState(void);
+
+private:
+	Player* p;
 };
 

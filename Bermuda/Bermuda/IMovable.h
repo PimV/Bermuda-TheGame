@@ -1,8 +1,10 @@
 #pragma once
+#include "EnumDirection.h"
 class IMovable
 {
 public:
 	//Speed Variables
+	double stopSpeed;
 	double minSpeed;
 	double moveSpeed;
 	double maxSpeed;
@@ -16,8 +18,11 @@ public:
 	double dy;
 
 	IMovable(double mSpeed) : moveSpeed(mSpeed){};
-	virtual void move() = 0;
+	virtual void move(double dt) = 0;
 	virtual ~IMovable(void);
 
+
+	// move method
+	// speed
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "header_loader.h"
 #include "SDLInitializer.h"
+#include "ActionContainer.h"
 #include "ImageLoader.h"
 #include <vector>
 
@@ -22,6 +23,8 @@ public:
 	void handleEvents();
 	void draw();
 
+	ActionContainer* getActionContainer();
+
 	bool running();
 	void quit();
 
@@ -31,11 +34,10 @@ public:
 	~GameStateManager(void);
 private: 
 	std::vector<IGameState*> states;
-
 	IGameState *currentState;
-	ImageLoader* imageLoader;
+	ImageLoader* imgLoader;
 	bool m_running;
 
-
+	ActionContainer* actionContainer;
 };
 

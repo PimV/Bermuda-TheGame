@@ -3,9 +3,6 @@
 
 SDLInitializer::SDLInitializer(void)
 {
-	init("Bermuda", 640, 480, 0, false);
-
-
 }
 
 
@@ -16,19 +13,28 @@ SDLInitializer::~SDLInitializer(void)
 void SDLInitializer::init(const char* title, int width, int height, int bpp, bool fullscreen) {
 	window = SDL_CreateWindow(
 		title,
-		640,
-		480,
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
 		width,
 		height,
-		0
+		fullscreen
 		);
-	//om ff te testen
 	renderer = SDL_CreateRenderer(window, -1, 0);
+	//TODO: Willen we dit wel gebruiken? Beetje buggy. Soms last van artifacting en seems. Vanaf 1920x900 geen correcte aspect ratio (tenzij full-screen)
+	SDL_RenderSetLogicalSize(renderer, 1600, 900);
 }
 
-void SDLInitializer::drawTexture(SDL_Texture* texture) {
+
+
+void SDLInitializer::clearScreen() {
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL,NULL);
+}
+
+void SDLInitializer::drawTexture(SDL_Texture* texture, const SDL_Rect* destRect) {
+	SDL_RenderCopy(renderer, texture, NULL,destRect);
+}
+
+void SDLInitializer::drawScreen() {
 	SDL_RenderPresent(renderer);
 }
 
