@@ -8,8 +8,8 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->camera = camera;
 	
 	//TODO: Change setx and sety to spawnlocation
-	this->setX(1350);
-	this->setY(1350);
+	this->setX(350);
+	this->setY(350);
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 5;

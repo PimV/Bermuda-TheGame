@@ -7,7 +7,7 @@
 
 
 GameStateManager::GameStateManager(void) {
-	init("Bermuda", 640, 480, 0, false);
+	init("Bermuda", 1080, 720, 0, false);
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
