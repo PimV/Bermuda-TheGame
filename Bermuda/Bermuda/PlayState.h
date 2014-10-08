@@ -2,6 +2,8 @@
 #include "igamestate.h"
 #include "header_loader.h"
 #include "Player.h"
+#include "Camera.h"
+
 class PlayState :
 	public IGameState
 {
@@ -10,6 +12,9 @@ private:
 
 	SDL_Surface* bg;
 	int alpha;
+
+	int counter;
+	Camera* camera;
 
 public:
 	

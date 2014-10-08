@@ -58,8 +58,15 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)SDL2.dll" "$(TargetDir)"
-copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
+      <Command>xcopy "$(SolutionDir)SDL2.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)zlib1.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libtiff-5.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libpng16-16.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libjpeg-9.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)Map.json" "$(TargetDir)"
+xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,15 +93,22 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Button.h" />
     <ClInclude Include="ClickAction.h" />
     <ClInclude Include="ContainerType.h" />
+    <ClInclude Include="IBehaviour.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="DrawableEntity.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EnumDirection.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IEntityContainer.h" />
+    <ClInclude Include="Defensive.h" />
+    <ClInclude Include="Evasive.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="header_loader.h" />
-    <ClInclude Include="IAggressive.h" />
+    <ClInclude Include="Aggressive.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
     <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
@@ -102,7 +116,9 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="Rabbit.h" />
     <ClInclude Include="SDLInitializer.h" />
+    <ClInclude Include="Spawnpoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionContainer.cpp" />
@@ -110,12 +126,21 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
+    <ClCompile Include="Aggressive.cpp" />
+    <ClCompile Include="Defensive.cpp" />
+    <ClInclude Include="Tile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DrawableEntity.cpp" />
+    <ClCompile Include="Evasive.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IAction.cpp" />
     <ClCompile Include="IEntityContainer.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
-    <ClCompile Include="IAggressive.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="IMovable.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainEntityContainer.cpp" />
@@ -124,7 +149,10 @@ copy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"</Command>
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="Rabbit.cpp" />
     <ClCompile Include="SDLInitializer.cpp" />
+    <ClCompile Include="Spawnpoint.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -78,6 +78,17 @@
     </Filter>
     <Filter Include="Header Files\Model\Container\Action">
       <UniqueIdentifier>{54191da4-0698-409e-9ff2-9d0b73348b23}</UniqueIdentifier>
+    <Filter Include="Header Files\Model\Entity\Behaviour">
+      <UniqueIdentifier>{88ee9c46-ab23-4645-acf7-c7244baaf062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Behaviour">
+      <UniqueIdentifier>{c23db13e-3987-4200-841e-0c722b6bf752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Entity\Entities">
+      <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Entities">
+      <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +105,6 @@
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="IAggressive.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="NPC.cpp">
@@ -141,6 +149,36 @@
     <ClCompile Include="EnumDirection.cpp">
       <Filter>Source Files\Model\Container\Action</Filter>
     </ClCompile>
+    <ClCompile Include="Aggressive.cpp">
+      <Filter>Source Files\Model\Entity\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="Evasive.cpp">
+      <Filter>Source Files\Model\Entity\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="Defensive.cpp">
+      <Filter>Source Files\Model\Entity\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageLoader.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Rabbit.cpp">
+      <Filter>Source Files\Model\Entity\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawnpoint.cpp">
+        <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -156,9 +194,6 @@
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="IAggressive.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="NPC.h">
@@ -205,6 +240,39 @@
     </ClInclude>
     <ClInclude Include="EnumDirection.h">
       <Filter>Header Files\Model\Container\Action</Filter>
+    </ClCompile>
+    <ClInclude Include="Aggressive.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="Defensive.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="Evasive.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="IBehaviour.h">
+      <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLoader.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Rabbit.h">
+      <Filter>Header Files\Model\Entity\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawnpoint.h">
+        <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

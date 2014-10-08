@@ -21,5 +21,8 @@ public:
 	virtual void move(double dt) = 0;
 	virtual ~IMovable(void);
 
+
+	// move method
+	// speed
 };
 
