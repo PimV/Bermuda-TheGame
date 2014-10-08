@@ -2,11 +2,14 @@
 #include <iostream>
 
 
-Player::Player(int id, double moveSpeed)
+Player::Player(int id, double moveSpeed, Camera* camera)
 	: Entity(id), IMovable(moveSpeed)
 {
-	this->setX(100);
-	this->setY(100);
+	this->camera = camera;
+	
+	//TODO: Change setx and sety to spawnlocation
+	this->setX(1350);
+	this->setY(1350);
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 5;
@@ -24,6 +27,10 @@ Player::Player(int id, double moveSpeed)
 
 	this->path = "F.png";
 
+	
+	//Set camera
+	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
+	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 }
 
 void Player::resetMovement()
@@ -101,8 +108,13 @@ void Player::move(double dt) {
 		dy = dy / 2;
 	}
 
+	//Move player
 	this->setX(getX() + dx *dt);
 	this->setY(getY() + dy *dt);
+
+	//Move camera
+	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
+	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 
 	
 	if (this->movingLeft) {
@@ -172,8 +184,8 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 	SDL_Rect rect;
 	rect.w = this->getWidth();
 	rect.h = this->getHeight();
-	rect.x = getX();
-	rect.y = getY();
+	rect.x = getX() - this->camera->getX();
+	rect.y = getY() - this->camera->getY();
 
 	//Add texture to renderer
 

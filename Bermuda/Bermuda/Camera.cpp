@@ -26,6 +26,16 @@ double Camera::getHeight()
 	return height;
 }
 
+void Camera::setX(double x)
+{
+	this->x = x;
+}
+
+void Camera::setY(double y)
+{
+	this->y = y;
+}
+
 Camera::~Camera()
 {
 }

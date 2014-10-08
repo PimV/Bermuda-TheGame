@@ -2,7 +2,6 @@
 #include "MenuState.h"
 #include "Button.h"
 #include "GameStateManager.h"
-#include "MapLoader.h"
 #include "ActionContainer.h"
 #include "ClickAction.h"
 #include "MoveAction.h"
@@ -16,13 +15,14 @@ PlayState::PlayState(void)
 
 
 void PlayState::init(GameStateManager *gsm) {
-	MapLoader* mapLoader = new MapLoader(gsm, gsm->getImageLoader());
+	mec = new MainEntityContainer();
+	mapLoader = new MapLoader(gsm, mec);
 	mapLoader->loadMap();
-
-	p = new Player(1, 3);
-
+	
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
 	camera = new Camera(0, 0, 640, 480);
+
+	p = new Player(1, 3, camera);
 }
 
 void PlayState::cleanup() {
@@ -56,8 +56,8 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 			SDL_GetMouseState(&x, &y);
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 				std::cout << x << "  " << y << std::endl;
-				p->destX = x;
-				p->destY = y;
+				p->destX = x + this->camera->getX();
+				p->destY = y + this->camera->getY();
 				p->resetMovement();
 				p->moveClick = true;
 			}
@@ -128,12 +128,16 @@ void PlayState::update(GameStateManager *gsm, double dt) {
 
 void PlayState::draw(GameStateManager *gsm) {
 	gsm->sdlInitializer->clearScreen();
-
+	
+	//Draw drawable container
+	std::vector<DrawableEntity*>* drawVec = mec->getDrawableContainer();
+	for(DrawableEntity* entity : *drawVec)
+	{
+		entity->draw(camera,gsm->sdlInitializer->getRenderer());
+	}
+	
 	//Draw player
 	p->draw(gsm->sdlInitializer);
-
-	//Draw drawable container
-
 
 	gsm->sdlInitializer->drawScreen();
 }
@@ -141,4 +145,6 @@ void PlayState::draw(GameStateManager *gsm) {
 PlayState::~PlayState(void)
 {
 	delete camera;
+	delete mec;
+	delete mapLoader;
 }

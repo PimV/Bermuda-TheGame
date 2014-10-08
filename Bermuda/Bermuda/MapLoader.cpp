@@ -8,8 +8,8 @@
 #include <Windows.h>
 
 
-MapLoader::MapLoader(GameStateManager* gsm, ImageLoader* imgLoader)
-	: gsm(gsm), imgLoader(imgLoader)
+MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
+	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader())
 {
 }
 
@@ -149,6 +149,8 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			//Camera* camera = new Camera(0, 100, 640, 480);
 			//tile->draw(camera, gsm->sdlInitializer->getRenderer());
 			//TODO: Put tile object in drawable container
+			mec->getDrawableContainer()->push_back(tile);
+
 			cout << tileID << " | ";
 		}
 		cout << endl;

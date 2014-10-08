@@ -2,6 +2,7 @@
 #include "entity.h"
 #include "IMovable.h"
 #include "header_loader.h"
+#include "Camera.h"
 #include "SDLInitializer.h"
 
 
@@ -10,7 +11,7 @@ class Player :
 	public IMovable
 {
 public:
-	Player(int id, double moveSpeed);
+	Player(int id, double moveSpeed, Camera* camera);
 	//virtual void move(EnumDirection direction) = 0;
 	virtual void move(double dt);
 	void clickMove();
@@ -28,6 +29,7 @@ public:
 	int destY;
 private:
 	const char* path;
+	Camera* camera;
 	//std::string* path;
 
 };

@@ -2,6 +2,7 @@
 enum class ContainerType
 {
 	Visible,
+	Invisible,
 	Movable,
 	Interactable,
 	Drawable,
