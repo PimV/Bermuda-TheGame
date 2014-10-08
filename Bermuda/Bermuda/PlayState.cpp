@@ -5,6 +5,7 @@
 #include "ActionContainer.h"
 #include "ClickAction.h"
 #include "MoveAction.h"
+#include "PauseState.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
@@ -88,7 +89,12 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 				p->movingDown = true;	
 				p->movingUp = false;	
 				break;
+			case SDLK_ESCAPE:
+				//TODO: methode voor deze escape klik aanmaken?
+				gsm->pushGameState(new PauseState());
+				break;
 			}
+			
 			break;
 
 		case SDL_KEYUP:
