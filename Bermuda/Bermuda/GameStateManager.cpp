@@ -5,6 +5,7 @@
 #include <iostream>
 #include <Windows.h>
 
+
 GameStateManager::GameStateManager(void) {
 	init("Bermuda", 640, 480, 0, false);
 }
@@ -15,6 +16,9 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 
 	this->changeGameState(MenuState::Instance());
+
+	actionContainer = new ActionContainer();
+
 	m_running = true;
 }
 
@@ -71,6 +75,10 @@ void GameStateManager::draw() {
 	states.back()->draw(this);
 }
 
+ActionContainer* GameStateManager::getActionContainer() {
+	return actionContainer;
+}
+
 bool GameStateManager::running() {
 	return m_running;
 }
@@ -88,6 +96,8 @@ ImageLoader* GameStateManager::getImageLoader()
 GameStateManager::~GameStateManager(void) {
 	delete imgLoader;
 	delete sdlInitializer;
+
+	delete actionContainer;
 }
 
 

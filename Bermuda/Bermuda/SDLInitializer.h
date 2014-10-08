@@ -5,7 +5,9 @@ class SDLInitializer
 public:
 	SDLInitializer(void);
 	void init(const char* title, int width, int height, int bpp, bool fullscreen);
-	void drawTexture(SDL_Texture* texture);
+	void clearScreen();
+	void drawTexture(SDL_Texture* texture,  const SDL_Rect* destRect);
+	void drawScreen();
 	SDL_Renderer* getRenderer();
 	virtual ~SDLInitializer(void);
 private:

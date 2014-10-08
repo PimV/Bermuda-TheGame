@@ -3,9 +3,6 @@
 
 SDLInitializer::SDLInitializer(void)
 {
-	init("Bermuda", 640, 480, 0, false);
-
-
 }
 
 
@@ -26,9 +23,17 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 	renderer = SDL_CreateRenderer(window, -1, 0);
 }
 
-void SDLInitializer::drawTexture(SDL_Texture* texture) {
+
+
+void SDLInitializer::clearScreen() {
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL,NULL);
+}
+
+void SDLInitializer::drawTexture(SDL_Texture* texture, const SDL_Rect* destRect) {
+	SDL_RenderCopy(renderer, texture, NULL,destRect);
+}
+
+void SDLInitializer::drawScreen() {
 	SDL_RenderPresent(renderer);
 }
 

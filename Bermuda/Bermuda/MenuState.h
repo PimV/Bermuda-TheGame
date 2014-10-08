@@ -10,8 +10,6 @@ private:
 	SDL_Surface* bg;
 	int alpha;
 
-	int counter;
-
 public:
 	MenuState(void);
 	void init(GameStateManager *gsm) ;
@@ -20,9 +18,9 @@ public:
 	void pause();
 	void resume();
 
-	void handleEvents( GameStateManager *gsm) ;
-	void update( GameStateManager *gsm, double dt) ;
-	void draw( GameStateManager *gsm) ;
+	void handleEvents(GameStateManager *gsm) ;
+	void update(GameStateManager *gsm, double dt) ;
+	void draw(GameStateManager *gsm) ;
 
 	static MenuState* Instance() {
 		return &m_MenuState;
