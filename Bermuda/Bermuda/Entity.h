@@ -18,7 +18,7 @@ public:
 	double getWidth();
 	double getHeight();
 	//Destructor
-	~Entity(void);
+	virtual ~Entity(void);
 
 
 private:

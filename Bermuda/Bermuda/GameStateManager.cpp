@@ -5,6 +5,7 @@
 #include <iostream>
 #include <Windows.h>
 
+
 GameStateManager::GameStateManager(void) {
 	init("Bermuda", 640, 480, 0, false);
 }
