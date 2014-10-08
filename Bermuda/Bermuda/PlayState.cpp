@@ -59,19 +59,27 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
 				p->resetMovement();
+				p->moveClick = false;
 				p->movingLeft = true;
+				p->movingRight = false;
 				break;
 			case SDLK_RIGHT:
 				p->resetMovement();
+				p->moveClick = false;
 				p->movingRight = true;	
+				p->movingLeft = false;
 				break;
 			case SDLK_UP:
 				p->resetMovement();
+				p->moveClick = false;
 				p->movingUp = true;	
+				p->movingDown = false;
 				break;
 			case SDLK_DOWN:
 				p->resetMovement();
+				p->moveClick = false;
 				p->movingDown = true;	
+				p->movingUp = false;	
 				break;
 			}
 			break;
@@ -99,7 +107,6 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 			case SDLK_DOWN:
 				p->moveClick = false;	
 				p->movingDown = false;
-
 				break;
 			}
 			break;

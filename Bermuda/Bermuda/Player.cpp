@@ -11,8 +11,8 @@ Player::Player(int id, double moveSpeed)
 	this->dy = 0;
 	this->maxSpeed = 5;
 
-	this->setWidth(50);
-	this->setHeight(50);
+	this->setWidth(31);
+	this->setHeight(48);
 
 	this->stopSpeed = 0.5;
 	//this->moveSpeed = id;
@@ -22,28 +22,28 @@ Player::Player(int id, double moveSpeed)
 	this->movingUp = false;
 	this->moveClick = false;
 
-	this->path = "front.bmp";
+	this->path = "F.png";
 
 }
 
 void Player::resetMovement()
 {
+	if (moveClick) {
 	this->movingLeft = false;
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
 	this->moveClick = false;
+	}
 }
 
 void Player::move(double dt) {
 	
 	if(moveClick)
 	{
-		if (getX() == destX && getY() == destY) {
-			moveClick = false;
-		} else {
+		
 			clickMove();
-		}
+		
 	}
 
 	if (movingLeft) {
@@ -108,16 +108,16 @@ void Player::move(double dt) {
 
 	
 	if (this->movingLeft) {
-		path = "left2.bmp";
+		path = "L.png";
 	}
 	else if (this->movingRight) {
-		path = "right.bmp";
+		path = "R.png";
 	}
 	else if (this->movingUp) {
-		path = "back.bmp";
+		path = "B.png";
 	}
 	else if (this->movingDown) {
-		path = "front.bmp";
+		path = "F.png";
 	}
 }
 
@@ -162,10 +162,14 @@ void Player::clickMove(){
 void Player::draw(SDLInitializer* sdlInitializer) {
 	//std::string path = "front.bmp";
 
+	SDL_Texture* texture = IMG_LoadTexture(sdlInitializer->getRenderer(), path);
 
+	if (texture == NULL) {
+		std::cout << "NO IMAGE" << std::endl;
+	}
 
-	SDL_Surface*  img = SDL_LoadBMP(path);
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(sdlInitializer->getRenderer(), img);
+	//SDL_Surface*  img = SDL_LoadBMP(path);
+	//SDL_Texture* texture = SDL_CreateTextureFromSurface(sdlInitializer->getRenderer(), img);
 
 	SDL_Rect rect;
 	rect.w = this->getWidth();
@@ -181,7 +185,7 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 
 	//Clean created textures/surfaces
 	SDL_DestroyTexture(texture);  
-	SDL_FreeSurface(img); 
+	//SDL_FreeSurface(img); 
 }
 
 Player::~Player(void)
