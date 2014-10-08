@@ -1,6 +1,7 @@
 #pragma once
 #include "igamestate.h"
 #include "header_loader.h"
+#include "Player.h"
 #include "Camera.h"
 
 class PlayState :
@@ -34,5 +35,8 @@ public:
 
 	PlayState(void);
 	~PlayState(void);
+
+private:
+	Player* p;
 };
 

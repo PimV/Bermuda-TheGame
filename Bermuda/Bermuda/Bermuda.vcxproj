@@ -89,11 +89,18 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActionContainer.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ClickAction.h" />
+    <ClInclude Include="ContainerType.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableEntity.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EnumDirection.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="IAction.h" />
+    <ClInclude Include="IEntityContainer.h" />
     <ClInclude Include="Defensive.h" />
     <ClInclude Include="Evasive.h" />
     <ClInclude Include="IGameState.h" />
@@ -103,7 +110,9 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="MoveAction.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
@@ -112,6 +121,11 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Spawnpoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionContainer.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ClickAction.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
     <ClInclude Include="Tile.h" />
@@ -119,16 +133,19 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawableEntity.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Evasive.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="IAction.cpp" />
+    <ClCompile Include="IEntityContainer.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="IMovable.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainEntityContainer.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />

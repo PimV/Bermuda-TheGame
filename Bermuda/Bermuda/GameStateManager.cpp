@@ -16,6 +16,9 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	ImageLoader* imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 
 	this->changeGameState(MenuState::Instance());
+
+	actionContainer = new ActionContainer();
+
 	m_running = true;
 }
 
@@ -72,6 +75,10 @@ void GameStateManager::draw() {
 	states.back()->draw(this);
 }
 
+ActionContainer* GameStateManager::getActionContainer() {
+	return actionContainer;
+}
+
 bool GameStateManager::running() {
 	return m_running;
 }
@@ -89,6 +96,8 @@ ImageLoader* GameStateManager::getImageLoader()
 GameStateManager::~GameStateManager(void) {
 	delete imageLoader;
 	delete sdlInitializer;
+
+	delete actionContainer;
 }
 
 
