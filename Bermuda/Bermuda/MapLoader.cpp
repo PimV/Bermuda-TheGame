@@ -1,14 +1,16 @@
 #include "MapLoader.h"
+#include "Tile.h"
 
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <Windows.h>
 
 
-MapLoader::MapLoader(ImageLoader* imgLoader)
+MapLoader::MapLoader(GameStateManager* gsm, ImageLoader* imgLoader)
+	: gsm(gsm), imgLoader(imgLoader)
 {
-	this->imgLoader = imgLoader;
 }
 
 void MapLoader::loadMap()
@@ -82,14 +84,6 @@ void MapLoader::extractMapInfo(Document& d)
 
 void MapLoader::createTileSets(Value& tilesets)
 {
-	/*
-	map_type map;
-	map["DerivedA"] = &createInstance<DerivedA>;
-	map["DerivedB"] = &createInstance<DerivedB>;
-	And then you can do
-	return map[some_string]();
-	*/
-
 	cout << "\nTilesets: " << endl;
 	for(int i = 0; i < tilesets.Capacity(); i++)
 	{
@@ -130,20 +124,51 @@ void MapLoader::createTileSets(Value& tilesets)
 
 void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, int tileHeight, int tileWidth)
 {
-	//TODO: for project, create tile objects
-	for (int j = 0; j < mapTileHeight; j++)
+	for (int y = 0; y < mapTileHeight; y++)
 	{
-		for (int k = 0; k < mapTileWidth; k++)
+		for (int x = 0; x < mapTileWidth; x++)
 		{
-			cout << tiles[(j*mapTileWidth)+k].GetInt() << " | ";
+			int tileID = tiles[(y*mapTileWidth)+x].GetInt();
+			
+			Tile* tile = nullptr;
+			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
+			{
+				//Tile is in collision vector. Create collisionTile and add to collision behaviour collections.
+				//TODO: create collision tile?
+				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
+			}
+			else
+			{
+				//Tile is not in collision vector. Creating normal tile.
+				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
+			}
+			tile->setHeight(tileHeight);
+			tile->setWidth(tileWidth);
+			tile->setX(x*tileWidth);
+			tile->setY(y*tileHeight);
+			//Camera* camera = new Camera(0, 100, 640, 480);
+			//tile->draw(camera, gsm->sdlInitializer->getRenderer());
+			//TODO: Put tile object in drawable container
+			cout << tileID << " | ";
 		}
 		cout << endl;
 	}
+	//SDL_RenderPresent(gsm->sdlInitializer->getRenderer());
+	//Sleep(10000);
 }
 
 void MapLoader::createObjects(Value& objects)
 {
-	//TODO: for project, create objects
+	/*
+	//Possibly use this to create objects from strings
+	map_type map;
+	map["DerivedA"] = &createInstance<DerivedA>;
+	map["DerivedB"] = &createInstance<DerivedB>;
+	//And then you can do
+	return map[some_string]();
+	*/
+
+	//TODO: Create objects
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
 		Value& object = objects[j];
@@ -156,7 +181,7 @@ void MapLoader::createObjects(Value& objects)
 
 void MapLoader::createSpawnPoints(Value& spawnpoints)
 {
-	//TODO: for project, create spawnpoint objects
+	//TODO: Create spawnpoint objects
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
 	{
 		Value& object = spawnpoints[j];

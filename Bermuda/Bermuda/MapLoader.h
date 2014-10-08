@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include "ImageLoader.h"
+#include "GameStateManager.h"
 
 using namespace std;
 using namespace rapidjson;
@@ -19,8 +20,9 @@ private:
 	map<int, string> objectClasses;
 	vector<int> collisionVector;
 	ImageLoader* imgLoader;
+	GameStateManager* gsm;
 public:
-	MapLoader(ImageLoader* imgLoader);
+	MapLoader(GameStateManager* gsm, ImageLoader* imgLoader);
 	void loadMap();
 	~MapLoader();
 };

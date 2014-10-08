@@ -13,7 +13,7 @@ PlayState::PlayState(void)
 
 
 void PlayState::init(GameStateManager *gsm) {
-	MapLoader* mapLoader = new MapLoader(gsm->getImageLoader());
+	MapLoader* mapLoader = new MapLoader(gsm, gsm->getImageLoader());
 	mapLoader->loadMap();
 
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
