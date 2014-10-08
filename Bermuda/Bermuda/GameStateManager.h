@@ -39,7 +39,5 @@ private:
 	bool m_running;
 
 	ActionContainer* actionContainer;
-
-	bool m_running;
 };
 

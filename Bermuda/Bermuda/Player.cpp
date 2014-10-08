@@ -14,7 +14,7 @@ Player::Player(int id, double moveSpeed)
 	this->setWidth(31);
 	this->setHeight(48);
 
-	this->stopSpeed = 0.5;
+	this->stopSpeed = 0.8;
 	//this->moveSpeed = id;
 	this->movingLeft = false;
 	this->movingRight = false;
@@ -41,29 +41,27 @@ void Player::move(double dt) {
 	
 	if(moveClick)
 	{
-		
-			clickMove();
-		
+		clickMove();		
 	}
 
 	if (movingLeft) {
-		dx -= moveSpeed;
-		if (dx < -maxSpeed) {
+		dx -= moveSpeed *dt;
+		if (dx < -maxSpeed *dt) {
 			dx = -maxSpeed;
 		}
 	} else if (movingRight) {
-		dx += moveSpeed;
-		if (dx > maxSpeed) {
+		dx += moveSpeed *dt;
+		if (dx > maxSpeed*dt) {
 			dx = maxSpeed;
 		}
 	} else {
 		if (dx > 0) {
-			dx -= stopSpeed;
+			dx -= stopSpeed *dt;
 			if (dx < 0) {
 				dx = 0;
 			}
 		} else if (dx < 0) {
-			dx += stopSpeed;
+			dx += stopSpeed *dt;
 			if (dx > 0) {
 				dx = 0;
 			}
@@ -71,23 +69,23 @@ void Player::move(double dt) {
 	}
 
 	if (movingUp) {
-		dy -= moveSpeed;
-		if (dy < -maxSpeed) {
+		dy -= moveSpeed *dt;
+		if (dy < -maxSpeed*dt) {
 			dy = -maxSpeed;
 		}
 	} else if (movingDown) {
-		dy += moveSpeed;
-		if (dy > maxSpeed) {
+		dy += moveSpeed *dt;
+		if (dy > maxSpeed*dt) {
 			dy = maxSpeed;
 		}
 	} else {
 		if (dy > 0) {
-			dy -= stopSpeed;
+			dy -= stopSpeed *dt;
 			if (dy < 0) {
 				dy = 0;
 			}
 		} else if (dy < 0) {
-			dy += stopSpeed;
+			dy += stopSpeed *dt;
 			if (dy > 0) {
 				dy = 0;
 			}
@@ -103,8 +101,8 @@ void Player::move(double dt) {
 		dy = dy / 2;
 	}
 
-	this->setX(getX() + dx);
-	this->setY(getY() + dy);
+	this->setX(getX() + dx *dt);
+	this->setY(getY() + dy *dt);
 
 	
 	if (this->movingLeft) {
