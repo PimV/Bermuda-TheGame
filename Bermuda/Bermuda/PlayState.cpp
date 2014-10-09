@@ -15,13 +15,15 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
+	double resolutionDelta = ScreenHeight / OPTIMALRESOLUTIONH;
+
 	this->gsm = gsm;
 	mec = new MainEntityContainer();
-	mapLoader = new MapLoader(this->gsm, mec);
+	mapLoader = new MapLoader(this->gsm, mec, resolutionDelta);
 	mapLoader->loadMap();
 	
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
-	camera = new Camera(0, 0, 1600, 900);
+	camera = new Camera(0, 0, OPTIMALRESOLUTIONW, OPTIMALRESOLUTIONH);
 
 	p = new Player(1, 3, camera);
 	p->LoadSpriteSheet("Player_Dagger.png", gsm->sdlInitializer->getRenderer());

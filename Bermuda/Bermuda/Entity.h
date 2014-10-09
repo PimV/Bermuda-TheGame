@@ -5,8 +5,8 @@ public:
 	//Constructor
 	Entity(int id);
 	//Setters
-	void setX(double x);
-	void setY(double y);
+	virtual void setX(double x);
+	virtual void setY(double y);
 	void setZ(double z);
 	void setWidth(double width);
 	void setHeight(double height);
