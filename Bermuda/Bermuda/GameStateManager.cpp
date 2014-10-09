@@ -64,15 +64,15 @@ void GameStateManager::popState() {
 }
 
 void GameStateManager::handleEvents() {
-	states.back()->handleEvents(this);
+	states.back()->handleEvents();
 }
 
 void GameStateManager::update(double deltaTime) {
-	states.back()->update(this, deltaTime);
+	states.back()->update(deltaTime);
 }
 
 void GameStateManager::draw() {
-	states.back()->draw(this);
+	states.back()->draw();
 }
 
 ActionContainer* GameStateManager::getActionContainer() {

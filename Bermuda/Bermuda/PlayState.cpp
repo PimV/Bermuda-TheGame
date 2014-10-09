@@ -5,6 +5,7 @@
 #include "ActionContainer.h"
 #include "ClickAction.h"
 #include "MoveAction.h"
+#include "PauseState.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
@@ -14,8 +15,9 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
+	this->gsm = gsm;
 	mec = new MainEntityContainer();
-	mapLoader = new MapLoader(gsm, mec);
+	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
@@ -30,7 +32,8 @@ void PlayState::cleanup() {
 }
 
 void PlayState::pause() {
-
+	this->p->moveClick = true;
+	this->p->resetMovement();
 }
 
 void PlayState::resume() {
@@ -38,7 +41,7 @@ void PlayState::resume() {
 }
 
 
-void PlayState::handleEvents(GameStateManager *gsm) {
+void PlayState::handleEvents() {
 	//p->handleEvents();
 	//Process Input
 
@@ -86,7 +89,12 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 				p->movingDown = true;	
 				p->movingUp = false;	
 				break;
+			case SDLK_ESCAPE:
+				//TODO: methode voor deze escape klik aanmaken?
+				this->gsm->pushGameState(new PauseState());
+				break;
 			}
+			
 			break;
 
 		case SDL_KEYUP:
@@ -119,25 +127,25 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 	}
 }
 
-void PlayState::update(GameStateManager *gsm, double dt) {
-	gsm->getActionContainer()->executeAllActions(dt);
+void PlayState::update(double dt) {
+	this->gsm->getActionContainer()->executeAllActions(dt);
 	p->move(dt);
 }
 
-void PlayState::draw(GameStateManager *gsm) {
-	gsm->sdlInitializer->clearScreen();
+void PlayState::draw() {
+	this->gsm->sdlInitializer->clearScreen();
 	
 	//Draw drawable container
 	std::vector<DrawableEntity*>* drawVec = mec->getDrawableContainer();
 	for(DrawableEntity* entity : *drawVec)
 	{
-		entity->draw(camera,gsm->sdlInitializer->getRenderer());
+		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
 	
 	//Draw player
-	p->draw(gsm->sdlInitializer);
+	p->draw(this->gsm->sdlInitializer);
 
-	gsm->sdlInitializer->drawScreen();
+	this->gsm->sdlInitializer->drawScreen();
 }
 
 PlayState::~PlayState(void)
