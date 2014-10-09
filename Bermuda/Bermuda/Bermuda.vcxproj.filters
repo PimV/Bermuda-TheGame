@@ -194,6 +194,17 @@
     </ClCompile>
     <ClCompile Include="CollidableContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
+    <ClCompile Include="ExitButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseButton.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +315,18 @@
     </ClInclude>
     <ClInclude Include="CollidableContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseButton.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

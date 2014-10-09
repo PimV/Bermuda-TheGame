@@ -166,9 +166,8 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			mec->getDrawableContainer()->add(tile);
 		}
 		//cout << endl;
+
 	}
-	//SDL_RenderPresent(gsm->sdlInitializer->getRenderer());
-	//Sleep(10000);
 }
 
 void MapLoader::createObjects(Value& objects)

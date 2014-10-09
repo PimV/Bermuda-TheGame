@@ -5,6 +5,7 @@
 #include "ActionContainer.h"
 #include "ClickAction.h"
 #include "MoveAction.h"
+#include "PauseState.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
@@ -15,15 +16,16 @@ PlayState::PlayState(void)
 
 
 void PlayState::init(GameStateManager *gsm) {
+	this->gsm = gsm;
 	mec = new MainEntityContainer();
-	//Create and load map
-	mapLoader = new MapLoader(gsm, mec);	
+
+	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
-	camera = new Camera(0, 0, 1080, 720);
+	camera = new Camera(0, 0, 1600, 900);
 
 	p = new Player(1, 3, camera);
 }
@@ -33,7 +35,8 @@ void PlayState::cleanup() {
 }
 
 void PlayState::pause() {
-
+	this->p->moveClick = true;
+	this->p->resetMovement();
 }
 
 void PlayState::resume() {
@@ -41,7 +44,7 @@ void PlayState::resume() {
 }
 
 
-void PlayState::handleEvents(GameStateManager *gsm) {
+void PlayState::handleEvents() {
 	//p->handleEvents();
 	//Process Input
 
@@ -58,7 +61,7 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 			int x,y;
 			SDL_GetMouseState(&x, &y);
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-				std::cout << x << "  " << y << std::endl;
+				//std::cout << x << "  " << y << std::endl;
 				p->destX = x + this->camera->getX();
 				p->destY = y + this->camera->getY();
 				p->resetMovement();
@@ -91,7 +94,12 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 				p->movingDown = true;	
 				p->movingUp = false;	
 				break;
+			case SDLK_ESCAPE:
+				//TODO: methode voor deze escape klik aanmaken?
+				this->gsm->pushGameState(new PauseState());
+				break;
 			}
+			
 			break;
 
 		case SDL_KEYUP:
@@ -124,11 +132,9 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 	}
 }
 
-void PlayState::update(GameStateManager *gsm, double dt) {
-	gsm->getActionContainer()->executeAllActions(dt);
 
-	//if (canMove) {
-
+void PlayState::update(double dt) {
+	this->gsm->getActionContainer()->executeAllActions(dt);
 	p->move(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
@@ -146,20 +152,20 @@ void PlayState::update(GameStateManager *gsm, double dt) {
 	//}
 }
 
-void PlayState::draw(GameStateManager *gsm) {
-	gsm->sdlInitializer->clearScreen();
-
+void PlayState::draw() {
+	this->gsm->sdlInitializer->clearScreen();
+	
 	//Draw drawable container
 	DrawableContainer* drawableContainer = mec->getDrawableContainer();
 	for(DrawableEntity* entity : drawableContainer->getContainer())
 	{
-		entity->draw(camera,gsm->sdlInitializer->getRenderer());
+		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
 
 	//Draw player
-	p->draw(gsm->sdlInitializer);
+	p->draw(this->gsm->sdlInitializer);
 
-	gsm->sdlInitializer->drawScreen();
+	this->gsm->sdlInitializer->drawScreen();
 }
 
 PlayState::~PlayState(void)
