@@ -14,6 +14,7 @@ MenuState::MenuState(void)
 void MenuState::init(GameStateManager *gsm) {
 	SDL_Surface* temp = SDL_LoadBMP("menustate.bmp");
 
+	this->gsm = gsm;
 	bg = SDL_ConvertSurfaceFormat(temp, SDL_PIXELFORMAT_UNKNOWN, 0);
 
 	SDL_FreeSurface(temp);
@@ -32,23 +33,23 @@ void MenuState::resume() {
 }
 
 
-void MenuState::handleEvents(GameStateManager *gsm) {
+void MenuState::handleEvents() {
 	SDL_Event mainEvent;
 
 	if(SDL_PollEvent(&mainEvent)) {
 		switch(mainEvent.type) {
 		case SDL_QUIT:
 	
-			gsm->quit();
+			this->gsm->quit();
 			break;
 
 		case SDL_KEYDOWN:
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_SPACE:
-				gsm->changeGameState(PlayState::Instance());
+				this->gsm->changeGameState(PlayState::Instance());
 				break;
 			case SDLK_ESCAPE:
-				gsm->quit();
+				this->gsm->quit();
 				break;
 			}
 			break;
@@ -58,18 +59,18 @@ void MenuState::handleEvents(GameStateManager *gsm) {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-				gsm->changeGameState(PlayState::Instance());
+				this->gsm->changeGameState(PlayState::Instance());
 			}
 			break;
 		}
 	}
 }
 
-void MenuState::update(GameStateManager *gsm, double dt) {
+void MenuState::update(double dt) {
 	//std::cout << "Pim rocks " << counter <<  std::endl;
 }
 
-void MenuState::draw(GameStateManager *gsm) {
+void MenuState::draw() {
 	//Create surface and textures
 	SDL_Surface* img = SDL_LoadBMP("menustate.bmp");
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);
@@ -80,13 +81,13 @@ void MenuState::draw(GameStateManager *gsm) {
 	Button* exitButton = new Button(150,165,150,75,"exit.bmp");
 
 	//Add texture to renderer
-	gsm->sdlInitializer->clearScreen();
+	this->gsm->sdlInitializer->clearScreen();
 
-	gsm->sdlInitializer->drawTexture(texture, NULL);
-	startButton->render(gsm->sdlInitializer->getRenderer());
-	exitButton->render(gsm->sdlInitializer->getRenderer());
+	this->gsm->sdlInitializer->drawTexture(texture, NULL);
+	startButton->render(this->gsm->sdlInitializer->getRenderer());
+	exitButton->render(this->gsm->sdlInitializer->getRenderer());
 
-	gsm->sdlInitializer->drawScreen();
+	this->gsm->sdlInitializer->drawScreen();
 
 	//Clean created textures/surfaces
 	SDL_DestroyTexture(texture);  
