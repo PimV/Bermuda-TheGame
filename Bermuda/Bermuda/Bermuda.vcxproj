@@ -65,7 +65,7 @@ xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libtiff-5.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libpng16-16.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libjpeg-9.dll" "$(TargetDir)"
-xcopy "$(SolutionDir)Map.json" "$(TargetDir)"
+xcopy "$(SolutionDir)Map.json" "$(TargetDir)" /y
 xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
