@@ -175,6 +175,9 @@ void Player::setPosition() {
 }
 
 void Player::clickMove(){
+	std::cout << destX << " - " << destY << std::endl;
+	std::cout << getX() << " get-get " << getY() << std::endl;
+
 	if (this->getX() + this->getWidth() / 2 > this->destX - 5 && this->getX() + this->getWidth() / 2  < this->destX + 5) {
 		movingRight = false;
 		movingLeft = false;
