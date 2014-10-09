@@ -37,7 +37,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 
 	//this->path = "F.png";
 	this->path = "Player_Dagger.png";
-	this->frameAmountX = 0, this->frameAmountY = 0, this->CurrentFrame = 0;
+	this->frameAmountX = 0, this->frameAmountY = 0, this->CurrentFrame = 0, this->animationSpeed = 0, this->animationDelay= 100;
 	crop.x = 0;
 	crop.y = 0;
 	crop.w = 0;
@@ -143,8 +143,6 @@ void Player::move(double dt) {
 	dy = dy*dt;
 
 	//Move player
-
-
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
 
@@ -157,19 +155,17 @@ void Player::move(double dt) {
 
 	//Move camera
 
-
-
 	if (this->movingLeft) {
-		PlayAnimation(1,7,9,0);
+		PlayAnimation(1,7,9);
 	}
 	else if (this->movingRight) {
-		PlayAnimation(1,7,11,0);
+		PlayAnimation(1,7,11);
 	}
 	else if (this->movingUp) {
-		PlayAnimation(1,7,8,0);
+		PlayAnimation(1,7,8);
 	}
 	else if (this->movingDown) {
-		PlayAnimation(1,7,10,0);
+		PlayAnimation(1,7,10);
 	}
 }
 
@@ -223,35 +219,43 @@ void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
 		std::cout << "Coudn't load: " << path.c_str();
 	}
 
-	PlayAnimation(1,1,10,0);
+	PlayAnimation(1,1,10);
 }
 
 void Player::SetupAnimation(int amountFrameX, int amountFrameY)
 {
 	frameAmountX = amountFrameX, frameAmountY = amountFrameY;
 	
-	// The rest of is calculated in PlayAnimation()
-	crop.w = this->getWidth();///frameAmountX;
-	crop.h = this->getHeight();///frameAmountY;
+	// Set width adn height of the crop rect. The rest of is calculated in PlayAnimation()
+	crop.w = this->getWidth();
+	crop.h = this->getHeight();
 }
 
-void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed)
+void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row)
 {
-	if (EndFrame <= CurrentFrame)
-		CurrentFrame = BeginFrame;
-	else
-		CurrentFrame++;
+	if ((animationSpeed + animationDelay) < SDL_GetTicks())
+	{
+		if (EndFrame <= CurrentFrame)
+			CurrentFrame = BeginFrame;
+		else
+			CurrentFrame++;
 
-	//crop.x = CurrentFrame * (this->getWidth()/frameAmountX);
-	crop.x = CurrentFrame * this->getWidth();
-	//crop.y = Row * (this->getHeight()/frameAmountY);
-	crop.y = Row * this->getHeight();
-	// The rest is set in SetupAnimation(), for is doesn't change
+		//crop.x = CurrentFrame * (this->getWidth()/frameAmountX);
+		crop.x = CurrentFrame * this->getWidth();
+		//crop.y = Row * (this->getHeight()/frameAmountY);
+		crop.y = Row * this->getHeight();
+		// The rest is set in SetupAnimation(), for is doesn't change
+		animationSpeed = SDL_GetTicks();
+	}
 }
 
 void Player::StopAnimation(int Row)
 {
-	this->PlayAnimation(0, 0, Row, 0);
+	CurrentFrame = 0;
+	//this->PlayAnimation(0, 0, Row);
+	crop.x = CurrentFrame * this->getWidth();
+	//crop.y = Row * (this->getHeight()/frameAmountY);
+	crop.y = Row * this->getHeight();
 }
 
 void Player::draw(SDLInitializer* sdlInitializer) {
@@ -266,25 +270,13 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 	std::cout<< this->getWidth() << std::endl;
 
 	SDL_Rect rect;
-	rect.w = this->getWidth();// /frameAmountX;
-	rect.h = this->getHeight();// /frameAmountY;
+	rect.w = this->getWidth();
+	rect.h = this->getHeight();
 	rect.x = getX() - this->camera->getX();
 	rect.y = getY() - this->camera->getY();
-
-	/*rect.w = crop.w;
-	rect.h = crop.h;
-	rect.x = crop.x;
-	rect.y = crop.y;*/
 	
-	//Add texture to renderer
-
 	sdlInitializer->drawTexture(texture, &rect, &crop);
-
-		sdlInitializer->drawScreen();
-
-	//Clean created textures/surfaces
-	//SDL_DestroyTexture(texture);  
-	//SDL_FreeSurface(img); 
+	sdlInitializer->drawScreen();
 }
 
 Player::~Player(void)

@@ -21,7 +21,7 @@ public:
 	void resetMovement();
 	void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
 	void SetupAnimation(int amountFramesX, int amountFramesY);
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row);
 	void StopAnimation(int Row);
 
 	void draw(SDLInitializer* sdlInitializer);
@@ -41,6 +41,6 @@ private:
 
 	SDL_Rect crop;
 	SDL_Texture* texture;
-	int frameAmountX, frameAmountY, CurrentFrame;
+	int frameAmountX, frameAmountY, CurrentFrame, animationSpeed, animationDelay;
 	//std::string* path;
 };
