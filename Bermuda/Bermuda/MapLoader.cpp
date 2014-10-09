@@ -157,16 +157,12 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				tile->setWidth(tileWidth);
 				tile->setX(x*tileWidth);
 				tile->setY(y*tileHeight);
-
-
-
-
 			}
 
+			//cout << tileID << " | ";
 			mec->getDrawableContainer()->add(tile);
 		}
 		//cout << endl;
-
 	}
 }
 

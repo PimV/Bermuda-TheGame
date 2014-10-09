@@ -34,4 +34,3 @@ private:
 	double collisionHeight;
 
 };
-
