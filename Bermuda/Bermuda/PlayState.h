@@ -6,8 +6,7 @@
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
 
-class PlayState :
-	public IGameState
+class PlayState : public IGameState
 {
 private:
 	static PlayState m_PlayState;
@@ -35,7 +34,7 @@ public:
 
 	static PlayState* Instance() {
 		return &m_PlayState;
-	}
+	};
 
 	PlayState(void);
 	~PlayState(void);
@@ -43,4 +42,3 @@ public:
 private:
 	Player* p;
 };
-
