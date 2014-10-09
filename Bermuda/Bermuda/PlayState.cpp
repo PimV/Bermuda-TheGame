@@ -22,7 +22,7 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader->loadMap();
 	
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
-	camera = new Camera(0, 0, 1080, 720);
+	camera = new Camera(0, 0, 1600, 900);
 
 	p = new Player(1, 3, camera);
 }
