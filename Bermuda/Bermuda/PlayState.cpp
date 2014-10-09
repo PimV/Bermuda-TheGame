@@ -130,8 +130,10 @@ void PlayState::draw(GameStateManager *gsm) {
 	gsm->sdlInitializer->clearScreen();
 	
 	//Draw drawable container
-	std::vector<DrawableEntity*>* drawVec = mec->getDrawableContainer();
-	for(DrawableEntity* entity : *drawVec)
+	DrawableContainer* drawableContainer = mec->getDrawableContainer();
+	//std::vector<DrawableEntity*>* drawVec = mec->getDrawableContainer();
+	//for(DrawableEntity* entity : *drawVec)
+	for(DrawableEntity* entity : drawableContainer->getContainer())
 	{
 		entity->draw(camera,gsm->sdlInitializer->getRenderer());
 	}

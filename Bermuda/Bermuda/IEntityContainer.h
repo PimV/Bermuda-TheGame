@@ -1,8 +1,8 @@
 #pragma once
+#include <vector>
 class IEntityContainer
 {
 public:
-	IEntityContainer(void);
-	virtual ~IEntityContainer(void);
+	virtual ~IEntityContainer();
 };
 

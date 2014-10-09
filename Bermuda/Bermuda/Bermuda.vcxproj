@@ -92,7 +92,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ActionContainer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ClickAction.h" />
+    <ClInclude Include="CollidableContainer.h" />
+    <ClInclude Include="CollidableTile.h" />
     <ClInclude Include="ContainerType.h" />
+    <ClInclude Include="DrawableContainer.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableEntity.h" />
@@ -100,6 +103,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EnumDirection.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="IAction.h" />
+    <ClInclude Include="Collidable.h" />
     <ClInclude Include="IEntityContainer.h" />
     <ClInclude Include="Defensive.h" />
     <ClInclude Include="Evasive.h" />
@@ -125,6 +129,9 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ActionContainer.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ClickAction.cpp" />
+    <ClCompile Include="CollidableContainer.cpp" />
+    <ClCompile Include="CollidableTile.cpp" />
+    <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
@@ -137,6 +144,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Evasive.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IAction.cpp" />
+    <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="IEntityContainer.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
