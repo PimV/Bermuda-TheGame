@@ -13,6 +13,10 @@ public:
 	double getY();
 	double getWidth();
 	double getHeight();
-	~Camera();
+
+	void setX(double x);
+	void setY(double y);
+
+	virtual ~Camera();
 };
 

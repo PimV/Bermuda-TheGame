@@ -2,7 +2,11 @@
 
 MainEntityContainer::MainEntityContainer(void)
 {
-	std::map<ContainerType, IEntityContainer> m;
+}
+
+std::vector<DrawableEntity*>* MainEntityContainer::getDrawableContainer()
+{
+	return &drawableContainer;
 }
 
 

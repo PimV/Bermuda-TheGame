@@ -7,7 +7,7 @@
 
 
 GameStateManager::GameStateManager(void) {
-	init("Bermuda", 640, 480, 0, false);
+	init("Bermuda", 1600, 900, 0, false);
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
@@ -64,15 +64,15 @@ void GameStateManager::popState() {
 }
 
 void GameStateManager::handleEvents() {
-	states.back()->handleEvents(this);
+	states.back()->handleEvents();
 }
 
 void GameStateManager::update(double deltaTime) {
-	states.back()->update(this, deltaTime);
+	states.back()->update(deltaTime);
 }
 
 void GameStateManager::draw() {
-	states.back()->draw(this);
+	states.back()->draw();
 }
 
 ActionContainer* GameStateManager::getActionContainer() {

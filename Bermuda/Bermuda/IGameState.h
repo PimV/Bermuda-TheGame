@@ -14,9 +14,9 @@ public:
 	virtual void pause() = 0;
 	virtual void resume() = 0;
 
-	virtual void handleEvents(GameStateManager* gsm) = 0;
-	virtual void update(GameStateManager* gsm, double dt) = 0;
-	virtual void draw(GameStateManager* gsm) = 0;
+	virtual void handleEvents() = 0;
+	virtual void update(double dt) = 0;
+	virtual void draw() = 0;
 
 	void ChangeState(GameStateManager* gsm, IGameState* state) {
 		gsm->changeGameState(state);

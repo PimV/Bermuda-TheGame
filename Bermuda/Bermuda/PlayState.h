@@ -3,12 +3,19 @@
 #include "header_loader.h"
 #include "Player.h"
 #include "Camera.h"
+#include "MainEntityContainer.h"
+#include "MapLoader.h"
 
 class PlayState :
 	public IGameState
 {
 private:
 	static PlayState m_PlayState;
+
+	GameStateManager* gsm;
+
+	MapLoader* mapLoader;
+	MainEntityContainer* mec;
 
 	SDL_Surface* bg;
 	int alpha;
@@ -17,7 +24,6 @@ private:
 	Camera* camera;
 
 public:
-	
 
 	void init(GameStateManager *gsm);
 	void cleanup();
@@ -25,9 +31,9 @@ public:
 	void pause();
 	void resume();
 
-	void handleEvents( GameStateManager *gsm) ;
-	void update( GameStateManager *gsm, double dt);
-	void draw( GameStateManager *gsm);
+	void handleEvents() ;
+	void update(double dt);
+	void draw();
 
 	static PlayState* Instance() {
 		return &m_PlayState;

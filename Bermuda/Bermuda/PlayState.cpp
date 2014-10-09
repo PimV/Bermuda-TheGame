@@ -2,10 +2,10 @@
 #include "MenuState.h"
 #include "Button.h"
 #include "GameStateManager.h"
-#include "MapLoader.h"
 #include "ActionContainer.h"
 #include "ClickAction.h"
 #include "MoveAction.h"
+#include "PauseState.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
@@ -16,13 +16,15 @@ PlayState::PlayState(void)
 
 
 void PlayState::init(GameStateManager *gsm) {
-	MapLoader* mapLoader = new MapLoader(gsm, gsm->getImageLoader());
+	this->gsm = gsm;
+	mec = new MainEntityContainer();
+	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
-
-	p = new Player(1, 3);
-
+	
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
-	camera = new Camera(0, 0, 640, 480);
+	camera = new Camera(0, 0, 1600, 900);
+
+	p = new Player(1, 3, camera);
 }
 
 void PlayState::cleanup() {
@@ -30,7 +32,8 @@ void PlayState::cleanup() {
 }
 
 void PlayState::pause() {
-
+	this->p->moveClick = true;
+	this->p->resetMovement();
 }
 
 void PlayState::resume() {
@@ -38,7 +41,7 @@ void PlayState::resume() {
 }
 
 
-void PlayState::handleEvents(GameStateManager *gsm) {
+void PlayState::handleEvents() {
 	//p->handleEvents();
 	//Process Input
 
@@ -56,8 +59,8 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 			SDL_GetMouseState(&x, &y);
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 				std::cout << x << "  " << y << std::endl;
-				p->destX = x;
-				p->destY = y;
+				p->destX = x + this->camera->getX();
+				p->destY = y + this->camera->getY();
 				p->resetMovement();
 				p->moveClick = true;
 			}
@@ -88,7 +91,12 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 				p->movingDown = true;	
 				p->movingUp = false;	
 				break;
+			case SDLK_ESCAPE:
+				//TODO: methode voor deze escape klik aanmaken?
+				this->gsm->pushGameState(new PauseState());
+				break;
 			}
+			
 			break;
 
 		case SDL_KEYUP:
@@ -121,24 +129,30 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 	}
 }
 
-void PlayState::update(GameStateManager *gsm, double dt) {
-	gsm->getActionContainer()->executeAllActions(dt);
+void PlayState::update(double dt) {
+	this->gsm->getActionContainer()->executeAllActions(dt);
 	p->move(dt);
 }
 
-void PlayState::draw(GameStateManager *gsm) {
-	gsm->sdlInitializer->clearScreen();
-
-	//Draw player
-	p->draw(gsm->sdlInitializer);
-
+void PlayState::draw() {
+	this->gsm->sdlInitializer->clearScreen();
+	
 	//Draw drawable container
+	std::vector<DrawableEntity*>* drawVec = mec->getDrawableContainer();
+	for(DrawableEntity* entity : *drawVec)
+	{
+		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
+	}
+	
+	//Draw player
+	p->draw(this->gsm->sdlInitializer);
 
-
-	gsm->sdlInitializer->drawScreen();
+	this->gsm->sdlInitializer->drawScreen();
 }
 
 PlayState::~PlayState(void)
 {
 	delete camera;
+	delete mec;
+	delete mapLoader;
 }
