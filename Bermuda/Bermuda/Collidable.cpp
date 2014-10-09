@@ -1,4 +1,5 @@
 #include "Collidable.h"
+#include <iostream>
 
 
 Collidable::Collidable(double collisionX, double collisionY, double collisionWidth, double collisionHeight)
@@ -7,6 +8,11 @@ Collidable::Collidable(double collisionX, double collisionY, double collisionWid
 	this->collisionWidth = collisionWidth;
 	this->collisionX = collisionX;
 	this->collisionY = collisionY;
+
+}
+
+Collidable::Collidable() {
+
 }
 
 #pragma region Setters
@@ -38,6 +44,27 @@ double Collidable::getCollisionY() {
 }
 #pragma endregion
 
+bool Collidable::intersects(Collidable* collidable) {
+	double targetLeft = collidable->mapX + collidable->getCollisionX();
+	double targetRight = collidable->mapX + collidable->getCollisionX() + collidable->getCollisionWidth();
+	double targetTop = collidable->mapY + collidable->getCollisionY();
+	double targetBot = collidable->mapY + collidable->getCollisionY() + collidable->getCollisionHeight();
+
+
+	double thisLeft = this->mapX + this->getCollisionX();
+	double thisRight = this->mapX + this->getCollisionX() + this->getCollisionWidth();
+	double thisTop = this->mapY + this->getCollisionY() + this->mapHeight;
+	double thisBot = this->mapY + this->getCollisionY() + this->getCollisionHeight();
+
+
+
+	if (((thisLeft < targetRight && thisLeft > targetLeft) || (thisRight > targetLeft && thisRight < targetRight))
+		&&
+		((thisTop < targetBot && thisTop > targetTop) || (thisBot > targetTop && thisBot < targetBot))) {
+			return true;
+	}
+	return false;
+}
 
 Collidable::~Collidable()
 {

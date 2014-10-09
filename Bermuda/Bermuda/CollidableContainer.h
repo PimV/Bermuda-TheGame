@@ -8,7 +8,7 @@ public:
 	CollidableContainer();
 
 
-	void add(Collidable* entity);
+	void add(Collidable* collidable);
 	std::vector<Collidable*> getContainer();
 
 	virtual ~CollidableContainer();

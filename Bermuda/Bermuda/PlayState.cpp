@@ -16,9 +16,12 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	mec = new MainEntityContainer();
-	mapLoader = new MapLoader(gsm, mec);
+	//Create and load map
+	mapLoader = new MapLoader(gsm, mec);	
 	mapLoader->loadMap();
-	
+
+	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
+
 	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
 	camera = new Camera(0, 0, 1080, 720);
 
@@ -97,13 +100,13 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 				p->moveClick = false;	
 				p->movingLeft = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
-		
+
 				break;
 			case SDLK_RIGHT:
 				p->moveClick = false;	
 				p->movingRight = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
-				
+
 				break;
 			case SDLK_UP:
 				p->moveClick = false;	
@@ -123,21 +126,36 @@ void PlayState::handleEvents(GameStateManager *gsm) {
 
 void PlayState::update(GameStateManager *gsm, double dt) {
 	gsm->getActionContainer()->executeAllActions(dt);
+
+	//if (canMove) {
+
 	p->move(dt);
+	if (!p->checkCollision(mec->getCollidableContainer())) {
+		p->setPosition();
+	}
+	//bool canMove = true;
+	//for(Collidable* c : mec->getCollidableContainer()->getContainer()) {
+	//	if (p->intersects(c)) {
+	//		p->moveClick = true;
+	//		p->resetMovement();
+	//		break;
+	//	}
+	//	//break;
+
+	//}
+	//}
 }
 
 void PlayState::draw(GameStateManager *gsm) {
 	gsm->sdlInitializer->clearScreen();
-	
+
 	//Draw drawable container
 	DrawableContainer* drawableContainer = mec->getDrawableContainer();
-	//std::vector<DrawableEntity*>* drawVec = mec->getDrawableContainer();
-	//for(DrawableEntity* entity : *drawVec)
 	for(DrawableEntity* entity : drawableContainer->getContainer())
 	{
 		entity->draw(camera,gsm->sdlInitializer->getRenderer());
 	}
-	
+
 	//Draw player
 	p->draw(gsm->sdlInitializer);
 
