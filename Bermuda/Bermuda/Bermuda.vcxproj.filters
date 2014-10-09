@@ -194,6 +194,7 @@
     </ClCompile>
     <ClCompile Include="CollidableContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="ExitButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
