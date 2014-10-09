@@ -6,7 +6,7 @@ public:
 	SDLInitializer(void);
 	void init(const char* title, int width, int height, int bpp, bool fullscreen);
 	void clearScreen();
-	void drawTexture(SDL_Texture* texture,  const SDL_Rect* destRect);
+	void drawTexture(SDL_Texture* texture,  const SDL_Rect* destRect,SDL_Rect* crop);
 	void drawScreen();
 	SDL_Renderer* getRenderer();
 	virtual ~SDLInitializer(void);

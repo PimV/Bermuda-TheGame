@@ -10,6 +10,8 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	//TODO: Change setx and sety to spawnlocation
 	this->setX(350);
 	this->setY(350);
+	this->setWidth(64);
+	this->setHeight(64);
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 5;
@@ -123,16 +125,16 @@ void Player::move(double dt) {
 
 	
 	if (this->movingLeft) {
-		path = "L.png";
+		PlayAnimation(1,7,9,0);
 	}
 	else if (this->movingRight) {
-		path = "R.png";
+		PlayAnimation(1,7,11,0);
 	}
 	else if (this->movingUp) {
-		path = "B.png";
+		PlayAnimation(1,7,8,0);
 	}
 	else if (this->movingDown) {
-		path = "F.png";
+		PlayAnimation(1,7,10,0);
 	}
 }
 
@@ -176,11 +178,12 @@ void Player::clickMove(){
 void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
 {
 	texture = IMG_LoadTexture(renderer, path.c_str());
-	int textureWidth, textureHeight;
-	SDL_QueryTexture(texture, NULL, NULL, &textureWidth, &textureHeight);
+	if (texture == NULL)
+	{
+		std::cout << "Coudn't load: " << path.c_str();
+	}
 
-	this->setWidth(textureWidth);
-	this->setHeight(textureHeight);
+	PlayAnimation(1,1,10,0);
 }
 
 void Player::SetupAnimation(int amountFrameX, int amountFrameY)
@@ -188,8 +191,8 @@ void Player::SetupAnimation(int amountFrameX, int amountFrameY)
 	frameAmountX = amountFrameX, frameAmountY = amountFrameY;
 	
 	// The rest of is calculated in PlayAnimation()
-	crop.w = this->getWidth()/frameAmountX;
-	crop.h = this->getHeight()/frameAmountY;
+	crop.w = this->getWidth();///frameAmountX;
+	crop.h = this->getHeight();///frameAmountY;
 }
 
 void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed)
@@ -199,8 +202,10 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed)
 	else
 		CurrentFrame++;
 
-	crop.x = CurrentFrame * (this->getWidth()/frameAmountX);
-	crop.y = Row * (this->getHeight()/frameAmountY);
+	//crop.x = CurrentFrame * (this->getWidth()/frameAmountX);
+	crop.x = CurrentFrame * this->getWidth();
+	//crop.y = Row * (this->getHeight()/frameAmountY);
+	crop.y = Row * this->getHeight();
 	// The rest is set in SetupAnimation(), for is doesn't change
 }
 
@@ -212,29 +217,33 @@ void Player::StopAnimation(int Row)
 void Player::draw(SDLInitializer* sdlInitializer) {
 	//std::string path = "front.bmp";
 
-	SDL_Texture* texture = IMG_LoadTexture(sdlInitializer->getRenderer(), path);
+	//SDL_Texture* texture = IMG_LoadTexture(sdlInitializer->getRenderer(), path.c_str());
 
 	if (texture == NULL) {
 		std::cout << "NO PLAYER IMAGE" << std::endl;
 	}
-
-	//SDL_Surface*  img = SDL_LoadBMP(path);
-	//SDL_Texture* texture = SDL_CreateTextureFromSurface(sdlInitializer->getRenderer(), img);
+	
+	std::cout<< this->getWidth() << std::endl;
 
 	SDL_Rect rect;
-	rect.w = this->getWidth();
-	rect.h = this->getHeight();
+	rect.w = this->getWidth();// /frameAmountX;
+	rect.h = this->getHeight();// /frameAmountY;
 	rect.x = getX() - this->camera->getX();
 	rect.y = getY() - this->camera->getY();
 
+	/*rect.w = crop.w;
+	rect.h = crop.h;
+	rect.x = crop.x;
+	rect.y = crop.y;*/
+	
 	//Add texture to renderer
 
-	sdlInitializer->drawTexture(texture, &rect);
+	sdlInitializer->drawTexture(texture, &rect, &crop);
 
-	//	sdlInitializer->drawScreen();
+		sdlInitializer->drawScreen();
 
 	//Clean created textures/surfaces
-	SDL_DestroyTexture(texture);  
+	//SDL_DestroyTexture(texture);  
 	//SDL_FreeSurface(img); 
 }
 
