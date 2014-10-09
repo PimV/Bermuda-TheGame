@@ -12,6 +12,8 @@ class PlayState :
 private:
 	static PlayState m_PlayState;
 
+	GameStateManager* gsm;
+
 	MapLoader* mapLoader;
 	MainEntityContainer* mec;
 
@@ -29,9 +31,9 @@ public:
 	void pause();
 	void resume();
 
-	void handleEvents( GameStateManager *gsm) ;
-	void update( GameStateManager *gsm, double dt);
-	void draw( GameStateManager *gsm);
+	void handleEvents() ;
+	void update(double dt);
+	void draw();
 
 	static PlayState* Instance() {
 		return &m_PlayState;

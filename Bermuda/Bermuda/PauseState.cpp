@@ -23,7 +23,7 @@ void PauseState::resume()
 {
 }
 
-void PauseState::handleEvents(GameStateManager* gsm)
+void PauseState::handleEvents()
 {
 	SDL_Event mainEvent;
 
@@ -43,12 +43,12 @@ void PauseState::handleEvents(GameStateManager* gsm)
 	}
 }
 
-void PauseState::update(GameStateManager* gsm, double dt)
+void PauseState::update(double dt)
 {
 	std::cout << "Active: pause state" << std::endl;
 }
 
-void PauseState::draw(GameStateManager* gsm)
+void PauseState::draw()
 {
 	//this->gsm->sdlInitializer->clearScreen();
 	//TODO: MEMORY LEAK omdat ik nog niet CLEAR sdl window aanroep omdat dat het beeld van playstate word weggehaald
@@ -67,7 +67,7 @@ void PauseState::draw(GameStateManager* gsm)
 	SDL_DestroyTexture(texture);  
 
 	
-	gsm->sdlInitializer->drawScreen();
+	this->gsm->sdlInitializer->drawScreen();
 }
 
 void PauseState::removeState()

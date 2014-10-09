@@ -17,9 +17,9 @@ public:
 	void resume();
 
 	//TODO: GSM bij deze methodes moet weg...
-	void handleEvents(GameStateManager* gsm);
-	void update(GameStateManager* gsm, double dt);
-	void draw(GameStateManager* gsm);
+	void handleEvents();
+	void update(double dt);
+	void draw();
 
 	void removeState();
 
