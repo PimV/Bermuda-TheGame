@@ -5,28 +5,17 @@
 Player::Player(int id, double moveSpeed, Camera* camera)
 	: Entity(id), IMovable(moveSpeed)
 {
-
 	this->camera = camera;
-
+	
 	//TODO: Change setx and sety to spawnlocation
 	this->setX(350);
 	this->setY(350);
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 6;
+	this->maxSpeed = 5;
 
 	this->setWidth(31);
 	this->setHeight(48);
-
-	this->setCollisionHeight(this->getHeight());
-	this->setCollisionWidth(this->getWidth()/2);
-	this->setCollisionX(this->getWidth()/4);
-	this->setCollisionY(0);
-
-	this->mapHeight = this->getHeight();
-	this->mapWidth = this->getWidth();
-	this->mapX = this->getX();
-	this->mapY = this->getY();
 
 	this->stopSpeed = 0.8;
 	//this->moveSpeed = id;
@@ -38,7 +27,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 
 	this->path = "F.png";
 
-
+	
 	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -47,29 +36,16 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 void Player::resetMovement()
 {
 	if (moveClick) {
-		this->movingLeft = false;
-		this->movingRight = false;
-		this->movingDown = false;
-		this->movingUp = false;
-		this->moveClick = false;
+	this->movingLeft = false;
+	this->movingRight = false;
+	this->movingDown = false;
+	this->movingUp = false;
+	this->moveClick = false;
 	}
-}
-
-bool Player::checkCollision(CollidableContainer* container) {
-	this->mapX = this->tempX;
-	this->mapY = this->tempY;
-	for (Collidable* c : container->getContainer()) {
-		if (this->intersects(c)) {
-			this->mapX = this->getX();
-			this->mapY = this->getY();
-			return true;
-		}
-	}
-	return false;
 }
 
 void Player::move(double dt) {
-
+	
 	if(moveClick)
 	{
 		clickMove();		
@@ -132,26 +108,15 @@ void Player::move(double dt) {
 		dy = dy / 2;
 	}
 
-	dx = dx*dt;
-	dy = dy*dt;
-
 	//Move player
-
-
-	this->setTempX(getX() + dx);
-	this->setTempY(getY() + dy);
-
-	/*this->setX(getX() + dx);
-	this->setY(getY() + dy);*/
-
-	//Temp:
-	//this->mapX = this->getX();
-	//this->mapY = this->getY();
+	this->setX(getX() + dx *dt);
+	this->setY(getY() + dy *dt);
 
 	//Move camera
+	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
+	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 
-
-
+	
 	if (this->movingLeft) {
 		path = "L.png";
 	}
@@ -164,14 +129,6 @@ void Player::move(double dt) {
 	else if (this->movingDown) {
 		path = "F.png";
 	}
-}
-
-void Player::setPosition() {
-	this->setX(getX() + dx);
-	this->setY(getY() + dy);
-
-	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
-	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 }
 
 void Player::clickMove(){

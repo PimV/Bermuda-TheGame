@@ -4,6 +4,7 @@
 #include "DrawableContainer.h"
 #include "CollidableContainer.h"
 #include <map>
+#include <vector>
 
 class MainEntityContainer
 {

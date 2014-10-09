@@ -138,35 +138,32 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				//Tile is in collision vector. Create collisionTile and add to collision behaviour collections.
 				//TODO: create collision tile?
 				//tile = new Tile(tileID, imgLoader->getMapImage(tileID));
-
-				//                                                             colX colY     colW  colH
 				tile = new CollidableTile(tileID, imgLoader->getMapImage(tileID), 0, 0, tileWidth,tileHeight);
-				tile->setHeight(tileHeight);
-				tile->setWidth(tileWidth);
-				tile->setX(x*tileWidth);
-				tile->setY(y*tileHeight);
-				static_cast<CollidableTile*>(tile)->setCollidableValues();
-
-				mec->getCollidableContainer()->add(static_cast<CollidableTile*>(tile));
+				//mec->getCollidableContainer()->add(tile);
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
 				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
-				tile->setHeight(tileHeight);
-				tile->setWidth(tileWidth);
-				tile->setX(x*tileWidth);
-				tile->setY(y*tileHeight);
-
-
-
-
 			}
+			tile->setHeight(tileHeight);
+			tile->setWidth(tileWidth);
+			tile->setX(x*tileWidth);
+			tile->setY(y*tileHeight);
 
+			//Camera* camera = new Camera(0, 100, 640, 480);
+			//tile->draw(camera, gsm->sdlInitializer->getRenderer());
+			//TODO: Put tile object in drawable container
 			mec->getDrawableContainer()->add(tile);
+
+			cout << tileID << " | ";
 		}
+<<<<<<< HEAD
 		//cout << endl;
 
+=======
+		cout << endl;
+>>>>>>> parent of 29448c2... First Collision implementation
 	}
 }
 
