@@ -35,7 +35,7 @@ private:
 	Camera* camera;
 
 	SDL_Rect crop;
-	SDL_Texture *texture;
+	SDL_Texture* texture;
 	int frameAmountX, frameAmountY, CurrentFrame;
 	//std::string* path;
 };

@@ -62,7 +62,7 @@ void PauseState::draw()
 	rect.h = 400;
 	rect.x = 200;
 	rect.y = 200;
-	this->gsm->sdlInitializer->drawTexture(texture, &rect);
+	this->gsm->sdlInitializer->drawTexture(texture, &rect, NULL);
 	
 	SDL_DestroyTexture(texture);  
 
