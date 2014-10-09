@@ -12,6 +12,7 @@ private:
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
 	static const int totalButtons = 2;
+	std::vector<BaseButton*> buttons;
 
 	static MenuState m_MenuState;
 
