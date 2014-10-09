@@ -14,7 +14,6 @@ PlayState::PlayState(void)
 {
 }
 
-
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	mec = new MainEntityContainer();
@@ -25,6 +24,7 @@ void PlayState::init(GameStateManager *gsm) {
 	camera = new Camera(0, 0, 1600, 900);
 
 	p = new Player(1, 3, camera);
+	p->LoadSpriteSheet("Player_Dagger.png", gsm->sdlInitializer->getRenderer());
 }
 
 void PlayState::cleanup() {
@@ -44,8 +44,6 @@ void PlayState::resume() {
 void PlayState::handleEvents() {
 	//p->handleEvents();
 	//Process Input
-
-
 
 	//Retrieve input
 	SDL_Event mainEvent;

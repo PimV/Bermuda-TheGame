@@ -12,12 +12,33 @@ MenuState::MenuState(void)
 }
 
 void MenuState::init(GameStateManager *gsm) {
-	SDL_Surface* temp = SDL_LoadBMP("menustate.bmp");
-
+	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), "Textures/green.bmp");
+	if (backgroundTexture == NULL)
+	{
+		std::cout << "Error loading startmenu background" << std::endl << "Error 2" << std::endl;
+		system("pause");
+	}
 	this->gsm = gsm;
-	bg = SDL_ConvertSurfaceFormat(temp, SDL_PIXELFORMAT_UNKNOWN, 0);
+	align();
+	//Create Buttons
+	buttons.push_back(new PlayButton(gsm));
+	buttons.push_back(new ExitButton(gsm));
+	//playButton = new PlayButton(gsm);
+	//exitButton = new ExitButton(gsm);
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons.at(i)->align(buttons.size() - i, buttons.size());
+	}
 
-	SDL_FreeSurface(temp);
+	//playButton->align(1, totalButtons);
+	//exitButton->align(0, totalButtons);
+}
+
+void MenuState::align()
+{
+	backgroundRect.x = 0;
+	backgroundRect.y = 0;
+	backgroundRect.w = ScreenWidth;
+	backgroundRect.h = ScreenHeight;
 }
 
 void MenuState::cleanup() {
@@ -36,7 +57,9 @@ void MenuState::resume() {
 void MenuState::handleEvents() {
 	SDL_Event mainEvent;
 
-	if(SDL_PollEvent(&mainEvent)) {
+	if (SDL_PollEvent(&mainEvent)) {
+		int x, y;
+		SDL_GetMouseState(&x, &y);
 		switch(mainEvent.type) {
 		case SDL_QUIT:
 	
@@ -54,12 +77,19 @@ void MenuState::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEMOTION: 
-			int x,y;
-			SDL_GetMouseState(&x, &y);
+			for (int i = 0; i < buttons.size(); i++) {
+				buttons.at(i)->hover(x, y, gsm);
+			}
+			//playButton->hover(x, y, gsm);
+			//exitButton->hover(x, y, gsm);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-				this->gsm->changeGameState(PlayState::Instance());
+				for (int i = 0; i < buttons.size(); i++) {
+					buttons.at(i)->clicked(x, y, gsm);
+				}
+				//playButton->clicked(x, y, gsm);
+				//exitButton->clicked(x, y, gsm);
 			}
 			break;
 		}
@@ -71,31 +101,23 @@ void MenuState::update(double dt) {
 }
 
 void MenuState::draw() {
-	//Create surface and textures
-	SDL_Surface* img = SDL_LoadBMP("menustate.bmp");
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), img);
+	gsm->sdlInitializer->clearScreen();
+	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons.at(i)->draw( gsm);
+	}
+	//playButton->draw(gsm);
+	//exitButton->draw(gsm);
+	gsm->sdlInitializer->drawScreen();
 
-
-
-	Button* startButton = new Button(150,75,150,75,"start.bmp");
-	Button* exitButton = new Button(150,165,150,75,"exit.bmp");
-
-	//Add texture to renderer
-	this->gsm->sdlInitializer->clearScreen();
-
-	this->gsm->sdlInitializer->drawTexture(texture, NULL);
-	startButton->render(this->gsm->sdlInitializer->getRenderer());
-	exitButton->render(this->gsm->sdlInitializer->getRenderer());
-
-	this->gsm->sdlInitializer->drawScreen();
-
-	//Clean created textures/surfaces
-	SDL_DestroyTexture(texture);  
-	SDL_FreeSurface(img); 
+	
 }
 
 
 
 MenuState::~MenuState(void)
 {
+	SDL_DestroyTexture(backgroundTexture);
+	delete playButton;
+	delete exitButton;
 }

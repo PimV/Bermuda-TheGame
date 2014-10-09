@@ -5,7 +5,6 @@
 #include "Camera.h"
 #include "SDLInitializer.h"
 
-
 class Player :
 	public Entity,
 	public IMovable
@@ -16,6 +15,10 @@ public:
 	virtual void move(double dt);
 	void clickMove();
 	void resetMovement();
+	void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
+	void SetupAnimation(int amountFramesX, int amountFramesY);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed);
+	void StopAnimation(int Row);
 
 	void draw(SDLInitializer* sdlInitializer);
 	~Player(void);
@@ -30,7 +33,9 @@ public:
 private:
 	const char* path;
 	Camera* camera;
+
+	SDL_Rect crop;
+	SDL_Texture *texture;
+	int frameAmountX, frameAmountY, CurrentFrame;
 	//std::string* path;
-
 };
-

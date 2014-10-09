@@ -14,9 +14,6 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->dy = 0;
 	this->maxSpeed = 5;
 
-	this->setWidth(31);
-	this->setHeight(48);
-
 	this->stopSpeed = 0.8;
 	//this->moveSpeed = id;
 	this->movingLeft = false;
@@ -25,8 +22,16 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->movingUp = false;
 	this->moveClick = false;
 
-	this->path = "F.png";
+	//this->path = "F.png";
+	this->path = "Player_Dagger.png";
+	this->frameAmountX = 0, this->frameAmountY = 0, this->CurrentFrame = 0;
+	crop.x = 0;
+	crop.y = 0;
+	crop.w = 0;
+	crop.h = 0;
 
+	// amount of sprites in the sheet
+	this->SetupAnimation(13, 21);
 	
 	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
@@ -168,6 +173,41 @@ void Player::clickMove(){
 	}
 }
 
+void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
+{
+	texture = IMG_LoadTexture(renderer, path.c_str());
+	int textureWidth, textureHeight;
+	SDL_QueryTexture(texture, NULL, NULL, &textureWidth, &textureHeight);
+
+	this->setWidth(textureWidth);
+	this->setHeight(textureHeight);
+}
+
+void Player::SetupAnimation(int amountFrameX, int amountFrameY)
+{
+	frameAmountX = amountFrameX, frameAmountY = amountFrameY;
+	
+	// The rest of is calculated in PlayAnimation()
+	crop.w = this->getWidth()/frameAmountX;
+	crop.h = this->getHeight()/frameAmountY;
+}
+
+void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed)
+{
+	if (EndFrame <= CurrentFrame)
+		CurrentFrame = BeginFrame;
+	else
+		CurrentFrame++;
+
+	crop.x = CurrentFrame * (this->getWidth()/frameAmountX);
+	crop.y = Row * (this->getHeight()/frameAmountY);
+	// The rest is set in SetupAnimation(), for is doesn't change
+}
+
+void Player::StopAnimation(int Row)
+{
+	this->PlayAnimation(0, 0, Row, 0);
+}
 
 void Player::draw(SDLInitializer* sdlInitializer) {
 	//std::string path = "front.bmp";
@@ -175,7 +215,7 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 	SDL_Texture* texture = IMG_LoadTexture(sdlInitializer->getRenderer(), path);
 
 	if (texture == NULL) {
-		std::cout << "NO IMAGE" << std::endl;
+		std::cout << "NO PLAYER IMAGE" << std::endl;
 	}
 
 	//SDL_Surface*  img = SDL_LoadBMP(path);
@@ -200,4 +240,5 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 
 Player::~Player(void)
 {
+	SDL_DestroyTexture(texture);
 }

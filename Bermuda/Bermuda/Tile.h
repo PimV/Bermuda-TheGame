@@ -9,4 +9,3 @@ public:
 	Tile(int id, Image* image);
 	~Tile();
 };
-
