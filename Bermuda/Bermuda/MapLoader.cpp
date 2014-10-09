@@ -144,7 +144,7 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
 			}
 			tile->setX(x*tileWidth);
-			tile->setY(y*tileHeight+tileHeight); // +tileHeight Because all 'tiled' objects use bottom left for image positioning, and Draw() method already substracts it. (but tile positions are already correctly calculated)
+			tile->setY(y*tileHeight);
 
 			//Put tile object in drawable container
 			mec->getDrawableContainer()->push_back(tile);
@@ -173,7 +173,7 @@ void MapLoader::createObjects(Value& objects)
 		cout << "y: " << object["y"].GetInt() << endl;
 		Tree* tree = new Tree(objectID, imgLoader->getMapImage(objectID));
 		tree->setX(object["x"].GetInt());
-		tree->setY(object["y"].GetInt());
+		tree->setY(object["y"].GetInt() - tree->getHeight()); // -getHeight() Because all 'tiled' objects use bottom left for image positioning
 
 		mec->getDrawableContainer()->push_back(tree);
 	}

@@ -18,7 +18,7 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 	{
 		SDL_Rect rect;
 		rect.x = getX() - camera->getX();
-		rect.y = getY() - camera->getY() - getHeight() ; // -getHeight() Because all 'tiled' objects use bottom left for image positioning
+		rect.y = getY() - camera->getY(); 
 		rect.w = getWidth();
 		rect.h = getHeight();
 
