@@ -151,9 +151,9 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			//TODO: Put tile object in drawable container
 			mec->getDrawableContainer()->push_back(tile);
 
-			cout << tileID << " | ";
+			//cout << tileID << " | ";
 		}
-		cout << endl;
+		//cout << endl;
 	}
 	//SDL_RenderPresent(gsm->sdlInitializer->getRenderer());
 	//Sleep(10000);
