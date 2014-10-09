@@ -14,7 +14,35 @@
         {
          "height":50,
          "name":"Objects",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":271,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":605,
+                 "y":416
+                }, 
+                {
+                 "gid":272,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":503,
+                 "y":275
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -105,7 +133,59 @@
          "tileheight":32,
          "tileproperties":
             {
+             "21":
+                {
+                 "Colission":"True"
+                },
+             "22":
+                {
+                 "Collision":"True"
+                },
+             "23":
+                {
+                 "Collision":"True"
+                },
+             "36":
+                {
+                 "Collision":"True"
+                },
+             "37":
+                {
+                 "Collision":"True"
+                },
+             "38":
+                {
+                 "Collision":"True"
+                },
+             "51":
+                {
+                 "Collision":"True"
+                },
+             "53":
+                {
+                 "Collision":"True"
+                },
+             "6":
+                {
+                 "Collision":"True"
+                },
+             "66":
+                {
+                 "Collision":"True"
+                },
              "67":
+                {
+                 "Collision":"True"
+                },
+             "68":
+                {
+                 "Collision":"True"
+                },
+             "7":
+                {
+                 "Colission":"True"
+                },
+             "8":
                 {
                  "Collision":"True"
                 }

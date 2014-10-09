@@ -9,10 +9,11 @@ class DrawableEntity :
 {
 private:
 	const double DRAWBUFFER;
-	Image* image;
+	Image* drawImage;
 public:
 	DrawableEntity(int id, Image* image);
 	void draw(Camera* camera, SDL_Renderer* renderer);
+	void setDrawImage(Image* image);
 	virtual ~DrawableEntity();
 };
 

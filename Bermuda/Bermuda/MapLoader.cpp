@@ -1,5 +1,6 @@
 #include "MapLoader.h"
 #include "Tile.h"
+#include "Tree.h"
 
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
@@ -142,10 +143,8 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				//Tile is not in collision vector. Creating normal tile.
 				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
 			}
-			tile->setHeight(tileHeight);
-			tile->setWidth(tileWidth);
 			tile->setX(x*tileWidth);
-			tile->setY(y*tileHeight);
+			tile->setY(y*tileHeight+tileHeight); // +tileHeight Because all 'tiled' objects use bottom left for image positioning, and Draw() method already substracts it. (but tile positions are already correctly calculated)
 
 			//Put tile object in drawable container
 			mec->getDrawableContainer()->push_back(tile);
@@ -155,22 +154,28 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 
 void MapLoader::createObjects(Value& objects)
 {
-	/*
+	
 	//Possibly use this to create objects from strings
-	map_type map;
+	/*map_type map;
 	map["DerivedA"] = &createInstance<DerivedA>;
 	map["DerivedB"] = &createInstance<DerivedB>;
 	//And then you can do
-	return map[some_string]();
-	*/
+	return map[some_string]();*/
+	
 
 	//TODO: Create objects
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
 		Value& object = objects[j];
-		cout << "- Object ID : " << object["gid"].GetInt() << " ";
+		int objectID = object["gid"].GetInt();
+		cout << "- Object ID : " << objectID << " ";
 		cout << "x: " << object["x"].GetInt() << " ";
 		cout << "y: " << object["y"].GetInt() << endl;
+		Tree* tree = new Tree(objectID, imgLoader->getMapImage(objectID));
+		tree->setX(object["x"].GetInt());
+		tree->setY(object["y"].GetInt());
+
+		mec->getDrawableContainer()->push_back(tree);
 	}
 	//Get the class type from map made during tileset reading
 }

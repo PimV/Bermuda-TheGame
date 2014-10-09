@@ -2,8 +2,10 @@
 
 
 DrawableEntity::DrawableEntity(int id, Image* image)
-	: Entity(id), DRAWBUFFER(64), image(image)
+	: Entity(id), DRAWBUFFER(64), drawImage(image)
 {
+	setWidth(image->getCroppingRect()->w);
+	setHeight(image->getCroppingRect()->h);
 }
 
 void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
@@ -16,13 +18,18 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 	{
 		SDL_Rect rect;
 		rect.x = getX() - camera->getX();
-		rect.y = getY() - camera->getY();
+		rect.y = getY() - camera->getY() - getHeight() ; // -getHeight() Because all 'tiled' objects use bottom left for image positioning
 		rect.w = getWidth();
 		rect.h = getHeight();
 
 		//Draw the entity
-		SDL_RenderCopy(renderer, image->getTileSet(), image->getCroppingRect(), &rect);
+		SDL_RenderCopy(renderer, drawImage->getTileSet(), drawImage->getCroppingRect(), &rect);
 	}
+}
+
+void DrawableEntity::setDrawImage(Image* image)
+{
+	drawImage = image;
 }
 
 DrawableEntity::~DrawableEntity()
