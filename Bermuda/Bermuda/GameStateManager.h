@@ -3,6 +3,7 @@
 #include "SDLInitializer.h"
 #include "ActionContainer.h"
 #include "ImageLoader.h"
+#include "Sound.h"
 #include <vector>
 
 class IGameState;
@@ -30,6 +31,8 @@ public:
 
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
+
+	Sound sound;
 
 	~GameStateManager(void);
 private: 

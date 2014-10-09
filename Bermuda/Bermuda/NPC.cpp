@@ -15,6 +15,9 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int walkRange, int actionRa
 
 void NPC::walk()
 {
+	// add timer
+	// walking in Entity?
+
 	if (walking == false) {
 		walking = true;
 
