@@ -32,7 +32,8 @@ void PlayState::cleanup() {
 }
 
 void PlayState::pause() {
-
+	this->p->moveClick = true;
+	this->p->resetMovement();
 }
 
 void PlayState::resume() {
