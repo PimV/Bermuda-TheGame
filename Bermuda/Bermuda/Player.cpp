@@ -263,7 +263,7 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 		std::cout << "NO PLAYER IMAGE" << std::endl;
 	}
 	
-	std::cout<< this->getWidth() << std::endl;
+	//std::cout<< this->getWidth() << std::endl;
 
 	SDL_Rect rect;
 	rect.w = this->getWidth();// /frameAmountX;
