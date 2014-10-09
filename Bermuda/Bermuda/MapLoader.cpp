@@ -9,8 +9,8 @@
 #include <Windows.h>
 
 
-MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec, double resolutionDelta)
-	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader()), resolutionDelta(resolutionDelta)
+MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
+	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader())
 {
 }
 
@@ -94,7 +94,7 @@ void MapLoader::createTileSets(Value& tilesets)
 		int tileWidth = tileset["tilewidth"].GetInt();
 		int firstId = tileset["firstgid"].GetInt();
 
-		imgLoader->loadTileset(imgName, tileWidth, tileHeight, resolutionDelta);
+		imgLoader->loadTileset(imgName, tileWidth, tileHeight);
 
 		cout << imgName << endl;
 		cout << "\ttile height: " << tileHeight << endl;

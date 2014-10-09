@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "header_loader.h"
 #include <cmath>
 
 Entity::Entity(int id)
@@ -8,11 +9,11 @@ Entity::Entity(int id)
 
 #pragma region Setters
 void Entity::setX(double x) {
-	this->x = x;
+	this->x = x * (ScreenHeight / OPTIMALRESOLUTIONH);
 }
 
 void Entity::setY(double y) {
-	this->y = y;
+	this->y = y * (ScreenHeight / OPTIMALRESOLUTIONH);
 }
 
 void Entity::setZ(double z) {

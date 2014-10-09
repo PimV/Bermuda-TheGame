@@ -23,9 +23,8 @@ private:
 	ImageLoader* imgLoader;
 	MainEntityContainer* mec;
 	GameStateManager* gsm;
-	double resolutionDelta;
 public:
-	MapLoader(GameStateManager* gsm, MainEntityContainer* mec, double resolutionDelta);
+	MapLoader(GameStateManager* gsm, MainEntityContainer* mec);
 	void loadMap();
 	~MapLoader();
 };
