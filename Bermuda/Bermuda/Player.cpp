@@ -17,9 +17,6 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->dy = 0;
 	this->maxSpeed = 6;
 
-	this->setWidth(31);
-	this->setHeight(48);
-
 	this->setCollisionHeight(this->getHeight());
 	this->setCollisionWidth(this->getWidth()/2);
 	this->setCollisionX(this->getWidth()/4);
