@@ -60,11 +60,11 @@ void Game::gameLoop(GameStateManager* gsm) {
 		fps++;
 
 		//If lastFpsTime > 1000 ms, set FPS to 0 and start re-calculating
-		if (lastFpsTime >= 1000) {
+		/*if (lastFpsTime >= 1000) {
 			std::cout << "FPS: "<< fps << std::endl;
 			lastFpsTime = 0;
 			fps = 0;
-		}
+		}*/
 
 		//UPDATE SHIT	
 		gsm->handleEvents();		

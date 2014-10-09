@@ -7,7 +7,6 @@
 #include "SDLInitializer.h"
 #include "CollidableContainer.h"
 
-
 class Player :
 	public Entity,
 	public IMovable,
@@ -20,6 +19,10 @@ public:
 	void clickMove();
 	void setPosition();
 	void resetMovement();
+	void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
+	void SetupAnimation(int amountFramesX, int amountFramesY);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed);
+	void StopAnimation(int Row);
 
 	void draw(SDLInitializer* sdlInitializer);
 	bool checkCollision(CollidableContainer* container);
@@ -35,7 +38,9 @@ public:
 private:
 	const char* path;
 	Camera* camera;
+
+	SDL_Rect crop;
+	SDL_Texture* texture;
+	int frameAmountX, frameAmountY, CurrentFrame;
 	//std::string* path;
-
 };
-

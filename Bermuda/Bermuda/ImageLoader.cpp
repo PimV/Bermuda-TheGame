@@ -40,6 +40,16 @@ void ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 	}
 }
 
+SDL_Texture* ImageLoader::loadSpriteSheet(string filename)
+{
+	SDL_Texture* spriteSheet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
+
+	if (spriteSheet == nullptr)
+		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
+
+	return spriteSheet;
+}
+
 Image* ImageLoader::getMapImage(int tileID)
 {
 	if(tileID > 0 && tileID <= images.size())
