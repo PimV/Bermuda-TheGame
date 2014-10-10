@@ -25,7 +25,7 @@ void MenuState::init(GameStateManager *gsm) {
 	buttons.push_back(new ExitButton(gsm));
 	//playButton = new PlayButton(gsm);
 	//exitButton = new ExitButton(gsm);
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < buttons.size(); ++i) {
 		buttons.at(i)->align(buttons.size() - i, buttons.size());
 	}
 
@@ -77,7 +77,7 @@ void MenuState::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEMOTION: 
-			for (int i = 0; i < buttons.size(); i++) {
+			for (int i = 0; i < buttons.size(); ++i) {
 				buttons.at(i)->hover(x, y, gsm);
 			}
 			//playButton->hover(x, y, gsm);
@@ -85,7 +85,7 @@ void MenuState::handleEvents() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-				for (int i = 0; i < buttons.size(); i++) {
+				for (int i = 0; i < buttons.size(); ++i) {
 					buttons.at(i)->clicked(x, y, gsm);
 				}
 				//playButton->clicked(x, y, gsm);
@@ -103,7 +103,7 @@ void MenuState::update(double dt) {
 void MenuState::draw() {
 	gsm->sdlInitializer->clearScreen();
 	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < buttons.size(); ++i) {
 		buttons.at(i)->draw( gsm);
 	}
 	//playButton->draw(gsm);

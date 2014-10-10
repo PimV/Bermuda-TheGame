@@ -60,7 +60,7 @@ void MapLoader::extractMapInfo(Document& d)
 	createTileSets(tilesets);
 
 	cout << "\nMap:" << endl;
-	for(int i = 0; i < d["layers"].Capacity(); i++)
+	for(int i = 0; i < d["layers"].Capacity(); ++i)
 	{
 		Value& layer = d["layers"][i];
 		string layerName = layer["name"].GetString();
@@ -86,7 +86,7 @@ void MapLoader::extractMapInfo(Document& d)
 void MapLoader::createTileSets(Value& tilesets)
 {
 	cout << "\nTilesets: " << endl;
-	for(int i = 0; i < tilesets.Capacity(); i++)
+	for(int i = 0; i < tilesets.Capacity(); ++i)
 	{
 		Value& tileset = tilesets[i];
 		string imgName = tileset["image"].GetString();
@@ -125,9 +125,9 @@ void MapLoader::createTileSets(Value& tilesets)
 
 void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, int tileHeight, int tileWidth)
 {
-	for (int y = 0; y < mapTileHeight; y++)
+	for (int y = 0; y < mapTileHeight; ++y)
 	{
-		for (int x = 0; x < mapTileWidth; x++)
+		for (int x = 0; x < mapTileWidth; ++x)
 		{
 			int tileID = tiles[(y*mapTileWidth)+x].GetInt();
 
@@ -178,7 +178,7 @@ void MapLoader::createObjects(Value& objects)
 	*/
 
 	//TODO: Create objects
-	for(int j = 0; j < objects.Capacity(); j++)
+	for(int j = 0; j < objects.Capacity(); ++j)
 	{
 		Value& object = objects[j];
 		cout << "- Object ID : " << object["gid"].GetInt() << " ";
@@ -191,7 +191,7 @@ void MapLoader::createObjects(Value& objects)
 void MapLoader::createSpawnPoints(Value& spawnpoints)
 {
 	//TODO: Create spawnpoint objects
-	for(int j = 0; j < spawnpoints.Capacity(); j++)
+	for(int j = 0; j < spawnpoints.Capacity(); ++j)
 	{
 		Value& object = spawnpoints[j];
 		cout << "- x: " << object["x"].GetInt() << " ";
