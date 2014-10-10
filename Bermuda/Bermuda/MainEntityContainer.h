@@ -1,20 +1,20 @@
 #pragma once
 #include "ContainerType.h"
 #include "IEntityContainer.h"
-#include "DrawableEntity.h"
+#include "DrawableContainer.h"
+#include "CollidableContainer.h"
 #include <map>
-#include <vector>
 
 class MainEntityContainer
 {
 public:
-	MainEntityContainer(void);
-	virtual ~MainEntityContainer(void);
+	MainEntityContainer();
+	DrawableContainer* getDrawableContainer();
+	CollidableContainer* getCollidableContainer();
+	virtual ~MainEntityContainer();
 
-	std::vector<DrawableEntity*>* getDrawableContainer();
 
 private: 
-	//std::map<ContainerType, std::vector<Entity*>> m_container;
-	std::vector<DrawableEntity*> drawableContainer;
+	std::map<ContainerType, IEntityContainer*> m_container;
 };
 

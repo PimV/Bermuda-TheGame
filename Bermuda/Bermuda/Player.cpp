@@ -5,8 +5,9 @@
 Player::Player(int id, double moveSpeed, Camera* camera)
 	: Entity(id), IMovable(moveSpeed)
 {
+
 	this->camera = camera;
-	
+
 	//TODO: Change setx and sety to spawnlocation
 	this->setX(350);
 	this->setY(350);
@@ -14,7 +15,21 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->setHeight(64);
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 5;
+	this->maxSpeed = 6;
+
+	//Berekening van collisionx verbeterd! DIT IS JUISTE VERSIE
+	//	this->setCollisionWidth(this->getWidth()/4);
+	//  this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	//MERGE DEZE JUISTE VERSIE NIET WEG
+	this->setCollisionHeight(this->getHeight());
+	this->setCollisionWidth(this->getWidth()/4);
+	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	this->setCollisionY(0);
+
+	this->mapHeight = this->getHeight();
+	this->mapWidth = this->getWidth();
+	this->mapX = this->getX();
+	this->mapY = this->getY();
 
 	this->stopSpeed = 0.8;
 	//this->moveSpeed = id;
@@ -43,16 +58,29 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 void Player::resetMovement()
 {
 	if (moveClick) {
-	this->movingLeft = false;
-	this->movingRight = false;
-	this->movingDown = false;
-	this->movingUp = false;
-	this->moveClick = false;
+		this->movingLeft = false;
+		this->movingRight = false;
+		this->movingDown = false;
+		this->movingUp = false;
+		this->moveClick = false;
 	}
 }
 
+bool Player::checkCollision(CollidableContainer* container) {
+	this->mapX = this->tempX;
+	this->mapY = this->tempY;
+	for (Collidable* c : container->getContainer()) {
+		if (this->intersects(c)) {
+			this->mapX = this->getX();
+			this->mapY = this->getY();
+			return true;
+		}
+	}
+	return false;
+}
+
 void Player::move(double dt) {
-	
+
 	if(moveClick)
 	{
 		clickMove();		
@@ -115,15 +143,26 @@ void Player::move(double dt) {
 		dy = dy / 2;
 	}
 
+	dx = dx*dt;
+	dy = dy*dt;
+
 	//Move player
-	this->setX(getX() + dx *dt);
-	this->setY(getY() + dy *dt);
+
+
+	this->setTempX(getX() + dx);
+	this->setTempY(getY() + dy);
+
+	/*this->setX(getX() + dx);
+	this->setY(getY() + dy);*/
+
+	//Temp:
+	//this->mapX = this->getX();
+	//this->mapY = this->getY();
 
 	//Move camera
-	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
-	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 
-	
+
+
 	if (this->movingLeft) {
 		PlayAnimation(1,7,9,0);
 	}
@@ -138,10 +177,15 @@ void Player::move(double dt) {
 	}
 }
 
-void Player::clickMove(){
-	std::cout << destX << " - " << destY << std::endl;
-	std::cout << getX() << " get-get " << getY() << std::endl;
+void Player::setPosition() {
+	this->setX(getX() + dx);
+	this->setY(getY() + dy);
 
+	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
+	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
+}
+
+void Player::clickMove(){
 	if (this->getX() + this->getWidth() / 2 > this->destX - 5 && this->getX() + this->getWidth() / 2  < this->destX + 5) {
 		movingRight = false;
 		movingLeft = false;
@@ -223,7 +267,7 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 		std::cout << "NO PLAYER IMAGE" << std::endl;
 	}
 	
-	std::cout<< this->getWidth() << std::endl;
+	//std::cout<< this->getWidth() << std::endl;
 
 	SDL_Rect rect;
 	rect.w = this->getWidth();// /frameAmountX;

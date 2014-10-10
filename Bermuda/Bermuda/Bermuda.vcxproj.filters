@@ -174,14 +174,26 @@
     <ClCompile Include="Spawnpoint.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DrawableEntity.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Collidable.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CollidableTile.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="CollidableContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
     <ClCompile Include="ExitButton.cpp">
       <Filter>Source Files\View\Component</Filter>
@@ -287,14 +299,26 @@
     <ClInclude Include="Spawnpoint.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DrawableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Collidable.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CollidableTile.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="CollidableContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
     <ClInclude Include="ExitButton.h">
       <Filter>Header Files\View\Component</Filter>

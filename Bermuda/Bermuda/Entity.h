@@ -7,6 +7,8 @@ public:
 	//Setters
 	void setX(double x);
 	void setY(double y);
+	void setTempX(double x);
+	void setTempY(double y);
 	void setZ(double z);
 	void setWidth(double width);
 	void setHeight(double height);
@@ -19,7 +21,8 @@ public:
 	double getHeight();
 	//Destructor
 	virtual ~Entity(void);
-
+	double tempX;
+	double tempY;
 
 private:
 	//Entity ID
@@ -28,6 +31,8 @@ private:
 	double x;
 	double y;
 	double z;
+
+
 	//Entity Size
 	double width;
 	double height;

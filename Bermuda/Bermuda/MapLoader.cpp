@@ -1,6 +1,7 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "Tree.h"
+#include "CollidableTile.h"
 
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
@@ -29,15 +30,15 @@ void MapLoader::loadMap()
 	//Read entire file into a string.
 	string json;
 	string line;
-    while (getline(stream, line)) {
-        json += line;
-    }
+	while (getline(stream, line)) {
+		json += line;
+	}
 
 	//Close stream.
 	stream.close();
 
 	//Parse JSON string into DOM.
-    Document d;
+	Document d;
 	d.Parse(json.c_str());
 
 	extractMapInfo(d);
@@ -55,7 +56,7 @@ void MapLoader::extractMapInfo(Document& d)
 	cout << "Map width: " << mapTileWidth << endl;
 	cout << "Map height: " << mapTileHeight << endl;
 	cout << "Tile size: " << tileWidth << " x " << tileHeight << endl;
-	
+
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
@@ -64,7 +65,7 @@ void MapLoader::extractMapInfo(Document& d)
 	{
 		Value& layer = d["layers"][i];
 		string layerName = layer["name"].GetString();
-		
+
 		cout << layerName << endl;
 		if(layerName == "Tiles")
 		{
@@ -130,25 +131,44 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 		for (int x = 0; x < mapTileWidth; x++)
 		{
 			int tileID = tiles[(y*mapTileWidth)+x].GetInt();
-			
+
 			Tile* tile = nullptr;
+
 			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
 			{
 				//Tile is in collision vector. Create collisionTile and add to collision behaviour collections.
 				//TODO: create collision tile?
-				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
+				//tile = new Tile(tileID, imgLoader->getMapImage(tileID));
+
+				//                                                             colX colY     colW  colH
+				tile = new CollidableTile(tileID, imgLoader->getMapImage(tileID), 0, 0, tileWidth,tileHeight);
+				tile->setHeight(tileHeight);
+				tile->setWidth(tileWidth);
+				tile->setX(x*tileWidth);
+				tile->setY(y*tileHeight);
+				static_cast<CollidableTile*>(tile)->setCollidableValues();
+
+				mec->getCollidableContainer()->add(static_cast<CollidableTile*>(tile));
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
 				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
+				tile->setHeight(tileHeight);
+				tile->setWidth(tileWidth);
+				tile->setX(x*tileWidth);
+				tile->setY(y*tileHeight);
 			}
+/*<<<<<<< HEAD
 			tile->setX(x*tileWidth);
 			tile->setY(y*tileHeight);
+=======
+>>>>>>> d8cab4bcb63337a5444e3c700c3394054e9d89a5*/
 
-			//Put tile object in drawable container
-			mec->getDrawableContainer()->push_back(tile);
+			//cout << tileID << " | ";
+			mec->getDrawableContainer()->add(tile);
 		}
+		//cout << endl;
 	}
 }
 
@@ -176,7 +196,7 @@ void MapLoader::createObjects(Value& objects)
 		tree->setX(object["x"].GetInt());
 		tree->setY(object["y"].GetInt() - tree->getHeight()); // -getHeight() Because all 'tiled' objects use bottom left for image positioning
 
-		mec->getDrawableContainer()->push_back(tree);
+		mec->getDrawableContainer()->add(tree);
 	}
 	//Get the class type from map made during tileset reading
 }
