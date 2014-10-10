@@ -9,11 +9,11 @@ Entity::Entity(int id)
 
 #pragma region Setters
 void Entity::setX(double x) {
-	this->x = x * (ScreenHeight / OPTIMALRESOLUTIONH);
+	this->x = x;
 }
 
 void Entity::setY(double y) {
-	this->y = y * (ScreenHeight / OPTIMALRESOLUTIONH);
+	this->y = y;
 }
 
 void Entity::setZ(double z) {

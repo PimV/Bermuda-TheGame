@@ -21,9 +21,8 @@ void ImageLoader::loadTileset(string filename, double tileWidth, double tileHeig
 	int fileWidth = 0;
 	int fileHeight = 0;
 	SDL_QueryTexture(tileSet, nullptr, nullptr, &fileWidth, &fileHeight);
-	double drawWidth = tileWidth * (ScreenHeight / OPTIMALRESOLUTIONH);
-	double drawHeight = tileHeight * (ScreenHeight / OPTIMALRESOLUTIONH);
-	cout << (ScreenHeight / OPTIMALRESOLUTIONH) << endl;
+	double drawWidth = tileWidth;
+	double drawHeight = tileHeight;
 
 	while ( y < fileHeight )
 	{

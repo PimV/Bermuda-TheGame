@@ -15,8 +15,6 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-	//*RESOLUTIONDELTA = ScreenHeight / OPTIMALRESOLUTIONH;
-
 	this->gsm = gsm;
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
