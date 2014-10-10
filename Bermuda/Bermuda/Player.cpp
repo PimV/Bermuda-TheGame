@@ -17,9 +17,13 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->dy = 0;
 	this->maxSpeed = 6;
 
+	//Berekening van collisionx verbeterd! DIT IS JUISTE VERSIE
+	//	this->setCollisionWidth(this->getWidth()/4);
+	//  this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	//MERGE DEZE JUISTE VERSIE NIET WEG
 	this->setCollisionHeight(this->getHeight());
-	this->setCollisionWidth(this->getWidth()/2);
-	this->setCollisionX(this->getWidth()/4);
+	this->setCollisionWidth(this->getWidth()/4);
+	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
 	this->setCollisionY(0);
 
 	this->mapHeight = this->getHeight();
