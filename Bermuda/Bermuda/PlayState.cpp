@@ -20,7 +20,6 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	
-	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight);
 
 	p = new Player(1, 3, camera);

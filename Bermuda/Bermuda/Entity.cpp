@@ -1,5 +1,4 @@
 #include "Entity.h"
-#include "header_loader.h"
 #include <cmath>
 
 Entity::Entity(int id)

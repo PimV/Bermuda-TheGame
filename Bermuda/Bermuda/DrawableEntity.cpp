@@ -1,11 +1,13 @@
 #include "DrawableEntity.h"
 
+double DrawableEntity::DRAWBUFFER = 64;
 
 DrawableEntity::DrawableEntity(int id, Image* image)
-	: Entity(id), DRAWBUFFER(64), drawImage(image)
+	: Entity(id), drawImage(image)
 {
 	setWidth(drawImage->getWidth());
 	setHeight(drawImage->getHeight());
+	sizeRect = new SDL_Rect();
 }
 
 void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
@@ -16,13 +18,13 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 		(getY() + getHeight()) > (camera->getY() - DRAWBUFFER) &&
 		getY() < (camera->getY() + camera->getHeight() + DRAWBUFFER))
 	{		
-		sizeRect.x = getX() - camera->getX();
-		sizeRect.y = getY() - camera->getY(); 
-		sizeRect.w = getWidth();
-		sizeRect.h = getHeight();
+		sizeRect->x = getX() - camera->getX();
+		sizeRect->y = getY() - camera->getY(); 
+		sizeRect->w = getWidth();
+		sizeRect->h = getHeight();
 
 		//Draw the entity
-		SDL_RenderCopy(renderer, drawImage->getTileSet(), drawImage->getCroppingRect(), &sizeRect);
+		SDL_RenderCopy(renderer, drawImage->getTileSet(), drawImage->getCroppingRect(), sizeRect);
 	}
 }
 

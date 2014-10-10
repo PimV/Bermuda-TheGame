@@ -171,6 +171,7 @@ void MapLoader::createObjects(Value& objects)
 		cout << "- Object ID : " << objectID << " ";
 		cout << "x: " << object["x"].GetInt() << " ";
 		cout << "y: " << object["y"].GetInt() << endl;
+		//TODO: dynamically create the objects. The object doesn't have to be a tree... (how to... give trees their stump image?)
 		Tree* tree = new Tree(objectID, imgLoader->getMapImage(objectID));
 		tree->setX(object["x"].GetInt());
 		tree->setY(object["y"].GetInt() - tree->getHeight()); // -getHeight() Because all 'tiled' objects use bottom left for image positioning
