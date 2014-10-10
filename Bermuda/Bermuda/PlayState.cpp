@@ -20,11 +20,9 @@ void PlayState::init(GameStateManager *gsm) {
 
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
+	camera = new Camera(0, 0, ScreenWidth, ScreenHeight);
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
-
-	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
-	camera = new Camera(0, 0, 1600, 900);
 
 	p = new Player(1, 3, camera);
 	p->LoadSpriteSheet("Player_Dagger.png", gsm->sdlInitializer->getRenderer());

@@ -1,5 +1,6 @@
 #include "MapLoader.h"
 #include "Tile.h"
+#include "Tree.h"
 #include "CollidableTile.h"
 
 #include <rapidjson/stringbuffer.h>
@@ -168,22 +169,29 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 
 void MapLoader::createObjects(Value& objects)
 {
-	/*
+	
 	//Possibly use this to create objects from strings
-	map_type map;
+	/*map_type map;
 	map["DerivedA"] = &createInstance<DerivedA>;
 	map["DerivedB"] = &createInstance<DerivedB>;
 	//And then you can do
-	return map[some_string]();
-	*/
+	return map[some_string]();*/
+	
 
 	//TODO: Create objects
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
 		Value& object = objects[j];
-		cout << "- Object ID : " << object["gid"].GetInt() << " ";
+		int objectID = object["gid"].GetInt();
+		cout << "- Object ID : " << objectID << " ";
 		cout << "x: " << object["x"].GetInt() << " ";
 		cout << "y: " << object["y"].GetInt() << endl;
+		//TODO: dynamically create the objects. The object doesn't have to be a tree... (how to... give trees their stump image?)
+		Tree* tree = new Tree(objectID, imgLoader->getMapImage(objectID));
+		tree->setX(object["x"].GetInt());
+		tree->setY(object["y"].GetInt() - tree->getHeight()); // -getHeight() Because all 'tiled' objects use bottom left for image positioning
+
+		mec->getDrawableContainer()->add(tree);
 	}
 	//Get the class type from map made during tileset reading
 }

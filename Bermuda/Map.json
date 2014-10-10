@@ -14,7 +14,35 @@
         {
          "height":50,
          "name":"Objects",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":271,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":605,
+                 "y":416
+                }, 
+                {
+                 "gid":272,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":503,
+                 "y":275
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
