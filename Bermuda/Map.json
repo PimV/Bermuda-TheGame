@@ -13,7 +13,7 @@
         }, 
         {
          "draworder":"topdown",
-         "height":50,
+         "height":0,
          "name":"Objects",
          "objects":[
                 {
@@ -49,13 +49,13 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":60,
+         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":50,
+         "height":0,
          "name":"SpawnPoints",
          "objects":[
                 {
@@ -89,7 +89,7 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":60,
+         "width":0,
          "x":0,
          "y":0
         }],
