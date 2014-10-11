@@ -130,6 +130,7 @@ void PlayState::handleEvents() {
 
 
 void PlayState::update(double dt) {
+	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
 	p->move(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
