@@ -15,16 +15,19 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int walkRange, int actionRa
 
 void NPC::walk()
 {
+	// add timer
+	// walking in Entity?
+
 	if (walking == false) {
 		walking = true;
 
 		srand(time(NULL));
 
-		int distanceX = rand() % (walkRange * 2) + (walkRange * -1);
-		int distanceY = rand() % (walkRange * 2) + (walkRange * -1);
+		double distanceX = rand() % (walkRange * 2) + (walkRange * -1);
+		double distanceY = rand() % (walkRange * 2) + (walkRange * -1);
 
-		int destinationX = this->spawnPoint->getX() + distanceX;
-		int destinationY = this->spawnPoint->getY() + distanceY;
+		double destinationX = this->spawnPoint->getX() + distanceX;
+		double destinationY = this->spawnPoint->getY() + distanceY;
 
 		// moveTo(destinationX, destinationY);
 

@@ -18,15 +18,18 @@ void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	mec = new MainEntityContainer();
 
-
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
+	SoundLoader* soundLoader = gsm->getSoundLoader();
+	soundLoader->playGameMusic();
+
+
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
 	p = new Player(1, 3, camera);
-	p->LoadSpriteSheet("Player_Dagger.png", gsm->sdlInitializer->getRenderer());
+	p->LoadSpriteSheet(RESOURCEPATH + "Player_Dagger.png", gsm->sdlInitializer->getRenderer());
 
 	temp =  std::vector<DrawableEntity*>();
 }
@@ -172,7 +175,8 @@ void PlayState::draw() {
 	DrawableContainer* drawableContainer = mec->getDrawableContainer();
 	for(DrawableEntity* entity : drawableContainer->getContainer())
 	{
-		if (entity->getY() < p->getY() - p->getHeight()) {
+		if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
+			int test = entity->getWidth();
 			if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
 				//Remove to temporaryContaienr
 				temp.erase(std::find(temp.begin(), temp.end(), entity));

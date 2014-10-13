@@ -9,8 +9,8 @@ ExitButton::ExitButton(GameStateManager *gsm) : BaseButton()
 
 void ExitButton::init()
 {
-	normalPicture = "Textures/exit.png";
-	hoverPicure = "Textures/exit_hover.png";
+	normalPicture = RESOURCEPATH + "Textures/exit.png";
+	hoverPicure = RESOURCEPATH + "Textures/exit_hover.png";
 }
 
 void ExitButton::action(GameStateManager *gsm)

@@ -98,79 +98,79 @@ void Player::move(double dt) {
 		clickMove(dt, angle, this->getDistence(this->getX(), this->getY(), destX, destY));
 	}
 	else {
-		if (movingLeft) {
-			dx -= moveSpeed *dt;
-			if (dx < -maxSpeed *dt) {
+	if (movingLeft) {
+		dx -= moveSpeed *dt;
+		if (dx < -maxSpeed *dt) {
 				dx = -maxSpeed *dt;
-			}
-		} else if (movingRight) {
-			dx += moveSpeed *dt;
+		}
+	} else if (movingRight) {
+		dx += moveSpeed *dt;
 			if (dx > maxSpeed *dt) {
 				dx = maxSpeed *dt;
+		}
+	} else {
+		if (dx > 0) {
+			dx -= stopSpeed *dt;
+			if (dx < 0) {
+				dx = 0;
 			}
-		} else {
+		} else if (dx < 0) {
+			dx += stopSpeed *dt;
 			if (dx > 0) {
-				dx -= stopSpeed *dt;
-				if (dx < 0) {
-					dx = 0;
-				}
-			} else if (dx < 0) {
-				dx += stopSpeed *dt;
-				if (dx > 0) {
-					dx = 0;
-				}
+				dx = 0;
 			}
 		}
+	}
 
-		if (movingUp) {
-			dy -= moveSpeed *dt;
+	if (movingUp) {
+		dy -= moveSpeed *dt;
 			if (dy < -maxSpeed *dt) {
 				dy = -maxSpeed *dt;
-			}
-		} else if (movingDown) {
-			dy += moveSpeed *dt;
+		}
+	} else if (movingDown) {
+		dy += moveSpeed *dt;
 			if (dy > maxSpeed *dt) {
 				dy = maxSpeed *dt;
+		}
+	} else {
+		if (dy > 0) {
+			dy -= stopSpeed *dt;
+			if (dy < 0) {
+				dy = 0;
 			}
-		} else {
+		} else if (dy < 0) {
+			dy += stopSpeed *dt;
 			if (dy > 0) {
-				dy -= stopSpeed *dt;
-				if (dy < 0) {
-					dy = 0;
-				}
-			} else if (dy < 0) {
-				dy += stopSpeed *dt;
-				if (dy > 0) {
-					dy = 0;
-				}
+				dy = 0;
 			}
 		}
+	}
 
-		if (dx == 0 && dy == 0) {
-			return;
-		}
+	if (dx == 0 && dy == 0) {
+		return;
+	}
 
-		if (dx != 0 && dy != 0) {
+	if (dx != 0 && dy != 0) {
 			
-			dx = dx / 2;
-			dy = dy / 2;
+		dx = dx / 2;
+		dy = dy / 2;
 			
 			//dx = dx / (moveSpeed / 2);
 			//dy = dy / (moveSpeed / 2);
-		}
+	}
 
-		//Move player
-		this->setTempX(getX() + dx);
-		this->setTempY(getY() + dy);
+	//Move player
+	this->setTempX(getX() + dx);
+	this->setTempY(getY() + dy);
 
-		/*this->setX(getX() + dx);
-		this->setY(getY() + dy);*/
+	/*this->setX(getX() + dx);
+	this->setY(getY() + dy);*/
 
-		//Temp:
-		//this->mapX = this->getX();
-		//this->mapY = this->getY();
+	//Temp:
+	//this->mapX = this->getX();
+	//this->mapY = this->getY();
 
-		//Move camera
+	//Move camera
 
 		// set animation row
 		if (this->movingLeft)
@@ -184,7 +184,7 @@ void Player::move(double dt) {
 
 		PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd,this->currentPlayerAnimationRow, dt);
 	}
-}
+	}
 
 void Player::setPosition() {
 	this->setX(getX() + dx);
@@ -195,11 +195,11 @@ void Player::setPosition() {
 }
 
 double Player::getDistence(int currentX, int currentY, int destX, int destY)
-{
+	{
 	double DifferenceX = currentX - destX;
 	double DifferenceY = currentY - destY;
 	return sqrt((DifferenceX * DifferenceX) + (DifferenceY * DifferenceY));
-}
+	}
 
 void Player::clickMove(double dt, double angle, double distance) {
 	
@@ -231,7 +231,7 @@ void Player::clickMove(double dt, double angle, double distance) {
 			anime = this->playerAnimationWalkDown;
 		else if( (angle <= 360 && angle > 300) || (angle >= 0 && angle <= 60)) // Left
 			anime = this->playerAnimationWalkLeft;
-		
+
 		this->PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd, anime, dt);
 	}
 	else
@@ -265,15 +265,15 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 	double animationDelay = (maxSpeed / 100)  * 40;
 	animationSpeed -= animationDelay;
 	if ( animationSpeed < animationDelay)
-	{
+{
 		this->currentPlayerAnimationRow = Row;
-		if (EndFrame <= CurrentFrame)
-			CurrentFrame = BeginFrame;
-		else
-			CurrentFrame++;
+	if (EndFrame <= CurrentFrame)
+		CurrentFrame = BeginFrame;
+	else
+		CurrentFrame++;
 
-		crop.x = CurrentFrame * this->getWidth();
-		crop.y = Row * this->getHeight();
+	crop.x = CurrentFrame * this->getWidth();
+	crop.y = Row * this->getHeight();
 		animationSpeed = maxSpeed * 3;
 	}
 	
@@ -286,17 +286,17 @@ void Player::StopAnimation()
 }
 
 void Player::draw(SDLInitializer* sdlInitializer) {
-	
+
 	if (texture == NULL) {
 		std::cout << "NO PLAYER IMAGE" << std::endl;
 	}
-
+	
 	SDL_Rect rect;
 	rect.w = this->getWidth();
 	rect.h = this->getHeight();
 	rect.x = getX() - this->camera->getX();
 	rect.y = getY() - this->camera->getY();
-	
+
 	sdlInitializer->drawTexture(texture, &rect, &crop);
 }
 
