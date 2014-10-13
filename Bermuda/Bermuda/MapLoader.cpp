@@ -133,7 +133,7 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			}
 
 			//cout << tileID << " | ";
-			mec->getBackgroundContainer()->add(tile);
+			
 			//mec->getDrawableContainer()->add(tile);
 		}
 	}

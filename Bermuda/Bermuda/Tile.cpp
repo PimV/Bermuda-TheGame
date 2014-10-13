@@ -6,7 +6,8 @@ Tile::Tile(int id, MainEntityContainer* mec, double x, double y, Image* image)
 {
 	setX(x);
 	setY(y);
-	mec->getDrawableContainer()->add(this);
+	//mec->getDrawableContainer()->add(this);
+	mec->getBackgroundContainer()->add(this);
 }
 
 
