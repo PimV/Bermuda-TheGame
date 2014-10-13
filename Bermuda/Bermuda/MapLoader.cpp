@@ -1,6 +1,7 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "Tree.h"
+#include "Rock.h"
 #include "CollidableTile.h"
 
 #include <rapidjson/stringbuffer.h>
@@ -163,11 +164,13 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
+			Rock* rock = new Rock(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
 			//Create rock object
 			//Rock also has 2 images. Big rock and destroyed rock. 
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
+			Rock* rock = new Rock(objectID, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
 			//Create destroyed rock object
 		}
 	}
