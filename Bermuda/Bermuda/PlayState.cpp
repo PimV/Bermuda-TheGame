@@ -21,7 +21,7 @@ void PlayState::init(GameStateManager *gsm) {
 
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
-	camera = new Camera(0, 0, ScreenWidth, ScreenHeight);
+	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
