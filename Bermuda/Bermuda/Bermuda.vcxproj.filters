@@ -222,6 +222,9 @@
     <ClCompile Include="BackgroundContainer.cpp">
       <Filter>Source Files\Model\Container\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -352,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="BackgroundContainer.h">
       <Filter>Header Files\Model\Container\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
