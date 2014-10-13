@@ -61,6 +61,7 @@
       <Command>xcopy "$(SolutionDir)SDL2.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)zlib1.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)smpeg2.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libtiff-5.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libpng16-16.dll" "$(TargetDir)"

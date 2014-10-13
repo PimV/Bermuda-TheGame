@@ -23,11 +23,11 @@ void NPC::walk()
 
 		srand(time(NULL));
 
-		int distanceX = rand() % (walkRange * 2) + (walkRange * -1);
-		int distanceY = rand() % (walkRange * 2) + (walkRange * -1);
+		double distanceX = rand() % (walkRange * 2) + (walkRange * -1);
+		double distanceY = rand() % (walkRange * 2) + (walkRange * -1);
 
-		int destinationX = this->spawnPoint->getX() + distanceX;
-		int destinationY = this->spawnPoint->getY() + distanceY;
+		double destinationX = this->spawnPoint->getX() + distanceX;
+		double destinationY = this->spawnPoint->getY() + distanceY;
 
 		// moveTo(destinationX, destinationY);
 
