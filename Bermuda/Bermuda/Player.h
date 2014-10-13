@@ -17,7 +17,7 @@ public:
 	//virtual void move(EnumDirection direction) = 0;
 	virtual void move(double dt);
 	//void clickMove();
-	void clickMove(double dt, double angle, double distence);
+	void clickMove();
 	void setPosition();
 	void resetMovement();
 	void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
