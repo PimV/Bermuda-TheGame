@@ -143,9 +143,6 @@ void Player::move(double dt) {
 		dy = dy / 2;
 	}
 
-	dx = dx*dt;
-	dy = dy*dt;
-
 	//Move player
 
 
@@ -178,6 +175,8 @@ void Player::move(double dt) {
 }
 
 void Player::setPosition() {
+	std::cout << dx << " " << dy;
+
 	this->setX(getX() + dx);
 	this->setY(getY() + dy);
 
