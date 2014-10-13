@@ -56,7 +56,7 @@ void PauseState::draw()
 		IS DIT EEN LEAK?
 	*/
 	
-	SDL_Texture* texture = IMG_LoadTexture(this->gsm->sdlInitializer->getRenderer(), "pausemenu.png");
+	SDL_Texture* texture = IMG_LoadTexture(this->gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "pausemenu.png").c_str());
 	SDL_Rect rect;
 	rect.w = 200;
 	rect.h = 400;
