@@ -7,13 +7,14 @@
 
 
 GameStateManager::GameStateManager(void) {
-	init("Bermuda", 1600, 900, 0, false);
+	init("Bermuda", 1280, 730, 0, false);
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
+	soundLoader = new SoundLoader();
 
 	this->changeGameState(MenuState::Instance());
 
@@ -91,6 +92,11 @@ void GameStateManager::quit() {
 ImageLoader* GameStateManager::getImageLoader()
 {
 	return imgLoader;
+}
+
+SoundLoader* GameStateManager::getSoundLoader()
+{
+	return soundLoader;
 }
 
 GameStateManager::~GameStateManager(void) {

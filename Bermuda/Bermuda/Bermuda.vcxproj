@@ -120,7 +120,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Rabbit.h" />
     <ClInclude Include="SDLInitializer.h" />
-    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundLoader.h" />
     <ClInclude Include="Spawnpoint.h" />
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +156,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="Rabbit.cpp" />
     <ClCompile Include="SDLInitializer.cpp" />
-    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundLoader.cpp" />
     <ClCompile Include="Spawnpoint.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>

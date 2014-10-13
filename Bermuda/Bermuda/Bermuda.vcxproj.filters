@@ -186,8 +186,8 @@
     <ClCompile Include="PauseState.cpp">
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Source Files\Model</Filter>
+    <ClCompile Include="SoundLoader.cpp">
+      <Filter>Source Files\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,8 +290,8 @@
     <ClInclude Include="PauseState.h">
       <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Header Files\Model</Filter>
+    <ClInclude Include="SoundLoader.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
 #include "SDLInitializer.h"
 #include "ActionContainer.h"
 #include "ImageLoader.h"
-#include "Sound.h"
+#include "SoundLoader.h"
 #include <vector>
 
 class IGameState;
@@ -31,14 +31,14 @@ public:
 
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
-
-	Sound sound;
+	SoundLoader* getSoundLoader();
 
 	~GameStateManager(void);
 private: 
 	std::vector<IGameState*> states;
 	IGameState *currentState;
 	ImageLoader* imgLoader;
+	SoundLoader* soundLoader;
 	bool m_running;
 
 	ActionContainer* actionContainer;
