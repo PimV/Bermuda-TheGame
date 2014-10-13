@@ -214,7 +214,7 @@
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
     <ClCompile Include="Tree.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundContainer.cpp">
       <Filter>Source Files\Model\Container\Tile</Filter>
@@ -342,7 +342,7 @@
       <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundContainer.h">
       <Filter>Header Files\Model\Container\Tile</Filter>

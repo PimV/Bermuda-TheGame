@@ -7,7 +7,7 @@ class CollidableTile :
 	public Collidable
 {
 public:
-	CollidableTile(int id, Image* image, double collisionX, double collisionY, double collisionWidth, double collisionHeight);
+	CollidableTile(int id, MainEntityContainer* mec, double x, double y, Image* image);
 	
 	void setCollidableValues();
 
