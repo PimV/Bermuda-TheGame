@@ -143,9 +143,6 @@ void Player::move(double dt) {
 		dy = dy / 2;
 	}
 
-	dx = dx*dt;
-	dy = dy*dt;
-
 	//Move player
 
 
