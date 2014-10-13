@@ -175,8 +175,6 @@ void Player::move(double dt) {
 }
 
 void Player::setPosition() {
-	std::cout << dx << " " << dy;
-
 	this->setX(getX() + dx);
 	this->setY(getY() + dy);
 
