@@ -1,15 +1,13 @@
 #pragma once
 #include "tile.h"
-#include "Collidable.h"
+#include "CollidableEntity.h"
 
 class CollidableTile :
-	public Tile,
-	public Collidable
+	public virtual Tile,
+	public virtual CollidableEntity
 {
 public:
 	CollidableTile(int id, MainEntityContainer* mec, double x, double y, Image* image);
-	
-	void setCollidableValues();
 
 	virtual ~CollidableTile();
 };

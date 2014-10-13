@@ -5,7 +5,7 @@
 #include "Image.h"
 
 class DrawableEntity :
-	public Entity
+	public virtual Entity
 {
 private:
 	static double DRAWBUFFER;

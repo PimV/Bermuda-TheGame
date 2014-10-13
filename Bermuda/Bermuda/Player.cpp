@@ -3,7 +3,7 @@
 
 
 Player::Player(int id, double moveSpeed, Camera* camera)
-	: Entity(id), IMovable(moveSpeed)
+	: Entity(id), CollidableEntity(id), IMovable(moveSpeed)
 {
 
 	this->camera = camera;
@@ -25,11 +25,6 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->setCollisionWidth(this->getWidth()/4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
 	this->setCollisionY(0);
-
-	this->mapHeight = this->getHeight();
-	this->mapWidth = this->getWidth();
-	this->mapX = this->getX();
-	this->mapY = this->getY();
 
 	this->stopSpeed = 0.8;
 	//this->moveSpeed = id;

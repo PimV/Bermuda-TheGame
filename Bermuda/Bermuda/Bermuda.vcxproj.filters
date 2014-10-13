@@ -186,9 +186,6 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Collidable.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="CollidableTile.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -218,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="BackgroundContainer.cpp">
       <Filter>Source Files\Model\Container\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CollidableEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,9 +314,6 @@
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Collidable.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="CollidableTile.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
@@ -346,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="BackgroundContainer.h">
       <Filter>Header Files\Model\Container\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CollidableEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
