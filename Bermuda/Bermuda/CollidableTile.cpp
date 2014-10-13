@@ -2,9 +2,11 @@
 #include <iostream>
 
 
-CollidableTile::CollidableTile(int id, Image* image, double collisionX, double collisionY, double collisionWidth, double collisionHeight) : 
-	Tile(id, image), Collidable(collisionX, collisionY, collisionWidth, collisionHeight)
+CollidableTile::CollidableTile(int id, MainEntityContainer* mec, double x, double y, Image* image) : 
+	Tile(id, mec, x, y, image), Collidable(0, 0, image->getWidth(), image->getHeight())
 {
+	setCollidableValues();
+	mec->getCollidableContainer()->add(this);
 }
 
 void CollidableTile::setCollidableValues()
@@ -17,4 +19,6 @@ void CollidableTile::setCollidableValues()
 
 CollidableTile::~CollidableTile(void)
 {
+	//TODO: Remove object from his containers here?
+	//mec->getDrawableContainer()->remove(this);
 }

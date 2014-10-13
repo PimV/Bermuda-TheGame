@@ -1,8 +1,8 @@
 #include "Camera.h"
 
 
-Camera::Camera(double x, double y, double width, double height)
-	: x(x), y(y), width(width), height(height)
+Camera::Camera(double x, double y, double width, double height, double mapWidth, double mapHeight)
+	: x(x), y(y), width(width), height(height), mapWidth(mapWidth), mapHeight(mapHeight)
 {
 }
 
@@ -28,12 +28,16 @@ double Camera::getHeight()
 
 void Camera::setX(double x)
 {
-	this->x = x;
+	if (x + this->getWidth() < this->mapWidth && x > 0) {
+		this->x = x;
+	}
 }
 
 void Camera::setY(double y)
 {
-	this->y = y;
+	if (y + this->getHeight() < this->mapHeight && y > 0) {
+		this->y = y;
+	}
 }
 
 Camera::~Camera()
