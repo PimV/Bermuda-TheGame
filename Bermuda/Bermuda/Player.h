@@ -43,10 +43,11 @@ private:
 	SDL_Rect crop;
 	SDL_Texture* texture;
 
-	int currentPlayerAnimationRow;
+	int currentPlayerAnimationRow, playerAnimationIdle;
 	int playerAnimationWalkUp, playerAnimationWalkLeft, playerAnimationWalkDown, playerAnimationWalkRight;
-	int playerAnimationWalkStop, playerAnimationWalkStart, playerAnimationWalkEnd;
-	int frameAmountX, frameAmountY, CurrentFrame, animationSpeed, animationDelay;
+	int playerAnimationWalkStart, playerAnimationWalkEnd;
+	int frameAmountX, frameAmountY, CurrentFrame;
+	double animationSpeed, animationDelay;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
 	//std::string* path;

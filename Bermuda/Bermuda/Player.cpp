@@ -28,7 +28,6 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->mapY = this->getY();
 
 	this->stopSpeed = 0.8;
-	//this->stopSpeed = 0.0;
 	//this->moveSpeed = id;
 	this->movingLeft = false;
 	this->movingRight = false;
@@ -36,14 +35,13 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->movingUp = false;
 	this->moveClick = false;
 
-	//this->path = "F.png";
 	this->path = "Player_Dagger.png";
-	this->currentPlayerAnimationRow = 10;
 	this->playerAnimationWalkUp = 8, this->playerAnimationWalkLeft = 9;
 	this->playerAnimationWalkDown = 10, this->playerAnimationWalkRight = 11;
-	this->playerAnimationWalkStop = 0; this->playerAnimationWalkStart = 1, this->playerAnimationWalkEnd = 7;
+	this->currentPlayerAnimationRow = this->playerAnimationWalkDown;
+	this->playerAnimationIdle = 0; this->playerAnimationWalkStart = 1, this->playerAnimationWalkEnd = 7;
 	this->frameAmountX = 0, this->frameAmountY = 0, this->CurrentFrame = 0;
-	this->animationSpeed = 0, this->animationDelay = 150;
+	this->animationSpeed = 0, this->animationDelay = 1;
 
 	crop.x = 0;
 	crop.y = 0;
@@ -60,7 +58,8 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 
 void Player::resetMovement()
 {
-	if (this->moveClick) {
+	if (this->moveClick)
+	{
 		this->movingLeft = false;
 		this->movingRight = false;
 		this->movingDown = false;
@@ -148,12 +147,13 @@ void Player::move(double dt) {
 		}
 
 		if (dx != 0 && dy != 0) {
+			/*
 			dx = dx / 2;
 			dy = dy / 2;
+			*/
+			dx = dx / (maxSpeed / 1.5);
+			dy = dy / (maxSpeed / 1.5);
 		}
-
-		dx = dx*dt;
-		dy = dy*dt;
 
 		//Move player
 		this->setTempX(getX() + dx);
@@ -168,18 +168,16 @@ void Player::move(double dt) {
 
 		//Move camera
 
-		if (this->movingLeft) {
+		// set animation row
+		if (this->movingLeft)
 			this->currentPlayerAnimationRow = this->playerAnimationWalkLeft;
-		}
-		else if (this->movingRight) {
+		else if (this->movingRight)
 			this->currentPlayerAnimationRow = this->playerAnimationWalkRight;
-		}
-		else if (this->movingUp) {
+		else if (this->movingUp)
 			this->currentPlayerAnimationRow = this->playerAnimationWalkUp;
-		}
-		else if (this->movingDown) {
+		else if (this->movingDown)
 			this->currentPlayerAnimationRow = this->playerAnimationWalkDown;
-		}
+
 		PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd,this->currentPlayerAnimationRow, dt);
 	}
 }
@@ -205,9 +203,9 @@ void Player::clickMove(double dt, double angle, double distance) {
 	if (distance >= 2)
 	{
 		if (this->getX() != destX)
-			this->setX( this->getX() -  ((this->getX()-destX)/distance) * moveSpeed );
+			this->setX( this->getX() -  ((this->getX()-destX)/distance) * (maxSpeed / 1.5) );
 		if (this->getY() != destY)
-			this->setY( this->getY() -  ((this->getY()-destY)/distance) * moveSpeed );
+			this->setY( this->getY() -  ((this->getY()-destY)/distance) * (maxSpeed / 1.5) );
 
 		// Determine player walking animation sprite by the destenation angle
 		if(angle > 45 && angle <= 135) // UP
@@ -219,7 +217,7 @@ void Player::clickMove(double dt, double angle, double distance) {
 		else if( (angle <= 360 && angle > 315) || (angle >= 0 && angle <= 45)) // Left
 			anime = this->playerAnimationWalkLeft;
 
-		this->PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd, anime);
+		this->PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd, anime, dt);
 	}
 	else
 	{
@@ -270,7 +268,7 @@ void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
 		std::cout << "Coudn't load: " << path.c_str();
 	}
 
-	PlayAnimation(1,1,10);
+	StopAnimation(this->currentPlayerAnimationRow);
 }
 
 void Player::SetupAnimation(int amountFrameX, int amountFrameY)
@@ -282,9 +280,13 @@ void Player::SetupAnimation(int amountFrameX, int amountFrameY)
 	crop.h = this->getHeight();
 }
 
-void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row)
+void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 {
-	if ((animationSpeed + animationDelay) < SDL_GetTicks())
+	double animationDelay = 1;
+	animationSpeed -= animationDelay;
+	std::cout << "animationSpeed out: " << animationSpeed << std::endl;
+	//if ((animationSpeed + animationDelay) < SDL_GetTicks())
+	if ( animationSpeed < animationDelay)
 	{
 		this->currentPlayerAnimationRow = Row;
 		if (EndFrame <= CurrentFrame)
@@ -292,21 +294,18 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row)
 		else
 			CurrentFrame++;
 
-		//crop.x = CurrentFrame * (this->getWidth()/frameAmountX);
 		crop.x = CurrentFrame * this->getWidth();
-		//crop.y = Row * (this->getHeight()/frameAmountY);
 		crop.y = Row * this->getHeight();
-		// The rest is set in SetupAnimation(), for is doesn't change
-		animationSpeed = SDL_GetTicks();
+		//animationSpeed = SDL_GetTicks();
+		animationSpeed = animationDelay;
+		std::cout << "animationSpeed in: " << animationSpeed << std::endl;
 	}
+	
 }
 
 void Player::StopAnimation(int Row)
 {
-	CurrentFrame = 0;
-	//this->PlayAnimation(0, 0, Row);
-	crop.x = CurrentFrame * this->getWidth();
-	//crop.y = Row * (this->getHeight()/frameAmountY);
+	crop.x = playerAnimationIdle * this->getWidth();
 	crop.y = Row * this->getHeight();
 }
 
