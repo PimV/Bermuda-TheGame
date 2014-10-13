@@ -52,10 +52,8 @@ void MapLoader::extractMapInfo(Document& d)
 	int tileHeight = d["tileheight"].GetInt();
 	int tileWidth = d["tilewidth"].GetInt();
 
-	//cout << "Map info:" << endl;
-	//cout << "Map width: " << mapTileWidth << endl;
-	//cout << "Map height: " << mapTileHeight << endl;
-	//cout << "Tile size: " << tileWidth << " x " << tileHeight << endl;
+	mapHeight = mapTileHeight * tileHeight;
+	mapWidth = mapTileWidth * tileWidth;
 
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
@@ -131,10 +129,6 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				//Tile is not in collision vector. Creating normal tile.
 				Tile* tile = new Tile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
 			}
-
-			//cout << tileID << " | ";
-			
-			//mec->getDrawableContainer()->add(tile);
 		}
 	}
 }
@@ -189,6 +183,16 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		cout << "y: " << object["y"].GetInt() << " ";
 		cout << "type: " << object["type"].GetString() << endl;
 	}
+}
+
+int MapLoader::getMapHeight()
+{
+	return mapHeight;
+}
+
+int MapLoader::getMapWidth()
+{
+	return mapWidth;
 }
 
 MapLoader::~MapLoader()
