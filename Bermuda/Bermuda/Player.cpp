@@ -21,7 +21,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	//	this->setCollisionWidth(this->getWidth()/4);
 	//  this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
 	//MERGE DEZE JUISTE VERSIE NIET WEG
-	this->setCollisionHeight(this->getHeight());
+	this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
 	this->setCollisionY(0);
