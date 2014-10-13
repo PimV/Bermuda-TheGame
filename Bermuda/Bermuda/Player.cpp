@@ -14,7 +14,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->setHeight(64);
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 3;
+	this->maxSpeed = 4;
 	//this->maxSpeed = 0;
 
 	//Berekening van collisionx verbeterd! DIT IS JUISTE VERSIE
@@ -69,7 +69,7 @@ void Player::resetMovement()
 		this->movingDown = false;
 		this->movingUp = false;
 		this->moveClick = false;
-		StopAnimation(this->currentPlayerAnimationRow);
+		StopAnimation();
 	}
 }
 
@@ -80,7 +80,7 @@ bool Player::checkCollision(CollidableContainer* container) {
 		if (this->intersects(c)) {
 			this->mapX = this->getX();
 			this->mapY = this->getY();
-			this->StopAnimation(currentPlayerAnimationRow);
+			this->StopAnimation();
 			return true;
 		}
 	}
@@ -101,12 +101,12 @@ void Player::move(double dt) {
 		if (movingLeft) {
 			dx -= moveSpeed *dt;
 			if (dx < -maxSpeed *dt) {
-				dx = -maxSpeed;
+				dx = -maxSpeed *dt;
 			}
 		} else if (movingRight) {
 			dx += moveSpeed *dt;
-			if (dx > maxSpeed*dt) {
-				dx = maxSpeed;
+			if (dx > maxSpeed *dt) {
+				dx = maxSpeed *dt;
 			}
 		} else {
 			if (dx > 0) {
@@ -124,13 +124,13 @@ void Player::move(double dt) {
 
 		if (movingUp) {
 			dy -= moveSpeed *dt;
-			if (dy < -maxSpeed*dt) {
-				dy = -maxSpeed;
+			if (dy < -maxSpeed *dt) {
+				dy = -maxSpeed *dt;
 			}
 		} else if (movingDown) {
 			dy += moveSpeed *dt;
-			if (dy > maxSpeed*dt) {
-				dy = maxSpeed;
+			if (dy > maxSpeed *dt) {
+				dy = maxSpeed *dt;
 			}
 		} else {
 			if (dy > 0) {
@@ -151,12 +151,12 @@ void Player::move(double dt) {
 		}
 
 		if (dx != 0 && dy != 0) {
-			/*
+			
 			dx = dx / 2;
 			dy = dy / 2;
-			*/
-			dx = dx / (moveSpeed / 2);
-			dy = dy / (moveSpeed / 2);
+			
+			//dx = dx / (moveSpeed / 2);
+			//dy = dy / (moveSpeed / 2);
 		}
 
 		//Move player
@@ -248,7 +248,7 @@ void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
 		std::cout << "Coudn't load: " << path.c_str();
 	}
 
-	StopAnimation(this->currentPlayerAnimationRow);
+	StopAnimation();
 }
 
 void Player::SetupAnimation(int amountFrameX, int amountFrameY)
@@ -279,10 +279,10 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 	
 }
 
-void Player::StopAnimation(int Row)
+void Player::StopAnimation()
 {
 	crop.x = playerAnimationIdle * this->getWidth();
-	crop.y = Row * this->getHeight();
+	crop.y = this->currentPlayerAnimationRow * this->getHeight();
 }
 
 void Player::draw(SDLInitializer* sdlInitializer) {
