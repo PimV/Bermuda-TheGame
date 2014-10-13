@@ -12,7 +12,7 @@ MenuState::MenuState(void)
 }
 
 void MenuState::init(GameStateManager *gsm) {
-	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), "Textures/green.bmp");
+	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/green.bmp").c_str());
 	if (backgroundTexture == NULL)
 	{
 		std::cout << "Error loading startmenu background" << std::endl << "Error 2" << std::endl;

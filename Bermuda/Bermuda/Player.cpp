@@ -40,7 +40,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->moveClick = false;
 
 	//this->path = "F.png";
-	this->path = "Player_Dagger.png";
+	this->path = (RESOURCEPATH + "Player_Dagger.png").c_str();
 	this->frameAmountX = 0, this->frameAmountY = 0, this->CurrentFrame = 0;
 	crop.x = 0;
 	crop.y = 0;

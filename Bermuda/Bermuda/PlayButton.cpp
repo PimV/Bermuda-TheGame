@@ -9,8 +9,8 @@ PlayButton::PlayButton(GameStateManager *gsm) : BaseButton()
 
 void PlayButton::init()
 {
-	normalPicture = "Textures/play.png";
-	hoverPicure = "Textures/play_hover.png";
+	normalPicture = RESOURCEPATH + "Textures/play.png";
+	hoverPicure = RESOURCEPATH + "Textures/play_hover.png";
 }
 
 void PlayButton::action(GameStateManager *gsm)
