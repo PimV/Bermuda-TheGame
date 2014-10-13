@@ -29,6 +29,9 @@ void MenuState::init(GameStateManager *gsm) {
 		buttons.at(i)->align(buttons.size() - i, buttons.size());
 	}
 
+	SoundLoader* soundLoader = gsm->getSoundLoader();
+	soundLoader->playMenuMusic();
+
 	//playButton->align(1, totalButtons);
 	//exitButton->align(0, totalButtons);
 }
