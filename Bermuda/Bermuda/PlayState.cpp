@@ -56,7 +56,7 @@ void PlayState::handleEvents() {
 	SDL_Event mainEvent;
 	int x,y;
 
-	if(SDL_PollEvent(&mainEvent)) {
+	while(SDL_PollEvent(&mainEvent)) {
 
 		switch(mainEvent.type) {
 		case SDL_MOUSEBUTTONDOWN:
