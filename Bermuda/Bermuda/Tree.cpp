@@ -5,7 +5,6 @@ Tree::Tree(int id, MainEntityContainer* mec, double x, double y, Image* treeImag
 {
 	setX(x);
 	setY(y);
-	setCollidableValues();
 	mec->getDrawableContainer()->add(this);
 	mec->getCollidableContainer()->add(this);
 }

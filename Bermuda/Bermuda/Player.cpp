@@ -73,12 +73,14 @@ void Player::resetMovement()
 }
 
 bool Player::checkCollision(CollidableContainer* container) {
-	this->mapX = this->tempX;
-	this->mapY = this->tempY;
-	for (Collidable* c : container->getContainer()) {
+	double currentX = this->getX();
+	double currentY = this->getY();
+	this->setX(this->tempX);
+	this->setY(this->tempY);
+	for (CollidableEntity* c : container->getContainer()) {
 		if (this->intersects(c)) {
-			this->mapX = this->getX();
-			this->mapY = this->getY();
+			this->setX(currentX);
+			this->setY(currentY);
 			this->StopAnimation();
 			return true;
 		}
