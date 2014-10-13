@@ -23,7 +23,7 @@ public:
 	void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
 	void SetupAnimation(int amountFramesX, int amountFramesY);
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
-	void StopAnimation(int Row);
+	void StopAnimation();
 
 	void draw(SDLInitializer* sdlInitializer);
 	bool checkCollision(CollidableContainer* container);

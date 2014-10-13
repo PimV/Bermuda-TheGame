@@ -104,37 +104,31 @@ void PlayState::handleEvents() {
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
-				p->moveClick = true;
-				p->resetMovement();
-				//p->moveClick = false;	
-				//p->movingLeft = false;
-
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
+				p->moveClick = false;
+				//p->resetMovement();
+				p->movingLeft = false;
+				p->StopAnimation();
 
 				break;
 			case SDLK_RIGHT:
-				p->moveClick = true;
-				p->resetMovement();
-				//p->moveClick = false;	
-				//p->movingRight = false;
-
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
+				p->moveClick = false;
+				//p->resetMovement();
+				p->movingRight = false;
+				p->StopAnimation();
 
 				break;
 			case SDLK_UP:
-				p->moveClick = true;
-				p->resetMovement();
-				//p->moveClick = false;	
-				//p->movingUp = false;
-
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
+				p->moveClick = false;
+				//p->resetMovement();
+				p->movingUp = false;
+				p->StopAnimation();
 
 				break;
 			case SDLK_DOWN:
-				p->moveClick = true;
-				p->resetMovement();
-				//p->moveClick = false;	
-				//p->movingDown = false;
+				p->moveClick = false;
+				//p->resetMovement();
+				p->movingDown = false;
+				p->StopAnimation();
 				break;
 			}
 			break;
