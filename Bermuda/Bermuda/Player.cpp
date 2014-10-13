@@ -281,7 +281,7 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 
 	sdlInitializer->drawTexture(texture, &rect, &crop);
 
-		sdlInitializer->drawScreen();
+		//sdlInitializer->drawScreen();
 
 	//Clean created textures/surfaces
 	//SDL_DestroyTexture(texture);  

@@ -131,6 +131,10 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				//Tile is not in collision vector. Creating normal tile.
 				Tile* tile = new Tile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
 			}
+
+			//cout << tileID << " | ";
+			
+			//mec->getDrawableContainer()->add(tile);
 		}
 	}
 }

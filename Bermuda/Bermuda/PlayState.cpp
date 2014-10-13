@@ -18,6 +18,7 @@ void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	mec = new MainEntityContainer();
 
+
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight);
@@ -26,6 +27,8 @@ void PlayState::init(GameStateManager *gsm) {
 
 	p = new Player(1, 3, camera);
 	p->LoadSpriteSheet("Player_Dagger.png", gsm->sdlInitializer->getRenderer());
+
+	temp =  std::vector<DrawableEntity*>();
 }
 
 void PlayState::cleanup() {
@@ -95,13 +98,13 @@ void PlayState::handleEvents() {
 				this->gsm->pushGameState(new PauseState());
 				break;
 			}
-			
+
 			break;
 
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
-				p->moveClick = false;	
+				p->moveClick = false;
 				p->movingLeft = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
 
@@ -150,18 +153,45 @@ void PlayState::update(double dt) {
 }
 
 void PlayState::draw() {
+	//Clears the screen
 	this->gsm->sdlInitializer->clearScreen();
-	
-	//Draw drawable container
-	DrawableContainer* drawableContainer = mec->getDrawableContainer();
-	for(DrawableEntity* entity : drawableContainer->getContainer())
+
+	//Load background
+	BackgroundContainer* backgroundContainer = mec->getBackgroundContainer();
+	for(DrawableEntity* entity : backgroundContainer->getContainer())
 	{
 		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
 
-	//Draw player
+	//Load drawable container and check order to be drawn
+	DrawableContainer* drawableContainer = mec->getDrawableContainer();
+	for(DrawableEntity* entity : drawableContainer->getContainer())
+	{
+		if (entity->getY() < p->getY() - p->getHeight()) {
+			if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
+				//Remove to temporaryContaienr
+				temp.erase(std::find(temp.begin(), temp.end(), entity));
+			}
+			entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
+		} else {
+			if (std::find(temp.begin(), temp.end(), entity) == temp.end()) {
+				//Add to temporaryContainer
+				temp.push_back(entity);
+			}
+
+		}
+	}
+
+	//Load player
 	p->draw(this->gsm->sdlInitializer);
 
+	//Load entities above the player
+	for(DrawableEntity* entity : temp)
+	{
+		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
+	}
+
+	//Draw screen
 	this->gsm->sdlInitializer->drawScreen();
 }
 
