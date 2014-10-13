@@ -14,7 +14,7 @@ private:
 public:
 	ImageLoader(SDL_Renderer* renderer);
 	~ImageLoader();
-	void loadTileset(string filename, double tileWidth, double tileHeight);
+	int loadTileset(string filename, double tileWidth, double tileHeight);
 	SDL_Texture* loadSpriteSheet(string filename);
 	Image* getMapImage(int tileID);
 };
