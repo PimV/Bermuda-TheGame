@@ -14,7 +14,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->setHeight(64);
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 6;
+	this->maxSpeed = 3;
 	//this->maxSpeed = 0;
 
 	this->setCollisionHeight(this->getHeight());
@@ -151,8 +151,8 @@ void Player::move(double dt) {
 			dx = dx / 2;
 			dy = dy / 2;
 			*/
-			dx = dx / (maxSpeed / 1.5);
-			dy = dy / (maxSpeed / 1.5);
+			dx = dx / (moveSpeed / 2);
+			dy = dy / (moveSpeed / 2);
 		}
 
 		//Move player
@@ -208,6 +208,7 @@ void Player::clickMove(double dt, double angle, double distance) {
 			this->setY( this->getY() -  ((this->getY()-destY)/distance) * (maxSpeed / 1.5) );
 
 		// Determine player walking animation sprite by the destenation angle
+		/*
 		if(angle > 45 && angle <= 135) // UP
 			anime = this->playerAnimationWalkUp;
 		else if(angle > 135 && angle <= 225) // Right
@@ -216,48 +217,23 @@ void Player::clickMove(double dt, double angle, double distance) {
 			anime = this->playerAnimationWalkDown;
 		else if( (angle <= 360 && angle > 315) || (angle >= 0 && angle <= 45)) // Left
 			anime = this->playerAnimationWalkLeft;
-
+		*/
+		
+		if(angle > 60 && angle <= 120) // UP
+			anime = this->playerAnimationWalkUp;
+		else if(angle > 120 && angle <= 240) // Right
+			anime = this->playerAnimationWalkRight;
+		else if(angle > 240 && angle <= 300) // Down
+			anime = this->playerAnimationWalkDown;
+		else if( (angle <= 360 && angle > 300) || (angle >= 0 && angle <= 60)) // Left
+			anime = this->playerAnimationWalkLeft;
+		
 		this->PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd, anime, dt);
 	}
 	else
 	{
 		this->resetMovement();
 	}
-
-	/*
-	if (this->getX() + this->getWidth() / 2 > this->destX - 5 && this->getX() + this->getWidth() / 2  < this->destX + 5) {
-		movingRight = false;
-		movingLeft = false;
-	} else if(this->destX > this->getX() + this->getWidth() / 2)
-	{
-		movingRight = true;
-		movingLeft = false;
-	}
-	else if(this->destX < this->getX() + this->getWidth() / 2)
-	{
-		movingLeft = true;
-		movingRight = false;
-	}
-
-	if (this->getY() + this->getHeight() > this->destY - 5 && this->getY() + this->getHeight() < this->destY + 5) {
-		movingDown = false;
-		movingUp = false;
-	} else if(this->destY > this->getY() + this->getHeight())
-	{
-		movingDown = true;
-		movingUp = false;
-	}
-	else if(this->destY < this->getY() + this->getHeight())
-	{
-		movingUp = true;
-		movingDown = false;
-	}	
-
-	if (!movingDown && !movingUp && !movingLeft && !movingRight) {
-		//moveClick = false;
-		resetMovement();
-	}
-	*/
 }
 
 void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
@@ -282,10 +258,8 @@ void Player::SetupAnimation(int amountFrameX, int amountFrameY)
 
 void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 {
-	double animationDelay = 1;
+	double animationDelay = (maxSpeed / 100)  * 40;
 	animationSpeed -= animationDelay;
-	std::cout << "animationSpeed out: " << animationSpeed << std::endl;
-	//if ((animationSpeed + animationDelay) < SDL_GetTicks())
 	if ( animationSpeed < animationDelay)
 	{
 		this->currentPlayerAnimationRow = Row;
@@ -296,9 +270,7 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 
 		crop.x = CurrentFrame * this->getWidth();
 		crop.y = Row * this->getHeight();
-		//animationSpeed = SDL_GetTicks();
-		animationSpeed = animationDelay;
-		std::cout << "animationSpeed in: " << animationSpeed << std::endl;
+		animationSpeed = maxSpeed * 3;
 	}
 	
 }
