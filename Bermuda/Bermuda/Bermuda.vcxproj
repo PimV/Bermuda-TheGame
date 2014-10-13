@@ -60,6 +60,7 @@
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)SDL2.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)SDL2_mixer.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)zlib1.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)smpeg2.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
