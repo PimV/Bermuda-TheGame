@@ -12,7 +12,7 @@ MenuState::MenuState(void)
 }
 
 void MenuState::init(GameStateManager *gsm) {
-	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/green.bmp").c_str());
+	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
 	if (backgroundTexture == NULL)
 	{
 		std::cout << "Error loading startmenu background" << std::endl << "Error 2" << std::endl;
@@ -28,6 +28,9 @@ void MenuState::init(GameStateManager *gsm) {
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->align(buttons.size() - i, buttons.size());
 	}
+
+	SoundLoader* soundLoader = gsm->getSoundLoader();
+	soundLoader->playMenuMusic();
 
 	//playButton->align(1, totalButtons);
 	//exitButton->align(0, totalButtons);

@@ -70,6 +70,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		//UPDATE SHIT	
 		gsm->handleEvents();		
 		gsm->update(delta);
+		//gsm->draw();
 		gsm->draw();
 
 		//Get time after loop

@@ -18,10 +18,13 @@ void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	mec = new MainEntityContainer();
 
-
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
+
+	SoundLoader* soundLoader = gsm->getSoundLoader();
+	soundLoader->playGameMusic();
+
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
@@ -53,7 +56,7 @@ void PlayState::handleEvents() {
 	SDL_Event mainEvent;
 	int x,y;
 
-	if(SDL_PollEvent(&mainEvent)) {
+	while(SDL_PollEvent(&mainEvent)) {
 
 		switch(mainEvent.type) {
 		case SDL_MOUSEBUTTONDOWN:
@@ -105,25 +108,30 @@ void PlayState::handleEvents() {
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
 				p->moveClick = false;
+				//p->resetMovement();
 				p->movingLeft = false;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
+				p->StopAnimation();
 
 				break;
 			case SDLK_RIGHT:
-				p->moveClick = false;	
+				p->moveClick = false;
+				//p->resetMovement();
 				p->movingRight = false;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
+				p->StopAnimation();
 
 				break;
 			case SDLK_UP:
-				p->moveClick = false;	
+				p->moveClick = false;
+				//p->resetMovement();
 				p->movingUp = false;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
+				p->StopAnimation();
 
 				break;
 			case SDLK_DOWN:
-				p->moveClick = false;	
+				p->moveClick = false;
+				//p->resetMovement();
 				p->movingDown = false;
+				p->StopAnimation();
 				break;
 			}
 			break;
@@ -167,7 +175,8 @@ void PlayState::draw() {
 	DrawableContainer* drawableContainer = mec->getDrawableContainer();
 	for(DrawableEntity* entity : drawableContainer->getContainer())
 	{
-		if (entity->getY() < p->getY() - p->getHeight()) {
+		if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
+			int test = entity->getWidth();
 			if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
 				//Remove to temporaryContaienr
 				temp.erase(std::find(temp.begin(), temp.end(), entity));
