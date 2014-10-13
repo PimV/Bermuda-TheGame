@@ -167,7 +167,8 @@ void PlayState::draw() {
 	DrawableContainer* drawableContainer = mec->getDrawableContainer();
 	for(DrawableEntity* entity : drawableContainer->getContainer())
 	{
-		if (entity->getY() < p->getY() - p->getHeight()) {
+		if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
+			int test = entity->getWidth();
 			if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
 				//Remove to temporaryContaienr
 				temp.erase(std::find(temp.begin(), temp.end(), entity));
