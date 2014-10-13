@@ -3,8 +3,7 @@
 #include "CollidableEntity.h"
 
 class CollidableTile :
-	public virtual Tile,
-	public virtual CollidableEntity
+	public Tile, public CollidableEntity
 {
 public:
 	CollidableTile(int id, MainEntityContainer* mec, double x, double y, Image* image);

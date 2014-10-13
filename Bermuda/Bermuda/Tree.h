@@ -4,7 +4,7 @@
 #include "MainEntityContainer.h"
 
 class Tree :
-	public virtual DrawableEntity, public virtual CollidableEntity
+	public DrawableEntity, public CollidableEntity
 {
 private:
 	Image* treeImage;
