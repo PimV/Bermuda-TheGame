@@ -52,21 +52,19 @@ void MapLoader::extractMapInfo(Document& d)
 	int tileHeight = d["tileheight"].GetInt();
 	int tileWidth = d["tilewidth"].GetInt();
 
-	cout << "Map info:" << endl;
-	cout << "Map width: " << mapTileWidth << endl;
-	cout << "Map height: " << mapTileHeight << endl;
-	cout << "Tile size: " << tileWidth << " x " << tileHeight << endl;
+	//cout << "Map info:" << endl;
+	//cout << "Map width: " << mapTileWidth << endl;
+	//cout << "Map height: " << mapTileHeight << endl;
+	//cout << "Tile size: " << tileWidth << " x " << tileHeight << endl;
 
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
-	cout << "\nMap:" << endl;
 	for(int i = 0; i < d["layers"].Capacity(); i++)
 	{
 		Value& layer = d["layers"][i];
 		string layerName = layer["name"].GetString();
 
-		cout << layerName << endl;
 		if(layerName == "Tiles")
 		{
 			createTiles(layer["data"], mapTileHeight, mapTileWidth, tileHeight, tileWidth);
@@ -79,14 +77,11 @@ void MapLoader::extractMapInfo(Document& d)
 		{
 			createSpawnPoints(layer["objects"]);
 		}
-		// Ignore any other layers.
-		cout << endl;
 	}
 }
 
 void MapLoader::createTileSets(Value& tilesets)
 {
-	cout << "\nTilesets: " << endl;
 	for(int i = 0; i < tilesets.Capacity(); i++)
 	{
 		Value& tileset = tilesets[i];
@@ -97,11 +92,6 @@ void MapLoader::createTileSets(Value& tilesets)
 
 		imgLoader->loadTileset(imgName, tileWidth, tileHeight);
 
-		cout << imgName << endl;
-		cout << "\ttile height: " << tileHeight << endl;
-		cout << "\ttile width: " << tileWidth << endl;
-		cout << "\tfirst ID: " << firstId << endl;
-
 		if(tileset.HasMember("tileproperties"))
 		{
 			for(Value::ConstMemberIterator it=tileset["tileproperties"].MemberBegin(); it != tileset["tileproperties"].MemberEnd(); it++) {
@@ -111,12 +101,10 @@ void MapLoader::createTileSets(Value& tilesets)
 					if (name == "Type")
 					{
 						objectClasses[objectID] = it2->value.GetString();
-						cout << "Add ID " << objectID << " to types map with type: " << it2->value.GetString() << endl;
 					}
 					else if (name == "Collision")
 					{
 						collisionVector.push_back(objectID);
-						cout << "Add ID " << objectID << " to collision vector" << endl;
 					}
 				}
 			}
