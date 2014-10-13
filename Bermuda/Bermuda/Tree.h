@@ -1,10 +1,10 @@
 #pragma once
 #include "DrawableEntity.h"
-#include "Collidable.h"
+#include "CollidableEntity.h"
 #include "MainEntityContainer.h"
 
 class Tree :
-	public DrawableEntity, public Collidable
+	public virtual DrawableEntity, public virtual CollidableEntity
 {
 private:
 	Image* treeImage;

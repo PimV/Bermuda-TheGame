@@ -2,7 +2,7 @@
 
 
 Tile::Tile(int id, MainEntityContainer* mec, double x, double y, Image* image)
-	: DrawableEntity(id, image)
+	: Entity(id), DrawableEntity(id, image)
 {
 	setX(x);
 	setY(y);

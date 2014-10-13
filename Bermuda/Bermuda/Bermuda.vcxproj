@@ -108,7 +108,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EnumDirection.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="IAction.h" />
-    <ClInclude Include="Collidable.h" />
+    <ClInclude Include="CollidableEntity.h" />
     <ClInclude Include="IEntityContainer.h" />
     <ClInclude Include="Defensive.h" />
     <ClInclude Include="Evasive.h" />
@@ -159,7 +159,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IAction.cpp" />
-    <ClCompile Include="Collidable.cpp" />
+    <ClCompile Include="CollidableEntity.cpp" />
     <ClCompile Include="IEntityContainer.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
