@@ -15,7 +15,7 @@ void ExitButton::init()
 
 void ExitButton::action(GameStateManager *gsm)
 {
-	std::cout << "exit clicked" << std::endl;
+	exit(0);
 }
 
 void ExitButton::loadNormalPicture(GameStateManager *gsm)
