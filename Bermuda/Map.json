@@ -88,8 +88,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":438,
-                 "y":1366
+                 "x":411,
+                 "y":1350
                 }, 
                 {
                  "gid":273,
@@ -270,21 +270,6 @@
                  "width":0,
                  "x":540,
                  "y":1164
-                }, 
-                {
-                 "gid":273,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":546,
-                 "y":1250
                 }, 
                 {
                  "gid":273,
