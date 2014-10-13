@@ -16,13 +16,14 @@ public:
 	Player(int id, double moveSpeed, Camera* camera);
 	//virtual void move(EnumDirection direction) = 0;
 	virtual void move(double dt);
+	//void clickMove();
 	void clickMove();
 	void setPosition();
 	void resetMovement();
 	void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
 	void SetupAnimation(int amountFramesX, int amountFramesY);
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, float Speed);
-	void StopAnimation(int Row);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	void StopAnimation();
 
 	void draw(SDLInitializer* sdlInitializer);
 	bool checkCollision(CollidableContainer* container);
@@ -41,6 +42,13 @@ private:
 
 	SDL_Rect crop;
 	SDL_Texture* texture;
+
+	int currentPlayerAnimationRow, playerAnimationIdle;
+	int playerAnimationWalkUp, playerAnimationWalkLeft, playerAnimationWalkDown, playerAnimationWalkRight;
+	int playerAnimationWalkStart, playerAnimationWalkEnd;
 	int frameAmountX, frameAmountY, CurrentFrame;
+	double animationSpeed, animationDelay;
+
+	double getDistence(int currentX, int currentY, int destX, int destY);
 	//std::string* path;
 };

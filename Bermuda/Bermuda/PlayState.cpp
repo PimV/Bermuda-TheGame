@@ -56,7 +56,7 @@ void PlayState::handleEvents() {
 	SDL_Event mainEvent;
 	int x,y;
 
-	if(SDL_PollEvent(&mainEvent)) {
+	while(SDL_PollEvent(&mainEvent)) {
 
 		switch(mainEvent.type) {
 		case SDL_MOUSEBUTTONDOWN:
@@ -108,25 +108,30 @@ void PlayState::handleEvents() {
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_LEFT:
 				p->moveClick = false;
+				//p->resetMovement();
 				p->movingLeft = false;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
+				p->StopAnimation();
 
 				break;
 			case SDLK_RIGHT:
-				p->moveClick = false;	
+				p->moveClick = false;
+				//p->resetMovement();
 				p->movingRight = false;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
+				p->StopAnimation();
 
 				break;
 			case SDLK_UP:
-				p->moveClick = false;	
+				p->moveClick = false;
+				//p->resetMovement();
 				p->movingUp = false;
-				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::North));
+				p->StopAnimation();
 
 				break;
 			case SDLK_DOWN:
-				p->moveClick = false;	
+				p->moveClick = false;
+				//p->resetMovement();
 				p->movingDown = false;
+				p->StopAnimation();
 				break;
 			}
 			break;
