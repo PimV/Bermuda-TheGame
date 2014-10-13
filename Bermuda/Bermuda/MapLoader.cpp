@@ -161,7 +161,8 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			}
 
 			//cout << tileID << " | ";
-			mec->getDrawableContainer()->add(tile);
+			mec->getBackgroundContainer()->add(tile);
+			//mec->getDrawableContainer()->add(tile);
 		}
 		//cout << endl;
 	}
@@ -192,6 +193,7 @@ void MapLoader::createObjects(Value& objects)
 		tree->setY(object["y"].GetInt() - tree->getHeight()); // -getHeight() Because all 'tiled' objects use bottom left for image positioning
 
 		mec->getDrawableContainer()->add(tree);
+		
 	}
 	//Get the class type from map made during tileset reading
 }
