@@ -6,5 +6,8 @@
 
 static const std::string BASEPATH = SDL_GetBasePath();
 static const std::string RESOURCEPATH = BASEPATH + "Resources\\";
-static int ScreenWidth = 1600;
-static int ScreenHeight = 900;
+static const double OPTIMALRESOLUTIONW = 1600;
+static const double OPTIMALRESOLUTIONH = 900;
+static double ScreenWidth = 1600;
+static double ScreenHeight = 900;
+static bool fullScreen = false;

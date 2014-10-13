@@ -3,17 +3,21 @@
 #include "IMovable.h"
 #include "header_loader.h"
 #include "Camera.h"
+#include "Collidable.h"
 #include "SDLInitializer.h"
+#include "CollidableContainer.h"
 
 class Player :
 	public Entity,
-	public IMovable
+	public IMovable,
+	public Collidable
 {
 public:
 	Player(int id, double moveSpeed, Camera* camera);
 	//virtual void move(EnumDirection direction) = 0;
 	virtual void move(double dt);
 	void clickMove();
+	void setPosition();
 	void resetMovement();
 	void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
 	void SetupAnimation(int amountFramesX, int amountFramesY);
@@ -21,6 +25,7 @@ public:
 	void StopAnimation(int Row);
 
 	void draw(SDLInitializer* sdlInitializer);
+	bool checkCollision(CollidableContainer* container);
 	~Player(void);
 
 	bool movingLeft;

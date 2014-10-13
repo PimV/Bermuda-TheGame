@@ -65,7 +65,7 @@ xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libtiff-5.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libpng16-16.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libjpeg-9.dll" "$(TargetDir)"
-xcopy "$(SolutionDir)Map.json" "$(TargetDir)"
+xcopy "$(SolutionDir)Map.json" "$(TargetDir)" /y
 xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -93,7 +93,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
     <ClInclude Include="ClickAction.h" />
+    <ClInclude Include="CollidableContainer.h" />
+    <ClInclude Include="CollidableTile.h" />
     <ClInclude Include="ContainerType.h" />
+    <ClInclude Include="DrawableContainer.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Camera.h" />
@@ -102,6 +105,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EnumDirection.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="IAction.h" />
+    <ClInclude Include="Collidable.h" />
     <ClInclude Include="IEntityContainer.h" />
     <ClInclude Include="Defensive.h" />
     <ClInclude Include="Evasive.h" />
@@ -124,16 +128,21 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Rabbit.h" />
     <ClInclude Include="SDLInitializer.h" />
     <ClInclude Include="Spawnpoint.h" />
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionContainer.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
     <ClCompile Include="ClickAction.cpp" />
+    <ClCompile Include="CollidableContainer.cpp" />
+    <ClCompile Include="CollidableTile.cpp" />
+    <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +152,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IAction.cpp" />
+    <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="IEntityContainer.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />

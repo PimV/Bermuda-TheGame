@@ -19,6 +19,14 @@ void Entity::setZ(double z) {
 	this->z = z;
 }
 
+void Entity::setTempX(double x) {
+	this->tempX = x;
+}
+
+void Entity::setTempY(double y) {
+	this->tempY = y;
+}
+
 void Entity::setWidth(double width) {
 	this->width = width;
 }

@@ -17,11 +17,12 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	mec = new MainEntityContainer();
+
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
-	
-	//TODO: Window resolution mee geven en correcte X en Y positie. (aan de hand van player location)
-	camera = new Camera(0, 0, 1600, 900);
+	camera = new Camera(0, 0, ScreenWidth, ScreenHeight);
+
+	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
 	p = new Player(1, 3, camera);
 	p->LoadSpriteSheet("Player_Dagger.png", gsm->sdlInitializer->getRenderer());
@@ -56,7 +57,7 @@ void PlayState::handleEvents() {
 			int x,y;
 			SDL_GetMouseState(&x, &y);
 			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-				std::cout << x << "  " << y << std::endl;
+				//std::cout << x << "  " << y << std::endl;
 				p->destX = x + this->camera->getX();
 				p->destY = y + this->camera->getY();
 				p->resetMovement();
@@ -103,13 +104,13 @@ void PlayState::handleEvents() {
 				p->moveClick = false;	
 				p->movingLeft = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::West));
-		
+
 				break;
 			case SDLK_RIGHT:
 				p->moveClick = false;	
 				p->movingRight = false;
 				//gsm->getActionContainer()->addAction(new MoveAction(p, EnumDirection::East));
-				
+
 				break;
 			case SDLK_UP:
 				p->moveClick = false;	
@@ -127,21 +128,36 @@ void PlayState::handleEvents() {
 	}
 }
 
+
 void PlayState::update(double dt) {
 	this->gsm->getActionContainer()->executeAllActions(dt);
 	p->move(dt);
+	if (!p->checkCollision(mec->getCollidableContainer())) {
+		p->setPosition();
+	}
+	//bool canMove = true;
+	//for(Collidable* c : mec->getCollidableContainer()->getContainer()) {
+	//	if (p->intersects(c)) {
+	//		p->moveClick = true;
+	//		p->resetMovement();
+	//		break;
+	//	}
+	//	//break;
+
+	//}
+	//}
 }
 
 void PlayState::draw() {
 	this->gsm->sdlInitializer->clearScreen();
 	
 	//Draw drawable container
-	std::vector<DrawableEntity*>* drawVec = mec->getDrawableContainer();
-	for(DrawableEntity* entity : *drawVec)
+	DrawableContainer* drawableContainer = mec->getDrawableContainer();
+	for(DrawableEntity* entity : drawableContainer->getContainer())
 	{
 		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
-	
+
 	//Draw player
 	p->draw(this->gsm->sdlInitializer);
 
