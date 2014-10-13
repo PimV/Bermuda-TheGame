@@ -1,5 +1,7 @@
 #include "MapLoader.h"
 #include "Tile.h"
+#include "Tree.h"
+#include "CollidableTile.h"
 
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
@@ -28,15 +30,15 @@ void MapLoader::loadMap()
 	//Read entire file into a string.
 	string json;
 	string line;
-    while (getline(stream, line)) {
-        json += line;
-    }
+	while (getline(stream, line)) {
+		json += line;
+	}
 
 	//Close stream.
 	stream.close();
 
 	//Parse JSON string into DOM.
-    Document d;
+	Document d;
 	d.Parse(json.c_str());
 
 	extractMapInfo(d);
@@ -50,21 +52,19 @@ void MapLoader::extractMapInfo(Document& d)
 	int tileHeight = d["tileheight"].GetInt();
 	int tileWidth = d["tilewidth"].GetInt();
 
-	cout << "Map info:" << endl;
-	cout << "Map width: " << mapTileWidth << endl;
-	cout << "Map height: " << mapTileHeight << endl;
-	cout << "Tile size: " << tileWidth << " x " << tileHeight << endl;
-	
+	//cout << "Map info:" << endl;
+	//cout << "Map width: " << mapTileWidth << endl;
+	//cout << "Map height: " << mapTileHeight << endl;
+	//cout << "Tile size: " << tileWidth << " x " << tileHeight << endl;
+
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
-	cout << "\nMap:" << endl;
 	for(int i = 0; i < d["layers"].Capacity(); i++)
 	{
 		Value& layer = d["layers"][i];
 		string layerName = layer["name"].GetString();
-		
-		cout << layerName << endl;
+
 		if(layerName == "Tiles")
 		{
 			createTiles(layer["data"], mapTileHeight, mapTileWidth, tileHeight, tileWidth);
@@ -77,14 +77,11 @@ void MapLoader::extractMapInfo(Document& d)
 		{
 			createSpawnPoints(layer["objects"]);
 		}
-		// Ignore any other layers.
-		cout << endl;
 	}
 }
 
 void MapLoader::createTileSets(Value& tilesets)
 {
-	cout << "\nTilesets: " << endl;
 	for(int i = 0; i < tilesets.Capacity(); i++)
 	{
 		Value& tileset = tilesets[i];
@@ -95,11 +92,6 @@ void MapLoader::createTileSets(Value& tilesets)
 
 		imgLoader->loadTileset(imgName, tileWidth, tileHeight);
 
-		cout << imgName << endl;
-		cout << "\ttile height: " << tileHeight << endl;
-		cout << "\ttile width: " << tileWidth << endl;
-		cout << "\tfirst ID: " << firstId << endl;
-
 		if(tileset.HasMember("tileproperties"))
 		{
 			for(Value::ConstMemberIterator it=tileset["tileproperties"].MemberBegin(); it != tileset["tileproperties"].MemberEnd(); it++) {
@@ -109,12 +101,10 @@ void MapLoader::createTileSets(Value& tilesets)
 					if (name == "Type")
 					{
 						objectClasses[objectID] = it2->value.GetString();
-						cout << "Add ID " << objectID << " to types map with type: " << it2->value.GetString() << endl;
 					}
 					else if (name == "Collision")
 					{
 						collisionVector.push_back(objectID);
-						cout << "Add ID " << objectID << " to collision vector" << endl;
 					}
 				}
 			}
@@ -129,50 +119,64 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 		for (int x = 0; x < mapTileWidth; x++)
 		{
 			int tileID = tiles[(y*mapTileWidth)+x].GetInt();
-			
-			Tile* tile = nullptr;
+
 			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
 			{
-				//Tile is in collision vector. Create collisionTile and add to collision behaviour collections.
-				//TODO: create collision tile?
-				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
+				//Tile is in collision vector. Create collisionTile.
+				CollidableTile* tile = new CollidableTile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
+
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
-				tile = new Tile(tileID, imgLoader->getMapImage(tileID));
+				Tile* tile = new Tile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
 			}
-			tile->setHeight(tileHeight);
-			tile->setWidth(tileWidth);
-			tile->setX(x*tileWidth);
-			tile->setY(y*tileHeight);
 
-			//Put tile object in drawable container
-			mec->getDrawableContainer()->push_back(tile);
+			//cout << tileID << " | ";
+			
+			//mec->getDrawableContainer()->add(tile);
 		}
 	}
 }
 
 void MapLoader::createObjects(Value& objects)
 {
-	/*
+	
 	//Possibly use this to create objects from strings
-	map_type map;
+	/*map_type map;
 	map["DerivedA"] = &createInstance<DerivedA>;
 	map["DerivedB"] = &createInstance<DerivedB>;
 	//And then you can do
-	return map[some_string]();
-	*/
-
-	//TODO: Create objects
+	return map[some_string]();*/
+	
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
 		Value& object = objects[j];
-		cout << "- Object ID : " << object["gid"].GetInt() << " ";
-		cout << "x: " << object["x"].GetInt() << " ";
-		cout << "y: " << object["y"].GetInt() << endl;
+		int objectID = object["gid"].GetInt();
+		Image* objectImg = imgLoader->getMapImage(objectID);
+		double objectX = object["x"].GetDouble();
+		double objectY = object["y"].GetDouble() - objectImg->getHeight(); // -getHeight() Because all 'tiled' objects use bottom left for image positioning;
+
+		//TODO: Any better way to do this?
+		if(objectClasses[objectID] == "Tree")
+		{
+			Tree* tree = new Tree(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
+		}
+		else if(objectClasses[objectID] == "TreeStump")
+		{
+			Tree* tree = new Tree(objectID, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
+			//TODO: Set tree in his 'stump' state. (If we want to allow placing stumps directly in the 'tiled' map.)
+		}
+		else if(objectClasses[objectID] == "Rock")
+		{
+			//Create rock object
+			//Rock also has 2 images. Big rock and destroyed rock. 
+		}
+		else if(objectClasses[objectID] == "RockPieces")
+		{
+			//Create destroyed rock object
+		}
 	}
-	//Get the class type from map made during tileset reading
 }
 
 void MapLoader::createSpawnPoints(Value& spawnpoints)

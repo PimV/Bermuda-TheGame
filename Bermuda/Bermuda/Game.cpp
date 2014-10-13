@@ -65,7 +65,8 @@ void Game::gameLoop(GameStateManager* gsm) {
 			lastFpsTime = 0;
 			fps = 0;
 		}
-		
+
+		if(delta > 4.0) { delta = 4.0; }
 		//UPDATE SHIT	
 		gsm->handleEvents();		
 		gsm->update(delta);

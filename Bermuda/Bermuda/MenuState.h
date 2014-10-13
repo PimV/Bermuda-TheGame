@@ -1,10 +1,19 @@
 #pragma once
+#include "ExitButton.h"
+#include "PlayButton.h"
+#include <SDL_image.h>
+#include <SDL.h>
 #include "igamestate.h"
 #include "header_loader.h"
 class MenuState :
 	public IGameState
 {
 private:
+	SDL_Texture* backgroundTexture;
+	SDL_Rect backgroundRect;
+	static const int totalButtons = 2;
+	std::vector<BaseButton*> buttons;
+
 	static MenuState m_MenuState;
 
 	GameStateManager* gsm;
@@ -13,6 +22,12 @@ private:
 	int alpha;
 
 public:
+	//TODO: put buttons in array
+	PlayButton* playButton;
+	ExitButton* exitButton;
+
+	void align();
+
 	MenuState(void);
 	void init(GameStateManager *gsm) ;
 	void cleanup();

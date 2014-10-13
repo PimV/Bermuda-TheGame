@@ -6,6 +6,8 @@ enum class ContainerType
 	Movable,
 	Interactable,
 	Drawable,
-	Destroyable
+	Destroyable,
+	Collidable,
+	Background
 };
 
