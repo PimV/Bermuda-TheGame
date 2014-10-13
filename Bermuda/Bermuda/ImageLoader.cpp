@@ -6,8 +6,10 @@ ImageLoader::ImageLoader(SDL_Renderer* renderer)
 	this->renderer = renderer;
 }
 
-void ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
+//Returns the first ID of the new tileset images
+int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeight)
 {
+	int startID = images.size() + 1;
 	SDL_Texture* tileSet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
 	tileSets.push_back(tileSet);
 
@@ -21,6 +23,8 @@ void ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 	int fileWidth = 0;
 	int fileHeight = 0;
 	SDL_QueryTexture(tileSet, nullptr, nullptr, &fileWidth, &fileHeight);
+	double drawWidth = tileWidth;
+	double drawHeight = tileHeight;
 
 	while ( y < fileHeight )
 	{
@@ -32,12 +36,13 @@ void ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 			crop->w = tileWidth;
 			crop->h = tileHeight;
 
-			images.push_back(new Image(tileSet, crop));
+			images.push_back(new Image(tileSet, crop, drawWidth, drawHeight));
 			x += tileWidth;
 		}
 		x = 0;
 		y += tileHeight;
 	}
+	return startID;
 }
 
 SDL_Texture* ImageLoader::loadSpriteSheet(string filename)

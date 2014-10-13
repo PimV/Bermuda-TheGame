@@ -17,9 +17,13 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->maxSpeed = 3;
 	//this->maxSpeed = 0;
 
-	this->setCollisionHeight(this->getHeight());
-	this->setCollisionWidth(this->getWidth()/2);
-	this->setCollisionX(this->getWidth()/4);
+	//Berekening van collisionx verbeterd! DIT IS JUISTE VERSIE
+	//	this->setCollisionWidth(this->getWidth()/4);
+	//  this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	//MERGE DEZE JUISTE VERSIE NIET WEG
+	this->setCollisionHeight(this->getHeight() - 15);
+	this->setCollisionWidth(this->getWidth()/4);
+	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
 	this->setCollisionY(0);
 
 	this->mapHeight = this->getHeight();
@@ -294,7 +298,6 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 	rect.y = getY() - this->camera->getY();
 	
 	sdlInitializer->drawTexture(texture, &rect, &crop);
-	sdlInitializer->drawScreen();
 }
 
 Player::~Player(void)

@@ -65,7 +65,7 @@ xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libtiff-5.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libpng16-16.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libjpeg-9.dll" "$(TargetDir)"
-xcopy "$(SolutionDir)Map.json" "$(TargetDir)"
+xcopy "$(SolutionDir)Map.json" "$(TargetDir)" /y
 xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -90,6 +90,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ActionContainer.h" />
+    <ClInclude Include="BackgroundContainer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
     <ClInclude Include="ClickAction.h" />
@@ -128,9 +129,11 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Rabbit.h" />
     <ClInclude Include="SDLInitializer.h" />
     <ClInclude Include="Spawnpoint.h" />
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionContainer.cpp" />
+    <ClCompile Include="BackgroundContainer.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
     <ClCompile Include="ClickAction.cpp" />
@@ -141,6 +144,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>

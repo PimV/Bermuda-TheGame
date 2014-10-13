@@ -23,9 +23,13 @@ private:
 	ImageLoader* imgLoader;
 	MainEntityContainer* mec;
 	GameStateManager* gsm;
+	int mapHeight;
+	int mapWidth;
 public:
 	MapLoader(GameStateManager* gsm, MainEntityContainer* mec);
 	void loadMap();
+	int getMapHeight();
+	int getMapWidth();
 	~MapLoader();
 };
 
