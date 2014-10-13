@@ -14,7 +14,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->setHeight(64);
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 4;
+	this->maxSpeed = 3;
 	//this->maxSpeed = 0;
 
 	//Berekening van collisionx verbeterd! DIT IS JUISTE VERSIE
@@ -30,6 +30,8 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->mapWidth = this->getWidth();
 	this->mapX = this->getX();
 	this->mapY = this->getY();
+	this->setTempX(getX() );
+	this->setTempY(getY() );
 
 	this->stopSpeed = 0.8;
 	//this->moveSpeed = id;
@@ -45,7 +47,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->currentPlayerAnimationRow = this->playerAnimationWalkDown;
 	this->playerAnimationIdle = 0; this->playerAnimationWalkStart = 1, this->playerAnimationWalkEnd = 7;
 	this->frameAmountX = 0, this->frameAmountY = 0, this->CurrentFrame = 0;
-	this->animationSpeed = 0, this->animationDelay = 1;
+	this->animationSpeed = 10;//, this->animationDelay = 1;
 
 	crop.x = 0;
 	crop.y = 0;
@@ -54,7 +56,7 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 
 	// amount of sprites in the sheet
 	this->SetupAnimation(13, 21);
-	
+
 	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -150,14 +152,14 @@ void Player::move(double dt) {
 			return;
 		}
 
-		if (dx != 0 && dy != 0) {
-			
-			dx = dx / 2;
-			dy = dy / 2;
-			
-			//dx = dx / (moveSpeed / 2);
-			//dy = dy / (moveSpeed / 2);
-		}
+		//if (dx != 0 && dy != 0) {
+
+		//	dx = dx / 2;
+		//	dy = dy / 2;
+
+		//	//dx = dx / (moveSpeed / 2);
+		//	//dy = dy / (moveSpeed / 2);
+		//}
 
 		//Move player
 		this->setTempX(getX() + dx);
@@ -187,8 +189,10 @@ void Player::move(double dt) {
 }
 
 void Player::setPosition() {
-	this->setX(getX() + dx);
-	this->setY(getY() + dy);
+	//this->setX(getX() + dx);
+	//this->setY(getY() + dy);
+	this->setX(this->tempX);
+	this->setY(this->tempY);
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -202,26 +206,10 @@ double Player::getDistence(int currentX, int currentY, int destX, int destY)
 }
 
 void Player::clickMove(double dt, double angle, double distance) {
-	
-	int anime = 10;
-	if (distance >= 2)
-	{
-		if (this->getX() != destX)
-			this->setX( this->getX() -  ((this->getX()-destX)/distance) * (maxSpeed / 1.5) );
-		if (this->getY() != destY)
-			this->setY( this->getY() -  ((this->getY()-destY)/distance) * (maxSpeed / 1.5) );
 
-		// Determine player walking animation sprite by the destenation angle
-		/*
-		if(angle > 45 && angle <= 135) // UP
-			anime = this->playerAnimationWalkUp;
-		else if(angle > 135 && angle <= 225) // Right
-			anime = this->playerAnimationWalkRight;
-		else if(angle > 225 && angle <= 315) // Down
-			anime = this->playerAnimationWalkDown;
-		else if( (angle <= 360 && angle > 315) || (angle >= 0 && angle <= 45)) // Left
-			anime = this->playerAnimationWalkLeft;
-		*/
+	int anime = 10;
+	if (distance >= 5)
+	{
 		
 		if(angle > 60 && angle <= 120) // UP
 			anime = this->playerAnimationWalkUp;
@@ -231,12 +219,81 @@ void Player::clickMove(double dt, double angle, double distance) {
 			anime = this->playerAnimationWalkDown;
 		else if( (angle <= 360 && angle > 300) || (angle >= 0 && angle <= 60)) // Left
 			anime = this->playerAnimationWalkLeft;
-		
+
+
+		//if (this->getX() != destX) {
+		if (this->getX() + this->getWidth() / 2 > this->destX - 5 && this->getX() + this->getWidth() / 2  < this->destX + 5) {
+			dx = 0;
+			movingLeft = false;
+			movingRight = false;
+		}
+		else if(this->destX > this->getX() + this->getWidth() / 2){
+			dx = (((this->getX()-destX)/distance) * (maxSpeed)) * dt;
+			movingRight = true;
+			movingLeft = false;
+		}
+		else if(this->destX < this->getX() + this->getWidth() / 2){
+			dx = (((this->getX()-destX)/distance) * (maxSpeed)) * dt;
+			movingLeft = true;
+			movingRight = false;
+		}
+		//this->setX( this->getX() -  ((this->getX()-destX)/distance) * (maxSpeed / 1.5) );
+
+		//if (this->getY() != destY) {
+		if (this->getY() + this->getHeight() > this->destY - 5 && this->getY() + this->getHeight() < this->destY + 5) {
+			dy = 0;
+			movingUp = false;
+			movingDown = false;
+		}
+		else if(this->destY > this->getY() + this->getHeight()){
+			dy = (((this->getY()-destY)/distance) * (maxSpeed)) * dt;
+			movingDown = true;
+			movingUp = false;
+		}
+		else if(this->destY < this->getY() + this->getHeight()){
+			dy = (((this->getY()-destY)/distance) * (maxSpeed)) * dt;
+			movingUp = true;
+			movingDown = false;
+		}
+
+		if (dx == 0 && dy == 0) {
+			
+			resetMovement();
+			StopAnimation();
+			return;
+		}
+
+		if (!movingDown && !movingUp && !movingLeft && !movingRight) {
+			moveClick = false;
+		}
+
+
+		this->tempX = this->getX() -  dx;
+		this->tempY =  this->getY() -  dy;
+
+		std::cout << this->tempX << " " <<this->destX << " " << this->tempY << " " <<  this->destY << std::endl;
+		//	this->setY( this->getY() -  ((this->getY()-destY)/distance) * (maxSpeed / 1.5) );
+
+		// Determine player walking animation sprite by the destenation angle
+		/*
+		if(angle > 45 && angle <= 135) // UP
+		anime = this->playerAnimationWalkUp;
+		else if(angle > 135 && angle <= 225) // Right
+		anime = this->playerAnimationWalkRight;
+		else if(angle > 225 && angle <= 315) // Down
+		anime = this->playerAnimationWalkDown;
+		else if( (angle <= 360 && angle > 315) || (angle >= 0 && angle <= 45)) // Left
+		anime = this->playerAnimationWalkLeft;
+		*/
+
+
 		this->PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd, anime, dt);
 	}
 	else
 	{
+		std::cout << "Dest reached" << std::endl;
 		this->resetMovement();
+		StopAnimation();
 	}
 }
 
@@ -254,7 +311,7 @@ void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
 void Player::SetupAnimation(int amountFrameX, int amountFrameY)
 {
 	frameAmountX = amountFrameX, frameAmountY = amountFrameY;
-	
+
 	// Set width and height of the crop rect. The rest of is calculated in PlayAnimation()
 	crop.w = this->getWidth();
 	crop.h = this->getHeight();
@@ -263,7 +320,7 @@ void Player::SetupAnimation(int amountFrameX, int amountFrameY)
 void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 {
 	double animationDelay = (maxSpeed / 100)  * 40;
-	animationSpeed -= animationDelay;
+	animationSpeed -= animationDelay * dt;
 	if ( animationSpeed < animationDelay)
 	{
 		this->currentPlayerAnimationRow = Row;
@@ -276,7 +333,7 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 		crop.y = Row * this->getHeight();
 		animationSpeed = maxSpeed * 3;
 	}
-	
+
 }
 
 void Player::StopAnimation()
@@ -286,7 +343,7 @@ void Player::StopAnimation()
 }
 
 void Player::draw(SDLInitializer* sdlInitializer) {
-	
+
 	if (texture == NULL) {
 		std::cout << "NO PLAYER IMAGE" << std::endl;
 	}
@@ -296,7 +353,7 @@ void Player::draw(SDLInitializer* sdlInitializer) {
 	rect.h = this->getHeight();
 	rect.x = getX() - this->camera->getX();
 	rect.y = getY() - this->camera->getY();
-	
+
 	sdlInitializer->drawTexture(texture, &rect, &crop);
 }
 
