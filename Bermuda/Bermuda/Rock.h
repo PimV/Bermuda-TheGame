@@ -1,10 +1,10 @@
 #pragma once
 #include "drawableentity.h"
-#include "Collidable.h"
+#include "CollidableEntity.h"
 #include "MainEntityContainer.h"
 
 class Rock :
-	public DrawableEntity, public Collidable
+	public DrawableEntity, public CollidableEntity
 {
 private:
 	Image* rockImage;

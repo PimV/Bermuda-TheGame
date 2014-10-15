@@ -5,11 +5,11 @@ CollidableContainer::CollidableContainer(void)
 {
 }
 
-void CollidableContainer::add(Collidable* collidable) {
+void CollidableContainer::add(CollidableEntity* collidable) {
 	this->m_container.push_back(collidable);
 }
 
-std::vector<Collidable*> CollidableContainer::getContainer() {
+std::vector<CollidableEntity*> CollidableContainer::getContainer() {
 	return this->m_container;
 }
 

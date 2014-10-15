@@ -1,18 +1,17 @@
 #pragma once
 #include "ientitycontainer.h"
-#include "Collidable.h"
+#include "CollidableEntity.h"
 class CollidableContainer :
 	public IEntityContainer
 {
 public:
 	CollidableContainer();
 
-
-	void add(Collidable* collidable);
-	std::vector<Collidable*> getContainer();
+	void add(CollidableEntity* collidable);
+	std::vector<CollidableEntity*> getContainer();
 
 	virtual ~CollidableContainer();
 private:
-	std::vector<Collidable*> m_container;
+	std::vector<CollidableEntity*> m_container;
 };
 
