@@ -17,6 +17,7 @@ class Player :
 public:
 	Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm);
 	//virtual void move(EnumDirection direction) = 0;
+	void update(double dt);
 	virtual void move(double dt);
 	//void clickMove();
 	void clickMove();

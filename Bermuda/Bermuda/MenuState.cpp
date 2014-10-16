@@ -57,46 +57,46 @@ void MenuState::resume() {
 }
 
 
-void MenuState::handleEvents() {
-	SDL_Event mainEvent;
+void MenuState::handleEvents(SDL_Event mainEvent) {
+	//	SDL_Event mainEvent;
 
-	if (SDL_PollEvent(&mainEvent)) {
-		int x, y;
-		SDL_GetMouseState(&x, &y);
-		switch(mainEvent.type) {
-		case SDL_QUIT:
-	
+
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	switch(mainEvent.type) {
+	case SDL_QUIT:
+
+		this->gsm->quit();
+		break;
+
+	case SDL_KEYDOWN:
+		switch(mainEvent.key.keysym.sym) {
+		case SDLK_SPACE:
+			this->gsm->changeGameState(PlayState::Instance());
+			break;
+		case SDLK_ESCAPE:
 			this->gsm->quit();
 			break;
-
-		case SDL_KEYDOWN:
-			switch(mainEvent.key.keysym.sym) {
-			case SDLK_SPACE:
-				this->gsm->changeGameState(PlayState::Instance());
-				break;
-			case SDLK_ESCAPE:
-				this->gsm->quit();
-				break;
-			}
-			break;
-		case SDL_MOUSEMOTION: 
-			for (int i = 0; i < buttons.size(); i++) {
-				buttons.at(i)->hover(x, y, gsm);
-			}
-			//playButton->hover(x, y, gsm);
-			//exitButton->hover(x, y, gsm);
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-				for (int i = 0; i < buttons.size(); i++) {
-					buttons.at(i)->clicked(x, y, gsm);
-				}
-				//playButton->clicked(x, y, gsm);
-				//exitButton->clicked(x, y, gsm);
-			}
-			break;
 		}
+		break;
+	case SDL_MOUSEMOTION: 
+		for (int i = 0; i < buttons.size(); i++) {
+			buttons.at(i)->hover(x, y, gsm);
+		}
+		//playButton->hover(x, y, gsm);
+		//exitButton->hover(x, y, gsm);
+		break;
+	case SDL_MOUSEBUTTONDOWN:
+		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
+			for (int i = 0; i < buttons.size(); i++) {
+				buttons.at(i)->clicked(x, y, gsm);
+			}
+			//playButton->clicked(x, y, gsm);
+			//exitButton->clicked(x, y, gsm);
+		}
+		break;
 	}
+
 }
 
 void MenuState::update(double dt) {
@@ -104,16 +104,11 @@ void MenuState::update(double dt) {
 }
 
 void MenuState::draw() {
-	gsm->sdlInitializer->clearScreen();
+	//gsm->sdlInitializer->clearScreen();
 	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->draw( gsm);
 	}
-	//playButton->draw(gsm);
-	//exitButton->draw(gsm);
-	gsm->sdlInitializer->drawScreen();
-
-	
 }
 
 

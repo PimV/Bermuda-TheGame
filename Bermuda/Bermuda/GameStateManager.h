@@ -11,10 +11,14 @@ class IGameState;
 class GameStateManager
 {
 public:
+	bool showFps;
 	GameStateManager(void);
 
 	void init(const char* title, int width, int height, int bpp, bool fullscreen);
 	void cleanup();
+
+	void setFps(int fps);
+	int getFps();
 
 	void changeGameState(IGameState* gameState);
 	void pushGameState(IGameState* gameState);
@@ -35,11 +39,13 @@ public:
 
 	~GameStateManager(void);
 private: 
+	int fps;
 	std::vector<IGameState*> states;
 	IGameState *currentState;
 	ImageLoader* imgLoader;
 	SoundLoader* soundLoader;
 	bool m_running;
+
 
 	ActionContainer* actionContainer;
 };
