@@ -24,24 +24,20 @@ void PauseState::resume()
 {
 }
 
-void PauseState::handleEvents()
+void PauseState::handleEvents(SDL_Event mainEvent)
 {
-	SDL_Event mainEvent;
-
-	if(SDL_PollEvent(&mainEvent)) 
+	switch(mainEvent.type) 
 	{
-		switch(mainEvent.type) 
+	case SDL_KEYDOWN:
+		switch(mainEvent.key.keysym.sym) 
 		{
-		case SDL_KEYDOWN:
-			switch(mainEvent.key.keysym.sym) 
-			{
-			case SDLK_ESCAPE:
-				this->removeState();
-				break;
-			}
+		case SDLK_ESCAPE:
+			this->removeState();
 			break;
 		}
+		break;
 	}
+
 }
 
 void PauseState::update(double dt)

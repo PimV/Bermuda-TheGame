@@ -11,6 +11,7 @@ class IGameState;
 class GameStateManager
 {
 public:
+	bool showFps;
 	GameStateManager(void);
 
 	void init(const char* title, int width, int height, int bpp, bool fullscreen);
@@ -44,6 +45,7 @@ private:
 	ImageLoader* imgLoader;
 	SoundLoader* soundLoader;
 	bool m_running;
+
 
 	ActionContainer* actionContainer;
 };
