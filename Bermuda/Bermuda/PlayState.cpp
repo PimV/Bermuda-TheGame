@@ -144,7 +144,8 @@ void PlayState::handleEvents() {
 void PlayState::update(double dt) {
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
-	p->move(dt);
+	/*p->move(dt);*/
+	p->update(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
@@ -152,7 +153,7 @@ void PlayState::update(double dt) {
 
 void PlayState::draw() {
 	//Clears the screen
-	this->gsm->sdlInitializer->clearScreen();
+	//this->gsm->sdlInitializer->clearScreen();
 
 	//Load background
 	BackgroundContainer* backgroundContainer = mec->getBackgroundContainer();

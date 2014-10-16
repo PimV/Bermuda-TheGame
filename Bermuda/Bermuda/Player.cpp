@@ -88,6 +88,10 @@ bool Player::checkCollision(CollidableContainer* container) {
 	return false;
 }
 
+void Player::update(double dt) {
+	this->move(dt);
+}
+
 void Player::move(double dt) {
 
 	if(moveClick)

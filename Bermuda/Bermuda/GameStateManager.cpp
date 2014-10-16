@@ -83,8 +83,13 @@ void GameStateManager::update(double deltaTime) {
 }
 
 void GameStateManager::draw() {
+	//Clear Screen
+	this->sdlInitializer->clearScreen();
+
 	//Draw GameState
-	states.back()->draw();
+	for (size_t  i = 0; i < states.size(); i++) {
+		states.at(i)->draw();
+	}
 
 	//Draw FPS
 	this->sdlInitializer->drawText(to_string(this->getFps()), 5, 5, 20, 24);

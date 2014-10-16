@@ -104,7 +104,7 @@ void MenuState::update(double dt) {
 }
 
 void MenuState::draw() {
-	gsm->sdlInitializer->clearScreen();
+	//gsm->sdlInitializer->clearScreen();
 	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->draw( gsm);
