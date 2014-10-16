@@ -35,7 +35,7 @@ public:
 	void pause();
 	void resume();
 
-	void handleEvents() ;
+	void handleEvents(SDL_Event mainEvent) ;
 	void update(double dt) ;
 	void draw() ;
 

@@ -18,7 +18,7 @@ public:
 	void resume();
 
 	//TODO: GSM bij deze methodes moet weg...
-	void handleEvents();
+	void handleEvents(SDL_Event mainEvent);
 	void update(double dt);
 	void draw();
 

@@ -48,98 +48,93 @@ void PlayState::resume() {
 }
 
 
-void PlayState::handleEvents() {
+void PlayState::handleEvents(SDL_Event mainEvent) {
 	//p->handleEvents();
 	//Process Input
 
 	//Retrieve input
-	SDL_Event mainEvent;
 	int x,y;
+	switch(mainEvent.type) {
 
-	while(SDL_PollEvent(&mainEvent)) {
-
-		switch(mainEvent.type) {
-
-		case SDL_MOUSEBUTTONDOWN:
-			int x,y;
-			SDL_GetMouseState(&x, &y);
-			if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-				//std::cout << x << "  " << y << std::endl;
-				p->destX = x + this->camera->getX();
-				p->destY = y + this->camera->getY();
-				p->resetMovement();
-				p->moveClick = true;
-			}
+	case SDL_MOUSEBUTTONDOWN:
+		int x,y;
+		SDL_GetMouseState(&x, &y);
+		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
+			//std::cout << x << "  " << y << std::endl;
+			p->destX = x + this->camera->getX();
+			p->destY = y + this->camera->getY();
+			p->resetMovement();
+			p->moveClick = true;
+		}
+		break;
+	case SDL_KEYDOWN:
+		switch(mainEvent.key.keysym.sym) {
+		case SDLK_LEFT:
+			p->resetMovement();
+			p->moveClick = false;
+			p->movingLeft = true;
+			p->movingRight = false;
 			break;
-		case SDL_KEYDOWN:
-			switch(mainEvent.key.keysym.sym) {
-			case SDLK_LEFT:
-				p->resetMovement();
-				p->moveClick = false;
-				p->movingLeft = true;
-				p->movingRight = false;
-				break;
-			case SDLK_RIGHT:
-				p->resetMovement();
-				p->moveClick = false;
-				p->movingRight = true;	
-				p->movingLeft = false;
-				break;
-			case SDLK_UP:
-				p->resetMovement();
-				p->moveClick = false;
-				p->movingUp = true;	
-				p->movingDown = false;
-				break;
-			case SDLK_DOWN:
-				p->resetMovement();
-				p->moveClick = false;
-				p->movingDown = true;	
-				p->movingUp = false;	
-				break;
-			case SDLK_ESCAPE:
-				//TODO: methode voor deze escape klik aanmaken?
-				this->gsm->pushGameState(PauseState::Instance());
-				break;
-			}
-
+		case SDLK_RIGHT:
+			p->resetMovement();
+			p->moveClick = false;
+			p->movingRight = true;	
+			p->movingLeft = false;
 			break;
-
-		case SDL_KEYUP:
-			switch(mainEvent.key.keysym.sym) {
-			case SDLK_LEFT:
-				p->moveClick = false;
-				//p->resetMovement();
-				p->movingLeft = false;
-				p->StopAnimation();
-
-				break;
-			case SDLK_RIGHT:
-				p->moveClick = false;
-				//p->resetMovement();
-				p->movingRight = false;
-				p->StopAnimation();
-
-				break;
-			case SDLK_UP:
-				p->moveClick = false;
-				//p->resetMovement();
-				p->movingUp = false;
-				p->StopAnimation();
-
-				break;
-			case SDLK_DOWN:
-				p->moveClick = false;
-				//p->resetMovement();
-				p->movingDown = false;
-				p->StopAnimation();
-				break;
-			}
+		case SDLK_UP:
+			p->resetMovement();
+			p->moveClick = false;
+			p->movingUp = true;	
+			p->movingDown = false;
+			break;
+		case SDLK_DOWN:
+			p->resetMovement();
+			p->moveClick = false;
+			p->movingDown = true;	
+			p->movingUp = false;	
+			break;
+		case SDLK_ESCAPE:
+			//TODO: methode voor deze escape klik aanmaken?
+			this->gsm->pushGameState(PauseState::Instance());
 			break;
 		}
+
+		break;
+
+	case SDL_KEYUP:
+		switch(mainEvent.key.keysym.sym) {
+		case SDLK_LEFT:
+			p->moveClick = false;
+			//p->resetMovement();
+			p->movingLeft = false;
+			p->StopAnimation();
+
+			break;
+		case SDLK_RIGHT:
+			p->moveClick = false;
+			//p->resetMovement();
+			p->movingRight = false;
+			p->StopAnimation();
+
+			break;
+		case SDLK_UP:
+			p->moveClick = false;
+			//p->resetMovement();
+			p->movingUp = false;
+			p->StopAnimation();
+
+			break;
+		case SDLK_DOWN:
+			p->moveClick = false;
+			//p->resetMovement();
+			p->movingDown = false;
+			p->StopAnimation();
+			break;
+		}
+		break;
+
 	}
 }
-
 
 void PlayState::update(double dt) {
 	//TODO: Player collision check in de player.move() zelf afhandelen? 

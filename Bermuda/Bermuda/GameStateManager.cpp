@@ -22,6 +22,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	actionContainer = new ActionContainer();
 
 	m_running = true;
+	showFps = false;
 	this->setFps(0);
 }
 
@@ -75,7 +76,45 @@ void GameStateManager::popState() {
 }
 
 void GameStateManager::handleEvents() {
-	states.back()->handleEvents();
+	SDL_Event mainEvent;
+
+	while(SDL_PollEvent(&mainEvent)) 
+	{
+		switch(mainEvent.type) 
+		{
+		case SDL_KEYDOWN:
+			switch(mainEvent.key.keysym.sym) 
+			{
+			case SDLK_TAB:
+				if (this->showFps == false) {
+					this->showFps = true;
+				}
+				break;
+			default: 
+				states.back()->handleEvents(mainEvent);
+				break;
+			}
+			break;
+		case SDL_KEYUP:
+			switch(mainEvent.key.keysym.sym) {
+			case SDLK_TAB:
+				if (this->showFps == true) {
+					this->showFps = false;
+				}
+				break;
+			default:
+				states.back()->handleEvents(mainEvent);
+				break;
+			}
+			break;
+		default:
+			states.back()->handleEvents(mainEvent);
+			break;
+		}
+	}
+
+
+
 }
 
 void GameStateManager::update(double deltaTime) {
@@ -92,7 +131,9 @@ void GameStateManager::draw() {
 	}
 
 	//Draw FPS
-	this->sdlInitializer->drawText(to_string(this->getFps()), 5, 5, 20, 24);
+	if (this->showFps == true) {
+		this->sdlInitializer->drawText(std::string("FPS: " + to_string(this->getFps())), 5, 5, 50, 24);
+	}
 
 	//Draw entire screen
 	this->sdlInitializer->drawScreen();
