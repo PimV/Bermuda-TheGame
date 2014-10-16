@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\SDL2_mixer\include;..\..\SDL2_image\include;..\..\SDL2\include;..\..\RapidJson\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\SDL2_mixer\lib\x86;..\..\SDL2\lib\x86;..\..\SDL2_image\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\SDL2_ttf\include;..\..\SDL2_mixer\include;..\..\SDL2_image\include;..\..\SDL2\include;..\..\RapidJson\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\SDL2_ttf\lib\x86;..\..\SDL2_mixer\lib\x86;..\..\SDL2\lib\x86;..\..\SDL2_image\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\PimGame\Desktop\SDL\SDL2-devel-2.0.3-VC\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
@@ -54,13 +54,16 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)SDL2.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)SDL2_image.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)SDL2_ttf.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)SDL2_mixer.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)libfreetype-6.dll" "$(TargetDir)"
+xcopy "$(SolutionDir)Starzy_Darzy.ttf" "$(TargetDir)"
 xcopy "$(SolutionDir)zlib1.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)smpeg2.dll" "$(TargetDir)"
 xcopy "$(SolutionDir)libwebp-4.dll" "$(TargetDir)"
@@ -108,7 +111,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EnumDirection.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="IAction.h" />
-    <ClInclude Include="Collidable.h" />
+    <ClInclude Include="CollidableEntity.h" />
     <ClInclude Include="IEntityContainer.h" />
     <ClInclude Include="Defensive.h" />
     <ClInclude Include="Evasive.h" />
@@ -159,7 +162,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IAction.cpp" />
-    <ClCompile Include="Collidable.cpp" />
+    <ClCompile Include="CollidableEntity.cpp" />
     <ClCompile Include="IEntityContainer.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />

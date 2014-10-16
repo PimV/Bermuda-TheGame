@@ -6,6 +6,7 @@ class PauseState :
 {
 private:
 	GameStateManager* gsm;
+	static PauseState m_PauseState;
 
 public:
 	PauseState();
@@ -17,13 +18,16 @@ public:
 	void resume();
 
 	//TODO: GSM bij deze methodes moet weg...
-	void handleEvents();
+	void handleEvents(SDL_Event mainEvent);
 	void update(double dt);
 	void draw();
 
 	void removeState();
 
-	
+	static PauseState* Instance() {
+		return &m_PauseState;
+	};
+
 	virtual ~PauseState();
 };
 

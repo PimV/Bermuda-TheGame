@@ -4,6 +4,7 @@
 #include "PlayState.h"
 #include <iostream>
 #include <Windows.h>
+#include <SDL_ttf.h>
 
 
 GameStateManager::GameStateManager(void) {
@@ -21,6 +22,16 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	actionContainer = new ActionContainer();
 
 	m_running = true;
+	showFps = false;
+	this->setFps(0);
+}
+
+void GameStateManager::setFps(int fps) {
+	this->fps = fps;
+}
+
+int GameStateManager::getFps() {
+	return this->fps;
 }
 
 void GameStateManager::cleanup() {
@@ -65,7 +76,45 @@ void GameStateManager::popState() {
 }
 
 void GameStateManager::handleEvents() {
-	states.back()->handleEvents();
+	SDL_Event mainEvent;
+
+	while(SDL_PollEvent(&mainEvent)) 
+	{
+		switch(mainEvent.type) 
+		{
+		case SDL_KEYDOWN:
+			switch(mainEvent.key.keysym.sym) 
+			{
+			case SDLK_TAB:
+				if (this->showFps == false) {
+					this->showFps = true;
+				}
+				break;
+			default: 
+				states.back()->handleEvents(mainEvent);
+				break;
+			}
+			break;
+		case SDL_KEYUP:
+			switch(mainEvent.key.keysym.sym) {
+			case SDLK_TAB:
+				if (this->showFps == true) {
+					this->showFps = false;
+				}
+				break;
+			default:
+				states.back()->handleEvents(mainEvent);
+				break;
+			}
+			break;
+		default:
+			states.back()->handleEvents(mainEvent);
+			break;
+		}
+	}
+
+
+
 }
 
 void GameStateManager::update(double deltaTime) {
@@ -73,7 +122,21 @@ void GameStateManager::update(double deltaTime) {
 }
 
 void GameStateManager::draw() {
-	states.back()->draw();
+	//Clear Screen
+	this->sdlInitializer->clearScreen();
+
+	//Draw GameState
+	for (size_t  i = 0; i < states.size(); i++) {
+		states.at(i)->draw();
+	}
+
+	//Draw FPS
+	if (this->showFps == true) {
+		this->sdlInitializer->drawText(std::string("FPS: " + to_string(this->getFps())), 5, 5, 50, 24);
+	}
+
+	//Draw entire screen
+	this->sdlInitializer->drawScreen();
 }
 
 ActionContainer* GameStateManager::getActionContainer() {

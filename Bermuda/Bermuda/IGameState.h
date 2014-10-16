@@ -14,7 +14,7 @@ public:
 	virtual void pause() = 0;
 	virtual void resume() = 0;
 
-	virtual void handleEvents() = 0;
+	virtual void handleEvents(SDL_Event mainEvent) = 0;
 	virtual void update(double dt) = 0;
 	virtual void draw() = 0;
 

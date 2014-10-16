@@ -3,18 +3,18 @@
 #include "IMovable.h"
 #include "header_loader.h"
 #include "Camera.h"
-#include "Collidable.h"
+#include "CollidableEntity.h"
 #include "SDLInitializer.h"
 #include "CollidableContainer.h"
 
 class Player :
-	public Entity,
 	public IMovable,
-	public Collidable
+	public CollidableEntity
 {
 public:
 	Player(int id, double moveSpeed, Camera* camera);
 	//virtual void move(EnumDirection direction) = 0;
+	void update(double dt);
 	virtual void move(double dt);
 	//void clickMove();
 	void clickMove();

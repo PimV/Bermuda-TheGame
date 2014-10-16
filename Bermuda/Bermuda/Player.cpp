@@ -4,7 +4,7 @@
 
 
 Player::Player(int id, double moveSpeed, Camera* camera)
-	: Entity(id), IMovable(moveSpeed)
+	: Entity(id), CollidableEntity(id), IMovable(moveSpeed)
 {
 	this->camera = camera;
 
@@ -26,11 +26,6 @@ Player::Player(int id, double moveSpeed, Camera* camera)
 	this->setCollisionWidth(this->getWidth()/4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
 	this->setCollisionY(0);
-
-	this->mapHeight = this->getHeight();
-	this->mapWidth = this->getWidth();
-	this->mapX = this->getX();
-	this->mapY = this->getY();
 
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
@@ -78,17 +73,23 @@ void Player::resetMovement()
 }
 
 bool Player::checkCollision(CollidableContainer* container) {
-	this->mapX = this->tempX;
-	this->mapY = this->tempY;
-	for (Collidable* c : container->getContainer()) {
+	double currentX = this->getX();
+	double currentY = this->getY();
+	this->setX(this->tempX);
+	this->setY(this->tempY);
+	for (CollidableEntity* c : container->getContainer()) {
 		if (this->intersects(c)) {
-			this->mapX = this->getX();
-			this->mapY = this->getY();
+			this->setX(currentX);
+			this->setY(currentY);
 			this->StopAnimation();
 			return true;
 		}
 	}
 	return false;
+}
+
+void Player::update(double dt) {
+	this->move(dt);
 }
 
 void Player::move(double dt) {
