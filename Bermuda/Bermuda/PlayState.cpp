@@ -169,7 +169,7 @@ void PlayState::draw() {
 			}
 			entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 		} else {
-			if (std::find(temp.begin(), temp.end(), entity) == temp.end()) {
+			if (std::find(temp.begin(), temp.end(), entity) == temp.end() && entity != p) {
 				//Add to temporaryContainer
 				temp.push_back(entity);
 			}
@@ -178,7 +178,7 @@ void PlayState::draw() {
 	}
 
 	//Load player
-	//p->draw(this->gsm->sdlInitializer);
+	p->draw(camera, gsm->sdlInitializer->getRenderer());
 
 	//Load entities above the player
 	for(DrawableEntity* entity : temp)
