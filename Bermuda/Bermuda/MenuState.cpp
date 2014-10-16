@@ -65,7 +65,7 @@ void MenuState::handleEvents() {
 		SDL_GetMouseState(&x, &y);
 		switch(mainEvent.type) {
 		case SDL_QUIT:
-	
+
 			this->gsm->quit();
 			break;
 
@@ -104,16 +104,11 @@ void MenuState::update(double dt) {
 }
 
 void MenuState::draw() {
-	gsm->sdlInitializer->clearScreen();
+	//gsm->sdlInitializer->clearScreen();
 	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->draw( gsm);
 	}
-	//playButton->draw(gsm);
-	//exitButton->draw(gsm);
-	gsm->sdlInitializer->drawScreen();
-
-	
 }
 
 

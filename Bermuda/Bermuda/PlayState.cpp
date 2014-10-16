@@ -59,6 +59,7 @@ void PlayState::handleEvents() {
 	while(SDL_PollEvent(&mainEvent)) {
 
 		switch(mainEvent.type) {
+
 		case SDL_MOUSEBUTTONDOWN:
 			int x,y;
 			SDL_GetMouseState(&x, &y);
@@ -98,7 +99,7 @@ void PlayState::handleEvents() {
 				break;
 			case SDLK_ESCAPE:
 				//TODO: methode voor deze escape klik aanmaken?
-				this->gsm->pushGameState(new PauseState());
+				this->gsm->pushGameState(PauseState::Instance());
 				break;
 			}
 
@@ -143,26 +144,16 @@ void PlayState::handleEvents() {
 void PlayState::update(double dt) {
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
-	p->move(dt);
+	/*p->move(dt);*/
+	p->update(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
-	//bool canMove = true;
-	//for(Collidable* c : mec->getCollidableContainer()->getContainer()) {
-	//	if (p->intersects(c)) {
-	//		p->moveClick = true;
-	//		p->resetMovement();
-	//		break;
-	//	}
-	//	//break;
-
-	//}
-	//}
 }
 
 void PlayState::draw() {
 	//Clears the screen
-	this->gsm->sdlInitializer->clearScreen();
+	//this->gsm->sdlInitializer->clearScreen();
 
 	//Load background
 	BackgroundContainer* backgroundContainer = mec->getBackgroundContainer();
@@ -200,8 +191,6 @@ void PlayState::draw() {
 		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
 
-	//Draw screen
-	this->gsm->sdlInitializer->drawScreen();
 }
 
 PlayState::~PlayState(void)

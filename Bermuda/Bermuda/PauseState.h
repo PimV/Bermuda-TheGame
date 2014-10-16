@@ -6,6 +6,7 @@ class PauseState :
 {
 private:
 	GameStateManager* gsm;
+	static PauseState m_PauseState;
 
 public:
 	PauseState();
@@ -23,7 +24,10 @@ public:
 
 	void removeState();
 
-	
+	static PauseState* Instance() {
+		return &m_PauseState;
+	};
+
 	virtual ~PauseState();
 };
 
