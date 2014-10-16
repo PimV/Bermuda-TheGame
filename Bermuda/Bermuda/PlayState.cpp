@@ -28,7 +28,7 @@ void PlayState::init(GameStateManager *gsm) {
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
-	p = new Player(1, 3, camera);
+	p = new Player(1, 3, camera, gsm);
 	p->LoadSpriteSheet(RESOURCEPATH + "Player_Dagger.png", gsm->sdlInitializer->getRenderer());
 
 	temp =  std::vector<DrawableEntity*>();

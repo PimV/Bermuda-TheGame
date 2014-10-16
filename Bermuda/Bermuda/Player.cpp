@@ -3,8 +3,8 @@
 #include <iostream>
 
 
-Player::Player(int id, double moveSpeed, Camera* camera)
-	: Entity(id), CollidableEntity(id), IMovable(moveSpeed)
+Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm)
+	: Entity(id), DrawableEntity(id, nullptr), CollidableEntity(id), IMovable(moveSpeed)
 {
 	this->camera = camera;
 
