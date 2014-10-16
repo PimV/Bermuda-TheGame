@@ -48,6 +48,8 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 	SDL_Texture* imgTxture = SDL_CreateTextureFromSurface(this->getRenderer(), imgTxt);
 
 	SDL_RenderCopy(this->getRenderer(), imgTxture, NULL, &txtRect);
+
+
 	SDL_DestroyTexture(imgTxture);
 	SDL_FreeSurface(imgTxt);
 }

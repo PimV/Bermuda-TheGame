@@ -99,7 +99,7 @@ void PlayState::handleEvents() {
 				break;
 			case SDLK_ESCAPE:
 				//TODO: methode voor deze escape klik aanmaken?
-				this->gsm->pushGameState(new PauseState());
+				this->gsm->pushGameState(PauseState::Instance());
 				break;
 			}
 
