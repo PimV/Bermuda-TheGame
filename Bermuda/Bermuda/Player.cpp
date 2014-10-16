@@ -3,10 +3,11 @@
 #include <iostream>
 
 
-Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm)
+Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
 	: Entity(id), DrawableEntity(id, nullptr), CollidableEntity(id), IMovable(moveSpeed)
 {
 	this->camera = camera;
+	this->gsm = gsm;
 
 	//TODO: Change setx and sety to spawnlocation
 	this->setX(350);
@@ -18,10 +19,6 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm)
 	this->maxSpeed = 3;
 	//this->maxSpeed = 0;
 
-	//Berekening van collisionx verbeterd! DIT IS JUISTE VERSIE
-	//	this->setCollisionWidth(this->getWidth()/4);
-	//  this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	//MERGE DEZE JUISTE VERSIE NIET WEG
 	this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
@@ -38,21 +35,16 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm)
 	this->movingUp = false;
 	this->moveClick = false;
 
-	this->path = (RESOURCEPATH + "Player_Dagger.png").c_str();
-	this->playerAnimationWalkUp = 8, this->playerAnimationWalkLeft = 9;
-	this->playerAnimationWalkDown = 10, this->playerAnimationWalkRight = 11;
-	this->currentPlayerAnimationRow = this->playerAnimationWalkDown;
-	this->playerAnimationIdle = 0; this->playerAnimationWalkStart = 1, this->playerAnimationWalkEnd = 7;
-	this->frameAmountX = 0, this->frameAmountY = 0, this->CurrentFrame = 0;
+	this->firstImgID = gsm->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	this->playerAnimationWalkUpRow = 8, this->playerAnimationWalkLeftRow = 9;
+	this->playerAnimationWalkDownRow = 10, this->playerAnimationWalkRightRow = 11;
+	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
+	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 8;
+	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
-	crop.x = 0;
-	crop.y = 0;
-	crop.w = 0;
-	crop.h = 0;
-
-	// amount of sprites in the sheet
-	this->SetupAnimation(13, 21);
+	this->StopAnimation();
+	mec->getDrawableContainer()->add(this);
 
 	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
@@ -177,15 +169,15 @@ void Player::move(double dt) {
 
 	// set animation row
 	if (this->movingLeft)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkLeft;
+		this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
 	else if (this->movingRight)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkRight;
+		this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
 	else if (this->movingUp)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkUp;
+		this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
 	else if (this->movingDown)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkDown;
+		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 
-	PlayAnimation(this->playerAnimationWalkStart,this->playerAnimationWalkEnd,this->currentPlayerAnimationRow, dt);
+	PlayAnimation(this->playerAnimationWalkStartColumn,this->playerAnimationWalkEndColumn,this->currentPlayerAnimationRow, dt);
 
 }
 
@@ -242,26 +234,6 @@ void Player::clickMove() {
 	}
 }
 
-void Player::LoadSpriteSheet(std::string path, SDL_Renderer *renderer)
-{
-	texture = IMG_LoadTexture(renderer, path.c_str());
-	if (texture == NULL)
-	{
-		std::cout << "Coudn't load: " << path.c_str();
-	}
-
-	StopAnimation();
-}
-
-void Player::SetupAnimation(int amountFrameX, int amountFrameY)
-{
-	frameAmountX = amountFrameX, frameAmountY = amountFrameY;
-
-	// Set width and height of the crop rect. The rest of is calculated in PlayAnimation()
-	crop.w = this->getWidth();
-	crop.h = this->getHeight();
-}
-
 void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 {
 	double animationDelay = (maxSpeed / 100)  * 40;
@@ -274,8 +246,7 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 		else
 			CurrentFrame++;
 
-		crop.x = CurrentFrame * this->getWidth();
-		crop.y = Row * this->getHeight();
+		this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
 		animationSpeed = maxSpeed * 3;
 	}
 
@@ -283,26 +254,10 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 
 void Player::StopAnimation()
 {
-	crop.x = playerAnimationIdle * this->getWidth();
-	crop.y = this->currentPlayerAnimationRow * this->getHeight();
+	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
 }
 
-void Player::draw(SDLInitializer* sdlInitializer) {
-
-	if (texture == NULL) {
-		std::cout << "NO PLAYER IMAGE" << std::endl;
-	}
-
-	SDL_Rect rect;
-	rect.w = this->getWidth();
-	rect.h = this->getHeight();
-	rect.x = getX() - this->camera->getX();
-	rect.y = getY() - this->camera->getY();
-
-	sdlInitializer->drawTexture(texture, &rect, &crop);
-}
 
 Player::~Player(void)
 {
-	SDL_DestroyTexture(texture);
 }
