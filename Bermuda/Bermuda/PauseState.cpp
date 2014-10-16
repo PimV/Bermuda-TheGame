@@ -53,9 +53,9 @@ void PauseState::draw()
 	//this->gsm->sdlInitializer->clearScreen();
 	//TODO: MEMORY LEAK omdat ik nog niet CLEAR sdl window aanroep omdat dat het beeld van playstate word weggehaald
 	/*
-		IS DIT EEN LEAK?
+	IS DIT EEN LEAK?
 	*/
-	
+
 	SDL_Texture* texture = IMG_LoadTexture(this->gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "pausemenu.png").c_str());
 	SDL_Rect rect;
 	rect.w = 200;
@@ -63,11 +63,8 @@ void PauseState::draw()
 	rect.x = 200;
 	rect.y = 200;
 	this->gsm->sdlInitializer->drawTexture(texture, &rect, NULL);
-	
-	SDL_DestroyTexture(texture);  
 
-	
-	this->gsm->sdlInitializer->drawScreen();
+	SDL_DestroyTexture(texture);  
 }
 
 void PauseState::removeState()

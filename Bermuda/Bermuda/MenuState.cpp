@@ -65,7 +65,7 @@ void MenuState::handleEvents() {
 		SDL_GetMouseState(&x, &y);
 		switch(mainEvent.type) {
 		case SDL_QUIT:
-	
+
 			this->gsm->quit();
 			break;
 
@@ -109,11 +109,6 @@ void MenuState::draw() {
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->draw( gsm);
 	}
-	//playButton->draw(gsm);
-	//exitButton->draw(gsm);
-	gsm->sdlInitializer->drawScreen();
-
-	
 }
 
 

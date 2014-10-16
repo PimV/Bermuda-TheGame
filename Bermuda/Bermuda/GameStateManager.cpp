@@ -4,6 +4,7 @@
 #include "PlayState.h"
 #include <iostream>
 #include <Windows.h>
+#include <SDL_ttf.h>
 
 
 GameStateManager::GameStateManager(void) {
@@ -21,6 +22,15 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	actionContainer = new ActionContainer();
 
 	m_running = true;
+	this->setFps(0);
+}
+
+void GameStateManager::setFps(int fps) {
+	this->fps = fps;
+}
+
+int GameStateManager::getFps() {
+	return this->fps;
 }
 
 void GameStateManager::cleanup() {
@@ -73,7 +83,14 @@ void GameStateManager::update(double deltaTime) {
 }
 
 void GameStateManager::draw() {
+	//Draw GameState
 	states.back()->draw();
+
+	//Draw FPS
+	this->sdlInitializer->drawText(to_string(this->getFps()), 5, 5, 20, 24);
+
+	//Draw entire screen
+	this->sdlInitializer->drawScreen();
 }
 
 ActionContainer* GameStateManager::getActionContainer() {

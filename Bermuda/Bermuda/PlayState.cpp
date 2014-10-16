@@ -59,6 +59,7 @@ void PlayState::handleEvents() {
 	while(SDL_PollEvent(&mainEvent)) {
 
 		switch(mainEvent.type) {
+
 		case SDL_MOUSEBUTTONDOWN:
 			int x,y;
 			SDL_GetMouseState(&x, &y);
@@ -147,17 +148,6 @@ void PlayState::update(double dt) {
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
-	//bool canMove = true;
-	//for(Collidable* c : mec->getCollidableContainer()->getContainer()) {
-	//	if (p->intersects(c)) {
-	//		p->moveClick = true;
-	//		p->resetMovement();
-	//		break;
-	//	}
-	//	//break;
-
-	//}
-	//}
 }
 
 void PlayState::draw() {
@@ -200,8 +190,6 @@ void PlayState::draw() {
 		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
 
-	//Draw screen
-	this->gsm->sdlInitializer->drawScreen();
 }
 
 PlayState::~PlayState(void)
