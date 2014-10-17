@@ -23,8 +23,6 @@ public:
 	void clickMove();
 	void setPosition();
 	void resetMovement();
-	//void LoadSpriteSheet(std::string path, SDL_Renderer *renderer);
-	//void SetupAnimation(int amountFramesX, int amountFramesY);
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
 	void StopAnimation();
 
@@ -44,9 +42,6 @@ private:
 	Camera* camera;
 	GameStateManager* gsm;
 
-	//SDL_Rect crop;
-	//SDL_Texture* texture;
-
 	int firstImgID;
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;
 	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
@@ -55,5 +50,4 @@ private:
 	double animationSpeed, animationDelay;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
-	//std::string* path;
 };
