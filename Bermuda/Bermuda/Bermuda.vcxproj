@@ -122,6 +122,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="InteractiveBase.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
@@ -151,6 +152,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="InteractiveBase.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />

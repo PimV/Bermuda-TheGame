@@ -97,6 +97,9 @@
     <Filter Include="Header Files\Model\Container\Tile">
       <UniqueIdentifier>{ddd9e1dc-147b-4b55-af41-a0b18b490747}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Container\Interactive">
+      <UniqueIdentifier>{be7ae0cc-0742-4e68-8b12-6ab94637c53d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -212,7 +215,7 @@
     </ClCompile>
     <ClCompile Include="SoundLoader.cpp">
       <Filter>Source Files\Controller</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -220,10 +223,13 @@
       <Filter>Source Files\Model\Container\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CollidableEntity.cpp">
-	  <Filter>Source Files\Model\Entity</Filter>
-	</ClCompile>
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="Rock.cpp">
       <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveBase.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,7 +352,7 @@
     </ClInclude>
     <ClInclude Include="SoundLoader.h">
       <Filter>Header Files\Controller</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
@@ -354,10 +360,13 @@
       <Filter>Header Files\Model\Container\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CollidableEntity.h">
-	  <Filter>Header Files\Model\Entity</Filter>
-	</ClInclude>
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
     <ClInclude Include="Rock.h">
       <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveBase.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
