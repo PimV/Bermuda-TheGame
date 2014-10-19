@@ -66,6 +66,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->moveClick = true;
 		}
 		break;
+
 	case SDL_KEYDOWN:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
@@ -91,6 +92,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->moveClick = false;
 			p->movingDown = true;	
 			p->movingUp = false;	
+			break;
+		case SDLK_SPACE:
+			p->interaction = true;
 			break;
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
@@ -129,9 +133,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingDown = false;
 			p->StopAnimation();
 			break;
+		case SDLK_SPACE:
+			p->interaction = false;
+			p->StopAnimation();
+			break;
 		}
 		break;
-
 	}
 }
 
