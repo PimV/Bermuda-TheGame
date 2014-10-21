@@ -15,7 +15,7 @@ class Player :
 	public CollidableEntity
 {
 public:
-	Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
+	Player(int id, double moveSpeed, int x, int y, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
 	//virtual void move(EnumDirection direction) = 0;
 	void update(double dt);
 	virtual void move(double dt);

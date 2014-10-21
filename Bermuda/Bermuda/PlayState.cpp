@@ -28,7 +28,7 @@ void PlayState::init(GameStateManager *gsm) {
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
-	p = new Player(1, 3, camera, gsm, mec);
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera, gsm, mec);
 
 	temp =  std::vector<DrawableEntity*>();
 }

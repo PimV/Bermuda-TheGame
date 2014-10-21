@@ -164,14 +164,12 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
-			Rock* rock = new Rock(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
-			//Create rock object
-			//Rock also has 2 images. Big rock and destroyed rock. 
+			Rock* rock = new Rock(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1)); 
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
 			Rock* rock = new Rock(objectID, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
-			//Create destroyed rock object
+			//TODO: Set rock to his 'pieces' state. (If we want to allow placing rock pieces directly in the 'tiled' map.)
 		}
 	}
 }
@@ -182,9 +180,18 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
 	{
 		Value& object = spawnpoints[j];
+		Value& properties = object["properties"];
+
 		cout << "- x: " << object["x"].GetInt() << " ";
 		cout << "y: " << object["y"].GetInt() << " ";
-		cout << "type: " << object["type"].GetString() << endl;
+		cout << "type: " << properties["SpawnType"].GetString() << endl;
+
+		if(properties["SpawnType"].GetString() == "Player")
+		{
+			cout << "goed!!" << endl;
+			startPosX = object["x"].GetInt();
+			startPosY = object["y"].GetInt();
+		}
 	}
 }
 
@@ -196,6 +203,16 @@ int MapLoader::getMapHeight()
 int MapLoader::getMapWidth()
 {
 	return mapWidth;
+}
+
+int MapLoader::getStartPosX()
+{
+	return startPosX;
+}
+
+int MapLoader::getStartPosY()
+{
+	return startPosY;
 }
 
 MapLoader::~MapLoader()

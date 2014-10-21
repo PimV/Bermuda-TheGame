@@ -3,15 +3,15 @@
 #include <iostream>
 
 
-Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
+Player::Player(int id, double moveSpeed, int x, int y, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
 	: Entity(id), DrawableEntity(id, nullptr), CollidableEntity(id), IMovable(moveSpeed)
 {
 	this->camera = camera;
 	this->gsm = gsm;
 
 	//TODO: Change setx and sety to spawnlocation
-	this->setX(350);
-	this->setY(350);
+	this->setX(x);
+	this->setY(y);
 	this->setWidth(64);
 	this->setHeight(64);
 	this->dx = 0;
