@@ -273,7 +273,7 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 
 void Player::StopAnimation()
 {
-	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
+	this->setDrawImage( gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn) );
 }
 
 

@@ -75,27 +75,32 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingLeft = true;
 			p->movingRight = false;
 			break;
+
 		case SDLK_RIGHT:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingRight = true;	
 			p->movingLeft = false;
 			break;
+
 		case SDLK_UP:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingUp = true;	
 			p->movingDown = false;
 			break;
+
 		case SDLK_DOWN:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingDown = true;	
 			p->movingUp = false;	
 			break;
+
 		case SDLK_SPACE:
 			p->interaction = true;
 			break;
+
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
 			this->gsm->pushGameState(PauseState::Instance());
@@ -107,36 +112,34 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYUP:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingLeft = false;
-			p->StopAnimation();
-
 			break;
+
 		case SDLK_RIGHT:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingRight = false;
-			p->StopAnimation();
-
 			break;
+
 		case SDLK_UP:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingUp = false;
-			p->StopAnimation();
+			break;
 
-			break;
 		case SDLK_DOWN:
-			p->moveClick = false;
-			//p->resetMovement();
-			p->movingDown = false;
 			p->StopAnimation();
+			p->moveClick = false;
+			p->movingDown = false;
 			break;
+
 		case SDLK_SPACE:
 			p->interaction = false;
 			p->StopAnimation();
 			break;
+
 		}
 		break;
 	}
