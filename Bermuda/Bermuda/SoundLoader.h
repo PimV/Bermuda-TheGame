@@ -10,20 +10,18 @@ public:
 
 	void playMenuMusic();
 	void playGameMusic();
-
 private:
+	bool init();
+
 	bool loadMenuMusic();
 	bool loadGameMusic();
-
-	void threadMenuMusic(std::vector<Mix_Music*> menuMusic);
-	static int threadGameMusic(void* data);
+	void threadMenuMusic();
+	void threadGameMusic();
 
 	std::vector<Mix_Music*> menuMusic;
 	std::vector<Mix_Music*> gameMusic;
 	//std::vector<Mix_Chunk*> soundEffects;
 
-	bool* quit;
-
-	static bool init();
+	int target_time_ms;
 };
 
