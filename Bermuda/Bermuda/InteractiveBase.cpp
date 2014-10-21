@@ -13,7 +13,7 @@ InteractiveBase::~InteractiveBase(void)
 
 void InteractiveBase::interact()
 {
-	// TODO: Fill methode
+	// this methode is pure virtual
 }
 
 void InteractiveBase::setRangeValue(int value)
