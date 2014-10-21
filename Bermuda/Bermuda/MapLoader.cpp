@@ -186,7 +186,8 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		cout << "y: " << object["y"].GetInt() << " ";
 		cout << "type: " << properties["SpawnType"].GetString() << endl;
 
-		if(properties["SpawnType"].GetString() == "Player")
+		string spawnType = properties["SpawnType"].GetString();
+		if(spawnType == "Player")
 		{
 			cout << "goed!!" << endl;
 			startPosX = object["x"].GetInt();
