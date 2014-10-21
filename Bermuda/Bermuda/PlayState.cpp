@@ -33,6 +33,9 @@ void PlayState::init(GameStateManager *gsm) {
 	p = new Player(1, 3, camera, gsm, mec);
 
 	temp =  std::vector<DrawableEntity*>();
+
+
+	std:: cout << gameTime << std::endl;
 }
 
 void PlayState::cleanup() {
@@ -159,6 +162,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
+
+	this->gameTime += this->gsm->lastUpdateLength;
+	std::cout << this->gameTime << std::endl;
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
 	/*p->move(dt);*/

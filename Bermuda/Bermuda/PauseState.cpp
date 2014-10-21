@@ -42,7 +42,7 @@ void PauseState::handleEvents(SDL_Event mainEvent)
 
 void PauseState::update(double dt)
 {
-	std::cout << "Active: pause state" << std::endl;
+	//std::cout << "Active: pause state" << std::endl;
 }
 
 void PauseState::draw()

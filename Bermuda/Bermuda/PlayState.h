@@ -43,6 +43,7 @@ public:
 	~PlayState(void);
 
 private:
+	long gameTime;
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 };

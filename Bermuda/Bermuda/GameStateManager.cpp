@@ -24,10 +24,15 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	m_running = true;
 	showFps = false;
 	this->setFps(0);
+	this->lastUpdateLength = 0;
 }
 
 void GameStateManager::setFps(int fps) {
 	this->fps = fps;
+}
+
+void GameStateManager::drawTime(long time) {
+	this->lastUpdateLength = time;
 }
 
 int GameStateManager::getFps() {

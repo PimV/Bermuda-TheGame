@@ -23,6 +23,7 @@ public:
 	void changeGameState(IGameState* gameState);
 	void pushGameState(IGameState* gameState);
 	void popState();
+	void drawTime(long time);
 
 	void update(double delta);
 	void handleEvents();
@@ -32,13 +33,14 @@ public:
 
 	bool running();
 	void quit();
-
+		long lastUpdateLength;
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
 
 	~GameStateManager(void);
 private: 
+
 	int fps;
 	std::vector<IGameState*> states;
 	IGameState *currentState;
