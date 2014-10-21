@@ -16,8 +16,6 @@ public:
 
 	std::vector<IAction*>* getVector();
 
-
-
 	virtual ~ActionContainer(void);
 
 private:
