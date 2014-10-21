@@ -191,7 +191,8 @@ bool SoundLoader::loadGameMusic()
 	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Maskball.mp3").c_str()));
 	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Mystery.mp3").c_str()));
 	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Playground.mp3").c_str()));
-	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Saint Morning.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Run Amok.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Pamgaea.mp3").c_str()));
 	for (size_t i = 0; i < gameMusic.size(); i++)
 	{
 		if (gameMusic[i] == NULL)
