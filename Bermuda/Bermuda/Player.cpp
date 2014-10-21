@@ -198,7 +198,7 @@ void::Player::interact(double dt)
 	else if (this->currentPlayerAnimationRow == this->playerAnimationWalkRightRow)
 		this->currentPlayerAnimationRow += 4;
 
-	PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
+	this->PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
 }
 
 void Player::setPosition() {
@@ -267,10 +267,8 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 			CurrentFrame++;
 
 		this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
-		//this->setDrawImage(gsm->getImageLoader()->getMapImage( (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
 		animationSpeed = maxSpeed * 3;
 	}
-
 }
 
 void Player::StopAnimation()
