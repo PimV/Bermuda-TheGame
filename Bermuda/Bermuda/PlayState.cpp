@@ -7,8 +7,12 @@
 #include "MoveAction.h"
 #include "PauseState.h"
 #include <iostream>
+#include <algorithm>
 
 PlayState PlayState::m_PlayState;
+
+//Needed for vector sort
+bool drawableSortFunction (DrawableEntity* one,DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()  ); }
 
 PlayState::PlayState(void)
 {
@@ -25,9 +29,9 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playGameMusic();
 
-	p = new Player(1, mapLoader->getChunkSize(), 3, camera, gsm, mec);
+	temp = 0;
 
-	temp =  std::vector<DrawableEntity*>();
+	p = new Player(1, mapLoader->getChunkSize(), 3, camera, gsm, mec);
 }
 
 void PlayState::cleanup() {
@@ -143,12 +147,15 @@ void PlayState::update(double dt) {
 }
 
 void PlayState::draw() {
-
+	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
 	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
 	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
 
+	std::vector<DrawableEntity*> drawableVector;
+
+	//Loop through all chunks
 	for(int i = beginChunkY; i <= endChunkY; i++)
 	{
 		for(int j = beginChunkX; j <= endChunkX; j++)
@@ -164,54 +171,26 @@ void PlayState::draw() {
 			}
 
 			//Objecten
-			std::vector<DrawableEntity*>* vec = this->mec->getDrawableContainer()->getChunk(i, j);
+			vec = this->mec->getDrawableContainer()->getChunk(i, j);
 			if(vec != nullptr)
 			{
 				for(DrawableEntity* e : *vec)
 				{
-					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+					drawableVector.push_back(e);
 				}
 			}
 
 		}
 	}
 
+	//Sort drawable object vector
+	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
 
-
-	//DrawableContainer* drawableContainer = mec->getDrawableContainer();
-	//for(DrawableEntity* entity : drawableContainer->getContainer())
-	//{
-	//	if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
-	//		int test = entity->getWidth();
-	//		if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
-	//			//Remove to temporaryContaienr
-	//			temp.erase(std::find(temp.begin(), temp.end(), entity));
-	//		}
-	//		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
-	//	} else {
-	//		if (std::find(temp.begin(), temp.end(), entity) == temp.end() && entity != p) {
-	//			//Add to temporaryContainer
-	//			temp.push_back(entity);
-	//		}
-
-	//	}
-	//}
-
-	std::vector<DrawableEntity*>* contt =  this->mec->getDrawableContainer()->getChunk(floor(p->getY() / 300), floor(p->getX() / 300));
-	for(DrawableEntity* e : *contt)
+	//Draw sorted object vector
+	for(DrawableEntity* e : drawableVector)
 	{
 		e->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
-
-	//Load player
-	p->draw(camera, gsm->sdlInitializer->getRenderer());
-
-	//Load entities above the player
-	for(DrawableEntity* entity : temp)
-	{
-		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
-	}
-
 }
 
 PlayState::~PlayState(void)

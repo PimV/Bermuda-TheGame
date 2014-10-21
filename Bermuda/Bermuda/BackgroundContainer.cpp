@@ -5,14 +5,6 @@ BackgroundContainer::BackgroundContainer()
 {
 }
 
-//void BackgroundContainer::add(DrawableEntity* entity) {
-//	this->m_container.push_back(entity);
-//}
-//
-//std::vector<DrawableEntity*> BackgroundContainer::getContainer() {
-//	return this->m_container;
-//}
-
 void BackgroundContainer::initChunks(int chunksY, int chunksX)
 {
 	container.resize(chunksY);

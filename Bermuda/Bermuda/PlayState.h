@@ -22,6 +22,7 @@ private:
 
 	int counter;
 	Camera* camera;
+	int temp;
 
 public:
 
@@ -44,5 +45,4 @@ public:
 
 private:
 	Player* p;
-	std::vector<DrawableEntity*> temp;
 };

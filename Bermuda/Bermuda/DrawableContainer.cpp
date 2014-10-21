@@ -1,5 +1,5 @@
 #include "DrawableContainer.h"
-
+#include <iostream>
 
 DrawableContainer::DrawableContainer() : IEntityContainer()
 {
@@ -22,11 +22,11 @@ void DrawableContainer::add(DrawableEntity* entity)
 
 void DrawableContainer::remove(DrawableEntity* entity)
 {
-	std::vector<DrawableEntity*> vec = this->container[entity->getChunkY()][entity->getChunkX()];
-	std::vector<DrawableEntity*>::iterator it = std::find(vec.begin(), vec.end(), entity);
+	std::vector<DrawableEntity*>* vec = &this->container[entity->getChunkY()][entity->getChunkX()];
+	std::vector<DrawableEntity*>::iterator it = std::find(vec->begin(), vec->end(), entity);
 
-	if (it != vec.end()) {
-		vec.erase(it);
+	if (it != vec->end()) {
+		vec->erase(it);
 	}
 }
 
