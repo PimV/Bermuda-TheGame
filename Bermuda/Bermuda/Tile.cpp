@@ -1,11 +1,12 @@
 #include "Tile.h"
 
 
-Tile::Tile(int id, MainEntityContainer* mec, double x, double y, Image* image)
+Tile::Tile(int id, int chunkSize, MainEntityContainer* mec, double x, double y, Image* image)
 	: Entity(id), DrawableEntity(id, image)
 {
 	setX(x);
 	setY(y);
+	setChunkSize(chunkSize);
 	//mec->getDrawableContainer()->add(this);
 	mec->getBackgroundContainer()->add(this);
 }

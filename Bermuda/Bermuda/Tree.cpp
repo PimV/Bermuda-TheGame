@@ -1,10 +1,11 @@
 #include "Tree.h"
 
-Tree::Tree(int id, MainEntityContainer* mec, double x, double y, Image* treeImage, Image* stumpImage)
+Tree::Tree(int id, int chunkSize, MainEntityContainer* mec, double x, double y, Image* treeImage, Image* stumpImage)
 	: Entity(id), DrawableEntity(id, treeImage), CollidableEntity(id, 34, 102, 27, 15), mec(mec), treeImage(treeImage), stumpImage(stumpImage)
 {
 	setX(x);
 	setY(y);
+	setChunkSize(chunkSize);
 	mec->getDrawableContainer()->add(this);
 	mec->getCollidableContainer()->add(this);
 }

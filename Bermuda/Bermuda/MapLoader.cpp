@@ -9,10 +9,11 @@
 #include <string>
 #include <iostream>
 #include <Windows.h>
+#include <math.h>
 
 
 MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
-	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader())
+	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader()), chunkSize(300)
 {
 }
 
@@ -55,6 +56,9 @@ void MapLoader::extractMapInfo(Document& d)
 
 	mapHeight = mapTileHeight * tileHeight;
 	mapWidth = mapTileWidth * tileWidth;
+
+	//Set the containers
+	mec->initContainerSizes(floor(mapHeight/chunkSize) +1, floor(mapWidth/chunkSize) +1);
 
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
@@ -122,13 +126,12 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
 			{
 				//Tile is in collision vector. Create collisionTile.
-				CollidableTile* tile = new CollidableTile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
-
+				CollidableTile* tile = new CollidableTile(tileID, chunkSize, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
-				Tile* tile = new Tile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
+				Tile* tile = new Tile(tileID, chunkSize, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));				
 			}
 		}
 	}
@@ -136,7 +139,6 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 
 void MapLoader::createObjects(Value& objects)
 {
-	
 	//Possibly use this to create objects from strings
 	/*map_type map;
 	map["DerivedA"] = &createInstance<DerivedA>;
@@ -146,6 +148,8 @@ void MapLoader::createObjects(Value& objects)
 	
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
+		Entity* e = nullptr;
+
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
 		Image* objectImg = imgLoader->getMapImage(objectID);
@@ -155,22 +159,22 @@ void MapLoader::createObjects(Value& objects)
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
 		{
-			Tree* tree = new Tree(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
+			e = new Tree(objectID, chunkSize, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
-			Tree* tree = new Tree(objectID, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
+			e = new Tree(objectID, chunkSize, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
 			//TODO: Set tree in his 'stump' state. (If we want to allow placing stumps directly in the 'tiled' map.)
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
-			Rock* rock = new Rock(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
+			e = new Rock(objectID, chunkSize, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
 			//Create rock object
 			//Rock also has 2 images. Big rock and destroyed rock. 
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			Rock* rock = new Rock(objectID, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
+			e = new Rock(objectID, chunkSize, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
 			//Create destroyed rock object
 		}
 	}
@@ -196,6 +200,11 @@ int MapLoader::getMapHeight()
 int MapLoader::getMapWidth()
 {
 	return mapWidth;
+}
+
+int MapLoader::getChunkSize()
+{
+	return chunkSize;
 }
 
 MapLoader::~MapLoader()

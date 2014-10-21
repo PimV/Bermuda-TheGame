@@ -11,7 +11,7 @@ private:
 	Image* rockPiecesImage;
 	MainEntityContainer* mec;
 public:
-	Rock(int id, MainEntityContainer* mec,  double x, double y, Image* rockImage, Image* rockPieces);
+	Rock(int id, int chunkSize, MainEntityContainer* mec,  double x, double y, Image* rockImage, Image* rockPieces);
 	void setCollidableValues();
 	~Rock();
 };

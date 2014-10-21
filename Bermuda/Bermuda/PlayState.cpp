@@ -25,10 +25,7 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playGameMusic();
 
-
-	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
-
-	p = new Player(1, 3, camera, gsm, mec);
+	p = new Player(1, mapLoader->getChunkSize(), 3, camera, gsm, mec);
 
 	temp =  std::vector<DrawableEntity*>();
 }
@@ -146,34 +143,64 @@ void PlayState::update(double dt) {
 }
 
 void PlayState::draw() {
-	//Clears the screen
-	//this->gsm->sdlInitializer->clearScreen();
 
-	//Load background
-	BackgroundContainer* backgroundContainer = mec->getBackgroundContainer();
-	for(DrawableEntity* entity : backgroundContainer->getContainer())
-	{
-		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
-	}
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
 
-	//Load drawable container and check order to be drawn
-	DrawableContainer* drawableContainer = mec->getDrawableContainer();
-	for(DrawableEntity* entity : drawableContainer->getContainer())
+	for(int i = beginChunkY; i <= endChunkY; i++)
 	{
-		if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
-			int test = entity->getWidth();
-			if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
-				//Remove to temporaryContaienr
-				temp.erase(std::find(temp.begin(), temp.end(), entity));
+		for(int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Background
+			std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(DrawableEntity* e : *vec)
+				{
+					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+				}
 			}
-			entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
-		} else {
-			if (std::find(temp.begin(), temp.end(), entity) == temp.end() && entity != p) {
-				//Add to temporaryContainer
-				temp.push_back(entity);
+
+			//Objecten
+			std::vector<DrawableEntity*>* vec = this->mec->getDrawableContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(DrawableEntity* e : *vec)
+				{
+					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+				}
 			}
 
 		}
+	}
+
+
+
+	//DrawableContainer* drawableContainer = mec->getDrawableContainer();
+	//for(DrawableEntity* entity : drawableContainer->getContainer())
+	//{
+	//	if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
+	//		int test = entity->getWidth();
+	//		if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
+	//			//Remove to temporaryContaienr
+	//			temp.erase(std::find(temp.begin(), temp.end(), entity));
+	//		}
+	//		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
+	//	} else {
+	//		if (std::find(temp.begin(), temp.end(), entity) == temp.end() && entity != p) {
+	//			//Add to temporaryContainer
+	//			temp.push_back(entity);
+	//		}
+
+	//	}
+	//}
+
+	std::vector<DrawableEntity*>* contt =  this->mec->getDrawableContainer()->getChunk(floor(p->getY() / 300), floor(p->getX() / 300));
+	for(DrawableEntity* e : *contt)
+	{
+		e->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
 
 	//Load player
