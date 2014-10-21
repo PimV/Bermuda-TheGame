@@ -7,6 +7,7 @@
 #include "MoveAction.h"
 #include "PauseState.h"
 #include <iostream>
+#include "Windows.h" 
 
 PlayState PlayState::m_PlayState;
 
@@ -22,9 +23,7 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
-	SoundLoader* soundLoader = gsm->getSoundLoader();
-	soundLoader->closeMusic();
-	soundLoader->playGameMusic();
+	SoundLoader::Instance()->playGameMusic();
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 

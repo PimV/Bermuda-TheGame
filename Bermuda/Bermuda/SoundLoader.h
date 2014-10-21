@@ -2,6 +2,8 @@
 #include <SDL_mixer.h>
 #include <vector>
 
+enum class StateType;
+
 class SoundLoader
 {
 public:
@@ -11,13 +13,18 @@ public:
 	void playMenuMusic();
 	void playGameMusic();
 	void closeMusic();
+
+	static SoundLoader* Instance() {
+		return &m_SoundLoader;
+	};
 private:
-	bool init();
+	bool initialiseSound();
+	void initialiseThread();
 
 	bool loadMenuMusic();
 	bool loadGameMusic();
-	void threadMenuMusic();
-	void threadGameMusic();
+
+	void threadMusic();
 
 	std::vector<Mix_Music*> menuMusic;
 	std::vector<Mix_Music*> gameMusic;
@@ -25,5 +32,8 @@ private:
 
 	int target_time_ms;
 	bool quit;
-};
+	bool haltMusic;
+	static SoundLoader m_SoundLoader;
 
+	StateType stateType;
+};

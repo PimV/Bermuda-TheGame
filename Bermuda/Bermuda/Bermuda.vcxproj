@@ -136,6 +136,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="SDLInitializer.h" />
     <ClInclude Include="SoundLoader.h" />
     <ClInclude Include="Spawnpoint.h" />
+    <ClInclude Include="StateType.h" />
     <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,21 +1,73 @@
 #include "SoundLoader.h"
 #include "header_loader.h"
+#include "StateType.h"
 
 #include <SDL_thread.h>
 #include <time.h>
 #include <iostream>
 #include <thread>
 
+#pragma region Constructor & Destructor
 SoundLoader::SoundLoader()
 {
 	target_time_ms = 180000; // 3 minutes
-	if (!init())
+		
+	if (!initialiseSound())
 	{
 		printf("Failed to initialize SoundLoader!\n");
 	}
+
+	initialiseThread();
 }
 
-bool SoundLoader::init()
+SoundLoader::~SoundLoader()
+{
+	for (size_t i = 0; i < menuMusic.size(); i++)
+	{
+		Mix_FreeMusic(menuMusic[i]);
+		menuMusic[i] = NULL;
+	}
+
+	for (size_t i = 0; i < gameMusic.size(); i++)
+	{
+		Mix_FreeMusic(gameMusic[i]);
+		gameMusic[i] = NULL;
+	}
+}
+
+#pragma endregion
+
+#pragma region Public Methods
+void SoundLoader::playGameMusic()
+{
+	stateType = StateType::Game;
+	haltMusic = true;
+}
+
+void SoundLoader::playMenuMusic()
+{
+	stateType = StateType::Menu;
+	haltMusic = true;
+}
+
+void SoundLoader::closeMusic()
+{
+	quit = true;
+}
+
+SoundLoader SoundLoader::m_SoundLoader;
+
+#pragma endregion
+
+#pragma region Private Methodes
+void SoundLoader::initialiseThread()
+{
+	std::thread t(&SoundLoader::threadMusic, this);
+	t.detach();
+}
+
+
+bool SoundLoader::initialiseSound()
 {
 	bool success = true;
 
@@ -48,87 +100,60 @@ bool SoundLoader::init()
 	return success;
 }
 
-void SoundLoader::playGameMusic()
+void SoundLoader::threadMusic()
 {
 	quit = false;
-	std::thread gameMusicThread(&SoundLoader::threadGameMusic, this);
-	gameMusicThread.detach();
-}
-
-void SoundLoader::playMenuMusic()
-{
-	quit = false;
-	std::thread menuMusicThread(&SoundLoader::threadMenuMusic, this);
-	menuMusicThread.detach();
-}
-
-void SoundLoader::closeMusic()
-{
-	quit = true;
-}
-
-void SoundLoader::threadGameMusic()
-{
-	Mix_FadeOutMusic(1500); // Stop any music that's already playing
-
-	long currentTime = SDL_GetTicks();
-	long prevTime = 0;
+	//long currentTime = SDL_GetTicks();
+	//long prevTime = 0;
+	
+	// Stop any music that's already playing
+	Mix_FadeOutMusic(1500); 
 
 	while (!quit)
 	{
 		if (Mix_PlayingMusic() == 0) {
-			std::cout << "Music start" << std::endl;
 
 			srand(time(NULL));
-			int i = rand() % gameMusic.size();
-			Mix_FadeInMusic(gameMusic[i], 0, 1500);
-		} 
+			int trackNr;
 
-		currentTime = SDL_GetTicks();
+			switch (stateType)
+			{
+			case StateType::Setup:
+				break;
+			case StateType::Game:
+				trackNr = rand() % gameMusic.size();
+				Mix_FadeInMusic(gameMusic[trackNr], 0, 1500);
+				break;
+			case StateType::Menu:
+				trackNr = rand() % menuMusic.size();
+				Mix_FadeInMusic(menuMusic[trackNr], 0, 1500);
+				break;
+			case StateType::Pause:
+				break;
+			default:
+				break;
+			}
+		}
+
+		if (haltMusic == true) 
+		{
+			Mix_FadeOutMusic(1500);
+			haltMusic = false;
+		}
+
+		/*currentTime = SDL_GetTicks();
 		if (currentTime - prevTime > target_time_ms)
 		{
 			std::cout << currentTime - prevTime << std::endl;
-			
 			prevTime = currentTime;
 			Mix_FadeOutMusic(1500);
-		}
+		}*/
 
 		std::chrono::milliseconds dura(50);
 		std::this_thread::sleep_for(dura);
 	}
-}
-
-void SoundLoader::threadMenuMusic()
-{
-	Mix_FadeOutMusic(1500); // Stop any music that's already playing
-
-	bool running = true;
-
-	long currentTime = SDL_GetTicks();
-	long prevTime = 0;
-
-	while (running)
-	{
-		if (Mix_PlayingMusic() == 0) {
-			std::cout << "Music start" << std::endl;
-
-			srand(time(NULL));
-			int i = rand() % menuMusic.size();
-			Mix_FadeInMusic(menuMusic[i], 0, 1500);
-		}
-
-		currentTime = SDL_GetTicks();
-		if (currentTime - prevTime > target_time_ms)
-		{
-			std::cout << currentTime - prevTime << std::endl;
-
-			prevTime = currentTime;
-			Mix_FadeOutMusic(1500);
-		}
-
-		std::chrono::milliseconds dura(50);
-		std::this_thread::sleep_for(dura);
-	}
+	quit = true;
+	Mix_FadeOutMusic(1500);
 }
 
 bool SoundLoader::loadMenuMusic()
@@ -178,20 +203,4 @@ bool SoundLoader::loadGameMusic()
 
 	return success;
 }
-
-
-
-SoundLoader::~SoundLoader()
-{
-	for (size_t i = 0; i < menuMusic.size(); i++)
-	{
-		Mix_FreeMusic(menuMusic[i]);
-		menuMusic[i] = NULL;
-	}
-
-	for (size_t i = 0; i < gameMusic.size(); i++)
-	{
-		Mix_FreeMusic(gameMusic[i]);
-		gameMusic[i] = NULL;
-	}
-}
+#pragma endregion
