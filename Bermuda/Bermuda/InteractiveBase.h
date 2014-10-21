@@ -7,7 +7,7 @@ public:
 	InteractiveBase(void);
 	virtual ~InteractiveBase(void);
 
-	virtual void interact();
+	virtual void interact() = 0;
 	virtual void setRangeValue(int value);
 	virtual int getRangeValue();
 
