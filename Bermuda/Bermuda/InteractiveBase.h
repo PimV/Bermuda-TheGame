@@ -8,12 +8,10 @@ public:
 	virtual ~InteractiveBase(void);
 
 	virtual void interact();
-	virtual void setRangeValue(int value) = 0;
-	virtual int getRangeValue() = 0;
+	virtual void setRangeValue(int value);
+	virtual int getRangeValue();
 
 private:
 	int rangeValue;
-
-	virtual void createRangeRect() = 0;
 };
 
