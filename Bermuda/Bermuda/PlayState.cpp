@@ -7,6 +7,8 @@
 #include "MoveAction.h"
 #include "PauseState.h"
 #include <iostream>
+#include "Inventory.h"
+#include "Item.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -95,6 +97,21 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
 			this->gsm->pushGameState(PauseState::Instance());
+			break;
+		case SDLK_i:
+			this->p->getInventory()->addItem(new Item(2,16,true,NULL));
+			this->p->getInventory()->printInventory();
+			break;
+		case SDLK_o: {
+			Item* item = new Item(2,16,true,NULL);
+			item->setStackSize(5);
+			this->p->getInventory()->addItem(item);
+			this->p->getInventory()->printInventory();
+			break;
+					 }
+		case SDLK_r:
+			this->p->getInventory()->deleteItem(this->p->getInventory()->getItems()[0],5);
+			this->p->getInventory()->printInventory();
 			break;
 		}
 

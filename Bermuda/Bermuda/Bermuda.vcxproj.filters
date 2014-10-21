@@ -97,6 +97,12 @@
     <Filter Include="Header Files\Model\Container\Tile">
       <UniqueIdentifier>{ddd9e1dc-147b-4b55-af41-a0b18b490747}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Item">
+      <UniqueIdentifier>{097e5ade-cb4e-4841-9a10-36e47053f69c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Item">
+      <UniqueIdentifier>{e778ff3d-ea2e-4688-a957-eb24b2bef58a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -212,7 +218,7 @@
     </ClCompile>
     <ClCompile Include="SoundLoader.cpp">
       <Filter>Source Files\Controller</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -220,10 +226,16 @@
       <Filter>Source Files\Model\Container\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CollidableEntity.cpp">
-	  <Filter>Source Files\Model\Entity</Filter>
-	</ClCompile>
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="Rock.cpp">
       <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,7 +358,7 @@
     </ClInclude>
     <ClInclude Include="SoundLoader.h">
       <Filter>Header Files\Controller</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
@@ -354,10 +366,19 @@
       <Filter>Header Files\Model\Container\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CollidableEntity.h">
-	  <Filter>Header Files\Model\Entity</Filter>
-	</ClInclude>
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
     <ClInclude Include="Rock.h">
       <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemType.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "header_loader.h"
 #include <iostream>
+#include "Inventory.h"
 
 
 Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
@@ -28,7 +29,6 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, 
 	this->setTempY(this->getY());
 
 	this->stopSpeed = 0.8;
-	//this->moveSpeed = id;
 	this->movingLeft = false;
 	this->movingRight = false;
 	this->movingDown = false;
@@ -49,6 +49,12 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, 
 	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
+
+	this->inventory = new Inventory();
+}
+
+Inventory* Player::getInventory() {
+	return this->inventory;
 }
 
 void Player::resetMovement()
@@ -260,4 +266,5 @@ void Player::StopAnimation()
 
 Player::~Player(void)
 {
+	delete this->inventory;
 }
