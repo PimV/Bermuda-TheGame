@@ -148,12 +148,20 @@ bool SoundLoader::loadGameMusic()
 {
 	bool success = true;
 
-	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Rites.mp3").c_str()));
-	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Run Amok.mp3").c_str()));
-	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Carefree.mp3").c_str()));
-	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Lightless Dawn.mp3").c_str()));
-	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Pamgaea.mp3").c_str()));
-	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Reign Supreme.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Bahara.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Behemos.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Colosseoum Main.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Creep.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Crisis.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Darkon.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Enrlun.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Flaris.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/General.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Kailun.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Maskball.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Mystery.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Playground.mp3").c_str()));
+	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Saint Morning.mp3").c_str()));
 	for (size_t i = 0; i < gameMusic.size(); i++)
 	{
 		if (gameMusic[i] == NULL)
