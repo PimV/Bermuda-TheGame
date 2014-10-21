@@ -30,6 +30,7 @@ void MenuState::init(GameStateManager *gsm) {
 	}
 
 	SoundLoader* soundLoader = gsm->getSoundLoader();
+	soundLoader->closeMusic();
 	soundLoader->playMenuMusic();
 
 	//playButton->align(1, totalButtons);

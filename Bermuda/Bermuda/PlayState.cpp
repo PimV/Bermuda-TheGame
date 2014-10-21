@@ -23,8 +23,8 @@ void PlayState::init(GameStateManager *gsm) {
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
 	SoundLoader* soundLoader = gsm->getSoundLoader();
+	soundLoader->closeMusic();
 	soundLoader->playGameMusic();
-
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 

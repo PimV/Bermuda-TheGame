@@ -50,26 +50,31 @@ bool SoundLoader::init()
 
 void SoundLoader::playGameMusic()
 {
+	quit = false;
 	std::thread gameMusicThread(&SoundLoader::threadGameMusic, this);
 	gameMusicThread.detach();
 }
 
 void SoundLoader::playMenuMusic()
 {
+	quit = false;
 	std::thread menuMusicThread(&SoundLoader::threadMenuMusic, this);
 	menuMusicThread.detach();
+}
+
+void SoundLoader::closeMusic()
+{
+	quit = true;
 }
 
 void SoundLoader::threadGameMusic()
 {
 	Mix_FadeOutMusic(1500); // Stop any music that's already playing
 
-	bool running = true;
-
 	long currentTime = SDL_GetTicks();
 	long prevTime = 0;
 
-	while (running)
+	while (!quit)
 	{
 		if (Mix_PlayingMusic() == 0) {
 			std::cout << "Music start" << std::endl;

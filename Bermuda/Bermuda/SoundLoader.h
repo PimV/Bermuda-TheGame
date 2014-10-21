@@ -10,6 +10,7 @@ public:
 
 	void playMenuMusic();
 	void playGameMusic();
+	void closeMusic();
 private:
 	bool init();
 
@@ -23,5 +24,6 @@ private:
 	//std::vector<Mix_Chunk*> soundEffects;
 
 	int target_time_ms;
+	bool quit;
 };
 
