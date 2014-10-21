@@ -85,12 +85,12 @@ bool Inventory::hasItem(Item* item) {
 }
 void Inventory::deleteItem(Item* item, int count) {
 
-	//item->setStackSize(item->getStackSize() - count);
+	item->setStackSize(item->getStackSize() - count);
 
-	/*if (item->getStackSize() == 0) {
+	if (item->getStackSize() == 0) {
 		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), item);
 		this->itemVector.erase(it);
-	}*/
+	}
 
 
 }

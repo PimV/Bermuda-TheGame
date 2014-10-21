@@ -113,6 +113,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			this->p->getInventory()->deleteItem(this->p->getInventory()->getItems()[0],5);
 			this->p->getInventory()->printInventory();
 			break;
+		case SDLK_l:
+			Item* item = new Item(3,22,true,NULL);
+			item->setStackSize(5);
+			this->p->getInventory()->addItem(item);
+			this->p->getInventory()->printInventory();
+			break;
 		}
 
 		break;
