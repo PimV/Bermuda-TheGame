@@ -97,6 +97,9 @@
     <Filter Include="Header Files\Model\Container\Tile">
       <UniqueIdentifier>{ddd9e1dc-147b-4b55-af41-a0b18b490747}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Container\Interactive">
+      <UniqueIdentifier>{be7ae0cc-0742-4e68-8b12-6ab94637c53d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -227,6 +230,12 @@
     </ClCompile>
     <ClCompile Include="EntityChunkContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
+	</ClCompile>
+    <ClCompile Include="SoundLoader.cpp">
+      <Filter>Source Files\Model</Filter>
+	</ClCompile>
+    <ClCompile Include="InteractiveBase.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +373,15 @@
     </ClInclude>
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
+	</ClInclude>
+    <ClInclude Include="StateType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundLoader.h">
+      <Filter>Header Files\Model</Filter>
+	</ClInclude>
+    <ClInclude Include="InteractiveBase.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

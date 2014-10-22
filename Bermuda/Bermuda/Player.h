@@ -22,6 +22,7 @@ public:
 	//void clickMove();
 	void clickMove();
 	void setPosition();
+	void interact(double dt);
 	void resetMovement();
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
 	void StopAnimation();
@@ -35,6 +36,7 @@ public:
 	bool movingUp;
 	bool movingDown;
 	bool moveClick;
+	bool interaction;
 	int destX;
 	int destY;
 private:
@@ -46,6 +48,7 @@ private:
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;
 	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
 	int playerAnimationWalkStartColumn, playerAnimationWalkEndColumn;
+	int playerAnimationActionStartColumn, playerAnimationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
 	double animationSpeed, animationDelay;
 

@@ -10,11 +10,6 @@ Player::Player(int id, double moveSpeed, int x, int y, int chunkSize,Camera* cam
 	this->camera = camera;
 	this->gsm = gsm;
 
-	//TODO: Change setx and sety to spawnlocation
-	//this->setX(300);
-	//this->setY(300);
-	//this->setChunkSize(chunkSize);
-
 	//Entity -> dimension values
 	this->setWidth(64);
 	this->setHeight(64);
@@ -39,12 +34,14 @@ Player::Player(int id, double moveSpeed, int x, int y, int chunkSize,Camera* cam
 	this->movingDown = false;
 	this->movingUp = false;
 	this->moveClick = false;
+	this->interaction = false;
 
 	this->firstImgID = gsm->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
 	this->playerAnimationWalkUpRow = 8, this->playerAnimationWalkLeftRow = 9;
 	this->playerAnimationWalkDownRow = 10, this->playerAnimationWalkRightRow = 11;
 	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 8;
+	this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 	
@@ -110,8 +107,15 @@ bool Player::checkCollision(CollidableContainer* container) {
 }
 
 void Player::update(double dt) {
-	//TODO : naar MoveContainer o.i.d. 
-	this->move(dt);
+
+	if (interaction)
+	{
+		interact(dt);
+	}
+	else
+	{
+		this->move(dt);
+	}
 }
 
 void Player::move(double dt) {
@@ -172,14 +176,14 @@ void Player::move(double dt) {
 		return;
 	}
 
-	if (dx != 0 && dy != 0) {
+	//if (dx != 0 && dy != 0) {
 
 		//dx = dx / 2;
 		//dy = dy / 2;
 
 		//dx = dx / (moveSpeed / 2);
 		//dy = dy / (moveSpeed / 2);
-	}
+	//}
 
 	//Move player
 	this->setTempX(getX() + dx);
@@ -206,8 +210,23 @@ void Player::move(double dt) {
 	else if (this->movingDown)
 		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 
-	PlayAnimation(this->playerAnimationWalkStartColumn,this->playerAnimationWalkEndColumn,this->currentPlayerAnimationRow, dt);
+	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
 
+}
+
+void::Player::interact(double dt)
+{
+	// this is for setting the new animation, the value only needs to be added once
+	if (this->currentPlayerAnimationRow == this->playerAnimationWalkUpRow)
+		this->currentPlayerAnimationRow += 4;
+	else if (this->currentPlayerAnimationRow == this->playerAnimationWalkLeftRow)
+		this->currentPlayerAnimationRow += 4;
+	else if (this->currentPlayerAnimationRow == this->playerAnimationWalkDownRow)
+		this->currentPlayerAnimationRow += 4;
+	else if (this->currentPlayerAnimationRow == this->playerAnimationWalkRightRow)
+		this->currentPlayerAnimationRow += 4;
+
+	this->PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
 }
 
 void Player::setPosition() {
@@ -287,12 +306,11 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 		this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
 		animationSpeed = maxSpeed * 3;
 	}
-
 }
 
 void Player::StopAnimation()
 {
-	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
+	this->setDrawImage( gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn) );
 }
 
 
