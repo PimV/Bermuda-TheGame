@@ -3,7 +3,7 @@ class Entity
 {
 public:
 	//Constructor
-	Entity(int id, int x, int y, int chunkSize);
+	Entity(int id, double x, double y, int chunkSize);
 	//Setters
 	void setX(double x);
 	void setY(double y);

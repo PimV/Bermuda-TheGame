@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-Entity::Entity(int id, int x, int y, int chunkSize)
+Entity::Entity(int id, double x, double y, int chunkSize)
 {
 	this->id = id;
 	this->x = x;

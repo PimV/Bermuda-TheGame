@@ -1,7 +1,7 @@
 #include "Spawnpoint.h"
 
 
-Spawnpoint::Spawnpoint(int id, int x, int y, int chunkSize) 
+Spawnpoint::Spawnpoint(int id, double x, double y, int chunkSize) 
 	: Entity(id,x,y,chunkSize)
 {
 }

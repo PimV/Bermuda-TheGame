@@ -10,8 +10,8 @@ private:
 	double collisionWidth;
 	double collisionHeight;
 public:
-	CollidableEntity(int id, int x, int y, int chunkSize, double collisionX, double collisionY, double collisionWidth, double collisionHeight);
-	CollidableEntity(int id, int x, int y, int chunkSize);
+	CollidableEntity(int id, double x, double y, int chunkSize, double collisionX, double collisionY, double collisionWidth, double collisionHeight);
+	CollidableEntity(int id, double x, double y, int chunkSize);
 	CollidableEntity();
 
 	void setCollisionX(double x);

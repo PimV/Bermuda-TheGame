@@ -5,7 +5,7 @@ class Spawnpoint :
 	public Entity
 {
 public:
-	Spawnpoint(int id, int x, int y, int chunkSize);
+	Spawnpoint(int id, double x, double y, int chunkSize);
 	virtual ~Spawnpoint();
 };
 
