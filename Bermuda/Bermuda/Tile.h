@@ -7,6 +7,6 @@ class Tile :
 	public DrawableEntity
 {
 public:
-	Tile(int id, MainEntityContainer* mec, double x, double y, Image* image);
+	Tile(int id, int x, int y, int chunkSize, MainEntityContainer* mec, Image* image);
 	~Tile();
 };

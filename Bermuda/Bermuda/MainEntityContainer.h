@@ -15,6 +15,8 @@ public:
 	BackgroundContainer* getBackgroundContainer();
 	virtual ~MainEntityContainer();
 
+	void initContainerSizes(int chunksY, int chunksX);
+
 
 private: 
 	std::map<ContainerType, IEntityContainer*> m_container;

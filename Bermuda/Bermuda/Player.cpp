@@ -3,26 +3,26 @@
 #include <iostream>
 
 
-Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
-	: Entity(id), DrawableEntity(id, nullptr), CollidableEntity(id), IMovable(moveSpeed)
+Player::Player(int id, double moveSpeed, int x, int y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
+	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize), IMovable(moveSpeed)
 {
+	this->mec = mec;
 	this->camera = camera;
 	this->gsm = gsm;
 
-	//TODO: Change setx and sety to spawnlocation
-	this->setX(350);
-	this->setY(350);
+	//Entity -> dimension values
 	this->setWidth(64);
 	this->setHeight(64);
-	this->dx = 0;
-	this->dy = 0;
-	this->maxSpeed = 3;
-	//this->maxSpeed = 0;
 
+	//CollidableEnity - collision values
 	this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
 	this->setCollisionY(0);
+
+	this->dx = 0;
+	this->dy = 0;
+	this->maxSpeed = 3;
 
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
@@ -44,13 +44,16 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, 
 	this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
-
-	this->StopAnimation();
-	mec->getDrawableContainer()->add(this);
-
+	
 	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
+	
+	this->StopAnimation();
+
+	//Add to containers
+	mec->getDrawableContainer()->add(this);
+	//TODO : collision container
 }
 
 void Player::resetMovement()
@@ -66,31 +69,56 @@ void Player::resetMovement()
 	}
 }
 
-bool Player::checkCollision(CollidableContainer* container) {
+bool Player::checkCollision(CollidableContainer* container) {	
+	//TODO: werkend maken met nieuwe collidablecontainer shit
 	double currentX = this->getX();
 	double currentY = this->getY();
 	this->setX(this->tempX);
 	this->setY(this->tempY);
-	for (CollidableEntity* c : container->getContainer()) {
-		if (this->intersects(c)) {
-			this->setX(currentX);
-			this->setY(currentY);
-			this->StopAnimation();
-			return true;
+
+	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
+	int beginChunkX = this->getChunkX() - 1;
+	int endChunkX = this->getChunkX() + 1;
+	int beginChunkY = this->getChunkY() - 1;
+	int endChunkY = this->getChunkY() + 1;
+
+	//Loop through all chunks
+	for(int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for(int j = beginChunkX; j <= endChunkX; j++)
+		{
+			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(CollidableEntity* e : *vec)
+				{
+					if (this->intersects(e)) {
+						this->setX(currentX);
+						this->setY(currentY);
+						this->StopAnimation();
+						return true;
+					}
+				}
+			}
 		}
 	}
+
 	return false;
 }
 
 void Player::update(double dt) {
+
 	if (interaction)
+	{
 		interact(dt);
+	}
 	else
+	{
 		this->move(dt);
+	}
 }
 
 void Player::move(double dt) {
-
 	if(moveClick)
 	{
 		clickMove();
@@ -148,14 +176,14 @@ void Player::move(double dt) {
 		return;
 	}
 
-	if (dx != 0 && dy != 0) {
+	//if (dx != 0 && dy != 0) {
 
 		//dx = dx / 2;
 		//dy = dy / 2;
 
 		//dx = dx / (moveSpeed / 2);
 		//dy = dy / (moveSpeed / 2);
-	}
+	//}
 
 	//Move player
 	this->setTempX(getX() + dx);
@@ -207,6 +235,15 @@ void Player::setPosition() {
 
 	this->setX(this->tempX);
 	this->setY(this->tempY);
+
+	//Chance chunks if needed
+	if(floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX()) 
+	{  
+		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
+		this->mec->getDrawableContainer()->remove(this);
+		this->setChunks(); 
+		this->mec->getDrawableContainer()->add(this);
+	} 
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));

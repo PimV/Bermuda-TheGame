@@ -3,13 +3,13 @@
 #include <time.h>
 #include <iostream>
 
-NPC::NPC(int id, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint) : Entity(id)
+NPC::NPC(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint) 
+	: spawnPoint(spawnPoint), Entity(id,spawnPoint->getX(),spawnPoint->getY(),chunkSize)
 {
 	this->healthPoints = healthPoints;
 	this->attackPoints = attackPoints;
 	this->walkRange = walkRange;
 	this->actionRange = actionRange;
-	this->spawnPoint = spawnPoint;
 	this->walking = false;
 }
 

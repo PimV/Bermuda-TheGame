@@ -213,6 +213,9 @@
     <ClCompile Include="PauseState.cpp">
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
+    <ClCompile Include="SoundLoader.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -225,6 +228,9 @@
     <ClCompile Include="Rock.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="EntityChunkContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+	</ClCompile>
     <ClCompile Include="SoundLoader.cpp">
       <Filter>Source Files\Model</Filter>
 	</ClCompile>
@@ -350,6 +356,9 @@
     <ClInclude Include="PauseState.h">
       <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
+    <ClInclude Include="SoundLoader.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
@@ -362,6 +371,9 @@
     <ClInclude Include="Rock.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="EntityChunkContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+	</ClInclude>
     <ClInclude Include="StateType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
