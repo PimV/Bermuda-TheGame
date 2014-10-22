@@ -27,6 +27,7 @@ private:
 	int mapWidth;
 	int startPosX;
 	int startPosY;
+	const int chunkSize;
 public:
 	MapLoader(GameStateManager* gsm, MainEntityContainer* mec);
 	void loadMap();
@@ -34,6 +35,7 @@ public:
 	int getMapWidth();
 	int getStartPosX();
 	int getStartPosY();
+	int getChunkSize();
 	~MapLoader();
 };
 

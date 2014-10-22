@@ -9,10 +9,11 @@
 #include <string>
 #include <iostream>
 #include <Windows.h>
+#include <math.h>
 
 
 MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
-	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader())
+	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader()), chunkSize(300)
 {
 }
 
@@ -55,6 +56,9 @@ void MapLoader::extractMapInfo(Document& d)
 
 	mapHeight = mapTileHeight * tileHeight;
 	mapWidth = mapTileWidth * tileWidth;
+
+	//Set the containers
+	mec->initContainerSizes(floor(mapHeight/chunkSize) +1, floor(mapWidth/chunkSize) +1);
 
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
@@ -122,13 +126,12 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
 			{
 				//Tile is in collision vector. Create collisionTile.
-				CollidableTile* tile = new CollidableTile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
-
+				CollidableTile* tile = new CollidableTile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
-				Tile* tile = new Tile(tileID, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
+				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));				
 			}
 		}
 	}
@@ -136,7 +139,6 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 
 void MapLoader::createObjects(Value& objects)
 {
-	
 	//Possibly use this to create objects from strings
 	/*map_type map;
 	map["DerivedA"] = &createInstance<DerivedA>;
@@ -146,6 +148,8 @@ void MapLoader::createObjects(Value& objects)
 	
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
+		Entity* e = nullptr;
+
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
 		Image* objectImg = imgLoader->getMapImage(objectID);
@@ -155,20 +159,20 @@ void MapLoader::createObjects(Value& objects)
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
 		{
-			Tree* tree = new Tree(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
+			e = new Tree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
-			Tree* tree = new Tree(objectID, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
+			e = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
 			//TODO: Set tree in his 'stump' state. (If we want to allow placing stumps directly in the 'tiled' map.)
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
-			Rock* rock = new Rock(objectID, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1)); 
+			e = new Rock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			Rock* rock = new Rock(objectID, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
+			e = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
 			//TODO: Set rock to his 'pieces' state. (If we want to allow placing rock pieces directly in the 'tiled' map.)
 		}
 	}
@@ -177,6 +181,7 @@ void MapLoader::createObjects(Value& objects)
 void MapLoader::createSpawnPoints(Value& spawnpoints)
 {
 	//TODO: Create spawnpoint objects
+	cout << "spawnPoints:" << endl;
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
 	{
 		Value& object = spawnpoints[j];
@@ -189,7 +194,6 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		string spawnType = properties["SpawnType"].GetString();
 		if(spawnType == "Player")
 		{
-			cout << "goed!!" << endl;
 			startPosX = object["x"].GetInt();
 			startPosY = object["y"].GetInt();
 		}
@@ -214,6 +218,11 @@ int MapLoader::getStartPosX()
 int MapLoader::getStartPosY()
 {
 	return startPosY;
+}
+
+int MapLoader::getChunkSize()
+{
+	return chunkSize;
 }
 
 MapLoader::~MapLoader()

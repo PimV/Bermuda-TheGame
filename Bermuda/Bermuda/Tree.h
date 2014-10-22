@@ -11,7 +11,7 @@ private:
 	Image* stumpImage;
 	MainEntityContainer* mec;
 public:
-	Tree(int id, MainEntityContainer* mec,  double x, double y, Image* treeImage, Image* stumpImage);
+	Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* stumpImage);
 	void setCollidableValues();
 	~Tree();
 };

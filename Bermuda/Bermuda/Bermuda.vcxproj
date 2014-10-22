@@ -103,6 +103,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="CollidableTile.h" />
     <ClInclude Include="ContainerType.h" />
     <ClInclude Include="DrawableContainer.h" />
+    <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Camera.h" />
@@ -122,6 +123,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="InteractiveBase.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
@@ -136,6 +138,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="SDLInitializer.h" />
     <ClInclude Include="SoundLoader.h" />
     <ClInclude Include="Spawnpoint.h" />
+    <ClInclude Include="StateType.h" />
     <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
@@ -148,9 +151,11 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="CollidableTile.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityChunkContainer.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="InteractiveBase.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />
