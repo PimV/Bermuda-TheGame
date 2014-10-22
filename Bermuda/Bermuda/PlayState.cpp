@@ -12,7 +12,7 @@
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
-bool drawableSortFunction (DrawableEntity* one,DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()  ); }
+bool drawableSortFunction (DrawableEntity* one,DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight() ); }
 
 PlayState::PlayState(void)
 {
@@ -169,7 +169,6 @@ void PlayState::draw() {
 					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
 				}
 			}
-
 			//Objecten
 			vec = this->mec->getDrawableContainer()->getChunk(i, j);
 			if(vec != nullptr)

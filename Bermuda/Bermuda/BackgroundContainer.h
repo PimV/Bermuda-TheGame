@@ -13,6 +13,7 @@ public:
 	std::vector<DrawableEntity*>* getChunk(int y, int x);
 	
 	void initChunks(int chunksY, int chunksX);
+	void remove(DrawableEntity* entity);
 
 	~BackgroundContainer();
 private:

@@ -11,8 +11,8 @@ Player::Player(int id, int chunkSize, double moveSpeed, Camera* camera, GameStat
 	this->gsm = gsm;
 
 	//TODO: Change setx and sety to spawnlocation
-	this->setX(600);
-	this->setY(1350);
+	this->setX(300);
+	this->setY(300);
 	this->setWidth(64);
 	this->setHeight(64);
 	this->dx = 0;
@@ -73,135 +73,29 @@ bool Player::checkCollision(CollidableContainer* container) {
 	this->setX(this->tempX);
 	this->setY(this->tempY);
 
-	//Check current chunk
-	for(CollidableEntity* e : *this->mec->getCollidableContainer()->getChunk(this->getChunkY(), this->getChunkX()))
-	{
-		if (this->intersects(e)) {
-			this->setX(currentX);
-			this->setY(currentY);
-			this->StopAnimation();
-			return true;
-		}
-	}
+	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
+	int beginChunkX = this->getChunkX() - 1;
+	int endChunkX = this->getChunkX() + 1;
+	int beginChunkY = this->getChunkY() - 1;
+	int endChunkY = this->getChunkY() + 1;
 
-	//MARK: omdat de player sprite nooit in de buurt kan komen van de rand van onze map (er zit namelijk altijd water omheen) kunnen wij geen vector out of bound krijgen door getChunkX() +1 te gebruiken
-	
-	//Check east chunk
-	std::vector<CollidableEntity*>* directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY(), this->getChunkX() +1);
-	if(directionChunk != nullptr) 
+	//Loop through all chunks
+	for(int i = beginChunkY; i <= endChunkY; i++)
 	{
-		for(CollidableEntity* e : *directionChunk)
+		for(int j = beginChunkX; j <= endChunkX; j++)
 		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
-			}
-		}
-	}
-
-	//Check south chunk	
-	directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY() +1, this->getChunkX());
-	if(directionChunk != nullptr)
-	{
-		for(CollidableEntity* e : *directionChunk)
-		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
-			}
-		}
-	}
-
-	//Check south-east chunk
-	directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY() +1, this->getChunkX() +1);
-	if(directionChunk != nullptr)
-	{
-		for(CollidableEntity* e : *directionChunk)
-		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
-			}
-		}
-	}
-
-	//Check west chunk
-	directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY(), this->getChunkX() -1);
-	if(directionChunk != nullptr)
-	{
-		for(CollidableEntity* e : *directionChunk)
-		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
-			}
-		}
-	}
-
-	//Check south-west chunk
-	directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY() +1, this->getChunkX() -1);
-	if(directionChunk != nullptr)
-	{
-		for(CollidableEntity* e : *directionChunk)
-		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
-			}
-		}
-	}
-
-	//Check north chunk	
-	directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY() -1, this->getChunkX());
-	if(directionChunk != nullptr)
-	{
-		for(CollidableEntity* e : *directionChunk)
-		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
-			}
-		}
-	}
-
-	//Check north-west chunk
-	directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY() -1, this->getChunkX() -1);
-	if(directionChunk != nullptr)
-	{
-		for(CollidableEntity* e : *directionChunk)
-		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
-			}
-		}
-	}
-
-	//Check north-east chunk
-	directionChunk = this->mec->getCollidableContainer()->getChunk(this->getChunkY() -1, this->getChunkX() +1);
-	if(directionChunk != nullptr)
-	{
-		for(CollidableEntity* e : *directionChunk)
-		{
-			if (this->intersects(e)) {
-				this->setX(currentX);
-				this->setY(currentY);
-				this->StopAnimation();
-				return true;
+			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(CollidableEntity* e : *vec)
+				{
+					if (this->intersects(e)) {
+						this->setX(currentX);
+						this->setY(currentY);
+						this->StopAnimation();
+						return true;
+					}
+				}
 			}
 		}
 	}

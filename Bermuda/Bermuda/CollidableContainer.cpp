@@ -5,11 +5,6 @@ CollidableContainer::CollidableContainer()
 {
 }
 
-std::vector<std::vector<std::vector<CollidableEntity*>>>* CollidableContainer::getContainer()
-{
-	return &this->container;
-}
-
 void CollidableContainer::initChunks(int chunksY, int chunksX)
 {
 	container.resize(chunksY);
@@ -23,6 +18,16 @@ void CollidableContainer::initChunks(int chunksY, int chunksX)
 void CollidableContainer::add(CollidableEntity* collidable) 
 {
 	this->container[collidable->getChunkY()][collidable->getChunkX()].push_back(collidable);
+}
+
+void CollidableContainer::remove(CollidableEntity* entity)
+{
+	std::vector<CollidableEntity*>* vec = &this->container[entity->getChunkY()][entity->getChunkX()];
+	std::vector<CollidableEntity*>::iterator it = std::find(vec->begin(), vec->end(), entity);
+
+	if (it != vec->end()) {
+		vec->erase(it);
+	}
 }
 
 std::vector<CollidableEntity*>* CollidableContainer::getChunk(int y, int x)
