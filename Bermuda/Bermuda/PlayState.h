@@ -22,7 +22,6 @@ private:
 
 	int counter;
 	Camera* camera;
-	int temp;
 
 public:
 

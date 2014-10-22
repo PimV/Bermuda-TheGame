@@ -126,12 +126,12 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
 			{
 				//Tile is in collision vector. Create collisionTile.
-				CollidableTile* tile = new CollidableTile(tileID, chunkSize, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));
+				CollidableTile* tile = new CollidableTile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
-				Tile* tile = new Tile(tileID, chunkSize, mec, x*tileWidth, y*tileHeight, imgLoader->getMapImage(tileID));				
+				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));				
 			}
 		}
 	}
@@ -159,22 +159,22 @@ void MapLoader::createObjects(Value& objects)
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
 		{
-			e = new Tree(objectID, chunkSize, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
+			e = new Tree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
-			e = new Tree(objectID, chunkSize, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
+			e = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
 			//TODO: Set tree in his 'stump' state. (If we want to allow placing stumps directly in the 'tiled' map.)
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
-			e = new Rock(objectID, chunkSize, mec, objectX, objectY, objectImg, imgLoader->getMapImage(objectID+1));
+			e = new Rock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
 			//Create rock object
 			//Rock also has 2 images. Big rock and destroyed rock. 
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			e = new Rock(objectID, chunkSize, mec, objectX, objectY, imgLoader->getMapImage(objectID-1), objectImg);
+			e = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
 			//Create destroyed rock object
 		}
 	}

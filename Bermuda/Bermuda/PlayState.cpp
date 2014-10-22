@@ -29,9 +29,7 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playGameMusic();
 
-	temp = 0;
-
-	p = new Player(1, mapLoader->getChunkSize(), 3, camera, gsm, mec);
+	p = new Player(1, 3, 300, 300, mapLoader->getChunkSize(), camera, gsm, mec);
 }
 
 void PlayState::cleanup() {

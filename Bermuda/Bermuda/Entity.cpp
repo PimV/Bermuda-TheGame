@@ -3,9 +3,13 @@
 
 #include <iostream>
 
-Entity::Entity(int id)
+Entity::Entity(int id, int x, int y, int chunkSize)
 {
 	this->id = id;
+	this->x = x;
+	this->y = y;
+	this->setChunkSize(chunkSize);
+
 }
 
 #pragma region Setters

@@ -7,7 +7,7 @@ class NPC :
 	public Entity
 {
 public:
-	NPC(int id, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint);
+	NPC(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint);
 	virtual ~NPC(void);
 
 	void walk();
