@@ -11,7 +11,7 @@ Carrot::Carrot(int id, double x, double y, int chunkSize, MainEntityContainer* m
 
 void Carrot::interact()
 {
-	std::cout << "INTERACT MET WORTEL X: " << this->getX() << " Y: " << this->getY() << std::endl;
+	std::cout << "interact met CARROT X: " << this->getX() << " Y: " << this->getY() << std::endl;
 }
 
 
