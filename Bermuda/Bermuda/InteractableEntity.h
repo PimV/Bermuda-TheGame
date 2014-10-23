@@ -1,10 +1,10 @@
 #pragma once
 
-class InteractiveBase
+class InteractableEntity
 {
 public:
-	InteractiveBase(void);
-	virtual ~InteractiveBase(void);
+	InteractableEntity(void);
+	virtual ~InteractableEntity(void);
 
 	virtual void interact() = 0;
 	virtual void setRangeValue(int value);
