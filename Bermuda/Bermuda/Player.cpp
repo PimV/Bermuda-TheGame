@@ -108,14 +108,18 @@ bool Player::checkCollision(CollidableContainer* container) {
 
 void Player::update(double dt) {
 
-	if (interaction)
+	
+	this->move(dt);
+
+	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
+	/*if (interaction)
 	{
 		interact(dt);
 	}
 	else
 	{
 		this->move(dt);
-	}
+	}*/
 }
 
 void Player::move(double dt) {
@@ -214,19 +218,51 @@ void Player::move(double dt) {
 
 }
 
-void::Player::interact(double dt)
+void::Player::interact()
 {
-	// this is for setting the new animation, the value only needs to be added once
-	if (this->currentPlayerAnimationRow == this->playerAnimationWalkUpRow)
-		this->currentPlayerAnimationRow += 4;
-	else if (this->currentPlayerAnimationRow == this->playerAnimationWalkLeftRow)
-		this->currentPlayerAnimationRow += 4;
-	else if (this->currentPlayerAnimationRow == this->playerAnimationWalkDownRow)
-		this->currentPlayerAnimationRow += 4;
-	else if (this->currentPlayerAnimationRow == this->playerAnimationWalkRightRow)
-		this->currentPlayerAnimationRow += 4;
+	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
+	int beginChunkX = this->getChunkX() - 1;
+	int endChunkX = this->getChunkX() + 1;
+	int beginChunkY = this->getChunkY() - 1;
+	int endChunkY = this->getChunkY() + 1;
 
-	this->PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
+	int playerOffsetX = this->getX() + (this->getWidth() / 2);
+	int playerOffsetY = this->getY() + (this->getHeight() / 2);
+
+	//Loop through all chunks
+	for(int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for(int j = beginChunkX; j <= endChunkX; j++)
+		{
+			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(InteractableEntity* e : *vec)
+				{
+					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
+						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
+					{
+						e->interact();
+						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	//ROELS CODE HIERONDER UITGEZET, ANIMATIE IS AFHANKELIJK VAN WAARMEE GEINTERACT WORDT??????
+	//// this is for setting the new animation, the value only needs to be added once
+	//if (this->currentPlayerAnimationRow == this->playerAnimationWalkUpRow)
+	//	this->currentPlayerAnimationRow += 4;
+	//else if (this->currentPlayerAnimationRow == this->playerAnimationWalkLeftRow)
+	//	this->currentPlayerAnimationRow += 4;
+	//else if (this->currentPlayerAnimationRow == this->playerAnimationWalkDownRow)
+	//	this->currentPlayerAnimationRow += 4;
+	//else if (this->currentPlayerAnimationRow == this->playerAnimationWalkRightRow)
+	//	this->currentPlayerAnimationRow += 4;
+
+	//this->PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
 }
 
 void Player::setPosition() {

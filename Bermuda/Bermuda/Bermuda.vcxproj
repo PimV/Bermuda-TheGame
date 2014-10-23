@@ -98,6 +98,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="BackgroundContainer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
+    <ClInclude Include="Carrot.h" />
     <ClInclude Include="ClickAction.h" />
     <ClInclude Include="CollidableContainer.h" />
     <ClInclude Include="CollidableTile.h" />
@@ -123,6 +124,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="InteractableContainer.h" />
     <ClInclude Include="InteractableEntity.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MainEntityContainer.h" />
@@ -146,6 +148,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="BackgroundContainer.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
+    <ClCompile Include="Carrot.cpp" />
     <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="CollidableContainer.cpp" />
     <ClCompile Include="CollidableTile.cpp" />
@@ -155,6 +158,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Tree.cpp" />

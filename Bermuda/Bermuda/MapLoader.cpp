@@ -2,6 +2,7 @@
 #include "Tile.h"
 #include "Tree.h"
 #include "Rock.h"
+#include "Carrot.h"
 #include "CollidableTile.h"
 
 #include <rapidjson/stringbuffer.h>
@@ -233,7 +234,7 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "Carrot")
 		{
-			//TODO: Create carrot object
+			new Carrot(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID));
 		}
 		processedObjects++;
 		loadPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);

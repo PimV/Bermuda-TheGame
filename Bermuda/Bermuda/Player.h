@@ -22,7 +22,7 @@ public:
 	//void clickMove();
 	void clickMove();
 	void setPosition();
-	void interact(double dt);
+	void interact();
 	void resetMovement();
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
 	void StopAnimation();
