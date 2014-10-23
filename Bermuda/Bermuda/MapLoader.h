@@ -27,6 +27,8 @@ private:
 	int mapWidth;
 	int startPosX;
 	int startPosY;
+	int loadPercentage;
+	string loadStatus;
 	const int chunkSize;
 public:
 	MapLoader(GameStateManager* gsm, MainEntityContainer* mec);
@@ -36,6 +38,8 @@ public:
 	int getStartPosX();
 	int getStartPosY();
 	int getChunkSize();
+	int getLoadPercentage();
+	string getLoadStatus();
 	~MapLoader();
 };
 
