@@ -6,6 +6,7 @@
 #include "ClickAction.h"
 #include "MoveAction.h"
 #include "PauseState.h"
+#include "LoadingState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
@@ -21,14 +22,17 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+	
+	//Create MainentityContainer
 	mec = new MainEntityContainer();
-
+	//Create map loader and load the map
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
+	//Create new Camera
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-
+	//Start play music
 	SoundLoader::Instance()->playGameMusic();
-
+	//Create new Player
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 }
 
@@ -38,7 +42,7 @@ void PlayState::cleanup() {
 
 void PlayState::pause() {
 	this->p->moveClick = true;
-	this->p->resetMovement();
+    this->p->resetMovement();
 }
 
 void PlayState::resume() {
