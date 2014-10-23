@@ -11,6 +11,7 @@
 #include <Windows.h>
 #include <math.h>
 
+//TODO: remove console messages.
 
 MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
 	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader()), chunkSize(300)
@@ -19,6 +20,12 @@ MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
 
 void MapLoader::loadMap()
 {
+	loadPercentage = 0;
+	double loadWeight = 5;
+	loadStatus = "Reading map file.";
+	cout << loadStatus << endl;
+	cout << "loadPercentage: " << loadPercentage << endl;
+
 	//Create file stream.
 	string executableRoot = SDL_GetBasePath();
 	string fileName = executableRoot + "Map.json";
@@ -43,11 +50,17 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
+	loadPercentage += loadWeight;
+	cout << "loadPercentage: " << loadPercentage << endl;
+
 	extractMapInfo(d);
 }
 
 void MapLoader::extractMapInfo(Document& d)
 {
+	loadStatus = "Creating chunks.";
+	cout << endl << loadStatus << endl;
+
 	//Get general map information
 	int mapTileHeight = d["height"].GetInt();
 	int mapTileWidth = d["width"].GetInt();
@@ -80,11 +93,20 @@ void MapLoader::extractMapInfo(Document& d)
 		{
 			createSpawnPoints(layer["objects"]);
 		}
+		loadStatus = "Map loading finished.";
 	}
 }
 
 void MapLoader::createTileSets(Value& tilesets)
 {
+	double tempLastLoadPercentage = loadPercentage; //TODO: remove
+	double startLoadPercentage = loadPercentage;
+	double loadWeight = 20;
+	double totalTilesets = tilesets.Capacity();
+	double processedTilesets = 0;
+	loadStatus = "Loading tilesets.";
+	cout << endl << loadStatus << endl;
+
 	for(int i = 0; i < tilesets.Capacity(); i++)
 	{
 		Value& tileset = tilesets[i];
@@ -112,11 +134,29 @@ void MapLoader::createTileSets(Value& tilesets)
 				}
 			}
 		}
+		processedTilesets++;
+		loadPercentage = startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight);
+
+		//TODO: remove
+		if(loadPercentage != tempLastLoadPercentage)
+		{
+			cout << "loadPercentage: " << loadPercentage << endl;
+		}
+		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
 }
 
 void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, int tileHeight, int tileWidth)
 {
+	double tempLastLoadPercentage = loadPercentage; //TODO: remove
+
+	double startLoadPercentage = loadPercentage;
+	double loadWeight = 40;
+	double totalTiles = mapTileHeight * mapTileWidth;
+	double processedTiles = 0;
+	loadStatus = "Creating tiles.";
+	cout << endl << loadStatus << endl;
+
 	for (int y = 0; y < mapTileHeight; y++)
 	{
 		for (int x = 0; x < mapTileWidth; x++)
@@ -133,23 +173,39 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				//Tile is not in collision vector. Creating normal tile.
 				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));				
 			}
+			processedTiles++;
+			loadPercentage = startLoadPercentage + ((processedTiles / totalTiles) * loadWeight);
+			
+			//TODO: remove
+			if(loadPercentage != tempLastLoadPercentage)
+			{
+				cout << "loadPercentage: " << loadPercentage << endl;
+			}
+			tempLastLoadPercentage = loadPercentage; //TODO: remove
 		}
 	}
 }
 
 void MapLoader::createObjects(Value& objects)
 {
-	//Possibly use this to create objects from strings
+	//Possibly use something like this to create objects from strings
 	/*map_type map;
 	map["DerivedA"] = &createInstance<DerivedA>;
 	map["DerivedB"] = &createInstance<DerivedB>;
 	//And then you can do
 	return map[some_string]();*/
-	
+	//Parameters could be a problem with this though. 
+
+	double tempLastLoadPercentage = loadPercentage; //TODO: remove
+	double startLoadPercentage = loadPercentage;
+	double loadWeight = 20;
+	double totalObjects = objects.Capacity();
+	double processedObjects = 0;
+	loadStatus = "Creating objects.";
+	cout << endl << loadStatus << endl;
+
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
-		Entity* e = nullptr;
-
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
 		Image* objectImg = imgLoader->getMapImage(objectID);
@@ -159,37 +215,53 @@ void MapLoader::createObjects(Value& objects)
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
 		{
-			e = new Tree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
+			new Tree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
-			e = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
 			//TODO: Set tree in his 'stump' state. (If we want to allow placing stumps directly in the 'tiled' map.)
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
-			e = new Rock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
+			new Rock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			e = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
 			//TODO: Set rock to his 'pieces' state. (If we want to allow placing rock pieces directly in the 'tiled' map.)
 		}
+		else if(objectClasses[objectID] == "Carrot")
+		{
+			//TODO: Create carrot object
+		}
+		processedObjects++;
+		loadPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);
+			
+		//TODO: remove
+		if(loadPercentage != tempLastLoadPercentage)
+		{
+			cout << "loadPercentage: " << loadPercentage << endl;
+		}
+		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
 }
 
 void MapLoader::createSpawnPoints(Value& spawnpoints)
 {
+	double tempLastLoadPercentage = loadPercentage; //TODO: remove
+	double startLoadPercentage = loadPercentage;
+	double loadWeight = 15;
+	double totalSpawnpoints = spawnpoints.Capacity();
+	double processedSpawnpoints = 0;
+	loadStatus = "Creating spawnpoints.";
+	cout << endl << loadStatus << endl;
+
 	//TODO: Create spawnpoint objects
-	cout << "spawnPoints:" << endl;
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
 	{
 		Value& object = spawnpoints[j];
 		Value& properties = object["properties"];
-
-		cout << "- x: " << object["x"].GetInt() << " ";
-		cout << "y: " << object["y"].GetInt() << " ";
-		cout << "type: " << properties["SpawnType"].GetString() << endl;
 
 		string spawnType = properties["SpawnType"].GetString();
 		if(spawnType == "Player")
@@ -197,6 +269,15 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 			startPosX = object["x"].GetInt();
 			startPosY = object["y"].GetInt();
 		}
+		processedSpawnpoints++;
+		loadPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
+			
+		//TODO: remove
+		if(loadPercentage != tempLastLoadPercentage)
+		{
+			cout << "loadPercentage: " << loadPercentage << endl;
+		}
+		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
 }
 
@@ -223,6 +304,16 @@ int MapLoader::getStartPosY()
 int MapLoader::getChunkSize()
 {
 	return chunkSize;
+}
+
+int MapLoader::getLoadPercentage()
+{
+	return loadPercentage;
+}
+
+string MapLoader::getLoadStatus()
+{
+	return loadStatus;
 }
 
 MapLoader::~MapLoader()
