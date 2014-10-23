@@ -240,6 +240,9 @@
     <ClCompile Include="Carrot.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="InteractableContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="Carrot.h">
       <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

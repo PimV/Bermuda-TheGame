@@ -97,7 +97,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 
 		case SDLK_SPACE:
-			p->interaction = true;
+			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
+			//p->interaction = true;
+			p->interact();
 			break;
 
 		case SDLK_ESCAPE:

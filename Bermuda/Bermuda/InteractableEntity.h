@@ -1,15 +1,27 @@
 #pragma once
+#include "Entity.h"
 
-class InteractableEntity
+class InteractableEntity :
+	virtual public Entity
 {
-public:
-	InteractableEntity(void);
-	virtual ~InteractableEntity(void);
-
-	virtual void interact() = 0;
-	virtual void setRangeValue(int value);
-	virtual int getRangeValue();
-
 private:
 	int rangeValue;
+	int startX;
+	int endX;
+	int startY;
+	int endY;
+
+public:
+	InteractableEntity(int id, double x, double y, int chunkSize, int rangeValue);
+	virtual ~InteractableEntity();
+
+	int getInteractAreaStartX();
+	int getInteractAreaEndX();
+	int getInteractAreaStartY();
+	int getInteractAreaEndY();
+
+	void setRangeValues();
+
+	virtual void interact() = 0;
+	int getRangeValue();
 };
