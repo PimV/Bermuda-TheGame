@@ -244,6 +244,7 @@ void::Player::interact()
 					{
 						e->interact();
 						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
+						//TODO : juiste animatie laten zien e.d.
 						break;
 					}
 				}
