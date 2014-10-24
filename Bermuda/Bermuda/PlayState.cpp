@@ -109,11 +109,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			this->gsm->pushGameState(PauseState::Instance());
 			break;
 		case SDLK_i:
-			//this->p->getInventory()->addItem(new Item(2,16,true,NULL));
+			this->p->getInventory()->toggleInventory();
 			this->p->getInventory()->printInventory();
 			break;
 		case SDLK_o: {
-		/*	Item* item = new Item(2,16,true,NULL);
+			/*	Item* item = new Item(2,16,true,NULL);
 			item->setStackSize(5);
 			this->p->getInventory()->addItem(item);*/
 			this->p->getInventory()->printInventory();
@@ -124,7 +124,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			this->p->getInventory()->printInventory();
 			break;
 		case SDLK_l:
-		/*	Item* item = new Item(3,22,true,NULL);
+			/*	Item* item = new Item(3,22,true,NULL);
 			item->setStackSize(5);
 			this->p->getInventory()->addItem(item);*/
 			this->p->getInventory()->printInventory();
@@ -198,18 +198,18 @@ void PlayState::draw() {
 			if(vec != nullptr)
 			{
 				for(DrawableEntity* e : *vec)
-	{
+				{
 					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
 				}
-	}
+			}
 			//Objecten
 			vec = this->mec->getDrawableContainer()->getChunk(i, j);
 			if(vec != nullptr)
 			{
 				for(DrawableEntity* e : *vec)
-	{
+				{
 					drawableVector.push_back(e);
-			}
+				}
 			}
 
 		}
@@ -222,6 +222,10 @@ void PlayState::draw() {
 	for(DrawableEntity* e : drawableVector)
 	{
 		e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+	}
+
+	if (this->p->getInventory()->isOpen()) {
+		this->p->getInventory()->draw();
 	}
 }
 

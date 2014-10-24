@@ -15,15 +15,21 @@ public:
 	void deleteItem(Item* item, int count);
 	std::vector<Item*> getItems();
 
+	void draw();
+
 	Item* getItemById(int id, bool full);
 
 	int getSize();
 	void setSize(int size);
 
+	void toggleInventory();
+	bool isOpen();
+
 	void printInventory();
 
 	~Inventory(void);
 private:
+	bool open;
 	int slots; //Total item slots
 	std::vector<Item*> itemVector;
 };

@@ -14,6 +14,7 @@ Inventory::Inventory(void)
 
 void Inventory::init() {
 	std::cout<< "Created inv"<<std::endl;
+	this->open = false;
 	this->slots = 20;
 	this->itemVector = std::vector<Item*>();
 }
@@ -111,9 +112,9 @@ void Inventory::printInventory() {
 	std::cout << "INVENTORY: " << std::endl;
 	for (size_t i = 0; i < 20; i++) {
 		/*if (i % 4 == 0) {
-			std::cout <<  std::endl;
+		std::cout <<  std::endl;
 		}*/
-		
+
 		if (i < this->getSize()) {
 			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
@@ -122,6 +123,25 @@ void Inventory::printInventory() {
 		std::cout << std::endl;
 	}
 	std::cout <<std::endl;
+}
+
+bool Inventory::isOpen() {
+	return this->open;
+}
+void Inventory::toggleInventory() {
+	this->open = !this->open;
+}
+
+void Inventory::draw() {
+	int y = 50;
+	for (size_t i = 0; i < 20; i++) {
+		if (i < this->getSize()) {
+			GameStateManager::Instance()->sdlInitializer->drawText(
+				std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 16*i + 5,100, 16
+				);
+		}
+	}
+
 }
 
 
