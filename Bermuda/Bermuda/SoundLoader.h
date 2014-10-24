@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL_mixer.h>
 #include <vector>
+#include <map>
 
 enum class StateType;
 
@@ -12,7 +13,7 @@ public:
 
 	void playMenuMusic();
 	void playGameMusic();
-	void closeMusic();
+	void stopMusic();
 
 	static SoundLoader* Instance() {
 		return &m_SoundLoader;
@@ -30,8 +31,8 @@ private:
 	std::vector<Mix_Music*> gameMusic;
 	//std::vector<Mix_Chunk*> soundEffects;
 
-	int target_time_ms;
-	bool quit;
+	//int target_time_ms;
+	bool isRunning;
 	bool haltMusic;
 	static SoundLoader m_SoundLoader;
 
