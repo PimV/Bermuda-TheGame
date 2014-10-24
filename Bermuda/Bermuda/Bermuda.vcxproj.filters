@@ -221,7 +221,7 @@
     </ClCompile>
     <ClCompile Include="SoundLoader.cpp">
       <Filter>Source Files\Controller</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -229,8 +229,8 @@
       <Filter>Source Files\Model\Container\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CollidableEntity.cpp">
-	  <Filter>Source Files\Model\Entity</Filter>
-	</ClCompile>
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="Rock.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -253,6 +253,9 @@
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemCarrot.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
   </ItemGroup>
@@ -376,7 +379,7 @@
     </ClInclude>
     <ClInclude Include="SoundLoader.h">
       <Filter>Header Files\Controller</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
@@ -384,8 +387,8 @@
       <Filter>Header Files\Model\Container\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CollidableEntity.h">
-	  <Filter>Header Files\Model\Entity</Filter>
-	</ClInclude>
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
     <ClInclude Include="Rock.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
@@ -414,6 +417,12 @@
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemType.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemCarrot.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>

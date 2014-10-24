@@ -9,7 +9,6 @@
 Game::Game(void)
 {
 	gsm = new GameStateManager();
-
 	//Non-threaded
 	this->gameLoop(gsm);
 

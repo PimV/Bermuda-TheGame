@@ -103,17 +103,19 @@ int Inventory::getSize() {
 	return this->itemVector.size();
 }
 
+
 void Inventory::printInventory() {
 	std::cout << "INVENTORY: " << std::endl;
 	for (size_t i = 0; i < 20; i++) {
-		if (i % 4 == 0) {
+		/*if (i % 4 == 0) {
 			std::cout <<  std::endl;
-		}
+		}*/
 		if (i < this->getSize()) {
 			std::cout << "[" <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
 			std::cout << "[ ] ";
 		}
+		std::cout << std::endl;
 	}
 	std::cout <<std::endl;
 }
