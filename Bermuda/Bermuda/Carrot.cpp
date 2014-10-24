@@ -13,9 +13,13 @@ Carrot::Carrot(int id, double x, double y, int chunkSize, MainEntityContainer* m
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 }
 
-void Carrot::interact(Player* p)
+void Carrot::update(double dt) {
+
+}
+
+void Carrot::interact(Player* player)
 {
-	p->getInventory()->addItem(new ItemCarrot());
+	player->getInventory()->addItem(new ItemCarrot());
 	//std::cout << "interact met CARROT X: " << this->getX() << " Y: " << this->getY() << std::endl;
 	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	this->getMainEntityContainer()->getInteractableContainer()->remove(this);

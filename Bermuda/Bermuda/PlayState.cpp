@@ -177,6 +177,29 @@ void PlayState::update(double dt) {
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+
+	for(int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for(int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Background
+			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(InteractableEntity* e : *vec)
+				{
+					e->update(dt);
+				}
+			}
+
+		}
+	}
+
+
 }
 
 void PlayState::draw() {

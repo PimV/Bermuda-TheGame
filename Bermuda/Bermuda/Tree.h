@@ -1,18 +1,27 @@
 #pragma once
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "InteractableEntity.h"
 #include "MainEntityContainer.h"
 
 class Tree :
-	public DrawableEntity, public CollidableEntity
+	public DrawableEntity, public CollidableEntity, public InteractableEntity
 {
 private:
 	Image* treeImage;
 	Image* stumpImage;
 	MainEntityContainer* mec;
+
+	bool destroyed;
+
+	long timeSinceDestroy;
+	long respawnTime;
 public:
 	Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* stumpImage);
 	void setCollidableValues();
+	void update(double dt);
+	void respawn();
+	void interact(Player* player);
 	~Tree();
 };
 

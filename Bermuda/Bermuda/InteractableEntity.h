@@ -15,6 +15,9 @@ private:
 
 public:
 	InteractableEntity(int id, double x, double y, int chunkSize, int rangeValue);
+
+	virtual void update(double dt) = 0;
+
 	virtual ~InteractableEntity();
 
 	int getInteractAreaStartX();

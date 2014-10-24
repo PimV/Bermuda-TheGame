@@ -26,6 +26,17 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	m_running = true;
 	showFps = false;
 	GameStateManager::Instance()->setFps(0);
+
+
+	this->updateLength = 0;
+}
+
+void GameStateManager::setUpdateLength(long updateLength) {
+	this->updateLength = updateLength;
+}
+
+long GameStateManager::getUpdateLength() {
+	return this->updateLength;
 }
 
 void GameStateManager::setFps(int fps) {

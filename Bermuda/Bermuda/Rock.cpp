@@ -20,15 +20,15 @@ Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 
 //TODO: Use this->setDrawImage() to change to rock pieces
 
-void Rock::interact(Player* p)
-{
-	//std::cout << "interact met ROCK X: " << this->getX() << " Y: " << this->getY() << std::endl;
+void Rock::update(double dt) {
 
-	p->getInventory()->addItem(new ItemRock());
-	//std::cout << "interact met CARROT X: " << this->getX() << " Y: " << this->getY() << std::endl;
-	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
+}
+
+void Rock::interact(Player* player)
+{
+	player->getInventory()->addItem(new ItemRock());
+	this->setDrawImage(this->rockPiecesImage);
 	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
 }
 
 Rock::~Rock()

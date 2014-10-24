@@ -28,6 +28,9 @@ public:
 	void handleEvents();
 	void draw();
 
+	void setUpdateLength(long updateLength);
+	long getUpdateLength();
+
 	ActionContainer* getActionContainer();
 
 	bool running();
@@ -45,6 +48,7 @@ public:
 
 	~GameStateManager(void);
 private: 
+	long updateLength;
 	int fps;
 	std::vector<IGameState*> states;
 	IGameState* currentState;

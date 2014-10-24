@@ -1,10 +1,12 @@
 #pragma once
 enum class Items
 {
-	Rock=0,
-	Carrot=1
+	Rock,
+	Carrot,
+	Wood,
 };
 static const char* item_strings[] = {
 "Rock",
 "Carrot",
+"Wood",
 };

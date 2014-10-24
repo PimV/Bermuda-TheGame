@@ -11,8 +11,9 @@ private:
 	MainEntityContainer* mec;
 public:
 	Carrot(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* carrotImage);
+	void update(double dt);
 	virtual ~Carrot();
 
-	void interact(Player* p);
+	void interact(Player* player);
 };
 
