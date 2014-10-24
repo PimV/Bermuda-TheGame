@@ -1,7 +1,8 @@
 #pragma once
 #include "item.h"
+enum class Items;
 class ItemCarrot :
-	public Item
+	public virtual Item
 {
 public:
 	ItemCarrot();

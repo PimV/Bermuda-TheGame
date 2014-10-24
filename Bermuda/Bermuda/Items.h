@@ -1,8 +1,10 @@
 #pragma once
 enum class Items
 {
-	Rock=1,
-	Carrot=2
+	Rock=0,
+	Carrot=1
 };
-
-extern const char* item_strings[];
+static const char* item_strings[] = {
+"Rock",
+"Carrot",
+};

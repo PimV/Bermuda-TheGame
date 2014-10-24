@@ -8,7 +8,8 @@
 
 Game::Game(void)
 {
-	gsm = new GameStateManager();
+	gsm = GameStateManager::Instance();
+	gsm->init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);
 	//Non-threaded
 	this->gameLoop(gsm);
 

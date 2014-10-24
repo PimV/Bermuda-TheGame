@@ -248,7 +248,7 @@ void::Player::interact()
 					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
 						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
 					{
-						e->interact();
+						e->interact(this);
 						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
 						//TODO : juiste animatie laten zien e.d.
 						break;

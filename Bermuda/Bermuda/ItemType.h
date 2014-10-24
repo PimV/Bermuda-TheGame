@@ -1,5 +1,5 @@
 #pragma once
-enum class ItemType
+enum ItemType
 {
 	Food,
 	Drink,

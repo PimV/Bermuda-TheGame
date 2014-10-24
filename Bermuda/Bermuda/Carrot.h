@@ -13,6 +13,6 @@ public:
 	Carrot(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* carrotImage);
 	virtual ~Carrot();
 
-	void interact();
+	void interact(Player* p);
 };
 

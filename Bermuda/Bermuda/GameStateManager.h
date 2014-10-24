@@ -37,14 +37,22 @@ public:
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
 
+	
+	static GameStateManager* Instance() {
+		return &m_Gsm;
+	};
+
+
 	~GameStateManager(void);
 private: 
 	int fps;
 	std::vector<IGameState*> states;
-	IGameState *currentState;
+	IGameState* currentState;
 	ImageLoader* imgLoader;
 	SoundLoader* soundLoader;
 	bool m_running;
+
+	static GameStateManager m_Gsm;
 
 
 	ActionContainer* actionContainer;

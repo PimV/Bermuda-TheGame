@@ -1,6 +1,10 @@
 #include "Inventory.h"
 #include <iostream>
+#include "Items.h"
 #include "Item.h"
+
+
+
 
 Inventory::Inventory(void)
 {
@@ -12,7 +16,6 @@ void Inventory::init() {
 	std::cout<< "Created inv"<<std::endl;
 	this->slots = 20;
 	this->itemVector = std::vector<Item*>();
-
 }
 
 void Inventory::cleanup() {
@@ -65,7 +68,7 @@ Item* Inventory::getItemById(int id, bool full) {
 				if (this->itemVector[i]->getStackSize() < this->itemVector[i]->getMaxStackSize()) {
 					return this->itemVector[i];
 				} else {
-					std::cout << this->itemVector[i]->getStackSize() << " _-_ " << this->itemVector[i]->getMaxStackSize() << std::endl;
+					//std::cout << this->itemVector[i]->getStackSize() << " _-_ " << this->itemVector[i]->getMaxStackSize() << std::endl;
 				}
 			} else {
 				return this->itemVector[i];
@@ -110,8 +113,9 @@ void Inventory::printInventory() {
 		/*if (i % 4 == 0) {
 			std::cout <<  std::endl;
 		}*/
+		
 		if (i < this->getSize()) {
-			std::cout << "[" <<  this->itemVector[i]->getStackSize() << "] ";
+			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
 			std::cout << "[ ] ";
 		}

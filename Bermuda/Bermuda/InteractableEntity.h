@@ -1,6 +1,8 @@
 #pragma once
 #include "Entity.h"
+#include "Inventory.h"
 
+class Player;
 class InteractableEntity :
 	virtual public Entity
 {
@@ -22,6 +24,6 @@ public:
 
 	void setRangeValues();
 
-	virtual void interact() = 0;
+	virtual void interact(Player* p) = 0;
 	int getRangeValue();
 };

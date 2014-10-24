@@ -1,4 +1,5 @@
 #include "Rock.h"
+#include "Player.h"
 //TODO : remove IOSTREAM
 #include <iostream>
 
@@ -16,7 +17,7 @@ Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 
 //TODO: Use this->setDrawImage() to change to rock pieces
 
-void Rock::interact()
+void Rock::interact(Player* p)
 {
 	std::cout << "interact met ROCK X: " << this->getX() << " Y: " << this->getY() << std::endl;
 }
