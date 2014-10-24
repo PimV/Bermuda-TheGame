@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "MainEntityContainer.h"
 #include <cmath>
 
 #include <iostream>
@@ -9,7 +10,6 @@ Entity::Entity(int id, double x, double y, int chunkSize)
 	this->x = x;
 	this->y = y;
 	this->setChunkSize(chunkSize);
-
 }
 
 #pragma region Setters
@@ -44,7 +44,11 @@ void Entity::setHeight(double height) {
 void Entity::setChunkSize(int chunkSize)
 {
 	this->chunkSize = chunkSize;
-	setChunks();
+	this->setChunks();
+}
+
+void Entity::setMainEntityContainer(MainEntityContainer* mec) {
+	this->mec = mec;
 }
 
 void Entity::setChunks()
@@ -91,6 +95,10 @@ int Entity::getChunkX()
 int Entity::getChunkSize()
 {
 	return this->chunkSize;
+}
+
+MainEntityContainer* Entity::getMainEntityContainer() {
+	return this->mec;
 }
 
 #pragma endregion
