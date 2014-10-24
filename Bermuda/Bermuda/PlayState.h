@@ -44,5 +44,4 @@ public:
 
 private:
 	Player* p;
-	std::vector<DrawableEntity*> temp;
 };

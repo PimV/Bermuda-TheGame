@@ -7,10 +7,15 @@
 #include "MoveAction.h"
 #include "PauseState.h"
 #include <iostream>
+#include <algorithm>
+#include "Windows.h" 
 #include "Inventory.h"
 #include "Item.h"
 
 PlayState PlayState::m_PlayState;
+
+//Needed for vector sort
+bool drawableSortFunction (DrawableEntity* one,DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight() ); }
 
 PlayState::PlayState(void)
 {
@@ -24,15 +29,9 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
-	SoundLoader* soundLoader = gsm->getSoundLoader();
-	soundLoader->playGameMusic();
+	SoundLoader::Instance()->playGameMusic();
 
-
-	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
-
-	p = new Player(1, 3, camera, gsm, mec);
-
-	temp =  std::vector<DrawableEntity*>();
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 }
 
 void PlayState::cleanup() {
@@ -68,6 +67,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->moveClick = true;
 		}
 		break;
+
 	case SDL_KEYDOWN:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
@@ -76,24 +76,34 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingLeft = true;
 			p->movingRight = false;
 			break;
+
 		case SDLK_RIGHT:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingRight = true;	
 			p->movingLeft = false;
 			break;
+
 		case SDLK_UP:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingUp = true;	
 			p->movingDown = false;
 			break;
+
 		case SDLK_DOWN:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingDown = true;	
 			p->movingUp = false;	
 			break;
+
+		case SDLK_SPACE:
+			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
+			//p->interaction = true;
+			p->interact();
+			break;
+
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
 			this->gsm->pushGameState(PauseState::Instance());
@@ -126,35 +136,36 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYUP:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingLeft = false;
-			p->StopAnimation();
-
 			break;
+
 		case SDLK_RIGHT:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingRight = false;
-			p->StopAnimation();
-
 			break;
+
 		case SDLK_UP:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingUp = false;
-			p->StopAnimation();
+			break;
 
-			break;
 		case SDLK_DOWN:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingDown = false;
+			break;
+
+		case SDLK_SPACE:
+			p->interaction = false;
 			p->StopAnimation();
 			break;
+
 		}
 		break;
-
 	}
 }
 
@@ -169,45 +180,49 @@ void PlayState::update(double dt) {
 }
 
 void PlayState::draw() {
-	//Clears the screen
-	//this->gsm->sdlInitializer->clearScreen();
+	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
 
-	//Load background
-	BackgroundContainer* backgroundContainer = mec->getBackgroundContainer();
-	for(DrawableEntity* entity : backgroundContainer->getContainer())
+	std::vector<DrawableEntity*> drawableVector;
+
+	//Loop through all chunks
+	for(int i = beginChunkY; i <= endChunkY; i++)
 	{
-		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
+		for(int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Background
+			std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(DrawableEntity* e : *vec)
+	{
+					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+				}
 	}
-
-	//Load drawable container and check order to be drawn
-	DrawableContainer* drawableContainer = mec->getDrawableContainer();
-	for(DrawableEntity* entity : drawableContainer->getContainer())
+			//Objecten
+			vec = this->mec->getDrawableContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(DrawableEntity* e : *vec)
 	{
-		if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
-			int test = entity->getWidth();
-			if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
-				//Remove to temporaryContaienr
-				temp.erase(std::find(temp.begin(), temp.end(), entity));
+					drawableVector.push_back(e);
 			}
-			entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
-		} else {
-			if (std::find(temp.begin(), temp.end(), entity) == temp.end() && entity != p) {
-				//Add to temporaryContainer
-				temp.push_back(entity);
 			}
 
 		}
 	}
 
-	//Load player
-	p->draw(camera, gsm->sdlInitializer->getRenderer());
+	//Sort drawable object vector
+	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
 
-	//Load entities above the player
-	for(DrawableEntity* entity : temp)
+	//Draw sorted object vector
+	for(DrawableEntity* e : drawableVector)
 	{
-		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
+		e->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
-
 }
 
 PlayState::~PlayState(void)

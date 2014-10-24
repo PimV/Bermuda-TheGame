@@ -2,18 +2,17 @@
 #include <iostream>
 
 
-CollidableEntity::CollidableEntity(int id, double collisionX, double collisionY, double collisionWidth, double collisionHeight)
-	: Entity(id)
+CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize, double collisionX, double collisionY, double collisionWidth, double collisionHeight)
+	: Entity(id,x,y,chunkSize)
 {
 	this->collisionHeight = collisionHeight;
 	this->collisionWidth = collisionWidth;
 	this->collisionX = collisionX;
 	this->collisionY = collisionY;
-
 }
 
-CollidableEntity::CollidableEntity(int id)
-	: Entity(id)
+CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize)
+	: Entity(id,x,y,chunkSize)
 {
 }
 

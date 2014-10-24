@@ -98,11 +98,13 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="BackgroundContainer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
+    <ClInclude Include="Carrot.h" />
     <ClInclude Include="ClickAction.h" />
     <ClInclude Include="CollidableContainer.h" />
     <ClInclude Include="CollidableTile.h" />
     <ClInclude Include="ContainerType.h" />
     <ClInclude Include="DrawableContainer.h" />
+    <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Camera.h" />
@@ -122,6 +124,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IMovable.h" />
+    <ClInclude Include="InteractableContainer.h" />
+    <ClInclude Include="InteractableEntity.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemType.h" />
@@ -139,6 +143,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="SDLInitializer.h" />
     <ClInclude Include="SoundLoader.h" />
     <ClInclude Include="Spawnpoint.h" />
+    <ClInclude Include="StateType.h" />
     <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,14 +151,18 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="BackgroundContainer.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
+    <ClCompile Include="Carrot.cpp" />
     <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="CollidableContainer.cpp" />
     <ClCompile Include="CollidableTile.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityChunkContainer.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="InteractableContainer.cpp" />
+    <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Rock.cpp" />

@@ -16,7 +16,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 	soundLoader = new SoundLoader();
-
+	
 	this->changeGameState(MenuState::Instance());
 
 	actionContainer = new ActionContainer();
