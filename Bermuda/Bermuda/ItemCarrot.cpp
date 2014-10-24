@@ -22,7 +22,7 @@ void ItemCarrot::init() {
 	int itemCount = rand() % 2 + 1;	
 	this->setStackSize(itemCount);
 
-	std::cout << "Harvested " << itemCount << " carrots.";
+	std::cout << "Harvested " << itemCount << " carrots." << std::endl;
 }
 
 

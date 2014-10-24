@@ -258,6 +258,9 @@
     <ClCompile Include="ItemCarrot.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ItemRock.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -423,6 +426,9 @@
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="Items.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemRock.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
