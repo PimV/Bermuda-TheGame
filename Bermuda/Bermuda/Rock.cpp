@@ -27,8 +27,12 @@ void Rock::update(double dt) {
 void Rock::interact(Player* player)
 {
 	player->getInventory()->addItem(new ItemRock());
+	this->setCollisionY(0);
 	this->setDrawImage(this->rockPiecesImage);
+	this->getMainEntityContainer()->getBackgroundContainer()->add(this);
 	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
 }
 
 Rock::~Rock()

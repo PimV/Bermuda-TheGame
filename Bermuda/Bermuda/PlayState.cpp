@@ -186,7 +186,6 @@ void PlayState::update(double dt) {
 	{
 		for(int j = beginChunkX; j <= endChunkX; j++)
 		{
-			//Background
 			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
 			if(vec != nullptr)
 			{

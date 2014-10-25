@@ -28,8 +28,6 @@ void Tree::interact(Player* player) {
 
 	player->getInventory()->addItem(new ItemWood());
 	this->setDrawImage(this->stumpImage);
-
-
 }
 
 void Tree::update(double dt) {
