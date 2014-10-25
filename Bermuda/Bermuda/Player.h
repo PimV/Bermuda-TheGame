@@ -9,6 +9,8 @@
 #include "SDLInitializer.h"
 #include "MainEntityContainer.h"
 
+class Inventory;
+
 class Player :
 	public IMovable,
 	public DrawableEntity,
@@ -39,6 +41,8 @@ public:
 	bool interaction;
 	int destX;
 	int destY;
+
+	Inventory* getInventory();
 private:
 	const char* path;
 	Camera* camera;
@@ -55,4 +59,6 @@ private:
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
 	MainEntityContainer* mec;
+
+	Inventory* inventory;
 };

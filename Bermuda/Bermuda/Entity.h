@@ -1,4 +1,5 @@
 #pragma once
+class MainEntityContainer;
 class Entity
 {
 public:
@@ -14,6 +15,7 @@ public:
 	void setHeight(double height);
 	void setChunkSize(int chunkSize);
 	void setChunks(); //According to the chunksize
+	void setMainEntityContainer(MainEntityContainer* mec);
 	//Getters
 	int getId();
 	int getChunkSize();
@@ -24,6 +26,7 @@ public:
 	double getZ();
 	double getWidth();
 	double getHeight();
+	MainEntityContainer* getMainEntityContainer();
 	//Destructor
 	virtual ~Entity(void);
 	double tempX;
@@ -45,5 +48,8 @@ private:
 	int chunkSize;
 	int chunkY;
 	int chunkX;
+
+	//Entity Container
+	MainEntityContainer* mec;
 };
 

@@ -1,4 +1,5 @@
 #include "InteractableEntity.h"
+#include "GameStateManager.h"
 
 
 InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize, int rangeValue)
@@ -6,6 +7,7 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 {
 	this->rangeValue = rangeValue;
 	this->setRangeValues();
+	this->destroyed = false;
 }
 
 void InteractableEntity::setRangeValues()
@@ -14,6 +16,18 @@ void InteractableEntity::setRangeValues()
 	this->endX = this->getX() + this->getWidth() + this->rangeValue;
 	this->startY = this->getY() - this->rangeValue;
 	this->endY = this->getY() + this->getHeight() + this->rangeValue;
+}
+
+bool InteractableEntity::trackInteractTimes() {
+	if (destroyed) {
+		return false;
+	}
+	currentInteractTime += GameStateManager::Instance()->getUpdateLength();
+	if (currentInteractTime > interactTime) {
+		currentInteractTime = 0;
+		return true;
+	}
+	return false;
 }
 
 int InteractableEntity::getRangeValue()

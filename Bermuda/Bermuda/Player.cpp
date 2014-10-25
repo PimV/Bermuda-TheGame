@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "header_loader.h"
 #include <iostream>
+#include "Inventory.h"
 
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
@@ -28,7 +29,6 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->setTempY(this->getY());
 
 	this->stopSpeed = 0.8;
-	//this->moveSpeed = id;
 	this->movingLeft = false;
 	this->movingRight = false;
 	this->movingDown = false;
@@ -44,16 +44,22 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
-	
+
 	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
-	
+
 	this->StopAnimation();
 
 	//Add to containers
 	mec->getDrawableContainer()->add(this);
 	//TODO : collision container
+
+	this->inventory = new Inventory();
+}
+
+Inventory* Player::getInventory() {
+	return this->inventory;
 }
 
 void Player::resetMovement()
@@ -69,7 +75,7 @@ void Player::resetMovement()
 	}
 }
 
-bool Player::checkCollision(CollidableContainer* container) {	
+bool Player::checkCollision(CollidableContainer* container) {
 	//TODO: werkend maken met nieuwe collidablecontainer shit
 	double currentX = this->getX();
 	double currentY = this->getY();
@@ -108,17 +114,17 @@ bool Player::checkCollision(CollidableContainer* container) {
 
 void Player::update(double dt) {
 
-	
+
 	this->move(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
 	/*if (interaction)
 	{
-		interact(dt);
+	interact(dt);
 	}
 	else
 	{
-		this->move(dt);
+	this->move(dt);
 	}*/
 }
 
@@ -182,11 +188,11 @@ void Player::move(double dt) {
 
 	//if (dx != 0 && dy != 0) {
 
-		//dx = dx / 2;
-		//dy = dy / 2;
+	//dx = dx / 2;
+	//dy = dy / 2;
 
-		//dx = dx / (moveSpeed / 2);
-		//dy = dy / (moveSpeed / 2);
+	//dx = dx / (moveSpeed / 2);
+	//dy = dy / (moveSpeed / 2);
 	//}
 
 	//Move player
@@ -229,6 +235,9 @@ void::Player::interact()
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
 	int playerOffsetY = this->getY() + (this->getHeight() / 2);
 
+		double diff = 1000;
+	InteractableEntity* closestEntity = nullptr;
+
 	//Loop through all chunks
 	for(int i = beginChunkY; i <= endChunkY; i++)
 	{
@@ -237,19 +246,48 @@ void::Player::interact()
 			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
 			if(vec != nullptr)
 			{
+
+
 				for(InteractableEntity* e : *vec)
 				{
+					
 					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
 						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
 					{
-						e->interact();
+						double centerX = (e->getInteractAreaStartX() + e->getInteractAreaEndX()) / 2;
+						double centerY = (e->getInteractAreaStartY() + e->getInteractAreaEndY()) / 2;
+
+						double diffX = centerX - playerOffsetX;
+						double diffY = centerY - playerOffsetY;
+
+						if (diffX < 0) {
+							diffX = -diffX;
+						}
+
+						if (diffY < 0) {
+							diffY = -diffY;
+						}
+
+						if (diffX + diffY < diff) {
+							diff = diffX + diffY;
+							closestEntity = e;
+							std::cout << "New Closest Entity" << std::endl;
+						}
+
+
+
+						//e->interact(this);
 						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
 						//TODO : juiste animatie laten zien e.d.
-						break;
+						//break;
 					}
 				}
 			}
 		}
+	}
+
+	if (closestEntity != nullptr) {
+		closestEntity->interact(this);
 	}
 
 	//ROELS CODE HIERONDER UITGEZET, ANIMATIE IS AFHANKELIJK VAN WAARMEE GEINTERACT WORDT??????
@@ -353,4 +391,5 @@ void Player::StopAnimation()
 
 Player::~Player(void)
 {
+	delete this->inventory;
 }

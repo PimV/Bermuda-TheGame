@@ -9,6 +9,8 @@
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
+#include "Inventory.h"
+#include "Item.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -106,6 +108,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			//TODO: methode voor deze escape klik aanmaken?
 			this->gsm->pushGameState(PauseState::Instance());
 			break;
+		case SDLK_i:
+			this->p->getInventory()->toggleInventory();
+			this->p->getInventory()->printInventory();
+			break;
 		}
 
 		break;
@@ -149,11 +155,17 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 void PlayState::update(double dt) {
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
-	/*p->move(dt);*/
+
 	p->update(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
+
+	//Update all respawnable entities
+	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
+		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
+	}
+
 }
 
 void PlayState::draw() {
@@ -199,6 +211,10 @@ void PlayState::draw() {
 	for(DrawableEntity* e : drawableVector)
 	{
 		e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+	}
+
+	if (this->p->getInventory()->isOpen()) {
+		this->p->getInventory()->draw();
 	}
 }
 

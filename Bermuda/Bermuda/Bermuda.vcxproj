@@ -126,6 +126,13 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="IMovable.h" />
     <ClInclude Include="InteractableContainer.h" />
     <ClInclude Include="InteractableEntity.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemCarrot.h" />
+    <ClInclude Include="ItemRock.h" />
+    <ClInclude Include="Items.h" />
+    <ClInclude Include="ItemType.h" />
+    <ClInclude Include="ItemWood.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
@@ -136,6 +143,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Rabbit.h" />
+    <ClInclude Include="RespawnContainer.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="SDLInitializer.h" />
     <ClInclude Include="SoundLoader.h" />
@@ -160,6 +168,12 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Defensive.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemCarrot.cpp" />
+    <ClCompile Include="ItemRock.cpp" />
+    <ClCompile Include="ItemWood.cpp" />
+    <ClCompile Include="RespawnContainer.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />

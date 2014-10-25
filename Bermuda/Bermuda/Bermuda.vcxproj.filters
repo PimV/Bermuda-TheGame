@@ -100,6 +100,12 @@
     <Filter Include="Header Files\Model\Container\Interactive">
       <UniqueIdentifier>{be7ae0cc-0742-4e68-8b12-6ab94637c53d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Item">
+      <UniqueIdentifier>{097e5ade-cb4e-4841-9a10-36e47053f69c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Item">
+      <UniqueIdentifier>{e778ff3d-ea2e-4688-a957-eb24b2bef58a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -241,6 +247,24 @@
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="InteractableContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemCarrot.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemRock.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemWood.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="RespawnContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
   </ItemGroup>
@@ -393,6 +417,30 @@
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="InteractableContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemType.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemCarrot.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemRock.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemWood.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
   </ItemGroup>

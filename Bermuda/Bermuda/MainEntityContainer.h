@@ -5,6 +5,7 @@
 #include "CollidableContainer.h"
 #include "BackgroundContainer.h"
 #include "InteractableContainer.h"
+#include "RespawnContainer.h"
 #include <map>
 
 class MainEntityContainer
@@ -15,6 +16,7 @@ public:
 	CollidableContainer* getCollidableContainer();
 	BackgroundContainer* getBackgroundContainer();
 	InteractableContainer* getInteractableContainer();
+	RespawnContainer* getRespawnContainer();
 	virtual ~MainEntityContainer();
 
 	void initContainerSizes(int chunksY, int chunksX);

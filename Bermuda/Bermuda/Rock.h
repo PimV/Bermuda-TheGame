@@ -14,7 +14,8 @@ private:
 public:
 	Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* rockImage, Image* rockPieces);
 	void setCollidableValues();
-	void interact();
+	void update(double dt);
+	void interact(Player* player);
 
 	~Rock();
 };
