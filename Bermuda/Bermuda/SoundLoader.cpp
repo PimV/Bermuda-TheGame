@@ -10,7 +10,7 @@
 #pragma region Constructor & Destructor
 SoundLoader::SoundLoader()
 {
-	target_time_ms = 180000; // 3 minutes
+	//target_time_ms = 180000; // 3 minutes
 		
 	if (!initialiseSound())
 	{
@@ -50,9 +50,9 @@ void SoundLoader::playMenuMusic()
 	haltMusic = true;
 }
 
-void SoundLoader::closeMusic()
+void SoundLoader::stopMusic()
 {
-	quit = true;
+	isRunning = false;
 }
 
 SoundLoader SoundLoader::m_SoundLoader;
@@ -102,14 +102,14 @@ bool SoundLoader::initialiseSound()
 
 void SoundLoader::threadMusic()
 {
-	quit = false;
+	isRunning = true;
 	//long currentTime = SDL_GetTicks();
 	//long prevTime = 0;
 	
 	// Stop any music that's already playing
 	Mix_FadeOutMusic(1500); 
 
-	while (!quit)
+	while (isRunning)
 	{
 		if (Mix_PlayingMusic() == 0) {
 
@@ -152,7 +152,7 @@ void SoundLoader::threadMusic()
 		std::chrono::milliseconds dura(50);
 		std::this_thread::sleep_for(dura);
 	}
-	quit = true;
+	isRunning = false;
 	Mix_FadeOutMusic(1500);
 }
 
@@ -177,7 +177,7 @@ bool SoundLoader::loadMenuMusic()
 bool SoundLoader::loadGameMusic()
 {
 	bool success = true;
-
+	
 	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Bahara.mp3").c_str()));
 	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Behemos.mp3").c_str()));
 	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Colosseoum Main.mp3").c_str()));
