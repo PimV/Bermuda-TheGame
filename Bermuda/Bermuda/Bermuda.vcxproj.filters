@@ -264,6 +264,9 @@
     <ClCompile Include="ItemWood.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="RespawnContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -436,6 +439,9 @@
     </ClInclude>
     <ClInclude Include="ItemWood.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ MainEntityContainer::MainEntityContainer(void)
 	m_container[ContainerType::Collidable] = new CollidableContainer();
 	m_container[ContainerType::Background] = new BackgroundContainer();
 	m_container[ContainerType::Interactable] = new InteractableContainer();
+	m_container[ContainerType::Respawnable] = new RespawnContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {
@@ -22,6 +23,10 @@ BackgroundContainer* MainEntityContainer::getBackgroundContainer() {
 
 InteractableContainer* MainEntityContainer::getInteractableContainer() {
 	return static_cast<InteractableContainer*>(m_container[ContainerType::Interactable]);
+}
+
+RespawnContainer* MainEntityContainer::getRespawnContainer() {
+	return static_cast<RespawnContainer*>(m_container[ContainerType::Respawnable]);
 }
 
 void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)

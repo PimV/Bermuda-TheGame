@@ -3,9 +3,17 @@
 #include "Inventory.h"
 
 class Player;
+class GameStateManager;
 class InteractableEntity :
 	virtual public Entity
 {
+protected:
+	bool destroyed;
+	long interactTime;
+	long timeSinceDestroy;
+	long respawnTime;
+	long currentInteractTime;
+
 private:
 	int rangeValue;
 	int startX;
@@ -19,6 +27,8 @@ public:
 	virtual void update(double dt) = 0;
 
 	virtual ~InteractableEntity();
+
+	bool trackInteractTimes();
 
 	int getInteractAreaStartX();
 	int getInteractAreaEndX();

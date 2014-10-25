@@ -11,11 +11,6 @@ private:
 	Image* treeImage;
 	Image* stumpImage;
 	MainEntityContainer* mec;
-
-	bool destroyed;
-
-	long timeSinceDestroy;
-	long respawnTime;
 public:
 	Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* stumpImage);
 	void setCollidableValues();

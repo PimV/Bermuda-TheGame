@@ -15,19 +15,24 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 	this->getMainEntityContainer()->getDrawableContainer()->add(this);
 	this->getMainEntityContainer()->getCollidableContainer()->add(this);
 
+
 	this->destroyed = false;
 	this->respawnTime = 5000;
+	this->interactTime = 500;
 	this->timeSinceDestroy = 0;
+	this->currentInteractTime = 0;
 }
 
 void Tree::interact(Player* player) {
-	if (destroyed) {
-		return;
-	}
-	this->destroyed = true;
+	if (this->trackInteractTimes()) {
+		this->destroyed = true;
 
-	player->getInventory()->addItem(new ItemWood());
-	this->setDrawImage(this->stumpImage);
+		player->getInventory()->addItem(new ItemWood());
+		this->setDrawImage(this->stumpImage);
+		this->getMainEntityContainer()->getRespawnContainer()->add(this);
+		this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+		currentInteractTime = 0;
+	}
 }
 
 void Tree::update(double dt) {
@@ -43,6 +48,8 @@ void Tree::respawn() {
 	this->destroyed = false;
 	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->treeImage);
+	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
+	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 }
 
 //TODO: Use this->setDrawImage() to change to stump or tree. 

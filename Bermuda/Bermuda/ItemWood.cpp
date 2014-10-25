@@ -18,7 +18,7 @@ void ItemWood::init() {
 	this->setMaxStackSize(12);
 
 	srand(time(NULL));
-	int itemCount = rand() % 6 + 1;	
+	int itemCount = rand() % 3 + 1;	
 	this->setStackSize(itemCount);
 
 	std::cout << "Chopped " << itemCount << " logs." << std::endl;

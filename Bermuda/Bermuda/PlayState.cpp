@@ -112,23 +112,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			this->p->getInventory()->toggleInventory();
 			this->p->getInventory()->printInventory();
 			break;
-		case SDLK_o: {
-			/*	Item* item = new Item(2,16,true,NULL);
-			item->setStackSize(5);
-			this->p->getInventory()->addItem(item);*/
-			this->p->getInventory()->printInventory();
-			break;
-					 }
-		case SDLK_r:
-			//this->p->getInventory()->deleteItem(this->p->getInventory()->getItems()[0],5);
-			this->p->getInventory()->printInventory();
-			break;
-		case SDLK_l:
-			/*	Item* item = new Item(3,22,true,NULL);
-			item->setStackSize(5);
-			this->p->getInventory()->addItem(item);*/
-			this->p->getInventory()->printInventory();
-			break;
 		}
 
 		break;
@@ -172,32 +155,16 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 void PlayState::update(double dt) {
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
-	/*p->move(dt);*/
+
 	p->update(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
 
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
-			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
-				for(InteractableEntity* e : *vec)
-				{
-					e->update(dt);
-				}
-			}
-
-		}
+	//Update all respawnable entities
+	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
+		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
-
 
 }
 
