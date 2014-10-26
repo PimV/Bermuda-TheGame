@@ -37,6 +37,7 @@ public:
 
 	void setRangeValues();
 
-	virtual void interact(Player* p) = 0;
+	//virtual void interact(Player* p) = 0;
+	virtual void interact(Player* p);
 	int getRangeValue();
 };

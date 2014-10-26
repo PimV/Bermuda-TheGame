@@ -29,6 +29,7 @@ void Rock::update(double dt) {
 
 void Rock::interact(Player* player)
 {
+	InteractableEntity::interact(player);
 	if (this->trackInteractTimes()) {
 		player->getInventory()->addItem(new ItemRock());
 		this->setCollisionY(0);

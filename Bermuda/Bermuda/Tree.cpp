@@ -24,6 +24,8 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 }
 
 void Tree::interact(Player* player) {
+	InteractableEntity::interact(player);
+
 	if (this->trackInteractTimes()) {
 		this->destroyed = true;
 

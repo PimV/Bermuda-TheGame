@@ -1,6 +1,8 @@
 #include "InteractableEntity.h"
 #include "GameStateManager.h"
 
+#include <iostream>
+
 
 InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize, int rangeValue)
 	: Entity(id,x,y,chunkSize)
@@ -8,6 +10,12 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 	this->rangeValue = rangeValue;
 	this->setRangeValues();
 	this->destroyed = false;
+}
+
+void InteractableEntity::interact(Player* player)
+{
+	//TODO : oplossen op manier zonder casten
+	cout << (int)(((double)currentInteractTime / (double)interactTime) * 100) << endl;
 }
 
 void InteractableEntity::setRangeValues()

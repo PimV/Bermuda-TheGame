@@ -271,7 +271,7 @@ void::Player::interact()
 						if (diffX + diffY < diff) {
 							diff = diffX + diffY;
 							closestEntity = e;
-							std::cout << "New Closest Entity" << std::endl;
+							//std::cout << "New Closest Entity" << std::endl;
 						}
 
 
