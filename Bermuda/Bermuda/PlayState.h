@@ -23,6 +23,8 @@ private:
 	int counter;
 	Camera* camera;
 
+	void doSomething();
+
 public:
 
 	void init(GameStateManager *gsm);

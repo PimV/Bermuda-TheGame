@@ -139,9 +139,11 @@ void GameStateManager::draw() {
 	GameStateManager::Instance()->sdlInitializer->clearScreen();
 
 	//Draw GameState
-	for (size_t  i = 0; i < states.size(); i++) {
-		states.at(i)->draw();
-	}
+	//for (size_t  i = 0; i < states.size(); i++) {
+	//	states.at(i)->draw();
+	//}
+
+	states.back()->draw();
 
 	//Draw FPS
 	if (GameStateManager::Instance()->showFps == true) {

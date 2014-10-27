@@ -4,6 +4,7 @@
 #include "Rock.h"
 #include "Carrot.h"
 #include "CollidableTile.h"
+#include "LoadingState.h"
 
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
@@ -19,6 +20,12 @@ MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
 {
 }
 
+void MapLoader::setPercentage(int percentage)
+{
+	//cout << "loadPercentage: " << loadPercentage << endl;
+	LoadingState::Instance()->setPercentage(percentage);
+}
+
 void MapLoader::loadMap()
 {
 	loadPercentage = 0;
@@ -26,6 +33,7 @@ void MapLoader::loadMap()
 	loadStatus = "Reading map file.";
 	cout << loadStatus << endl;
 	cout << "loadPercentage: " << loadPercentage << endl;
+	this->setPercentage(loadPercentage);
 
 	//Create file stream.
 	string executableRoot = SDL_GetBasePath();
@@ -52,7 +60,7 @@ void MapLoader::loadMap()
 	d.Parse(json.c_str());
 
 	loadPercentage += loadWeight;
-	cout << "loadPercentage: " << loadPercentage << endl;
+	this->setPercentage(loadPercentage);
 
 	extractMapInfo(d);
 }
@@ -76,7 +84,7 @@ void MapLoader::extractMapInfo(Document& d)
 
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
-
+	
 	for(int i = 0; i < d["layers"].Capacity(); i++)
 	{
 		Value& layer = d["layers"][i];
@@ -141,7 +149,7 @@ void MapLoader::createTileSets(Value& tilesets)
 		//TODO: remove
 		if(loadPercentage != tempLastLoadPercentage)
 		{
-			cout << "loadPercentage: " << loadPercentage << endl;
+			this->setPercentage(loadPercentage);
 		}
 		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
@@ -180,7 +188,7 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			//TODO: remove
 			if(loadPercentage != tempLastLoadPercentage)
 			{
-				cout << "loadPercentage: " << loadPercentage << endl;
+				this->setPercentage(loadPercentage);
 			}
 			tempLastLoadPercentage = loadPercentage; //TODO: remove
 		}
@@ -242,7 +250,7 @@ void MapLoader::createObjects(Value& objects)
 		//TODO: remove
 		if(loadPercentage != tempLastLoadPercentage)
 		{
-			cout << "loadPercentage: " << loadPercentage << endl;
+			this->setPercentage(loadPercentage);
 		}
 		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
@@ -276,7 +284,7 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		//TODO: remove
 		if(loadPercentage != tempLastLoadPercentage)
 		{
-			cout << "loadPercentage: " << loadPercentage << endl;
+			this->setPercentage(loadPercentage);
 		}
 		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}

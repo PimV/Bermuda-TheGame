@@ -18,6 +18,7 @@ private:
 	void createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, int tileHeight, int tileWidth);
 	void createObjects(Value& objects);
 	void createSpawnPoints(Value& spawnpoints);
+	void setPercentage(int percentage);
 	map<int, string> objectClasses;
 	vector<int> collisionVector;
 	ImageLoader* imgLoader;

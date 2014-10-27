@@ -6,11 +6,13 @@
 #include "ClickAction.h"
 #include "MoveAction.h"
 #include "PauseState.h"
+#include "LoadingState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
 #include "Inventory.h"
 #include "Item.h"
+#include <thread>
 
 PlayState PlayState::m_PlayState;
 
@@ -23,15 +25,26 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-	mec = new MainEntityContainer();
 
+	this->gsm->pushGameState(LoadingState::Instance());
+
+	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
+	std::thread t(&PlayState::doSomething, this);
+	t.detach();
+
+	cout << "einde init playstate - aap " << endl;
+
+	//SoundLoader::Instance()->playGameMusic();
+}
+
+void PlayState::doSomething()
+{
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-
-	SoundLoader::Instance()->playGameMusic();
-
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
+
+	this->gsm->popState();
 }
 
 void PlayState::cleanup() {
@@ -39,8 +52,11 @@ void PlayState::cleanup() {
 }
 
 void PlayState::pause() {
-	this->p->moveClick = true;
-	this->p->resetMovement();
+	if(this->p != nullptr)
+	{
+		this->p->moveClick = true;
+		this->p->resetMovement();
+	}
 }
 
 void PlayState::resume() {
