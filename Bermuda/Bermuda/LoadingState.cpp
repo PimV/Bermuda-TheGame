@@ -11,6 +11,25 @@ void LoadingState::init(GameStateManager *gsm)
 {
 	this->gsm = gsm;
 	this->i = 0;
+
+	/*
+	//Create MainentityContainer
+	mec = new MainEntityContainer();
+	//Create map loader and load the map
+	mapLoader = new MapLoader(this->gsm, mec);
+	mapLoader->loadMap();
+	//Create new Camera
+	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
+	//Start play music
+	SoundLoader::Instance()->playGameMusic();
+	//Create new Player
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
+	*/
+}
+
+void LoadingState::setPlayState(PlayState* playState)
+{
+	this->playState = playState;
 }
 
 void LoadingState::cleanup() 

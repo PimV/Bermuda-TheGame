@@ -1,5 +1,6 @@
 #pragma once
 #include "igamestate.h"
+#include "PlayState.h"
 #include "header_loader.h"
 
 
@@ -10,6 +11,7 @@ private:
 	int i;
 	static LoadingState m_LoadingState;
 	
+	PlayState* playState;
 	GameStateManager* gsm;
 
 public:
@@ -22,6 +24,8 @@ public:
 	void handleEvents(SDL_Event mainEvent) ;
 	void update(double dt);
 	void draw();
+
+	void setPlayState(PlayState* playState);
 
 	static LoadingState* Instance() {
 		return &m_LoadingState;

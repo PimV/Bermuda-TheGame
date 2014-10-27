@@ -24,8 +24,8 @@ private:
 	Camera* camera;
 
 public:
-
 	void init(GameStateManager *gsm);
+	void setAll();
 	void cleanup();
 
 	void pause();

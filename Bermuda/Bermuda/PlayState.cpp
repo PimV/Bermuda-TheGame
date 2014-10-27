@@ -9,6 +9,7 @@
 #include "LoadingState.h"
 #include <iostream>
 #include <algorithm>
+#include <thread>
 #include "Windows.h" 
 
 PlayState PlayState::m_PlayState;
@@ -22,7 +23,15 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+
+	LoadingState::Instance()->setPlayState(this);
+	this->gsm->pushGameState(LoadingState::Instance());
+	//std::thread t(this->gsm->pushGameState(LoadingState::Instance()), this);
+	//t.detach();
 	
+
+	//mainentitycontiainer - maploader - camera - player
+	/*
 	//Create MainentityContainer
 	mec = new MainEntityContainer();
 	//Create map loader and load the map
@@ -34,6 +43,11 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader::Instance()->playGameMusic();
 	//Create new Player
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
+	
+	*/
+
+	std::cout << "LOADEDDDDD aap " << std::endl;
+	//pop
 }
 
 void PlayState::cleanup() {
