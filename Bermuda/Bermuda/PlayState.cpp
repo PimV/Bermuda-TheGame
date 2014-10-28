@@ -32,10 +32,8 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	std::thread t(&PlayState::doSomething, this);
 	t.detach();
-
-	cout << "einde init playstate - aap " << endl;
-
-	//SoundLoader::Instance()->playGameMusic();
+	
+	SoundLoader::Instance()->playGameMusic();
 }
 
 void PlayState::doSomething()

@@ -38,6 +38,7 @@ void Tree::interact(Player* player) {
 }
 
 void Tree::update(double dt) {
+	cout << "aap" << endl;
 	if (destroyed) {
 		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
 		if (this->timeSinceDestroy > respawnTime) {

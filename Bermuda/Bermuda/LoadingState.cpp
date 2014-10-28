@@ -57,7 +57,7 @@ void LoadingState::draw()
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text1, &rect1, NULL);
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text2, &rect2, NULL);
 	
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string(std::to_string(this->percentage) + " %"), ScreenWidth / 2 - 25, ScreenHeight / 2 - ScreenHeight / 40, 50, 50);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string(std::to_string(this->percentage) + " %"), ScreenWidth / 2 - 25, ScreenHeight / 2 - ScreenHeight / 30, 50, 50);
 }
 
 LoadingState::~LoadingState(void)
