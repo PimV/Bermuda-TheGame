@@ -10,10 +10,9 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <Windows.h>
 #include <math.h>
-
-//TODO: remove console messages.
 
 MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
 	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader()), chunkSize(300)
@@ -29,11 +28,11 @@ void MapLoader::setPercentage(int percentage)
 void MapLoader::loadMap()
 {
 	loadPercentage = 0;
-	double loadWeight = 5;
+	double startLoadPercentage = 0;
+	double loadWeight = 10;
+	double totalJSONLines = -1;
+	double processedJSONLines = 0;
 	loadStatus = "Reading map file.";
-	cout << loadStatus << endl;
-	cout << "loadPercentage: " << loadPercentage << endl;
-	this->setPercentage(loadPercentage);
 
 	//Create file stream.
 	string executableRoot = SDL_GetBasePath();
@@ -48,9 +47,31 @@ void MapLoader::loadMap()
 	//Read entire file into a string.
 	string json;
 	string line;
-	while (getline(stream, line)) {
-		json += line;
+	bool firstLine = true;
+	while (getline(stream, line)) 
+	{
+		if(firstLine)
+		{
+			//First line contains total file lines.
+			istringstream iss(line);
+			string type;
+			iss >> type >> totalJSONLines;
+			if(type != "JsonLines:" && totalJSONLines > 0)
+			{
+				cout << "Could not load map. Incorrect file structure. Missing line count." << endl;
+				return;
+			}
+			firstLine = false;
+		}
+		else
+		{
+			json += line;
+
+			processedJSONLines++;
+			loadPercentage = startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight);
+		}
 	}
+	loadPercentage = loadWeight; //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
 
 	//Close stream.
 	stream.close();
@@ -59,16 +80,12 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
-	loadPercentage += loadWeight;
-	this->setPercentage(loadPercentage);
-
 	extractMapInfo(d);
 }
 
 void MapLoader::extractMapInfo(Document& d)
 {
 	loadStatus = "Creating chunks.";
-	cout << endl << loadStatus << endl;
 
 	//Get general map information
 	int mapTileHeight = d["height"].GetInt();
@@ -108,13 +125,11 @@ void MapLoader::extractMapInfo(Document& d)
 
 void MapLoader::createTileSets(Value& tilesets)
 {
-	double tempLastLoadPercentage = loadPercentage; //TODO: remove
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
 	double totalTilesets = tilesets.Capacity();
 	double processedTilesets = 0;
 	loadStatus = "Loading tilesets.";
-	cout << endl << loadStatus << endl;
 
 	for(int i = 0; i < tilesets.Capacity(); i++)
 	{
@@ -145,26 +160,16 @@ void MapLoader::createTileSets(Value& tilesets)
 		}
 		processedTilesets++;
 		loadPercentage = startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight);
-
-		//TODO: remove
-		if(loadPercentage != tempLastLoadPercentage)
-		{
-			this->setPercentage(loadPercentage);
-		}
-		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
 }
 
 void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, int tileHeight, int tileWidth)
 {
-	double tempLastLoadPercentage = loadPercentage; //TODO: remove
-
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 40;
 	double totalTiles = mapTileHeight * mapTileWidth;
 	double processedTiles = 0;
 	loadStatus = "Creating tiles.";
-	cout << endl << loadStatus << endl;
 
 	for (int y = 0; y < mapTileHeight; y++)
 	{
@@ -184,13 +189,6 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			}
 			processedTiles++;
 			loadPercentage = startLoadPercentage + ((processedTiles / totalTiles) * loadWeight);
-			
-			//TODO: remove
-			if(loadPercentage != tempLastLoadPercentage)
-			{
-				this->setPercentage(loadPercentage);
-			}
-			tempLastLoadPercentage = loadPercentage; //TODO: remove
 		}
 	}
 }
@@ -205,13 +203,11 @@ void MapLoader::createObjects(Value& objects)
 	return map[some_string]();*/
 	//Parameters could be a problem with this though. 
 
-	double tempLastLoadPercentage = loadPercentage; //TODO: remove
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
 	double totalObjects = objects.Capacity();
 	double processedObjects = 0;
 	loadStatus = "Creating objects.";
-	cout << endl << loadStatus << endl;
 
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
@@ -246,25 +242,16 @@ void MapLoader::createObjects(Value& objects)
 		}
 		processedObjects++;
 		loadPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);
-			
-		//TODO: remove
-		if(loadPercentage != tempLastLoadPercentage)
-		{
-			this->setPercentage(loadPercentage);
-		}
-		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
 }
 
 void MapLoader::createSpawnPoints(Value& spawnpoints)
 {
-	double tempLastLoadPercentage = loadPercentage; //TODO: remove
 	double startLoadPercentage = loadPercentage;
-	double loadWeight = 15;
+	double loadWeight = 10;
 	double totalSpawnpoints = spawnpoints.Capacity();
 	double processedSpawnpoints = 0;
 	loadStatus = "Creating spawnpoints.";
-	cout << endl << loadStatus << endl;
 
 	//TODO: Create spawnpoint objects
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
@@ -280,13 +267,6 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		}
 		processedSpawnpoints++;
 		loadPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
-			
-		//TODO: remove
-		if(loadPercentage != tempLastLoadPercentage)
-		{
-			this->setPercentage(loadPercentage);
-		}
-		tempLastLoadPercentage = loadPercentage; //TODO: remove
 	}
 }
 
