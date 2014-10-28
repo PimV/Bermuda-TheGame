@@ -14,14 +14,14 @@ void LoadingState::init(GameStateManager *gsm) {
 	text1 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.bmp").c_str());
 	text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.bmp").c_str());
 
-	rect1.x = 300;
-	rect1.y = 300;
-	rect1.h = 50;
-	rect1.w = 500;
+	rect1.x = ScreenWidth / 3;
+	rect1.y = ScreenHeight / 2 - ScreenHeight / 40;
+	rect1.h = ScreenHeight / 20;
+	rect1.w = ScreenWidth / 3;
 
-	rect2.x = 300;
-	rect2.y = 300;
-	rect2.h = 50;
+	rect2.x = ScreenWidth / 3;
+	rect2.y = ScreenHeight / 2 - ScreenHeight / 40;
+	rect2.h = ScreenHeight / 20;
 	rect2.w = 0;
 }
 
@@ -52,12 +52,12 @@ void LoadingState::update(double dt)
 
 void LoadingState::draw() 
 {	
-	rect2.w = this->percentage * 5;
-
+	rect2.w = ((ScreenWidth / 3) / 100) * this->percentage;
+	
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text1, &rect1, NULL);
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text2, &rect2, NULL);
 	
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string(std::to_string(this->percentage) + " %"), 525, 305, 50, 50);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string(std::to_string(this->percentage) + " %"), ScreenWidth / 2 - 25, ScreenHeight / 2 - ScreenHeight / 40, 50, 50);
 }
 
 LoadingState::~LoadingState(void)
