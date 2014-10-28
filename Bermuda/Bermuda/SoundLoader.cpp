@@ -11,7 +11,8 @@
 SoundLoader::SoundLoader()
 {
 	//target_time_ms = 180000; // 3 minutes
-		
+	
+	allowThread = true;
 	if (!initialiseSound())
 	{
 		allowThread = false;
