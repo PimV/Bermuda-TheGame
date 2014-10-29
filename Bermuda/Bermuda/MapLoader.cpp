@@ -4,6 +4,7 @@
 #include "Rock.h"
 #include "Carrot.h"
 #include "CollidableTile.h"
+#include "LoadingState.h"
 
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
@@ -18,9 +19,16 @@ MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
 {
 }
 
+void MapLoader::setPercentage(int percentage)
+{
+	//cout << "loadPercentage: " << loadPercentage << endl;
+	this->loadPercentage = percentage;
+	LoadingState::Instance()->setPercentage(percentage);
+}
+
 void MapLoader::loadMap()
 {
-	loadPercentage = 0;
+	this->setPercentage(0);
 	double startLoadPercentage = 0;
 	double loadWeight = 10;
 	double totalJSONLines = -1;
@@ -61,10 +69,10 @@ void MapLoader::loadMap()
 			json += line;
 
 			processedJSONLines++;
-			loadPercentage = startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight);
+			this->setPercentage(startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight));
 		}
 	}
-	loadPercentage = loadWeight; //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
+	this->setPercentage(loadWeight); //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
 
 	//Close stream.
 	stream.close();
@@ -94,7 +102,7 @@ void MapLoader::extractMapInfo(Document& d)
 
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
-
+	
 	for(int i = 0; i < d["layers"].Capacity(); i++)
 	{
 		Value& layer = d["layers"][i];
@@ -152,7 +160,7 @@ void MapLoader::createTileSets(Value& tilesets)
 			}
 		}
 		processedTilesets++;
-		loadPercentage = startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight);
+		this->setPercentage(startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight));
 	}
 }
 
@@ -181,7 +189,7 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));				
 			}
 			processedTiles++;
-			loadPercentage = startLoadPercentage + ((processedTiles / totalTiles) * loadWeight);
+			this->setPercentage(startLoadPercentage + ((processedTiles / totalTiles) * loadWeight));
 		}
 	}
 }
@@ -234,7 +242,7 @@ void MapLoader::createObjects(Value& objects)
 			new Carrot(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID));
 		}
 		processedObjects++;
-		loadPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);
+		this->setPercentage(startLoadPercentage + ((processedObjects / totalObjects) * loadWeight));
 	}
 }
 
@@ -255,11 +263,11 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		string spawnType = properties["SpawnType"].GetString();
 		if(spawnType == "Player")
 		{
-			startPosX = object["x"].GetInt();
-			startPosY = object["y"].GetInt();
+			startPosX = object["x"].GetDouble();
+			startPosY = object["y"].GetDouble();
 		}
 		processedSpawnpoints++;
-		loadPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
+		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
 	}
 }
 
