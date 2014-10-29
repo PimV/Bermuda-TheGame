@@ -11,8 +11,8 @@ LoadingState::LoadingState(void)
 void LoadingState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 
-	text1 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.bmp").c_str());
-	text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.bmp").c_str());
+	text1 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.png").c_str());
+	text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.png").c_str());
 
 	rect1.x = ScreenWidth / 3;
 	rect1.y = ScreenHeight / 2 - ScreenHeight / 40;
