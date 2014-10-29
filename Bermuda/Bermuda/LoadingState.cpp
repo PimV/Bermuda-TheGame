@@ -13,7 +13,12 @@ void LoadingState::init(GameStateManager *gsm) {
 
 	text1 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.png").c_str());
 	text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.png").c_str());
-	textBackground = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_background.png").c_str());
+	textBackground = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\campfire.jpg").c_str());
+
+	if(textBackground == nullptr)
+	{
+		cout << "appp" << endl;
+	}
 
 	rect1.x = ScreenWidth / 3;
 	rect1.y = ScreenHeight / 2 - ScreenHeight / 40;

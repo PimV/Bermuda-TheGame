@@ -263,8 +263,8 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		string spawnType = properties["SpawnType"].GetString();
 		if(spawnType == "Player")
 		{
-			startPosX = object["x"].GetInt();
-			startPosY = object["y"].GetInt();
+			startPosX = object["x"].GetDouble();
+			startPosY = object["y"].GetDouble();
 		}
 		processedSpawnpoints++;
 		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
