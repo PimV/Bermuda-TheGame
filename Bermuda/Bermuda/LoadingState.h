@@ -17,8 +17,10 @@ private:
 	
 	SDL_Texture* text1;
 	SDL_Texture* text2;
+	SDL_Texture* textBackground;
 	SDL_Rect rect1;
 	SDL_Rect rect2;
+	SDL_Rect rectBackground;
 
 	int percentage;
 
