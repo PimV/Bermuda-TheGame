@@ -31,12 +31,12 @@ void GameStateManager::setFps(int fps) {
 	this->fps = fps;
 }
 
-void GameStateManager::drawTime(long time) {
-	this->lastUpdateLength = time;
-}
-
 int GameStateManager::getFps() {
 	return this->fps;
+}
+
+void GameStateManager::drawTime(long time) {
+	this->lastUpdateLength = time;
 }
 
 void GameStateManager::cleanup() {
@@ -117,9 +117,6 @@ void GameStateManager::handleEvents() {
 			break;
 		}
 	}
-
-
-
 }
 
 void GameStateManager::update(double deltaTime) {
@@ -173,6 +170,3 @@ GameStateManager::~GameStateManager(void) {
 
 	delete actionContainer;
 }
-
-
-

@@ -23,6 +23,7 @@ public:
 	void changeGameState(IGameState* gameState);
 	void pushGameState(IGameState* gameState);
 	void popState();
+
 	void drawTime(long time);
 
 	void update(double delta);
@@ -48,7 +49,5 @@ private:
 	SoundLoader* soundLoader;
 	bool m_running;
 
-
 	ActionContainer* actionContainer;
 };
-

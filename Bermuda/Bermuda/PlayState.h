@@ -32,7 +32,11 @@ public:
 	void resume();
 
 	void handleEvents(SDL_Event mainEvent) ;
+
 	void update(double dt);
+	void updateGameTime();
+	long getGameTime();
+
 	void draw();
 
 	static PlayState* Instance() {

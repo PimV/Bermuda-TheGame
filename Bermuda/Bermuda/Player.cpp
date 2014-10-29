@@ -57,10 +57,8 @@ Inventory* Player::getInventory() {
 	return this->inventory;
 }
 
-void Player::resetMovement()
-{
-	if (this->moveClick)
-	{
+void Player::resetMovement() {
+	if (this->moveClick) {
 		this->movingLeft = false;
 		this->movingRight = false;
 		this->movingDown = false;
@@ -87,13 +85,13 @@ bool Player::checkCollision(CollidableContainer* container) {
 }
 
 void Player::update(double dt) {
+	
 	this->move(dt);
 }
 
 void Player::move(double dt) {
 
-	if(moveClick)
-	{
+	if(moveClick) {
 		clickMove();
 	}
 
@@ -240,12 +238,10 @@ void Player::clickMove() {
 	}
 }
 
-void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
-{
+void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) {
 	double animationDelay = (maxSpeed / 100)  * 40;
 	animationSpeed -= animationDelay;
-	if ( animationSpeed < animationDelay)
-	{
+	if ( animationSpeed < animationDelay) {
 		this->currentPlayerAnimationRow = Row;
 		if (EndFrame <= CurrentFrame)
 			CurrentFrame = BeginFrame;
@@ -258,13 +254,11 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 
 }
 
-void Player::StopAnimation()
-{
+void Player::StopAnimation() {
 	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
 }
 
 
-Player::~Player(void)
-{
+Player::~Player(void) {
 	delete this->inventory;
 }
