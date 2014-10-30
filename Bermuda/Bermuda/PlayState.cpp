@@ -6,6 +6,7 @@
 #include "ClickAction.h"
 #include "MoveAction.h"
 #include "PauseState.h"
+#include "GameOverState.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
@@ -104,6 +105,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
 			this->gsm->pushGameState(PauseState::Instance());
+			break;
+
+		case SDLK_g:
+			this->gsm->changeGameState(GameOverState::Instance());
 			break;
 		}
 

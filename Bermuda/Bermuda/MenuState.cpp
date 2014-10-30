@@ -4,6 +4,7 @@
 #include "Button.h"
 #include "GameStateManager.h"
 #include <iostream>
+#include <SDL_ttf.h>
 
 MenuState MenuState::m_MenuState;
 
@@ -21,19 +22,32 @@ void MenuState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	align();
 	//Create Buttons
+	if (buttons.size() < 2) {
 	buttons.push_back(new PlayButton(gsm));
 	buttons.push_back(new ExitButton(gsm));
-	//playButton = new PlayButton(gsm);
-	//exitButton = new ExitButton(gsm);
+	}
+
+	//align buttons
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->align(buttons.size() - i, buttons.size());
 	}
 
+	//Bermuda text
+	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 80);
+	SDL_Color white = { 255, 255, 255 };
+	std::string bermudaMessage = "Bermuda";
+	SDL_Surface* bermudaMessageSurface = TTF_RenderText_Blended(staryDarzyLarge, bermudaMessage.c_str(), white);
+	bermudaTextTexture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), bermudaMessageSurface);
+
+	bermudaTextRect.x = ((int)ScreenWidth - bermudaMessageSurface->w) / 2;
+	bermudaTextRect.y = 50;
+	bermudaTextRect.h = bermudaMessageSurface->h;
+	bermudaTextRect.w = bermudaMessageSurface->w;
+
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playMenuMusic();
 
-	//playButton->align(1, totalButtons);
-	//exitButton->align(0, totalButtons);
+	TTF_CloseFont(staryDarzyLarge);
 }
 
 void MenuState::align()
@@ -46,6 +60,10 @@ void MenuState::align()
 
 void MenuState::cleanup() {
 	SDL_FreeSurface(bg);
+	SDL_DestroyTexture(backgroundTexture);
+	delete playButton;
+	delete exitButton;
+	SDL_DestroyTexture(bermudaTextTexture);
 }
 
 void MenuState::pause() {
@@ -58,9 +76,6 @@ void MenuState::resume() {
 
 
 void MenuState::handleEvents(SDL_Event mainEvent) {
-	//	SDL_Event mainEvent;
-
-
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 	switch(mainEvent.type) {
@@ -83,16 +98,12 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 		for (int i = 0; i < buttons.size(); i++) {
 			buttons.at(i)->hover(x, y, gsm);
 		}
-		//playButton->hover(x, y, gsm);
-		//exitButton->hover(x, y, gsm);
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			for (int i = 0; i < buttons.size(); i++) {
 				buttons.at(i)->clicked(x, y, gsm);
 			}
-			//playButton->clicked(x, y, gsm);
-			//exitButton->clicked(x, y, gsm);
 		}
 		break;
 	}
@@ -100,12 +111,11 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 }
 
 void MenuState::update(double dt) {
-	//std::cout << "Pim rocks " << counter <<  std::endl;
 }
 
 void MenuState::draw() {
-	//gsm->sdlInitializer->clearScreen();
 	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
+	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), bermudaTextTexture, NULL, &bermudaTextRect);
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->draw( gsm);
 	}
@@ -115,7 +125,5 @@ void MenuState::draw() {
 
 MenuState::~MenuState(void)
 {
-	SDL_DestroyTexture(backgroundTexture);
-	delete playButton;
-	delete exitButton;
+	cleanup();
 }
