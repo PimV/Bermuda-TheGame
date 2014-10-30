@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
-
-class Spawnpoint;
+#include "Spawnpoint.h"
 
 class NPC :
 	public virtual Entity
@@ -17,7 +16,7 @@ public:
 	int getAttackPoints();
 	int getWalkRange();
 	int getActionRange();
-	int getSpawnPoint();
+	Spawnpoint* getSpawnPoint();
 #pragma endregion
 
 #pragma region Setters

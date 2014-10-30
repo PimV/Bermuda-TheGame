@@ -35,6 +35,11 @@ void NPC::walk()
 	}
 }
 
+Spawnpoint* NPC::getSpawnPoint() 
+{
+	return this->spawnPoint;
+}
+
 NPC::~NPC(void)
 {
 }
