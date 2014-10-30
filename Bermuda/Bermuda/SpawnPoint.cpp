@@ -7,6 +7,7 @@ Spawnpoint::Spawnpoint(int id, double x, double y, int chunkSize)
 }
 
 
+
 Spawnpoint::~Spawnpoint()
 {
 }

@@ -4,7 +4,7 @@
 class Spawnpoint;
 
 class NPC :
-	public Entity
+	public virtual Entity
 {
 public:
 	NPC(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint);
