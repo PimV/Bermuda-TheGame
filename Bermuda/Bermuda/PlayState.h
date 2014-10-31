@@ -5,7 +5,8 @@
 #include "Camera.h"
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
-
+#include "GameTimer.h"
+#include "DayTimeManager.h"
 
 class PlayState : public IGameState
 {
@@ -23,6 +24,12 @@ private:
 	int counter;
 	Camera* camera;
 
+	Player* p;
+	std::vector<DrawableEntity*> temp;
+
+	GameTimer* gameTimer;
+	DayTimeManager* dayTimer;
+
 public:
 
 	void init(GameStateManager *gsm);
@@ -34,8 +41,8 @@ public:
 	void handleEvents(SDL_Event mainEvent) ;
 
 	void update(double dt);
-	void updateGameTime();
-	long getGameTime();
+	void updateGameTimers();
+	long getGameTimer();
 
 	void draw();
 
@@ -45,9 +52,4 @@ public:
 
 	PlayState(void);
 	~PlayState(void);
-
-private:
-	long gameTime;
-	Player* p;
-	std::vector<DrawableEntity*> temp;
 };

@@ -27,11 +27,15 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playGameMusic();
 
-	this->gameTime = 0;
+	//this->gameTime = 0;
 
 	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
 
 	p = new Player(1, 3, camera, gsm, mec);
+
+	gameTimer = new GameTimer();
+	gameTimer->init();
+	dayTimer = new DayTimeManager(gameTimer);
 
 	temp =  std::vector<DrawableEntity*>();
 }
@@ -120,6 +124,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			this->p->getInventory()->addItem(item);
 			this->p->getInventory()->printInventory();
 			break;
+		//case SDLK_F1:
+			//std::cout << this->gsm->lastUpdateLength << std::endl;
+			//break;
 		}
 
 		break;
@@ -161,7 +168,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 
 void PlayState::update(double dt) {
 
-	this->updateGameTime();
+	this->updateGameTimers();
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
 	/*p->move(dt);*/
@@ -171,14 +178,16 @@ void PlayState::update(double dt) {
 	}
 }
 
-void PlayState::updateGameTime() {
+void PlayState::updateGameTimers() {
 
-	this->gameTime += this->gsm->lastUpdateLength;
-	std::cout << this->gameTime << std::endl;
+	//this->gameTime += this->gsm->lastUpdateLength;
+	//std::cout << this->gameTime << std::endl;
+	this->gameTimer->updateGameTime(this->gsm->lastUpdateLength);
+	this->dayTimer->updateGameTime();
 }
 
-long PlayState::getGameTime() {
-	return this->gameTime;
+long PlayState::getGameTimer() {
+	return this->gameTimer->getGameTime();
 }
 
 void PlayState::draw() {

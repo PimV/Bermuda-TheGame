@@ -102,8 +102,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="CollidableContainer.h" />
     <ClInclude Include="CollidableTile.h" />
     <ClInclude Include="ContainerType.h" />
+    <ClInclude Include="DayTimeManager.h" />
     <ClInclude Include="DrawableContainer.h" />
     <ClInclude Include="ExitButton.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableEntity.h" />
@@ -133,6 +135,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerUpdateTimer.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Rabbit.h" />
     <ClInclude Include="Rock.h" />
@@ -149,13 +152,16 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="CollidableContainer.cpp" />
     <ClCompile Include="CollidableTile.cpp" />
+    <ClCompile Include="DayTimeManager.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="PlayerUpdateTimer.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />
