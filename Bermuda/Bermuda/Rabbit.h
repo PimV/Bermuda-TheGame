@@ -4,8 +4,10 @@
 #include "IMovable.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "GameStateManager.h"
+#include "MainEntityContainer.h"
 
-class Rabbit : 
+class Rabbit:
 	public NPC,
 	public Evasive,
 	public IMovable,
@@ -13,7 +15,10 @@ class Rabbit :
 	public CollidableEntity
 {
 public:
-	Rabbit(int id, int chunkSize, int healthPoints, int attackPoints, int moveSpeed, int walkRange, int actionRange, Spawnpoint *spawnPoint);
+	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, GameStateManager* gsm, MainEntityContainer* mec);
 	~Rabbit();
+private:
+	int firstImgID;
 };
 
+	
