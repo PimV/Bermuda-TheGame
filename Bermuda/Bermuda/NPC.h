@@ -9,8 +9,6 @@ public:
 	NPC(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint);
 	virtual ~NPC(void);
 
-	void walk();
-
 #pragma region Getters
 	int getHeathPoints();
 	int getAttackPoints();
@@ -29,6 +27,6 @@ public:
 
 private:
 	int healthPoints, attackPoints, walkRange, actionRange;
-	bool walking;
+	bool destroyed, respawnTime, interactTime, timeSinceDestroy, currentInteractTime;;
 	Spawnpoint *spawnPoint;
 };
