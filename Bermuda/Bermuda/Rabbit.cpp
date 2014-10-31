@@ -1,5 +1,6 @@
 #include "Rabbit.h"
 #include <time.h>
+#include <iostream>
 
 Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
 	NPC(id, chunkSize, 5, 1, 20, 5, spawnPoint),
@@ -181,7 +182,9 @@ void Rabbit::move(double dt, double destinationX, double destinationY)
 
 void Rabbit::update(double dt) {
 	this->tempCounter++;
+	std::cout << tempCounter;
 	if (this->tempCounter == 1000) {
+		std::cout << "Rabbit is walking!";
 		this->walk(dt);
 	}
 
