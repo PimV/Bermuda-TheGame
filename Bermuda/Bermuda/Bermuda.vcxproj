@@ -133,6 +133,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Items.h" />
     <ClInclude Include="ItemType.h" />
     <ClInclude Include="ItemWood.h" />
+    <ClInclude Include="LoadingState.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MainEntityContainer.h" />
     <ClInclude Include="MenuState.h" />
@@ -173,6 +174,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemCarrot.cpp" />
     <ClCompile Include="ItemRock.cpp" />
     <ClCompile Include="ItemWood.cpp" />
+    <ClCompile Include="LoadingState.cpp" />
     <ClCompile Include="RespawnContainer.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Tree.cpp" />

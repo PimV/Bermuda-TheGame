@@ -34,6 +34,8 @@ private:
 	//int target_time_ms;
 	bool isRunning;
 	bool haltMusic;
+	bool allowThread;
+
 	static SoundLoader m_SoundLoader;
 
 	StateType stateType;

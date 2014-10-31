@@ -267,6 +267,9 @@
     <ClCompile Include="RespawnContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="LoadingState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -442,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="RespawnContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingState.h">
+      <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

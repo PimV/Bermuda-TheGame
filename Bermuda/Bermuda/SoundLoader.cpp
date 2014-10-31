@@ -11,17 +11,23 @@
 SoundLoader::SoundLoader()
 {
 	//target_time_ms = 180000; // 3 minutes
-		
+	
+	allowThread = true;
 	if (!initialiseSound())
 	{
+		allowThread = false;
 		printf("Failed to initialize SoundLoader!\n");
 	}
 
-	initialiseThread();
+	if (allowThread == true)
+	{
+		initialiseThread();
+	}
 }
 
 SoundLoader::~SoundLoader()
 {
+	isRunning = false;
 	for (size_t i = 0; i < menuMusic.size(); i++)
 	{
 		Mix_FreeMusic(menuMusic[i]);
