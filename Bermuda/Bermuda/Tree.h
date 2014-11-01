@@ -17,6 +17,7 @@ public:
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
+	void setDestroyedState();
 	~Tree();
 };
 

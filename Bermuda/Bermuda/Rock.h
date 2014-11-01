@@ -16,7 +16,7 @@ public:
 	void setCollidableValues();
 	void update(double dt);
 	void interact(Player* player);
-
+	void setDestroyedState();
 	~Rock();
 };
 

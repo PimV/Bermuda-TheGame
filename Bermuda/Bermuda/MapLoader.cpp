@@ -4,6 +4,7 @@
 #include "Rock.h"
 #include "Carrot.h"
 #include "CollidableTile.h"
+#include "SpawnPoint.h"
 #include "LoadingState.h"
 
 #include <rapidjson/stringbuffer.h>
@@ -225,8 +226,14 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
-			new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
-			//TODO: Set tree in his 'stump' state. (If we want to allow placing stumps directly in the 'tiled' map.)
+			Tree* tree = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			tree->setDestroyedState();
+		}
+		else if(objectClasses[objectID] == "AppleTree")
+		{
+		}
+		else if(objectClasses[objectID] == "AppleTreeStump")
+		{
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
@@ -234,12 +241,18 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
-			//TODO: Set rock to his 'pieces' state. (If we want to allow placing rock pieces directly in the 'tiled' map.)
+			Rock* rock = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			rock->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "Carrot")
 		{
 			new Carrot(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID));
+		}
+		else if(objectClasses[objectID] == "Pillar")
+		{
+		}
+		else if(objectClasses[objectID] == "RuinStatue")
+		{
 		}
 		processedObjects++;
 		this->setPercentage(startLoadPercentage + ((processedObjects / totalObjects) * loadWeight));
@@ -265,6 +278,10 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		{
 			startPosX = object["x"].GetDouble();
 			startPosY = object["y"].GetDouble();
+		}
+		else
+		{
+			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize);
 		}
 		processedSpawnpoints++;
 		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
