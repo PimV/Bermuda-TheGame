@@ -128,6 +128,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="InteractableEntity.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ToolAxe.h" />
     <ClInclude Include="ItemCarrot.h" />
     <ClInclude Include="ItemRock.h" />
     <ClInclude Include="Items.h" />
@@ -150,6 +151,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="SoundLoader.h" />
     <ClInclude Include="Spawnpoint.h" />
     <ClInclude Include="StateType.h" />
+    <ClInclude Include="Tool.h" />
     <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
@@ -171,12 +173,14 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ToolAxe.cpp" />
     <ClCompile Include="ItemCarrot.cpp" />
     <ClCompile Include="ItemRock.cpp" />
     <ClCompile Include="ItemWood.cpp" />
     <ClCompile Include="LoadingState.cpp" />
     <ClCompile Include="RespawnContainer.cpp" />
     <ClCompile Include="Rock.cpp" />
+    <ClCompile Include="Tool.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

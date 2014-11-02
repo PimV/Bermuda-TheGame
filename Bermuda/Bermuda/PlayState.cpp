@@ -13,6 +13,7 @@
 #include "Inventory.h"
 #include "Item.h"
 #include <thread>
+#include "ToolAxe.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -32,7 +33,7 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	std::thread t(&PlayState::doSomething, this);
 	t.detach();
-	
+
 	SoundLoader::Instance()->playGameMusic();
 }
 
@@ -74,7 +75,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		int x,y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			//std::cout << x << "  " << y << std::endl;
 			p->destX = x + this->camera->getX();
 			p->destY = y + this->camera->getY();
 			p->resetMovement();
@@ -90,7 +90,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingLeft = true;
 			p->movingRight = false;
 			break;
-
 		case SDLK_RIGHT:
 			p->resetMovement();
 			p->moveClick = false;
@@ -111,12 +110,27 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingDown = true;	
 			p->movingUp = false;	
 			break;
-
+		case SDLK_LSHIFT:
+			p->sprinting = true;
+			break;
+		case SDLK_p:
+			p->setCollisionHeight(0);
+			p->setCollisionWidth(0);
+			p->setCollisionX(-10000);
+			p->setCollisionY(-10000);
+			break;
 		case SDLK_SPACE:
 			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
-			//p->interaction = true;
+			std::cout << p->getInventory()->hasItemById(3);
+			p->interaction = true;
 			p->interact();
 			break;
+		case SDLK_0: {
+			ToolAxe* tool = new ToolAxe();
+			tool->init();
+			this->p->getInventory()->addItem(tool);
+			break;
+					 }
 
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
@@ -136,6 +150,16 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingLeft = false;
+			break;
+		case SDLK_q:
+			p->setCollisionHeight(p->getHeight() - 15);
+			p->setCollisionWidth(p->getWidth()/4);
+			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
+			p->setCollisionY(0);
+			break;
+		case SDLK_LSHIFT:
+			p->sprinting = false;
+			//p->moveSpeed = p->maxSpeed;
 			break;
 
 		case SDLK_RIGHT:
