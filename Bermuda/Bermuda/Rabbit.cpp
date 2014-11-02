@@ -46,7 +46,7 @@ IMovable(2)
 
 	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 7;
 	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
-	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
+	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
 	this->StopAnimation();
@@ -54,6 +54,7 @@ IMovable(2)
 
 void Rabbit::update(double dt) {
 	this->walk(dt);
+	std::cout << this->getX() << std::endl;
 
 	//if (destroyed) {
 	//	this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
