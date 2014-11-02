@@ -184,7 +184,7 @@ void PlayState::updateGameTimers() {
 }
 
 long PlayState::getGameTimer() {
-	return this->gameTimer->getGameTime();
+	return this->dayTimer->getGameTime();
 }
 
 void PlayState::draw() {
