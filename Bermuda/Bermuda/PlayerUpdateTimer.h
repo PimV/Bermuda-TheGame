@@ -1,22 +1,22 @@
 #pragma once
 #include <iostream>
 
-#include "GameTimer.h"
+#include "GameStateManager.h"
 
 class PlayerUpdateTimer
 {
 public:
-	PlayerUpdateTimer(GameTimer* _gameTimer);
+	PlayerUpdateTimer();
 	~PlayerUpdateTimer(void);
 
-	void updateGameTime();
+	void updateGameTime(long _gameTime);
 	long getGameTime();
 
-	void updateDayTime();
+	bool updateHungerTime();
+	bool updateThurstTime();
 
 private:
-	GameTimer* gameTimer;
-	long gameTime, lastUpdate,  nextUpdate;
-	int dayParts, currentDayPart;
+	long gameTime;
+	long lastHungerUpdate, nextHungerUpdate;
+	long lastThurstUpdate, nextThurstUpdate;
 };
-

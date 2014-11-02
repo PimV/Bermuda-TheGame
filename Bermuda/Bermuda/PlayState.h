@@ -6,7 +6,7 @@
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
 #include "GameTimer.h"
-#include "DayTimeManager.h"
+#include "DayTimeTimer.h"
 
 class PlayState : public IGameState
 {
@@ -28,7 +28,7 @@ private:
 	std::vector<DrawableEntity*> temp;
 
 	GameTimer* gameTimer;
-	DayTimeManager* dayTimer;
+	DayTimeTimer* dayTimer;
 
 public:
 

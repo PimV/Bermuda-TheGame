@@ -1,9 +1,8 @@
-#include "DayTimeManager.h"
+#include "DayTimeTimer.h"
 
-DayTimeManager::DayTimeManager(GameTimer* _gameTimer)
+DayTimeTimer::DayTimeTimer()
 {
-	this->gameTimer = _gameTimer;
-	this->dayParts = 10;
+	this->dayParts = 24;
 	this->currentDayPart = 0;
 	this->gameTime = 0;
 	this->nextDayUpdate = 0;
@@ -16,30 +15,32 @@ DayTimeManager::DayTimeManager(GameTimer* _gameTimer)
 	this->lastDayPartUpdate = 1500; // +- 3.1 seconds
 }
 
-
-DayTimeManager::~DayTimeManager(void)
+DayTimeTimer::~DayTimeTimer(void)
 {
-	// don't clear the gameTimer
+
 }
 
-void DayTimeManager::updateGameTime()
+void DayTimeTimer::updateGameTime(long _gameTime)
 {
-	this->gameTime = gameTimer->getGameTime();
+	this->gameTime += _gameTime;
 	this->updateDayTime();
 }
 
-void DayTimeManager::updateDayTime()
+void DayTimeTimer::updateDayTime()
 {
 	//std::cout << (this->lastDayPartUpdate + this->gameTime) << std::endl;
 	if ( this->lastDayPartUpdate < (this->gameTime - this->nextDayUpdate) )
 	{
 		this->nextDayUpdate = this->gameTime + lastDayPartUpdate;
 
-		if (currentDayPart < 10)
+		if (currentDayPart < dayParts)
 			currentDayPart++;
 		else
-			currentDayPart = 1;
-
-		std::cout << "Current Daypart: " << currentDayPart << std::endl;
+			currentDayPart = 0;
 	}
+}
+
+int DayTimeTimer::getCurrentDayPart()
+{
+	return currentDayPart;
 }

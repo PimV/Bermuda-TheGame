@@ -1,21 +1,22 @@
 #pragma once
 #include <iostream>
 
-#include "GameTimer.h"
+#include "GameStateManager.h"
 
-class DayTimeManager
+class DayTimeTimer
 {
 public:
-	DayTimeManager(GameTimer* _gameTimer);
-	~DayTimeManager(void);
+	DayTimeTimer();
+	~DayTimeTimer(void);
 
-	void updateGameTime();
+	void updateGameTime(long _gameTime);
 	long getGameTime();
 
 	void updateDayTime();
 
+	int getCurrentDayPart();
+
 private:
-	GameTimer* gameTimer;
 	long gameTime, lastDayPartUpdate,  nextDayUpdate;
 	int dayParts, currentDayPart;
 };

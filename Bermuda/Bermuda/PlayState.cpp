@@ -33,9 +33,7 @@ void PlayState::init(GameStateManager *gsm) {
 
 	p = new Player(1, 3, camera, gsm, mec);
 
-	gameTimer = new GameTimer();
-	gameTimer->init();
-	dayTimer = new DayTimeManager(gameTimer);
+	dayTimer = new DayTimeTimer();
 
 	temp =  std::vector<DrawableEntity*>();
 }
@@ -182,8 +180,7 @@ void PlayState::updateGameTimers() {
 
 	//this->gameTime += this->gsm->lastUpdateLength;
 	//std::cout << this->gameTime << std::endl;
-	this->gameTimer->updateGameTime(this->gsm->lastUpdateLength);
-	this->dayTimer->updateGameTime();
+	this->dayTimer->updateGameTime(this->gsm->lastUpdateLength);
 }
 
 long PlayState::getGameTimer() {
@@ -224,12 +221,20 @@ void PlayState::draw() {
 	//Load player
 	p->draw(camera, gsm->sdlInitializer->getRenderer());
 
+	// TODO: replace to player draw
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(this->p->getHealth())), 1150, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(this->p->getHunger())), 1150, 35, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thurst: " + to_string(this->p->getThurst())), 1150, 65, 100, 25);
+	if (this->dayTimer->getCurrentDayPart() > 9)
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 80, 25);
+	else
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 80, 25);
+
 	//Load entities above the player
 	for(DrawableEntity* entity : temp)
 	{
 		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
-
 }
 
 PlayState::~PlayState(void)

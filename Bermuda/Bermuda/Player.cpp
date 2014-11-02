@@ -20,6 +20,9 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, 
 	this->maxSpeed = 3;
 	//this->maxSpeed = 0;
 
+	this->playerTimer = new PlayerUpdateTimer();
+	this->health = 100, this->hunger = 100, this->thurst = 100;
+
 	this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
@@ -85,9 +88,86 @@ bool Player::checkCollision(CollidableContainer* container) {
 }
 
 void Player::update(double dt) {
-	
+	this->updatePlayerStatuses();
 	this->move(dt);
 }
+
+#pragma region PlayerStatusUpdates
+void Player::updatePlayerStatuses()
+{
+	this->playerTimer->updateGameTime(this->gsm->lastUpdateLength);
+
+	if ( playerTimer->updateHungerTime() )
+	{
+		if (this->getHunger() > 0)
+			this->updateHunger(-1);
+		else 
+			this->updateHealth(-1);
+	}
+
+	if ( playerTimer->updateThurstTime() )
+	{
+		if (this->getThurst() > 0)
+			this->updateThurst(-1);
+		else
+			this->updateHealth(-2);
+	}
+
+	/*
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(this->getHealth())), 5, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(this->getHunger())), 5, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thurst: " + to_string(this->getThurst())), 5, 5, 100, 25);
+	*/
+	
+}
+
+void Player::updateHealth(int value)
+{
+	if ( (this->health + value)  > 100)
+		this->health = 100;
+	else
+		this->health += value;
+}
+
+void Player::updateHunger(int value)
+{
+	if ( (this->hunger + value)  > 100)
+		this->hunger = 100;
+	else if ( (this->health - value)  < 0 )
+		this->hunger = 0;
+	else
+		this->hunger += value;
+	
+	//std::cout << "Hunger: " << this->hunger << std::endl;
+}
+
+void Player::updateThurst(int value)
+{
+	if ( (this->thurst + value)  > 100)
+		this->thurst = 100;
+	else if ( (this->health - value)  < 0 )
+		this->hunger = 0;
+	else
+		this->thurst += value;
+
+	//std::cout << "Thurst: " << this->thurst << std::endl;
+}
+
+int Player::getHealth()
+{
+	return this->health;
+}
+
+int Player::getHunger()
+{
+	return this->hunger;
+}
+
+int Player::getThurst()
+{
+	return this->thurst;
+}
+#pragma endregion PlayerStatusUpdates
 
 void Player::move(double dt) {
 
