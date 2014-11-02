@@ -11,7 +11,8 @@ class Rabbit :
 	public NPC,
 	public Evasive,
 	public IMovable,
-	public DrawableEntity
+	public DrawableEntity,
+	public CollidableEntity
 {
 public:
 	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, GameStateManager* gsm, MainEntityContainer* mec);
@@ -20,6 +21,8 @@ public:
 	void walk(double dt);
 	virtual void move(double dt);
 	void update(double dt);
+	bool checkCollision(CollidableContainer* container);
+	void setPosition();
 
 private:
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
@@ -37,5 +40,6 @@ private:
 	bool walking, movingDown, movingUp, movingRight, movingLeft;
 	double destinationX, destinationY;
 	GameStateManager* gsm;
+	MainEntityContainer* mec;
 };
 

@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
+#include "Rabbit.h"
 
 
 class PlayState : public IGameState
@@ -46,4 +47,7 @@ public:
 
 private:
 	Player* p;
+
+	// temp
+	Rabbit* r;
 };
