@@ -20,6 +20,11 @@ DayTimeTimer::~DayTimeTimer(void)
 
 }
 
+long DayTimeTimer::getGameTime()
+{
+	return this->gameTime;
+}
+
 void DayTimeTimer::updateGameTime(long _gameTime)
 {
 	this->gameTime += _gameTime;

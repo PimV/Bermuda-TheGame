@@ -58,7 +58,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		lastFpsTime += updateLength;
 		//Increase FPS since one frame has passed
 		fps++;
-		gsm->drawTime(updateLength);
+		gsm->updateGameTime(updateLength);
 		//If lastFpsTime > 1000 ms, set FPS to 0 and start re-calculating
 		if (lastFpsTime >= 1000) {
 			gsm->setFps(fps);

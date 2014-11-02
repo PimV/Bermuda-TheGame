@@ -21,7 +21,7 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, 
 	//this->maxSpeed = 0;
 
 	this->playerTimer = new PlayerUpdateTimer();
-	this->health = 100, this->hunger = 100, this->thurst = 100;
+	this->health = 10, this->hunger = 5, this->thurst = 5;
 
 	this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
@@ -85,6 +85,15 @@ bool Player::checkCollision(CollidableContainer* container) {
 		}
 	}
 	return false;
+}
+
+void Player::draw(Camera* camera, SDL_Renderer* renderer)
+{
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(this->getHealth())), 1150, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(this->getHunger())), 1150, 35, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thurst: " + to_string(this->getThurst())), 1150, 65, 100, 25);
+
+	DrawableEntity::draw(camera, renderer);
 }
 
 void Player::update(double dt) {

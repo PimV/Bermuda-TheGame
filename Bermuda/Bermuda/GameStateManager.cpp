@@ -35,7 +35,7 @@ int GameStateManager::getFps() {
 	return this->fps;
 }
 
-void GameStateManager::drawTime(long time) {
+void GameStateManager::updateGameTime(long time) {
 	this->lastUpdateLength = time;
 }
 

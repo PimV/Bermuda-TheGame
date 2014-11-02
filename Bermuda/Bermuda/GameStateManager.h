@@ -24,7 +24,7 @@ public:
 	void pushGameState(IGameState* gameState);
 	void popState();
 
-	void drawTime(long time);
+	void updateGameTime(long time);
 
 	void update(double delta);
 	void handleEvents();
