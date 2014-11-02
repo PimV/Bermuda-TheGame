@@ -14,6 +14,9 @@
 #include "Item.h"
 #include <thread>
 
+#include "Spawnpoint.h"
+#include "Rabbit.h"
+
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
@@ -41,6 +44,10 @@ void PlayState::doSomething()
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
+	
+	// temp
+	Spawnpoint *sp = new Spawnpoint(1000, mapLoader->getStartPosX() + 10, mapLoader->getStartPosY() + 10, mapLoader->getChunkSize());
+	Rabbit *r = new Rabbit(1001, mapLoader->getChunkSize(), sp, gsm, mec);
 
 	this->gsm->popState();
 }

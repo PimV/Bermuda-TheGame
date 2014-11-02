@@ -18,11 +18,24 @@ public:
 	~Rabbit();
 
 	void walk(double dt);
-	void move(double dt, double destinationX, double destinationY);
+	virtual void move(double dt);
 	void update(double dt);
 
 private:
-	int firstImgID, tempCounter, dx, dy, maxSpeed, stopSpeed;
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	void StopAnimation();
+
+	int firstImgID;
+	int currentPlayerAnimationRow, playerAnimationIdleColumn;
+	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
+	int playerAnimationWalkStartColumn, playerAnimationWalkEndColumn;
+	int playerAnimationActionStartColumn, playerAnimationActionEndColumn;
+	int frameAmountX, frameAmountY, CurrentFrame;
+	double animationSpeed, animationDelay;
+
+	int tempCounter, dx, dy, maxSpeed, stopSpeed;
 	bool walking, movingDown, movingUp, movingRight, movingLeft;
+	double destinationX, destinationY;
+	GameStateManager* gsm;
 };
 

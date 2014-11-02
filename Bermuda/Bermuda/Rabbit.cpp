@@ -4,13 +4,17 @@
 
 Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
 	NPC(id, chunkSize, 5, 1, 20, 5, spawnPoint),
-	Entity(id, this->getSpawnPoint()->getX(), this->getSpawnPoint()->getY(), chunkSize),
-	DrawableEntity(id, this->getSpawnPoint()->getX(), this->getSpawnPoint()->getY(), chunkSize, nullptr),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
+	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 	//CollidableEntity(id, x, y, chunkSize, 34, 102, 27, 15), mec(mec), treeImage(treeImage), stumpImage(stumpImage)
 	IMovable(moveSpeed)
 {
+	std::cout << "Rabbit created!";
+
 	this->tempCounter = 0;
 	this->walking = false;
+
+	this->gsm = gsm;
 
 	this->dx = 0;
 	this->dy = 0;
@@ -20,38 +24,75 @@ Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* 
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
-
 	this->setMainEntityContainer(mec);
 	//this->getMainEntityContainer()->getInteractableContainer()->add(this);
 	this->getMainEntityContainer()->getDrawableContainer()->add(this);
 	//this->getMainEntityContainer()->getCollidableContainer()->add(this);
 
-	//this->movingLeft = false;
-	//this->movingRight = false;
-	//this->movingDown = false;
-	//this->movingUp = false;
+	this->movingLeft = false;
+	this->movingRight = false;
+	this->movingDown = false;
+	this->movingUp = false;
 	//this->moveClick = false;
 	//this->interaction = false;
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("rabbitsheet.png", 40, 40);
+	this->firstImgID = gsm->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
 
-	//this->playerAnimationWalkUpRow = 8, this->playerAnimationWalkLeftRow = 9;
-	//this->playerAnimationWalkDownRow = 10, this->playerAnimationWalkRightRow = 11;
-	//this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-	//this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 8;
-	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
-	//this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
-	//this->animationSpeed = 10;//, this->animationDelay = 1;
+	this->playerAnimationWalkUpRow = 8, this->playerAnimationWalkLeftRow = 9;
+	this->playerAnimationWalkDownRow = 10, this->playerAnimationWalkRightRow = 11;
+	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
+	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 8;
+	this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
+	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
+	this->animationSpeed = 10;//, this->animationDelay = 1;
 
 	//Set camera
 	//this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	//this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 
-	//this->StopAnimation();
+	this->StopAnimation();
 
 	//Add to containers
 	mec->getDrawableContainer()->add(this);
+}
 
+void Rabbit::update(double dt) {
+	// temp: (Use timer instead)
+	this->tempCounter++;
+	std::cout << tempCounter;
+	if (this->tempCounter == 1000) {
+		std::cout << "Rabbit is walking!";
+		this->walk(dt);
+	}
+
+	//if (destroyed) {
+	//	this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
+	//	if (this->timeSinceDestroy > respawnTime) {
+	//		this->respawn();
+	//	}
+	//}
+}
+
+void Rabbit::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
+{
+	double animationDelay = (maxSpeed / 100) * 40;
+	animationSpeed -= animationDelay;
+	if (animationSpeed < animationDelay)
+	{
+		this->currentPlayerAnimationRow = Row;
+		if (EndFrame <= CurrentFrame)
+			CurrentFrame = BeginFrame;
+		else
+			CurrentFrame++;
+
+		this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
+		animationSpeed = maxSpeed * 3;
+	}
+}
+
+void Rabbit::StopAnimation()
+{
+	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
 }
 
 void Rabbit::walk(double dt)
@@ -65,18 +106,18 @@ void Rabbit::walk(double dt)
 		double distanceX = rand() % (this->getWalkRange() * 2) + (this->getWalkRange() * -1);
 		double distanceY = rand() % (this->getWalkRange() * 2) + (this->getWalkRange() * -1);
 
-		double destinationX = this->getSpawnPoint()->getX() + distanceX;
-		double destinationY = this->getSpawnPoint()->getY() + distanceY;
+		this->destinationX = this->getSpawnPoint()->getX() + distanceX;
+		this->destinationY = this->getSpawnPoint()->getY() + distanceY;
 
-		this->move(dt, destinationX, destinationY);
+		this->move(dt);
 
 		walking = false;
 	}
 }
 
-void Rabbit::move(double dt, double destinationX, double destinationY)
+void Rabbit::move(double dt)
 {
-	if (this->getX() + this->getWidth() / 2 > destinationX - 5 && this->getX() + this->getWidth() / 2  < destinationX + 5) {
+	if (this->getX() + this->getWidth() / 2 > destinationX - 5 && this->getX() + this->getWidth() / 2 < destinationX + 5) {
 		movingRight = false;
 		movingLeft = false;
 	}
@@ -179,23 +220,6 @@ void Rabbit::move(double dt, double destinationX, double destinationY)
 	this->setTempY(getY() + dy);
 
 }
-
-void Rabbit::update(double dt) {
-	this->tempCounter++;
-	std::cout << tempCounter;
-	if (this->tempCounter == 1000) {
-		std::cout << "Rabbit is walking!";
-		this->walk(dt);
-	}
-
-	//if (destroyed) {
-	//	this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-	//	if (this->timeSinceDestroy > respawnTime) {
-	//		this->respawn();
-	//	}
-	//}
-}
-
 
 Rabbit::~Rabbit()
 {
