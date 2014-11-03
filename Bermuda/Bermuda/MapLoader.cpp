@@ -1,9 +1,13 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "Tree.h"
+#include "AppleTree.h"
 #include "Rock.h"
 #include "Carrot.h"
+#include "Pillar.h"
+#include "RuinStatue.h"
 #include "CollidableTile.h"
+#include "SpawnPoint.h"
 #include "LoadingState.h"
 
 #include <rapidjson/stringbuffer.h>
@@ -203,6 +207,7 @@ void MapLoader::createObjects(Value& objects)
 	//And then you can do
 	return map[some_string]();*/
 	//Parameters could be a problem with this though. 
+	//TODO: Create object factory?
 
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
@@ -225,8 +230,22 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
-			new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
-			//TODO: Set tree in his 'stump' state. (If we want to allow placing stumps directly in the 'tiled' map.)
+			Tree* tree = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			tree->setDestroyedState();
+		}
+		else if(objectClasses[objectID] == "AppleTree")
+		{
+			new AppleTree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1), imgLoader->getMapImage(objectID+2));
+		}
+		else if(objectClasses[objectID] == "AppleTreeEmpty")
+		{
+			AppleTree* tree = new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg, imgLoader->getMapImage(objectID+1));
+			tree->setDestroyedState();
+		}
+		else if(objectClasses[objectID] == "AppleTreeStump")
+		{
+			//TODO: Currently, AppleTrees use only the full and empty state. Stump is not used. For now, the stump creates a full AppleTree
+			new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-2), imgLoader->getMapImage(objectID-1), objectImg);
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
@@ -234,12 +253,20 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
-			//TODO: Set rock to his 'pieces' state. (If we want to allow placing rock pieces directly in the 'tiled' map.)
+			Rock* rock = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			rock->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "Carrot")
 		{
-			new Carrot(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID));
+			new Carrot(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if(objectClasses[objectID] == "Pillar")
+		{
+			new Pillar(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if(objectClasses[objectID] == "RuinStatue")
+		{
+			new RuinStatue(objectID, objectX, objectY, chunkSize, mec, objectImg);
 		}
 		processedObjects++;
 		this->setPercentage(startLoadPercentage + ((processedObjects / totalObjects) * loadWeight));
@@ -254,7 +281,7 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 	double processedSpawnpoints = 0;
 	loadStatus = "Creating spawnpoints.";
 
-	//TODO: Create spawnpoint objects
+	//TODO: Create spawnpoint objects with correct types
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
 	{
 		Value& object = spawnpoints[j];
@@ -265,6 +292,10 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		{
 			startPosX = object["x"].GetDouble();
 			startPosY = object["y"].GetDouble();
+		}
+		else
+		{
+			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize);
 		}
 		processedSpawnpoints++;
 		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
