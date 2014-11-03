@@ -45,12 +45,6 @@ void PlayState::doSomething()
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playGameMusic();
 
-	//this->gameTime = 0;
-
-	// merge conflict Game_Time -> Develop
-	//std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
-	//p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
-
 	dayTimer = new DayTimeTimer();
 
 	temp =  std::vector<DrawableEntity*>();
@@ -79,7 +73,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	//Process Input
 
 	//Retrieve input
-	int x,y;
+	//int x,y;
 	switch(mainEvent.type) {
 
 	case SDL_MOUSEBUTTONDOWN:
@@ -247,14 +241,11 @@ void PlayState::draw() {
 
 	//Draw player
 	p->draw(camera, gsm->sdlInitializer->getRenderer());
-
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), 1150, 5, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
-	if (this->dayTimer->getCurrentDayPart() > 9)
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
-	else
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
+	
+	/*
+	GameStateManager::Instance()->sdlInitializer->drawText(
+				std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 16*i + 5,100, 16
+	*/
 
 	//Sort drawable object vector
 	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
@@ -268,6 +259,16 @@ void PlayState::draw() {
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
 	}
+
+	// Draw the player status
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), 1150, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
+	// if current hour is smaller then 9 
+	if (this->dayTimer->getCurrentDayPart() > 9)
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
+	else
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
 
 }
 

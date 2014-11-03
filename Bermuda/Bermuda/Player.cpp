@@ -113,11 +113,6 @@ bool Player::checkCollision(CollidableContainer* container) {
 	return false;
 }
 
-void Player::draw(Camera* camera, SDL_Renderer* renderer)
-{
-	DrawableEntity::draw(camera, renderer);
-}
-
 void Player::update(double dt) {
 	this->updatePlayerStatuses();
 	this->move(dt);
