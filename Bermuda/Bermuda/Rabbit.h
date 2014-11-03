@@ -36,12 +36,13 @@ private:
 	int frameAmountX, frameAmountY, CurrentFrame;
 	double animationSpeed, animationDelay;
 
-	int tempCounter, dx, dy, maxSpeed, stopSpeed;
+	int tempCounter, dx, dy, stopSpeed;
 	bool walking, movingDown, movingUp, movingRight, movingLeft;
 	double destinationX, destinationY;
 	GameStateManager* gsm;
 	MainEntityContainer* mec;
 
+	double maxSpeed;
 	long timeSinceLastAction;
 };
 

@@ -8,14 +8,14 @@ NPC(id, chunkSize, 5, 1, 200, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-IMovable(1)
+IMovable(3)
 {
 	this->gsm = gsm;
 	this->mec = mec;
 
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 1;
+	this->maxSpeed = 3;
 	this->stopSpeed = 0.8;
 
 	this->setTempX(this->getX());
@@ -168,7 +168,7 @@ void Rabbit::walk(double dt)
 		case 3:
 		case 4:
 		case 5:
-			std::cout << value << ": Moving right" << std::endl;
+			//std::cout << value << ": Moving right" << std::endl;
 			movingRight = true;
 			movingLeft = false;
 			break;
@@ -177,7 +177,7 @@ void Rabbit::walk(double dt)
 		case 8:
 		case 9:
 		case 10:
-			std::cout << value << ": Moving left" << std::endl;
+			//std::cout << value << ": Moving left" << std::endl;
 			movingRight = false;
 			movingLeft = true;
 			break;
@@ -186,7 +186,7 @@ void Rabbit::walk(double dt)
 		case 13:
 		case 14:
 		case 15:
-			std::cout << value << ": Moving up" << std::endl;
+			//std::cout << value << ": Moving up" << std::endl;
 			movingDown = false;
 			movingUp = true;
 			break;
@@ -195,18 +195,20 @@ void Rabbit::walk(double dt)
 		case 18:
 		case 19:
 		case 20:
-			std::cout << value << ": Moving down" << std::endl;
+			//std::cout << value << ": Moving down" << std::endl;
 			movingDown = true;
 			movingUp = false;
 			break;
 		default:
-			std::cout << value << ": Moving nowhere" << std::endl;
+			//std::cout << value << ": Moving nowhere" << std::endl;
 			movingUp = false;
 			movingDown = false;
 			movingRight = false;
 			movingLeft = false;
 			dx = 0;
 			dy = 0;
+			this->StopAnimation();
+
 			break;
 		}
 
