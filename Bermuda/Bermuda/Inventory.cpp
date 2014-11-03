@@ -152,7 +152,7 @@ void Inventory::draw() {
 	for (size_t i = 0; i < 20; i++) {
 		if (i < this->getSize()) {
 			GameStateManager::Instance()->sdlInitializer->drawText(
-				std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 16*i + 5,100, 16
+				std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 16*i + 5,100, 32
 				);
 		}
 	}
