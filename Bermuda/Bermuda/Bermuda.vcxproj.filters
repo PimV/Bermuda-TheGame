@@ -260,6 +260,7 @@
     </ClCompile>
     <ClCompile Include="DayTimeTimer.cpp">
       <Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="ItemCarrot.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -453,6 +454,7 @@
     </ClInclude>
     <ClInclude Include="DayTimeTimer.h">
       <Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="ItemCarrot.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
