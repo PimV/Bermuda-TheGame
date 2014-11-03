@@ -305,7 +305,7 @@ void::Player::interact()
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
 	int playerOffsetY = this->getY() + (this->getHeight() / 2);
 
-		double diff = 1000;
+	double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks
