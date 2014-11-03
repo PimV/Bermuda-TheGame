@@ -27,7 +27,6 @@ private:
 	void doSomething();
 
 public:
-	Player* getPlayer();
 
 	void init(GameStateManager *gsm);
 	void cleanup();
