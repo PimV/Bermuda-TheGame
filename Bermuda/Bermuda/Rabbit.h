@@ -6,6 +6,7 @@
 #include "CollidableEntity.h"
 #include "GameStateManager.h"
 #include "MainEntityContainer.h"
+#include <random>
 
 class Rabbit :
 	public NPC,

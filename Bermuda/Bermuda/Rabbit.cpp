@@ -13,43 +13,40 @@ IMovable(3)
 	this->gsm = gsm;
 	this->mec = mec;
 
+	this->setWidth(36);
+	this->setHeight(36);
+
+	this->setCollisionHeight(this->getHeight() - 15);
+	this->setCollisionWidth(this->getWidth() / 4);
+	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	this->setCollisionY(0);
+
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
 	this->stopSpeed = 0.8;
-
-	this->setTempX(this->getX());
-	this->setTempY(this->getY());
-
-	this->setWidth(36);
-	this->setHeight(36);
-
-	this->destinationX = this->getX();
-	this->destinationY = this->getY();
-
-	this->setMainEntityContainer(mec);
-	//this->getMainEntityContainer()->getInteractableContainer()->add(this);
-	this->getMainEntityContainer()->getDrawableContainer()->add(this);
-	this->getMainEntityContainer()->getCollidableContainer()->add(this);
-
 	this->movingLeft = false;
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
 	//this->interaction = false;
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("rabbitsheet.png", 36, 36);
+	this->setTempX(this->getX());
+	this->setTempY(this->getY());
 
+	this->firstImgID = gsm->getImageLoader()->loadTileset("rabbitsheet.png", 36, 36);
 	this->playerAnimationWalkUpRow = 1, this->playerAnimationWalkLeftRow = 3;
 	this->playerAnimationWalkDownRow = 0, this->playerAnimationWalkRightRow = 2;
 	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-
 	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 7;
 	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
 	this->timeSinceLastAction = 0;
+
+	mec->getDrawableContainer()->add(this);
+	mec->getCollidableContainer()->add(this);
 
 	this->StopAnimation();
 }
@@ -146,6 +143,7 @@ void Rabbit::walk(double dt)
 {
 	random_device dev;
 	default_random_engine dre(dev());
+
 	uniform_int_distribution<int> dist1(1000, 5000);
 	int timeWait = dist1(dre);
 
@@ -161,58 +159,57 @@ void Rabbit::walk(double dt)
 
 		timeSinceLastAction = 0;
 
-		uniform_int_distribution<int> dist2(1, 50);
+		uniform_int_distribution<int> dist2(1, 10);
 		int value = dist2(dre);
+
+		this->StopAnimation();
 
 		switch (value)
 		{
 		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-			//std::cout << value << ": Moving right" << std::endl;
 			movingRight = true;
 			movingLeft = false;
 			break;
-		case 6:
-		case 7:
-		case 8:
-		case 9:
-		case 10:
-			//std::cout << value << ": Moving left" << std::endl;
+		case 2:
 			movingRight = false;
 			movingLeft = true;
 			break;
-		case 11:
-		case 12:
-		case 13:
-		case 14:
-		case 15:
-			//std::cout << value << ": Moving up" << std::endl;
-			movingDown = false;
-			movingUp = true;
-			break;
-		case 16:
-		case 17:
-		case 18:
-		case 19:
-		case 20:
-			//std::cout << value << ": Moving down" << std::endl;
+		case 3:
 			movingDown = true;
 			movingUp = false;
 			break;
+		case 4:
+			movingDown = false;
+			movingUp = true;
+			break;
 		default:
-			//std::cout << value << ": Moving nowhere" << std::endl;
 			movingUp = false;
 			movingDown = false;
 			movingRight = false;
 			movingLeft = false;
 			dx = 0;
 			dy = 0;
-			this->StopAnimation();
-
 			break;
+		}
+
+		if ((getX() - getSpawnPoint()->getX()) > getWalkRange())
+		{
+			movingRight = false;
+			movingLeft = true;
+		} else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
+		{
+			movingRight = true;
+			movingLeft = false;
+		}
+
+		if ((getY() - getSpawnPoint()->getY()) > getWalkRange())
+		{
+			movingDown = false;
+			movingUp = true;
+		} else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
+		{
+			movingDown = true;
+			movingUp = false;
 		}
 
 	}
