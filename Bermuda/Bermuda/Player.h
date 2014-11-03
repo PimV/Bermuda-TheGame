@@ -22,9 +22,9 @@ public:
 	//virtual void move(EnumDirection direction) = 0;
 
 	void update(double dt);
-	void updateHealth(int value);
-	void updateHunger(int value);
-	void updateThurst(int value);
+	void setHealth(int value);
+	void setHunger(int value);
+	void setThurst(int value);
 
 	int getHealth();
 	int getHunger();

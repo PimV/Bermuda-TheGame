@@ -136,21 +136,21 @@ void Player::updatePlayerStatuses()
 	if ( playerTimer->updateHungerTime() )
 	{
 		if (this->getHunger() > 0)
-			this->updateHunger(-1);
+			this->setHunger(-1);
 		else 
-			this->updateHealth(-1);
+			this->setHealth(-1);
 	}
 
 	if ( playerTimer->updateThirstTime() )
 	{
 		if (this->getThirst() > 0)
-			this->updateThurst(-1);
+			this->setThurst(-1);
 		else
-			this->updateHealth(-2);
+			this->setHealth(-2);
 	}
 }
 
-void Player::updateHealth(int value)
+void Player::setHealth(int value)
 {
 	if ( (this->health + value)  > 100)
 		this->health = 100;
@@ -158,7 +158,7 @@ void Player::updateHealth(int value)
 		this->health += value;
 }
 
-void Player::updateHunger(int value)
+void Player::setHunger(int value)
 {
 	if ( (this->hunger + value)  > 100)
 		this->hunger = 100;
@@ -168,7 +168,7 @@ void Player::updateHunger(int value)
 		this->hunger += value;
 }
 
-void Player::updateThurst(int value)
+void Player::setThurst(int value)
 {
 	if ( (this->thirst + value)  > 100)
 		this->thirst = 100;
@@ -301,7 +301,7 @@ void::Player::interact()
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
 	int playerOffsetY = this->getY() + (this->getHeight() / 2);
 
-		double diff = 1000;
+	double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks

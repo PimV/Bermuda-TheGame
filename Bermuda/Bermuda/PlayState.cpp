@@ -239,14 +239,6 @@ void PlayState::draw() {
 		}
 	}
 
-	//Draw player
-	p->draw(camera, gsm->sdlInitializer->getRenderer());
-	
-	/*
-	GameStateManager::Instance()->sdlInitializer->drawText(
-				std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 16*i + 5,100, 16
-	*/
-
 	//Sort drawable object vector
 	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
 
@@ -266,9 +258,9 @@ void PlayState::draw() {
 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
 	// if current hour is smaller then 9 
 	if (this->dayTimer->getCurrentDayPart() > 9)
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
+		this->gsm->sdlInitializer->drawText(std::string("   Hour: " + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
 	else
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
+		this->gsm->sdlInitializer->drawText(std::string("   Hour: 0" + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
 
 }
 
