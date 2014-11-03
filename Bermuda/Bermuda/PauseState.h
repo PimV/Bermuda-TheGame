@@ -1,5 +1,6 @@
 #pragma once
 #include "igamestate.h"
+#include "BasePauzeButton.h"
 
 class PauseState :
 	public IGameState
@@ -7,6 +8,8 @@ class PauseState :
 private:
 	GameStateManager* gsm;
 	static PauseState m_PauseState;
+
+	std::vector<BasePauzeButton*> buttons;
 
 public:
 	PauseState();

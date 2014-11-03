@@ -47,6 +47,7 @@ void MenuState::init(GameStateManager *gsm) {
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playMenuMusic();
 
+	SDL_FreeSurface(bermudaMessageSurface);
 	TTF_CloseFont(staryDarzyLarge);
 }
 
@@ -57,23 +58,6 @@ void MenuState::align()
 	backgroundRect.w = ScreenWidth;
 	backgroundRect.h = ScreenHeight;
 }
-
-void MenuState::cleanup() {
-	SDL_FreeSurface(bg);
-	SDL_DestroyTexture(backgroundTexture);
-	delete playButton;
-	delete exitButton;
-	SDL_DestroyTexture(bermudaTextTexture);
-}
-
-void MenuState::pause() {
-
-}
-
-void MenuState::resume() {
-
-}
-
 
 void MenuState::handleEvents(SDL_Event mainEvent) {
 	int x, y;
@@ -110,9 +94,6 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 
 }
 
-void MenuState::update(double dt) {
-}
-
 void MenuState::draw() {
 	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), bermudaTextTexture, NULL, &bermudaTextRect);
@@ -121,7 +102,29 @@ void MenuState::draw() {
 	}
 }
 
+void MenuState::update(double dt)
+{
+	
+}
 
+void MenuState::pause() {
+
+}
+
+void MenuState::resume() {
+
+}
+
+void MenuState::cleanup() {
+	SDL_FreeSurface(bg);
+	SDL_DestroyTexture(backgroundTexture);
+
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		delete buttons[i];
+	}
+	buttons.clear();
+}
 
 MenuState::~MenuState(void)
 {

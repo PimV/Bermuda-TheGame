@@ -228,6 +228,18 @@
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
+    <ClCompile Include="BasePauzeButton.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeExitButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeMenuButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeResumeButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -364,6 +376,18 @@
     </ClInclude>
     <ClInclude Include="GameOverState.h">
       <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePauzeButton.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeExitButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeMenuButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeResumeButton.h">
+      <Filter>Header Files\View\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

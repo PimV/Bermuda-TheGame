@@ -1,5 +1,7 @@
 #include "PauseState.h"
-#include <iostream>
+#include "PauzeMenuButton.h"
+#include "PauzeResumeButton.h"
+#include "PauzeExitButton.h"
 
 PauseState PauseState::m_PauseState;
 
@@ -10,10 +12,17 @@ PauseState::PauseState()
 void PauseState::init(GameStateManager* gsm)
 {
 	this->gsm = gsm;
-}
 
-void PauseState::cleanup()
-{
+	PauzeResumeButton* resumeButton = new PauzeResumeButton(gsm);
+	PauzeMenuButton* menuButton = new PauzeMenuButton(gsm);
+	PauzeExitButton* exitButton = new PauzeExitButton(gsm);
+
+	resumeButton->placeAbove(menuButton);
+	exitButton->placeUnder(menuButton);
+
+	buttons.push_back(resumeButton);
+	buttons.push_back(menuButton);
+	buttons.push_back(exitButton);
 }
 
 void PauseState::pause()
@@ -26,6 +35,8 @@ void PauseState::resume()
 
 void PauseState::handleEvents(SDL_Event mainEvent)
 {
+	int x, y;
+	SDL_GetMouseState(&x, &y);
 	switch(mainEvent.type) 
 	{
 	case SDL_KEYDOWN:
@@ -36,32 +47,42 @@ void PauseState::handleEvents(SDL_Event mainEvent)
 			break;
 		}
 		break;
+	case SDL_MOUSEMOTION:
+		for (int i = 0; i < buttons.size(); i++) {
+			buttons.at(i)->hover(x, y, gsm);
+		}
+		break;
+	case SDL_MOUSEBUTTONDOWN:
+		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
+			for (int i = 0; i < buttons.size(); i++) {
+				buttons.at(i)->clicked(x, y, gsm);
+			}
+		}
+		break;
 	}
 
 }
 
 void PauseState::update(double dt)
 {
-	std::cout << "Active: pause state" << std::endl;
+
 }
 
 void PauseState::draw()
 {
-	//this->gsm->sdlInitializer->clearScreen();
-	//TODO: MEMORY LEAK omdat ik nog niet CLEAR sdl window aanroep omdat dat het beeld van playstate word weggehaald
-	/*
-	IS DIT EEN LEAK?
-	*/
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		buttons[i]->draw(gsm);
+	}
+}
 
-	SDL_Texture* texture = IMG_LoadTexture(this->gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "pausemenu.png").c_str());
-	SDL_Rect rect;
-	rect.w = 200;
-	rect.h = 400;
-	rect.x = 200;
-	rect.y = 200;
-	this->gsm->sdlInitializer->drawTexture(texture, &rect, NULL);
-
-	SDL_DestroyTexture(texture);  
+void PauseState::cleanup()
+{
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		delete buttons[i];
+	}
+	buttons.clear();
 }
 
 void PauseState::removeState()
@@ -71,4 +92,5 @@ void PauseState::removeState()
 
 PauseState::~PauseState()
 {
+	cleanup();
 }

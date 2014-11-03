@@ -202,9 +202,12 @@ void PlayState::draw() {
 
 }
 
+//ERROR Deze methode word nooit aangeroepen volgens mij.
+//Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)
 {
 	delete camera;
 	delete mec;
 	delete mapLoader;
+	std::cout << "deleting playstate" << endl; 
 }

@@ -25,8 +25,6 @@ private:
 
 public:
 	//TODO: put buttons in array
-	PlayButton* playButton;
-	ExitButton* exitButton;
 
 	void align();
 
