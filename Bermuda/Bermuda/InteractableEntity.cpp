@@ -58,6 +58,8 @@ int InteractableEntity::getInteractAreaStartY()
 	return this->startY;
 }
 
+void InteractableEntity::setDestroyedState() {}
+
 int InteractableEntity::getInteractAreaEndY()
 {
 	return this->endY;

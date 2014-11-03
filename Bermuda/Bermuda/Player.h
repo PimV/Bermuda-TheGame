@@ -53,6 +53,7 @@ public:
 	int destY;
 
 	Inventory* getInventory();
+
 private:
 	const char* path;
 	Camera* camera;

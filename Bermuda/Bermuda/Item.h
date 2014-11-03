@@ -32,6 +32,9 @@ public:
 	void removeItemType(ItemType itemType);
 	std::vector<ItemType> getItemTypes();
 
+	bool isConsumable();
+	bool isEquipable();
+
 
 
 

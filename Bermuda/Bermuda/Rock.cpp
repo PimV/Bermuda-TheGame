@@ -25,10 +25,12 @@ void Rock::update(double dt) {
 
 void Rock::interact(Player* player)
 {
-	InteractableEntity::interact(player);
-	if (this->trackInteractTimes()) {
-		this->setDestroyedState();
-		player->getInventory()->addItem(new ItemRock());
+	if (player->getInventory()->hasPickaxe()) {
+		InteractableEntity::interact(player);
+		if (this->trackInteractTimes()) {
+			this->setDestroyedState();
+			player->getInventory()->addItem(new ItemRock());
+		}
 	}
 }
 

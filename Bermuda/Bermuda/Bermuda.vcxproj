@@ -96,6 +96,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   <ItemGroup>
     <ClInclude Include="ActionContainer.h" />
     <ClInclude Include="AppleTree.h" />
+    <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
@@ -103,10 +104,12 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ClickAction.h" />
     <ClInclude Include="CollidableContainer.h" />
     <ClInclude Include="CollidableTile.h" />
+    <ClInclude Include="Consumable.h" />
     <ClInclude Include="ContainerType.h" />
     <ClInclude Include="DayTimeTimer.h" />
     <ClInclude Include="DrawableContainer.h" />
     <ClInclude Include="EntityChunkContainer.h" />
+    <ClInclude Include="Equipable.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="IBehaviour.h" />
@@ -131,6 +134,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="InteractableEntity.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Pickaxe.h" />
+    <ClInclude Include="ToolAxe.h" />
     <ClInclude Include="ItemCarrot.h" />
     <ClInclude Include="ItemRock.h" />
     <ClInclude Include="Items.h" />
@@ -156,11 +161,14 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="SoundLoader.h" />
     <ClInclude Include="Spawnpoint.h" />
     <ClInclude Include="StateType.h" />
+    <ClInclude Include="Tool.h" />
+    <ClInclude Include="ToolPickaxe.h" />
     <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionContainer.cpp" />
     <ClCompile Include="AppleTree.cpp" />
+    <ClCompile Include="Axe.cpp" />
     <ClCompile Include="BackgroundContainer.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
@@ -168,6 +176,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="CollidableContainer.cpp" />
     <ClCompile Include="CollidableTile.cpp" />
+    <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="DayTimeTimer.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -177,10 +186,13 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Defensive.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="PlayerUpdateTimer.cpp" />
+    <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Pickaxe.cpp" />
+    <ClCompile Include="ToolAxe.cpp" />
     <ClCompile Include="ItemCarrot.cpp" />
     <ClCompile Include="ItemRock.cpp" />
     <ClCompile Include="ItemWood.cpp" />
@@ -189,6 +201,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="RespawnContainer.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="RuinStatue.cpp" />
+    <ClCompile Include="Tool.cpp" />
+    <ClCompile Include="ToolPickaxe.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

@@ -39,6 +39,6 @@ public:
 
 	//virtual void interact(Player* p) = 0;
 	virtual void interact(Player* p);
-	virtual void setDestroyedState() = 0;
+	virtual void setDestroyedState();
 	int getRangeValue();
 };

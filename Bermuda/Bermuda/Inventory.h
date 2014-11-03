@@ -12,8 +12,12 @@ public:
 
 	bool addItem(Item* item);
 	bool hasItem(Item* item);
+	bool hasItemById(int itemId);
 	void deleteItem(Item* item, int count);
 	std::vector<Item*> getItems();
+
+	bool hasAxe();
+	bool hasPickaxe();
 
 	void draw();
 

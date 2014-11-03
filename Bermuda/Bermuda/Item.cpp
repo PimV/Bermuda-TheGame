@@ -93,6 +93,14 @@ std::vector<ItemType> Item::getItemTypes() {
 	return this->itemTypes;
 }
 
+bool Item::isConsumable() {
+	return this->hasItemType(ItemType::Drink) || this->hasItemType(ItemType::Food);
+}
+
+bool Item::isEquipable() {
+	return this->hasItemType(ItemType::Armour) || this->hasItemType(ItemType::Tool) || this->hasItemType(ItemType::Weapon);
+}
+
 
 
 

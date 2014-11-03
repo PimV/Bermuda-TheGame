@@ -27,6 +27,8 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
+	this->sprinting = false;
+	this->sprintSpeed = 15;
 
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
@@ -56,6 +58,7 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 
 	//Add to containers
 	mec->getDrawableContainer()->add(this);
+	mec->getCollidableContainer()->add(this);
 	//TODO : collision container
 
 	this->inventory = new Inventory();
@@ -90,15 +93,11 @@ bool Player::checkCollision(CollidableContainer* container) {
 	int endChunkY = this->getChunkY() + 1;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
-				for(CollidableEntity* e : *vec)
-				{
+			if(vec != nullptr) {
+				for(CollidableEntity* e : *vec) {
 					if (this->intersects(e)) {
 						this->setX(currentX);
 						this->setY(currentY);
@@ -195,7 +194,12 @@ int Player::getThirst()
 #pragma endregion PlayerStatusUpdates
 
 void Player::move(double dt) {
-
+	if (sprinting) {
+		maxSpeed = 50;
+	} else {
+		maxSpeed = 3;
+	}
+	
 	if(moveClick) {
 		clickMove();
 	}
@@ -299,20 +303,16 @@ void::Player::interact()
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
 	int playerOffsetY = this->getY() + (this->getHeight() / 2);
 
-	double diff = 1000;
+		double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
+			if(vec != nullptr) {
 
-				for(InteractableEntity* e : *vec)
-				{
+				for(InteractableEntity* e : *vec) {
 					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
 						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
 					{
