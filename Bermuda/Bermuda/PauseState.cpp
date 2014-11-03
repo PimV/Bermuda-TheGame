@@ -40,22 +40,27 @@ void PauseState::handleEvents(SDL_Event mainEvent)
 	switch(mainEvent.type) 
 	{
 	case SDL_KEYDOWN:
-		switch(mainEvent.key.keysym.sym) 
+		switch (mainEvent.key.keysym.sym)
 		{
 		case SDLK_ESCAPE:
 			GameStateManager::Instance()->popState();
 			break;
+		}
+		break;
 	case SDL_MOUSEMOTION:
-		for (int i = 0; i < buttons.size(); i++) {
+		for (int i = 0; i < buttons.size(); i++)
+		{
 			buttons.at(i)->hover(x, y, gsm);
 		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
-		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			for (int i = 0; i < buttons.size(); i++) {
+		if (mainEvent.button.button == SDL_BUTTON_LEFT)
+		{
+			for (int i = 0; i < buttons.size(); i++)
+			{
 				buttons.at(i)->clicked(x, y, gsm);
 			}
-	}
+		}
 		break;
 	}
 
@@ -63,6 +68,7 @@ void PauseState::handleEvents(SDL_Event mainEvent)
 
 void PauseState::update(double dt)
 {
+
 }
 
 void PauseState::draw()
@@ -76,7 +82,7 @@ void PauseState::draw()
 void PauseState::cleanup()
 {
 	for (int i = 0; i < buttons.size(); i++)
-{
+	{
 		delete buttons[i];
 	}
 	buttons.clear();
