@@ -7,7 +7,6 @@
 #include "MapLoader.h"
 #include "Rabbit.h"
 
-
 class PlayState : public IGameState
 {
 private:
@@ -48,7 +47,6 @@ public:
 private:
 	Player* p;
 
-	// temp
-	Rabbit* r;
+	// TEMPORARY RABBIT CONTAINER
 	std::vector<Rabbit*> rabbits;
 };

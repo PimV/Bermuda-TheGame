@@ -9,7 +9,7 @@ static const std::string RESOURCEPATH = BASEPATH + "Resources\\";
 //static const double OPTIMALRESOLUTIONW = 1600;
 //static const double OPTIMALRESOLUTIONH = 900;
 
-static double ScreenWidth = 1200;
-static double ScreenHeight = 650;
+static double ScreenWidth = 1280;
+static double ScreenHeight = 720;
 
 static bool fullScreen = false;

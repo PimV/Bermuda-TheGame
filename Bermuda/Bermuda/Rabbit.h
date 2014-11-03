@@ -6,7 +6,6 @@
 #include "CollidableEntity.h"
 #include "GameStateManager.h"
 #include "MainEntityContainer.h"
-#include <random>
 
 class Rabbit :
 	public NPC,
@@ -29,6 +28,9 @@ private:
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
 	void StopAnimation();
 
+	GameStateManager* gsm;
+	MainEntityContainer* mec;
+
 	int firstImgID;
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;
 	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
@@ -37,11 +39,8 @@ private:
 	int frameAmountX, frameAmountY, CurrentFrame;
 	double animationSpeed, animationDelay;
 
-	int tempCounter, dx, dy, stopSpeed;
-	bool walking, movingDown, movingUp, movingRight, movingLeft;
-	double destinationX, destinationY;
-	GameStateManager* gsm;
-	MainEntityContainer* mec;
+	int dx, dy, stopSpeed;
+	bool movingDown, movingUp, movingRight, movingLeft;
 
 	double maxSpeed;
 	long timeSinceLastAction;

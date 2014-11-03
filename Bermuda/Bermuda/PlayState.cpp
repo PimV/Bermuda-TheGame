@@ -16,13 +16,9 @@
 #include "ToolAxe.h"
 #include "ItemCarrot.h"
 
-
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
 #include "Pickaxe.h"
-
-
-#include "Spawnpoint.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -43,7 +39,7 @@ void PlayState::init(GameStateManager *gsm) {
 	std::thread t(&PlayState::doSomething, this);
 	t.detach();
 	
-	//SoundLoader::Instance()->playGameMusic();
+	SoundLoader::Instance()->playGameMusic();
 }
 
 void PlayState::doSomething()
@@ -52,13 +48,11 @@ void PlayState::doSomething()
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 
-	// temp
+	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
 	Spawnpoint *sp = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	r = new Rabbit(1001, mapLoader->getChunkSize(), sp, gsm, mec);
-	for (size_t i = 0; i < 100; i++)
+	for (size_t i = 0; i < 20; i++)
 	{
-		int j = 1002 + i;
-		rabbits.push_back(new Rabbit(j, mapLoader->getChunkSize(), sp, gsm, mec));
+		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp, gsm, mec));
 	}
 
 	//TEMPORARY AXE SPAWN:
@@ -244,11 +238,7 @@ void PlayState::update(double dt) {
 		p->setPosition();
 	}
 
-	r->update(dt);
-	if (!r->checkCollision(mec->getCollidableContainer())) {
-		r->setPosition();
-	}
-
+	// TEMPORARY RABBIT UPDATE
 	for each (Rabbit *rb in this->rabbits)
 	{
 		rb->update(dt);

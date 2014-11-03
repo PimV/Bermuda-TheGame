@@ -4,7 +4,7 @@
 #include <random>
 
 Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
-NPC(id, chunkSize, 5, 1, 200, 50, spawnPoint),
+NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
@@ -160,11 +160,11 @@ void Rabbit::walk(double dt)
 		timeSinceLastAction = 0;
 
 		uniform_int_distribution<int> dist2(1, 10);
-		int value = dist2(dre);
+		int randomNumberMoveDirection = dist2(dre);
 
 		this->StopAnimation();
 
-		switch (value)
+		switch (randomNumberMoveDirection)
 		{
 		case 1:
 			movingRight = true;
