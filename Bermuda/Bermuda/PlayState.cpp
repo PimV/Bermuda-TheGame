@@ -14,6 +14,7 @@
 #include "Item.h"
 #include <thread>
 #include "ToolAxe.h"
+#include "ItemCarrot.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -121,14 +122,16 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_SPACE:
 			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
-			std::cout << p->getInventory()->hasItemById(3);
 			p->interaction = true;
 			p->interact();
 			break;
 		case SDLK_0: {
-			ToolAxe* tool = new ToolAxe();
-			tool->init();
-			this->p->getInventory()->addItem(tool);
+			//if (p->getInventory()->hasItemById(1)) {
+				Consumable* ic = static_cast<Consumable*>(p->getInventory()->getItemById(1, false));
+				if (ic != NULL) {
+					ic->consume(p);
+				}
+			//}
 			break;
 					 }
 

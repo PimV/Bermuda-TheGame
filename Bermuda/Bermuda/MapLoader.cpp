@@ -6,6 +6,9 @@
 #include "CollidableTile.h"
 #include "LoadingState.h"
 
+//TEMPORARY AXE SPAWN:
+#include "Axe.h"
+
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
 #include <string>
@@ -269,6 +272,10 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		processedSpawnpoints++;
 		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
 	}
+
+	//TEMPORARY AXE SPAWN:
+	new Axe(9001, startPosX, startPosY, chunkSize, mec, imgLoader->getMapImage(imgLoader->loadTileset("Battle_axe.png", 48, 48)));
+
 }
 
 int MapLoader::getMapHeight()

@@ -24,16 +24,18 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 }
 
 void Tree::interact(Player* player) {
-	InteractableEntity::interact(player);
+	if (player->getInventory()->hasAxe()) {
+		InteractableEntity::interact(player);
 
-	if (this->trackInteractTimes()) {
-		this->destroyed = true;
+		if (this->trackInteractTimes()) {
+			this->destroyed = true;
 
-		player->getInventory()->addItem(new ItemWood());
-		this->setDrawImage(this->stumpImage);
-		this->getMainEntityContainer()->getRespawnContainer()->add(this);
-		this->getMainEntityContainer()->getInteractableContainer()->remove(this);
-		currentInteractTime = 0;
+			player->getInventory()->addItem(new ItemWood());
+			this->setDrawImage(this->stumpImage);
+			this->getMainEntityContainer()->getRespawnContainer()->add(this);
+			this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+			currentInteractTime = 0;
+		}
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "CollidableEntity.h"
 #include "InteractableEntity.h"
 #include "MainEntityContainer.h"
+#include "Items.h"
 
 class Tree :
 	public DrawableEntity, public CollidableEntity, public InteractableEntity

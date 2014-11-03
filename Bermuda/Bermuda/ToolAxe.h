@@ -4,7 +4,6 @@
 enum class Items;
 class ToolAxe :
 	public Tool
-
 {
 public:
 	ToolAxe();
