@@ -265,8 +265,6 @@ void Player::move(double dt) {
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
 
-
-
 	/*this->setX(getX() + dx);
 	this->setY(getY() + dy);*/
 
@@ -286,7 +284,7 @@ void Player::move(double dt) {
 	else if (this->movingDown)
 		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 
-	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+	this->PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
 
 }
 
@@ -313,10 +311,8 @@ void::Player::interact()
 			if(vec != nullptr)
 			{
 
-
 				for(InteractableEntity* e : *vec)
 				{
-					
 					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
 						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
 					{
@@ -339,8 +335,6 @@ void::Player::interact()
 							closestEntity = e;
 							//std::cout << "New Closest Entity" << std::endl;
 						}
-
-
 
 						//e->interact(this);
 						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
