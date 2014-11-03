@@ -4,7 +4,7 @@
 #include "Inventory.h"
 
 
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
+Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
 	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize), IMovable(moveSpeed)
 {
 	this->mec = mec;
@@ -14,6 +14,9 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	//Entity -> dimension values
 	this->setWidth(64);
 	this->setHeight(64);
+
+	this->playerTimer = new PlayerUpdateTimer();
+	this->health = 100, this->hunger = 100, this->thirst = 100;
 
 	//CollidableEnity - collision values
 	this->setCollisionHeight(this->getHeight() - 15);
@@ -65,10 +68,8 @@ Inventory* Player::getInventory() {
 	return this->inventory;
 }
 
-void Player::resetMovement()
-{
-	if (this->moveClick)
-	{
+void Player::resetMovement() {
+	if (this->moveClick) {
 		this->movingLeft = false;
 		this->movingRight = false;
 		this->movingDown = false;
@@ -92,15 +93,11 @@ bool Player::checkCollision(CollidableContainer* container) {
 	int endChunkY = this->getChunkY() + 1;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
-				for(CollidableEntity* e : *vec)
-				{
+			if(vec != nullptr) {
+				for(CollidableEntity* e : *vec) {
 					if (this->intersects(e)) {
 						this->setX(currentX);
 						this->setY(currentY);
@@ -116,8 +113,7 @@ bool Player::checkCollision(CollidableContainer* container) {
 }
 
 void Player::update(double dt) {
-
-
+	this->updatePlayerStatuses();
 	this->move(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
@@ -131,6 +127,74 @@ void Player::update(double dt) {
 	}*/
 }
 
+#pragma region PlayerStatusUpdates
+void Player::updatePlayerStatuses()
+{
+	this->playerTimer->updateGameTime(this->gsm->lastUpdateLength);
+
+	if ( playerTimer->updateHungerTime() )
+	{
+		if (this->getHunger() > 0)
+			this->setHunger(-1);
+		else 
+			this->setHealth(-1);
+	}
+
+	if ( playerTimer->updateThirstTime() )
+	{
+		if (this->getThirst() > 0)
+			this->setThirst(-1);
+		else
+			this->setHealth(-2);
+	}
+}
+
+void Player::setHealth(int value)
+{
+	if ( (this->health + value)  > 100)
+		this->health = 100;
+	else if ( (this->health - value)  < 0 )
+		this->health = 0;
+	else
+		this->health += value;
+}
+
+void Player::setHunger(int value)
+{
+	if ( (this->hunger + value)  > 100)
+		this->hunger = 100;
+	else if ( (this->hunger - value)  < 0 )
+		this->hunger = 0;
+	else
+		this->hunger += value;
+}
+
+void Player::setThirst(int value)
+{
+	if ( (this->thirst + value)  > 100)
+		this->thirst = 100;
+	else if ( (this->thirst - value)  < 0 )
+		this->thirst = 0;
+	else
+		this->thirst += value;
+}
+
+int Player::getHealth()
+{
+	return this->health;
+}
+
+int Player::getHunger()
+{
+	return this->hunger;
+}
+
+int Player::getThirst()
+{
+	return this->thirst;
+}
+#pragma endregion PlayerStatusUpdates
+
 void Player::move(double dt) {
 	if (sprinting) {
 		maxSpeed = 50;
@@ -138,8 +202,7 @@ void Player::move(double dt) {
 		maxSpeed = 3;
 	}
 	
-	if(moveClick)
-	{
+	if(moveClick) {
 		clickMove();
 	}
 
@@ -208,8 +271,6 @@ void Player::move(double dt) {
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
 
-
-
 	/*this->setX(getX() + dx);
 	this->setY(getY() + dy);*/
 
@@ -229,7 +290,7 @@ void Player::move(double dt) {
 	else if (this->movingDown)
 		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 
-	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+	this->PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
 
 }
 
@@ -248,18 +309,12 @@ void::Player::interact()
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
+			if(vec != nullptr) {
 
-
-				for(InteractableEntity* e : *vec)
-				{
-
+				for(InteractableEntity* e : *vec) {
 					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
 						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
 					{
@@ -282,8 +337,6 @@ void::Player::interact()
 							closestEntity = e;
 							//std::cout << "New Closest Entity" << std::endl;
 						}
-
-
 
 						//e->interact(this);
 						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
@@ -375,12 +428,10 @@ void Player::clickMove() {
 	}
 }
 
-void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
-{
+void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) {
 	double animationDelay = (maxSpeed / 100)  * 40;
 	animationSpeed -= animationDelay;
-	if ( animationSpeed < animationDelay)
-	{
+	if ( animationSpeed < animationDelay) {
 		this->currentPlayerAnimationRow = Row;
 		if (EndFrame <= CurrentFrame)
 			CurrentFrame = BeginFrame;
@@ -392,13 +443,10 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 	}
 }
 
-void Player::StopAnimation()
-{
-	this->setDrawImage( gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn) );
+void Player::StopAnimation() {
+	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
 }
 
-
-Player::~Player(void)
-{
+Player::~Player(void) {
 	delete this->inventory;
 }

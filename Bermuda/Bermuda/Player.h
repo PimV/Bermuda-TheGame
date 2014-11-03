@@ -8,6 +8,7 @@
 #include "GameStateManager.h"
 #include "SDLInitializer.h"
 #include "MainEntityContainer.h"
+#include "PlayerUpdateTimer.h"
 
 class Inventory;
 
@@ -19,7 +20,16 @@ class Player :
 public:
 	Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
 	//virtual void move(EnumDirection direction) = 0;
+
 	void update(double dt);
+	void setHealth(int value);
+	void setHunger(int value);
+	void setThirst(int value);
+
+	int getHealth();
+	int getHunger();
+	int getThirst();
+
 	virtual void move(double dt);
 	//void clickMove();
 	void clickMove();
@@ -49,6 +59,9 @@ private:
 	Camera* camera;
 	GameStateManager* gsm;
 
+	PlayerUpdateTimer* playerTimer;
+	int health, hunger, thirst;
+
 	int firstImgID;
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;
 	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
@@ -62,4 +75,6 @@ private:
 	MainEntityContainer* mec;
 
 	Inventory* inventory;
+
+	void updatePlayerStatuses();
 };

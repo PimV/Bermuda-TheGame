@@ -258,6 +258,15 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUpdateTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DayTimeTimer.cpp">
+      <Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="ItemCarrot.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -464,6 +473,15 @@
     <ClInclude Include="ItemType.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUpdateTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DayTimeTimer.h">
+      <Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="ItemCarrot.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
