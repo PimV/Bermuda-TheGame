@@ -23,6 +23,16 @@ void ItemCarrot::init() {
 	this->setStackSize(itemCount);
 
 	std::cout << "Harvested " << itemCount << " carrots." << std::endl;
+
+	this->setHungerRefill(5);
+	this->setThirstRefill(0);
+	this->setHealthRefill(0);
+
+
+}
+
+void ItemCarrot::consume(Player* player) {
+	Consumable::consume(player);
 }
 
 

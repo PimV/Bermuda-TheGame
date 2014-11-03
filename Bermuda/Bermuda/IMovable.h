@@ -8,6 +8,8 @@ public:
 	double minSpeed;
 	double moveSpeed;
 	double maxSpeed;
+	double sprintSpeed;
+	bool sprinting;
 	//Direction Booleans
 	bool movingLeft;
 	bool movingRight;

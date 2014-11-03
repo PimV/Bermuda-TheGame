@@ -68,8 +68,6 @@ Item* Inventory::getItemById(int id, bool full) {
 			if (!full) {
 				if (this->itemVector[i]->getStackSize() < this->itemVector[i]->getMaxStackSize()) {
 					return this->itemVector[i];
-				} else {
-					//std::cout << this->itemVector[i]->getStackSize() << " _-_ " << this->itemVector[i]->getMaxStackSize() << std::endl;
 				}
 			} else {
 				return this->itemVector[i];
@@ -87,6 +85,15 @@ bool Inventory::hasItem(Item* item) {
 	}
 	return false;
 }
+
+bool Inventory::hasItemById(int itemId) {
+	for (size_t i = 0; i < this->itemVector.size(); i++) {
+		if (this->itemVector[i] != NULL && this->itemVector[i]->getId() == itemId) {
+			return true;
+		}
+	}
+	return false;
+}
 void Inventory::deleteItem(Item* item, int count) {
 
 	item->setStackSize(item->getStackSize() - count);
@@ -97,6 +104,14 @@ void Inventory::deleteItem(Item* item, int count) {
 	}
 
 
+}
+
+bool Inventory::hasAxe() {
+	return this->hasItemById((int)Items::Axe);
+}
+
+bool Inventory::hasPickaxe() {
+	return this->hasItemById((int)Items::Pickaxe);
 }
 
 std::vector<Item*> Inventory::getItems() {

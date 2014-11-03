@@ -24,6 +24,8 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
+	this->sprinting = false;
+	this->sprintSpeed = 15;
 
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
@@ -53,6 +55,7 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 
 	//Add to containers
 	mec->getDrawableContainer()->add(this);
+	mec->getCollidableContainer()->add(this);
 	//TODO : collision container
 
 	this->inventory = new Inventory();
@@ -129,6 +132,12 @@ void Player::update(double dt) {
 }
 
 void Player::move(double dt) {
+	if (sprinting) {
+		maxSpeed = 50;
+	} else {
+		maxSpeed = 3;
+	}
+	
 	if(moveClick)
 	{
 		clickMove();
@@ -235,7 +244,7 @@ void::Player::interact()
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
 	int playerOffsetY = this->getY() + (this->getHeight() / 2);
 
-		double diff = 1000;
+	double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks
@@ -250,7 +259,7 @@ void::Player::interact()
 
 				for(InteractableEntity* e : *vec)
 				{
-					
+
 					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
 						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
 					{
