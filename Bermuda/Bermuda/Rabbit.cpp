@@ -144,7 +144,12 @@ bool Rabbit::checkCollision(CollidableContainer* container) {
 
 void Rabbit::walk(double dt)
 {
-	if (timeSinceLastAction < 1000)
+	random_device dev;
+	default_random_engine dre(dev());
+	uniform_int_distribution<int> dist1(1000, 5000);
+	int timeWait = dist1(dre);
+
+	if (timeSinceLastAction < timeWait)
 	{
 		timeSinceLastAction += GameStateManager::Instance()->getUpdateLength() * dt;
 	}
@@ -156,10 +161,8 @@ void Rabbit::walk(double dt)
 
 		timeSinceLastAction = 0;
 
-		random_device dev;
-		default_random_engine dre(dev());
-		uniform_int_distribution<int> dist(1, 50);
-		int value = dist(dre);
+		uniform_int_distribution<int> dist2(1, 50);
+		int value = dist2(dre);
 
 		switch (value)
 		{
