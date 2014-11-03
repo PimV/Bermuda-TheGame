@@ -8,8 +8,8 @@
 
 Game::Game(void)
 {
-	gsm = new GameStateManager();
-
+	gsm = GameStateManager::Instance();
+	gsm->init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);
 	//Non-threaded
 	this->gameLoop(gsm);
 
@@ -50,6 +50,9 @@ void Game::gameLoop(GameStateManager* gsm) {
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
 		long updateLength = (currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart;
+
+		gsm->setUpdateLength(updateLength);
+
 		//Previous time = current time
 		previousTime = currentTime;
 		//Calculate delta
@@ -62,7 +65,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		//If lastFpsTime > 1000 ms, set FPS to 0 and start re-calculating
 		if (lastFpsTime >= 1000) {
 			gsm->setFps(fps);
-			std::cout << "FPS: "<< fps << std::endl;
+			//std::cout << "FPS: "<< fps << std::endl;
 			lastFpsTime = 0;
 			fps = 0;
 		}

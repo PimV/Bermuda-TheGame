@@ -8,6 +8,7 @@ enum class ContainerType
 	Drawable,
 	Destroyable,
 	Collidable,
-	Background
+	Background,
+	Respawnable
 };
 

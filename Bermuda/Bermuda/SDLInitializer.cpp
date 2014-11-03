@@ -29,9 +29,7 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 }
 
 void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
-	if (font == NULL) {
-		font = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 24);
-	}
+	font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), h);
 
 	SDL_Surface* imgTxt;
 	SDL_Rect txtRect;

@@ -7,7 +7,7 @@ class Rabbit :
 	public Evasive
 {
 public:
-	Rabbit(int id, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint);
+	Rabbit(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint);
 	~Rabbit();
 };
 

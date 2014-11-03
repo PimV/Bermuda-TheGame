@@ -6,9 +6,9 @@
 #include <Windows.h>
 #include <SDL_ttf.h>
 
-
+GameStateManager GameStateManager::m_Gsm;
 GameStateManager::GameStateManager(void) {
-	init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);
+	/*init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);*/
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
@@ -16,22 +16,35 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 	soundLoader = new SoundLoader();
+	//states = new std::vector<IGameState*>();
 
-	this->changeGameState(MenuState::Instance());
+
+	GameStateManager::Instance()->changeGameState(MenuState::Instance());
 
 	actionContainer = new ActionContainer();
 
 	m_running = true;
 	showFps = false;
-	this->setFps(0);
+	GameStateManager::Instance()->setFps(0);
+
+
+	this->updateLength = 0;
+}
+
+void GameStateManager::setUpdateLength(long updateLength) {
+	this->updateLength = updateLength;
+}
+
+long GameStateManager::getUpdateLength() {
+	return this->updateLength;
 }
 
 void GameStateManager::setFps(int fps) {
-	this->fps = fps;
+	GameStateManager::Instance()->fps = fps;
 }
 
 int GameStateManager::getFps() {
-	return this->fps;
+	return GameStateManager::Instance()->fps;
 }
 
 void GameStateManager::cleanup() {
@@ -52,7 +65,7 @@ void GameStateManager::changeGameState(IGameState* gameState) {
 	}
 
 	states.push_back(gameState);
-	states.back()->init(this);
+	states.back()->init(GameStateManager::Instance());
 }
 
 void GameStateManager::pushGameState(IGameState* gameState) {
@@ -61,7 +74,7 @@ void GameStateManager::pushGameState(IGameState* gameState) {
 	}
 
 	states.push_back(gameState);
-	states.back()->init(this);
+	states.back()->init(GameStateManager::Instance());
 }
 
 void GameStateManager::popState() {
@@ -86,9 +99,12 @@ void GameStateManager::handleEvents() {
 			switch(mainEvent.key.keysym.sym) 
 			{
 			case SDLK_TAB:
-				if (this->showFps == false) {
-					this->showFps = true;
+				if (GameStateManager::Instance()->showFps == false) {
+					GameStateManager::Instance()->showFps = true;
 				}
+				break;
+			case SDLK_r:
+				GameStateManager::Instance()->changeGameState(PlayState::Instance());
 				break;
 			default: 
 				states.back()->handleEvents(mainEvent);
@@ -98,8 +114,8 @@ void GameStateManager::handleEvents() {
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
 			case SDLK_TAB:
-				if (this->showFps == true) {
-					this->showFps = false;
+				if (GameStateManager::Instance()->showFps == true) {
+					GameStateManager::Instance()->showFps = false;
 				}
 				break;
 			default:
@@ -123,20 +139,22 @@ void GameStateManager::update(double deltaTime) {
 
 void GameStateManager::draw() {
 	//Clear Screen
-	this->sdlInitializer->clearScreen();
+	GameStateManager::Instance()->sdlInitializer->clearScreen();
 
 	//Draw GameState
-	for (size_t  i = 0; i < states.size(); i++) {
+	/*for (size_t  i = 0; i < states.size(); i++) {
 		states.at(i)->draw();
-	}
+	}*/
+
+	states.back()->draw();
 
 	//Draw FPS
-	if (this->showFps == true) {
-		this->sdlInitializer->drawText(std::string("FPS: " + to_string(this->getFps())), 5, 5, 50, 24);
+	if (GameStateManager::Instance()->showFps == true) {
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("FPS: " + to_string(GameStateManager::Instance()->getFps())), 5, 5, 50, 24);
 	}
 
 	//Draw entire screen
-	this->sdlInitializer->drawScreen();
+	GameStateManager::Instance()->sdlInitializer->drawScreen();
 }
 
 ActionContainer* GameStateManager::getActionContainer() {

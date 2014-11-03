@@ -3,6 +3,7 @@
 class IEntityContainer
 {
 public:
+	virtual void initChunks(int chunksY, int chunksX);
 	virtual ~IEntityContainer();
 };
 
