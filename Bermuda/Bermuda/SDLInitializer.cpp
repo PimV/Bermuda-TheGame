@@ -37,7 +37,7 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 
 	txtRect.x = x;
 	txtRect.y = y;
-	txtRect.w = w;
+	txtRect.w = msg.length() * h / 3;
 	txtRect.h = h;
 
 	fColor.r = fColor.g = fColor.b = 245;
@@ -48,6 +48,7 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 	SDL_RenderCopy(this->getRenderer(), imgTxture, NULL, &txtRect);
 
 
+	TTF_CloseFont(font);
 	SDL_DestroyTexture(imgTxture);
 	SDL_FreeSurface(imgTxt);
 }

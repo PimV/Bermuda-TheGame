@@ -41,5 +41,7 @@ private:
 	double destinationX, destinationY;
 	GameStateManager* gsm;
 	MainEntityContainer* mec;
+
+	long timeSinceLastAction;
 };
 

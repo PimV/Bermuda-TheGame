@@ -13,6 +13,14 @@
 #include "Inventory.h"
 #include "Item.h"
 #include <thread>
+#include "ToolAxe.h"
+#include "ItemCarrot.h"
+
+
+//TEMPORARY AXE SPAWN:
+#include "Axe.h"
+#include "Pickaxe.h"
+
 
 #include "Spawnpoint.h"
 
@@ -34,7 +42,7 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	std::thread t(&PlayState::doSomething, this);
 	t.detach();
-
+	
 	//SoundLoader::Instance()->playGameMusic();
 }
 
@@ -53,6 +61,10 @@ void PlayState::doSomething()
 	//	rabbits.push_back(new Rabbit(j, mapLoader->getChunkSize(), sp, gsm, mec));
 	//}
 
+	//TEMPORARY AXE SPAWN:
+	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
+	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
+	
 	this->gsm->popState();
 }
 
@@ -85,7 +97,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			//std::cout << x << "  " << y << std::endl;
 			p->destX = x + this->camera->getX();
 			p->destY = y + this->camera->getY();
 			p->resetMovement();
@@ -101,7 +112,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingLeft = true;
 			p->movingRight = false;
 			break;
-
 		case SDLK_RIGHT:
 			p->resetMovement();
 			p->moveClick = false;
@@ -122,12 +132,50 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingDown = true;
 			p->movingUp = false;
 			break;
-
+		case SDLK_LSHIFT:
+			p->sprinting = true;
+			break;
+		case SDLK_p:
+			p->setCollisionHeight(0);
+			p->setCollisionWidth(0);
+			p->setCollisionX(-10000);
+			p->setCollisionY(-10000);
+			break;
 		case SDLK_SPACE:
 			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
-			//p->interaction = true;
+			p->interaction = true;
 			p->interact();
 			break;
+		case SDLK_0: {
+			//Consume Carrot (Same method as 9)
+			Item* i = p->getInventory()->getItemById(1, true);
+			if (i != nullptr) {
+				std::cout << "Item found!" << std::endl;
+				if (i->isConsumable()) {
+					Consumable* c = (Consumable*)i;
+					c->consume(p);
+				} else if (i->isEquipable()) {
+					Equipable* e = (Equipable*)i;
+					e->equip(p);
+				}
+			}
+			break;
+					 }
+		case SDLK_9: {
+			//Equip Axe (Same method as 0)
+			Item* i = p->getInventory()->getItemById(3, true);
+			if (i != nullptr) {
+				std::cout << "Item found!" << std::endl;
+				if (i->isConsumable()) {
+					Consumable* c = (Consumable*)i;
+					c->consume(p);
+				} else if (i->isEquipable()) {
+					Equipable* e = (Equipable*)i;
+					e->equip(p);
+				}
+			}
+			break;
+					 }
 
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
@@ -147,6 +195,16 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingLeft = false;
+			break;
+		case SDLK_q:
+			p->setCollisionHeight(p->getHeight() - 15);
+			p->setCollisionWidth(p->getWidth()/4);
+			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
+			p->setCollisionY(0);
+			break;
+		case SDLK_LSHIFT:
+			p->sprinting = false;
+			//p->moveSpeed = p->maxSpeed;
 			break;
 
 		case SDLK_RIGHT:
