@@ -14,6 +14,6 @@ int main(int argc, char* args[])
 {
 	Game game;
 
-	std::cin.get();
+	//std::cin.get();
 	return 0;
 }
