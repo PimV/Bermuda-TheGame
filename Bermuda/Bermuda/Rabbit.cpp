@@ -53,7 +53,7 @@ IMovable(2)
 
 void Rabbit::update(double dt) {
 	this->walk(dt);
-	std::cout << this->getX() << std::endl;
+	std::cout << "Rabbit X: " << this->getX() << " Y: " << this->getY() << std::endl;
 
 	//if (destroyed) {
 	//	this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
