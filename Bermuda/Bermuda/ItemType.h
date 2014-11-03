@@ -1,8 +1,9 @@
 #pragma once
-enum class ItemType
+enum ItemType
 {
 	Food,
 	Drink,
+	Material,
 	Weapon,
 	Tool,
 	Armour,

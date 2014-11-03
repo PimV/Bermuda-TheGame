@@ -18,7 +18,7 @@ class Player :
 	public CollidableEntity
 {
 public:
-	Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
+	Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
 	//virtual void move(EnumDirection direction) = 0;
 
 	void draw(Camera* camera, SDL_Renderer* renderer);
@@ -35,6 +35,7 @@ public:
 	//void clickMove();
 	void clickMove();
 	void setPosition();
+	void interact();
 	void resetMovement();
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
 	void StopAnimation();
@@ -48,6 +49,7 @@ public:
 	bool movingUp;
 	bool movingDown;
 	bool moveClick;
+	bool interaction;
 	int destX;
 	int destY;
 
@@ -64,10 +66,13 @@ private:
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;
 	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
 	int playerAnimationWalkStartColumn, playerAnimationWalkEndColumn;
+	int playerAnimationActionStartColumn, playerAnimationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
 	double animationSpeed, animationDelay;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
+
+	MainEntityContainer* mec;
 
 	Inventory* inventory;
 

@@ -6,11 +6,18 @@
 #include "ClickAction.h"
 #include "MoveAction.h"
 #include "PauseState.h"
+#include "LoadingState.h"
 #include <iostream>
+#include <algorithm>
+#include "Windows.h" 
 #include "Inventory.h"
 #include "Item.h"
+#include <thread>
 
 PlayState PlayState::m_PlayState;
+
+//Needed for vector sort
+bool drawableSortFunction (DrawableEntity* one,DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight() ); }
 
 PlayState::PlayState(void)
 {
@@ -18,24 +25,36 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-	mec = new MainEntityContainer();
 
+	this->gsm->pushGameState(LoadingState::Instance());
+
+	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
+	std::thread t(&PlayState::doSomething, this);
+	t.detach();
+	
+	SoundLoader::Instance()->playGameMusic();
+}
+
+void PlayState::doSomething()
+{
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playGameMusic();
 
 	//this->gameTime = 0;
 
-	std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
-
-	p = new Player(1, 3, camera, gsm, mec);
+	// merge conflict Game_Time -> Develop
+	//std::cout << "Collidable Objects: " << mec->getCollidableContainer()->getContainer().size() << std::endl;
+	//p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 
 	dayTimer = new DayTimeTimer();
 
 	temp =  std::vector<DrawableEntity*>();
+	this->gsm->popState();
 }
 
 void PlayState::cleanup() {
@@ -43,8 +62,11 @@ void PlayState::cleanup() {
 }
 
 void PlayState::pause() {
-	this->p->moveClick = true;
-	this->p->resetMovement();
+	if(this->p != nullptr)
+	{
+		this->p->moveClick = true;
+		this->p->resetMovement();
+	}
 }
 
 void PlayState::resume() {
@@ -71,6 +93,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->moveClick = true;
 		}
 		break;
+
 	case SDL_KEYDOWN:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
@@ -79,47 +102,40 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingLeft = true;
 			p->movingRight = false;
 			break;
+
 		case SDLK_RIGHT:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingRight = true;	
 			p->movingLeft = false;
 			break;
+
 		case SDLK_UP:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingUp = true;	
 			p->movingDown = false;
 			break;
+
 		case SDLK_DOWN:
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingDown = true;	
 			p->movingUp = false;	
 			break;
+
+		case SDLK_SPACE:
+			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
+			//p->interaction = true;
+			p->interact();
+			break;
+
 		case SDLK_ESCAPE:
 			//TODO: methode voor deze escape klik aanmaken?
 			this->gsm->pushGameState(PauseState::Instance());
 			break;
 		case SDLK_i:
-			this->p->getInventory()->addItem(new Item(2,16,true,NULL));
-			this->p->getInventory()->printInventory();
-			break;
-		case SDLK_o: {
-			Item* item = new Item(2,16,true,NULL);
-			item->setStackSize(5);
-			this->p->getInventory()->addItem(item);
-			this->p->getInventory()->printInventory();
-			break;
-					 }
-		case SDLK_r:
-			this->p->getInventory()->deleteItem(this->p->getInventory()->getItems()[0],5);
-			this->p->getInventory()->printInventory();
-			break;
-		case SDLK_l:
-			Item* item = new Item(3,22,true,NULL);
-			item->setStackSize(5);
-			this->p->getInventory()->addItem(item);
+			this->p->getInventory()->toggleInventory();
 			this->p->getInventory()->printInventory();
 			break;
 		//case SDLK_F1:
@@ -132,35 +148,36 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYUP:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingLeft = false;
-			p->StopAnimation();
-
 			break;
+
 		case SDLK_RIGHT:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingRight = false;
-			p->StopAnimation();
-
 			break;
+
 		case SDLK_UP:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingUp = false;
-			p->StopAnimation();
+			break;
 
-			break;
 		case SDLK_DOWN:
+			p->StopAnimation();
 			p->moveClick = false;
-			//p->resetMovement();
 			p->movingDown = false;
+			break;
+
+		case SDLK_SPACE:
+			p->interaction = false;
 			p->StopAnimation();
 			break;
+
 		}
 		break;
-
 	}
 }
 
@@ -169,11 +186,17 @@ void PlayState::update(double dt) {
 	this->updateGameTimers();
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
-	/*p->move(dt);*/
+
 	p->update(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
+
+	//Update all respawnable entities
+	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
+		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
+	}
+
 }
 
 void PlayState::updateGameTimers() {
@@ -186,49 +209,66 @@ long PlayState::getGameTimer() {
 }
 
 void PlayState::draw() {
-	//Clears the screen
-	//this->gsm->sdlInitializer->clearScreen();
 
-	//Load background
-	BackgroundContainer* backgroundContainer = mec->getBackgroundContainer();
-	for(DrawableEntity* entity : backgroundContainer->getContainer())
-	{
-		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
-	}
+	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
 
-	//Load drawable container and check order to be drawn
-	DrawableContainer* drawableContainer = mec->getDrawableContainer();
-	for(DrawableEntity* entity : drawableContainer->getContainer())
+	std::vector<DrawableEntity*> drawableVector;
+
+	//Loop through all chunks
+	for(int i = beginChunkY; i <= endChunkY; i++)
 	{
-		if (entity->getY() + entity->getHeight() < p->getY() + p->getHeight()) {
-			int test = entity->getWidth();
-			if (std::find(temp.begin(), temp.end(), entity) != temp.end()) {
-				//Remove to temporaryContaienr
-				temp.erase(std::find(temp.begin(), temp.end(), entity));
+		for(int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Background
+			std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(DrawableEntity* e : *vec)
+				{
+					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+				}
 			}
-			entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
-		} else {
-			if (std::find(temp.begin(), temp.end(), entity) == temp.end() && entity != p) {
-				//Add to temporaryContainer
-				temp.push_back(entity);
+			//Objecten
+			vec = this->mec->getDrawableContainer()->getChunk(i, j);
+			if(vec != nullptr)
+			{
+				for(DrawableEntity* e : *vec)
+				{
+					drawableVector.push_back(e);
+				}
 			}
 
 		}
 	}
 
-	//Load player
+	//Draw player
 	p->draw(camera, gsm->sdlInitializer->getRenderer());
-	
+
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), 1150, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
 	if (this->dayTimer->getCurrentDayPart() > 9)
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
 	else
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
 
-	//Load entities above the player
-	for(DrawableEntity* entity : temp)
+	//Sort drawable object vector
+	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
+
+	//Draw sorted object vector
+	for(DrawableEntity* e : drawableVector)
 	{
-		entity->draw(camera,this->gsm->sdlInitializer->getRenderer());
+		e->draw(camera,this->gsm->sdlInitializer->getRenderer());
 	}
+
+	if (this->p->getInventory()->isOpen()) {
+		this->p->getInventory()->draw();
+	}
+
 }
 
 PlayState::~PlayState(void)

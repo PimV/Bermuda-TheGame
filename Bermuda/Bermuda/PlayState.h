@@ -30,6 +30,8 @@ private:
 	GameTimer* gameTimer;
 	DayTimeTimer* dayTimer;
 
+	void doSomething();
+
 public:
 
 	void init(GameStateManager *gsm);

@@ -8,8 +8,8 @@
 
 Game::Game(void)
 {
-	gsm = new GameStateManager();
-
+	gsm = GameStateManager::Instance();
+	gsm->init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);
 	//Non-threaded
 	this->gameLoop(gsm);
 
@@ -50,6 +50,9 @@ void Game::gameLoop(GameStateManager* gsm) {
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
 		long updateLength = (currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart;
+
+		gsm->setUpdateLength(updateLength);
+
 		//Previous time = current time
 		previousTime = currentTime;
 		//Calculate delta

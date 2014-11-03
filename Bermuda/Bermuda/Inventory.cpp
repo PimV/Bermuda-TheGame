@@ -1,6 +1,10 @@
 #include "Inventory.h"
 #include <iostream>
+#include "Items.h"
 #include "Item.h"
+
+
+
 
 Inventory::Inventory(void)
 {
@@ -10,9 +14,9 @@ Inventory::Inventory(void)
 
 void Inventory::init() {
 	std::cout<< "Created inv"<<std::endl;
+	this->open = false;
 	this->slots = 20;
 	this->itemVector = std::vector<Item*>();
-
 }
 
 void Inventory::cleanup() {
@@ -65,7 +69,7 @@ Item* Inventory::getItemById(int id, bool full) {
 				if (this->itemVector[i]->getStackSize() < this->itemVector[i]->getMaxStackSize()) {
 					return this->itemVector[i];
 				} else {
-					std::cout << this->itemVector[i]->getStackSize() << " _-_ " << this->itemVector[i]->getMaxStackSize() << std::endl;
+					//std::cout << this->itemVector[i]->getStackSize() << " _-_ " << this->itemVector[i]->getMaxStackSize() << std::endl;
 				}
 			} else {
 				return this->itemVector[i];
@@ -103,19 +107,41 @@ int Inventory::getSize() {
 	return this->itemVector.size();
 }
 
+
 void Inventory::printInventory() {
 	std::cout << "INVENTORY: " << std::endl;
 	for (size_t i = 0; i < 20; i++) {
-		if (i % 4 == 0) {
-			std::cout <<  std::endl;
-		}
+		/*if (i % 4 == 0) {
+		std::cout <<  std::endl;
+		}*/
+
 		if (i < this->getSize()) {
-			std::cout << "[" <<  this->itemVector[i]->getStackSize() << "] ";
+			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
 			std::cout << "[ ] ";
 		}
+		std::cout << std::endl;
 	}
 	std::cout <<std::endl;
+}
+
+bool Inventory::isOpen() {
+	return this->open;
+}
+void Inventory::toggleInventory() {
+	this->open = !this->open;
+}
+
+void Inventory::draw() {
+	int y = 50;
+	for (size_t i = 0; i < 20; i++) {
+		if (i < this->getSize()) {
+			GameStateManager::Instance()->sdlInitializer->drawText(
+				std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 16*i + 5,100, 16
+				);
+		}
+	}
+
 }
 
 

@@ -30,6 +30,9 @@ public:
 	void handleEvents();
 	void draw();
 
+	void setUpdateLength(long updateLength);
+	long getUpdateLength();
+
 	ActionContainer* getActionContainer();
 
 	bool running();
@@ -39,15 +42,23 @@ public:
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
 
-	~GameStateManager(void);
-private: 
+	
+	static GameStateManager* Instance() {
+		return &m_Gsm;
+	};
 
+	~GameStateManager(void);
+
+private: 
+	long updateLength;
 	int fps;
 	std::vector<IGameState*> states;
-	IGameState *currentState;
+	IGameState* currentState;
 	ImageLoader* imgLoader;
 	SoundLoader* soundLoader;
 	bool m_running;
+
+	static GameStateManager m_Gsm;
 
 	ActionContainer* actionContainer;
 };
