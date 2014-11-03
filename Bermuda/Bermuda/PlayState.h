@@ -50,4 +50,5 @@ private:
 
 	// temp
 	Rabbit* r;
+	std::vector<Rabbit*> rabbits;
 };

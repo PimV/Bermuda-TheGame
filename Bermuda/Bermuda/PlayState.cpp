@@ -35,7 +35,7 @@ void PlayState::init(GameStateManager *gsm) {
 	std::thread t(&PlayState::doSomething, this);
 	t.detach();
 
-	SoundLoader::Instance()->playGameMusic();
+	//SoundLoader::Instance()->playGameMusic();
 }
 
 void PlayState::doSomething()
@@ -46,7 +46,12 @@ void PlayState::doSomething()
 
 	// temp
 	Spawnpoint *sp = new Spawnpoint(1000, mapLoader->getStartPosX() + 10, mapLoader->getStartPosY() + 10, mapLoader->getChunkSize());
-	r = new Rabbit(1001, mapLoader->getChunkSize(), sp, gsm, mec);
+	r = new Rabbit(1060, mapLoader->getChunkSize(), sp, gsm, mec);
+	//for (size_t i = 0; i < 50; i++)
+	//{
+	//	int j = 1000 + i;
+	//	rabbits.push_back(new Rabbit(j, mapLoader->getChunkSize(), sp, gsm, mec));
+	//}
 
 	this->gsm->popState();
 }
@@ -185,6 +190,14 @@ void PlayState::update(double dt) {
 	if (!r->checkCollision(mec->getCollidableContainer())) {
 		r->setPosition();
 	}
+
+	//for each (Rabbit *rb in this->rabbits)
+	//{
+	//	rb->update(dt);
+	//	if (!rb->checkCollision(mec->getCollidableContainer())) {
+	//		rb->setPosition();
+	//	}
+	//}
 
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {

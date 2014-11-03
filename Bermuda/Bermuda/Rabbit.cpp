@@ -1,13 +1,14 @@
 #include "Rabbit.h"
 #include <time.h>
 #include <iostream>
+#include <random>
 
 Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
-NPC(id, chunkSize, 5, 1, 500, 50, spawnPoint),
+NPC(id, chunkSize, 5, 1, 200, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-IMovable(2)
+IMovable(3)
 {
 	this->gsm = gsm;
 	this->mec = mec;
@@ -22,7 +23,7 @@ IMovable(2)
 
 	this->setWidth(36);
 	this->setHeight(36);
-	
+
 	this->destinationX = this->getX();
 	this->destinationY = this->getY();
 
@@ -53,7 +54,7 @@ IMovable(2)
 
 void Rabbit::update(double dt) {
 	this->walk(dt);
-	std::cout << "Rabbit X: " << this->getX() << " Y: " << this->getY() << std::endl;
+	//std::cout << "Rabbit X: " << this->getX() << " Y: " << this->getY() << " - Destination X: " << this->destinationX << " Destionation Y: " << this->destinationY << std::endl;
 
 	//if (destroyed) {
 	//	this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
@@ -141,16 +142,85 @@ bool Rabbit::checkCollision(CollidableContainer* container) {
 
 void Rabbit::walk(double dt)
 {
+	//if ((this->getX() > this->destinationX - 5 ||
+	//	this->getX() < this->destinationX + 5) &&
+	//	(this->getY() > this->destinationY - 5 ||
+	//	this->getY() < this->destinationY + 5)) {
 
-	if (this->getX() == this->destinationX && this->getY() == this->destinationY) {
-		std::cout << "Rabbit is walking!" << std::endl;
-		srand(time(NULL));
+	//	//std::cout << "Rabbit walks again!" << std::endl;
+	//	srand(time(NULL));
 
-		double distanceX = rand() % (this->getWalkRange() * 2) + (this->getWalkRange() * -1);
-		double distanceY = rand() % (this->getWalkRange() * 2) + (this->getWalkRange() * -1);
+	//	double distanceX = rand() % (this->getWalkRange() * 2) + (this->getWalkRange() * -1);
+	//	double distanceY = rand() % (this->getWalkRange() * 2) + (this->getWalkRange() * -1);
 
-		this->destinationX = this->getSpawnPoint()->getX() + distanceX;
-		this->destinationY = this->getSpawnPoint()->getY() + distanceY;
+	//	this->destinationX = this->getSpawnPoint()->getX() + distanceX;
+	//	this->destinationY = this->getSpawnPoint()->getY() + distanceY;
+	//}
+
+	movingUp = false;
+	movingDown = false;
+	movingRight = false;
+	movingLeft = false;
+
+	//srand(time(NULL));
+	//int randomValue = rand();
+	//std::cout << randomValue << std::endl;
+
+	random_device dev;
+	default_random_engine dre(dev());
+	uniform_int_distribution<int> dist(1, 100);
+	std::cout << dist(dre) << std::endl;
+
+	switch (dist(dre))
+	{
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		movingRight = false;
+		movingLeft = false;
+		break;
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+		movingRight = true;
+		movingLeft = false;
+		break;
+	case 9:
+	case 10:
+	case 11:
+	case 12:
+		movingLeft = true;
+		movingRight = false;
+		break;
+	case 13:
+	case 14:
+	case 15:
+	case 16:
+		movingDown = false;
+		movingUp = false;
+		break;
+	case 17:
+	case 18:
+	case 19:
+	case 20:
+		movingDown = true;
+		movingUp = false;
+		break;
+	case 21:
+	case 22:
+	case 23:
+	case 24:
+		movingUp = true;
+		movingDown = false;
+		break;
+	default:
+		movingUp = false;
+		movingDown = false;
+		movingRight = false;
+		movingLeft = false;
+		break;
 	}
 
 	this->move(dt);
@@ -158,35 +228,35 @@ void Rabbit::walk(double dt)
 
 void Rabbit::move(double dt)
 {
-	if (this->getX() + this->getWidth() / 2 > this->destinationX - 5 && this->getX() + this->getWidth() / 2 < this->destinationX + 5) {
-		movingRight = false;
-		movingLeft = false;
-	}
-	else if (this->destinationX > this->getX() + this->getWidth() / 2)
-	{
-		movingRight = true;
-		movingLeft = false;
-	}
-	else if (this->destinationX < this->getX() + this->getWidth() / 2)
-	{
-		movingLeft = true;
-		movingRight = false;
-	}
+	//if (this->getX() + this->getWidth() / 2 > this->destinationX - 5 && this->getX() + this->getWidth() / 2 < this->destinationX + 5) {
+	//	movingRight = false;
+	//	movingLeft = false;
+	//}
+	//else if (this->destinationX > this->getX() + this->getWidth() / 2)
+	//{
+	//	movingRight = true;
+	//	movingLeft = false;
+	//}
+	//else if (this->destinationX < this->getX() + this->getWidth() / 2)
+	//{
+	//	movingLeft = true;
+	//	movingRight = false;
+	//}
 
-	if (this->getY() + this->getHeight() > this->destinationY - 5 && this->getY() + this->getHeight() < this->destinationY + 5) {
-		movingDown = false;
-		movingUp = false;
-	}
-	else if (this->destinationY > this->getY() + this->getHeight())
-	{
-		movingDown = true;
-		movingUp = false;
-	}
-	else if (this->destinationY < this->getY() + this->getHeight())
-	{
-		movingUp = true;
-		movingDown = false;
-	}
+	//if (this->getY() + this->getHeight() > this->destinationY - 5 && this->getY() + this->getHeight() < this->destinationY + 5) {
+	//	movingDown = false;
+	//	movingUp = false;
+	//}
+	//else if (this->destinationY > this->getY() + this->getHeight())
+	//{
+	//	movingDown = true;
+	//	movingUp = false;
+	//}
+	//else if (this->destinationY < this->getY() + this->getHeight())
+	//{
+	//	movingUp = true;
+	//	movingDown = false;
+	//}
 
 
 	if (movingLeft) {
@@ -269,7 +339,7 @@ void Rabbit::move(double dt)
 	else if (this->movingDown)
 		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 
-	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+	//PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
 }
 
 Rabbit::~Rabbit()
