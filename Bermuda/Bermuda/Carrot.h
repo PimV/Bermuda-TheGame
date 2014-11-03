@@ -15,5 +15,6 @@ public:
 	virtual ~Carrot();
 
 	void interact(Player* player);
+	void setDestroyedState();
 };
 
