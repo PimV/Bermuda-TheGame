@@ -258,10 +258,6 @@
     <ClCompile Include="PauzeMenuButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
-    <ClCompile Include="PauzeResumeButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="EntityChunkContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
@@ -341,6 +337,9 @@
       <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
     <ClCompile Include="PauzeAchievementsButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeResumeButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
   </ItemGroup>
@@ -483,10 +482,6 @@
     <ClInclude Include="PauzeMenuButton.h">
       <Filter>Header Files\View\Component</Filter>
     </ClInclude>
-    <ClInclude Include="PauzeResumeButton.h">
-      <Filter>Header Files\View\Component</Filter>
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
@@ -575,6 +570,9 @@
       <Filter>Header Files\Model\Entity\Items</Filter>
     </ClInclude>
     <ClInclude Include="PauzeAchievementsButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeResumeButton.h">
       <Filter>Header Files\View\Component</Filter>
     </ClInclude>
   </ItemGroup>

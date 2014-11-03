@@ -43,31 +43,54 @@ void PauseState::handleEvents(SDL_Event mainEvent)
 {
 	int x, y;
 	SDL_GetMouseState(&x, &y);
-	switch(mainEvent.type) 
+
+	if (curWindow == 0)
 	{
-	case SDL_KEYDOWN:
-		switch (mainEvent.key.keysym.sym)
+		switch (mainEvent.type)
 		{
-		case SDLK_ESCAPE:
-			GameStateManager::Instance()->popState();
+		case SDL_KEYDOWN:
+			switch (mainEvent.key.keysym.sym)
+			{
+			case SDLK_ESCAPE:
+				GameStateManager::Instance()->popState();
+				break;
+			}
 			break;
-		}
-		break;
-	case SDL_MOUSEMOTION:
-		for (int i = 0; i < buttons.size(); i++)
-		{
-			buttons.at(i)->hover(x, y, gsm);
-		}
-		break;
-	case SDL_MOUSEBUTTONDOWN:
-		if (mainEvent.button.button == SDL_BUTTON_LEFT)
-		{
+		case SDL_MOUSEMOTION:
 			for (int i = 0; i < buttons.size(); i++)
 			{
-				buttons.at(i)->clicked(x, y, gsm);
+				buttons.at(i)->hover(x, y, gsm);
 			}
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if (mainEvent.button.button == SDL_BUTTON_LEFT)
+			{
+				for (int i = 0; i < buttons.size(); i++)
+				{
+					buttons.at(i)->clicked(x, y, gsm);
+				}
+			}
+			break;
 		}
-		break;
+	}
+	else if (curWindow == 1)
+	{
+		switch (mainEvent.type)
+		{
+		case SDL_KEYDOWN:
+			switch (mainEvent.key.keysym.sym)
+			{
+			case SDLK_ESCAPE:
+				PauseState::Instance()->setCurWindow(0);
+				break;
+			}
+			break;
+		case SDL_MOUSEMOTION:
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			break;
+		}
+
 	}
 
 }
@@ -85,9 +108,16 @@ void PauseState::setCurWindow(int window)
 
 void PauseState::draw()
 {
-	for (int i = 0; i < buttons.size(); i++)
+	if (curWindow == 0)
 	{
-		buttons[i]->draw(gsm);
+		for (int i = 0; i < buttons.size(); i++)
+		{
+			buttons[i]->draw(gsm);
+		}
+	}
+	else if (curWindow == 1)
+	{
+
 	}
 }
 
