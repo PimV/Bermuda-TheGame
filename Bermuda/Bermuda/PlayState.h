@@ -21,6 +21,7 @@ private:
 	int alpha;
 
 	int counter;
+	bool mapLoaded;
 	Camera* camera;
 
 	void doSomething();

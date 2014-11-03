@@ -33,6 +33,7 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
+	this->mapLoaded = false;
 	this->gsm = gsm;
 
 	this->gsm->pushGameState(LoadingState::Instance());
@@ -55,6 +56,7 @@ void PlayState::doSomething()
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
 	this->gsm->popState();
+	this->mapLoaded = true;
 }
 
 void PlayState::cleanup() {
@@ -64,9 +66,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if(this->p != nullptr)
 	{
-	this->p->moveClick = true;
-	this->p->resetMovement();
-}
+		this->p->moveClick = true;
+		this->p->resetMovement();
+	}
 }
 
 void PlayState::resume() {
@@ -240,57 +242,60 @@ void PlayState::update(double dt) {
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
-}
+	}
 
 }
 
 void PlayState::draw() {
-	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
-
-	std::vector<DrawableEntity*> drawableVector;
-
-	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
+	if(this->mapLoaded)
 	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
+		//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
+		int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+		int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+		int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+		int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+
+		std::vector<DrawableEntity*> drawableVector;
+
+		//Loop through all chunks
+		for(int i = beginChunkY; i <= endChunkY; i++)
 		{
-			//Background
-			std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
-			if(vec != nullptr)
+			for(int j = beginChunkX; j <= endChunkX; j++)
 			{
-				for(DrawableEntity* e : *vec)
-	{
-					e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+				//Background
+				std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
+				if(vec != nullptr)
+				{
+					for(DrawableEntity* e : *vec)
+					{
+						e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+					}
 				}
-	}
-			//Objecten
-			vec = this->mec->getDrawableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
-				for(DrawableEntity* e : *vec)
-	{
-					drawableVector.push_back(e);
-			}
-			}
+				//Objecten
+				vec = this->mec->getDrawableContainer()->getChunk(i, j);
+				if(vec != nullptr)
+				{
+					for(DrawableEntity* e : *vec)
+					{
+						drawableVector.push_back(e);
+					}
+				}
 
+			}
 		}
-	}
 
-	//Sort drawable object vector
-	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
+		//Sort drawable object vector
+		std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
 
-	//Draw sorted object vector
-	for(DrawableEntity* e : drawableVector)
-	{
-		e->draw(camera,this->gsm->sdlInitializer->getRenderer());
-	}
+		//Draw sorted object vector
+		for(DrawableEntity* e : drawableVector)
+		{
+			e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+		}
 
-	if (this->p->getInventory()->isOpen()) {
-		this->p->getInventory()->draw();
+		if (this->p->getInventory()->isOpen()) {
+			this->p->getInventory()->draw();
+		}
 	}
 }
 
