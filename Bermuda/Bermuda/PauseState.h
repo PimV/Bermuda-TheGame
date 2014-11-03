@@ -8,11 +8,11 @@ class PauseState :
 private:
 	GameStateManager* gsm;
 	static PauseState m_PauseState;
-	std::string curWindow;
+	int curWindow;
 	std::vector<BasePauzeButton*> buttons;
 
 public:
-	void setCurWindow();
+	void setCurWindow(int);
 
 	void pause();
 	void resume();

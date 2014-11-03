@@ -2,6 +2,7 @@
 #include "PauzeMenuButton.h"
 #include "PauzeResumeButton.h"
 #include "PauzeExitButton.h"
+#include "PauzeAchievementsButton.h"
 
 PauseState PauseState::m_PauseState;
 
@@ -12,14 +13,19 @@ PauseState::PauseState()
 void PauseState::init(GameStateManager* gsm)
 {
 	this->gsm = gsm;
+	setCurWindow(0);
 
 	PauzeResumeButton* resumeButton = new PauzeResumeButton(gsm);
 	PauzeMenuButton* menuButton = new PauzeMenuButton(gsm);
 	PauzeExitButton* exitButton = new PauzeExitButton(gsm);
+	PauzeAchievementsButton* achievementsButton = new PauzeAchievementsButton(gsm);
 
-	resumeButton->placeAbove(menuButton);
+	achievementsButton->placeAbove(menuButton);
+	resumeButton->placeAbove(achievementsButton);
 	exitButton->placeUnder(menuButton);
 
+
+	buttons.push_back(achievementsButton);
 	buttons.push_back(resumeButton);
 	buttons.push_back(menuButton);
 	buttons.push_back(exitButton);
@@ -69,6 +75,12 @@ void PauseState::handleEvents(SDL_Event mainEvent)
 void PauseState::update(double dt)
 {
 
+}
+
+
+void PauseState::setCurWindow(int window)
+{
+	curWindow = window;
 }
 
 void PauseState::draw()

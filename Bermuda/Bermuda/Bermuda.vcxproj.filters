@@ -233,13 +233,35 @@
     </ClCompile>
     <ClCompile Include="SoundLoader.cpp">
       <Filter>Source Files\Controller</Filter>
-	</ClCompile>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="BackgroundContainer.cpp">
       <Filter>Source Files\Model\Container\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CollidableEntity.cpp">
-	  <Filter>Source Files\Model\Entity</Filter>
-	</ClCompile>
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePauzeButton.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeExitButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeMenuButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeResumeButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="EntityChunkContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
@@ -318,19 +340,7 @@
     <ClCompile Include="Pickaxe.cpp">
       <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverState.cpp">
-      <Filter>Source Files\Model\GameState</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePauzeButton.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeExitButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeMenuButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeResumeButton.cpp">
+    <ClCompile Include="PauzeAchievementsButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
   </ItemGroup>
@@ -448,12 +458,34 @@
     </ClInclude>
     <ClInclude Include="SoundLoader.h">
       <Filter>Header Files\Controller</Filter>
-	</ClInclude>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
     <ClInclude Include="BackgroundContainer.h">
       <Filter>Header Files\Model\Container\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CollidableEntity.h">
-	  <Filter>Header Files\Model\Entity</Filter>
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePauzeButton.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeExitButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeMenuButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeResumeButton.h">
+      <Filter>Header Files\View\Component</Filter>
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
@@ -466,7 +498,7 @@
     </ClInclude>
     <ClInclude Include="InteractableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="InteractableContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
@@ -542,19 +574,7 @@
     <ClInclude Include="Pickaxe.h">
       <Filter>Header Files\Model\Entity\Items</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverState.h">
-      <Filter>Header Files\Model\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePauzeButton.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeExitButton.h">
-      <Filter>Header Files\View\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeMenuButton.h">
-      <Filter>Header Files\View\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeResumeButton.h">
+    <ClInclude Include="PauzeAchievementsButton.h">
       <Filter>Header Files\View\Component</Filter>
     </ClInclude>
   </ItemGroup>
