@@ -1,18 +1,43 @@
 #include "CollidableContainer.h"
 
-
-CollidableContainer::CollidableContainer(void)
+//TODO : remove methode zoals in drawablecontainer
+CollidableContainer::CollidableContainer()
 {
 }
 
-void CollidableContainer::add(CollidableEntity* collidable) {
-	this->m_container.push_back(collidable);
+void CollidableContainer::initChunks(int chunksY, int chunksX)
+{
+	container.resize(chunksY);
+
+	for(int i = 0; i < container.size(); i++)
+	{
+		container[i].resize(chunksX);
+	}
 }
 
-std::vector<CollidableEntity*> CollidableContainer::getContainer() {
-	return this->m_container;
+void CollidableContainer::add(CollidableEntity* collidable) 
+{
+	this->container[collidable->getChunkY()][collidable->getChunkX()].push_back(collidable);
 }
 
+void CollidableContainer::remove(CollidableEntity* entity)
+{
+	std::vector<CollidableEntity*>* vec = &this->container[entity->getChunkY()][entity->getChunkX()];
+	std::vector<CollidableEntity*>::iterator it = std::find(vec->begin(), vec->end(), entity);
+
+	if (it != vec->end()) {
+		vec->erase(it);
+	}
+}
+
+std::vector<CollidableEntity*>* CollidableContainer::getChunk(int y, int x)
+{
+	if(y >= 0 && x >= 0 && y < this->container.size() &&  x < this->container[y].size())
+	{
+		return &this->container[y][x];
+	}
+	return nullptr;
+}
 
 CollidableContainer::~CollidableContainer(void)
 {

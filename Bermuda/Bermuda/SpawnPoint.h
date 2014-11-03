@@ -15,6 +15,7 @@ public:
 	void Check();
 
 	Spawnpoint(int id); // --> Spawnpoint(int type)
+	Spawnpoint(int id, double x, double y, int chunkSize);
 	virtual ~Spawnpoint();
 };
 

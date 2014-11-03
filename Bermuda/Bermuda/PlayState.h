@@ -23,6 +23,8 @@ private:
 	int counter;
 	Camera* camera;
 
+	void doSomething();
+
 public:
 
 	void init(GameStateManager *gsm);
@@ -44,5 +46,4 @@ public:
 
 private:
 	Player* p;
-	std::vector<DrawableEntity*> temp;
 };

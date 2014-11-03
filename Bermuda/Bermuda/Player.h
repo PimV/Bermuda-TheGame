@@ -9,20 +9,22 @@
 #include "SDLInitializer.h"
 #include "MainEntityContainer.h"
 
+class Inventory;
+
 class Player :
 	public IMovable,
 	public DrawableEntity,
 	public CollidableEntity
 {
 public:
-	Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
+	Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
 	//virtual void move(EnumDirection direction) = 0;
 	void update(double dt);
 	virtual void move(double dt);
 	//void clickMove();
 	void clickMove();
 	void setPosition();
-	void interact(double dt);
+	void interact();
 	void resetMovement();
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
 	void StopAnimation();
@@ -39,6 +41,9 @@ public:
 	bool interaction;
 	int destX;
 	int destY;
+
+	Inventory* getInventory();
+
 private:
 	const char* path;
 	Camera* camera;
@@ -53,4 +58,8 @@ private:
 	double animationSpeed, animationDelay;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
+
+	MainEntityContainer* mec;
+
+	Inventory* inventory;
 };

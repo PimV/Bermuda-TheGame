@@ -29,9 +29,7 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 }
 
 void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
-	if (font == NULL) {
-		font = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 24);
-	}
+	font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), h);
 
 	SDL_Surface* imgTxt;
 	SDL_Rect txtRect;
@@ -39,7 +37,7 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 
 	txtRect.x = x;
 	txtRect.y = y;
-	txtRect.w = w;
+	txtRect.w = msg.length() * h / 3;
 	txtRect.h = h;
 
 	fColor.r = fColor.g = fColor.b = 245;
@@ -50,6 +48,7 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 	SDL_RenderCopy(this->getRenderer(), imgTxture, NULL, &txtRect);
 
 
+	TTF_CloseFont(font);
 	SDL_DestroyTexture(imgTxture);
 	SDL_FreeSurface(imgTxt);
 }
