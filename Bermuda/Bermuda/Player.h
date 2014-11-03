@@ -24,7 +24,7 @@ public:
 	void update(double dt);
 	void setHealth(int value);
 	void setHunger(int value);
-	void setThurst(int value);
+	void setThirst(int value);
 
 	int getHealth();
 	int getHunger();

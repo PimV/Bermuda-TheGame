@@ -230,6 +230,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
+	// check if player died
+	if (p->getHealth() < 1) {
+		this->gsm->changeGameState(MenuState::Instance());
+	}
 
 	this->updateGameTimers();
 	//TODO: Player collision check in de player.move() zelf afhandelen? 

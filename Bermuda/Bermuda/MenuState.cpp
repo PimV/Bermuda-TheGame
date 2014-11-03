@@ -21,8 +21,10 @@ void MenuState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	align();
 	//Create Buttons
-	buttons.push_back(new PlayButton(gsm));
-	buttons.push_back(new ExitButton(gsm));
+	 if (buttons.size() < 2) {
+		buttons.push_back(new PlayButton(gsm));
+		buttons.push_back(new ExitButton(gsm));
+	}
 	//playButton = new PlayButton(gsm);
 	//exitButton = new ExitButton(gsm);
 	for (int i = 0; i < buttons.size(); i++) {

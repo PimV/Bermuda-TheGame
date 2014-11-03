@@ -143,7 +143,7 @@ void Player::updatePlayerStatuses()
 	if ( playerTimer->updateThirstTime() )
 	{
 		if (this->getThirst() > 0)
-			this->setThurst(-1);
+			this->setThirst(-1);
 		else
 			this->setHealth(-2);
 	}
@@ -153,6 +153,8 @@ void Player::setHealth(int value)
 {
 	if ( (this->health + value)  > 100)
 		this->health = 100;
+	else if ( (this->health - value)  < 0 )
+		this->health = 0;
 	else
 		this->health += value;
 }
@@ -167,7 +169,7 @@ void Player::setHunger(int value)
 		this->hunger += value;
 }
 
-void Player::setThurst(int value)
+void Player::setThirst(int value)
 {
 	if ( (this->thirst + value)  > 100)
 		this->thirst = 100;
