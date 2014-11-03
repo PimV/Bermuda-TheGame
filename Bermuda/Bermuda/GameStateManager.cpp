@@ -145,12 +145,14 @@ void GameStateManager::draw() {
 	//Clear Screen
 	GameStateManager::Instance()->sdlInitializer->clearScreen();
 
-	//Draw GameState
-	/*for (size_t  i = 0; i < states.size(); i++) {
-	states.at(i)->draw();
-	}*/
+	//OPTION ONE: Draw all GameStates
+	for (size_t  i = 0; i < states.size(); i++) 
+	{
+		states.at(i)->draw();
+	}
 
-	states.back()->draw();
+	//OPTION TWO: Draw only top state (does not work when pause state is on ... background will be black)
+	//states.back()->draw();
 
 	//Draw FPS
 	if (GameStateManager::Instance()->showFps == true) {
