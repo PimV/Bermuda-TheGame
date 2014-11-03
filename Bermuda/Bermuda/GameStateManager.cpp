@@ -96,6 +96,7 @@ void GameStateManager::handleEvents() {
 		switch(mainEvent.type) 
 		{
 		case SDL_QUIT:
+			this->m_running = false;
 			exit(0);
 			break;
 		case SDL_KEYDOWN:

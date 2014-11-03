@@ -63,18 +63,10 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 	switch(mainEvent.type) {
-	case SDL_QUIT:
-
-		this->gsm->quit();
-		break;
-
 	case SDL_KEYDOWN:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_SPACE:
 			this->gsm->changeGameState(PlayState::Instance());
-			break;
-		case SDLK_ESCAPE:
-			this->gsm->quit();
 			break;
 		}
 		break;
