@@ -41,8 +41,7 @@ IMovable(2)
 
 	this->playerAnimationWalkUpRow = 1, this->playerAnimationWalkLeftRow = 3;
 	this->playerAnimationWalkDownRow = 0, this->playerAnimationWalkRightRow = 2;
-	//this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-	this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
+	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 
 	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 7;
 	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
