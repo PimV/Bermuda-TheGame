@@ -43,7 +43,7 @@ void PauseState::handleEvents(SDL_Event mainEvent)
 		switch(mainEvent.key.keysym.sym) 
 		{
 		case SDLK_ESCAPE:
-			this->removeState();
+			gsm->popState();
 			break;
 		}
 		break;
@@ -83,11 +83,6 @@ void PauseState::cleanup()
 		delete buttons[i];
 	}
 	buttons.clear();
-}
-
-void PauseState::removeState()
-{
-	this->gsm->popState();
 }
 
 PauseState::~PauseState()
