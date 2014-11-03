@@ -13,10 +13,10 @@ public:
 	long getGameTime();
 
 	bool updateHungerTime();
-	bool updateThurstTime();
+	bool updateThirstTime();
 
 private:
 	long gameTime;
 	long lastHungerUpdate, nextHungerUpdate;
-	long lastThurstUpdate, nextThurstUpdate;
+	long lastThirstUpdate, nextThirstUpdate;
 };

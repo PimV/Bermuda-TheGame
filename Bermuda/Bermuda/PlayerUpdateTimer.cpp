@@ -6,7 +6,7 @@ PlayerUpdateTimer::PlayerUpdateTimer()
 	this->gameTime = 0;
 
 	this->lastHungerUpdate = 2200, this->nextHungerUpdate = 0;
-	this->lastThurstUpdate = 1500; this->nextThurstUpdate = 0;// +- 3.1 seconds
+	this->lastThirstUpdate = 1500; this->nextThirstUpdate = 0;// +- 3.1 seconds
 }
 
 PlayerUpdateTimer::~PlayerUpdateTimer(void)
@@ -28,11 +28,11 @@ bool PlayerUpdateTimer::updateHungerTime()
 	return false;
 }
 
-bool PlayerUpdateTimer::updateThurstTime()
+bool PlayerUpdateTimer::updateThirstTime()
 {
-	if ( this->lastThurstUpdate < (this->gameTime - this->nextThurstUpdate) )
+	if ( this->lastThirstUpdate < (this->gameTime - this->nextThirstUpdate) )
 	{
-		this->nextThurstUpdate = this->gameTime + this->lastThurstUpdate;
+		this->nextThirstUpdate = this->gameTime + this->lastThirstUpdate;
 		return true;
 	}
 	return false;

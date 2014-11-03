@@ -29,7 +29,7 @@ public:
 
 	int getHealth();
 	int getHunger();
-	int getThurst();
+	int getThirst();
 
 	virtual void move(double dt);
 	//void clickMove();
@@ -58,7 +58,7 @@ private:
 	GameStateManager* gsm;
 
 	PlayerUpdateTimer* playerTimer;
-	int health, hunger, thurst;
+	int health, hunger, thirst;
 
 	int firstImgID;
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;

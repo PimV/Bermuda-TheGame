@@ -21,7 +21,7 @@ Player::Player(int id, double moveSpeed, Camera* camera, GameStateManager* gsm, 
 	//this->maxSpeed = 0;
 
 	this->playerTimer = new PlayerUpdateTimer();
-	this->health = 10, this->hunger = 5, this->thurst = 5;
+	this->health = 100, this->hunger = 100, this->thirst = 100;
 
 	this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
@@ -91,7 +91,7 @@ void Player::draw(Camera* camera, SDL_Renderer* renderer)
 {
 	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(this->getHealth())), 1150, 5, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(this->getHunger())), 1150, 35, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Thurst: " + to_string(this->getThurst())), 1150, 65, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(this->getThirst())), 1150, 65, 100, 25);
 
 	DrawableEntity::draw(camera, renderer);
 }
@@ -114,19 +114,13 @@ void Player::updatePlayerStatuses()
 			this->updateHealth(-1);
 	}
 
-	if ( playerTimer->updateThurstTime() )
+	if ( playerTimer->updateThirstTime() )
 	{
-		if (this->getThurst() > 0)
+		if (this->getThirst() > 0)
 			this->updateThurst(-1);
 		else
 			this->updateHealth(-2);
 	}
-
-	/*
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(this->getHealth())), 5, 5, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(this->getHunger())), 5, 5, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Thurst: " + to_string(this->getThurst())), 5, 5, 100, 25);
-	*/
 	
 }
 
@@ -142,24 +136,20 @@ void Player::updateHunger(int value)
 {
 	if ( (this->hunger + value)  > 100)
 		this->hunger = 100;
-	else if ( (this->health - value)  < 0 )
+	else if ( (this->hunger - value)  < 0 )
 		this->hunger = 0;
 	else
 		this->hunger += value;
-	
-	//std::cout << "Hunger: " << this->hunger << std::endl;
 }
 
 void Player::updateThurst(int value)
 {
-	if ( (this->thurst + value)  > 100)
-		this->thurst = 100;
-	else if ( (this->health - value)  < 0 )
-		this->hunger = 0;
+	if ( (this->thirst + value)  > 100)
+		this->thirst = 100;
+	else if ( (this->thirst - value)  < 0 )
+		this->thirst = 0;
 	else
-		this->thurst += value;
-
-	//std::cout << "Thurst: " << this->thurst << std::endl;
+		this->thirst += value;
 }
 
 int Player::getHealth()
@@ -172,9 +162,9 @@ int Player::getHunger()
 	return this->hunger;
 }
 
-int Player::getThurst()
+int Player::getThirst()
 {
-	return this->thurst;
+	return this->thirst;
 }
 #pragma endregion PlayerStatusUpdates
 
@@ -346,7 +336,6 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) {
 void Player::StopAnimation() {
 	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
 }
-
 
 Player::~Player(void) {
 	delete this->inventory;
