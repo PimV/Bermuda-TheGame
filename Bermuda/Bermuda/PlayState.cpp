@@ -126,12 +126,33 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->interact();
 			break;
 		case SDLK_0: {
-			//if (p->getInventory()->hasItemById(1)) {
-				Consumable* ic = static_cast<Consumable*>(p->getInventory()->getItemById(1, false));
-				if (ic != NULL) {
-					ic->consume(p);
+			//Consume Carrot (Same method as 9)
+			Item* i = p->getInventory()->getItemById(1, true);
+			if (i != nullptr) {
+				std::cout << "Item found!" << std::endl;
+				if (i->isConsumable()) {
+					Consumable* c = (Consumable*)i;
+					c->consume(p);
+				} else if (i->isEquipable()) {
+					Equipable* e = (Equipable*)i;
+					e->equip(p);
 				}
-			//}
+			}
+			break;
+					 }
+		case SDLK_9: {
+			//Equip Axe (Same method as 0)
+			Item* i = p->getInventory()->getItemById(3, true);
+			if (i != nullptr) {
+				std::cout << "Item found!" << std::endl;
+				if (i->isConsumable()) {
+					Consumable* c = (Consumable*)i;
+					c->consume(p);
+				} else if (i->isEquipable()) {
+					Equipable* e = (Equipable*)i;
+					e->equip(p);
+				}
+			}
 			break;
 					 }
 

@@ -1,15 +1,14 @@
 #pragma once
 #include "item.h"
-#include "Equipable.h"
 class Player;
-class Tool :
-	public Equipable
+class Equipable :
+	public  Item
 {
 public:
-	Tool(void);
+	Equipable(void);
 
 	virtual void equip(Player* p);
 
-	virtual ~Tool(void);
+	virtual ~Equipable(void);
 };
 

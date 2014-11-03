@@ -68,8 +68,6 @@ Item* Inventory::getItemById(int id, bool full) {
 			if (!full) {
 				if (this->itemVector[i]->getStackSize() < this->itemVector[i]->getMaxStackSize()) {
 					return this->itemVector[i];
-				} else {
-					//std::cout << this->itemVector[i]->getStackSize() << " _-_ " << this->itemVector[i]->getMaxStackSize() << std::endl;
 				}
 			} else {
 				return this->itemVector[i];

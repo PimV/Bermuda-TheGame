@@ -282,6 +282,9 @@
     <ClCompile Include="Consumable.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Equipable.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -471,6 +474,9 @@
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Consumable.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipable.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
