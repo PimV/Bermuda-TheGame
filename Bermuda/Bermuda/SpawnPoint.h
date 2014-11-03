@@ -2,7 +2,7 @@
 #include "Entity.h"
 
 class Spawnpoint :
-	public Entity
+	public virtual Entity
 {
 public:
 	Spawnpoint(int id, double x, double y, int chunkSize);
