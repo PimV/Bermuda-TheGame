@@ -95,6 +95,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ActionContainer.h" />
+    <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
     <ClInclude Include="Button.h" />
@@ -144,6 +145,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MoveAction.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="Pillar.h" />
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
@@ -151,6 +153,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Rabbit.h" />
     <ClInclude Include="RespawnContainer.h" />
     <ClInclude Include="Rock.h" />
+    <ClInclude Include="RuinStatue.h" />
     <ClInclude Include="SDLInitializer.h" />
     <ClInclude Include="SoundLoader.h" />
     <ClInclude Include="Spawnpoint.h" />
@@ -161,6 +164,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionContainer.cpp" />
+    <ClCompile Include="AppleTree.cpp" />
     <ClCompile Include="Axe.cpp" />
     <ClCompile Include="BackgroundContainer.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -187,8 +191,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemRock.cpp" />
     <ClCompile Include="ItemWood.cpp" />
     <ClCompile Include="LoadingState.cpp" />
+    <ClCompile Include="Pillar.cpp" />
     <ClCompile Include="RespawnContainer.cpp" />
     <ClCompile Include="Rock.cpp" />
+    <ClCompile Include="RuinStatue.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="ToolPickaxe.cpp" />
     <ClCompile Include="Tree.cpp" />
