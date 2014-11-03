@@ -103,6 +103,9 @@ void GameStateManager::handleEvents() {
 					GameStateManager::Instance()->showFps = true;
 				}
 				break;
+			case SDLK_r:
+				GameStateManager::Instance()->changeGameState(PlayState::Instance());
+				break;
 			default: 
 				states.back()->handleEvents(mainEvent);
 				break;

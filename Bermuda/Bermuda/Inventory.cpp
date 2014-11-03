@@ -110,6 +110,10 @@ bool Inventory::hasAxe() {
 	return this->hasItemById((int)Items::Axe);
 }
 
+bool Inventory::hasPickaxe() {
+	return this->hasItemById((int)Items::Pickaxe);
+}
+
 std::vector<Item*> Inventory::getItems() {
 	return this->itemVector;
 }

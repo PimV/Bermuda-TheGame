@@ -16,6 +16,12 @@
 #include "ToolAxe.h"
 #include "ItemCarrot.h"
 
+
+//TEMPORARY AXE SPAWN:
+#include "Axe.h"
+#include "Pickaxe.h"
+
+
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
@@ -43,7 +49,9 @@ void PlayState::doSomething()
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
-
+		//TEMPORARY AXE SPAWN:
+	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
+	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
 	this->gsm->popState();
 }
 

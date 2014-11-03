@@ -6,9 +6,6 @@
 #include "CollidableTile.h"
 #include "LoadingState.h"
 
-//TEMPORARY AXE SPAWN:
-#include "Axe.h"
-
 #include <rapidjson/stringbuffer.h>
 #include <fstream>
 #include <string>
@@ -77,6 +74,8 @@ void MapLoader::loadMap()
 	}
 	this->setPercentage(loadWeight); //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
 
+	std::cout << "Map file read" << std::endl;
+
 	//Close stream.
 	stream.close();
 
@@ -84,7 +83,11 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
+	std::cout << "Map file parsed" << std::endl;
+
 	extractMapInfo(d);
+
+	
 }
 
 void MapLoader::extractMapInfo(Document& d)
@@ -102,7 +105,7 @@ void MapLoader::extractMapInfo(Document& d)
 
 	//Set the containers
 	mec->initContainerSizes(floor(mapHeight/chunkSize) +1, floor(mapWidth/chunkSize) +1);
-
+	std::cout << "Map info extracted" << std::endl;
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 	
@@ -273,8 +276,7 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
 	}
 
-	//TEMPORARY AXE SPAWN:
-	new Axe(9001, startPosX, startPosY, chunkSize, mec, imgLoader->getMapImage(imgLoader->loadTileset("Battle_axe.png", 48, 48)));
+
 
 }
 

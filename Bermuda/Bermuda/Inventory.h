@@ -17,6 +17,7 @@ public:
 	std::vector<Item*> getItems();
 
 	bool hasAxe();
+	bool hasPickaxe();
 
 	void draw();
 

@@ -106,6 +106,12 @@
     <Filter Include="Header Files\Model\Item">
       <UniqueIdentifier>{e778ff3d-ea2e-4688-a957-eb24b2bef58a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Entity\Items">
+      <UniqueIdentifier>{17aec08f-41aa-4534-b019-097c25e25923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Items">
+      <UniqueIdentifier>{509ba93d-2b43-4b63-9033-f85328f65185}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -276,14 +282,20 @@
     <ClCompile Include="ToolAxe.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Axe.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Consumable.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
     <ClCompile Include="Equipable.cpp">
       <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolPickaxe.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Axe.cpp">
+      <Filter>Source Files\Model\Entity\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickaxe.cpp">
+      <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -470,14 +482,20 @@
     <ClInclude Include="ToolAxe.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Axe.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Consumable.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="Equipable.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolPickaxe.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Axe.h">
+      <Filter>Header Files\Model\Entity\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickaxe.h">
+      <Filter>Header Files\Model\Entity\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
