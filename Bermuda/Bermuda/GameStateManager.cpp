@@ -95,6 +95,9 @@ void GameStateManager::handleEvents() {
 	{
 		switch(mainEvent.type) 
 		{
+		case SDL_QUIT:
+			exit(0);
+			break;
 		case SDL_KEYDOWN:
 			switch(mainEvent.key.keysym.sym) 
 			{
@@ -143,7 +146,7 @@ void GameStateManager::draw() {
 
 	//Draw GameState
 	/*for (size_t  i = 0; i < states.size(); i++) {
-		states.at(i)->draw();
+	states.at(i)->draw();
 	}*/
 
 	states.back()->draw();

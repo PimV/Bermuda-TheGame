@@ -41,7 +41,7 @@ void PlayState::init(GameStateManager *gsm) {
 	std::thread t(&PlayState::doSomething, this);
 	t.detach();
 
-	SoundLoader::Instance()->playGameMusic();
+	//SoundLoader::Instance()->playGameMusic();
 }
 
 void PlayState::doSomething()
