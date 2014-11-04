@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Spawnpoint.h"
+#include "CollidableContainer.h"
 
 class NPC :
 	public virtual Entity
@@ -29,4 +30,12 @@ private:
 	int healthPoints, attackPoints, walkRange, actionRange;
 	bool destroyed, respawnTime, interactTime, timeSinceDestroy, currentInteractTime;;
 	Spawnpoint *spawnPoint;
+
+	virtual void update(double dt) = 0;
+	virtual void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) = 0;
+	virtual void StopAnimation() = 0;
+	virtual void setPosition() = 0;
+	virtual bool checkCollision(CollidableContainer* container) = 0;
+	virtual void calculateMovingDirectionAndMove(double dt) = 0;
+
 };

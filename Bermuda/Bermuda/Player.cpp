@@ -19,6 +19,7 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->dy = 0;
 	this->maxSpeed = 3;
 	this->moveSpeed = 3;
+	this->minSpeed = 1;
 	this->sprinting = false;
 	this->sprintSpeed = 15;
 

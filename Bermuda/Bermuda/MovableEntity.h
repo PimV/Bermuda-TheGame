@@ -28,7 +28,7 @@ public:
 	double animationSpeed, animationDelay;
 
 	int dx, dy;
-	double moveSpeed, maxSpeed, stopSpeed;
+	double moveSpeed, minSpeed, maxSpeed, stopSpeed;
 	bool movingDown, movingUp, movingRight, movingLeft;
 
 	long timeSinceLastAction;
