@@ -318,6 +318,9 @@
     <ClCompile Include="Pickaxe.cpp">
       <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
+    <ClCompile Include="Wasp.cpp">
+      <Filter>Source Files\Model\Entity\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -443,9 +446,6 @@
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="StateType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SoundLoader.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
@@ -526,6 +526,12 @@
     </ClInclude>
     <ClInclude Include="Pickaxe.h">
       <Filter>Header Files\Model\Entity\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Wasp.h">
+      <Filter>Header Files\Model\Entity\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="StateType.h">
+      <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

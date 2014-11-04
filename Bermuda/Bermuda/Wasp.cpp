@@ -1,20 +1,20 @@
-#include "Rabbit.h"
+#include "Wasp.h"
 #include <time.h>
 #include <iostream>
 #include <random>
 
-Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
+Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
 NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-IMovable(3)
+IMovable(2)
 {
 	this->gsm = gsm;
 	this->mec = mec;
 
-	this->setWidth(36);
-	this->setHeight(36);
+	this->setWidth(32);
+	this->setHeight(32);
 
 	this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth() / 4);
@@ -23,7 +23,7 @@ IMovable(3)
 
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 3;
+	this->maxSpeed = 2;
 	this->stopSpeed = 0.8;
 	this->movingLeft = false;
 	this->movingRight = false;
@@ -34,13 +34,13 @@ IMovable(3)
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("rabbitsheet.png", 36, 36);
-	this->playerAnimationWalkUpRow = 1, this->playerAnimationWalkLeftRow = 3;
-	this->playerAnimationWalkDownRow = 0, this->playerAnimationWalkRightRow = 2;
+	this->firstImgID = gsm->getImageLoader()->loadTileset("bee.png", 32, 32);
+	this->playerAnimationWalkUpRow = 0, this->playerAnimationWalkLeftRow = 1;
+	this->playerAnimationWalkDownRow = 2, this->playerAnimationWalkRightRow = 3;
 	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 7;
+	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 2;
 	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
-	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
+	this->frameAmountX = 3, this->frameAmountY = 3, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
 	this->timeSinceLastAction = 0;
@@ -51,7 +51,7 @@ IMovable(3)
 	this->StopAnimation();
 }
 
-void Rabbit::update(double dt) {
+void Wasp::update(double dt) {
 	this->walk(dt);
 	//std::cout << "Rabbit X: " << this->getX() << " Y: " << this->getY() << " - Destination X: " << this->destinationX << " Destionation Y: " << this->destinationY << std::endl;
 
@@ -63,7 +63,7 @@ void Rabbit::update(double dt) {
 	//}
 }
 
-void Rabbit::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
+void Wasp::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 {
 	double animationDelay = (maxSpeed / 100) * 40;
 	animationSpeed -= animationDelay;
@@ -80,12 +80,12 @@ void Rabbit::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 	}
 }
 
-void Rabbit::StopAnimation()
+void Wasp::StopAnimation()
 {
 	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
 }
 
-void Rabbit::setPosition() {
+void Wasp::setPosition() {
 	//this->setX(getX() + dx);
 	//this->setY(getY() + dy);
 
@@ -102,7 +102,7 @@ void Rabbit::setPosition() {
 	}
 }
 
-bool Rabbit::checkCollision(CollidableContainer* container) {
+bool Wasp::checkCollision(CollidableContainer* container) {
 	//TODO: werkend maken met nieuwe collidablecontainer
 	double currentX = this->getX();
 	double currentY = this->getY();
@@ -139,7 +139,7 @@ bool Rabbit::checkCollision(CollidableContainer* container) {
 	return false;
 }
 
-void Rabbit::walk(double dt)
+void Wasp::walk(double dt)
 {
 	random_device dev;
 	default_random_engine dre(dev());
@@ -196,7 +196,8 @@ void Rabbit::walk(double dt)
 		{
 			movingRight = false;
 			movingLeft = true;
-		} else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
+		}
+		else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
 		{
 			movingRight = true;
 			movingLeft = false;
@@ -206,7 +207,8 @@ void Rabbit::walk(double dt)
 		{
 			movingDown = false;
 			movingUp = true;
-		} else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
+		}
+		else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
 		{
 			movingDown = true;
 			movingUp = false;
@@ -216,7 +218,7 @@ void Rabbit::walk(double dt)
 	this->move(dt);
 }
 
-void Rabbit::move(double dt)
+void Wasp::move(double dt)
 {
 	if (movingLeft) {
 		dx -= moveSpeed *dt;
@@ -285,7 +287,7 @@ void Rabbit::move(double dt)
 	//dy = dy / (moveSpeed / 2);
 	//}
 
-	//Move rabbit
+	//Move wasp
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
 
@@ -301,7 +303,7 @@ void Rabbit::move(double dt)
 	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
 }
 
-Rabbit::~Rabbit()
+Wasp::~Wasp()
 {
 
 }

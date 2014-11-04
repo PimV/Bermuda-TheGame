@@ -2,10 +2,23 @@
 #include "Entity.h"
 
 class Spawnpoint :
-	public Entity
+	public virtual Entity
 {
+private:
+	//variables
+	int curChilderen;
+	int maxChilderen;
+	enum spawnType;
+	int type;
+
+	//methodes
+	void init();
+	void spawnMob();
+
 public:
-	Spawnpoint(int id, double x, double y, int chunkSize);
+
+	//Constructor destructor
+	Spawnpoint(int type, double x, double y, int chunkSize);
 	virtual ~Spawnpoint();
 };
 
