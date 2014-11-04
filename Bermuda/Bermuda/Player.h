@@ -8,6 +8,7 @@
 #include "GameStateManager.h"
 #include "SDLInitializer.h"
 #include "MainEntityContainer.h"
+#include "StatusTracker.h"
 
 class Inventory;
 
@@ -43,6 +44,7 @@ public:
 	int destY;
 
 	Inventory* getInventory();
+	StatusTracker* getStatusTracker();
 
 private:
 	const char* path;
@@ -62,4 +64,5 @@ private:
 	MainEntityContainer* mec;
 
 	Inventory* inventory;
+	StatusTracker* statusTracker;
 };

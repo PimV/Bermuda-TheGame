@@ -29,6 +29,7 @@ void Tree::interact(Player* player) {
 	if (this->trackInteractTimes()) {
 		this->setDestroyedState();
 		player->getInventory()->addItem(new ItemWood());
+		player->getStatusTracker()->treeCut();
 	}
 }
 }

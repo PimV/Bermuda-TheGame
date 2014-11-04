@@ -342,6 +342,12 @@
     <ClCompile Include="PauzeResumeButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
+    <ClCompile Include="StatusTracker.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Achievement.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -574,6 +580,12 @@
     </ClInclude>
     <ClInclude Include="PauzeResumeButton.h">
       <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusTracker.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Achievement.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -59,10 +59,16 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	//TODO : collision container
 
 	this->inventory = new Inventory();
+	this->statusTracker = new StatusTracker();
 }
 
 Inventory* Player::getInventory() {
 	return this->inventory;
+}
+
+StatusTracker* Player::getStatusTracker()
+{
+	return this->statusTracker;
 }
 
 void Player::resetMovement()
@@ -401,4 +407,5 @@ void Player::StopAnimation()
 Player::~Player(void)
 {
 	delete this->inventory;
+	delete this->statusTracker;
 }

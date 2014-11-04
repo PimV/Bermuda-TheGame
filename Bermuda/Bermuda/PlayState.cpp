@@ -299,6 +299,11 @@ void PlayState::draw() {
 	}
 }
 
+Player* PlayState::getPlayer()
+{
+	return this->p;
+}
+
 //ERROR Deze methode word nooit aangeroepen volgens mij.
 //Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)
