@@ -61,6 +61,9 @@ void PauseStatusTrackerScreen::init()
 
 		nameRectangles.push_back(rectangeName);
 		countRectangles.push_back(rectangeCount);
+
+		SDL_FreeSurface(nameSurfaces.at(i));
+		SDL_FreeSurface(countSurfaces.at(i));
 	}
 
 	TTF_CloseFont(staryDarzy);
@@ -102,9 +105,19 @@ void PauseStatusTrackerScreen::draw()
 
 void PauseStatusTrackerScreen::cleanup()
 {
-
+	for (int i = 0; i < nameTextures.size(); i++)
+	{
+		SDL_DestroyTexture(nameTextures.at(i));
+	}
+	for (int i = 0; i < countTextures.size(); i++)
+	{
+		SDL_DestroyTexture(countTextures.at(i));
+	}
+	nameTextures.clear();
+	countTextures.clear();
 }
 
 PauseStatusTrackerScreen::~PauseStatusTrackerScreen()
 {
+	cleanup();
 }
