@@ -205,12 +205,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			}
 		case SDLK_F11:
 			//Enable collision
-			p->setCollisionHeight(p->getHeight() - 15);
-			p->setCollisionWidth(p->getWidth()/4);
-			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
-			p->setCollisionY(0);
+			p->setCollisionHeight(10);
+			p->setCollisionWidth(24);
+			p->setCollisionX(20);
+			p->setCollisionY(52);
 			break;
-		case SDLK_F12:
+		case SDLK_F10:
 			//Disable collision
 			p->setCollisionHeight(0);
 			p->setCollisionWidth(0);

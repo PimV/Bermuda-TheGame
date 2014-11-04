@@ -15,9 +15,9 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->setHeight(64);
 
 	//this->playerTimer = new PlayerUpdateTimer();
-	this->hungerUpdate = 0, this->hungerUpdateTime = 2200;
+	this->hungerUpdate = 0; this->hungerUpdateTime = 2200;
 	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
-	this->health = 3, this->hunger = 3, this->thirst = 100;
+	this->health = 10; this->hunger = 10; this->thirst = 100;
 
 	//CollidableEnity - collision values
 	/*this->setCollisionHeight(this->getHeight() - 15);
