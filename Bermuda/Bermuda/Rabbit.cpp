@@ -7,7 +7,7 @@ Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* 
 NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
+CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
 IMovable(3)
 {
 	this->gsm = gsm;
@@ -16,10 +16,10 @@ IMovable(3)
 	this->setWidth(36);
 	this->setHeight(36);
 
-	this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth() / 4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);
+	//this->setCollisionHeight(this->getHeight() - 15);
+	//this->setCollisionWidth(this->getWidth() / 4);
+	//this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	//this->setCollisionY(0);
 
 	this->dx = 0;
 	this->dy = 0;
@@ -196,7 +196,8 @@ void Rabbit::walk(double dt)
 		{
 			movingRight = false;
 			movingLeft = true;
-		} else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
+		}
+		else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
 		{
 			movingRight = true;
 			movingLeft = false;
@@ -206,7 +207,8 @@ void Rabbit::walk(double dt)
 		{
 			movingDown = false;
 			movingUp = true;
-		} else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
+		}
+		else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
 		{
 			movingDown = true;
 			movingUp = false;

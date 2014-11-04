@@ -4,7 +4,7 @@
 #include "Inventory.h"
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize), IMovable(moveSpeed)
+	: Entity(id, x, y, chunkSize), DrawableEntity(id, x, y, chunkSize, nullptr), CollidableEntity(id, x, y, chunkSize, 20, 52, 24, 10), IMovable(moveSpeed)
 {
 	this->mec = mec;
 	this->camera = camera;
@@ -15,10 +15,10 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->setHeight(64);
 
 	//CollidableEnity - collision values
-	this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth()/4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);
+	//this->setCollisionHeight(this->getHeight() - 15);
+	//this->setCollisionWidth(this->getWidth()/4);
+	//this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	//this->setCollisionY(0);
 
 	this->dx = 0;
 	this->dy = 0;
@@ -117,7 +117,7 @@ bool Player::checkCollision(CollidableContainer* container) {
 void Player::update(double dt) {
 
 
-	this->move(dt);
+	this->calculateMovingDirectionAndMove(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
 	/*if (interaction)

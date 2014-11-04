@@ -7,7 +7,7 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
+CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
 IMovable(2)
 {
 	this->gsm = gsm;
@@ -16,10 +16,10 @@ IMovable(2)
 	this->setWidth(32);
 	this->setHeight(32);
 
-	this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth() / 4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);
+	//this->setCollisionHeight(this->getHeight() - 15);
+	//this->setCollisionWidth(this->getWidth() / 4);
+	//this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
+	//this->setCollisionY(0);
 
 	this->dx = 0;
 	this->dy = 0;
