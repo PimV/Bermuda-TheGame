@@ -328,7 +328,7 @@
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="NPCFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Entity\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

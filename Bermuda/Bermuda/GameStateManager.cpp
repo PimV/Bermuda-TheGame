@@ -2,6 +2,7 @@
 #include "IGameState.h"
 #include "MenuState.h"
 #include "PlayState.h"
+#include "NPCFactory.h"
 #include <iostream>
 #include <Windows.h>
 #include <SDL_ttf.h>
@@ -16,6 +17,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 	soundLoader = new SoundLoader();
+	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
 	//states = new std::vector<IGameState*>();
 
 
