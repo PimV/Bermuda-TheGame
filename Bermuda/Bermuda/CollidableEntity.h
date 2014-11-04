@@ -2,7 +2,7 @@
 #include "entity.h"
 
 class CollidableEntity :
-	virtual public Entity
+	public virtual Entity
 {
 private: 
 	double collisionX;

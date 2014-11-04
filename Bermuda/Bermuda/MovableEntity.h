@@ -1,11 +1,12 @@
 #pragma once
 #include "Entity.h"
+#include "header_loader.h"
 #include "GameStateManager.h"
 #include "CollidableContainer.h"
 #include "MainEntityContainer.h"
 
 class MovableEntity :
-	virtual public Entity
+	public virtual Entity
 {
 public:
 	MovableEntity(int id, double x, double y, int chunkSize);
