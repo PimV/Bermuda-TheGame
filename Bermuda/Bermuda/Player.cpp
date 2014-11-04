@@ -4,7 +4,8 @@
 #include "Inventory.h"
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
-	: Entity(id, x, y, chunkSize), DrawableEntity(id, x, y, chunkSize, nullptr), CollidableEntity(id, x, y, chunkSize, 20, 52, 24, 10), IMovable(moveSpeed)
+	: Entity(id, x, y, chunkSize), DrawableEntity(id, x, y, chunkSize, nullptr), CollidableEntity(id, x, y, chunkSize, 20, 52, 24, 10),
+	MovableEntity(id, x, y, chunkSize)
 {
 	this->mec = mec;
 	this->camera = camera;
@@ -17,6 +18,7 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
+	this->moveSpeed = 3;
 	this->sprinting = false;
 	this->sprintSpeed = 15;
 
@@ -136,97 +138,6 @@ void Player::calculateMovingDirectionAndMove(double dt)
 	}
 
 	this->move(dt);
-}
-
-
-void Player::move(double dt) 
-{
-	if (movingLeft) {
-		dx -= moveSpeed *dt;
-		if (dx < -maxSpeed *dt) {
-			dx = -maxSpeed *dt;
-		}
-	} else if (movingRight) {
-		dx += moveSpeed *dt;
-		if (dx > maxSpeed *dt) {
-			dx = maxSpeed *dt;
-		}
-	} else {
-		if (dx > 0) {
-			dx -= stopSpeed *dt;
-			if (dx < 0) {
-				dx = 0;
-			}
-		} else if (dx < 0) {
-			dx += stopSpeed *dt;
-			if (dx > 0) {
-				dx = 0;
-			}
-		}
-	}
-
-	if (movingUp) {
-		dy -= moveSpeed *dt;
-		if (dy < -maxSpeed *dt) {
-			dy = -maxSpeed *dt;
-		}
-	} else if (movingDown) {
-		dy += moveSpeed *dt;
-		if (dy > maxSpeed *dt) {
-			dy = maxSpeed *dt;
-		}
-	} else {
-		if (dy > 0) {
-			dy -= stopSpeed *dt;
-			if (dy < 0) {
-				dy = 0;
-			}
-		} else if (dy < 0) {
-			dy += stopSpeed *dt;
-			if (dy > 0) {
-				dy = 0;
-			}
-		}
-	}
-
-	if (dx == 0 && dy == 0) {
-		return;
-	}
-
-	//if (dx != 0 && dy != 0) {
-
-	//dx = dx / 2;
-	//dy = dy / 2;
-
-	//dx = dx / (moveSpeed / 2);
-	//dy = dy / (moveSpeed / 2);
-	//}
-
-	//Move player
-	this->setTempX(getX() + dx);
-	this->setTempY(getY() + dy);
-
-	/*this->setX(getX() + dx);
-	this->setY(getY() + dy);*/
-
-	//Temp:
-	//this->mapX = this->getX();
-	//this->mapY = this->getY();
-
-	//Move camera
-
-	// set animation row
-	if (this->movingLeft)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
-	else if (this->movingRight)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
-	else if (this->movingUp)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
-	else if (this->movingDown)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-
-	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
-
 }
 
 void::Player::interact()
@@ -392,6 +303,7 @@ void Player::StopAnimation()
 {
 	this->setDrawImage( gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn) );
 }
+
 
 Player::~Player(void)
 {

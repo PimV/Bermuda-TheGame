@@ -8,7 +8,7 @@ NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
-IMovable(3)
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 {
 	this->gsm = gsm;
 	this->mec = mec;
@@ -18,6 +18,7 @@ IMovable(3)
 
 	this->dx = 0;
 	this->dy = 0;
+	this->moveSpeed = 3;
 	this->maxSpeed = 3;
 	this->stopSpeed = 0.8;
 	this->movingLeft = false;
@@ -47,7 +48,7 @@ IMovable(3)
 }
 
 void Rabbit::update(double dt) {
-	this->walk(dt);
+	this->calculateMovingDirectionAndMove(dt);
 	//std::cout << "Rabbit X: " << this->getX() << " Y: " << this->getY() << " - Destination X: " << this->destinationX << " Destionation Y: " << this->destinationY << std::endl;
 
 	//if (destroyed) {
@@ -134,7 +135,7 @@ bool Rabbit::checkCollision(CollidableContainer* container) {
 	return false;
 }
 
-void Rabbit::walk(double dt)
+void Rabbit::calculateMovingDirectionAndMove(double dt)
 {
 	random_device dev;
 	default_random_engine dre(dev());
@@ -211,91 +212,6 @@ void Rabbit::walk(double dt)
 
 	}
 	this->move(dt);
-}
-
-void Rabbit::move(double dt)
-{
-	if (movingLeft) {
-		dx -= moveSpeed *dt;
-		if (dx < -maxSpeed *dt) {
-			dx = -maxSpeed *dt;
-		}
-	}
-	else if (movingRight) {
-		dx += moveSpeed *dt;
-		if (dx > maxSpeed *dt) {
-			dx = maxSpeed *dt;
-		}
-	}
-	else {
-		if (dx > 0) {
-			dx -= stopSpeed *dt;
-			if (dx < 0) {
-				dx = 0;
-			}
-		}
-		else if (dx < 0) {
-			dx += stopSpeed *dt;
-			if (dx > 0) {
-				dx = 0;
-			}
-		}
-	}
-
-	if (movingUp) {
-		dy -= moveSpeed *dt;
-		if (dy < -maxSpeed *dt) {
-			dy = -maxSpeed *dt;
-		}
-	}
-	else if (movingDown) {
-		dy += moveSpeed *dt;
-		if (dy > maxSpeed *dt) {
-			dy = maxSpeed *dt;
-		}
-	}
-	else {
-		if (dy > 0) {
-			dy -= stopSpeed *dt;
-			if (dy < 0) {
-				dy = 0;
-			}
-		}
-		else if (dy < 0) {
-			dy += stopSpeed *dt;
-			if (dy > 0) {
-				dy = 0;
-			}
-		}
-	}
-
-	if (dx == 0 && dy == 0) {
-		return;
-	}
-
-	//if (dx != 0 && dy != 0) {
-
-	//dx = dx / 2;
-	//dy = dy / 2;
-
-	//dx = dx / (moveSpeed / 2);
-	//dy = dy / (moveSpeed / 2);
-	//}
-
-	//Move rabbit
-	this->setTempX(getX() + dx);
-	this->setTempY(getY() + dy);
-
-	if (this->movingLeft)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
-	else if (this->movingRight)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
-	else if (this->movingUp)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
-	else if (this->movingDown)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-
-	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
 }
 
 Rabbit::~Rabbit()
