@@ -31,7 +31,7 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-		this->gsm = gsm;
+	this->gsm = gsm;
 
 	//this->gsm->pushGameState(LoadingState::Instance());
 
@@ -57,11 +57,11 @@ void PlayState::init(GameStateManager *gsm) {
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
-	
+
 
 	//std::thread t(&PlayState::doSomething, this);
 	//t.detach();
-	
+
 	SoundLoader::Instance()->playGameMusic();
 }
 
@@ -103,9 +103,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if (this->p != nullptr)
 	{
-	this->p->moveClick = true;
-	this->p->resetMovement();
-}
+		this->p->moveClick = true;
+		this->p->resetMovement();
+	}
 }
 
 void PlayState::resume() {
@@ -288,7 +288,7 @@ void PlayState::update(double dt) {
 
 	p->update(dt);
 	/*if (!p->checkCollision(mec->getCollidableContainer())) {
-		p->setPosition();
+	p->setPosition();
 	}*/
 
 	// TEMPORARY RABBIT UPDATE
@@ -296,7 +296,7 @@ void PlayState::update(double dt) {
 	{
 		rb->update(dt);
 		/*if (!rb->checkCollision(mec->getCollidableContainer())) {
-			rb->setPosition();
+		rb->setPosition();
 		}*/
 	}
 
@@ -305,7 +305,7 @@ void PlayState::update(double dt) {
 	{
 		wa->update(dt);
 		/*if (!wa->checkCollision(mec->getCollidableContainer())) {
-			wa->setPosition();
+		wa->setPosition();
 		}*/
 	}
 
