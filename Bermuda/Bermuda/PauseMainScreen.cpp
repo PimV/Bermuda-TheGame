@@ -3,6 +3,7 @@
 #include "PauzeResumeButton.h"
 #include "PauzeExitButton.h"
 #include "PauzeAchievementsButton.h"
+#include <iostream>
 
 
 PauseMainScreen::PauseMainScreen()
@@ -12,7 +13,7 @@ PauseMainScreen::PauseMainScreen()
 
 void PauseMainScreen::init()
 {
-	buttons.clear();
+	std::cout << "add buttons" << endl;
 
 	PauzeResumeButton* resumeButton = new PauzeResumeButton(GameStateManager::Instance());
 	PauzeMenuButton* menuButton = new PauzeMenuButton(GameStateManager::Instance());
@@ -58,7 +59,10 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 		{
 			for (int i = 0; i < buttons.size(); i++)
 			{
-				buttons.at(i)->clicked(x, y, gsm);
+				if (buttons.at(i)->clicked(x, y, gsm))
+				{
+					break;
+				}
 			}
 		}
 		break;
