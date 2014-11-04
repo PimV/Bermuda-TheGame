@@ -54,7 +54,7 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity) {
 
 	double thisLeft = this->getX() + this->getCollisionX();
 	double thisRight = this->getX() + this->getCollisionX() + this->getCollisionWidth();
-	double thisTop = this->getY() + this->getCollisionY() + this->getHeight();
+	double thisTop = this->getY() + this->getCollisionY();
 	double thisBot = this->getY() + this->getCollisionY() + this->getCollisionHeight();
 
 

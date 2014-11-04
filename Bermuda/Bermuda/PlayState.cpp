@@ -278,26 +278,26 @@ void PlayState::update(double dt) {
 	this->gsm->getActionContainer()->executeAllActions(dt);
 
 	p->update(dt);
-	if (!p->checkCollision(mec->getCollidableContainer())) {
+	/*if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
-	}
+	}*/
 
 	// TEMPORARY RABBIT UPDATE
 	for (Rabbit *rb : this->rabbits)
 	{
 		rb->update(dt);
-		if (!rb->checkCollision(mec->getCollidableContainer())) {
+		/*if (!rb->checkCollision(mec->getCollidableContainer())) {
 			rb->setPosition();
-		}
+		}*/
 	}
 
 	// TEMPORARY WASP UPDATE
 	for (Wasp *wa : this->wasps)
 	{
 		wa->update(dt);
-		if (!wa->checkCollision(mec->getCollidableContainer())) {
+		/*if (!wa->checkCollision(mec->getCollidableContainer())) {
 			wa->setPosition();
-		}
+		}*/
 	}
 
 	//Update all respawnable entities
