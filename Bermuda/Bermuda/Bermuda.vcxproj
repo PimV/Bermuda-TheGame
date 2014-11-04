@@ -151,7 +151,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerUpdateTimer.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Rabbit.h" />
     <ClInclude Include="RespawnContainer.h" />
@@ -185,7 +184,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
     <ClCompile Include="GameTimer.cpp" />
-    <ClCompile Include="PlayerUpdateTimer.cpp" />
     <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />

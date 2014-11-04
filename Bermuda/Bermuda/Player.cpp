@@ -15,8 +15,10 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->setWidth(64);
 	this->setHeight(64);
 
-	this->playerTimer = new PlayerUpdateTimer();
-	this->health = 100, this->hunger = 100, this->thirst = 100;
+	//this->playerTimer = new PlayerUpdateTimer();
+	this->hungerUpdate = 2200, this->hungerUpdateTime = 2200;
+	this->thirstUpdate = 1500; this->thirstUpdateTime = 1500;
+	this->health = 5, this->hunger = 3, this->thirst = 3;
 
 	//CollidableEnity - collision values
 	this->setCollisionHeight(this->getHeight() - 15);
@@ -130,67 +132,98 @@ void Player::update(double dt) {
 #pragma region PlayerStatusUpdates
 void Player::updatePlayerStatuses()
 {
-	this->playerTimer->updateGameTime(this->gsm->lastUpdateLength);
 
-	if ( playerTimer->updateHungerTime() )
-	{
-		if (this->getHunger() > 0)
-			this->setHunger(-1);
-		else 
-			this->setHealth(-1);
+	// check if hunger needs to be updated
+	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	if (this->hungerUpdate > hungerUpdateTime) {
+		this->incrementHunger(-1);
+		hungerUpdate = 0;
 	}
-
-	if ( playerTimer->updateThirstTime() )
-	{
-		if (this->getThirst() > 0)
-			this->setThirst(-1);
-		else
-			this->setHealth(-2);
+	
+	// check if thirst needs to be updated
+	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	if (this->thirstUpdate > thirstUpdateTime) {
+		this->incrementThirst(-1);
+		thirstUpdate = 0;
 	}
 }
 
-void Player::setHealth(int value)
+void Player::incrementHealth(int value)
 {
-	if ( (this->health + value)  > 100)
+	if (this->getHealth() + value > 100) {
+		this->setHealth(100);
+	} else if (this->getHealth() + value < 0) {
+		this->setHealth(0);
+	} else {
+		this->setHealth(this->getHealth() + value);
+	}
+}
+
+void Player::incrementHunger(int value)
+{
+	if (this->getHunger()+value > 100) {
+		this->setHunger(100);
+	} else if (this->getHunger() + value < 0) {
+		this->setHunger(0);
+		this->setHealth(this->getHealth() + value);
+	} else {
+		this->setHunger(this->getHunger() + value);
+	}
+}
+
+void Player::incrementThirst(int value)
+{
+	if (this->getThirst()+value > 100) {
+		this->setThirst(100);
+	} else if (this->getThirst() < 0) {
+		this->setThirst(0);
+		this->setHealth(this->getHealth() + value);
+	} else {
+		this->setThirst(this->getThirst() + value);
+	}
+}
+
+void Player::setHealth(int value) {
+
+	if (value > 100) {
 		this->health = 100;
-	else if ( (this->health - value)  < 0 )
+	} else if (value < 0 ) {
 		this->health = 0;
-	else
-		this->health += value;
+	} else {
+		this->health = value;
+	}
 }
 
-void Player::setHunger(int value)
-{
-	if ( (this->hunger + value)  > 100)
+void Player::setHunger(int value) {
+	if (value > 100) {
 		this->hunger = 100;
-	else if ( (this->hunger - value)  < 0 )
+	} else if (value < 0 ) {
 		this->hunger = 0;
-	else
-		this->hunger += value;
+	} else {
+		this->hunger = value;
+	}
 }
 
-void Player::setThirst(int value)
-{
-	if ( (this->thirst + value)  > 100)
+void Player::setThirst(int value) {
+	if (value > 100) {
 		this->thirst = 100;
-	else if ( (this->thirst - value)  < 0 )
+	} else if (value < 0 ) {
 		this->thirst = 0;
-	else
-		this->thirst += value;
+	} else {
+		this->thirst = value;
+	}
 }
 
-int Player::getHealth()
-{
+
+int Player::getHealth() {
 	return this->health;
 }
 
-int Player::getHunger()
-{
+int Player::getHunger() {
 	return this->hunger;
 }
 
-int Player::getThirst()
-{
+int Player::getThirst() {
 	return this->thirst;
 }
 #pragma endregion PlayerStatusUpdates

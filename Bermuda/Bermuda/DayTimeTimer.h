@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-#include "GameStateManager.h"
+#include "GameTimer.h"
 
 class DayTimeTimer
 {
@@ -9,14 +9,16 @@ public:
 	DayTimeTimer();
 	~DayTimeTimer(void);
 
+	static DayTimeTimer* Instance() { return &s_DayTimeTimer; };
+
 	void updateGameTime(long _gameTime);
-	long getGameTime();
 
 	void updateDayTime();
 
 	int getCurrentDayPart();
 
 private:
+	static DayTimeTimer s_DayTimeTimer;
 	long gameTime, lastDayPartUpdate,  nextDayUpdate;
 	int dayParts, currentDayPart;
 };

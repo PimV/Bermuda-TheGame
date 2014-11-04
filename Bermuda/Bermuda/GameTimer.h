@@ -7,11 +7,18 @@ public:
 	GameTimer(void);
 	~GameTimer(void);
 
-	GameTimer* init();
+	static GameTimer* Instance() { return &s_GameTimer; };
 	void updateGameTime(long _gameTime);
 	long getGameTime();
 
+	bool checkTimerAction(long* lastUpdate, long* nextUpdate);
+
+	void updateDayTime();
+	int getCurrentDayPart();
+
 private:
-	GameTimer* self;
+	static GameTimer s_GameTimer;
 	long gameTime;
+	long lastDayPartUpdate, nextDayUpdate;
+	int dayParts, currentDayPart;
 };

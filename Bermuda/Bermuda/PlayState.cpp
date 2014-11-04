@@ -53,8 +53,6 @@ void PlayState::doSomething()
 	SoundLoader* soundLoader = gsm->getSoundLoader();
 	soundLoader->playGameMusic();
 
-	dayTimer = new DayTimeTimer();
-
 	temp =  std::vector<DrawableEntity*>();
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
@@ -248,16 +246,17 @@ void PlayState::update(double dt) {
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
-
 }
 
 void PlayState::updateGameTimers() {
 
-	this->dayTimer->updateGameTime(this->gsm->lastUpdateLength);
+	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
+	//DayTimeTimer::Instance()->updateDayTime();
+	GameTimer::Instance()->updateDayTime();
 }
 
 long PlayState::getGameTimer() {
-	return this->dayTimer->getGameTime();
+	return GameTimer::Instance()->getGameTime();
 }
 
 void PlayState::draw() {
@@ -315,10 +314,10 @@ void PlayState::draw() {
 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
 	// if current hour is smaller then 9 
-	if (this->dayTimer->getCurrentDayPart() > 9)
-		this->gsm->sdlInitializer->drawText(std::string("   Hour: " + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
+	if (GameTimer::Instance()->getCurrentDayPart() > 9)
+		this->gsm->sdlInitializer->drawText(std::string("   Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
 	else
-		this->gsm->sdlInitializer->drawText(std::string("   Hour: 0" + to_string(this->dayTimer->getCurrentDayPart())), 1150, 95, 90, 25);
+		this->gsm->sdlInitializer->drawText(std::string("   Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
 
 }
 

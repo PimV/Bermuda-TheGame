@@ -27,9 +27,6 @@ private:
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 
-	GameTimer* gameTimer;
-	DayTimeTimer* dayTimer;
-
 	void doSomething();
 
 public:

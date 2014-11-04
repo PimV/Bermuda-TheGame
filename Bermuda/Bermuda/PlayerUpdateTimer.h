@@ -9,6 +9,8 @@ public:
 	PlayerUpdateTimer();
 	~PlayerUpdateTimer(void);
 
+	static PlayerUpdateTimer* Instance() { return &s_PlayerUpdateTimer; };
+
 	void updateGameTime(long _gameTime);
 	long getGameTime();
 
@@ -16,6 +18,7 @@ public:
 	bool updateThirstTime();
 
 private:
+	static PlayerUpdateTimer s_PlayerUpdateTimer;
 	long gameTime;
 	long lastHungerUpdate, nextHungerUpdate;
 	long lastThirstUpdate, nextThirstUpdate;

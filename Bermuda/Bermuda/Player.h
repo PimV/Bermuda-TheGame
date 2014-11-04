@@ -8,7 +8,7 @@
 #include "GameStateManager.h"
 #include "SDLInitializer.h"
 #include "MainEntityContainer.h"
-#include "PlayerUpdateTimer.h"
+#include "GameTimer.h"
 
 class Inventory;
 
@@ -22,9 +22,14 @@ public:
 	//virtual void move(EnumDirection direction) = 0;
 
 	void update(double dt);
+
 	void setHealth(int value);
 	void setHunger(int value);
 	void setThirst(int value);
+
+	void incrementHealth(int value);
+	void incrementHunger(int value);
+	void incrementThirst(int value);
 
 	int getHealth();
 	int getHunger();
@@ -59,8 +64,10 @@ private:
 	Camera* camera;
 	GameStateManager* gsm;
 
-	PlayerUpdateTimer* playerTimer;
+	//PlayerUpdateTimer* playerTimer;
 	int health, hunger, thirst;
+	long hungerUpdate, hungerUpdateTime;
+	long thirstUpdate, thirstUpdateTime;
 
 	int firstImgID;
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;

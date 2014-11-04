@@ -1,12 +1,12 @@
 #include "PlayerUpdateTimer.h"
 
-
+PlayerUpdateTimer PlayerUpdateTimer::s_PlayerUpdateTimer;
 PlayerUpdateTimer::PlayerUpdateTimer()
 {
 	this->gameTime = 0;
 
 	this->lastHungerUpdate = 2200, this->nextHungerUpdate = 0;
-	this->lastThirstUpdate = 1500; this->nextThirstUpdate = 0;// +- 3.1 seconds
+	this->lastThirstUpdate = 1500; this->nextThirstUpdate = 0;
 }
 
 PlayerUpdateTimer::~PlayerUpdateTimer(void)

@@ -1,5 +1,6 @@
 #include "DayTimeTimer.h"
 
+DayTimeTimer DayTimeTimer::s_DayTimeTimer;
 DayTimeTimer::DayTimeTimer()
 {
 	this->dayParts = 24;
@@ -17,12 +18,7 @@ DayTimeTimer::DayTimeTimer()
 
 DayTimeTimer::~DayTimeTimer(void)
 {
-
-}
-
-long DayTimeTimer::getGameTime()
-{
-	return this->gameTime;
+	
 }
 
 void DayTimeTimer::updateGameTime(long _gameTime)
@@ -33,19 +29,19 @@ void DayTimeTimer::updateGameTime(long _gameTime)
 
 void DayTimeTimer::updateDayTime()
 {
-	//std::cout << (this->lastDayPartUpdate + this->gameTime) << std::endl;
-	if ( this->lastDayPartUpdate < (this->gameTime - this->nextDayUpdate) )
+	long elapsedTime = (GameTimer::Instance()->getGameTime() - this->nextDayUpdate);
+	if ( this->lastDayPartUpdate < elapsedTime )
 	{
-		this->nextDayUpdate = this->gameTime + lastDayPartUpdate;
+		this->nextDayUpdate = GameTimer::Instance()->getGameTime() + this->lastDayPartUpdate;
 
-		if (currentDayPart < dayParts)
-			currentDayPart++;
+		if (this->currentDayPart < this->dayParts)
+			this->currentDayPart++;
 		else
-			currentDayPart = 0;
+			this->currentDayPart = 0;
 	}
 }
 
 int DayTimeTimer::getCurrentDayPart()
 {
-	return currentDayPart;
+	return this->currentDayPart;
 }
