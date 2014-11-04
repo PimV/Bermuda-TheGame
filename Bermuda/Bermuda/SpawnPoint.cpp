@@ -1,25 +1,46 @@
 #include "Spawnpoint.h"
-enum type
+#include "Rabbit.h"
+#include "PlayState.h"
+#include <iostream>
+
+enum spawnType
 {
-	RABBIT
+	RABBIT,
+	WASP
 };
 
-Spawnpoint::Spawnpoint(int id, double x, double y, int chunkSize) 
-	: Entity(id,x,y,chunkSize)
+Spawnpoint::Spawnpoint(int type, double x, double y, int chunkSize) 
+: Entity(type, x, y, chunkSize)
 {
+	this->type = type;
 }
 
-void Spawnpoint::Check()
+void Spawnpoint::init()
 {
-	if (maxChilderen - curChilderen <= 0)
+	curChilderen = 0;
+	if (type == RABBIT)
 	{
-		SpawnMob();
+		maxChilderen = 5;
+	}
+	if (type == WASP)
+	{
+		maxChilderen = 8;
 	}
 }
 
-void Spawnpoint::SpawnMob()
+void Spawnpoint::spawnMob()
 {
-	
+	if (curChilderen < maxChilderen)
+	{
+		if (type == RABBIT)
+		{
+			//rabbits.push_back(new Rabbit(1001, this->getChunkSize(), this, GameStateManager::Instance(), PlayState::Instance()->getMainEntityContainer));
+		}
+		if (type == WASP)
+		{
+			//wasps.push_back(new Wasp(2001, this->getChunkSize(), this, GameStateManager::Instance(), PlayState::Instance()->getMainEntityContainer));
+		}
+	}
 }
 
 Spawnpoint::~Spawnpoint()

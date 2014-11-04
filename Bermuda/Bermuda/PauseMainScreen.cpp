@@ -12,6 +12,8 @@ PauseMainScreen::PauseMainScreen()
 
 void PauseMainScreen::init()
 {
+	buttons.clear();
+
 	PauzeResumeButton* resumeButton = new PauzeResumeButton(GameStateManager::Instance());
 	PauzeMenuButton* menuButton = new PauzeMenuButton(GameStateManager::Instance());
 	PauzeExitButton* exitButton = new PauzeExitButton(GameStateManager::Instance());

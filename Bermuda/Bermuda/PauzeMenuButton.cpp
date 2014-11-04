@@ -22,8 +22,9 @@ void PauzeMenuButton::init(GameStateManager* gsm)
 	SDL_Surface* HoverMessageSurface = TTF_RenderText_Blended(staryDarzy, Message.c_str(), orange);
 	HoverButtonTexture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), HoverMessageSurface);
 
-	ButtonRect.h = MessageSurface->h * 2;
+	ButtonRect.h = MessageSurface->h;
 	ButtonRect.w = MessageSurface->w;
+
 	ButtonRect.x = ((int)ScreenWidth - MessageSurface->w) / 2;
 	ButtonRect.y = ((int)ScreenHeight - MessageSurface->h) / 2;
 
