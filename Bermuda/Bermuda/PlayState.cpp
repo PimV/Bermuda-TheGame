@@ -42,6 +42,11 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader::Instance()->playGameMusic();
 }
 
+MainEntityContainer* PlayState::getMainEntityContainer()
+{
+	return this->mec;
+}
+
 void PlayState::doSomething()
 {
 	mapLoader->loadMap();

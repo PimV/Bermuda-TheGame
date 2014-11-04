@@ -321,9 +321,6 @@
     <ClCompile Include="Wasp.cpp">
       <Filter>Source Files\Model\Entity\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="BaseSpawnPoint.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -535,9 +532,6 @@
     </ClInclude>
     <ClInclude Include="StateType.h">
       <Filter>Header Files\Model\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseSpawnPoint.h">
-      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

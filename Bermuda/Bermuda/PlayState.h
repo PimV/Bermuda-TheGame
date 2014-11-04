@@ -27,6 +27,7 @@ private:
 	void doSomething();
 
 public:
+	MainEntityContainer* getMainEntityContainer();
 
 	void init(GameStateManager *gsm);
 	void cleanup();
