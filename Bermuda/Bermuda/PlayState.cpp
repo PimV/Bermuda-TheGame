@@ -17,16 +17,14 @@
 #include "ToolAxe.h"
 #include "ItemCarrot.h"
 
-
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
 #include "Pickaxe.h"
 
-
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
-bool drawableSortFunction (DrawableEntity* one,DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight() ); }
+bool drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
 PlayState::PlayState(void)
 {
@@ -43,18 +41,24 @@ void PlayState::init(GameStateManager *gsm) {
 	std::thread t(&PlayState::doSomething, this);
 	t.detach();
 
-	//SoundLoader::Instance()->playGameMusic();
+	SoundLoader::Instance()->playGameMusic();
 }
+
+//MainEntityContainer* PlayState::getMainEntityContainer()
+//{
+//	return this->mec;
+//}
 
 void PlayState::doSomething()
 {
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
-
+	
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
+	
 	this->gsm->popState();
 	this->mapLoaded = true;
 }
@@ -64,11 +68,11 @@ void PlayState::cleanup() {
 }
 
 void PlayState::pause() {
-	if(this->p != nullptr)
+	if (this->p != nullptr)
 	{
-		this->p->moveClick = true;
-		this->p->resetMovement();
-	}
+	this->p->moveClick = true;
+	this->p->resetMovement();
+}
 }
 
 void PlayState::resume() {
@@ -81,11 +85,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	//Process Input
 
 	//Retrieve input
-	int x,y;
-	switch(mainEvent.type) {
+	int x, y;
+	switch (mainEvent.type) {
 
 	case SDL_MOUSEBUTTONDOWN:
-		int x,y;
+		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			p->destX = x + this->camera->getX();
@@ -96,7 +100,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		break;
 
 	case SDL_KEYDOWN:
-		switch(mainEvent.key.keysym.sym) {
+		switch (mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
 			p->resetMovement();
 			p->moveClick = false;
@@ -126,6 +130,51 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_LSHIFT:
 			p->sprinting = true;
 			break;
+		case SDLK_F1:
+			//Print player location
+			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
+			break;
+		case SDLK_F5: 
+			{
+			//Consume Carrot (Same method as 9)
+			Item* i = p->getInventory()->getItemById(1, true);
+			if (i != nullptr) {
+				std::cout << "Item found!" << std::endl;
+				if (i->isConsumable()) {
+					Consumable* c = (Consumable*)i;
+					c->consume(p);
+				} else if (i->isEquipable()) {
+					Equipable* e = (Equipable*)i;
+					e->equip(p);
+				}
+			}
+			break;
+					 }
+		case SDLK_F6: 
+			{
+			//Equip Axe (Same method as 0)
+			Item* i = p->getInventory()->getItemById(3, true);
+			if (i != nullptr) {
+				std::cout << "Item found!" << std::endl;
+				if (i->isConsumable()) {
+					Consumable* c = (Consumable*)i;
+					c->consume(p);
+				} else if (i->isEquipable()) {
+					Equipable* e = (Equipable*)i;
+					e->equip(p);
+				}
+			}
+			break;
+					 }
+		case SDLK_F11:
+			//Enable collision
+			p->setCollisionHeight(p->getHeight() - 15);
+			p->setCollisionWidth(p->getWidth()/4);
+			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
+			p->setCollisionY(0);
+			break;
+		case SDLK_F12:
+			//Disable collision
 		case SDLK_p:
 			p->setCollisionHeight(0);
 			p->setCollisionWidth(0);
@@ -185,7 +234,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		break;
 
 	case SDL_KEYUP:
-		switch(mainEvent.key.keysym.sym) {
+		switch (mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
 			p->StopAnimation();
 			p->moveClick = false;
@@ -238,7 +287,7 @@ void PlayState::update(double dt) {
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
 	}
-
+	
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
@@ -246,8 +295,9 @@ void PlayState::update(double dt) {
 
 }
 
-void PlayState::draw() {
-	if(this->mapLoaded)
+void PlayState::draw() 
+{
+	if (this->mapLoaded)
 	{
 		//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 		int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
@@ -258,24 +308,24 @@ void PlayState::draw() {
 		std::vector<DrawableEntity*> drawableVector;
 
 		//Loop through all chunks
-		for(int i = beginChunkY; i <= endChunkY; i++)
+		for (int i = beginChunkY; i <= endChunkY; i++)
 		{
-			for(int j = beginChunkX; j <= endChunkX; j++)
+			for (int j = beginChunkX; j <= endChunkX; j++)
 			{
 				//Background
 				std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
-				if(vec != nullptr)
+				if (vec != nullptr)
 				{
-					for(DrawableEntity* e : *vec)
+					for (DrawableEntity* e : *vec)
 					{
-						e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+						e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 					}
 				}
 				//Objecten
 				vec = this->mec->getDrawableContainer()->getChunk(i, j);
-				if(vec != nullptr)
+				if (vec != nullptr)
 				{
-					for(DrawableEntity* e : *vec)
+					for (DrawableEntity* e : *vec)
 					{
 						drawableVector.push_back(e);
 					}
@@ -288,9 +338,9 @@ void PlayState::draw() {
 		std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
 
 		//Draw sorted object vector
-		for(DrawableEntity* e : drawableVector)
+		for (DrawableEntity* e : drawableVector)
 		{
-			e->draw(camera,this->gsm->sdlInitializer->getRenderer());
+			e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 		}
 
 		if (this->p->getInventory()->isOpen()) {
