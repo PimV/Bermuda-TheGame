@@ -1,5 +1,6 @@
 #pragma once
 #include "igamestate.h"
+#include "BasePauzeButton.h"
 
 class PauseState :
 	public IGameState
@@ -7,27 +8,27 @@ class PauseState :
 private:
 	GameStateManager* gsm;
 	static PauseState m_PauseState;
+	std::string curWindow;
+	std::vector<BasePauzeButton*> buttons;
 
 public:
-	PauseState();
+	void setCurWindow();
 
-	void init(GameStateManager* gsm);
-
-	void cleanup();
 	void pause();
 	void resume();
 
-	//TODO: GSM bij deze methodes moet weg...
 	void handleEvents(SDL_Event mainEvent);
 	void update(double dt);
 	void draw();
-
-	void removeState();
 
 	static PauseState* Instance() {
 		return &m_PauseState;
 	};
 
+	//constructors destructors
+	PauseState();
+	void init(GameStateManager* gsm);
+	void cleanup();
 	virtual ~PauseState();
 };
 

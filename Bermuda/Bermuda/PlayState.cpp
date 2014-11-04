@@ -7,6 +7,7 @@
 #include "MoveAction.h"
 #include "PauseState.h"
 #include "LoadingState.h"
+#include "GameOverState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
@@ -30,7 +31,7 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-	this->gsm = gsm;
+		this->gsm = gsm;
 
 	//this->gsm->pushGameState(LoadingState::Instance());
 
@@ -42,13 +43,13 @@ void PlayState::init(GameStateManager *gsm) {
 
 	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
 	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < 5; i++)
 	{
 		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
 	}
 
 	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < 5; i++)
 	{
 		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
 	}
@@ -102,9 +103,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if (this->p != nullptr)
 	{
-		this->p->moveClick = true;
-		this->p->resetMovement();
-	}
+	this->p->moveClick = true;
+	this->p->resetMovement();
+}
 }
 
 void PlayState::resume() {
@@ -113,6 +114,7 @@ void PlayState::resume() {
 
 
 void PlayState::handleEvents(SDL_Event mainEvent) {
+
 	//p->handleEvents();
 	//Process Input
 
@@ -274,6 +276,13 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
+	// check if player died
+	if (p->getHealth() < 1)
+	{
+		this->gsm->changeGameState(GameOverState::Instance());
+	}
+
+	this->updateGameTimers();
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
 
@@ -304,10 +313,21 @@ void PlayState::update(double dt) {
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
-
 }
 
-void PlayState::draw() {
+void PlayState::updateGameTimers() {
+
+	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
+	//DayTimeTimer::Instance()->updateDayTime();
+	GameTimer::Instance()->updateDayTime();
+}
+
+long PlayState::getGameTimer() {
+	return GameTimer::Instance()->getGameTime();
+}
+
+void PlayState::draw() 
+{
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
@@ -355,11 +375,24 @@ void PlayState::draw() {
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
 	}
+
+	// Draw the player status
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), 1150, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
+	//this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
+	// if current hour is smaller then 9 
+	if (GameTimer::Instance()->getCurrentDayPart() > 9)
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
+	else
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
 }
 
+//ERROR Deze methode word nooit aangeroepen volgens mij.
+//Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)
 {
 	delete camera;
 	delete mec;
 	delete mapLoader;
+	std::cout << "deleting playstate" << endl; 
 }

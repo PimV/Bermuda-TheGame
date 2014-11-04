@@ -14,6 +14,11 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->setWidth(64);
 	this->setHeight(64);
 
+	//this->playerTimer = new PlayerUpdateTimer();
+	this->hungerUpdate = 0, this->hungerUpdateTime = 2200;
+	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
+	this->health = 100, this->hunger = 100, this->thirst = 100;
+
 	//CollidableEnity - collision values
 	/*this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
@@ -64,10 +69,8 @@ Inventory* Player::getInventory() {
 	return this->inventory;
 }
 
-void Player::resetMovement()
-{
-	if (this->moveClick)
-	{
+void Player::resetMovement() {
+	if (this->moveClick) {
 		this->movingLeft = false;
 		this->movingRight = false;
 		this->movingDown = false;
@@ -91,15 +94,11 @@ bool Player::checkCollision(CollidableContainer* container) {
 	int endChunkY = this->getChunkY() + 1;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
-				for(CollidableEntity* e : *vec)
-				{
+			if(vec != nullptr) {
+				for(CollidableEntity* e : *vec) {
 					if (this->intersects(e)) {
 						this->setX(currentX);
 						this->setY(currentY);
@@ -115,8 +114,7 @@ bool Player::checkCollision(CollidableContainer* container) {
 }
 
 void Player::update(double dt) {
-
-
+	this->updatePlayerStatuses();
 	this->move(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
@@ -130,15 +128,113 @@ void Player::update(double dt) {
 	}*/
 }
 
+#pragma region PlayerStatusUpdates
+void Player::updatePlayerStatuses()
+{
+
+	// check if hunger needs to be updated
+	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	if (this->hungerUpdate > hungerUpdateTime) {
+		this->incrementHunger(-1);
+		hungerUpdate = 0;
+	}
+	
+	// check if thirst needs to be updated
+	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	if (this->thirstUpdate > thirstUpdateTime) {
+		this->incrementThirst(-1);
+		thirstUpdate = 0;
+	}
+}
+
+void Player::incrementHealth(int value)
+{
+	if (this->getHealth() + value > 100) {
+		this->setHealth(100);
+	} else if (this->getHealth() + value < 0) {
+		this->setHealth(0);
+	} else {
+		this->setHealth(this->getHealth() + value);
+	}
+}
+
+void Player::incrementHunger(int value)
+{
+	if (this->getHunger()+value > 100) {
+		this->setHunger(100);
+	} else if (this->getHunger() + value < 0) {
+		this->setHunger(0);
+		this->setHealth(this->getHealth() + value);
+	} else {
+		this->setHunger(this->getHunger() + value);
+	}
+}
+
+void Player::incrementThirst(int value)
+{
+	if (this->getThirst()+value > 100) {
+		this->setThirst(100);
+	} else if (this->getThirst() < 0) {
+		this->setThirst(0);
+		this->setHealth(this->getHealth() + value);
+	} else {
+		this->setThirst(this->getThirst() + value);
+	}
+}
+
+void Player::setHealth(int value) {
+
+	if (value > 100) {
+		this->health = 100;
+	} else if (value < 0 ) {
+		this->health = 0;
+	} else {
+		this->health = value;
+	}
+}
+
+void Player::setHunger(int value) {
+	if (value > 100) {
+		this->hunger = 100;
+	} else if (value < 0 ) {
+		this->hunger = 0;
+	} else {
+		this->hunger = value;
+	}
+}
+
+void Player::setThirst(int value) {
+	if (value > 100) {
+		this->thirst = 100;
+	} else if (value < 0 ) {
+		this->thirst = 0;
+	} else {
+		this->thirst = value;
+	}
+}
+
+
+int Player::getHealth() {
+	return this->health;
+}
+
+int Player::getHunger() {
+	return this->hunger;
+}
+
+int Player::getThirst() {
+	return this->thirst;
+}
+#pragma endregion PlayerStatusUpdates
+
 void Player::move(double dt) {
 	if (sprinting) {
 		maxSpeed = 50;
 	} else {
 		maxSpeed = 3;
 	}
-
-	if(moveClick)
-	{
+	
+	if(moveClick) {
 		clickMove();
 	}
 
@@ -231,18 +327,12 @@ void::Player::interact()
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
+			if(vec != nullptr) {
 
-
-				for(InteractableEntity* e : *vec)
-				{
-
+				for(InteractableEntity* e : *vec) {
 					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
 						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
 					{
@@ -265,8 +355,6 @@ void::Player::interact()
 							closestEntity = e;
 							//std::cout << "New Closest Entity" << std::endl;
 						}
-
-
 
 						//e->interact(this);
 						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
@@ -358,12 +446,10 @@ void Player::clickMove() {
 	}
 }
 
-void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
-{
+void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) {
 	double animationDelay = (maxSpeed / 100)  * 40;
 	animationSpeed -= animationDelay;
-	if ( animationSpeed < animationDelay)
-	{
+	if ( animationSpeed < animationDelay) {
 		this->currentPlayerAnimationRow = Row;
 		if (EndFrame <= CurrentFrame)
 			CurrentFrame = BeginFrame;
@@ -375,13 +461,10 @@ void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 	}
 }
 
-void Player::StopAnimation()
-{
-	this->setDrawImage( gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn) );
+void Player::StopAnimation() {
+	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
 }
 
-
-Player::~Player(void)
-{
+Player::~Player(void) {
 	delete this->inventory;
 }

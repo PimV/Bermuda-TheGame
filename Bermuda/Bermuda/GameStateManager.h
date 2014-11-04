@@ -24,6 +24,8 @@ public:
 	void pushGameState(IGameState* gameState);
 	void popState();
 
+	void updateGameTime(long time);
+
 	void update(double delta);
 	void handleEvents();
 	void draw();
@@ -35,7 +37,7 @@ public:
 
 	bool running();
 	void quit();
-
+	long lastUpdateLength;
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
@@ -45,8 +47,8 @@ public:
 		return &m_Gsm;
 	};
 
-
 	~GameStateManager(void);
+
 private: 
 	long updateLength;
 	int fps;
@@ -58,7 +60,5 @@ private:
 
 	static GameStateManager m_Gsm;
 
-
 	ActionContainer* actionContainer;
 };
-
