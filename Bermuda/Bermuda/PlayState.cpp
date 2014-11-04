@@ -49,10 +49,16 @@ void PlayState::doSomething()
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 
 	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
-	Spawnpoint *sp = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
+	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
 	for (size_t i = 0; i < 20; i++)
 	{
-		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp, gsm, mec));
+		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
+	}
+
+	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
+	for (size_t i = 0; i < 20; i++)
+	{
+		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
 	}
 
 	//TEMPORARY AXE SPAWN:
@@ -244,6 +250,15 @@ void PlayState::update(double dt) {
 		rb->update(dt);
 		if (!rb->checkCollision(mec->getCollidableContainer())) {
 			rb->setPosition();
+		}
+	}
+
+	// TEMPORARY WASP UPDATE
+	for each (Wasp *wa in this->wasps)
+	{
+		wa->update(dt);
+		if (!wa->checkCollision(mec->getCollidableContainer())) {
+			wa->setPosition();
 		}
 	}
 
