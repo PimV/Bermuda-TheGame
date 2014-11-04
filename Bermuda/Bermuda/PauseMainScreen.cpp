@@ -3,7 +3,6 @@
 #include "PauzeResumeButton.h"
 #include "PauzeExitButton.h"
 #include "PauzeAchievementsButton.h"
-#include <iostream>
 
 
 PauseMainScreen::PauseMainScreen()

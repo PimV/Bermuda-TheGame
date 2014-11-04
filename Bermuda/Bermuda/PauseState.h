@@ -2,6 +2,7 @@
 #include "igamestate.h"
 #include "BasePauzeButton.h"
 #include "PauseMainScreen.h"
+#include "PauseStatusTrackerScreen.h"
 
 class PauseState :
 	public IGameState
@@ -11,6 +12,7 @@ private:
 	static PauseState m_PauseState;
 	int curWindow;
 	PauseMainScreen* mainScr;
+	PauseStatusTrackerScreen* statScr;
 
 public:
 	void setCurWindow(int);

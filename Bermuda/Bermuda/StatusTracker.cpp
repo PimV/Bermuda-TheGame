@@ -15,11 +15,15 @@ StatusTracker::StatusTracker()
 
 void StatusTracker::init()
 {
-	achievements.push_back(new Achievement("treesCut"));
-	achievements.push_back(new Achievement("rocksMined"));
-	achievements.push_back(new Achievement("carrotsPicked"));
-	achievements.push_back(new Achievement("applesPicked"));
-	treeCut();
+	achievements.push_back(new Achievement("trees Cut"));
+	achievements.push_back(new Achievement("rocks Mined"));
+	achievements.push_back(new Achievement("carrots Picked"));
+	achievements.push_back(new Achievement("apples Picked"));
+}
+
+std::vector<Achievement*> StatusTracker::getAllAchievements()
+{
+	return this->achievements;
 }
 
 void StatusTracker::treeCut()

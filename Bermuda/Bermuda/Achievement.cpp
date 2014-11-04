@@ -7,6 +7,16 @@ Achievement::Achievement(std::string str)
 	amount = 0;
 }
 
+int Achievement::getAmount()
+{
+	return amount;
+}
+
+std::string Achievement::getName()
+{
+	return name;
+}
+
 void Achievement::addAmount()
 {
 	amount++;

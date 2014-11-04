@@ -135,6 +135,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="PauseMainScreen.h" />
+    <ClInclude Include="PauseStatusTrackerScreen.h" />
     <ClInclude Include="PauzeAchievementsButton.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="StatusTracker.h" />
@@ -196,6 +197,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="PauseMainScreen.cpp" />
+    <ClCompile Include="PauseStatusTrackerScreen.cpp" />
     <ClCompile Include="PauzeAchievementsButton.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="StatusTracker.cpp" />

@@ -10,6 +10,7 @@ public:
 	void rockMined();
 	void carrotPicked();
 	void applePicked();
+	std::vector<Achievement*> getAllAchievements();
 
 	//constructor destructor
 	StatusTracker();

@@ -357,6 +357,9 @@
     <ClCompile Include="PauseMainScreen.cpp">
       <Filter>Source Files\Model\PauseScreens</Filter>
     </ClCompile>
+    <ClCompile Include="PauseStatusTrackerScreen.cpp">
+      <Filter>Source Files\Model\PauseScreens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -597,6 +600,9 @@
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
     <ClInclude Include="PauseMainScreen.h">
+      <Filter>Header Files\Model\PauseScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseStatusTrackerScreen.h">
       <Filter>Header Files\Model\PauseScreen</Filter>
     </ClInclude>
   </ItemGroup>
