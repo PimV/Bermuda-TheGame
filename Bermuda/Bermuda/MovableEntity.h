@@ -32,5 +32,8 @@ public:
 	bool movingDown, movingUp, movingRight, movingLeft;
 
 	long timeSinceLastAction;
-};
 
+public:
+	MovableEntity(int id, double x, double y, int chunkSize);
+	virtual ~MovableEntity(void);
+};

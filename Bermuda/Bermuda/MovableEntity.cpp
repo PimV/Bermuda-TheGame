@@ -90,6 +90,6 @@ void MovableEntity::move(double dt)
 	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
 }
 
-MovableEntity::~MovableEntity()
+MovableEntity::~MovableEntity(void)
 {
 }
