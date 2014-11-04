@@ -1,6 +1,8 @@
 #pragma once
 #include "igamestate.h"
 #include "BasePauzeButton.h"
+#include "PauseMainScreen.h"
+#include "PauseStatusTrackerScreen.h"
 
 class PauseState :
 	public IGameState
@@ -8,11 +10,12 @@ class PauseState :
 private:
 	GameStateManager* gsm;
 	static PauseState m_PauseState;
-	std::string curWindow;
-	std::vector<BasePauzeButton*> buttons;
+	int curWindow;
+	PauseMainScreen* mainScr;
+	PauseStatusTrackerScreen* statScr;
 
 public:
-	void setCurWindow();
+	void setCurWindow(int);
 
 	void pause();
 	void resume();

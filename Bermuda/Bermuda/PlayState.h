@@ -32,6 +32,7 @@ private:
 	void doSomething();
 
 public:
+	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
 
 	void init(GameStateManager *gsm);

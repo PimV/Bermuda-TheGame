@@ -387,6 +387,11 @@ void PlayState::draw()
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
 }
 
+Player* PlayState::getPlayer()
+{
+	return this->p;
+}
+
 //ERROR Deze methode word nooit aangeroepen volgens mij.
 //Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)

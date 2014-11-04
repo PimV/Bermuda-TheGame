@@ -30,6 +30,7 @@ void Rock::interact(Player* player)
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
 			player->getInventory()->addItem(new ItemRock());
+			player->getStatusTracker()->rockMined();
 		}
 	}
 }
