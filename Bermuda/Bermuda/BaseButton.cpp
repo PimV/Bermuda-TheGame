@@ -8,7 +8,8 @@ BaseButton::BaseButton()
 
 void BaseButton::align(int position, int total)
 {
-	PosY = ScreenHeight / 2 - (total + position * 2) * ConstHeight / 2;
+	//TODO: fix this fucked up Y calculator
+	PosY = (ScreenHeight - ConstHeight) / 2 - (position*total * (ConstHeight+5) / 2 );
 	buttonRect.h = ConstHeight;
 	buttonRect.w = ConstWidth;
 	buttonRect.x = PosX;

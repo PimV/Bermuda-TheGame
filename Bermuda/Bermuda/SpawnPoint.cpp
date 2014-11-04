@@ -40,7 +40,6 @@ void Spawnpoint::spawnMob()
 		{
 			//wasps.push_back(new Wasp(2001, this->getChunkSize(), this, GameStateManager::Instance(), PlayState::Instance()->getMainEntityContainer));
 		}
-
 	}
 }
 

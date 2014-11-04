@@ -27,9 +27,8 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	m_running = true;
 	showFps = false;
+	
 	GameStateManager::Instance()->setFps(0);
-
-
 	this->updateLength = 0;
 }
 
@@ -47,6 +46,10 @@ void GameStateManager::setFps(int fps) {
 
 int GameStateManager::getFps() {
 	return GameStateManager::Instance()->fps;
+}
+
+void GameStateManager::updateGameTime(long time) {
+	this->lastUpdateLength = time;
 }
 
 void GameStateManager::cleanup() {
@@ -134,9 +137,6 @@ void GameStateManager::handleEvents() {
 			break;
 		}
 	}
-
-
-
 }
 
 void GameStateManager::update(double deltaTime) {
@@ -147,12 +147,14 @@ void GameStateManager::draw() {
 	//Clear Screen
 	GameStateManager::Instance()->sdlInitializer->clearScreen();
 
-	//Draw GameState
-	/*for (size_t  i = 0; i < states.size(); i++) {
-	states.at(i)->draw();
-	}*/
+	//OPTION ONE: Draw all GameStates
+	for (size_t  i = 0; i < states.size(); i++) 
+	{
+		states.at(i)->draw();
+	}
 
-	states.back()->draw();
+	//OPTION TWO: Draw only top state (does not work when pause state is on ... background will be black)
+	//states.back()->draw();
 
 	//Draw FPS
 	if (GameStateManager::Instance()->showFps == true) {
@@ -192,6 +194,3 @@ GameStateManager::~GameStateManager(void) {
 
 	delete actionContainer;
 }
-
-
-
