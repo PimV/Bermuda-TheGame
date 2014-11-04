@@ -20,6 +20,9 @@ void PauzeExitButton::init(GameStateManager* gsm)
 	SDL_Surface* HoverMessageSurface = TTF_RenderText_Blended(staryDarzy, Message.c_str(), orange);
 	HoverButtonTexture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), HoverMessageSurface);
 	
+	ButtonRect.h = MessageSurface->h;
+	ButtonRect.w = MessageSurface->w;
+
 	SDL_FreeSurface(MessageSurface);
 	SDL_FreeSurface(HoverMessageSurface);
 	TTF_CloseFont(staryDarzy);

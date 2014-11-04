@@ -7,17 +7,14 @@ BasePauzeButton::BasePauzeButton()
 
 void BasePauzeButton::placeAbove(BasePauzeButton* button)
 {
-	ButtonRect.h = button->ButtonRect.h;
-	ButtonRect.w = button->ButtonRect.w;
-	ButtonRect.x = button->ButtonRect.x;
+
+	ButtonRect.x = ((int)ScreenWidth - ButtonRect.w) / 2;
 	ButtonRect.y = button->ButtonRect.y - button->ButtonRect.h * 2;
 }
 
 void BasePauzeButton::placeUnder(BasePauzeButton* button)
 {
-	ButtonRect.h = button->ButtonRect.h;
-	ButtonRect.w = button->ButtonRect.w;
-	ButtonRect.x = button->ButtonRect.x;
+	ButtonRect.x = ((int)ScreenWidth - ButtonRect.w) / 2;
 	ButtonRect.y = button->ButtonRect.y + button->ButtonRect.h * 2;
 }
 
