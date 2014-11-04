@@ -6,7 +6,8 @@
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
 #include "GameTimer.h"
-#include "DayTimeTimer.h"
+#include "Rabbit.h"
+#include "Wasp.h"
 
 class PlayState : public IGameState
 {
@@ -31,6 +32,7 @@ private:
 	void doSomething();
 
 public:
+	MainEntityContainer* getMainEntityContainer();
 
 	void init(GameStateManager *gsm);
 	void cleanup();
@@ -52,4 +54,10 @@ public:
 
 	PlayState(void);
 	~PlayState(void);
+
+private:
+
+	// TEMPORARY RABBIT CONTAINER
+	std::vector<Rabbit*> rabbits;
+	std::vector<Wasp*> wasps;
 };

@@ -336,8 +336,17 @@
     <ClCompile Include="PauzeMenuButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
-    <ClCompile Include="PauzeResumeButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
+	  <ClCompile Include="PauzeResumeButton.cpp">
+		  <Filter>Source Files\View\Component</Filter>
+	  </ClCompile>
+    <ClCompile Include="Wasp.cpp">
+      <Filter>Source Files\Model\Entity\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="MovableContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="MovableEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,9 +473,6 @@
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="StateType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SoundLoader.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
@@ -568,6 +574,18 @@
     </ClInclude>
     <ClInclude Include="PauzeResumeButton.h">
       <Filter>Header Files\View\Component</Filter>
+	</ClInclude>
+    <ClInclude Include="Wasp.h">
+      <Filter>Header Files\Model\Entity\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="StateType.h">
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

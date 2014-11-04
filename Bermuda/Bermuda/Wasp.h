@@ -7,7 +7,7 @@
 #include "GameStateManager.h"
 #include "MainEntityContainer.h"
 
-class Rabbit :
+class Wasp :
 	public NPC,
 	public Evasive,
 	public IMovable,
@@ -15,8 +15,8 @@ class Rabbit :
 	public CollidableEntity
 {
 public:
-	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, GameStateManager* gsm, MainEntityContainer* mec);
-	~Rabbit();
+	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint, GameStateManager* gsm, MainEntityContainer* mec);
+	~Wasp();
 
 	void walk(double dt);
 	virtual void move(double dt);

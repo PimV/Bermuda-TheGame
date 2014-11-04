@@ -1,23 +1,20 @@
 #pragma once
 #include "Entity.h"
-
-class Spawnpoint;
+#include "Spawnpoint.h"
 
 class NPC :
-	public Entity
+	public virtual Entity
 {
 public:
 	NPC(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint);
 	virtual ~NPC(void);
-
-	void walk();
 
 #pragma region Getters
 	int getHeathPoints();
 	int getAttackPoints();
 	int getWalkRange();
 	int getActionRange();
-	int getSpawnPoint();
+	Spawnpoint* getSpawnPoint();
 #pragma endregion
 
 #pragma region Setters
@@ -30,6 +27,6 @@ public:
 
 private:
 	int healthPoints, attackPoints, walkRange, actionRange;
-	bool walking;
+	bool destroyed, respawnTime, interactTime, timeSinceDestroy, currentInteractTime;;
 	Spawnpoint *spawnPoint;
 };

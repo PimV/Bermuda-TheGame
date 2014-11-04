@@ -3,8 +3,7 @@
 #include <iostream>
 #include "Inventory.h"
 
-
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
+Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
 	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize), IMovable(moveSpeed)
 {
 	this->mec = mec;
@@ -18,7 +17,7 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	//this->playerTimer = new PlayerUpdateTimer();
 	this->hungerUpdate = 0, this->hungerUpdateTime = 2200;
 	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
-	this->health = 2, this->hunger = 4, this->thirst = 100;
+	this->health = 100, this->hunger = 100, this->thirst = 100;
 
 	//CollidableEnity - collision values
 	this->setCollisionHeight(this->getHeight() - 15);
