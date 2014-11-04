@@ -16,11 +16,6 @@ IMovable(3)
 	this->setWidth(36);
 	this->setHeight(36);
 
-	//this->setCollisionHeight(this->getHeight() - 15);
-	//this->setCollisionWidth(this->getWidth() / 4);
-	//this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	//this->setCollisionY(0);
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;

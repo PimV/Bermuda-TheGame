@@ -20,9 +20,9 @@ public:
 	double dy;
 
 	IMovable(double mSpeed) : moveSpeed(mSpeed){};
-	virtual void move(double dt) = 0;
 	virtual ~IMovable(void);
 
+	virtual void move(double dt) = 0;
 
 	// move method
 	// speed

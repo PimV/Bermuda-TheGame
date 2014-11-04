@@ -14,12 +14,6 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->setWidth(64);
 	this->setHeight(64);
 
-	//CollidableEnity - collision values
-	//this->setCollisionHeight(this->getHeight() - 15);
-	//this->setCollisionWidth(this->getWidth()/4);
-	//this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	//this->setCollisionY(0);
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
@@ -115,8 +109,6 @@ bool Player::checkCollision(CollidableContainer* container) {
 }
 
 void Player::update(double dt) {
-
-
 	this->calculateMovingDirectionAndMove(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
@@ -400,7 +392,6 @@ void Player::StopAnimation()
 {
 	this->setDrawImage( gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn) );
 }
-
 
 Player::~Player(void)
 {
