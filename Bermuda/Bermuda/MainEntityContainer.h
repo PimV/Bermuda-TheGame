@@ -5,6 +5,7 @@
 #include "CollidableContainer.h"
 #include "BackgroundContainer.h"
 #include "InteractableContainer.h"
+#include "MovableContainer.h"
 #include "RespawnContainer.h"
 #include <map>
 
@@ -17,6 +18,8 @@ public:
 	BackgroundContainer* getBackgroundContainer();
 	InteractableContainer* getInteractableContainer();
 	RespawnContainer* getRespawnContainer();
+	MovableContainer* getMovableContainer();
+
 	virtual ~MainEntityContainer();
 
 	void initContainerSizes(int chunksY, int chunksX);
