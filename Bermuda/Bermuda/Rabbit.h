@@ -15,7 +15,7 @@ class Rabbit :
 	public CollidableEntity
 {
 public:
-	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, GameStateManager* gsm, MainEntityContainer* mec);
+	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
 	~Rabbit();
 
 	void walk(double dt);

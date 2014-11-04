@@ -549,7 +549,7 @@
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="NPCFactory.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Entity\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

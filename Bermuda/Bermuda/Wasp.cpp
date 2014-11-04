@@ -1,17 +1,18 @@
 #include "Wasp.h"
+#include "PlayState.h"
 #include <time.h>
 #include <iostream>
 #include <random>
 
-Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
+Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 IMovable(2)
 {
-	this->gsm = gsm;
-	this->mec = mec;
+	this->gsm = GameStateManager::Instance();
+	this->mec = PlayState::Instance()->getMainEntityContainer();
 
 	this->setWidth(32);
 	this->setHeight(32);
@@ -34,7 +35,7 @@ IMovable(2)
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("bee.png", 32, 32);
+	this->firstImgID = firstImgID;
 	this->playerAnimationWalkUpRow = 0, this->playerAnimationWalkLeftRow = 1;
 	this->playerAnimationWalkDownRow = 2, this->playerAnimationWalkRightRow = 3;
 	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;

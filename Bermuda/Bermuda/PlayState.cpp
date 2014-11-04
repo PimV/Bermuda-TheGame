@@ -53,19 +53,6 @@ void PlayState::doSomething()
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 
-	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
-	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
-	{
-		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
-	}
-
-	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
-	{
-		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
-	}
-
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
@@ -258,24 +245,6 @@ void PlayState::update(double dt) {
 	p->update(dt);
 	if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
-	}
-
-	// TEMPORARY RABBIT UPDATE
-	for (Rabbit* rb : this->rabbits)
-	{
-		rb->update(dt);
-		if (!rb->checkCollision(mec->getCollidableContainer())) {
-			rb->setPosition();
-		}
-	}
-
-	// TEMPORARY WASP UPDATE
-	for (Wasp* wa : this->wasps)
-	{
-		wa->update(dt);
-		if (!wa->checkCollision(mec->getCollidableContainer())) {
-			wa->setPosition();
-		}
 	}
 
 	//Update all respawnable entities

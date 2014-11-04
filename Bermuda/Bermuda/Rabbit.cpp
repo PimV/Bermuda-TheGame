@@ -1,17 +1,18 @@
 #include "Rabbit.h"
+#include "PlayState.h"
 #include <time.h>
 #include <iostream>
 #include <random>
 
-Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
+Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 IMovable(3)
 {
-	this->gsm = gsm;
-	this->mec = mec;
+	this->gsm = GameStateManager::Instance();
+	this->mec = PlayState::Instance()->getMainEntityContainer();
 
 	this->setWidth(36);
 	this->setHeight(36);
@@ -34,7 +35,7 @@ IMovable(3)
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("rabbitsheet.png", 36, 36);
+	this->firstImgID = firstImgID;
 	this->playerAnimationWalkUpRow = 1, this->playerAnimationWalkLeftRow = 3;
 	this->playerAnimationWalkDownRow = 0, this->playerAnimationWalkRightRow = 2;
 	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;

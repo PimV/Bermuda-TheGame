@@ -5,8 +5,6 @@
 #include "Camera.h"
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
-#include "Rabbit.h"
-#include "Wasp.h"
 
 class PlayState : public IGameState
 {
@@ -50,6 +48,6 @@ private:
 	Player* p;
 
 	// TEMPORARY RABBIT CONTAINER
-	std::vector<Rabbit*> rabbits;
-	std::vector<Wasp*> wasps;
+	//std::vector<Rabbit*> rabbits;
+	//std::vector<Wasp*> wasps;
 };

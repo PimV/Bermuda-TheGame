@@ -15,7 +15,7 @@ class Wasp :
 	public CollidableEntity
 {
 public:
-	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint, GameStateManager* gsm, MainEntityContainer* mec);
+	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
 	~Wasp();
 
 	void walk(double dt);

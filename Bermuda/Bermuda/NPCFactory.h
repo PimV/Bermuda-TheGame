@@ -1,7 +1,6 @@
 #pragma once
 #include "SpawnPoint.h"
 #include "ImageLoader.h"
-#include "Image.h"
 #include "header_loader.h"
 #include <map>
 
@@ -11,7 +10,7 @@ class NPCFactory
 private:
 	static NPCFactory npcFactory;
 
-	std::map<std::string, Image*> NPCImages;
+	std::map<std::string, int> FirstImageIDs;
 
 public:
 	NPCFactory();
