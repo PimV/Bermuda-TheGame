@@ -32,23 +32,10 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 
-	this->gsm->pushGameState(LoadingState::Instance());
+	//this->gsm->pushGameState(LoadingState::Instance());
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
-	std::thread t(&PlayState::doSomething, this);
-	t.detach();
-	
-	SoundLoader::Instance()->playGameMusic();
-}
-
-MainEntityContainer* PlayState::getMainEntityContainer()
-{
-	return this->mec;
-}
-
-void PlayState::doSomething()
-{
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
@@ -70,7 +57,42 @@ void PlayState::doSomething()
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
 	
-	this->gsm->popState();
+
+	//std::thread t(&PlayState::doSomething, this);
+	//t.detach();
+	
+	SoundLoader::Instance()->playGameMusic();
+}
+
+MainEntityContainer* PlayState::getMainEntityContainer()
+{
+	return this->mec;
+}
+
+void PlayState::doSomething()
+{
+	//mapLoader->loadMap();
+	//camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
+	//p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
+
+	//// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
+	//Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
+	//for (size_t i = 0; i < 20; i++)
+	//{
+	//	rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
+	//}
+
+	//Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
+	//for (size_t i = 0; i < 20; i++)
+	//{
+	//	wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
+	//}
+
+	////TEMPORARY AXE SPAWN:
+	//new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
+	//new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
+	//
+	//this->gsm->popState();
 }
 
 void PlayState::cleanup() {
@@ -261,7 +283,7 @@ void PlayState::update(double dt) {
 	}
 
 	// TEMPORARY RABBIT UPDATE
-	for each (Rabbit *rb in this->rabbits)
+	for (Rabbit *rb : this->rabbits)
 	{
 		rb->update(dt);
 		if (!rb->checkCollision(mec->getCollidableContainer())) {
@@ -270,7 +292,7 @@ void PlayState::update(double dt) {
 	}
 
 	// TEMPORARY WASP UPDATE
-	for each (Wasp *wa in this->wasps)
+	for (Wasp *wa : this->wasps)
 	{
 		wa->update(dt);
 		if (!wa->checkCollision(mec->getCollidableContainer())) {
