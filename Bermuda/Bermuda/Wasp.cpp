@@ -4,11 +4,11 @@
 #include <random>
 
 Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
-NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
-Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-IMovable(2)
+	NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
+	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
+	IMovable(2)
 {
 	this->gsm = gsm;
 	this->mec = mec;
@@ -16,10 +16,10 @@ IMovable(2)
 	this->setWidth(32);
 	this->setHeight(32);
 
-	this->setCollisionHeight(this->getHeight() - 15);
+	/*this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth() / 4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);
+	this->setCollisionY(0);*/
 
 	this->dx = 0;
 	this->dy = 0;
@@ -278,29 +278,26 @@ void Wasp::move(double dt)
 		return;
 	}
 
-	//if (dx != 0 && dy != 0) {
-
-	//dx = dx / 2;
-	//dy = dy / 2;
-
-	//dx = dx / (moveSpeed / 2);
-	//dy = dy / (moveSpeed / 2);
-	//}
-
 	//Move wasp
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
 
-	if (this->movingLeft)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
-	else if (this->movingRight)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
-	else if (this->movingUp)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
-	else if (this->movingDown)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
+	if (!this->checkCollision(mec->getCollidableContainer())) 
+	{
+		this->setPosition();
 
-	PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+		// set animation row
+		if (this->movingLeft)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
+		else if (this->movingRight)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
+		else if (this->movingUp)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
+		else if (this->movingDown)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
+
+		PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+	}
 }
 
 Wasp::~Wasp()

@@ -19,7 +19,7 @@ public:
 	double dx;
 	double dy;
 
-	IMovable(double mSpeed) : moveSpeed(mSpeed){};
+	IMovable(double mSpeed);
 	virtual void move(double dt) = 0;
 	virtual ~IMovable(void);
 
