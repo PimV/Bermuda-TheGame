@@ -95,86 +95,105 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYDOWN:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+			//Arrow left key
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingLeft = true;
 			p->movingRight = false;
 			break;
 		case SDLK_RIGHT:
+			//Arrow right key
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingRight = true;	
 			p->movingLeft = false;
 			break;
-
 		case SDLK_UP:
+			//Arrow up key
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingUp = true;	
 			p->movingDown = false;
 			break;
-
 		case SDLK_DOWN:
+			//Arrow down key
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingDown = true;	
 			p->movingUp = false;	
 			break;
 		case SDLK_LSHIFT:
+			//Sprint
 			p->sprinting = true;
 			break;
-		case SDLK_p:
+		case SDLK_F1:
+			//Print player location
+			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
+			break;
+		case SDLK_F5: 
+			{
+				//Consume Carrot (Same method as 9)
+				Item* i = p->getInventory()->getItemById(1, true);
+				if (i != nullptr) {
+					std::cout << "Item found!" << std::endl;
+					if (i->isConsumable()) {
+						Consumable* c = (Consumable*)i;
+						c->consume(p);
+					} else if (i->isEquipable()) {
+						Equipable* e = (Equipable*)i;
+						e->equip(p);
+					}
+				}
+				break;
+			}
+		case SDLK_F6: 
+			{
+				//Equip Axe (Same method as 0)
+				Item* i = p->getInventory()->getItemById(3, true);
+				if (i != nullptr) {
+					std::cout << "Item found!" << std::endl;
+					if (i->isConsumable()) {
+						Consumable* c = (Consumable*)i;
+						c->consume(p);
+					} else if (i->isEquipable()) {
+						Equipable* e = (Equipable*)i;
+						e->equip(p);
+					}
+				}
+				break;
+			}
+		case SDLK_F11:
+			//Enable collision
+			p->setCollisionHeight(p->getHeight() - 15);
+			p->setCollisionWidth(p->getWidth()/4);
+			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
+			p->setCollisionY(0);
+			break;
+		case SDLK_F12:
+			//Disable collision
 			p->setCollisionHeight(0);
 			p->setCollisionWidth(0);
 			p->setCollisionX(-10000);
 			p->setCollisionY(-10000);
 			break;
 		case SDLK_SPACE:
+			//Current interact button (= space)
 			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
 			p->interaction = true;
 			p->interact();
 			break;
-		case SDLK_0: {
-			//Consume Carrot (Same method as 9)
-			Item* i = p->getInventory()->getItemById(1, true);
-			if (i != nullptr) {
-				std::cout << "Item found!" << std::endl;
-				if (i->isConsumable()) {
-					Consumable* c = (Consumable*)i;
-					c->consume(p);
-				} else if (i->isEquipable()) {
-					Equipable* e = (Equipable*)i;
-					e->equip(p);
-				}
-			}
-			break;
-					 }
-		case SDLK_9: {
-			//Equip Axe (Same method as 0)
-			Item* i = p->getInventory()->getItemById(3, true);
-			if (i != nullptr) {
-				std::cout << "Item found!" << std::endl;
-				if (i->isConsumable()) {
-					Consumable* c = (Consumable*)i;
-					c->consume(p);
-				} else if (i->isEquipable()) {
-					Equipable* e = (Equipable*)i;
-					e->equip(p);
-				}
-			}
-			break;
-					 }
+
 
 		case SDLK_ESCAPE:
+			//Go to pause state on 'Escape'
 			//TODO: methode voor deze escape klik aanmaken?
 			this->gsm->pushGameState(PauseState::Instance());
 			break;
 		case SDLK_i:
+			//Open inventory
 			this->p->getInventory()->toggleInventory();
-			this->p->getInventory()->printInventory();
 			break;
 		}
-
 		break;
 
 	case SDL_KEYUP:
@@ -184,17 +203,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->moveClick = false;
 			p->movingLeft = false;
 			break;
-		case SDLK_q:
-			p->setCollisionHeight(p->getHeight() - 15);
-			p->setCollisionWidth(p->getWidth()/4);
-			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
-			p->setCollisionY(0);
-			break;
 		case SDLK_LSHIFT:
 			p->sprinting = false;
-			//p->moveSpeed = p->maxSpeed;
 			break;
-
 		case SDLK_RIGHT:
 			p->StopAnimation();
 			p->moveClick = false;
