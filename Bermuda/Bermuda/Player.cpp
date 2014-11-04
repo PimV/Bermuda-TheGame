@@ -129,19 +129,26 @@ void Player::update(double dt) {
 	this->move(dt);
 	}*/
 }
-
-void Player::move(double dt) {
+void Player::calculateMovingDirectionAndMove(double dt)
+{
 	if (sprinting) {
 		maxSpeed = 50;
-	} else {
+	}
+	else {
 		maxSpeed = 3;
 	}
-	
-	if(moveClick)
+
+	if (moveClick)
 	{
 		clickMove();
 	}
 
+	this->move(dt);
+}
+
+
+void Player::move(double dt) 
+{
 	if (movingLeft) {
 		dx -= moveSpeed *dt;
 		if (dx < -maxSpeed *dt) {
@@ -206,8 +213,6 @@ void Player::move(double dt) {
 	//Move player
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
-
-
 
 	/*this->setX(getX() + dx);
 	this->setY(getY() + dy);*/

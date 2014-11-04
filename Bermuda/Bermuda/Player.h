@@ -20,6 +20,7 @@ public:
 	Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera, GameStateManager* gsm, MainEntityContainer* mec);
 	//virtual void move(EnumDirection direction) = 0;
 	void update(double dt);
+	void calculateMovingDirectionAndMove(double dt);
 	virtual void move(double dt);
 	//void clickMove();
 	void clickMove();
