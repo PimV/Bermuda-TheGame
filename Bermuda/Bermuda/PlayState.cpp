@@ -261,7 +261,7 @@ void PlayState::update(double dt) {
 	}
 
 	// TEMPORARY RABBIT UPDATE
-	for each (Rabbit *rb in this->rabbits)
+	for (Rabbit* rb : this->rabbits)
 	{
 		rb->update(dt);
 		if (!rb->checkCollision(mec->getCollidableContainer())) {
@@ -270,7 +270,7 @@ void PlayState::update(double dt) {
 	}
 
 	// TEMPORARY WASP UPDATE
-	for each (Wasp *wa in this->wasps)
+	for (Wasp* wa : this->wasps)
 	{
 		wa->update(dt);
 		if (!wa->checkCollision(mec->getCollidableContainer())) {
