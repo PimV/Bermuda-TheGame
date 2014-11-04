@@ -4,7 +4,7 @@
 #include "Inventory.h"
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize), IMovable(moveSpeed)
+	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), IMovable(moveSpeed)
 {
 	this->mec = mec;
 	this->camera = camera;
@@ -20,10 +20,10 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->health = 100, this->hunger = 100, this->thirst = 100;
 
 	//CollidableEnity - collision values
-	this->setCollisionHeight(this->getHeight() - 15);
+	/*this->setCollisionHeight(this->getHeight() - 15);
 	this->setCollisionWidth(this->getWidth()/4);
 	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);
+	this->setCollisionY(0);*/
 
 	this->dx = 0;
 	this->dy = 0;
@@ -290,40 +290,26 @@ void Player::move(double dt) {
 		return;
 	}
 
-	//if (dx != 0 && dy != 0) {
-
-	//dx = dx / 2;
-	//dy = dy / 2;
-
-	//dx = dx / (moveSpeed / 2);
-	//dy = dy / (moveSpeed / 2);
-	//}
-
 	//Move player
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
 
-	/*this->setX(getX() + dx);
-	this->setY(getY() + dy);*/
+	if (!this->checkCollision(mec->getCollidableContainer())) 
+	{
+		this->setPosition();
 
-	//Temp:
-	//this->mapX = this->getX();
-	//this->mapY = this->getY();
+		// set animation row
+		if (this->movingLeft)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
+		else if (this->movingRight)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
+		else if (this->movingUp)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
+		else if (this->movingDown)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
 
-	//Move camera
-
-	// set animation row
-	if (this->movingLeft)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
-	else if (this->movingRight)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
-	else if (this->movingUp)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
-	else if (this->movingDown)
-		this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-
-	this->PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
-
+		PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+	}
 }
 
 void::Player::interact()

@@ -43,13 +43,13 @@ void PlayState::init(GameStateManager *gsm) {
 
 	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
 	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < 5; i++)
 	{
 		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
 	}
 
 	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < 5; i++)
 	{
 		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
 	}
@@ -287,29 +287,26 @@ void PlayState::update(double dt) {
 	this->gsm->getActionContainer()->executeAllActions(dt);
 
 	p->update(dt);
-	if (!p->checkCollision(mec->getCollidableContainer()))
-	{
+	/*if (!p->checkCollision(mec->getCollidableContainer())) {
 		p->setPosition();
-	}
+	}*/
 
 	// TEMPORARY RABBIT UPDATE
 	for (Rabbit *rb : this->rabbits)
 	{
 		rb->update(dt);
-		if (!rb->checkCollision(mec->getCollidableContainer())) 
-		{
+		/*if (!rb->checkCollision(mec->getCollidableContainer())) {
 			rb->setPosition();
-		}
+		}*/
 	}
 
 	// TEMPORARY WASP UPDATE
 	for (Wasp *wa : this->wasps)
 	{
 		wa->update(dt);
-		if (!wa->checkCollision(mec->getCollidableContainer()))
-		{
+		/*if (!wa->checkCollision(mec->getCollidableContainer())) {
 			wa->setPosition();
-		}
+		}*/
 	}
 
 	//Update all respawnable entities
