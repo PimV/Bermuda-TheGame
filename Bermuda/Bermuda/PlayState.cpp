@@ -52,6 +52,10 @@ void PlayState::doSomething()
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 
+	SoundLoader* soundLoader = gsm->getSoundLoader();
+	soundLoader->playGameMusic();
+
+	temp =  std::vector<DrawableEntity*>();
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
@@ -81,7 +85,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	//Process Input
 
 	//Retrieve input
-	int x,y;
+	//int x,y;
 	switch(mainEvent.type) {
 
 	case SDL_MOUSEBUTTONDOWN:
@@ -231,6 +235,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
+	// check if player died
+	if (p->getHealth() < 1) {
+		this->gsm->changeGameState(GameOverState::Instance());
+	}
+
+	this->updateGameTimers();
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
 
@@ -243,7 +253,17 @@ void PlayState::update(double dt) {
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
+}
 
+void PlayState::updateGameTimers() {
+
+	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
+	//DayTimeTimer::Instance()->updateDayTime();
+	GameTimer::Instance()->updateDayTime();
+}
+
+long PlayState::getGameTimer() {
+	return GameTimer::Instance()->getGameTime();
 }
 
 void PlayState::draw() {
@@ -296,6 +316,16 @@ void PlayState::draw() {
 		if (this->p->getInventory()->isOpen()) {
 			this->p->getInventory()->draw();
 		}
+
+		// Draw the player status
+		this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), 1150, 5, 100, 25);
+		this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
+		this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
+		// if current hour is smaller then 9 
+		if (GameTimer::Instance()->getCurrentDayPart() > 9)
+			this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
+		else
+			this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
 	}
 }
 

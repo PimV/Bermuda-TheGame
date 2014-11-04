@@ -27,7 +27,6 @@ void MenuState::init(GameStateManager *gsm) {
 	buttons.push_back(new ExitButton(gsm));
 	}
 
-	//align buttons
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->align(buttons.size() - i, buttons.size());
 	}
