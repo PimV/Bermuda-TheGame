@@ -43,9 +43,7 @@ void MenuState::init(GameStateManager *gsm) {
 	bermudaTextRect.h = bermudaMessageSurface->h;
 	bermudaTextRect.w = bermudaMessageSurface->w;
 
-	SoundLoader* soundLoader = gsm->getSoundLoader();
-	soundLoader->playMenuMusic();
-	//SoundLoader::Instance()->playMenuMusic();
+	SoundLoader::Instance()->playMenuMusic();
 
 	SDL_FreeSurface(bermudaMessageSurface);
 	TTF_CloseFont(staryDarzyLarge);

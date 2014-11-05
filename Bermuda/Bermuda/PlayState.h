@@ -28,6 +28,7 @@ private:
 	std::vector<DrawableEntity*> temp;
 
 public:
+	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
 
 	void init(GameStateManager *gsm);

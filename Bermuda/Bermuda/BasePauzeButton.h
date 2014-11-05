@@ -25,7 +25,7 @@ public:
 
 	void draw(GameStateManager* gsm);
 	void hover(int, int, GameStateManager *gsm);
-	void clicked(int, int, GameStateManager *gsm);
+	bool clicked(int, int, GameStateManager *gsm);
 
 	//constructors initialize, cleanup and delete
 	BasePauzeButton();

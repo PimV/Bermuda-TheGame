@@ -31,7 +31,7 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-		this->gsm = gsm;
+	this->gsm = gsm;
 
 	//this->gsm->pushGameState(LoadingState::Instance());
 
@@ -44,11 +44,11 @@ void PlayState::init(GameStateManager *gsm) {
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
-	
+
 
 	//std::thread t(&PlayState::doSomething, this);
 	//t.detach();
-	
+
 	SoundLoader::Instance()->playGameMusic();
 }
 
@@ -64,9 +64,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if (this->p != nullptr)
 	{
-	this->p->moveClick = true;
-	this->p->resetMovement();
-}
+		this->p->moveClick = true;
+		this->p->resetMovement();
+	}
 }
 
 void PlayState::resume() {
@@ -166,12 +166,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			}
 		case SDLK_F11:
 			//Enable collision
-			p->setCollisionHeight(p->getHeight() - 15);
-			p->setCollisionWidth(p->getWidth()/4);
-			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
-			p->setCollisionY(0);
+			p->setCollisionHeight(10);
+			p->setCollisionWidth(24);
+			p->setCollisionX(20);
+			p->setCollisionY(52);
 			break;
-		case SDLK_F12:
+		case SDLK_F10:
 			//Disable collision
 			p->setCollisionHeight(0);
 			p->setCollisionWidth(0);
@@ -325,6 +325,11 @@ void PlayState::draw()
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
 	else
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
+}
+
+Player* PlayState::getPlayer()
+{
+	return this->p;
 }
 
 //ERROR Deze methode word nooit aangeroepen volgens mij.

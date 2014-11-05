@@ -37,13 +37,15 @@ void BasePauzeButton::hover(int x, int y, GameStateManager *gsm)
 	}
 }
 
-void BasePauzeButton::clicked(int x, int y, GameStateManager *gsm)
+bool BasePauzeButton::clicked(int x, int y, GameStateManager *gsm)
 {
 	if (x >= ButtonRect.x && x <= (ButtonRect.x + ButtonRect.w) &&
 		y >= ButtonRect.y && y <= (ButtonRect.y + ButtonRect.h))
 	{
 		action(gsm);
+		return true;
 	}
+	return false;
 }
 void BasePauzeButton::draw(GameStateManager* gsm)
 {
