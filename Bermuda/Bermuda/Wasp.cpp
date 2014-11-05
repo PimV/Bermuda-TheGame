@@ -8,7 +8,7 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
-	IMovable(2)
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 {
 	this->gsm = gsm;
 	this->mec = mec;
@@ -16,15 +16,11 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 	this->setWidth(32);
 	this->setHeight(32);
 
-	/*this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth() / 4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);*/
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 2;
 	this->stopSpeed = 0.8;
+	this->moveSpeed = 2;
 	this->movingLeft = false;
 	this->movingRight = false;
 	this->movingDown = false;
@@ -216,88 +212,6 @@ void Wasp::walk(double dt)
 
 	}
 	this->move(dt);
-}
-
-void Wasp::move(double dt)
-{
-	if (movingLeft) {
-		dx -= moveSpeed *dt;
-		if (dx < -maxSpeed *dt) {
-			dx = -maxSpeed *dt;
-		}
-	}
-	else if (movingRight) {
-		dx += moveSpeed *dt;
-		if (dx > maxSpeed *dt) {
-			dx = maxSpeed *dt;
-		}
-	}
-	else {
-		if (dx > 0) {
-			dx -= stopSpeed *dt;
-			if (dx < 0) {
-				dx = 0;
-			}
-		}
-		else if (dx < 0) {
-			dx += stopSpeed *dt;
-			if (dx > 0) {
-				dx = 0;
-			}
-		}
-	}
-
-	if (movingUp) {
-		dy -= moveSpeed *dt;
-		if (dy < -maxSpeed *dt) {
-			dy = -maxSpeed *dt;
-		}
-	}
-	else if (movingDown) {
-		dy += moveSpeed *dt;
-		if (dy > maxSpeed *dt) {
-			dy = maxSpeed *dt;
-		}
-	}
-	else {
-		if (dy > 0) {
-			dy -= stopSpeed *dt;
-			if (dy < 0) {
-				dy = 0;
-			}
-		}
-		else if (dy < 0) {
-			dy += stopSpeed *dt;
-			if (dy > 0) {
-				dy = 0;
-			}
-		}
-	}
-
-	if (dx == 0 && dy == 0) {
-		return;
-	}
-
-	//Move wasp
-	this->setTempX(getX() + dx);
-	this->setTempY(getY() + dy);
-
-	if (!this->checkCollision(mec->getCollidableContainer())) 
-	{
-		this->setPosition();
-
-		// set animation row
-		if (this->movingLeft)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
-		else if (this->movingRight)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
-		else if (this->movingUp)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
-		else if (this->movingDown)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-
-		PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
-	}
 }
 
 Wasp::~Wasp()

@@ -1,4 +1,5 @@
 #include "MovableEntity.h"
+#include "PlayState.h"
 
 
 MovableEntity::MovableEntity(int id, double x, double y, int chunkSize)
@@ -6,7 +7,88 @@ MovableEntity::MovableEntity(int id, double x, double y, int chunkSize)
 {
 }
 
-
 MovableEntity::~MovableEntity(void)
 {
+}
+
+void MovableEntity::move(double dt)
+{
+	if (movingLeft) {
+		dx -= moveSpeed *dt;
+		if (dx < -maxSpeed *dt) {
+			dx = -maxSpeed *dt;
+		}
+	}
+	else if (movingRight) {
+		dx += moveSpeed *dt;
+		if (dx > maxSpeed *dt) {
+			dx = maxSpeed *dt;
+		}
+	}
+	else {
+		if (dx > 0) {
+			dx -= stopSpeed *dt;
+			if (dx < 0) {
+				dx = 0;
+			}
+		}
+		else if (dx < 0) {
+			dx += stopSpeed *dt;
+			if (dx > 0) {
+				dx = 0;
+			}
+		}
+	}
+
+	if (movingUp) {
+		dy -= moveSpeed *dt;
+		if (dy < -maxSpeed *dt) {
+			dy = -maxSpeed *dt;
+		}
+	}
+	else if (movingDown) {
+		dy += moveSpeed *dt;
+		if (dy > maxSpeed *dt) {
+			dy = maxSpeed *dt;
+		}
+	}
+	else {
+		if (dy > 0) {
+			dy -= stopSpeed *dt;
+			if (dy < 0) {
+				dy = 0;
+			}
+		}
+		else if (dy < 0) {
+			dy += stopSpeed *dt;
+			if (dy > 0) {
+				dy = 0;
+			}
+		}
+	}
+
+	if (dx == 0 && dy == 0) {
+		return;
+	}
+
+	//Move wasp
+	this->setTempX(getX() + dx);
+	this->setTempY(getY() + dy);
+
+	if (!this->checkCollision(PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()))
+	{
+		this->setPosition();
+
+		// set animation row
+		if (this->movingLeft)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
+		else if (this->movingRight)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
+		else if (this->movingUp)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
+		else if (this->movingDown)
+			this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
+
+		PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+	}
 }
