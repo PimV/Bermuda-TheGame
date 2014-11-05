@@ -10,6 +10,7 @@ public:
 	MovableEntity(int id, double x, double y, int chunkSize);
 	virtual ~MovableEntity(void);
 
+	virtual void update(double dt) = 0;
 	void move(double dt);
 
 protected:
