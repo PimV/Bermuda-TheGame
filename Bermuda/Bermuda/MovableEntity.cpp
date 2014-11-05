@@ -114,6 +114,43 @@ void MovableEntity::StopAnimation()
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }
 
+bool MovableEntity::checkCollision(CollidableContainer* container) {
+	//TODO: werkend maken met nieuwe collidablecontainer
+	double currentX = this->getX();
+	double currentY = this->getY();
+	this->setX(this->tempX);
+	this->setY(this->tempY);
+
+	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger then the current chunk)
+	int beginChunkX = this->getChunkX() - 1;
+	int endChunkX = this->getChunkX() + 1;
+	int beginChunkY = this->getChunkY() - 1;
+	int endChunkY = this->getChunkY() + 1;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			std::vector<CollidableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (CollidableEntity* e : *vec)
+				{
+					if (this->intersections(e)) {
+						this->setX(currentX);
+						this->setY(currentY);
+						this->StopAnimation();
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 void MovableEntity::setPosition() {
 	//this->setX(getX() + dx);
 	//this->setY(getY() + dy);

@@ -48,63 +48,6 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint *spawnPoint) :
 
 void Wasp::update(double dt) {
 	this->walk(dt);
-	//std::cout << "Rabbit X: " << this->getX() << " Y: " << this->getY() << " - Destination X: " << this->destinationX << " Destionation Y: " << this->destinationY << std::endl;
-
-	//if (destroyed) {
-	//	this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-	//	if (this->timeSinceDestroy > respawnTime) {
-	//		this->respawn();
-	//	}
-	//}
-}
-
-void Wasp::setImage(Image* image)
-{
-	this->setDrawImage(image);
-}
-
-void Wasp::ResetDrawableEntityAndSetChunk()
-{
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->setChunks();
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
-}
-
-bool Wasp::checkCollision(CollidableContainer* container) {
-	//TODO: werkend maken met nieuwe collidablecontainer
-	double currentX = this->getX();
-	double currentY = this->getY();
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
-	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger then the current chunk)
-	int beginChunkX = this->getChunkX() - 1;
-	int endChunkX = this->getChunkX() + 1;
-	int beginChunkY = this->getChunkY() - 1;
-	int endChunkY = this->getChunkY() + 1;
-
-	//Loop through all chunks
-	for (int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for (int j = beginChunkX; j <= endChunkX; j++)
-		{
-			std::vector<CollidableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->getChunk(i, j);
-			if (vec != nullptr)
-			{
-				for (CollidableEntity* e : *vec)
-				{
-					if (this->intersects(e)) {
-						this->setX(currentX);
-						this->setY(currentY);
-						this->StopAnimation();
-						return true;
-					}
-				}
-			}
-		}
-	}
-
-	return false;
 }
 
 void Wasp::walk(double dt)
@@ -184,6 +127,23 @@ void Wasp::walk(double dt)
 
 	}
 	this->move(dt);
+}
+
+void Wasp::setImage(Image* image)
+{
+	this->setDrawImage(image);
+}
+
+void Wasp::ResetDrawableEntityAndSetChunk()
+{
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	this->setChunks();
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+}
+
+bool Wasp::intersections(CollidableEntity* collidableEntity)
+{
+	return this->intersects(collidableEntity);
 }
 
 Wasp::~Wasp()

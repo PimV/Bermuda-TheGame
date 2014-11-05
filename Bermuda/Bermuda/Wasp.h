@@ -20,10 +20,11 @@ public:
 
 	void walk(double dt);
 	void update(double dt);
-	bool checkCollision(CollidableContainer* container);
 private:
-	void ResetDrawableEntityAndSetChunk();
 	void setImage(Image* image);
+	void ResetDrawableEntityAndSetChunk();
+	bool intersections(CollidableEntity* collidableEntity);
+
 	long timeSinceLastAction;
 };
 
