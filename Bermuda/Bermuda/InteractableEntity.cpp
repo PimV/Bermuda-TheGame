@@ -4,26 +4,21 @@
 #include <iostream>
 
 
-InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize, int rangeValue)
+InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize, int interactStartX, int interactStartY, int interactWidth, int interactHeight)
 	: Entity(id,x,y,chunkSize)
 {
-	this->rangeValue = rangeValue;
-	this->setRangeValues();
 	this->destroyed = false;
+	this->interactStartX = interactStartX;
+	this->interactStartY = interactStartY;
+	this->interactWidth = interactWidth;
+	this->interactHeight = interactHeight;
+
 }
 
 void InteractableEntity::interact(Player* player)
 {
 	//TODO : oplossen op manier zonder casten
 	cout << (int)(((double)currentInteractTime / (double)interactTime) * 100) << endl;
-}
-
-void InteractableEntity::setRangeValues()
-{
-	this->startX = this->getX() - this->rangeValue;
-	this->endX = this->getX() + this->getWidth() + this->rangeValue;
-	this->startY = this->getY() - this->rangeValue;
-	this->endY = this->getY() + this->getHeight() + this->rangeValue;
 }
 
 bool InteractableEntity::trackInteractTimes() {
@@ -38,32 +33,27 @@ bool InteractableEntity::trackInteractTimes() {
 	return false;
 }
 
-int InteractableEntity::getRangeValue()
+int InteractableEntity::getInteractStartX()
 {
-	return this->rangeValue;
+	return this->interactStartX;
 }
 
-int InteractableEntity::getInteractAreaStartX()
+int InteractableEntity::getInteractStartY()
 {
-	return this->startX;
+	return this->interactStartX;
 }
 
-int InteractableEntity::getInteractAreaEndX()
+int InteractableEntity::getInteractWidth()
 {
-	return this->endX;
+	return this->interactWidth;
 }
 
-int InteractableEntity::getInteractAreaStartY()
+int InteractableEntity::getInteractHeight()
 {
-	return this->startY;
+	return this->interactHeight;
 }
 
 void InteractableEntity::setDestroyedState() {}
-
-int InteractableEntity::getInteractAreaEndY()
-{
-	return this->endY;
-}
 
 InteractableEntity::~InteractableEntity()
 {

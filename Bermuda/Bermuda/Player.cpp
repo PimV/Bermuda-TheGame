@@ -339,11 +339,13 @@ void::Player::interact()
 			if(vec != nullptr) {
 
 				for(InteractableEntity* e : *vec) {
-					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
-						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
+					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
+						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
 					{
-						double centerX = (e->getInteractAreaStartX() + e->getInteractAreaEndX()) / 2;
-						double centerY = (e->getInteractAreaStartY() + e->getInteractAreaEndY()) / 2;
+						//double centerX = (e->getInteractAreaStartX() + e->getInteractAreaEndX()) / 2;
+						//double centerY = (e->getInteractAreaStartY() + e->getInteractAreaEndY()) / 2;
+						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
+						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
 
 						double diffX = centerX - playerOffsetX;
 						double diffY = centerY - playerOffsetY;
@@ -359,11 +361,9 @@ void::Player::interact()
 						if (diffX + diffY < diff) {
 							diff = diffX + diffY;
 							closestEntity = e;
-							//std::cout << "New Closest Entity" << std::endl;
 						}
 
 						//e->interact(this);
-						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
 						//TODO : juiste animatie laten zien e.d.
 						//break;
 					}

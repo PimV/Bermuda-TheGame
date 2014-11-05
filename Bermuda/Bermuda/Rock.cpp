@@ -7,7 +7,7 @@ Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 	Entity(id,x,y,chunkSize), 
 	DrawableEntity(id,x,y,chunkSize, rockImage), 
 	CollidableEntity(id,x,y,chunkSize, 0, 14, 32, 18), rockImage(rockImage), rockPiecesImage(rockPiecesImage),
-	InteractableEntity(id,x,y,chunkSize, 35)
+	InteractableEntity(id,x,y,chunkSize, -35, -35, this->getWidth() + 70, this->getHeight() + 70)
 {
 	this->setMainEntityContainer(mec);
 
