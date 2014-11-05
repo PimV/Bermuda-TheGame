@@ -40,7 +40,7 @@ int InteractableEntity::getInteractStartX()
 
 int InteractableEntity::getInteractStartY()
 {
-	return this->interactStartX;
+	return this->interactStartY;
 }
 
 int InteractableEntity::getInteractWidth()

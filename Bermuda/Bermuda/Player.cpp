@@ -327,7 +327,8 @@ void::Player::interact()
 	int endChunkY = this->getChunkY() + 1;
 
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
-	int playerOffsetY = this->getY() + (this->getHeight() / 2);
+	//De -7 wordt gebruikt omdat het plaatje niet helemaal klopt. In de breedte staat de speler idd precies in het midden van het plaatje. In de hoogte niet...
+	int playerOffsetY = this->getY() + (this->getHeight() / 2) +7;
 
 	double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
@@ -342,11 +343,9 @@ void::Player::interact()
 					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
 						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
 					{
-						//double centerX = (e->getInteractAreaStartX() + e->getInteractAreaEndX()) / 2;
-						//double centerY = (e->getInteractAreaStartY() + e->getInteractAreaEndY()) / 2;
 						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
 						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
-
+						
 						double diffX = centerX - playerOffsetX;
 						double diffY = centerY - playerOffsetY;
 
