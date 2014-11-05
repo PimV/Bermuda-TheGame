@@ -248,8 +248,9 @@ void PlayState::update(double dt) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
 
-	//Calculate begin and end chunks for the camera (+5 and -5 to make it a little bigger then the screen)
-	/*int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	//Update all spawnpoints and moving entities
+	//Calculate begin and end chunks for the camera (+5 and -5 to make it bigger than the screen)
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
 	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
 	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
@@ -259,17 +260,28 @@ void PlayState::update(double dt) {
 	{
 		for (int j = beginChunkX; j <= endChunkX; j++)
 		{
-			//Background
-			std::vector<MovableContainer*>* vec = this->mec->getMovableContainer()->getChunk(i, j);
-			if (vec != nullptr)
+			//Spawnpoints
+			std::vector<Spawnpoint*>* spawnpoints = this->mec->getSpawnpointContainer()->getChunk(i, j);
+			if (spawnpoints != nullptr)
 			{
-				for (MovableEntity* e : *vec)
+				for (Spawnpoint* e : *spawnpoints)
 				{
 					e->update();
 				}
 			}
+
+			//Moving entities
+			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
+			if (movingEntities != nullptr)
+			{
+				for (MovableEntity* e : *movingEntities)
+				{
+					//TODO: enable when movableEntities get an 'update' method. 
+					//e->update();
+				}
+			}
 		}
-	}*/
+	}
 }
 
 void PlayState::updateGameTimers() {
@@ -298,7 +310,6 @@ void PlayState::draw()
 	{
 		for (int j = beginChunkX; j <= endChunkX; j++)
 		{
-			if( j == p->getChunkX() && i == p->getChunkY()){continue;}
 			//Background
 			std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
 			if (vec != nullptr)

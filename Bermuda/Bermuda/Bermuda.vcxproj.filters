@@ -375,6 +375,9 @@
     <ClCompile Include="PauseStatusTrackerScreen.cpp">
       <Filter>Source Files\Model\PauseScreens</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnpointContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -634,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="PauseStatusTrackerScreen.h">
       <Filter>Header Files\Model\PauseScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnpointContainer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@ Spawnpoint::Spawnpoint(int id, double x, double y, int chunkSize, string spawnTy
 
 void Spawnpoint::init(string spawnType, int maxChildren)
 {
+	PlayState::Instance()->getMainEntityContainer()->getSpawnpointContainer()->add(this);
 	this->curChildren = 0;
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
@@ -32,7 +33,8 @@ void Spawnpoint::spawnMob()
 		{
 			NPCFactory::Instance()->createWasp(this);
 		}
-		curChildren++;
+		this->curChildren++;
+		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
 	}
 }
 

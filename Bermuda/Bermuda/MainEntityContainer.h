@@ -7,6 +7,7 @@
 #include "InteractableContainer.h"
 #include "MovableContainer.h"
 #include "RespawnContainer.h"
+#include "SpawnpointContainer.h"
 #include <map>
 
 class MainEntityContainer
@@ -19,6 +20,7 @@ public:
 	InteractableContainer* getInteractableContainer();
 	RespawnContainer* getRespawnContainer();
 	MovableContainer* getMovableContainer();
+	SpawnpointContainer* getSpawnpointContainer();
 
 	virtual ~MainEntityContainer();
 
