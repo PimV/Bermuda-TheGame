@@ -6,7 +6,7 @@ class CollidableTile :
 	public Tile, public CollidableEntity
 {
 public:
-	CollidableTile(int id, MainEntityContainer* mec, double x, double y, Image* image);
+	CollidableTile(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* image);
 
 	virtual ~CollidableTile();
 };

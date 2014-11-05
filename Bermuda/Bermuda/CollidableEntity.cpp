@@ -2,18 +2,17 @@
 #include <iostream>
 
 
-CollidableEntity::CollidableEntity(int id, double collisionX, double collisionY, double collisionWidth, double collisionHeight)
-	: Entity(id)
+CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize, double collisionX, double collisionY, double collisionWidth, double collisionHeight)
+	: Entity(id,x,y,chunkSize)
 {
 	this->collisionHeight = collisionHeight;
 	this->collisionWidth = collisionWidth;
 	this->collisionX = collisionX;
 	this->collisionY = collisionY;
-
 }
 
-CollidableEntity::CollidableEntity(int id)
-	: Entity(id)
+CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize)
+	: Entity(id,x,y,chunkSize)
 {
 }
 
@@ -55,7 +54,7 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity) {
 
 	double thisLeft = this->getX() + this->getCollisionX();
 	double thisRight = this->getX() + this->getCollisionX() + this->getCollisionWidth();
-	double thisTop = this->getY() + this->getCollisionY() + this->getHeight();
+	double thisTop = this->getY() + this->getCollisionY();
 	double thisBot = this->getY() + this->getCollisionY() + this->getCollisionHeight();
 
 

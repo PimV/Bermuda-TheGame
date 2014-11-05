@@ -2,11 +2,14 @@
 
 double DrawableEntity::DRAWBUFFER = 64;
 
-DrawableEntity::DrawableEntity(int id, Image* image)
-	: Entity(id), drawImage(image)
+DrawableEntity::DrawableEntity(int id, double x, double y, int chunkSize, Image* image)
+	: Entity(id,x,y,chunkSize), drawImage(image)
 {
-	setWidth(drawImage->getWidth());
-	setHeight(drawImage->getHeight());
+	if(image != nullptr)
+	{
+		setWidth(drawImage->getWidth());
+		setHeight(drawImage->getHeight());
+	}
 	sizeRect = new SDL_Rect();
 }
 
@@ -17,7 +20,7 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 		getX() < (camera->getX() + camera->getWidth() + DRAWBUFFER) &&
 		(getY() + getHeight()) > (camera->getY() - DRAWBUFFER) &&
 		getY() < (camera->getY() + camera->getHeight() + DRAWBUFFER))
-	{		
+	{
 		sizeRect->x = getX() - camera->getX();
 		sizeRect->y = getY() - camera->getY(); 
 		sizeRect->w = getWidth();

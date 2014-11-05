@@ -1,39 +1,78 @@
 #include "NPC.h"
 #include "Spawnpoint.h"
-#include <time.h>
 #include <iostream>
 
-NPC::NPC(int id, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint) : Entity(id)
+NPC::NPC(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint)  : 
+	Entity(id,spawnPoint->getX(),spawnPoint->getY(), chunkSize)
 {
 	this->healthPoints = healthPoints;
 	this->attackPoints = attackPoints;
 	this->walkRange = walkRange;
 	this->actionRange = actionRange;
 	this->spawnPoint = spawnPoint;
-	this->walking = false;
+
+	this->destroyed = false;
+	this->respawnTime = 5000;
+	this->interactTime = 500;
+	this->timeSinceDestroy = 0;
+	this->currentInteractTime = 0;
 }
 
-void NPC::walk()
+
+#pragma region Getters
+int NPC::getHeathPoints()
 {
-	// add timer
-	// walking in Entity?
-
-	if (walking == false) {
-		walking = true;
-
-		srand(time(NULL));
-
-		double distanceX = rand() % (walkRange * 2) + (walkRange * -1);
-		double distanceY = rand() % (walkRange * 2) + (walkRange * -1);
-
-		double destinationX = this->spawnPoint->getX() + distanceX;
-		double destinationY = this->spawnPoint->getY() + distanceY;
-
-		// moveTo(destinationX, destinationY);
-
-		walking = false;
-	}
+	return this->healthPoints;
 }
+
+int NPC::getAttackPoints()
+{
+	return this->attackPoints;
+}
+
+int NPC::getWalkRange()
+{
+	return this->walkRange;
+}
+
+int NPC::getActionRange()
+{
+	return this->actionRange;
+}
+
+Spawnpoint* NPC::getSpawnPoint()
+{
+	return this->spawnPoint;
+}
+#pragma endregion
+
+#pragma region Setters
+void NPC::setHealthPoints(int healthPoints)
+{
+	this->healthPoints = healthPoints;
+}
+
+void NPC::setAttackPoints(int attackPoints)
+{
+	this->attackPoints = attackPoints;
+}
+
+void NPC::setWalkRange(int walkRange)
+{
+	this->walkRange = walkRange;
+}
+
+void NPC::setActionRange(int actionRange)
+{
+	this->actionRange = actionRange;
+}
+
+void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
+{
+	this->spawnPoint = spawnPoint;
+}
+#pragma endregion
+
 
 NPC::~NPC(void)
 {

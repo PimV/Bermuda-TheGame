@@ -5,7 +5,8 @@
 #include "Camera.h"
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
-
+#include "Rabbit.h"
+#include "Wasp.h"
 
 class PlayState : public IGameState
 {
@@ -23,7 +24,10 @@ private:
 	int counter;
 	Camera* camera;
 
+	void doSomething();
+
 public:
+	MainEntityContainer* getMainEntityContainer();
 
 	void init(GameStateManager *gsm);
 	void cleanup();
@@ -44,5 +48,8 @@ public:
 
 private:
 	Player* p;
-	std::vector<DrawableEntity*> temp;
+
+	// TEMPORARY RABBIT CONTAINER
+	std::vector<Rabbit*> rabbits;
+	std::vector<Wasp*> wasps;
 };

@@ -97,6 +97,33 @@
     <Filter Include="Header Files\Model\Container\Tile">
       <UniqueIdentifier>{ddd9e1dc-147b-4b55-af41-a0b18b490747}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Container\Interactive">
+      <UniqueIdentifier>{be7ae0cc-0742-4e68-8b12-6ab94637c53d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Item">
+      <UniqueIdentifier>{097e5ade-cb4e-4841-9a10-36e47053f69c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Item">
+      <UniqueIdentifier>{e778ff3d-ea2e-4688-a957-eb24b2bef58a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Entity\Items">
+      <UniqueIdentifier>{17aec08f-41aa-4534-b019-097c25e25923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Items">
+      <UniqueIdentifier>{509ba93d-2b43-4b63-9033-f85328f65185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Static objects">
+      <UniqueIdentifier>{5d2ac97f-5936-43ca-bc5c-21c90b324f75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\Interactive objects">
+      <UniqueIdentifier>{bd8f883e-e17e-40b0-9f26-50ed011c1969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Entity\Static objects">
+      <UniqueIdentifier>{3c6593c0-39ef-41a3-9efa-4f4da12f426a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Entity\Interactive objects">
+      <UniqueIdentifier>{c554fe2a-4530-460b-924e-19bcf4eb40a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -183,12 +210,6 @@
     <ClCompile Include="DrawableEntity.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CollidableTile.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="DrawableContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
@@ -212,17 +233,98 @@
     </ClCompile>
     <ClCompile Include="SoundLoader.cpp">
       <Filter>Source Files\Controller</Filter>
-	</ClCompile>
-    <ClCompile Include="Tree.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundContainer.cpp">
       <Filter>Source Files\Model\Container\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CollidableEntity.cpp">
-	  <Filter>Source Files\Model\Entity</Filter>
-	</ClCompile>
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityChunkContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundLoader.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemCarrot.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemRock.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemWood.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="RespawnContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Carrot.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
     <ClCompile Include="Rock.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CollidableTile.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Pillar.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RuinStatue.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="AppleTree.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolAxe.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Consumable.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipable.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolPickaxe.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Axe.cpp">
+      <Filter>Source Files\Model\Entity\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickaxe.cpp">
+      <Filter>Source Files\Model\Entity\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Wasp.cpp">
+      <Filter>Source Files\Model\Entity\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="MovableContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="MovableEntity.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
   </ItemGroup>
@@ -317,12 +419,6 @@
     <ClInclude Include="DrawableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="CollidableTile.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="DrawableContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
@@ -346,17 +442,107 @@
     </ClInclude>
     <ClInclude Include="SoundLoader.h">
       <Filter>Header Files\Controller</Filter>
-	</ClInclude>
-    <ClInclude Include="Tree.h">
-      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundContainer.h">
       <Filter>Header Files\Model\Container\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CollidableEntity.h">
-	  <Filter>Header Files\Model\Entity</Filter>
-	</ClInclude>
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityChunkContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundLoader.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemType.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemCarrot.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemRock.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemWood.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingState.h">
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
     <ClInclude Include="Rock.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Carrot.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CollidableTile.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Pillar.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RuinStatue.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AppleTree.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolAxe.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Consumable.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipable.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolPickaxe.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Axe.h">
+      <Filter>Header Files\Model\Entity\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickaxe.h">
+      <Filter>Header Files\Model\Entity\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Wasp.h">
+      <Filter>Header Files\Model\Entity\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="StateType.h">
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
