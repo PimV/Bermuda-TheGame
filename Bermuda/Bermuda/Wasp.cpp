@@ -48,6 +48,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 2)
 
 	mec->getDrawableContainer()->add(this);
 	mec->getCollidableContainer()->add(this);
+	mec->getMovableContainer()->add(this);
 
 	this->StopAnimation();
 }

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "header_loader.h"
+#include "GameOverState.h"
 #include <iostream>
 #include "Inventory.h"
 
@@ -120,6 +121,13 @@ bool Player::checkCollision(CollidableContainer* container) {
 }
 
 void Player::update(double dt) {
+	// check if player died
+	if (this->getHealth() < 1)
+	{
+		this->gsm->changeGameState(GameOverState::Instance());
+		return;
+	}
+
 	this->updatePlayerStatuses();
 	this->move(dt);
 

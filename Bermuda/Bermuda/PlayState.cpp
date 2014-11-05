@@ -7,7 +7,6 @@
 #include "MoveAction.h"
 #include "PauseState.h"
 #include "LoadingState.h"
-#include "GameOverState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
@@ -237,12 +236,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
-	// check if player died
-	if (p->getHealth() < 1)
-	{
-		this->gsm->changeGameState(GameOverState::Instance());
-	}
-
+	
 	this->updateGameTimers();
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
@@ -253,6 +247,29 @@ void PlayState::update(double dt) {
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
+
+	//Calculate begin and end chunks for the camera (+5 and -5 to make it a little bigger then the screen)
+	/*int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Background
+			std::vector<MovableContainer*>* vec = this->mec->getMovableContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (MovableEntity* e : *vec)
+				{
+					e->update();
+				}
+			}
+		}
+	}*/
 }
 
 void PlayState::updateGameTimers() {
@@ -269,10 +286,10 @@ long PlayState::getGameTimer() {
 void PlayState::draw() 
 {
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 5;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 5;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 5;
 
 	std::vector<DrawableEntity*> drawableVector;
 
@@ -281,6 +298,7 @@ void PlayState::draw()
 	{
 		for (int j = beginChunkX; j <= endChunkX; j++)
 		{
+			if( j == p->getChunkX() && i == p->getChunkY()){continue;}
 			//Background
 			std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
 			if (vec != nullptr)
