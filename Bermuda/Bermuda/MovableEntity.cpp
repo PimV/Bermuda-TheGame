@@ -1,7 +1,6 @@
 #include "MovableEntity.h"
 #include "PlayState.h"
 
-
 MovableEntity::MovableEntity(int id, double x, double y, int chunkSize)
 	: Entity(id,x,y,chunkSize)
 {
@@ -91,4 +90,26 @@ void MovableEntity::move(double dt)
 
 		PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
 	}
+}
+
+void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
+{
+	double animationDelay = (maxSpeed / 100) * 40;
+	animationSpeed -= animationDelay;
+	if (animationSpeed < animationDelay)
+	{
+		this->currentAnimationRow = Row;
+		if (EndFrame <= CurrentFrame)
+			CurrentFrame = BeginFrame;
+		else
+			CurrentFrame++;
+
+		this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + CurrentFrame));
+		animationSpeed = maxSpeed * 3;
+	}
+}
+
+void MovableEntity::StopAnimation()
+{
+	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }

@@ -22,15 +22,9 @@ public:
 	void update(double dt);
 	bool checkCollision(CollidableContainer* container);
 	void setPosition();
-
+	
 private:
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
-	void StopAnimation();
-
-	GameStateManager* gsm;
-	MainEntityContainer* mec;
-
-	int firstImgID;
+	void setImage(Image* image);
 	long timeSinceLastAction;
 };
 

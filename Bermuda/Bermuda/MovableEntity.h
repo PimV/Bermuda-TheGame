@@ -1,6 +1,7 @@
 #pragma once
 #include "entity.h"
 #include "CollidableContainer.h"
+#include "Image.h"
 
 class MovableEntity :
 	virtual public Entity
@@ -11,12 +12,14 @@ public:
 	virtual ~MovableEntity(void);
 
 	virtual void update(double dt) = 0;
+	
 	void move(double dt);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	void StopAnimation();
 
 protected:
-	virtual void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) = 0;
-	virtual void StopAnimation() = 0;
 	virtual void setPosition() = 0;
+	virtual void setImage(Image* image) = 0;
 	virtual bool checkCollision(CollidableContainer* container) = 0;
 
 	//Speed Variables
@@ -27,6 +30,7 @@ protected:
 	//Direction Variables
 	double dx, dy;
 
+	int firstImgID;
 	int currentAnimationRow, animationIdleColumn;
 	int animationWalkUpRow, animationWalkLeftRow, animationWalkDownRow, animationWalkRightRow;
 	int animationWalkStartColumn, animationWalkEndColumn;

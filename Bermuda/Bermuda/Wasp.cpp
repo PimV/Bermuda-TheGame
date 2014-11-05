@@ -4,7 +4,7 @@
 #include <random>
 #include "PlayState.h"
 
-Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint) :
+Wasp::Wasp(int id, int chunkSize, Spawnpoint *spawnPoint) :
 	NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
@@ -58,27 +58,7 @@ void Wasp::update(double dt) {
 	//}
 }
 
-void Wasp::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
-{
-	double animationDelay = (maxSpeed / 100) * 40;
-	animationSpeed -= animationDelay;
-	if (animationSpeed < animationDelay)
-	{
-		this->currentAnimationRow = Row;
-		if (EndFrame <= CurrentFrame)
-			CurrentFrame = BeginFrame;
-		else
-			CurrentFrame++;
 
-		this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + CurrentFrame));
-		animationSpeed = maxSpeed * 3;
-	}
-}
-
-void Wasp::StopAnimation()
-{
-	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
-}
 
 void Wasp::setPosition() {
 	//this->setX(getX() + dx);
@@ -95,6 +75,11 @@ void Wasp::setPosition() {
 		this->setChunks();
 		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	}
+}
+
+void Wasp::setImage(Image* image)
+{
+	this->setDrawImage(image);
 }
 
 bool Wasp::checkCollision(CollidableContainer* container) {
