@@ -31,6 +31,8 @@ private:
 
 	void doSomething();
 
+	bool ready;
+
 public:
 	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
