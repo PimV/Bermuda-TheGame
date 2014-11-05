@@ -1,7 +1,7 @@
 #pragma once
 #include "NPC.h"
 #include "Evasive.h"
-#include "IMovable.h"
+#include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "GameStateManager.h"
@@ -10,7 +10,7 @@
 class Wasp :
 	public NPC,
 	public Evasive,
-	public IMovable,
+	public MovableEntity,
 	public DrawableEntity,
 	public CollidableEntity
 {

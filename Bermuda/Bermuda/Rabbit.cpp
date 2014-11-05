@@ -9,7 +9,7 @@ NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
-IMovable(3)
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 3)
 {
 	this->gsm = GameStateManager::Instance();
 	this->mec = PlayState::Instance()->getMainEntityContainer();

@@ -1,6 +1,6 @@
 #pragma once
 #include "entity.h"
-#include "IMovable.h"
+#include "MovableEntity.h"
 #include "header_loader.h"
 #include "Camera.h"
 #include "DrawableEntity.h"
@@ -14,7 +14,7 @@
 class Inventory;
 
 class Player :
-	public IMovable,
+	public MovableEntity,
 	public DrawableEntity,
 	public CollidableEntity
 {

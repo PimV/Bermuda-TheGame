@@ -4,7 +4,7 @@
 #include "Inventory.h"
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), IMovable(moveSpeed)
+	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id,x,y,chunkSize,moveSpeed)
 {
 	this->mec = mec;
 	this->camera = camera;

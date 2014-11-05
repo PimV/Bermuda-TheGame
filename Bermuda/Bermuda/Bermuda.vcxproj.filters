@@ -141,9 +141,6 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="IMovable.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -345,9 +342,9 @@
     <ClCompile Include="PauzeAchievementsButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
-	  <ClCompile Include="PauzeResumeButton.cpp">
-		  <Filter>Source Files\View\Component</Filter>
-	  </ClCompile>
+    <ClCompile Include="PauzeResumeButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
     <ClCompile Include="Wasp.cpp">
       <Filter>Source Files\Model\Entity\Entities</Filter>
     </ClCompile>
@@ -387,9 +384,6 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="IMovable.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -607,7 +601,7 @@
     </ClInclude>
     <ClInclude Include="PauzeResumeButton.h">
       <Filter>Header Files\View\Component</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Wasp.h">
       <Filter>Header Files\Model\Entity\Entities</Filter>
     </ClInclude>
