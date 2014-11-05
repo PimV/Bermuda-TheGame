@@ -20,6 +20,7 @@ void Carrot::update(double dt) {
 void Carrot::interact(Player* player)
 {
 	player->getInventory()->addItem(new ItemCarrot());
+	player->getStatusTracker()->carrotPicked();
 	this->setDestroyedState();
 	//std::cout << "interact met CARROT X: " << this->getX() << " Y: " << this->getY() << std::endl;
 }

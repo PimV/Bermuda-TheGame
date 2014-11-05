@@ -15,9 +15,9 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->setHeight(64);
 
 	//this->playerTimer = new PlayerUpdateTimer();
-	this->hungerUpdate = 0, this->hungerUpdateTime = 2200;
+	this->hungerUpdate = 0; this->hungerUpdateTime = 2200;
 	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
-	this->health = 100, this->hunger = 100, this->thirst = 100;
+	this->health = 20; this->hunger = 20; this->thirst = 100;
 
 	//CollidableEnity - collision values
 	/*this->setCollisionHeight(this->getHeight() - 15);
@@ -63,10 +63,16 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	//TODO : collision container
 
 	this->inventory = new Inventory();
+	this->statusTracker = new StatusTracker();
 }
 
 Inventory* Player::getInventory() {
 	return this->inventory;
+}
+
+StatusTracker* Player::getStatusTracker()
+{
+	return this->statusTracker;
 }
 
 void Player::resetMovement() {
@@ -467,4 +473,5 @@ void Player::StopAnimation() {
 
 Player::~Player(void) {
 	delete this->inventory;
+	delete this->statusTracker;
 }

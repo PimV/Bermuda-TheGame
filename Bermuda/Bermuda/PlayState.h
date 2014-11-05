@@ -34,6 +34,7 @@ private:
 	bool ready;
 
 public:
+	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
 
 	void init(GameStateManager *gsm);

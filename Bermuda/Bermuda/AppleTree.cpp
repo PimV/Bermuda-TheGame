@@ -29,6 +29,7 @@ void AppleTree::interact(Player* player) {
 	if (this->trackInteractTimes()) {
 		this->setDestroyedState();
 		//player->getInventory()->addItem(new ItemApple());
+		player->getStatusTracker()->applePicked();
 	}
 }
 

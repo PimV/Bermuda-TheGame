@@ -94,6 +94,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Achievement.h" />
     <ClInclude Include="ActionContainer.h" />
     <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
@@ -135,9 +136,13 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="InteractableEntity.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="PauseMainScreen.h" />
+    <ClInclude Include="PauseStatusTrackerScreen.h" />
+    <ClInclude Include="PauzeAchievementsButton.h" />
     <ClInclude Include="MovableContainer.h" />
     <ClInclude Include="MovableEntity.h" />
     <ClInclude Include="Pickaxe.h" />
+    <ClInclude Include="StatusTracker.h" />
     <ClInclude Include="ToolAxe.h" />
     <ClInclude Include="ItemCarrot.h" />
     <ClInclude Include="ItemRock.h" />
@@ -173,6 +178,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Wasp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Achievement.cpp" />
     <ClCompile Include="ActionContainer.cpp" />
     <ClCompile Include="AppleTree.cpp" />
     <ClCompile Include="Axe.cpp" />
@@ -197,9 +203,13 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="PauseMainScreen.cpp" />
+    <ClCompile Include="PauseStatusTrackerScreen.cpp" />
+    <ClCompile Include="PauzeAchievementsButton.cpp" />
     <ClCompile Include="MovableContainer.cpp" />
     <ClCompile Include="MovableEntity.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
+    <ClCompile Include="StatusTracker.cpp" />
     <ClCompile Include="ToolAxe.cpp" />
     <ClCompile Include="ItemCarrot.cpp" />
     <ClCompile Include="ItemRock.cpp" />

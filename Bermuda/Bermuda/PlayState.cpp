@@ -31,7 +31,7 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-	this->gsm = gsm;
+		this->gsm = gsm;
 	ready = false;
 
 	mec = new MainEntityContainer();
@@ -56,12 +56,12 @@ void PlayState::init(GameStateManager *gsm) {
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_axe.png", 22, 27)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_pickaxe.png",32, 32)));
-
+	
 	std::cout << "Done" << std::endl;
 
 	//std::thread t(&PlayState::doSomething, this);
 	//t.detach();
-
+	
 	SoundLoader::Instance()->playGameMusic();
 	ready = true;
 }
@@ -104,9 +104,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if (this->p != nullptr)
 	{
-		this->p->moveClick = true;
-		this->p->resetMovement();
-	}
+	this->p->moveClick = true;
+	this->p->resetMovement();
+}
 }
 
 void PlayState::resume() {
@@ -208,12 +208,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			}
 		case SDLK_F11:
 			//Enable collision
-			p->setCollisionHeight(p->getHeight() - 15);
-			p->setCollisionWidth(p->getWidth()/4);
-			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
-			p->setCollisionY(0);
+			p->setCollisionHeight(10);
+			p->setCollisionWidth(24);
+			p->setCollisionX(20);
+			p->setCollisionY(52);
 			break;
-		case SDLK_F12:
+		case SDLK_F10:
 			//Disable collision
 			p->setCollisionHeight(0);
 			p->setCollisionWidth(0);
@@ -294,7 +294,7 @@ void PlayState::update(double dt) {
 
 	p->update(dt);
 	/*if (!p->checkCollision(mec->getCollidableContainer())) {
-	p->setPosition();
+		p->setPosition();
 	}*/
 
 	// TEMPORARY RABBIT UPDATE
@@ -302,7 +302,7 @@ void PlayState::update(double dt) {
 	{
 		rb->update(dt);
 		/*if (!rb->checkCollision(mec->getCollidableContainer())) {
-		rb->setPosition();
+			rb->setPosition();
 		}*/
 	}
 
@@ -311,7 +311,7 @@ void PlayState::update(double dt) {
 	{
 		wa->update(dt);
 		/*if (!wa->checkCollision(mec->getCollidableContainer())) {
-		wa->setPosition();
+			wa->setPosition();
 		}*/
 	}
 
@@ -394,6 +394,11 @@ void PlayState::draw()
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
 	else
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
+}
+
+Player* PlayState::getPlayer()
+{
+	return this->p;
 }
 
 //ERROR Deze methode word nooit aangeroepen volgens mij.
