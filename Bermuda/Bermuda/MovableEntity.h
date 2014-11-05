@@ -27,10 +27,10 @@ protected:
 	//Direction Variables
 	double dx, dy;
 
-	int currentPlayerAnimationRow, playerAnimationIdleColumn;
-	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
-	int playerAnimationWalkStartColumn, playerAnimationWalkEndColumn;
-	int playerAnimationActionStartColumn, playerAnimationActionEndColumn;
+	int currentAnimationRow, animationIdleColumn;
+	int animationWalkUpRow, animationWalkLeftRow, animationWalkDownRow, animationWalkRightRow;
+	int animationWalkStartColumn, animationWalkEndColumn;
+	int animationActionStartColumn, animationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
 	double animationSpeed, animationDelay;
 };

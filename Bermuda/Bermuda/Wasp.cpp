@@ -31,16 +31,17 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 	this->setTempY(this->getY());
 
 	this->firstImgID = gsm->getImageLoader()->loadTileset("bee.png", 32, 32);
-	this->playerAnimationWalkUpRow = 0, this->playerAnimationWalkLeftRow = 1;
-	this->playerAnimationWalkDownRow = 2, this->playerAnimationWalkRightRow = 3;
-	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 2;
+	this->animationWalkUpRow = 0, this->animationWalkLeftRow = 1;
+	this->animationWalkDownRow = 2, this->animationWalkRightRow = 3;
+	this->currentAnimationRow = this->animationWalkDownRow;
+	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 2;
 	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 3, this->frameAmountY = 3, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
 	this->timeSinceLastAction = 0;
 
+	//////////////////////
 	mec->getDrawableContainer()->add(this);
 	mec->getCollidableContainer()->add(this);
 
