@@ -1,45 +1,51 @@
 #include "Spawnpoint.h"
 #include "Rabbit.h"
 #include "PlayState.h"
+#include "NPCFactory.h"
+#include "GameTimer.h"
 #include <iostream>
 
-enum spawnType
+Spawnpoint::Spawnpoint(int id, double x, double y, int chunkSize, string spawnType, int maxChildren) 
+: Entity(id, x, y, chunkSize)
 {
-	RABBIT,
-	WASP
-};
-
-Spawnpoint::Spawnpoint(int type, double x, double y, int chunkSize) 
-: Entity(type, x, y, chunkSize)
-{
-	this->type = type;
+	init(spawnType, maxChildren);
 }
 
-void Spawnpoint::init()
+void Spawnpoint::init(string spawnType, int maxChildren)
 {
-	curChilderen = 0;
-	if (type == RABBIT)
-	{
-		maxChilderen = 5;
-	}
-	if (type == WASP)
-	{
-		maxChilderen = 8;
-	}
+	this->curChildren = 0;
+	this->maxChildren = maxChildren;
+	this->spawnType = spawnType;
+	this->spawnInterval = 90000; //1,5 minuten
+	spawnMob();
 }
 
 void Spawnpoint::spawnMob()
 {
-	if (curChilderen < maxChilderen)
+	if (curChildren < maxChildren)
 	{
-		if (type == RABBIT)
+		if (spawnType == "rabbit")
 		{
-			//rabbits.push_back(new Rabbit(1001, this->getChunkSize(), this, GameStateManager::Instance(), PlayState::Instance()->getMainEntityContainer));
+			NPCFactory::Instance()->createRabbit(this);
 		}
-		if (type == WASP)
+		if (spawnType == "wasp")
 		{
-			//wasps.push_back(new Wasp(2001, this->getChunkSize(), this, GameStateManager::Instance(), PlayState::Instance()->getMainEntityContainer));
+			NPCFactory::Instance()->createWasp(this);
 		}
+		curChildren++;
+	}
+}
+
+void Spawnpoint::decreaseChildren()
+{
+	this->curChildren--;
+}
+
+void Spawnpoint::update()
+{
+	if(GameTimer::Instance()->getGameTime() > lastSpawnTime + spawnInterval)
+	{
+		spawnMob();
 	}
 }
 

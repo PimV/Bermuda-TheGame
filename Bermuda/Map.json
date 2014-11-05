@@ -30034,7 +30034,7 @@ JsonLines: 32105
                  "name":"",
                  "properties":
                     {
-                     "SpawnType":"Player"
+                     "SpawnType":"player"
                     },
                  "rotation":0,
                  "type":"",
@@ -30048,7 +30048,7 @@ JsonLines: 32105
                  "name":"",
                  "properties":
                     {
-                     "SpawnType":"Rabbit"
+                     "SpawnType":"rabbit"
                     },
                  "rotation":0,
                  "type":"",
@@ -30062,7 +30062,7 @@ JsonLines: 32105
                  "name":"",
                  "properties":
                     {
-                     "SpawnType":"Rabbit"
+                     "SpawnType":"wasp"
                     },
                  "rotation":0,
                  "type":"",
