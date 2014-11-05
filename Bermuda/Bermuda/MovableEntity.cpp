@@ -113,3 +113,18 @@ void MovableEntity::StopAnimation()
 {
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }
+
+void MovableEntity::setPosition() {
+	//this->setX(getX() + dx);
+	//this->setY(getY() + dy);
+
+	this->setX(this->tempX);
+	this->setY(this->tempY);
+
+	//Chance chunks if needed
+	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
+	{
+		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
+		this->ResetDrawableEntityAndSetChunk();
+	}
+}

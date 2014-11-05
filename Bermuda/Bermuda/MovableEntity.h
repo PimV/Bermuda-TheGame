@@ -12,15 +12,15 @@ public:
 	virtual ~MovableEntity(void);
 
 	virtual void update(double dt) = 0;
-	
-	void move(double dt);
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
-	void StopAnimation();
-
 protected:
-	virtual void setPosition() = 0;
 	virtual void setImage(Image* image) = 0;
 	virtual bool checkCollision(CollidableContainer* container) = 0;
+	virtual void ResetDrawableEntityAndSetChunk() = 0;
+
+	void move(double dt);
+	void setPosition();
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	void StopAnimation();
 
 	//Speed Variables
 	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;

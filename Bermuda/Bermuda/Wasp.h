@@ -21,9 +21,8 @@ public:
 	void walk(double dt);
 	void update(double dt);
 	bool checkCollision(CollidableContainer* container);
-	void setPosition();
-	
 private:
+	void ResetDrawableEntityAndSetChunk();
 	void setImage(Image* image);
 	long timeSinceLastAction;
 };

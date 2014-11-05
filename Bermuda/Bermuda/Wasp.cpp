@@ -58,28 +58,16 @@ void Wasp::update(double dt) {
 	//}
 }
 
-
-
-void Wasp::setPosition() {
-	//this->setX(getX() + dx);
-	//this->setY(getY() + dy);
-
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
-	//Chance chunks if needed
-	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
-	{
-		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
-		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-		this->setChunks();
-		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
-	}
-}
-
 void Wasp::setImage(Image* image)
 {
 	this->setDrawImage(image);
+}
+
+void Wasp::ResetDrawableEntityAndSetChunk()
+{
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	this->setChunks();
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 }
 
 bool Wasp::checkCollision(CollidableContainer* container) {
