@@ -4,7 +4,7 @@
 #include <random>
 #include "PlayState.h"
 
-Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
+Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint) :
 	NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),

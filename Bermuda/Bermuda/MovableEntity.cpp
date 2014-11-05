@@ -81,14 +81,14 @@ void MovableEntity::move(double dt)
 
 		// set animation row
 		if (this->movingLeft)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
+			this->currentAnimationRow = this->animationWalkLeftRow;
 		else if (this->movingRight)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
+			this->currentAnimationRow = this->animationWalkRightRow;
 		else if (this->movingUp)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
+			this->currentAnimationRow = this->animationWalkUpRow;
 		else if (this->movingDown)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
+			this->currentAnimationRow = this->animationWalkDownRow;
 
-		PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
+		PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
 	}
 }

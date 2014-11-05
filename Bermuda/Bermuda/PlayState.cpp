@@ -50,7 +50,7 @@ void PlayState::init(GameStateManager *gsm) {
 	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
 	for (size_t i = 0; i < 5; i++)
 	{
-		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
+		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2));
 	}
 
 	//TEMPORARY AXE SPAWN:

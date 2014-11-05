@@ -15,7 +15,7 @@ class Wasp :
 	public MovableEntity
 {
 public:
-	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint, GameStateManager* gsm, MainEntityContainer* mec);
+	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint);
 	~Wasp();
 
 	void walk(double dt);
