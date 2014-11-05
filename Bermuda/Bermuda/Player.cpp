@@ -20,12 +20,6 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
 	this->health = 20; this->hunger = 20; this->thirst = 100;
 
-	//CollidableEnity - collision values
-	/*this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth()/4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);*/
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
