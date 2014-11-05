@@ -44,7 +44,7 @@ void PlayState::init(GameStateManager *gsm) {
 	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
 	for (size_t i = 0; i < 5; i++)
 	{
-		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
+		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1));
 	}
 
 	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());

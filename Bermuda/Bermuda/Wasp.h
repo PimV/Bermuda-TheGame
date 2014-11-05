@@ -5,7 +5,6 @@
 #include "CollidableEntity.h"
 #include "GameStateManager.h"
 #include "MainEntityContainer.h"
-#include "MovableEntity.h"
 
 class Wasp :
 	public NPC,
@@ -17,7 +16,6 @@ class Wasp :
 public:
 	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint);
 	~Wasp();
-
 	void walk(double dt);
 	void update(double dt);
 private:

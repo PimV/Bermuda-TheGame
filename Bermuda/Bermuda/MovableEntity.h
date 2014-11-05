@@ -15,7 +15,7 @@ public:
 protected:
 	virtual void setImage(Image* image) = 0;
 	virtual void ResetDrawableEntityAndSetChunk() = 0;
-	virtual bool intersections(CollidableEntity* collidableEntity);
+	virtual bool intersections(CollidableEntity* collidableEntity) = 0;
 
 	void move(double dt);
 	void setPosition();

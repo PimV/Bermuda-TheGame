@@ -5,11 +5,11 @@
 #include "PlayState.h"
 
 Wasp::Wasp(int id, int chunkSize, Spawnpoint *spawnPoint) :
-	NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
-	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
-	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
+NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
+Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
+DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
+CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 {
 	this->setWidth(32);
 	this->setHeight(32);
@@ -17,8 +17,8 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint *spawnPoint) :
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 2;
-	this->stopSpeed = 0.8;
 	this->moveSpeed = 2;
+	this->stopSpeed = 0.8;
 	this->movingLeft = false;
 	this->movingRight = false;
 	this->movingDown = false;
