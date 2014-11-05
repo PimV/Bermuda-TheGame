@@ -2,6 +2,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
+#include "PlayState.h"
 
 Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm, MainEntityContainer* mec) :
 	NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
@@ -10,9 +11,6 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
 	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 {
-	this->gsm = gsm;
-	this->mec = mec;
-
 	this->setWidth(32);
 	this->setHeight(32);
 
@@ -30,7 +28,7 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("bee.png", 32, 32);
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("bee.png", 32, 32);
 	this->animationWalkUpRow = 0, this->animationWalkLeftRow = 1;
 	this->animationWalkDownRow = 2, this->animationWalkRightRow = 3;
 	this->currentAnimationRow = this->animationWalkDownRow;
@@ -41,9 +39,9 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 
 	this->timeSinceLastAction = 0;
 
-	//////////////////////
-	mec->getDrawableContainer()->add(this);
-	mec->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	// Add to MovableContainer?
 
 	this->StopAnimation();
 }
@@ -66,20 +64,20 @@ void Wasp::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 	animationSpeed -= animationDelay;
 	if (animationSpeed < animationDelay)
 	{
-		this->currentPlayerAnimationRow = Row;
+		this->currentAnimationRow = Row;
 		if (EndFrame <= CurrentFrame)
 			CurrentFrame = BeginFrame;
 		else
 			CurrentFrame++;
 
-		this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
+		this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + CurrentFrame));
 		animationSpeed = maxSpeed * 3;
 	}
 }
 
 void Wasp::StopAnimation()
 {
-	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
+	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }
 
 void Wasp::setPosition() {
@@ -93,9 +91,9 @@ void Wasp::setPosition() {
 	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
 	{
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
-		this->mec->getDrawableContainer()->remove(this);
+		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 		this->setChunks();
-		this->mec->getDrawableContainer()->add(this);
+		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	}
 }
 
@@ -117,7 +115,7 @@ bool Wasp::checkCollision(CollidableContainer* container) {
 	{
 		for (int j = beginChunkX; j <= endChunkX; j++)
 		{
-			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
+			std::vector<CollidableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->getChunk(i, j);
 			if (vec != nullptr)
 			{
 				for (CollidableEntity* e : *vec)
