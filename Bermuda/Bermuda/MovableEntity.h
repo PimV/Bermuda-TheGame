@@ -17,7 +17,8 @@ protected:
 	virtual void ResetDrawableEntityAndSetChunk() = 0;
 	virtual bool intersections(CollidableEntity* collidableEntity) = 0;
 
-	void move(double dt);
+	virtual void move(double dt);
+
 	void setPosition();
 	bool checkCollision(CollidableContainer* container);
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
