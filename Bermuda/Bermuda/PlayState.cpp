@@ -30,9 +30,8 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-	this->gsm = gsm;
-
-	//this->gsm->pushGameState(LoadingState::Instance());
+		this->gsm = gsm;
+	ready = false;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -41,14 +40,16 @@ void PlayState::init(GameStateManager *gsm) {
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
 
 	//TEMPORARY AXE SPAWN:
-	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
-	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
-
+	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_axe.png", 22, 27)));
+	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_pickaxe.png",32, 32)));
+	
+	std::cout << "Done" << std::endl;
 
 	//std::thread t(&PlayState::doSomething, this);
 	//t.detach();
-
+	
 	SoundLoader::Instance()->playGameMusic();
+	ready = true;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -63,9 +64,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if (this->p != nullptr)
 	{
-		this->p->moveClick = true;
-		this->p->resetMovement();
-	}
+	this->p->moveClick = true;
+	this->p->resetMovement();
+}
 }
 
 void PlayState::resume() {
@@ -74,7 +75,9 @@ void PlayState::resume() {
 
 
 void PlayState::handleEvents(SDL_Event mainEvent) {
-
+	if (!ready) {
+		return;
+	}
 	//p->handleEvents();
 	//Process Input
 
@@ -236,7 +239,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
-	
+	// check if player died
+	if (!ready) {
+		return;
+	}
+
 	this->updateGameTimers();
 	//TODO: Player collision check in de player.move() zelf afhandelen? 
 	this->gsm->getActionContainer()->executeAllActions(dt);
@@ -297,6 +304,9 @@ long PlayState::getGameTimer() {
 
 void PlayState::draw() 
 {
+	if (!ready) {
+		return;
+	}
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;

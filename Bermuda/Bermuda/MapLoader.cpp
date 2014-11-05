@@ -28,6 +28,8 @@ void MapLoader::setPercentage(int percentage)
 	//cout << "loadPercentage: " << loadPercentage << endl;
 	this->loadPercentage = percentage;
 	LoadingState::Instance()->setPercentage(percentage);
+	LoadingState::Instance()->draw();
+	std::cout << percentage << std::endl;
 }
 
 void MapLoader::loadMap()
@@ -38,6 +40,7 @@ void MapLoader::loadMap()
 	double loadWeight = 10;
 	double totalJSONLines = -1;
 	double processedJSONLines = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Reading map file.";
 
 	//Create file stream.
@@ -74,7 +77,10 @@ void MapLoader::loadMap()
 			json += line;
 
 			processedJSONLines++;
-			this->setPercentage(startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight));
+			tempPercentage = startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight);
+			if (tempPercentage != this->loadPercentage) {
+				this->setPercentage(tempPercentage);
+			}
 		}
 	}
 	this->setPercentage(loadWeight); //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
@@ -92,7 +98,7 @@ void MapLoader::loadMap()
 
 	extractMapInfo(d);
 
-	
+
 }
 
 void MapLoader::extractMapInfo(Document& d)
@@ -113,7 +119,7 @@ void MapLoader::extractMapInfo(Document& d)
 	std::cout << "Map info extracted" << std::endl;
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
-	
+
 	for(int i = 0; i < d["layers"].Capacity(); i++)
 	{
 		Value& layer = d["layers"][i];
@@ -141,6 +147,7 @@ void MapLoader::createTileSets(Value& tilesets)
 	double loadWeight = 20;
 	double totalTilesets = tilesets.Capacity();
 	double processedTilesets = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Loading tilesets.";
 
 	for(int i = 0; i < tilesets.Capacity(); i++)
@@ -171,7 +178,11 @@ void MapLoader::createTileSets(Value& tilesets)
 			}
 		}
 		processedTilesets++;
-		this->setPercentage(startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight));
+		tempPercentage = startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight);
+		if (tempPercentage != this->loadPercentage) {
+			this->setPercentage(tempPercentage);
+		}
+
 	}
 }
 
@@ -181,6 +192,7 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 	double loadWeight = 40;
 	double totalTiles = mapTileHeight * mapTileWidth;
 	double processedTiles = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Creating tiles.";
 
 	for (int y = 0; y < mapTileHeight; y++)
@@ -200,7 +212,10 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(firstImgID + tileID));				
 			}
 			processedTiles++;
-			this->setPercentage(startLoadPercentage + ((processedTiles / totalTiles) * loadWeight));
+			tempPercentage = startLoadPercentage + ((processedTiles / totalTiles) * loadWeight);
+			if (tempPercentage != this->loadPercentage) {
+				this->setPercentage(tempPercentage);
+			}
 		}
 	}
 }
@@ -220,6 +235,7 @@ void MapLoader::createObjects(Value& objects)
 	double loadWeight = 20;
 	double totalObjects = objects.Capacity();
 	double processedObjects = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Creating objects.";
 
 	for(int j = 0; j < objects.Capacity(); j++)
@@ -276,7 +292,10 @@ void MapLoader::createObjects(Value& objects)
 			new RuinStatue(objectID, objectX, objectY, chunkSize, mec, objectImg);
 		}
 		processedObjects++;
-		this->setPercentage(startLoadPercentage + ((processedObjects / totalObjects) * loadWeight));
+		tempPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);
+		if (tempPercentage != this->loadPercentage) {
+			this->setPercentage(tempPercentage);
+		}
 	}
 }
 
@@ -286,6 +305,7 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 	double loadWeight = 10;
 	double totalSpawnpoints = spawnpoints.Capacity();
 	double processedSpawnpoints = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Creating spawnpoints.";
 
 	//TODO: Create spawnpoint objects with correct types
@@ -305,7 +325,10 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize, spawnType, 3);
 		}
 		processedSpawnpoints++;
-		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
+		tempPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
+		if (tempPercentage != this->loadPercentage) {
+			this->setPercentage(tempPercentage);
+		}
 	}
 
 

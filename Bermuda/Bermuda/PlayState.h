@@ -27,6 +27,8 @@ private:
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 
+	bool ready;
+
 public:
 	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
