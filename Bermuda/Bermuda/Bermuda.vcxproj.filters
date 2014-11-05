@@ -88,9 +88,6 @@
     <Filter Include="Header Files\Model\Entity\Entities">
       <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Model\Entity\Entities">
-      <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Container\Tile">
       <UniqueIdentifier>{0b5bd2ae-4d0b-44bb-8038-82aae156ecd5}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,9 @@
     </Filter>
     <Filter Include="Header Files\Model\PauseScreen">
       <UniqueIdentifier>{2a950ad5-ee96-41ad-8440-bfe5fd53a722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\NPC%27s">
+      <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -208,7 +208,7 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Rabbit.cpp">
-      <Filter>Source Files\Model\Entity\Entities</Filter>
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
     <ClCompile Include="Spawnpoint.cpp">
       <Filter>Source Files\Model\Entity</Filter>
@@ -345,11 +345,11 @@
     <ClCompile Include="PauzeAchievementsButton.cpp">
       <Filter>Source Files\View\Component</Filter>
     </ClCompile>
-	  <ClCompile Include="PauzeResumeButton.cpp">
-		  <Filter>Source Files\View\Component</Filter>
-	  </ClCompile>
+    <ClCompile Include="PauzeResumeButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
     <ClCompile Include="Wasp.cpp">
-      <Filter>Source Files\Model\Entity\Entities</Filter>
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
     <ClCompile Include="MovableContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
@@ -604,7 +604,7 @@
     </ClInclude>
     <ClInclude Include="PauzeResumeButton.h">
       <Filter>Header Files\View\Component</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Wasp.h">
       <Filter>Header Files\Model\Entity\Entities</Filter>
     </ClInclude>
