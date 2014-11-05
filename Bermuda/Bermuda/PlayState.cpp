@@ -250,10 +250,10 @@ void PlayState::update(double dt) {
 
 	//Update all spawnpoints and moving entities
 	//Calculate begin and end chunks for the camera (+5 and -5 to make it bigger than the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 5;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 5;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 5;
 
 	//Loop through all chunks
 	for (int i = beginChunkY; i <= endChunkY; i++)
@@ -298,10 +298,10 @@ long PlayState::getGameTimer() {
 void PlayState::draw() 
 {
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 5;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 5;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 5;
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
 
 	std::vector<DrawableEntity*> drawableVector;
 
