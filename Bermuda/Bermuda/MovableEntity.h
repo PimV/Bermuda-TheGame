@@ -14,27 +14,18 @@ public:
 	void move(double dt);
 
 protected:
-
 	virtual void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) = 0;
 	virtual void StopAnimation() = 0;
 	virtual void setPosition() = 0;
 	virtual bool checkCollision(CollidableContainer* container) = 0;
 
 	//Speed Variables
-	double stopSpeed;
-	double minSpeed;
-	double moveSpeed;
-	double maxSpeed;
-	double sprintSpeed;
-	bool sprinting;
+	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
 	//Direction Booleans
-	bool movingLeft;
-	bool movingRight;
-	bool movingDown;
-	bool movingUp;
+	bool movingLeft, movingRight, movingDown, movingUp;
+	bool sprinting;
 	//Direction Variables
-	double dx;
-	double dy;
+	double dx, dy;
 
 	int currentPlayerAnimationRow, playerAnimationIdleColumn;
 	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
