@@ -248,11 +248,10 @@ void PlayState::update(double dt) {
 	}
 
 	this->updateGameTimers();
-	//TODO: Player collision check in de player.move() zelf afhandelen? 
-	this->gsm->getActionContainer()->executeAllActions(dt);
 
-	p->update(dt);
-
+	//TODO: moet dit nog?
+	//this->gsm->getActionContainer()->executeAllActions(dt);
+	
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);

@@ -17,8 +17,8 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 3;
-	this->moveSpeed = 3;
+	this->maxSpeed = 2;
+	this->moveSpeed = 2;
 	this->stopSpeed = 0.8;
 	this->movingLeft = false;
 	this->movingRight = false;
