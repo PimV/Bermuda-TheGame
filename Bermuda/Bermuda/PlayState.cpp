@@ -380,9 +380,13 @@ void PlayState::draw()
 		{
 			for (int j = beginChunkX; j <= endChunkX; j++)
 			{
-				for (Spawnpoint* sp : *this->mec->getSpawnpointContainer()->getChunk(i, j))
+				std::vector<Spawnpoint*>* vec = this->mec->getSpawnpointContainer()->getChunk(i, j);
+				if(vec != nullptr)
 				{
-					sp->drawSpawnpointArea();
+					for (Spawnpoint* sp : *vec)
+					{
+						sp->drawSpawnpointArea();
+					}
 				}
 			}
 		}
