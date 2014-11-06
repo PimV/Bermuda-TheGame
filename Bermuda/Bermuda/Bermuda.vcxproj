@@ -112,6 +112,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
     <ClInclude Include="ExitButton.h" />
+    <ClInclude Include="Fish.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="IBehaviour.h" />
@@ -198,6 +199,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="EnumDirection.cpp" />
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="Fish.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />

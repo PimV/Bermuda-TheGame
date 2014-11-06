@@ -13,7 +13,6 @@ private:
 	Image* stumpImage;
 public:
 	Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* stumpImage);
-	void setCollidableValues();
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
