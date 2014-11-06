@@ -14,6 +14,7 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 	this->interactStartY = interactStartY;
 	this->interactWidth = interactWidth;
 	this->interactHeight = interactHeight;
+	this->percentage = 100;
 
 	this->interactTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelOrange.png").c_str());
 }
@@ -21,8 +22,8 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 void InteractableEntity::interact(Player* player)
 {
 	//TODO : oplossen op manier zonder casten
-	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
-	cout << percentage << endl;
+	this->percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
+	cout << this->percentage << endl;
 }
 
 void InteractableEntity::drawInteractableArea()
@@ -67,6 +68,11 @@ int InteractableEntity::getInteractWidth()
 int InteractableEntity::getInteractHeight()
 {
 	return this->interactHeight;
+}
+
+int InteractableEntity::getPercentage()
+{
+	return this->percentage;
 }
 
 void InteractableEntity::setDestroyedState() {}

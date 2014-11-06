@@ -43,6 +43,9 @@ public:
 	void interact();
 	void resetMovement();
 
+	void setCurrentInteractableEntity(InteractableEntity* newCurrent);
+	InteractableEntity* getCurrentInteractableEntity();
+
 	bool moveClick;
 	bool interaction;
 	int destX;
@@ -64,6 +67,8 @@ private:
 
 	Inventory* inventory;
 	StatusTracker* statusTracker;
+
+	InteractableEntity* currentInteractableEntity;
 
 	void updatePlayerStatuses();
 

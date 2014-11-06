@@ -20,10 +20,13 @@ Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
 
 void Fish::interact(Player* player) 
 {
+	player->setCurrentInteractableEntity(this);
+
 	//TODO: check if player has fishingrod or fishing harpoon
 	InteractableEntity::interact(player);
 
-	if (this->trackInteractTimes()) {
+	if (this->trackInteractTimes()) {		
+		player->setCurrentInteractableEntity(nullptr);
 		this->setDestroyedState();		
 		player->getInventory()->addItem(new ItemFish());
 		//TODO: add fish caught in statustracker

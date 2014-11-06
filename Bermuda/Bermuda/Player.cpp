@@ -357,6 +357,16 @@ bool Player::checkIntersects(CollidableEntity* collidableEntity)
 	return this->intersects(collidableEntity);
 }
 
+InteractableEntity* Player::getCurrentInteractableEntity()
+{
+	return this->currentInteractableEntity;
+}
+
+void Player::setCurrentInteractableEntity(InteractableEntity* newCurrent)
+{
+	this->currentInteractableEntity = newCurrent;
+}
+
 Player::~Player(void) {
 	delete this->inventory;
 	delete this->statusTracker;

@@ -20,6 +20,7 @@ private:
 	int interactStartY;
 	int interactWidth;
 	int interactHeight;
+	int percentage;
 	
 	SDL_Rect interactRect;
 	SDL_Texture* interactTexture;
@@ -36,6 +37,7 @@ public:
 	int getInteractStartY();
 	int getInteractWidth();
 	int getInteractHeight();
+	int getPercentage();
 
 	virtual void interact(Player* p);
 	virtual void setDestroyedState();

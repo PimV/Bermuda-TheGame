@@ -32,9 +32,18 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	ready = false;
+
+	//F function bools
 	showCol = false;
 	showInter = false;
 	showSpawnArea = false;
+	
+	//Health
+	this->currentInteractText = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_grey.png").c_str());
+	this->currentInteractTextFront = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_red.png").c_str());
+	currentInteractRect.w = 100;
+	currentInteractRect.h = 5;
+	currentInteractRectFront.h = 5;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -420,6 +429,29 @@ void PlayState::draw()
 				ce->drawCollidableArea();
 			}
 		}
+	}
+
+	//Draw healthbar current interact item
+	if(this->p->getCurrentInteractableEntity() != nullptr)
+	{
+		if(this->p->getCurrentInteractableEntity()->getWidth() < 100)
+		{
+			currentInteractRect.x = this->p->getCurrentInteractableEntity()->getX() - camera->getX() - (( 100 - this->p->getCurrentInteractableEntity()->getWidth()) /2);
+			currentInteractRectFront.x = this->p->getCurrentInteractableEntity()->getX() - camera->getX()  - (( 100 - this->p->getCurrentInteractableEntity()->getWidth()) /2);
+		}
+		else
+		{
+			currentInteractRect.x = this->p->getCurrentInteractableEntity()->getX() - camera->getX() + (( this->p->getCurrentInteractableEntity()->getWidth() - 100) /2);
+			currentInteractRectFront.x = this->p->getCurrentInteractableEntity()->getX() - camera->getX()  + (( this->p->getCurrentInteractableEntity()->getWidth() - 100) /2);
+		}
+
+		currentInteractRect.y = this->p->getCurrentInteractableEntity()->getY() - camera->getY() - 10;
+		
+		currentInteractRectFront.y = this->p->getCurrentInteractableEntity()->getY() - camera->getY()  - 10;
+		currentInteractRectFront.w = 100 - this->p->getCurrentInteractableEntity()->getPercentage();
+
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->currentInteractText,&this->currentInteractRect,NULL);
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->currentInteractTextFront,&this->currentInteractRectFront,NULL);
 	}
 
 	if (this->p->getInventory()->isOpen()) {

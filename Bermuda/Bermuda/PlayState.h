@@ -16,6 +16,11 @@ private:
 
 	MapLoader* mapLoader;
 	MainEntityContainer* mec;
+		
+	SDL_Texture* currentInteractText;
+	SDL_Texture* currentInteractTextFront;
+	SDL_Rect currentInteractRect;
+	SDL_Rect currentInteractRectFront;
 
 	SDL_Surface* bg;
 	int alpha;

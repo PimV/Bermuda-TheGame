@@ -26,8 +26,10 @@ void Rock::update(double dt) {
 void Rock::interact(Player* player)
 {
 	if (player->getInventory()->hasPickaxe()) {
+		player->setCurrentInteractableEntity(this);
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
+		player->setCurrentInteractableEntity(nullptr);
 			this->setDestroyedState();
 			player->getInventory()->addItem(new ItemRock());
 			player->getStatusTracker()->rockMined();
