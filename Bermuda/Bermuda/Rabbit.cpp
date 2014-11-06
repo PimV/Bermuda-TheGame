@@ -16,11 +16,6 @@ IMovable(3)
 	this->setWidth(36);
 	this->setHeight(36);
 
-	//this->setCollisionHeight(this->getHeight() - 15);
-	//this->setCollisionWidth(this->getWidth() / 4);
-	//this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	//this->setCollisionY(0);
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
@@ -86,9 +81,6 @@ void Rabbit::StopAnimation()
 }
 
 void Rabbit::setPosition() {
-	//this->setX(getX() + dx);
-	//this->setY(getY() + dy);
-
 	this->setX(this->tempX);
 	this->setY(this->tempY);
 
@@ -97,18 +89,14 @@ void Rabbit::setPosition() {
 	{
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->mec->getDrawableContainer()->remove(this);
+		this->mec->getCollidableContainer()->remove(this);
 		this->setChunks();
 		this->mec->getDrawableContainer()->add(this);
+		this->mec->getCollidableContainer()->add(this);
 	}
 }
 
 bool Rabbit::checkCollision(CollidableContainer* container) {
-	//TODO: werkend maken met nieuwe collidablecontainer
-	double currentX = this->getX();
-	double currentY = this->getY();
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
 	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger then the current chunk)
 	int beginChunkX = this->getChunkX() - 1;
 	int endChunkX = this->getChunkX() + 1;
@@ -126,8 +114,6 @@ bool Rabbit::checkCollision(CollidableContainer* container) {
 				for (CollidableEntity* e : *vec)
 				{
 					if (this->intersects(e)) {
-						this->setX(currentX);
-						this->setY(currentY);
 						this->StopAnimation();
 						return true;
 					}
@@ -279,7 +265,7 @@ void Rabbit::move(double dt)
 	//Move rabbit
 	this->setTempX(getX() + dx);
 	this->setTempY(getY() + dy);
-
+	
 	if (!this->checkCollision(mec->getCollidableContainer())) 
 	{
 		this->setPosition();

@@ -19,12 +19,6 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
 	this->health = 100; this->hunger = 100; this->thirst = 100;
 
-	//CollidableEnity - collision values
-	/*this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth()/4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);*/
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
@@ -87,11 +81,6 @@ void Player::resetMovement() {
 }
 
 bool Player::checkCollision(CollidableContainer* container) {
-	//TODO: werkend maken met nieuwe collidablecontainer shit
-	double currentX = this->getX();
-	double currentY = this->getY();
-	this->setX(this->tempX);
-	this->setY(this->tempY);
 
 	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
 	int beginChunkX = this->getChunkX() - 1;
@@ -106,8 +95,6 @@ bool Player::checkCollision(CollidableContainer* container) {
 			if(vec != nullptr) {
 				for(CollidableEntity* e : *vec) {
 					if (this->intersects(e)) {
-						this->setX(currentX);
-						this->setY(currentY);
 						this->StopAnimation();
 						return true;
 					}
@@ -390,9 +377,6 @@ void::Player::interact()
 }
 
 void Player::setPosition() {
-	//this->setX(getX() + dx);
-	//this->setY(getY() + dy);
-
 	this->setX(this->tempX);
 	this->setY(this->tempY);
 
@@ -401,8 +385,10 @@ void Player::setPosition() {
 	{  
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->mec->getDrawableContainer()->remove(this);
+		this->mec->getCollidableContainer()->remove(this);
 		this->setChunks(); 
 		this->mec->getDrawableContainer()->add(this);
+		this->mec->getCollidableContainer()->add(this);
 	} 
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));

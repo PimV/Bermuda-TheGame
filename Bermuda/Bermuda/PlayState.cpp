@@ -44,13 +44,13 @@ void PlayState::init(GameStateManager *gsm) {
 
 	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
 	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < 1; i++)
 	{
 		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
 	}
 
 	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < 1; i++)
 	{
 		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
 	}

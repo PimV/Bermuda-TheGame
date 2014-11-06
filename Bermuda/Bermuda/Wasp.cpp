@@ -7,7 +7,7 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 	NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 8, 20, 16, 12),
 	IMovable(2)
 {
 	this->gsm = gsm;
@@ -15,11 +15,6 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, GameStateManager* gsm,
 
 	this->setWidth(32);
 	this->setHeight(32);
-
-	/*this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth() / 4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);*/
 
 	this->dx = 0;
 	this->dy = 0;
@@ -86,29 +81,22 @@ void Wasp::StopAnimation()
 }
 
 void Wasp::setPosition() {
-	//this->setX(getX() + dx);
-	//this->setY(getY() + dy);
-
 	this->setX(this->tempX);
 	this->setY(this->tempY);
-
+	
 	//Chance chunks if needed
 	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
 	{
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->mec->getDrawableContainer()->remove(this);
+		this->mec->getCollidableContainer()->remove(this);
 		this->setChunks();
 		this->mec->getDrawableContainer()->add(this);
+		this->mec->getCollidableContainer()->add(this);
 	}
 }
 
 bool Wasp::checkCollision(CollidableContainer* container) {
-	//TODO: werkend maken met nieuwe collidablecontainer
-	double currentX = this->getX();
-	double currentY = this->getY();
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
 	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger then the current chunk)
 	int beginChunkX = this->getChunkX() - 1;
 	int endChunkX = this->getChunkX() + 1;
@@ -126,8 +114,6 @@ bool Wasp::checkCollision(CollidableContainer* container) {
 				for (CollidableEntity* e : *vec)
 				{
 					if (this->intersects(e)) {
-						this->setX(currentX);
-						this->setY(currentY);
 						this->StopAnimation();
 						return true;
 					}
