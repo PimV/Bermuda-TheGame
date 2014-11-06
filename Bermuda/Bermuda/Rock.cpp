@@ -38,7 +38,10 @@ void Rock::interact(Player* player)
 void Rock::setDestroyedState()
 {
 	this->destroyed = true;
+	this->setCollisionX(0);
+	this->setCollisionWidth(0);
 	this->setCollisionY(0);
+	this->setCollisionHeight(0);
 	this->setDrawImage(this->rockPiecesImage);
 	this->getMainEntityContainer()->getBackgroundContainer()->add(this);
 	this->getMainEntityContainer()->getInteractableContainer()->remove(this);

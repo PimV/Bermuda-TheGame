@@ -139,8 +139,12 @@ void Rabbit::setImage(Image* image)
 void Rabbit::ResetDrawableEntityAndSetChunk()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->setChunks();
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
 bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
@@ -150,5 +154,4 @@ bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
 
 Rabbit::~Rabbit()
 {
-
 }

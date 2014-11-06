@@ -4,12 +4,13 @@
 #include <iostream>
 #include <random>
 
+
 Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, chunkSize, 5, 1, 50, spawnPoint),
-Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
+	NPC(id, chunkSize, 5, 1, 50, spawnPoint),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
+	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 8, 20, 16, 12),
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 {
 	this->setWidth(32);
 	this->setHeight(32);
@@ -137,8 +138,12 @@ void Wasp::setImage(Image* image)
 void Wasp::ResetDrawableEntityAndSetChunk()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->setChunks();
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
 bool Wasp::checkIntersects(CollidableEntity* collidableEntity)
@@ -148,5 +153,4 @@ bool Wasp::checkIntersects(CollidableEntity* collidableEntity)
 
 Wasp::~Wasp()
 {
-
 }

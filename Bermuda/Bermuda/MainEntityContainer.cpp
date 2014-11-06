@@ -8,7 +8,8 @@ MainEntityContainer::MainEntityContainer(void)
 	m_container[ContainerType::Interactable] = new InteractableContainer();
 	m_container[ContainerType::Respawnable] = new RespawnContainer();
 	m_container[ContainerType::Movable] = new MovableContainer();
-	m_container[ContainerType::Spawnpoint] = new MovableContainer();
+	//TODO: werkt onderstaande container naar behoren? (johan/bas)
+	m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {

@@ -70,6 +70,16 @@ double Entity::getY() {
 	return this->y;
 }
 
+double Entity::getTempX()
+{
+	return this->tempX;
+}
+
+double Entity::getTempY()
+{
+	return this->tempY;
+}
+
 double Entity::getZ() {
 	return this->z;
 }

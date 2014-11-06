@@ -111,7 +111,7 @@ void Player::updatePlayerStatuses()
 		this->incrementHunger(-1);
 		hungerUpdate = 0;
 	}
-	
+
 	// check if thirst needs to be updated
 	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
 	if (this->thirstUpdate > thirstUpdateTime) {
@@ -243,7 +243,7 @@ void::Player::interact()
 					{
 						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
 						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
-						
+
 						double diffX = centerX - playerOffsetX;
 						double diffY = centerY - playerOffsetY;
 
@@ -288,20 +288,7 @@ void::Player::interact()
 }
 
 void Player::setPosition() {
-	//this->setX(getX() + dx);
-	//this->setY(getY() + dy);
-
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
-	//Chance chunks if needed
-	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
-	{
-		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
-		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-		this->setChunks();
-		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
-	}
+	MovableEntity::setPosition();
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -357,8 +344,12 @@ void Player::setImage(Image* image)
 void Player::ResetDrawableEntityAndSetChunk()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->setChunks();
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
 bool Player::checkIntersects(CollidableEntity* collidableEntity)

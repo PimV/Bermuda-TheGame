@@ -251,7 +251,7 @@ void PlayState::update(double dt) {
 
 	//TODO: moet dit nog?
 	//this->gsm->getActionContainer()->executeAllActions(dt);
-	
+
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
@@ -279,13 +279,26 @@ void PlayState::update(double dt) {
 				}
 			}
 
-			//Moving entities
+			//Oude manier! LATEN STAAN
+			////Moving entities
+			//std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
+			//if (movingEntities != nullptr)
+			//{
+			//	for (MovableEntity* e : *movingEntities)
+			//	{
+			//		//TODO: enable when movableEntities get an 'update' method. 
+			//		e->update(dt);
+			//	}
+			//}
+
+			//NIEUWE MANIER! is dit de juiste manier?
+			////Moving entities
 			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
-			if (movingEntities != nullptr)
+			if(movingEntities != nullptr && movingEntities->size() > 0)
 			{
-				for (MovableEntity* e : *movingEntities)
+				std::vector<MovableEntity*> copyMovingEntities = std::vector<MovableEntity*>(*movingEntities);
+				for (MovableEntity* e : copyMovingEntities)
 				{
-					//TODO: enable when movableEntities get an 'update' method. 
 					e->update(dt);
 				}
 			}
@@ -329,6 +342,17 @@ void PlayState::draw()
 				for (DrawableEntity* e : *vec)
 				{
 					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
+					//Draw collision area
+					if(this->showCol)
+					{
+						//TEMP draw collision area
+						CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+						if(ce != NULL)
+						{
+							ce->drawCollidableArea();
+						}
+					}
 				}
 			}
 			//Objecten
