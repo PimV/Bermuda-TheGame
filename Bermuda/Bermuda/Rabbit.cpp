@@ -6,7 +6,7 @@
 #include "PlayState.h"
 
 Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
+NPC(id, chunkSize, 5, 1, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
@@ -105,23 +105,23 @@ void Rabbit::directionsAndMove(double dt)
 			break;
 		}
 
-		if ((getX() - getSpawnPoint()->getX()) > getWalkRange())
+		if ((getX() - getSpawnPoint()->getX()) > getSpawnPoint()->getWalkRange())
 		{
 			movingRight = false;
 			movingLeft = true;
 		}
-		else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
+		else if ((getSpawnPoint()->getX() - getX()) > getSpawnPoint()->getWalkRange())
 		{
 			movingRight = true;
 			movingLeft = false;
 		}
 
-		if ((getY() - getSpawnPoint()->getY()) > getWalkRange())
+		if ((getY() - getSpawnPoint()->getY()) > getSpawnPoint()->getWalkRange())
 		{
 			movingDown = false;
 			movingUp = true;
 		}
-		else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
+		else if ((getSpawnPoint()->getY() - getY()) > getSpawnPoint()->getWalkRange())
 		{
 			movingDown = true;
 			movingUp = false;

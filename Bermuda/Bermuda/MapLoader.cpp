@@ -25,11 +25,9 @@ MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
 
 void MapLoader::setPercentage(int percentage)
 {
-	//cout << "loadPercentage: " << loadPercentage << endl;
 	this->loadPercentage = percentage;
 	LoadingState::Instance()->setPercentage(percentage);
 	LoadingState::Instance()->draw();
-	std::cout << percentage << std::endl;
 }
 
 void MapLoader::loadMap()
@@ -85,8 +83,6 @@ void MapLoader::loadMap()
 	}
 	this->setPercentage(loadWeight); //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
 
-	std::cout << "Map file read" << std::endl;
-
 	//Close stream.
 	stream.close();
 
@@ -94,10 +90,7 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
-	std::cout << "Map file parsed" << std::endl;
-
 	extractMapInfo(d);
-
 
 }
 
@@ -116,7 +109,6 @@ void MapLoader::extractMapInfo(Document& d)
 
 	//Set the containers
 	mec->initContainerSizes(floor(mapHeight/chunkSize) +1, floor(mapWidth/chunkSize) +1);
-	std::cout << "Map info extracted" << std::endl;
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
@@ -322,7 +314,7 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		}
 		else
 		{
-			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize, spawnType, 3);
+			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize, spawnType, 3, 400);
 		}
 		processedSpawnpoints++;
 		tempPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
