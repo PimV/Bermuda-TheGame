@@ -6,7 +6,7 @@
 Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y,chunkSize), 
 	DrawableEntity(id,x,y,chunkSize, treeImage), 
-	InteractableEntity(id,x,y,chunkSize, 15),
+	InteractableEntity(id,x,y,chunkSize, 14, 60, 68, 78),
 	CollidableEntity(id,x,y,chunkSize, 34, 102, 27, 15), treeImage(treeImage), stumpImage(stumpImage)
 {
 	this->setMainEntityContainer(mec);

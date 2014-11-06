@@ -1,4 +1,6 @@
 #include "CollidableEntity.h"
+#include "PlayState.h"
+#include "Camera.h"
 #include <iostream>
 
 
@@ -9,11 +11,25 @@ CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize, do
 	this->collisionWidth = collisionWidth;
 	this->collisionX = collisionX;
 	this->collisionY = collisionY;
+
+	this->collidableTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelRed.png").c_str());
 }
 
 CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize)
 	: Entity(id,x,y,chunkSize)
 {
+}
+
+void CollidableEntity::drawCollidableArea()
+{
+	Camera* c = PlayState::Instance()->getCamera();
+
+	collidableRect.x = this->getX() - c->getX() + this->getCollisionX();
+	collidableRect.y = this->getY() - c->getY() + this->getCollisionY();
+	collidableRect.w = this->getCollisionWidth();
+	collidableRect.h = this->getCollisionHeight();
+	
+	GameStateManager::Instance()->sdlInitializer->drawTexture(this->collidableTexture,&this->collidableRect,NULL);
 }
 
 #pragma region Setters
