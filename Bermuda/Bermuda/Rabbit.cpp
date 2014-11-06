@@ -141,7 +141,7 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 }
 
-bool Rabbit::intersections(CollidableEntity* collidableEntity)
+bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
 {
 	return this->intersects(collidableEntity);
 }

@@ -19,8 +19,9 @@ public:
 	void walk(double dt);
 	void update(double dt);
 private:
+	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool intersections(CollidableEntity* collidableEntity);
+	bool checkIntersects(CollidableEntity* collidableEntity);
 };
 

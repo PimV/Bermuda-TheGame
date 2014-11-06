@@ -141,7 +141,7 @@ void Wasp::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 }
 
-bool Wasp::intersections(CollidableEntity* collidableEntity)
+bool Wasp::checkIntersects(CollidableEntity* collidableEntity)
 {
 	return this->intersects(collidableEntity);
 }

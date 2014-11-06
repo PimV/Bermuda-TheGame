@@ -137,7 +137,7 @@ bool MovableEntity::checkCollision(CollidableContainer* container) {
 			{
 				for (CollidableEntity* e : *vec)
 				{
-					if (this->intersections(e)) {
+					if (this->checkIntersects(e)) {
 						this->setX(currentX);
 						this->setY(currentY);
 						this->StopAnimation();
