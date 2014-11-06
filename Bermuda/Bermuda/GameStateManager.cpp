@@ -108,9 +108,7 @@ void GameStateManager::handleEvents() {
 			switch(mainEvent.key.keysym.sym) 
 			{
 			case SDLK_TAB:
-				if (GameStateManager::Instance()->showFps == false) {
-					GameStateManager::Instance()->showFps = true;
-				}
+				GameStateManager::Instance()->showFps = !GameStateManager::Instance()->showFps;
 				break;
 			case SDLK_r:
 				GameStateManager::Instance()->changeGameState(PlayState::Instance());
@@ -122,11 +120,6 @@ void GameStateManager::handleEvents() {
 			break;
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
-			case SDLK_TAB:
-				if (GameStateManager::Instance()->showFps == true) {
-					GameStateManager::Instance()->showFps = false;
-				}
-				break;
 			default:
 				states.back()->handleEvents(mainEvent);
 				break;
