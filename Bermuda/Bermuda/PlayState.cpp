@@ -40,19 +40,19 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
 
 	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
 	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
 	for (size_t i = 0; i < 5; i++)
 	{
-		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
+		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1));
 	}
 
 	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
 	for (size_t i = 0; i < 5; i++)
 	{
-		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
+		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2));
 	}
 
 	//TEMPORARY AXE SPAWN:
