@@ -28,6 +28,7 @@ private:
 	std::vector<DrawableEntity*> temp;
 
 	bool ready;
+	bool showCol, showInter;
 
 public:
 	Player* getPlayer();
@@ -46,6 +47,8 @@ public:
 	long getGameTimer();
 
 	void draw();
+
+	Camera* getCamera();
 
 	static PlayState* Instance() {
 		return &m_PlayState;

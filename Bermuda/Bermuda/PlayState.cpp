@@ -30,24 +30,21 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-		this->gsm = gsm;
+	this->gsm = gsm;
 	ready = false;
+	showCol = false;
+	showInter = false;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
 
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_axe.png", 22, 27)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_pickaxe.png",32, 32)));
-	
-	std::cout << "Done" << std::endl;
 
-	//std::thread t(&PlayState::doSomething, this);
-	//t.detach();
-	
 	SoundLoader::Instance()->playGameMusic();
 	ready = true;
 }
@@ -64,9 +61,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if (this->p != nullptr)
 	{
-	this->p->moveClick = true;
-	this->p->resetMovement();
-}
+		this->p->moveClick = true;
+		this->p->resetMovement();
+	}
 }
 
 void PlayState::resume() {
@@ -133,6 +130,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_F1:
 			//Print player location
 			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
+			break;
+		case SDLK_F2:
+			this->showCol = !this->showCol;
+			break;
+		case SDLK_F3:
+			this->showInter = !this->showInter;
 			break;
 		case SDLK_F5: 
 			{
@@ -284,7 +287,7 @@ void PlayState::update(double dt) {
 				for (MovableEntity* e : *movingEntities)
 				{
 					//TODO: enable when movableEntities get an 'update' method. 
-					//e->update();
+					e->update(dt);
 				}
 			}
 		}
@@ -349,6 +352,27 @@ void PlayState::draw()
 	for (DrawableEntity* e : drawableVector)
 	{
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
+		//Draw interactable area
+		if(this->showInter)
+		{
+			InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
+			if(ie != NULL)
+			{
+				ie->drawInteractableArea();
+			}	
+		}
+
+		//Draw collision area
+		if(this->showCol)
+		{
+			//TEMP draw collision area
+			CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+			if(ce != NULL)
+			{
+				ce->drawCollidableArea();
+			}
+		}
 	}
 
 	if (this->p->getInventory()->isOpen()) {
@@ -369,6 +393,11 @@ void PlayState::draw()
 Player* PlayState::getPlayer()
 {
 	return this->p;
+}
+
+Camera* PlayState::getCamera()
+{
+	return this->camera;
 }
 
 //ERROR Deze methode word nooit aangeroepen volgens mij.

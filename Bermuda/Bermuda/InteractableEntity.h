@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Inventory.h"
+#include "header_loader.h"
 
 class Player;
 class GameStateManager;
@@ -15,30 +16,29 @@ protected:
 	long currentInteractTime;
 
 private:
-	int rangeValue;
-	int startX;
-	int endX;
-	int startY;
-	int endY;
+	int interactStartX;
+	int interactStartY;
+	int interactWidth;
+	int interactHeight;
+	
+	SDL_Rect interactRect;
+	SDL_Texture* interactTexture;
 
 public:
-	InteractableEntity(int id, double x, double y, int chunkSize, int rangeValue);
+	InteractableEntity(int id, double x, double y, int chunkSize, int interactStartX, int interactStartY, int interactWidth, int interactHeight);
 
 	virtual void update(double dt) = 0;
-
-	virtual ~InteractableEntity();
-
+	void drawInteractableArea();
+	
 	bool trackInteractTimes();
 
-	int getInteractAreaStartX();
-	int getInteractAreaEndX();
-	int getInteractAreaStartY();
-	int getInteractAreaEndY();
+	int getInteractStartX();
+	int getInteractStartY();
+	int getInteractWidth();
+	int getInteractHeight();
 
-	void setRangeValues();
-
-	//virtual void interact(Player* p) = 0;
 	virtual void interact(Player* p);
 	virtual void setDestroyedState();
-	int getRangeValue();
+
+	virtual ~InteractableEntity();
 };
