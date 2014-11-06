@@ -12,24 +12,23 @@ public:
 	virtual ~MovableEntity(void);
 
 	virtual void update(double dt) = 0;
+
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	void StopAnimation();
+
+	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
+	bool movingLeft, movingRight, movingDown, movingUp;
+	bool sprinting;
 protected:
 	virtual void setImage(Image* image) = 0;
 	virtual void ResetDrawableEntityAndSetChunk() = 0;
 	virtual bool checkIntersects(CollidableEntity* collidableEntity) = 0;
 
 	virtual void move(double dt);
-
-	void setPosition();
+	virtual void setPosition();
+	
 	bool checkCollision(CollidableContainer* container);
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
-	void StopAnimation();
 
-	//Speed Variables
-	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
-	//Direction Booleans
-	bool movingLeft, movingRight, movingDown, movingUp;
-	bool sprinting;
-	//Direction Variables
 	double dx, dy;
 
 	int firstImgID;

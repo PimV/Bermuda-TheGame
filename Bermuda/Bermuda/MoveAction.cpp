@@ -8,7 +8,7 @@ MoveAction::MoveAction(Player* p, EnumDirection direction)
 }
 
 void MoveAction::execute(double dt) {
-	p->move(dt);
+	p->walk(dt);
 }
 
 MoveAction::~MoveAction(void)

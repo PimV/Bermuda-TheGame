@@ -1,8 +1,8 @@
 #pragma once
 #include "entity.h"
-#include "IMovable.h"
 #include "header_loader.h"
 #include "Camera.h"
+#include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "GameStateManager.h"
@@ -14,7 +14,7 @@
 class Inventory;
 
 class Player :
-	public IMovable,
+	public MovableEntity,
 	public DrawableEntity,
 	public CollidableEntity
 {
@@ -23,6 +23,8 @@ public:
 	//virtual void move(EnumDirection direction) = 0;
 
 	void update(double dt);
+	//void move(double dt);
+	void walk(double dt);
 
 	void setHealth(int value);
 	void setHunger(int value);
@@ -36,23 +38,22 @@ public:
 	int getHunger();
 	int getThirst();
 
-	virtual void move(double dt);
 	//void clickMove();
 	void clickMove();
 	void setPosition();
 	void interact();
 	void resetMovement();
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
-	void StopAnimation();
+	//void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	//void StopAnimation();
 
 	//void draw(SDLInitializer* sdlInitializer);
-	bool checkCollision(CollidableContainer* container);
+	//bool checkCollision(CollidableContainer* container);
 	~Player(void);
 
-	bool movingLeft;
-	bool movingRight;
-	bool movingUp;
-	bool movingDown;
+	//bool movingLeft;
+	//bool movingRight;
+	//bool movingUp;
+	//bool movingDown;
 	bool moveClick;
 	bool interaction;
 	int destX;
@@ -71,13 +72,13 @@ private:
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
 
-	int firstImgID;
-	int currentPlayerAnimationRow, playerAnimationIdleColumn;
-	int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
-	int playerAnimationWalkStartColumn, playerAnimationWalkEndColumn;
-	int playerAnimationActionStartColumn, playerAnimationActionEndColumn;
-	int frameAmountX, frameAmountY, CurrentFrame;
-	double animationSpeed, animationDelay;
+	//int firstImgID;
+	//int currentPlayerAnimationRow, playerAnimationIdleColumn;
+	//int playerAnimationWalkUpRow, playerAnimationWalkLeftRow, playerAnimationWalkDownRow, playerAnimationWalkRightRow;
+	//int playerAnimationWalkStartColumn, playerAnimationWalkEndColumn;
+	//int playerAnimationActionStartColumn, playerAnimationActionEndColumn;
+	//int frameAmountX, frameAmountY, CurrentFrame;
+	//double animationSpeed, animationDelay;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
@@ -87,4 +88,10 @@ private:
 	StatusTracker* statusTracker;
 
 	void updatePlayerStatuses();
+
+
+
+	void setImage(Image* image);
+	void ResetDrawableEntityAndSetChunk();
+	bool checkIntersects(CollidableEntity* collidableEntity);
 };
