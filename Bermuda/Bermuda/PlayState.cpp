@@ -365,6 +365,17 @@ void PlayState::draw()
 				for (DrawableEntity* e : *vec)
 				{
 					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
+					//Draw collision area
+					if(this->showCol)
+					{
+						//TEMP draw collision area
+						CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+						if(ce != NULL)
+						{
+							ce->drawCollidableArea();
+						}
+					}
 				}
 			}
 			//Objecten
