@@ -378,7 +378,57 @@ void PlayState::draw()
 	//Draw sorted object vector
 	for (DrawableEntity* e : drawableVector)
 	{
+		//TEMP draw collision area
+		/*CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+		if(ce != NULL)
+		{
+			SDL_Rect rect;
+
+			int rx = ce->getX() - camera->getX() + ce->getCollisionX();
+			int rxe = ce->getX() - camera->getX() + ce->getCollisionX() + ce->getCollisionWidth();
+			int ry = ce->getY() - camera->getY() + ce->getCollisionY();
+			int rye = ce->getY() - camera->getY() + ce->getCollisionY() + ce->getCollisionHeight();
+
+			rect.x = rx;
+			rect.y = ry;
+			rect.w = rxe - rx;
+			rect.h = rye - ry;
+
+			
+			SDL_Texture* text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.png").c_str());
+
+			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), text2, NULL, &rect);
+
+			SDL_DestroyTexture(text2);
+		}*/
+
+		//TEMP draw interact area
+		/*InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
+		if(ie != NULL)
+		{
+			SDL_Rect rect;
+
+			int rx = ie->getX() - camera->getX() + ie->getInteractStartX();
+			int rxe = ie->getX() - camera->getX() + ie->getInteractStartX() + ie->getInteractWidth();
+			int ry = ie->getY() - camera->getY() + ie->getInteractStartY();
+			int rye = ie->getY() - camera->getY() + ie->getInteractStartY() + ie->getInteractHeight();
+
+			rect.x = rx;
+			rect.y = ry;
+			rect.w = rxe - rx;
+			rect.h = rye - ry;
+
+			
+			SDL_Texture* text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.png").c_str());
+
+			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), text2, NULL, &rect);
+
+			SDL_DestroyTexture(text2);
+		}*/
+
+		
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
 	}
 
 	if (this->p->getInventory()->isOpen()) {
