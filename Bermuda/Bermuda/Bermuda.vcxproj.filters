@@ -85,9 +85,6 @@
     <Filter Include="Source Files\Model\Entity\Behaviour">
       <UniqueIdentifier>{c23db13e-3987-4200-841e-0c722b6bf752}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Model\Entity\Entities">
-      <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Container\Tile">
       <UniqueIdentifier>{0b5bd2ae-4d0b-44bb-8038-82aae156ecd5}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,9 @@
     </Filter>
     <Filter Include="Source Files\Model\Entity\NPC%27s">
       <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Entity\NPC%27s">
+      <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -459,7 +459,7 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Rabbit.h">
-      <Filter>Header Files\Model\Entity\Entities</Filter>
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="Spawnpoint.h">
       <Filter>Header Files\Model\Entity</Filter>
@@ -606,7 +606,7 @@
       <Filter>Header Files\View\Component</Filter>
     </ClInclude>
     <ClInclude Include="Wasp.h">
-      <Filter>Header Files\Model\Entity\Entities</Filter>
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="StateType.h">
       <Filter>Header Files\Model\GameState</Filter>
