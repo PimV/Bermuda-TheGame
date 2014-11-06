@@ -5,7 +5,7 @@
 #include <iostream>
 
 Pickaxe::Pickaxe(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* pickaxeImage)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, pickaxeImage), InteractableEntity(id,x,y,chunkSize, 25)
+	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, pickaxeImage), InteractableEntity(id,x,y,chunkSize, -25, -25, this->getWidth() + 50, this->getHeight() + 50)
 {
 	this->setMainEntityContainer(mec);
 
