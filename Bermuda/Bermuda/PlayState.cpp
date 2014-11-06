@@ -388,6 +388,7 @@ void PlayState::draw()
 	{
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 
+		//Draw interactable area
 		if(this->showInter)
 		{
 			InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
@@ -397,6 +398,7 @@ void PlayState::draw()
 			}	
 		}
 
+		//Draw collision area
 		if(this->showCol)
 		{
 			//TEMP draw collision area
