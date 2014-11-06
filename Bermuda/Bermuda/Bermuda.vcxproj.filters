@@ -375,6 +375,12 @@
     <ClCompile Include="NPCFactory.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
+    <ClCompile Include="Fish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFish.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -637,6 +643,12 @@
     </ClInclude>
     <ClInclude Include="SpawnpointContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Fish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFish.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ ItemCarrot::ItemCarrot()
 
 void ItemCarrot::init() {
 	this->setId((int)Items::Carrot);
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Carrot.png", 30,22)));
+	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemCarrot.png", 30,22)));
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Drink);
@@ -27,8 +27,6 @@ void ItemCarrot::init() {
 	this->setHungerRefill(5);
 	this->setThirstRefill(0);
 	this->setHealthRefill(0);
-
-
 }
 
 void ItemCarrot::consume(Player* player) {

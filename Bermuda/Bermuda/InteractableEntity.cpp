@@ -21,7 +21,8 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 void InteractableEntity::interact(Player* player)
 {
 	//TODO : oplossen op manier zonder casten
-	cout << (int)(((double)currentInteractTime / (double)interactTime) * 100) << endl;
+	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
+	cout << percentage << endl;
 }
 
 void InteractableEntity::drawInteractableArea()

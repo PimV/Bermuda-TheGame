@@ -1,4 +1,4 @@
-JsonLines: 32081
+JsonLines: 32194
 { "height":325,
  "layers":[
         {
@@ -30016,6 +30016,96 @@ JsonLines: 32081
                  "width":0,
                  "x":3680,
                  "y":7070.67
+                }, 
+                {
+                 "gid":451,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":767.5,
+                 "y":1888
+                }, 
+                {
+                 "gid":451,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4768.66666666667,
+                 "y":1568.66666666667
+                }, 
+                {
+                 "gid":451,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":8704.5,
+                 "y":4033.5
+                }, 
+                {
+                 "gid":451,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5470.66666666667,
+                 "y":5311.33333333333
+                }, 
+                {
+                 "gid":451,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5056.66666666667,
+                 "y":5664
+                }, 
+                {
+                 "gid":451,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3392,
+                 "y":832
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -32073,6 +32163,29 @@ JsonLines: 32081
             },
          "spacing":0,
          "tileheight":96,
+         "tilewidth":64,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "firstgid":451,
+         "image":"fish 64x64.png",
+         "imageheight":64,
+         "imagewidth":64,
+         "margin":0,
+         "name":"fish",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":64,
+         "tileproperties":
+            {
+             "0":
+                {
+                 "Type":"Fish"
+                }
+            },
          "tilewidth":64,
          "transparentcolor":"#ff00ff"
         }],

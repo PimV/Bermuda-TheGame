@@ -3,15 +3,16 @@
 #include "Consumable.h"
 enum class Items;
 
-class ItemCarrot :
+
+class ItemFish :
 	public virtual Consumable
 {
 public:
-	ItemCarrot();
-
+	ItemFish();
+	
 	void init();
 	void consume(Player* player);
 
-	virtual ~ItemCarrot(void);
+	virtual ~ItemFish();
 };
 

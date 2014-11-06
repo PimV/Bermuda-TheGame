@@ -4,6 +4,7 @@
 #include "AppleTree.h"
 #include "Rock.h"
 #include "Carrot.h"
+#include "Fish.h"
 #include "Pillar.h"
 #include "RuinStatue.h"
 #include "CollidableTile.h"
@@ -282,6 +283,10 @@ void MapLoader::createObjects(Value& objects)
 		else if(objectClasses[objectID] == "RuinStatue")
 		{
 			new RuinStatue(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if(objectClasses[objectID] == "Fish")
+		{
+			new Fish(objectID, objectX, objectY, chunkSize, objectImg);
 		}
 		processedObjects++;
 		tempPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);
