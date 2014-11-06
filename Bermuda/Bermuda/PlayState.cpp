@@ -34,6 +34,7 @@ void PlayState::init(GameStateManager *gsm) {
 	ready = false;
 	showCol = false;
 	showInter = false;
+	showSpawnArea = false;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -136,6 +137,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_F3:
 			this->showInter = !this->showInter;
+			break;
+		case SDLK_F4:
+			this->showSpawnArea = !this->showSpawnArea;
 			break;
 		case SDLK_F5: 
 			{
@@ -365,6 +369,22 @@ void PlayState::draw()
 				}
 			}
 
+		}
+	}
+
+	//Draw spawnpoint area
+	if(this->showSpawnArea)
+	{
+		//Loop through all chunks
+		for (int i = beginChunkY; i <= endChunkY; i++)
+		{
+			for (int j = beginChunkX; j <= endChunkX; j++)
+			{
+				for (Spawnpoint* sp : *this->mec->getSpawnpointContainer()->getChunk(i, j))
+				{
+					sp->drawSpawnpointArea();
+				}
+			}
 		}
 	}
 

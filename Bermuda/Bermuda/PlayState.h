@@ -28,7 +28,7 @@ private:
 	std::vector<DrawableEntity*> temp;
 
 	bool ready;
-	bool showCol, showInter;
+	bool showCol, showInter, showSpawnArea; 
 
 public:
 	Player* getPlayer();

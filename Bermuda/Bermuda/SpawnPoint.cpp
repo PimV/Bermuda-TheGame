@@ -9,6 +9,8 @@ Spawnpoint::Spawnpoint(int id, double x, double y, int chunkSize, string spawnTy
 : Entity(id, x, y, chunkSize)
 {
 	init(spawnType, maxChildren, walkRange);
+	
+	this->spawnpointTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelPurple.png").c_str());
 }
 
 void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
@@ -20,6 +22,18 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->spawnInterval = 90000; //1,5 minuten
 	this->walkRange = walkRange;
 	spawnMob();
+}
+
+void Spawnpoint::drawSpawnpointArea()
+{
+	Camera* c = PlayState::Instance()->getCamera();
+
+	spawnpointRect.x = this->getX() - c->getX() - this->walkRange;
+	spawnpointRect.y = this->getY() - c->getY() - this->walkRange;
+	spawnpointRect.w = this->walkRange *2;
+	spawnpointRect.h = this->walkRange *2;
+
+	GameStateManager::Instance()->sdlInitializer->drawTexture(this->spawnpointTexture,&this->spawnpointRect,NULL);
 }
 
 void Spawnpoint::spawnMob()
@@ -59,4 +73,5 @@ void Spawnpoint::update()
 
 Spawnpoint::~Spawnpoint()
 {
+	SDL_DestroyTexture(spawnpointTexture);
 }
