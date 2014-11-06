@@ -1,11 +1,12 @@
 #include "Rabbit.h"
+#include "PlayState.h"
 #include <time.h>
 #include <iostream>
 #include <random>
 #include "PlayState.h"
 
-Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint) :
-NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
+Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
+NPC(id, chunkSize, 5, 1, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
@@ -28,11 +29,12 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("rabbitsheet.png", 36, 36);
+	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;
 	this->animationWalkDownRow = 0, this->animationWalkRightRow = 2;
 	this->currentAnimationRow = this->animationWalkDownRow;
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 7;
+
 	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
@@ -103,23 +105,23 @@ void Rabbit::directionsAndMove(double dt)
 			break;
 		}
 
-		if ((getX() - getSpawnPoint()->getX()) > getWalkRange())
+		if ((getX() - getSpawnPoint()->getX()) > getSpawnPoint()->getWalkRange())
 		{
 			movingRight = false;
 			movingLeft = true;
 		}
-		else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
+		else if ((getSpawnPoint()->getX() - getX()) > getSpawnPoint()->getWalkRange())
 		{
 			movingRight = true;
 			movingLeft = false;
 		}
 
-		if ((getY() - getSpawnPoint()->getY()) > getWalkRange())
+		if ((getY() - getSpawnPoint()->getY()) > getSpawnPoint()->getWalkRange())
 		{
 			movingDown = false;
 			movingUp = true;
 		}
-		else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
+		else if ((getSpawnPoint()->getY() - getY()) > getSpawnPoint()->getWalkRange())
 		{
 			movingDown = true;
 			movingUp = false;

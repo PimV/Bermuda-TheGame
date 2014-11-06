@@ -2,12 +2,11 @@
 #include "Spawnpoint.h"
 #include <iostream>
 
-NPC::NPC(int id, int chunkSize, int healthPoints, int attackPoints, int walkRange, int actionRange, Spawnpoint *spawnPoint)  : 
+NPC::NPC(int id, int chunkSize, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
 	Entity(id,spawnPoint->getX(),spawnPoint->getY(), chunkSize)
 {
 	this->healthPoints = healthPoints;
 	this->attackPoints = attackPoints;
-	this->walkRange = walkRange;
 	this->actionRange = actionRange;
 	this->spawnPoint = spawnPoint;
 
@@ -33,11 +32,6 @@ int NPC::getAttackPoints()
 	return this->attackPoints;
 }
 
-int NPC::getWalkRange()
-{
-	return this->walkRange;
-}
-
 int NPC::getActionRange()
 {
 	return this->actionRange;
@@ -58,11 +52,6 @@ void NPC::setHealthPoints(int healthPoints)
 void NPC::setAttackPoints(int attackPoints)
 {
 	this->attackPoints = attackPoints;
-}
-
-void NPC::setWalkRange(int walkRange)
-{
-	this->walkRange = walkRange;
 }
 
 void NPC::setActionRange(int actionRange)

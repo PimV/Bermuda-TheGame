@@ -1,6 +1,7 @@
 #pragma once
 #include "NPC.h"
 #include "Evasive.h"
+#include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "GameStateManager.h"
@@ -14,7 +15,7 @@ class Rabbit :
 	public MovableEntity
 {
 public:
-	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint);
+	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
 	~Rabbit();
 	void directionsAndMove(double dt);
 	void update(double dt);

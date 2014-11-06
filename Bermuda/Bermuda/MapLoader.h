@@ -24,6 +24,7 @@ private:
 	ImageLoader* imgLoader;
 	MainEntityContainer* mec;
 	GameStateManager* gsm;
+	int firstImgID;
 	int mapHeight;
 	int mapWidth;
 	int startPosX;

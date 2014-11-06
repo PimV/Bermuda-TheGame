@@ -1,11 +1,11 @@
 #include "Wasp.h"
+#include "PlayState.h"
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "PlayState.h"
 
-Wasp::Wasp(int id, int chunkSize, Spawnpoint *spawnPoint) :
-NPC(id, chunkSize, 5, 1, 400, 50, spawnPoint),
+Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
+NPC(id, chunkSize, 5, 1, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 10, 24, 18),
@@ -28,7 +28,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("bee.png", 32, 32);
+	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 0, this->animationWalkLeftRow = 1;
 	this->animationWalkDownRow = 2, this->animationWalkRightRow = 3;
 	this->currentAnimationRow = this->animationWalkDownRow;
@@ -103,23 +103,23 @@ void Wasp::directionsAndMove(double dt)
 			break;
 		}
 
-		if ((getX() - getSpawnPoint()->getX()) > getWalkRange())
+		if ((getX() - getSpawnPoint()->getX()) > getSpawnPoint()->getWalkRange())
 		{
 			movingRight = false;
 			movingLeft = true;
 		}
-		else if ((getSpawnPoint()->getX() - getX()) > getWalkRange())
+		else if ((getSpawnPoint()->getX() - getX()) > getSpawnPoint()->getWalkRange())
 		{
 			movingRight = true;
 			movingLeft = false;
 		}
 
-		if ((getY() - getSpawnPoint()->getY()) > getWalkRange())
+		if ((getY() - getSpawnPoint()->getY()) > getSpawnPoint()->getWalkRange())
 		{
 			movingDown = false;
 			movingUp = true;
 		}
-		else if ((getSpawnPoint()->getY() - getY()) > getWalkRange())
+		else if ((getSpawnPoint()->getY() - getY()) > getSpawnPoint()->getWalkRange())
 		{
 			movingDown = true;
 			movingUp = false;

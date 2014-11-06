@@ -91,9 +91,6 @@
     <Filter Include="Header Files\Model\Container\Tile">
       <UniqueIdentifier>{ddd9e1dc-147b-4b55-af41-a0b18b490747}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Model\Container\Interactive">
-      <UniqueIdentifier>{be7ae0cc-0742-4e68-8b12-6ab94637c53d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Item">
       <UniqueIdentifier>{097e5ade-cb4e-4841-9a10-36e47053f69c}</UniqueIdentifier>
     </Filter>
@@ -139,9 +136,6 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="IMovable.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -375,6 +369,12 @@
     <ClCompile Include="PauseStatusTrackerScreen.cpp">
       <Filter>Source Files\Model\PauseScreens</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnpointContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCFactory.cpp">
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -384,9 +384,6 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="IMovable.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -617,6 +614,9 @@
     <ClInclude Include="MovableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="NPCFactory.h">
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
+    </ClInclude>
     <ClInclude Include="StatusTracker.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
@@ -634,6 +634,9 @@
     </ClInclude>
     <ClInclude Include="PauseStatusTrackerScreen.h">
       <Filter>Header Files\Model\PauseScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnpointContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

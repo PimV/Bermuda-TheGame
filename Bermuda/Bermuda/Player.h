@@ -1,8 +1,8 @@
 #pragma once
 #include "entity.h"
+#include "MovableEntity.h"
 #include "header_loader.h"
 #include "Camera.h"
-#include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "GameStateManager.h"

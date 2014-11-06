@@ -1,10 +1,11 @@
 #include "Player.h"
 #include "header_loader.h"
+#include "GameOverState.h"
 #include <iostream>
 #include "Inventory.h"
 #include "PlayState.h"
 
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera)
+Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
 	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
 {
 	this->camera = camera;
@@ -79,6 +80,13 @@ void Player::resetMovement() {
 }
 
 void Player::update(double dt) {
+	// check if player died
+	if (this->getHealth() < 1)
+	{
+		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
+		return;
+	}
+
 	this->updatePlayerStatuses();
 	this->directionsAndMove(dt);
 
