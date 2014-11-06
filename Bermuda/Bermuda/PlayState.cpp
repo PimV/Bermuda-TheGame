@@ -31,8 +31,10 @@ PlayState::PlayState(void)
 }
 
 void PlayState::init(GameStateManager *gsm) {
-		this->gsm = gsm;
+	this->gsm = gsm;
 	ready = false;
+	showCol = false;
+	showInter = false;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -56,12 +58,12 @@ void PlayState::init(GameStateManager *gsm) {
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_axe.png", 22, 27)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Iron_pickaxe.png",32, 32)));
-	
+
 	std::cout << "Done" << std::endl;
 
 	//std::thread t(&PlayState::doSomething, this);
 	//t.detach();
-	
+
 	SoundLoader::Instance()->playGameMusic();
 	ready = true;
 }
@@ -104,9 +106,9 @@ void PlayState::cleanup() {
 void PlayState::pause() {
 	if (this->p != nullptr)
 	{
-	this->p->moveClick = true;
-	this->p->resetMovement();
-}
+		this->p->moveClick = true;
+		this->p->resetMovement();
+	}
 }
 
 void PlayState::resume() {
@@ -173,6 +175,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_F1:
 			//Print player location
 			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
+			break;
+		case SDLK_F2:
+			this->showCol = !this->showCol;
+			break;
+		case SDLK_F3:
+			this->showInter = !this->showInter;
 			break;
 		case SDLK_F5: 
 			{
@@ -294,7 +302,7 @@ void PlayState::update(double dt) {
 
 	p->update(dt);
 	/*if (!p->checkCollision(mec->getCollidableContainer())) {
-		p->setPosition();
+	p->setPosition();
 	}*/
 
 	// TEMPORARY RABBIT UPDATE
@@ -302,7 +310,7 @@ void PlayState::update(double dt) {
 	{
 		rb->update(dt);
 		/*if (!rb->checkCollision(mec->getCollidableContainer())) {
-			rb->setPosition();
+		rb->setPosition();
 		}*/
 	}
 
@@ -311,7 +319,7 @@ void PlayState::update(double dt) {
 	{
 		wa->update(dt);
 		/*if (!wa->checkCollision(mec->getCollidableContainer())) {
-			wa->setPosition();
+		wa->setPosition();
 		}*/
 	}
 
@@ -378,57 +386,26 @@ void PlayState::draw()
 	//Draw sorted object vector
 	for (DrawableEntity* e : drawableVector)
 	{
-		//TEMP draw collision area
-		/*CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
-		if(ce != NULL)
-		{
-			SDL_Rect rect;
-
-			int rx = ce->getX() - camera->getX() + ce->getCollisionX();
-			int rxe = ce->getX() - camera->getX() + ce->getCollisionX() + ce->getCollisionWidth();
-			int ry = ce->getY() - camera->getY() + ce->getCollisionY();
-			int rye = ce->getY() - camera->getY() + ce->getCollisionY() + ce->getCollisionHeight();
-
-			rect.x = rx;
-			rect.y = ry;
-			rect.w = rxe - rx;
-			rect.h = rye - ry;
-
-			
-			SDL_Texture* text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.png").c_str());
-
-			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), text2, NULL, &rect);
-
-			SDL_DestroyTexture(text2);
-		}*/
-
-		//TEMP draw interact area
-		/*InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
-		if(ie != NULL)
-		{
-			SDL_Rect rect;
-
-			int rx = ie->getX() - camera->getX() + ie->getInteractStartX();
-			int rxe = ie->getX() - camera->getX() + ie->getInteractStartX() + ie->getInteractWidth();
-			int ry = ie->getY() - camera->getY() + ie->getInteractStartY();
-			int rye = ie->getY() - camera->getY() + ie->getInteractStartY() + ie->getInteractHeight();
-
-			rect.x = rx;
-			rect.y = ry;
-			rect.w = rxe - rx;
-			rect.h = rye - ry;
-
-			
-			SDL_Texture* text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.png").c_str());
-
-			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), text2, NULL, &rect);
-
-			SDL_DestroyTexture(text2);
-		}*/
-
-		
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 
+		if(this->showInter)
+		{
+			InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
+			if(ie != NULL)
+			{
+				ie->drawInteractableArea();
+			}	
+		}
+
+		if(this->showCol)
+		{
+			//TEMP draw collision area
+			CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+			if(ce != NULL)
+			{
+				ce->drawCollidableArea();
+			}
+		}
 	}
 
 	if (this->p->getInventory()->isOpen()) {
@@ -449,6 +426,11 @@ void PlayState::draw()
 Player* PlayState::getPlayer()
 {
 	return this->p;
+}
+
+Camera* PlayState::getCamera()
+{
+	return this->camera;
 }
 
 //ERROR Deze methode word nooit aangeroepen volgens mij.

@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Inventory.h"
+#include "header_loader.h"
 
 class Player;
 class GameStateManager;
@@ -19,11 +20,15 @@ private:
 	int interactStartY;
 	int interactWidth;
 	int interactHeight;
+	
+	SDL_Rect interactRect;
+	SDL_Texture* interactTexture;
 
 public:
 	InteractableEntity(int id, double x, double y, int chunkSize, int interactStartX, int interactStartY, int interactWidth, int interactHeight);
 
 	virtual void update(double dt) = 0;
+	void drawInteractableArea();
 	
 	bool trackInteractTimes();
 

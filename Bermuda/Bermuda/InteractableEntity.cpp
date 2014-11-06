@@ -1,5 +1,7 @@
 #include "InteractableEntity.h"
 #include "GameStateManager.h"
+#include "PlayState.h"
+#include "Camera.h"
 
 #include <iostream>
 
@@ -13,12 +15,25 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 	this->interactWidth = interactWidth;
 	this->interactHeight = interactHeight;
 
+	this->interactTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelOrange.png").c_str());
 }
 
 void InteractableEntity::interact(Player* player)
 {
 	//TODO : oplossen op manier zonder casten
 	cout << (int)(((double)currentInteractTime / (double)interactTime) * 100) << endl;
+}
+
+void InteractableEntity::drawInteractableArea()
+{
+	Camera* c = PlayState::Instance()->getCamera();
+
+	interactRect.x = this->getX() - c->getX() + this->getInteractStartX();
+	interactRect.y = this->getY() - c->getY() + this->getInteractStartY();
+	interactRect.w = this->getInteractWidth();
+	interactRect.h = this->getInteractHeight();
+	
+	GameStateManager::Instance()->sdlInitializer->drawTexture(this->interactTexture,&this->interactRect,NULL);
 }
 
 bool InteractableEntity::trackInteractTimes() {
@@ -57,4 +72,5 @@ void InteractableEntity::setDestroyedState() {}
 
 InteractableEntity::~InteractableEntity()
 {
+	SDL_DestroyTexture(interactTexture);
 }
