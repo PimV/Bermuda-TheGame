@@ -4,12 +4,10 @@
 #include "Inventory.h"
 #include "PlayState.h"
 
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
+Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera)
 	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
 {
-	this->mec = mec;
 	this->camera = camera;
-	this->gsm = gsm;
 
 	//Entity -> dimension values
 	this->setWidth(64);
@@ -19,12 +17,6 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->hungerUpdate = 0; this->hungerUpdateTime = 2200;
 	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
 	this->health = 100; this->hunger = 100; this->thirst = 100;
-
-	//CollidableEnity - collision values
-	/*this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth()/4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);*/
 
 	this->dx = 0;
 	this->dy = 0;
@@ -44,7 +36,7 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
 	this->currentAnimationRow = this->animationWalkDownRow;
@@ -53,16 +45,14 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
-	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 
 	this->StopAnimation();
 
-	//Add to containers
-	mec->getDrawableContainer()->add(this);
-	mec->getCollidableContainer()->add(this);
-	//TODO : collision container
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->inventory = new Inventory();
 	this->statusTracker = new StatusTracker();
@@ -235,7 +225,7 @@ void::Player::interact()
 	//Loop through all chunks
 	for(int i = beginChunkY; i <= endChunkY; i++) {
 		for(int j = beginChunkX; j <= endChunkX; j++) {
-			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
+			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
 			if(vec != nullptr) {
 
 				for(InteractableEntity* e : *vec) {
@@ -301,9 +291,9 @@ void Player::setPosition() {
 	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
 	{
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
-		this->mec->getDrawableContainer()->remove(this);
+		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 		this->setChunks();
-		this->mec->getDrawableContainer()->add(this);
+		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	}
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
