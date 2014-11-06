@@ -1,6 +1,6 @@
 #include "Fish.h"
 #include "PlayState.h"
-
+#include "ItemFish.h"
 
 Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
 	Entity(id,x,y,chunkSize), 
@@ -24,9 +24,8 @@ void Fish::interact(Player* player)
 	InteractableEntity::interact(player);
 
 	if (this->trackInteractTimes()) {
-		this->setDestroyedState();
-		std::cout << "FISH ADDED!" << std::endl;
-		//TODO: add item fish in inventory
+		this->setDestroyedState();		
+		player->getInventory()->addItem(new ItemFish());
 		//TODO: add fish caught in statustracker
 	}
 }
@@ -45,33 +44,30 @@ void Fish::respawn()
 {
 	this->destroyed = false;
 	this->timeSinceDestroy = 0;
-	this->setDrawImage(this->fishImage);
-	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
-	this->getMainEntityContainer()->getInteractableContainer()->add(this);
-	this->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 }
 
 void Fish::setDestroyedState() 
 {
 	this->destroyed = true;
-	//TODO: fish does only have 1 image.... nullptr works???
-	this->setDrawImage(nullptr);
-	this->getMainEntityContainer()->getRespawnContainer()->add(this);
-	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	currentInteractTime = 0;
 }
 
 
 Fish::~Fish()
 {
-	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	if(this->destroyed) 
 	{ 
-		this->getMainEntityContainer()->getRespawnContainer()->remove(this); 
+		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this); 
 	}
 	else 
 	{ 
-		this->getMainEntityContainer()->getInteractableContainer()->remove(this); 
+		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this); 
 	}
 }

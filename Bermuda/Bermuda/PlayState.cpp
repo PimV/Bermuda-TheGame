@@ -337,24 +337,24 @@ void PlayState::draw()
 		{
 			//Background
 			std::vector<DrawableEntity*>* vec = this->mec->getBackgroundContainer()->getChunk(i, j);
-			//if (vec != nullptr)
-			//{
-			//	for (DrawableEntity* e : *vec)
-			//	{
-			//		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+			if (vec != nullptr)
+			{
+				for (DrawableEntity* e : *vec)
+				{
+					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 
-			//		//Draw collision area
-			//		if(this->showCol)
-			//		{
-			//			//TEMP draw collision area
-			//			CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
-			//			if(ce != NULL)
-			//			{
-			//				ce->drawCollidableArea();
-			//			}
-			//		}
-			//	}
-			//}
+					//Draw collision area
+					if(this->showCol)
+					{
+						//TEMP draw collision area
+						CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+						if(ce != NULL)
+						{
+							ce->drawCollidableArea();
+						}
+					}
+				}
+			}
 			//Objecten
 			vec = this->mec->getDrawableContainer()->getChunk(i, j);
 			if (vec != nullptr)

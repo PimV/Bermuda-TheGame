@@ -378,6 +378,9 @@
     <ClCompile Include="Fish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ItemFish.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -643,6 +646,9 @@
     </ClInclude>
     <ClInclude Include="Fish.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFish.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
