@@ -39,5 +39,7 @@ protected:
 	int animationActionStartColumn, animationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
 	double animationSpeed, animationDelay;
+	
+	long timeSinceLastAction;
 };
 

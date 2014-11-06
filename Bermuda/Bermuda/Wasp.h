@@ -22,7 +22,5 @@ private:
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 	bool intersections(CollidableEntity* collidableEntity);
-
-	long timeSinceLastAction;
 };
 
