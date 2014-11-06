@@ -80,7 +80,7 @@ void Player::resetMovement() {
 
 void Player::update(double dt) {
 	this->updatePlayerStatuses();
-	this->walk(dt);
+	this->directionsAndMove(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
 	/*if (interaction)
@@ -192,7 +192,7 @@ int Player::getThirst() {
 }
 #pragma endregion PlayerStatusUpdates
 
-void Player::walk(double dt)
+void Player::directionsAndMove(double dt)
 {
 	if (sprinting) {
 		maxSpeed = 50;

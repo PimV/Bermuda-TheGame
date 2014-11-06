@@ -16,7 +16,7 @@ class Rabbit :
 public:
 	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint);
 	~Rabbit();
-	void walk(double dt);
+	void directionsAndMove(double dt);
 	void update(double dt);
 private:
 	// Replace methods to DrawableEntity & CollidableEntity

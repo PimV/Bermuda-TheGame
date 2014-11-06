@@ -47,10 +47,10 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 }
 
 void Rabbit::update(double dt) {
-	this->walk(dt);
+	this->directionsAndMove(dt);
 }
 
-void Rabbit::walk(double dt)
+void Rabbit::directionsAndMove(double dt)
 {
 	random_device dev;
 	default_random_engine dre(dev());

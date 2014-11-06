@@ -47,10 +47,10 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 }
 
 void Wasp::update(double dt) {
-	this->walk(dt);
+	this->directionsAndMove(dt);
 }
 
-void Wasp::walk(double dt)
+void Wasp::directionsAndMove(double dt)
 {
 	random_device dev;
 	default_random_engine dre(dev());

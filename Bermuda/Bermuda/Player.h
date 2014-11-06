@@ -23,7 +23,7 @@ public:
 	~Player(void);
 
 	void update(double dt);
-	void walk(double dt);
+	void directionsAndMove(double dt);
 
 	void setHealth(int value);
 	void setHunger(int value);

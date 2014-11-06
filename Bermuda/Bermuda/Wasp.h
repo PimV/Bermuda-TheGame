@@ -16,7 +16,7 @@ class Wasp :
 public:
 	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint);
 	~Wasp();
-	void walk(double dt);
+	void directionsAndMove(double dt);
 	void update(double dt);
 private:
 	// Replace methods to DrawableEntity & CollidableEntity

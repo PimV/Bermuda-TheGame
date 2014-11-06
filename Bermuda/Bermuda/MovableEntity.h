@@ -11,6 +11,7 @@ public:
 	MovableEntity(int id, double x, double y, int chunkSize);
 	virtual ~MovableEntity(void);
 
+	virtual void directionsAndMove(double dt) = 0;
 	virtual void update(double dt) = 0;
 
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
