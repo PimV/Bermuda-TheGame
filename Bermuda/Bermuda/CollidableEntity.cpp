@@ -89,4 +89,5 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity) {
 
 CollidableEntity::~CollidableEntity()
 {
+	SDL_DestroyTexture(collidableTexture);
 }

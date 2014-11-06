@@ -8,6 +8,8 @@ MainEntityContainer::MainEntityContainer(void)
 	m_container[ContainerType::Interactable] = new InteractableContainer();
 	m_container[ContainerType::Respawnable] = new RespawnContainer();
 	m_container[ContainerType::Movable] = new MovableContainer();
+	//TODO: werkt onderstaande container naar behoren? (johan/bas)
+	m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {
@@ -34,6 +36,10 @@ MovableContainer* MainEntityContainer::getMovableContainer() {
 	return static_cast<MovableContainer*>(m_container[ContainerType::Movable]);
 }
 
+SpawnpointContainer* MainEntityContainer::getSpawnpointContainer() {
+	return static_cast<SpawnpointContainer*>(m_container[ContainerType::Spawnpoint]);
+}
+
 void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)
 {
 	//Init all containers with chunks
@@ -42,6 +48,7 @@ void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)
 	m_container[ContainerType::Background]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Interactable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Movable]->initChunks(chunksY, chunksX);
+	m_container[ContainerType::Spawnpoint]->initChunks(chunksY, chunksX);
 }
 
 MainEntityContainer::~MainEntityContainer(void)

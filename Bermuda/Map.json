@@ -1,4 +1,4 @@
-JsonLines: 32105
+JsonLines: 32081
 { "height":325,
  "layers":[
         {
@@ -30034,7 +30034,7 @@ JsonLines: 32105
                  "name":"",
                  "properties":
                     {
-                     "SpawnType":"Player"
+                     "SpawnType":"player"
                     },
                  "rotation":0,
                  "type":"",
@@ -30048,7 +30048,7 @@ JsonLines: 32105
                  "name":"",
                  "properties":
                     {
-                     "SpawnType":"Rabbit"
+                     "SpawnType":"rabbit"
                     },
                  "rotation":0,
                  "type":"",
@@ -30062,7 +30062,7 @@ JsonLines: 32105
                  "name":"",
                  "properties":
                     {
-                     "SpawnType":"Rabbit"
+                     "SpawnType":"wasp"
                     },
                  "rotation":0,
                  "type":"",
@@ -30162,10 +30162,6 @@ JsonLines: 32105
          "tileheight":32,
          "tileproperties":
             {
-             "105":
-                {
-                 "Collision":"True"
-                },
              "106":
                 {
                  "Collision":"True"
@@ -30174,19 +30170,11 @@ JsonLines: 32105
                 {
                  "Collision":"True"
                 },
-             "108":
-                {
-                 "Collision":"True"
-                },
              "109":
                 {
                  "Collision":"True"
                 },
              "110":
-                {
-                 "Collision":"True"
-                },
-             "111":
                 {
                  "Collision":"True"
                 },
@@ -30654,10 +30642,6 @@ JsonLines: 32105
                 {
                  "Collision":"True"
                 },
-             "90":
-                {
-                 "Collision":"True"
-                },
              "91":
                 {
                  "Collision":"True"
@@ -30666,19 +30650,11 @@ JsonLines: 32105
                 {
                  "Collision":"True"
                 },
-             "93":
-                {
-                 "Collision":"True"
-                },
              "94":
                 {
                  "Collision":"True"
                 },
              "95":
-                {
-                 "Collision":"True"
-                },
-             "96":
                 {
                  "Collision":"True"
                 },
