@@ -41,7 +41,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
-	// Add to MovableContainer?
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
 }
