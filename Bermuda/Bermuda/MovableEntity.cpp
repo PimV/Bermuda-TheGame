@@ -4,6 +4,7 @@
 MovableEntity::MovableEntity(int id, double x, double y, int chunkSize)
 	: Entity(id,x,y,chunkSize)
 {
+	this->keepAnimationWhenIdle = false;
 }
 
 MovableEntity::~MovableEntity(void)
@@ -67,6 +68,10 @@ void MovableEntity::move(double dt)
 	}
 
 	if (dx == 0 && dy == 0) {
+		if(this->keepAnimationWhenIdle) 
+		{  
+			PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
+		}
 		return;
 	}
 

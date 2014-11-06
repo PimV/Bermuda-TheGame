@@ -29,6 +29,7 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 
+	this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 0, this->animationWalkLeftRow = 1;
 	this->animationWalkDownRow = 2, this->animationWalkRightRow = 3;
@@ -74,7 +75,7 @@ void Wasp::directionsAndMove(double dt)
 		uniform_int_distribution<int> dist2(1, 10);
 		int randomNumberMoveDirection = dist2(dre);
 
-		this->StopAnimation();
+		//this->StopAnimation();
 
 		switch (randomNumberMoveDirection)
 		{

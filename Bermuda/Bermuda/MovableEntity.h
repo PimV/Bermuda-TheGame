@@ -32,6 +32,7 @@ protected:
 
 	double dx, dy;
 
+	bool keepAnimationWhenIdle;
 	int firstImgID;
 	int currentAnimationRow, animationIdleColumn;
 	int animationWalkUpRow, animationWalkLeftRow, animationWalkDownRow, animationWalkRightRow;
