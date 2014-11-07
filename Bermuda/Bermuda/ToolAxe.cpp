@@ -6,7 +6,7 @@
 
 ToolAxe::ToolAxe(Image* image) 
 {
-	this->setImage();
+	this->setImage(image);
 	init();
 }
 
