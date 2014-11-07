@@ -3,12 +3,12 @@
 #include <ctime>
 #include <iostream>
 
-ItemRock::ItemRock() 
+ItemRock::ItemRock(Image* image) 
 {
-	init();
+	init(image);
 }
 
-void ItemRock::init() {
+void ItemRock::init(Image* image) {
 	this->setId((int)Items::Rock);
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemRock.png", 30,22)));
 
@@ -25,6 +25,6 @@ void ItemRock::init() {
 }
 
 
-ItemRock::~ItemRock(void)
+ItemRock::~ItemRock()
 {
 }

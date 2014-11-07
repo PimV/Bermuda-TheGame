@@ -3,12 +3,12 @@
 #include <ctime>
 #include <iostream>
 
-ItemCarrot::ItemCarrot() 
+ItemCarrot::ItemCarrot(Image* image) 
 {
-	init();
+	init(image);
 }
 
-void ItemCarrot::init() {
+void ItemCarrot::init(Image* image) {
 	this->setId((int)Items::Carrot);
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemCarrot.png", 30,22)));
 
@@ -34,6 +34,6 @@ void ItemCarrot::consume(Player* player) {
 }
 
 
-ItemCarrot::~ItemCarrot(void)
+ItemCarrot::~ItemCarrot()
 {
 }

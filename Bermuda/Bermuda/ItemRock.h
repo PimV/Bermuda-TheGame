@@ -1,14 +1,16 @@
 #pragma once
 #include "item.h"
+#include "Image.h"
 enum class Items;
+
 class ItemRock :
 	public virtual Item
 {
 public:
-	ItemRock(void);
+	ItemRock(Image* image);
 
-	void init();
+	void init(Image* image);
 
-	virtual ~ItemRock(void);
+	virtual ~ItemRock();
 };
 

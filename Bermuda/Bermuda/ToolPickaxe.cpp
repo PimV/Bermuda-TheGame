@@ -4,12 +4,12 @@
 #include <iostream>
 #include "Player.h"
 
-ToolPickaxe::ToolPickaxe() 
+ToolPickaxe::ToolPickaxe(Image* image) 
 {
-	init();
+	init(image);
 }
 
-void ToolPickaxe::init() {
+void ToolPickaxe::init(Image* image) {
 	this->setId((int)Items::Pickaxe);
 	std::cout << "AXE ID: " << this->getId() << std::endl;
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Carrot.png", 30,22)));
@@ -27,6 +27,6 @@ void ToolPickaxe::equip(Player* player) {
 	Equipable::equip(player);
 }
 
-ToolPickaxe::~ToolPickaxe(void)
+ToolPickaxe::~ToolPickaxe()
 {
 }

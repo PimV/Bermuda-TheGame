@@ -4,12 +4,12 @@
 #include <iostream>
 
 
-ItemFish::ItemFish()
+ItemFish::ItemFish(Image* image)
 {
-	init();
+	init(image);
 }
 
-void ItemFish::init() 
+void ItemFish::init(Image* image) 
 {
 	this->setId((int)Items::Fish);
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemFish.png", 30,24)));
