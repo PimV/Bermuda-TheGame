@@ -14,7 +14,7 @@ NPCFactory::NPCFactory()
 void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 {
 	FirstImageIDs["rabbit"] = imgLoader->loadTileset("rabbitsheet.png", 36, 36);
-	FirstImageIDs["wasp"] = imgLoader->loadTileset("bee.png", 32, 32);
+	FirstImageIDs["wasp"] = imgLoader->loadTileset("wasp.png", 32, 32);
 	FirstImageIDs["bat"] = imgLoader->loadTileset("bat.png", 32, 32);
 }
 
