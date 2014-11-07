@@ -305,7 +305,6 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 	int tempPercentage = loadPercentage;
 	loadStatus = "Creating spawnpoints.";
 
-	//TODO: Create spawnpoint objects with correct types
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
 	{
 		Value& object = spawnpoints[j];

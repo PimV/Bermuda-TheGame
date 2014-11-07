@@ -1,4 +1,4 @@
-JsonLines: 32194
+JsonLines: 32208
 { "height":325,
  "layers":[
         {
@@ -30044,8 +30044,8 @@ JsonLines: 32194
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4768.66666666667,
-                 "y":1568.66666666667
+                 "x":4768.67,
+                 "y":1568.67
                 }, 
                 {
                  "gid":451,
@@ -30074,8 +30074,8 @@ JsonLines: 32194
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5470.66666666667,
-                 "y":5311.33333333333
+                 "x":5470.67,
+                 "y":5311.33
                 }, 
                 {
                  "gid":451,
@@ -30089,7 +30089,7 @@ JsonLines: 32194
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5056.66666666667,
+                 "x":5056.67,
                  "y":5664
                 }, 
                 {
@@ -30160,6 +30160,20 @@ JsonLines: 32194
                  "width":6,
                  "x":2174.91,
                  "y":1547.82
+                }, 
+                {
+                 "height":6,
+                 "name":"",
+                 "properties":
+                    {
+                     "SpawnType":"bat"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":6,
+                 "x":2170,
+                 "y":2560.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",

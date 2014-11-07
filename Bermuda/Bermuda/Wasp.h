@@ -4,8 +4,6 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
-#include "GameStateManager.h"
-#include "MainEntityContainer.h"
 
 class Wasp :
 	public NPC,

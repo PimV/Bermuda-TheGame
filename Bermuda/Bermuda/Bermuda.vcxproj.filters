@@ -381,6 +381,9 @@
     <ClCompile Include="Fish.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -649,6 +652,9 @@
     </ClInclude>
     <ClInclude Include="Fish.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Bat.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
