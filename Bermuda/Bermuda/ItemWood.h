@@ -9,7 +9,7 @@ class ItemWood :
 public:
 	ItemWood(Image* image);
 
-	void init(Image* image);
+	void init();
 
 	virtual ~ItemWood();
 };

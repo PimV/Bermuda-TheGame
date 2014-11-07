@@ -10,7 +10,7 @@ class ToolPickaxe :
 public:
 	ToolPickaxe(Image* image);
 
-	void init(Image* image);
+	void init();
 	void equip(Player* player);
 
 	virtual ~ToolPickaxe();

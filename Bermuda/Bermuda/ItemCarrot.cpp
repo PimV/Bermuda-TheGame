@@ -5,12 +5,12 @@
 
 ItemCarrot::ItemCarrot(Image* image) 
 {
-	init(image);
+	this->setImage(image);
+	init();
 }
 
-void ItemCarrot::init(Image* image) {
+void ItemCarrot::init() {
 	this->setId((int)Items::Carrot);
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemCarrot.png", 30,22)));
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Drink);

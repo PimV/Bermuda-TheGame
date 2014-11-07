@@ -6,13 +6,12 @@
 
 ToolPickaxe::ToolPickaxe(Image* image) 
 {
-	init(image);
+	this->setImage(image);
+	init();
 }
 
-void ToolPickaxe::init(Image* image) {
+void ToolPickaxe::init() {
 	this->setId((int)Items::Pickaxe);
-	std::cout << "AXE ID: " << this->getId() << std::endl;
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Carrot.png", 30,22)));
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Tool);

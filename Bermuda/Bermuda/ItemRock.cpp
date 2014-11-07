@@ -5,12 +5,12 @@
 
 ItemRock::ItemRock(Image* image) 
 {
-	init(image);
+	this->setImage(image);
+	init();
 }
 
-void ItemRock::init(Image* image) {
+void ItemRock::init() {
 	this->setId((int)Items::Rock);
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemRock.png", 30,22)));
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Material);

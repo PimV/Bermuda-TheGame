@@ -5,12 +5,12 @@
 
 ItemWood::ItemWood(Image* image) 
 {
-	init(image);
+	this->setImage(image);
+	init();
 }
 
-void ItemWood::init(Image* image) {
+void ItemWood::init() {
 	this->setId((int)Items::Wood);
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemLogs.png", 32,25)));
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Material);

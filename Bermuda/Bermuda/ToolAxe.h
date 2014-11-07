@@ -10,7 +10,7 @@ class ToolAxe :
 public:
 	ToolAxe(Image* image);
 
-	void init(Image* image);
+	void init();
 	void equip(Player* player);
 
 	virtual ~ToolAxe();

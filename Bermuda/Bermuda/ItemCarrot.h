@@ -10,7 +10,7 @@ class ItemCarrot :
 public:
 	ItemCarrot(Image* image);
 
-	void init(Image* image);
+	void init();
 	void consume(Player* player);
 
 	virtual ~ItemCarrot();

@@ -9,7 +9,7 @@ class ItemRock :
 public:
 	ItemRock(Image* image);
 
-	void init(Image* image);
+	void init();
 
 	virtual ~ItemRock();
 };
