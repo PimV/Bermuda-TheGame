@@ -56,7 +56,13 @@ MainEntityContainer* PlayState::getMainEntityContainer()
 }
 
 void PlayState::cleanup() {
-
+	std::cout << "Cleaning Playstate" << std::endl;
+	std::cout << "    - Cleaning Camera" << std::endl;
+	delete camera;
+	std::cout << "    - Cleaning MainEntityContainer" << std::endl;
+	delete mec;
+	std::cout << "    - Cleaning MapLoader" << std::endl;
+	delete mapLoader;
 }
 
 void PlayState::pause() {
@@ -451,8 +457,5 @@ Camera* PlayState::getCamera()
 //Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)
 {
-	delete camera;
-	delete mec;
-	delete mapLoader;
 	std::cout << "deleting playstate" << endl; 
 }

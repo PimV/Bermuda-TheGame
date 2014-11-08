@@ -27,7 +27,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	m_running = true;
 	showFps = false;
-	
+
 	GameStateManager::Instance()->setFps(0);
 	this->updateLength = 0;
 }
@@ -64,7 +64,7 @@ void GameStateManager::cleanup() {
 }
 
 void GameStateManager::changeGameState(IGameState* gameState) {
-	if (!states.empty()) {
+	while (!states.empty()) {
 		states.back()->cleanup();
 		states.pop_back();
 	}
