@@ -12,6 +12,8 @@ public:
 	//std::vector<DrawableEntity*> getContainer();
 	std::vector<DrawableEntity*>* getChunk(int y, int x);
 	
+	void cleanup();
+
 	void initChunks(int chunksY, int chunksX);
 	void remove(DrawableEntity* entity);
 

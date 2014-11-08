@@ -26,4 +26,5 @@ void RespawnContainer::remove(InteractableEntity* entity)
 
 RespawnContainer::~RespawnContainer(void)
 {
+	
 }

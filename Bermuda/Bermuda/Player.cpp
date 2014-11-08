@@ -360,4 +360,7 @@ bool Player::checkIntersects(CollidableEntity* collidableEntity)
 Player::~Player(void) {
 	delete this->inventory;
 	delete this->statusTracker;
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }

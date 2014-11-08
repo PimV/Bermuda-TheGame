@@ -9,6 +9,8 @@ class InteractableContainer :
 public:
 	InteractableContainer();
 
+	void cleanup();
+
 	void add(InteractableEntity* entity);
 	std::vector<InteractableEntity*>* getChunk(int y, int x);
 

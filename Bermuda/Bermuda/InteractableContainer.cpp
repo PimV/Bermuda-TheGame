@@ -1,5 +1,5 @@
 #include "InteractableContainer.h"
-
+#include <iostream>
 
 InteractableContainer::InteractableContainer(void)
 {
@@ -39,6 +39,23 @@ std::vector<InteractableEntity*>* InteractableContainer::getChunk(int y, int x)
 	return nullptr;
 }
 
+void InteractableContainer::cleanup() {
+	std::cout << "Cleaning Interactable Container" << std::endl;
+	int itemsDeleted = 0;
+	for (size_t i = 0; i < this->container.size(); i++) {
+		for (size_t j = 0; j < this->container[i].size(); j++) {
+			for (size_t k = 0; k < this->getChunk(i,j)->size(); k++) {
+				itemsDeleted++;
+				delete this->getChunk(i,j)->at(k);
+			}
+			this->getChunk(i,j)->clear();
+			this->getChunk(i,j)->shrink_to_fit();
+		}
+	}
+	std::cout << "Interactable Container Cleared - " << itemsDeleted << " items deleted."  << std::endl;
+}
+
 InteractableContainer::~InteractableContainer(void)
 {
+	this->cleanup();
 }

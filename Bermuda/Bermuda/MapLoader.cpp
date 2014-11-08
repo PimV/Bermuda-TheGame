@@ -28,7 +28,7 @@ void MapLoader::setPercentage(int percentage)
 {
 	this->loadPercentage = percentage;
 	LoadingState::Instance()->setPercentage(percentage);
-	LoadingState::Instance()->draw();
+	//LoadingState::Instance()->draw();
 }
 
 void MapLoader::loadMap()
@@ -83,7 +83,6 @@ void MapLoader::loadMap()
 		}
 	}
 	this->setPercentage(loadWeight); //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
-
 	//Close stream.
 	stream.close();
 
@@ -91,7 +90,8 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
-	extractMapInfo(d);
+	extractMapInfo(d);;
+
 
 }
 
@@ -286,7 +286,7 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{
-			new Fish(objectID, objectX, objectY, chunkSize, objectImg);
+			new Fish(objectID, objectX, objectY, chunkSize, mec, objectImg);
 		}
 		processedObjects++;
 		tempPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);

@@ -53,4 +53,21 @@ void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)
 
 MainEntityContainer::~MainEntityContainer(void)
 {
+	m_container[ContainerType::Background]->cleanup();
+	m_container[ContainerType::Collidable]->cleanup();
+	m_container[ContainerType::Drawable]->cleanup();
+
+	m_container[ContainerType::Interactable]->cleanup();
+	m_container[ContainerType::Movable]->cleanup();
+	m_container[ContainerType::Spawnpoint]->cleanup();
+
+	delete m_container[ContainerType::Background];
+	delete m_container[ContainerType::Collidable];
+	delete m_container[ContainerType::Drawable];
+
+	delete m_container[ContainerType::Interactable];
+	delete m_container[ContainerType::Movable];
+	delete m_container[ContainerType::Spawnpoint];
+
+
 }

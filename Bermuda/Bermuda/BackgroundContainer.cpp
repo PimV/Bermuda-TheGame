@@ -1,5 +1,5 @@
 #include "BackgroundContainer.h"
-
+#include <iostream>
 
 BackgroundContainer::BackgroundContainer()
 {
@@ -37,6 +37,21 @@ std::vector<DrawableEntity*>* BackgroundContainer::getChunk(int y, int x)
 		return &this->container[y][x];
 	}
 	return nullptr;
+}
+
+void BackgroundContainer::cleanup() {
+	std::cout << "Cleaning Background Container" << std::endl;
+	int itemsDeleted = 0;
+	for (size_t i = 0; i < this->container.size(); i++) {
+		for (size_t j = 0; j < this->container[i].size(); j++) {
+			for (size_t k = 0; k < this->getChunk(i,j)->size(); k++) {
+				itemsDeleted++;
+				delete this->getChunk(i,j)->at(k);
+			}
+			this->getChunk(i,j)->clear();
+		}
+	}
+	std::cout << "Background Container Cleared - " << itemsDeleted << " items deleted."  << std::endl;
 }
 
 BackgroundContainer::~BackgroundContainer()

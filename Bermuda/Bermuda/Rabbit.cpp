@@ -6,11 +6,11 @@
 #include "PlayState.h"
 
 Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, chunkSize, 5, 1, 50, spawnPoint),
-Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
+	NPC(id, chunkSize, 5, 1, 50, spawnPoint),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
+	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 {
 	this->setWidth(36);
 	this->setHeight(36);
@@ -154,4 +154,7 @@ bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
 
 Rabbit::~Rabbit()
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }

@@ -27,4 +27,6 @@ void Axe::interact(Player* player)
 
 Axe::~Axe()
 {
+	this->getMainEntityContainer()->getBackgroundContainer()->remove(this);
+	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }

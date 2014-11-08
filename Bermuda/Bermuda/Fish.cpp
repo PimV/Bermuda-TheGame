@@ -2,13 +2,16 @@
 #include "PlayState.h"
 #include "ItemFish.h"
 
-Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
+Fish::Fish(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* fishImage) :
 	Entity(id,x,y,chunkSize), 
 	DrawableEntity(id,x,y,chunkSize, fishImage), 
 	InteractableEntity(id,x,y,chunkSize, -64, -64, 192, 192)
 {
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	this->setMainEntityContainer(mec);
+	this->getMainEntityContainer()->getInteractableContainer()->add(this);
+	this->getMainEntityContainer()->getDrawableContainer()->add(this);
+	//PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
+	//PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 
 	this->destroyed = false;
 	this->respawnTime = 10000;
@@ -44,30 +47,25 @@ void Fish::respawn()
 {
 	this->destroyed = false;
 	this->timeSinceDestroy = 0;
-	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
+	this->getMainEntityContainer()->getInteractableContainer()->add(this);
+	this->getMainEntityContainer()->getDrawableContainer()->add(this);
 }
 
 void Fish::setDestroyedState() 
 {
 	this->destroyed = true;
-	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	this->getMainEntityContainer()->getRespawnContainer()->add(this);
+	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	currentInteractTime = 0;
 }
 
 
 Fish::~Fish()
 {
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
-		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this); 
-	}
-	else 
-	{ 
-		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this); 
-	}
+	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	this->getMainEntityContainer()->getRespawnContainer()->remove(this); 
+	this->getMainEntityContainer()->getInteractableContainer()->remove(this); 
+
 }

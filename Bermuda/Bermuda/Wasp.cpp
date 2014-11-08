@@ -154,4 +154,7 @@ bool Wasp::checkIntersects(CollidableEntity* collidableEntity)
 
 Wasp::~Wasp()
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }

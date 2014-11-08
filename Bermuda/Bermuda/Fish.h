@@ -9,7 +9,7 @@ class Fish :
 private:
 	Image* fishImage;
 public:
-	Fish(int id, double x, double y, int chunkSize, Image* fishImage);
+	Fish(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* fishImage);
 
 	void update(double dt);
 	void respawn();

@@ -11,6 +11,8 @@ public:
 	void add(MovableEntity* collidable);
 	std::vector<MovableEntity*>* getChunk(int y, int x);
 
+	void cleanup();
+
 	void initChunks(int chunksY, int chunksX);
 	void remove(MovableEntity* entity);
 

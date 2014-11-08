@@ -28,9 +28,9 @@ double Image::getHeight()
 
 Image::~Image()
 {
-	std::cout << "Cleaning Image" << std::endl;
-	std::cout << "    - Cleaning cropRect" << std::endl;
+	//std::cout << "Cleaning Image" << std::endl;
+	//std::cout << "    - Cleaning cropRect" << std::endl;
 	delete cropRect;
 	cropRect = nullptr;
-	std::cout << "Image cleaned" << std::endl;
+	//std::cout << "Image cleaned" << std::endl;
 }

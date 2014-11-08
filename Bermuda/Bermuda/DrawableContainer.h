@@ -6,10 +6,12 @@ class DrawableContainer :
 {
 public:
 	DrawableContainer();
-	
+
 	std::vector<DrawableEntity*>* getChunk(int y, int x);	
 	void initChunks(int chunksY, int chunksX);
-	
+
+	void cleanup();
+
 	void add(DrawableEntity* entity);
 	void remove(DrawableEntity* entity);
 

@@ -8,6 +8,8 @@ class CollidableContainer :
 public:
 	CollidableContainer();
 
+	void cleanup();
+	
 	void add(CollidableEntity* collidable);
 	std::vector<CollidableEntity*>* getChunk(int y, int x);
 

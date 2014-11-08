@@ -74,12 +74,9 @@ Tree::~Tree()
 {
 	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
+
 		this->getMainEntityContainer()->getRespawnContainer()->remove(this); 
-	}
-	else 
-	{ 
+	
 		this->getMainEntityContainer()->getInteractableContainer()->remove(this); 
-	}
+	
 }

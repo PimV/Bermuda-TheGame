@@ -51,14 +51,9 @@ void Rock::setDestroyedState()
 
 Rock::~Rock()
 {
-	if(this->destroyed)
-	{
-		this->getMainEntityContainer()->getBackgroundContainer()->add(this);
-	}
-	else
-	{
-		this->getMainEntityContainer()->getInteractableContainer()->remove(this);
-		this->getMainEntityContainer()->getCollidableContainer()->remove(this);
-		this->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	}
+	this->getMainEntityContainer()->getBackgroundContainer()->remove(this);
+	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
+
 }

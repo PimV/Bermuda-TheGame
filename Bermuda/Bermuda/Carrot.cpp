@@ -33,4 +33,6 @@ void Carrot::setDestroyedState()
 
 Carrot::~Carrot()
 {
+	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }
