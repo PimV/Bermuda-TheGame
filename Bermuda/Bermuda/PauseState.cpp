@@ -60,7 +60,9 @@ void PauseState::draw()
 void PauseState::cleanup()
 {
 	delete mainScr;
+	mainScr = nullptr;
 	delete statScr;
+	statScr = nullptr;
 }
 
 PauseState::~PauseState()
