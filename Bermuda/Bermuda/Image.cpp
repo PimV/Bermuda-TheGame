@@ -31,6 +31,6 @@ Image::~Image()
 	delete cropRect;
 	cropRect = nullptr;
 
-	delete tileSet;
+	SDL_DestroyTexture(tileSet);
 	tileSet = nullptr;
 }
