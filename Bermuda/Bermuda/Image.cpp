@@ -29,4 +29,8 @@ double Image::getHeight()
 Image::~Image()
 {
 	delete cropRect;
+	cropRect = nullptr;
+
+	delete tileSet;
+	tileSet = nullptr;
 }
