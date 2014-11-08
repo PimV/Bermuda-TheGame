@@ -369,4 +369,8 @@ string MapLoader::getLoadStatus()
 
 MapLoader::~MapLoader()
 {
+	std::cout << "Cleaning MapLoader" << std::endl;
+	std::cout << "    - Cleaning ImageLoader" << std::endl;
+	imgLoader->cleanup();
+	std::cout << "MapLoader cleaned" << std::endl;
 }

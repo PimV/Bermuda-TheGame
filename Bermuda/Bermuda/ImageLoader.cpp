@@ -17,7 +17,7 @@ int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeigh
 	{
 		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
 	}
-	
+
 	int x = 0;
 	int y = 0;
 	int fileWidth = 0;
@@ -72,17 +72,28 @@ Image* ImageLoader::getMapImage(int tileID)
 	}
 }
 
-ImageLoader::~ImageLoader()
-{
+void ImageLoader::cleanup() {
 	// Destroy all images
+	std::cout << "Destroying all images" << std::endl;
 	for (int i = 0; i < images.size(); i++)
 	{
-		delete images.at(i);
+		delete images[i];
+		images[i] = nullptr;
 	}
+	images.clear();
+	std::vector<Image*>().swap(images);
 
-	// Destroy all tilesets
+	//// Destroy all tilesets
+	std::cout << "Destroying all tilesets" << std::endl;
 	for (int i = 0; i < tileSets.size(); i++)
 	{
-		SDL_DestroyTexture(tileSets.at(i));
+		SDL_DestroyTexture(tileSets[i]);
 	}
+	tileSets.clear();
+	std::vector<SDL_Texture*>().swap(tileSets);
+}
+
+ImageLoader::~ImageLoader()
+{
+	this->cleanup();
 }

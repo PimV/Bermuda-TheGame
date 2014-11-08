@@ -17,8 +17,6 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 	soundLoader = new SoundLoader();
-	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
-	//states = new std::vector<IGameState*>();
 
 
 	GameStateManager::Instance()->changeGameState(MenuState::Instance());

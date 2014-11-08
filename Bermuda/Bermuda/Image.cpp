@@ -1,5 +1,5 @@
 #include "Image.h"
-
+#include <iostream>
 
 Image::Image(SDL_Texture* tileSet, SDL_Rect* cropRect, double width, double height)
 	: tileSet(tileSet), cropRect(cropRect), width(width), height(height)
@@ -28,9 +28,9 @@ double Image::getHeight()
 
 Image::~Image()
 {
+	std::cout << "Cleaning Image" << std::endl;
+	std::cout << "    - Cleaning cropRect" << std::endl;
 	delete cropRect;
 	cropRect = nullptr;
-
-	SDL_DestroyTexture(tileSet);
-	tileSet = nullptr;
+	std::cout << "Image cleaned" << std::endl;
 }

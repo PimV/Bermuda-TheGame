@@ -15,6 +15,7 @@
 #include <thread>
 #include "ToolAxe.h"
 #include "ItemCarrot.h"
+#include "NPCFactory.h"
 
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
@@ -31,10 +32,12 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+	NPCFactory::Instance()->loadNPCTileSets(GameStateManager::Instance()->getImageLoader());
 	ready = false;
 	showCol = false;
 	showInter = false;
 	showSpawnArea = false;
+
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -56,13 +59,19 @@ MainEntityContainer* PlayState::getMainEntityContainer()
 }
 
 void PlayState::cleanup() {
+
 	std::cout << "Cleaning Playstate" << std::endl;
 	std::cout << "    - Cleaning Camera" << std::endl;
 	delete camera;
+	camera = nullptr;
+
 	std::cout << "    - Cleaning MainEntityContainer" << std::endl;
 	delete mec;
-	std::cout << "    - Cleaning MapLoader" << std::endl;
+	mec = nullptr;
+
+	//std::cout << "    - Cleaning MapLoader" << std::endl;
 	delete mapLoader;
+	mapLoader = nullptr;
 }
 
 void PlayState::pause() {
