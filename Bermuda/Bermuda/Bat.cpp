@@ -152,4 +152,7 @@ bool Bat::checkIntersects(CollidableEntity* collidableEntity)
 
 Bat::~Bat()
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }
