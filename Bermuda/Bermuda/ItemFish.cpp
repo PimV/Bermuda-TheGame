@@ -4,15 +4,15 @@
 #include <iostream>
 
 
-ItemFish::ItemFish()
+ItemFish::ItemFish(Image* image)
 {
+	this->setImage(image);
 	init();
 }
 
 void ItemFish::init() 
 {
 	this->setId((int)Items::Fish);
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Items\\ItemFish.png", 30,24)));
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Drink);

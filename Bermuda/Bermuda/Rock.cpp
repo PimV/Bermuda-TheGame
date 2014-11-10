@@ -1,6 +1,7 @@
 #include "Rock.h"
 #include "Player.h"
 #include "ItemRock.h"
+#include "ItemFactory.h"
 
 
 Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* rockImage, Image* rockPiecesImage) :
@@ -29,7 +30,7 @@ void Rock::interact(Player* player)
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
-			player->getInventory()->addItem(new ItemRock());
+			player->getInventory()->addItem(ItemFactory::Instance()->createRock());
 			player->getStatusTracker()->rockMined();
 		}
 	}
