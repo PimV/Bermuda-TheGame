@@ -384,6 +384,9 @@
     <ClCompile Include="Bat.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
+    <ClCompile Include="ItemFactory.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -655,6 +658,9 @@
     </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>Header Files\Model\Entity\NPC%27s</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

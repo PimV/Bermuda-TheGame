@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include "ItemWood.h"
 #include "Player.h"
+#include "ItemFactory.h"
 
 Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y,chunkSize), 
@@ -28,7 +29,7 @@ void Tree::interact(Player* player) {
 
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
-			player->getInventory()->addItem(new ItemWood());
+			player->getInventory()->addItem(ItemFactory::Instance()->createWood());
 			player->getStatusTracker()->treeCut();
 		}
 	}
