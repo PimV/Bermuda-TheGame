@@ -15,9 +15,11 @@ class Rabbit :
 public:
 	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
 	~Rabbit();
-	void directionsAndMove(double dt);
 	void update(double dt);
 private:
+	void directionsAndMove(double dt);
+
+
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();

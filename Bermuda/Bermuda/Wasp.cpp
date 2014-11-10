@@ -57,7 +57,7 @@ void Wasp::directionsAndMove(double dt)
 	random_device dev;
 	default_random_engine dre(dev());
 
-	uniform_int_distribution<int> dist1(1000, 5000);
+	uniform_int_distribution<int> dist1(500, 5000);
 	int timeWait = dist1(dre);
 
 	if (timeSinceLastAction < timeWait)
@@ -65,17 +65,10 @@ void Wasp::directionsAndMove(double dt)
 		timeSinceLastAction += GameStateManager::Instance()->getUpdateLength() * dt;
 	}
 	else {
-		movingUp = false;
-		movingDown = false;
-		movingRight = false;
-		movingLeft = false;
-
 		timeSinceLastAction = 0;
 
 		uniform_int_distribution<int> dist2(1, 10);
 		int randomNumberMoveDirection = dist2(dre);
-
-		//this->StopAnimation();
 
 		switch (randomNumberMoveDirection)
 		{
