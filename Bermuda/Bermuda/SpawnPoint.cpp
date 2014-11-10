@@ -48,6 +48,10 @@ void Spawnpoint::spawnMob()
 		{
 			NPCFactory::Instance()->createWasp(this);
 		}
+		if (spawnType == "bat")
+		{
+			NPCFactory::Instance()->createBat(this);
+		}
 		this->curChildren++;
 		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
 	}

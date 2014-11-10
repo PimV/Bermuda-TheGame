@@ -5,7 +5,7 @@
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 
-class Rabbit :
+class Bat :
 	public NPC,
 	public Evasive,
 	public DrawableEntity,
@@ -13,8 +13,8 @@ class Rabbit :
 	public MovableEntity
 {
 public:
-	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
-	~Rabbit();
+	Bat(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
+	~Bat();
 	void directionsAndMove(double dt);
 	void update(double dt);
 private:
@@ -23,3 +23,4 @@ private:
 	void ResetDrawableEntityAndSetChunk();
 	bool checkIntersects(CollidableEntity* collidableEntity);
 };
+

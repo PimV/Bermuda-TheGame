@@ -1,11 +1,9 @@
-#include "Wasp.h"
+#include "Bat.h"
 #include "PlayState.h"
-#include <time.h>
-#include <iostream>
 #include <random>
 
 
-Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
+Bat::Bat(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 	NPC(id, chunkSize, 5, 1, 50, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
@@ -48,11 +46,11 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 	this->StopAnimation();
 }
 
-void Wasp::update(double dt) {
+void Bat::update(double dt) {
 	this->directionsAndMove(dt);
 }
 
-void Wasp::directionsAndMove(double dt)
+void Bat::directionsAndMove(double dt)
 {
 	random_device dev;
 	default_random_engine dre(dev());
@@ -131,12 +129,12 @@ void Wasp::directionsAndMove(double dt)
 	this->move(dt);
 }
 
-void Wasp::setImage(Image* image)
+void Bat::setImage(Image* image)
 {
 	this->setDrawImage(image);
 }
 
-void Wasp::ResetDrawableEntityAndSetChunk()
+void Bat::ResetDrawableEntityAndSetChunk()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
@@ -147,11 +145,14 @@ void Wasp::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Wasp::checkIntersects(CollidableEntity* collidableEntity)
+bool Bat::checkIntersects(CollidableEntity* collidableEntity)
 {
 	return this->intersects(collidableEntity);
 }
 
-Wasp::~Wasp()
+Bat::~Bat()
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }

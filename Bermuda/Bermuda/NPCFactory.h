@@ -17,6 +17,7 @@ public:
 	void loadNPCTileSets(ImageLoader* imgLoader);
 	void createRabbit(Spawnpoint* sp);
 	void createWasp(Spawnpoint* sp);
+	void createBat(Spawnpoint* sp);
 
 	~NPCFactory();
 	static NPCFactory* Instance() {
