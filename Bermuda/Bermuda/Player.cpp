@@ -37,7 +37,8 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	//this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Empty_Handed_ChopLeft.png", 64, 64);
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
 	this->currentAnimationRow = this->animationWalkDownRow;
@@ -93,7 +94,7 @@ void Player::update(double dt) {
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
 	/*if (interaction)
 	{
-	interact(dt);
+		interact(dt);
 	}
 	else
 	{
@@ -285,6 +286,11 @@ void::Player::interact()
 	//	this->currentPlayerAnimationRow += 4;
 
 	//this->PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
+
+	/*
+
+	*/
+	this->PlayAnimation(0, 7, 21, 1);
 }
 
 void Player::setPosition() {
