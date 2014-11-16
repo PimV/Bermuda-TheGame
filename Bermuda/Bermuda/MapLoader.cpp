@@ -3,10 +3,15 @@
 #include "Tree.h"
 #include "AppleTree.h"
 #include "Rock.h"
+#include "RockSpikes.h"
+#include "GoldRock.h"
+#include "Ice.h"
 #include "Carrot.h"
 #include "Fish.h"
 #include "Pillar.h"
 #include "RuinStatue.h"
+#include "EasterHead.h"
+#include "Cactus.h"
 #include "CollidableTile.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
@@ -277,6 +282,32 @@ void MapLoader::createObjects(Value& objects)
 			Rock* rock = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			rock->setDestroyedState();
 		}
+		else if (objectClasses[objectID] == "RockSpikes")
+		{
+			new RockSpikes(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "GoldRock")
+		{
+			new GoldRock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "GoldRockPieces")
+		{
+			GoldRock* goldRock = new GoldRock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			goldRock->setDestroyedState();
+		}
+		else if (objectClasses[objectID] == "Ice")
+		{
+			new Ice(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "IceSpikes")
+		{
+			new Ice(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
+		}
+		else if (objectClasses[objectID] == "IcePieces")
+		{
+			Ice* ice = new Ice(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			ice->setDestroyedState();
+		}
 		else if(objectClasses[objectID] == "Carrot")
 		{
 			new Carrot(objectID, objectX, objectY, chunkSize, mec, objectImg);
@@ -288,6 +319,14 @@ void MapLoader::createObjects(Value& objects)
 		else if(objectClasses[objectID] == "RuinStatue")
 		{
 			new RuinStatue(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "EasterHead" || objectClasses[objectID] == "EasterHeadDestroyed")
+		{
+			new EasterHead(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "Cactus")
+		{
+			new Cactus(objectID, objectX, objectY, chunkSize, mec, objectImg);
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{
