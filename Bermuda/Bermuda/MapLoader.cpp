@@ -56,25 +56,30 @@ void MapLoader::loadMap()
 	string json;
 	string line;
 	bool firstLine = true;
-	while (getline(stream, line)) 
+	while (getline(stream, line))
 	{
-		if(firstLine)
+		if (firstLine)
 		{
+			firstLine = false;
 			//First line contains total file lines.
 			istringstream iss(line);
 			string type;
 			iss >> type >> totalJSONLines;
-			if(type != "JsonLines:" && totalJSONLines > 0)
+			if (type == "JsonLines:" && totalJSONLines > 0)
 			{
-				cout << "Could not load map. Incorrect file structure. Missing line count." << endl;
-				return;
+				continue;
 			}
-			firstLine = false;
+			else
+			{
+				cout << "Missing line count. Can't calculate file load percentage." << endl;
+				totalJSONLines = 0;
+			}
 		}
-		else
-		{
-			json += line;
 
+		json += line;
+
+		if (totalJSONLines > 0)
+		{
 			processedJSONLines++;
 			tempPercentage = startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight);
 			if (tempPercentage != this->loadPercentage) {
