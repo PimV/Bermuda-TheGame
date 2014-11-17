@@ -14,9 +14,14 @@ private:
 	std::vector<SDL_Rect> countRectangles;
 	std::vector<SDL_Surface*> countSurfaces;
 
+	//background
+	SDL_Texture* backgroundTexture;
+	SDL_Rect backgroundRect;
+
 	//Methodes
 	void init();
 	void cleanup();
+	void setBackground();
 
 public:
 	//Methodes

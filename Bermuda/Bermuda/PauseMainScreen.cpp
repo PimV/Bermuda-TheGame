@@ -13,8 +13,7 @@ PauseMainScreen::PauseMainScreen()
 
 void PauseMainScreen::init()
 {
-	std::cout << "add buttons" << endl;
-
+	//Buttons
 	PauzeResumeButton* resumeButton = new PauzeResumeButton(GameStateManager::Instance());
 	PauzeMenuButton* menuButton = new PauzeMenuButton(GameStateManager::Instance());
 	PauzeExitButton* exitButton = new PauzeExitButton(GameStateManager::Instance());
@@ -24,11 +23,55 @@ void PauseMainScreen::init()
 	resumeButton->placeAbove(achievementsButton);
 	exitButton->placeUnder(menuButton);
 
-
 	buttons.push_back(achievementsButton);
 	buttons.push_back(resumeButton);
 	buttons.push_back(menuButton);
 	buttons.push_back(exitButton);
+
+	//Background
+	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/menuBackground.png").c_str());
+	setBackground();
+}
+
+void PauseMainScreen::setBackground()
+{
+	backgroundRect.x = ScreenWidth;
+	for each (BasePauzeButton* var in buttons)
+	{
+		if (var->getX() <= backgroundRect.x)
+		{
+			backgroundRect.x = var->getX();
+		}
+	}
+	backgroundRect.x = backgroundRect.x - 30;
+
+	backgroundRect.y = ScreenHeight;
+	for each (BasePauzeButton* var in buttons)
+	{
+		if (var->getY() <= backgroundRect.y)
+		{
+			backgroundRect.y = var->getY(); 
+		}
+	}
+	backgroundRect.y = backgroundRect.y - 30;
+
+	backgroundRect.w = 0;
+	backgroundRect.h = 0;
+
+	for each (BasePauzeButton* var in buttons)
+	{
+		if (var->getWidth() >= backgroundRect.w)
+		{
+			backgroundRect.w = var->getWidth();
+		}
+	}
+	backgroundRect.w += 60;
+
+	for each (BasePauzeButton* var in buttons)
+	{
+		backgroundRect.h += var->getHeight() * 2;
+	}
+	backgroundRect.h += 40;
 }
 
 void PauseMainScreen::handleEvents(SDL_Event mainEvent)
@@ -71,6 +114,8 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 
 void PauseMainScreen::draw()
 {
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
+
 	for (int i = 0; i < buttons.size(); i++)
 	{
 		buttons[i]->draw(GameStateManager::Instance());
@@ -88,4 +133,5 @@ void PauseMainScreen::cleanup()
 
 PauseMainScreen::~PauseMainScreen()
 {
+	cleanup();
 }

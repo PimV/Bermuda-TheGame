@@ -20,8 +20,13 @@ protected:
 
 public:
 	//methodes
+	void createButton(std::string);
 	void placeAbove(BasePauzeButton* button);
 	void placeUnder(BasePauzeButton* button);
+	int getX();
+	int getY();
+	int getHeight();
+	int getWidth();
 
 	void draw(GameStateManager* gsm);
 	void hover(int, int, GameStateManager *gsm);
