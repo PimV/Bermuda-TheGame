@@ -165,7 +165,7 @@ void SoundLoader::threadMusic()
 bool SoundLoader::loadMenuMusic()
 {
 	bool success = true;
-
+	std::cout<< "Loading menu music" << std::endl;
 	menuMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/menu/Rollin at 5.mp3").c_str()));
 	menuMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/menu/Rollin at 5 - electronic.mp3").c_str()));
 	for (size_t i = 0; i < menuMusic.size(); i++)
@@ -182,6 +182,7 @@ bool SoundLoader::loadMenuMusic()
 
 bool SoundLoader::loadGameMusic()
 {
+	std::cout<< "Loading game music" << std::endl;
 	bool success = true;
 	
 	gameMusic.push_back(Mix_LoadMUS((RESOURCEPATH + "music/game/Bahara.mp3").c_str()));

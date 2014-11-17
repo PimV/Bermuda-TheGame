@@ -5,7 +5,7 @@ class GameTimer
 {
 public:
 	GameTimer(void);
-	~GameTimer(void);
+	virtual ~GameTimer(void);
 
 	static GameTimer* Instance() { return &s_GameTimer; };
 	void updateGameTime(long _gameTime);

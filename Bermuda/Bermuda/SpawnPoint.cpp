@@ -74,4 +74,5 @@ void Spawnpoint::update()
 Spawnpoint::~Spawnpoint()
 {
 	SDL_DestroyTexture(spawnpointTexture);
+	spawnpointTexture = nullptr;
 }

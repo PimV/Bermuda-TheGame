@@ -28,11 +28,12 @@ void MapLoader::setPercentage(int percentage)
 {
 	this->loadPercentage = percentage;
 	LoadingState::Instance()->setPercentage(percentage);
-	//LoadingState::Instance()->draw();
+	LoadingState::Instance()->draw();
 }
 
 void MapLoader::loadMap()
 {
+	LoadingState::Instance()->init(nullptr);
 	this->setPercentage(0);
 	this->firstImgID = imgLoader->getCurrentImageCount();
 	double startLoadPercentage = 0;
@@ -90,9 +91,7 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
-	extractMapInfo(d);;
-
-
+	extractMapInfo(d);
 }
 
 void MapLoader::extractMapInfo(Document& d)
@@ -130,8 +129,10 @@ void MapLoader::extractMapInfo(Document& d)
 		{
 			createSpawnPoints(layer["objects"]);
 		}
-		loadStatus = "Map loading finished.";
+		
 	}
+	loadStatus = "Map loading finished.";
+	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::createTileSets(Value& tilesets)
@@ -317,10 +318,10 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 			startPosX = object["x"].GetDouble();
 			startPosY = object["y"].GetDouble();
 		}
-		else
+		/*else
 		{
 			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize, spawnType, 3, 400);
-		}
+		}*/
 		processedSpawnpoints++;
 		tempPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
 		if (tempPercentage != this->loadPercentage) {

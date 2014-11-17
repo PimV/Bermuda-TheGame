@@ -42,6 +42,6 @@ public:
 	int getChunkSize();
 	int getLoadPercentage();
 	string getLoadStatus();
-	~MapLoader();
+	virtual ~MapLoader();
 };
 

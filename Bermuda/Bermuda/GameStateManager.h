@@ -47,11 +47,12 @@ public:
 		return &m_Gsm;
 	};
 
-	~GameStateManager(void);
+	virtual ~GameStateManager(void);
 
 private: 
 	long updateLength;
 	int fps;
+	double speedMultiplier;
 	std::vector<IGameState*> states;
 	IGameState* currentState;
 	ImageLoader* imgLoader;

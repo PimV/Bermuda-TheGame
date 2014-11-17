@@ -7,7 +7,7 @@ public:
 	bool IsIn(int mouseX, int mouseY);
 	void render(SDL_Renderer* renderer);
 	SDL_Rect getRectangle();
-	~Button(void);
+	virtual ~Button(void);
 private:
 	SDL_Rect rect;
 

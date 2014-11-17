@@ -13,10 +13,11 @@ GameStateManager::GameStateManager(void) {
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
+	speedMultiplier = 1;
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
-	soundLoader = new SoundLoader();
+	//soundLoader = new SoundLoader();
 
 
 	GameStateManager::Instance()->changeGameState(MenuState::Instance());
@@ -111,11 +112,27 @@ void GameStateManager::handleEvents() {
 			case SDLK_r:
 				GameStateManager::Instance()->changeGameState(PlayState::Instance());
 				break;
+			case SDLK_PAGEUP:
+				speedMultiplier++;
+				if (speedMultiplier >= 10) {
+					speedMultiplier = 10;
+				}
+				break;
+			case SDLK_PAGEDOWN:
+				speedMultiplier--;
+				if (speedMultiplier <= 0) {
+					speedMultiplier = 0.05;
+				}
+				break;
+			case SDLK_HOME:
+				speedMultiplier = 1;
+				break;
 			default: 
 				states.back()->handleEvents(mainEvent);
 				break;
 			}
 			break;
+
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
 			default:
@@ -131,7 +148,7 @@ void GameStateManager::handleEvents() {
 }
 
 void GameStateManager::update(double deltaTime) {
-	states.back()->update(deltaTime);
+	states.back()->update(deltaTime*speedMultiplier);
 }
 
 void GameStateManager::draw() {

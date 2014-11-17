@@ -9,8 +9,8 @@ void PauseState::init(GameStateManager* gsm)
 {
 	this->gsm = gsm;
 	setCurWindow(0);
-	mainScr = new PauseMainScreen;
-	statScr = new PauseStatusTrackerScreen;
+	mainScr = new PauseMainScreen();
+	statScr = new PauseStatusTrackerScreen();
 }
 
 void PauseState::pause()
