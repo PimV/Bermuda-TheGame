@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 //#include "ItemApple.h"
 #include "Player.h"
+#include "ItemFactory.h"
 
 //TODO: Make tree give apples
 
@@ -28,7 +29,7 @@ void AppleTree::interact(Player* player) {
 
 	if (this->trackInteractTimes()) {
 		this->setDestroyedState();
-		//player->getInventory()->addItem(new ItemApple());
+		player->getInventory()->addItem(ItemFactory::Instance()->createApple());
 		player->getStatusTracker()->applePicked();
 	}
 }

@@ -12,13 +12,26 @@ void ItemFactory::loadItemTileSets(ImageLoader* imgLoader)
 	itemImages["fish"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemFish.png", 30, 24));
 	itemImages["rock"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemRock.png", 30,22));
 	itemImages["wood"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemLogs.png", 32,25));
+	itemImages["gold"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemGold.png", 34,22));
+	itemImages["water"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemWater.png", 22,34));
 	itemImages["axe"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\Iron_pickaxe.png", 32,32));
 	itemImages["pickaxe"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\Iron_axe.png", 22,27));
+	itemImages["apple"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemApple.png", 30,34));;
 }
 
 ItemCarrot* ItemFactory::createCarrot()
 {
 	return new ItemCarrot(itemImages["carrot"]);
+}
+
+ItemApple* ItemFactory::createApple()
+{
+	return new ItemApple(itemImages["apple"]);
+}
+
+ItemWater* ItemFactory::createWater()
+{
+	return new ItemWater(itemImages["water"]);
 }
 
 ItemFish* ItemFactory::createFish()
@@ -29,6 +42,11 @@ ItemFish* ItemFactory::createFish()
 ItemRock* ItemFactory::createRock()
 {
 	return new ItemRock(itemImages["rock"]);
+}
+
+ItemGold* ItemFactory::createGold()
+{
+	return new ItemGold(itemImages["gold"]);
 }
 
 ItemWood* ItemFactory::createWood()
