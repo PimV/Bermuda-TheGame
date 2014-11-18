@@ -181,6 +181,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Spawnpoint.h" />
     <ClInclude Include="StateType.h" />
     <ClInclude Include="Tool.h" />
+    <ClInclude Include="ToolFlint.h" />
     <ClInclude Include="ToolPickaxe.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Wasp.h" />
@@ -242,6 +243,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="RuinStatue.cpp" />
     <ClCompile Include="Tool.cpp" />
+    <ClCompile Include="ToolFlint.cpp" />
     <ClCompile Include="ToolPickaxe.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Wasp.cpp" />
