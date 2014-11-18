@@ -354,7 +354,7 @@ void Player::ResetDrawableEntityAndSetChunk()
 
 bool Player::checkIntersects(CollidableEntity* collidableEntity)
 {
-	return this->intersects(collidableEntity);
+	return this->intersects(collidableEntity, this);
 }
 
 Player::~Player(void) {

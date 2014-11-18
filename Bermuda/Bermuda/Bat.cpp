@@ -140,7 +140,7 @@ void Bat::ResetDrawableEntityAndSetChunk()
 
 bool Bat::checkIntersects(CollidableEntity* collidableEntity)
 {
-	return this->intersects(collidableEntity);
+	return this->intersects(collidableEntity, this);
 }
 
 Bat::~Bat()
