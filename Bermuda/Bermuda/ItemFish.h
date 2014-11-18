@@ -4,7 +4,6 @@
 #include "Image.h"
 enum class Items;
 
-
 class ItemFish :
 	public virtual Consumable
 {
