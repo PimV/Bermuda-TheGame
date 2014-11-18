@@ -11,6 +11,7 @@
 #include "ItemGold.h"
 #include "ToolAxe.h"
 #include "ToolPickaxe.h"
+#include "ToolFlint.h"
 #include <map>
 
 class ItemFactory
@@ -31,6 +32,7 @@ public:
 	ItemGold* createGold();
 	ToolAxe* createAxe();
 	ToolPickaxe* createPickaxe();
+	ToolFlint* createFlint();
 
 	~ItemFactory();
 	static ItemFactory* Instance() {

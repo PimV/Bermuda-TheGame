@@ -9,6 +9,7 @@ enum class Items
 	Wood,
 	Gold,
 	Axe,
+	Flint,
 	Pickaxe
 };
 static const char* item_strings[] = {
@@ -20,5 +21,6 @@ static const char* item_strings[] = {
 	"Wood",
 	"Gold",
 	"Axe",
+	"Flint",
 	"Pickaxe"
 };
