@@ -12,23 +12,26 @@ MenuState::MenuState(void)
 {
 }
 
-void MenuState::init(GameStateManager *gsm) {
-	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
+//TODO: remove GSM
+void MenuState::init(GameStateManager* gsm) {
+	//Background
+	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
 	if (backgroundTexture == NULL)
 	{
 		std::cout << "Error loading startmenu background" << std::endl << "Error 2" << std::endl;
 		system("pause");
 	}
-	this->gsm = gsm;
 	align();
+
 	//Create Buttons
 	if (buttons.size() < 2) {
-	buttons.push_back(new PlayButton(gsm));
-	buttons.push_back(new ExitButton(gsm));
-	}
+		PlayButton* playButton = new PlayButton();
+		ExitButton* exitButton = new ExitButton();
 
-	for (int i = 0; i < buttons.size(); i++) {
-		buttons.at(i)->align(buttons.size() - i, buttons.size());
+		playButton->placeAbove(exitButton);
+
+		buttons.push_back(playButton);
+		buttons.push_back(exitButton);
 	}
 
 	//Bermuda text
@@ -36,15 +39,17 @@ void MenuState::init(GameStateManager *gsm) {
 	SDL_Color white = { 255, 255, 255 };
 	std::string bermudaMessage = "Bermuda";
 	SDL_Surface* bermudaMessageSurface = TTF_RenderText_Blended(staryDarzyLarge, bermudaMessage.c_str(), white);
-	bermudaTextTexture = SDL_CreateTextureFromSurface(gsm->sdlInitializer->getRenderer(), bermudaMessageSurface);
+	bermudaTextTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), bermudaMessageSurface);
 
 	bermudaTextRect.x = ((int)ScreenWidth - bermudaMessageSurface->w) / 2;
 	bermudaTextRect.y = 50;
 	bermudaTextRect.h = bermudaMessageSurface->h;
 	bermudaTextRect.w = bermudaMessageSurface->w;
 
+	//soundloader
 	SoundLoader::Instance()->playMenuMusic();
 
+	//clearing surfaces
 	SDL_FreeSurface(bermudaMessageSurface);
 	TTF_CloseFont(staryDarzyLarge);
 }
@@ -64,19 +69,19 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYDOWN:
 		switch(mainEvent.key.keysym.sym) {
 		case SDLK_SPACE:
-			this->gsm->changeGameState(PlayState::Instance());
+			GameStateManager::Instance()->changeGameState(PlayState::Instance());
 			break;
 		}
 		break;
 	case SDL_MOUSEMOTION: 
 		for (int i = 0; i < buttons.size(); i++) {
-			buttons.at(i)->hover(x, y, gsm);
+			buttons.at(i)->hover(x, y);
 		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			for (int i = 0; i < buttons.size(); i++) {
-				buttons.at(i)->clicked(x, y, gsm);
+				buttons.at(i)->clicked(x, y);
 			}
 		}
 		break;
@@ -85,10 +90,10 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 }
 
 void MenuState::draw() {
-	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
-	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), bermudaTextTexture, NULL, &bermudaTextRect);
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), bermudaTextTexture, NULL, &bermudaTextRect);
 	for (int i = 0; i < buttons.size(); i++) {
-		buttons.at(i)->draw( gsm);
+		buttons.at(i)->draw();
 	}
 }
 
@@ -106,7 +111,6 @@ void MenuState::resume() {
 }
 
 void MenuState::cleanup() {
-	SDL_FreeSurface(bg);
 	SDL_DestroyTexture(backgroundTexture);
 
 	for (int i = 0; i < buttons.size(); i++)
