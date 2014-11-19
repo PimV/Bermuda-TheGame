@@ -1,17 +1,17 @@
 #include "PauzeExitButton.h"
 
-PauzeExitButton::PauzeExitButton(GameStateManager* gsm)
+PauzeExitButton::PauzeExitButton()
 {
-	init(gsm);
+	init();
 }
 
-void PauzeExitButton::init(GameStateManager* gsm)
+void PauzeExitButton::init()
 {
 	std::string Message = "Save and exit";
 	createButton(Message);
 }
 
-void PauzeExitButton::action(GameStateManager* gsm)
+void PauzeExitButton::action()
 {
 	exit(0);
 }

@@ -14,10 +14,10 @@ PauseMainScreen::PauseMainScreen()
 void PauseMainScreen::init()
 {
 	//Buttons
-	PauzeResumeButton* resumeButton = new PauzeResumeButton(GameStateManager::Instance());
-	PauzeMenuButton* menuButton = new PauzeMenuButton(GameStateManager::Instance());
-	PauzeExitButton* exitButton = new PauzeExitButton(GameStateManager::Instance());
-	PauzeAchievementsButton* achievementsButton = new PauzeAchievementsButton(GameStateManager::Instance());
+	PauzeResumeButton* resumeButton = new PauzeResumeButton();
+	PauzeMenuButton* menuButton = new PauzeMenuButton();
+	PauzeExitButton* exitButton = new PauzeExitButton();
+	PauzeAchievementsButton* achievementsButton = new PauzeAchievementsButton();
 
 	achievementsButton->placeAbove(menuButton);
 	resumeButton->placeAbove(achievementsButton);
@@ -98,7 +98,7 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 	case SDL_MOUSEMOTION:
 		for (size_t i = 0; i < buttons.size(); i++)
 		{
-			buttons.at(i)->hover(x, y, gsm);
+			buttons.at(i)->hover(x, y);
 		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
@@ -106,7 +106,7 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 		{
 			for (size_t i = 0; i < buttons.size(); i++)
 			{
-				if (buttons.at(i)->clicked(x, y, gsm))
+				if (buttons.at(i)->clicked(x, y))
 				{
 					break;
 				}
@@ -122,7 +122,7 @@ void PauseMainScreen::draw()
 
 	for (size_t i = 0; i < buttons.size(); i++)
 	{
-		buttons[i]->draw(GameStateManager::Instance());
+		buttons[i]->draw();
 	}
 }
 

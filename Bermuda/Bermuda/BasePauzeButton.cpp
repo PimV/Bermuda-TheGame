@@ -64,7 +64,7 @@ void BasePauzeButton::createButton(std::string message)
 	TTF_CloseFont(staryDarzy);
 }
 
-void BasePauzeButton::hover(int x, int y, GameStateManager *gsm)
+void BasePauzeButton::hover(int x, int y)
 {
 	if (x >= ButtonRect.x && x <= (ButtonRect.x + ButtonRect.w) &&
 		y >= ButtonRect.y && y <= (ButtonRect.y + ButtonRect.h))
@@ -83,26 +83,27 @@ void BasePauzeButton::hover(int x, int y, GameStateManager *gsm)
 	}
 }
 
-bool BasePauzeButton::clicked(int x, int y, GameStateManager *gsm)
+bool BasePauzeButton::clicked(int x, int y)
 {
 	if (x >= ButtonRect.x && x <= (ButtonRect.x + ButtonRect.w) &&
 		y >= ButtonRect.y && y <= (ButtonRect.y + ButtonRect.h))
 	{
-		action(gsm);
+		action();
 		return true;
 	}
 	return false;
 }
 
-void BasePauzeButton::draw(GameStateManager* gsm)
+void BasePauzeButton::draw()
 {
+	SDL_Renderer* renderer = GameStateManager::Instance()->sdlInitializer->getRenderer();
 	if (active == false)
 	{
-		SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), ButtonTexture, NULL, &ButtonRect);
+		SDL_RenderCopy(renderer, ButtonTexture, NULL, &ButtonRect);
 	}
 	else
 	{
-		SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), HoverButtonTexture, NULL, &ButtonRect);
+		SDL_RenderCopy(renderer, HoverButtonTexture, NULL, &ButtonRect);
 	}
 }
 

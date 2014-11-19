@@ -2,20 +2,20 @@
 #include "PauseState.h"
 
 
-PauzeResumeButton::PauzeResumeButton(GameStateManager* gsm)
+PauzeResumeButton::PauzeResumeButton()
 {
-	init(gsm);
+	init();
 }
 
-void PauzeResumeButton::init(GameStateManager* gsm)
+void PauzeResumeButton::init()
 {
 	std::string Message = "Resume";
 	createButton(Message);
 }
 
-void PauzeResumeButton::action(GameStateManager* gsm)
+void PauzeResumeButton::action()
 {
-	gsm->popState();
+	GameStateManager::Instance()->popState();
 }
 
 PauzeResumeButton::~PauzeResumeButton()

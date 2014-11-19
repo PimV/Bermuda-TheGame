@@ -2,20 +2,20 @@
 #include "MenuState.h"
 
 
-PauzeMenuButton::PauzeMenuButton(GameStateManager* gsm)
+PauzeMenuButton::PauzeMenuButton()
 {
-	init(gsm);
+	init();
 }
 
-void PauzeMenuButton::init(GameStateManager* gsm)
+void PauzeMenuButton::init()
 {
 	std::string Message = "Save and back to menu";
 	createButton(Message);
 }
 
-void PauzeMenuButton::action(GameStateManager* gsm)
+void PauzeMenuButton::action()
 {
-	gsm->changeGameState(MenuState::Instance());
+	GameStateManager::Instance()->changeGameState(MenuState::Instance());
 }
 
 PauzeMenuButton::~PauzeMenuButton()

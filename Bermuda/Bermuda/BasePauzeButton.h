@@ -10,7 +10,7 @@ private:
 	bool active;
 
 	//Methodes
-	virtual void action(GameStateManager* gsm) = 0;
+	virtual void action() = 0;
 
 protected:
 	//Variables
@@ -28,13 +28,13 @@ public:
 	int getHeight();
 	int getWidth();
 
-	void draw(GameStateManager* gsm);
-	void hover(int, int, GameStateManager *gsm);
-	bool clicked(int, int, GameStateManager *gsm);
+	void draw();
+	void hover(int, int);
+	bool clicked(int, int);
 
 	//constructors initialize, cleanup and delete
 	BasePauzeButton();
-	virtual void init(GameStateManager* gsm) = 0;
+	virtual void init() = 0;
 	void cleanup();
 	virtual ~BasePauzeButton();
 };

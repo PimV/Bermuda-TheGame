@@ -2,18 +2,18 @@
 #include "PauseState.h"
 
 
-PauzeAchievementsButton::PauzeAchievementsButton(GameStateManager* gsm)
+PauzeAchievementsButton::PauzeAchievementsButton()
 {
-	init(gsm);
+	init();
 }
 
-void PauzeAchievementsButton::init(GameStateManager* gsm)
+void PauzeAchievementsButton::init()
 {
 	std::string Message = "Achievements";
 	createButton(Message);
 }
 
-void PauzeAchievementsButton::action(GameStateManager* gsm)
+void PauzeAchievementsButton::action()
 {
 	PauseState::Instance()->setCurWindow(1);
 }
