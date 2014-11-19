@@ -28,9 +28,8 @@ void GoldRock::interact(Player* player)
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
-			//TODO: give gold
-			//player->getInventory()->addItem(ItemFactory::Instance()->createRock());
-			//player->getStatusTracker()->rockMined();
+			player->getInventory()->addItem(ItemFactory::Instance()->createGold());
+			//TODO: add to statustracker
 		}
 	}
 }
