@@ -153,11 +153,11 @@ void PauseStatusTrackerScreen::draw()
 {
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 	
-	for (int i = 0; i < nameTextures.size(); i++)
+	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameTextures.at(i), NULL, &nameRectangles.at(i));
 	}
-	for (int i = 0; i < countTextures.size(); i++)
+	for (size_t i = 0; i < countTextures.size(); i++)
 	{
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), countTextures.at(i), NULL, &countRectangles.at(i));
 	}
@@ -165,12 +165,12 @@ void PauseStatusTrackerScreen::draw()
 
 void PauseStatusTrackerScreen::cleanup()
 {
-	for (int i = 0; i < nameTextures.size(); i++)
+	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		SDL_DestroyTexture(nameTextures.at(i));
 	}
 	nameTextures.clear();
-	for (int i = 0; i < countTextures.size(); i++)
+	for (size_t i = 0; i < countTextures.size(); i++)
 	{
 		SDL_DestroyTexture(countTextures.at(i));
 	}

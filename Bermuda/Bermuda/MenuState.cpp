@@ -74,14 +74,17 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 		}
 		break;
 	case SDL_MOUSEMOTION: 
-		for (int i = 0; i < buttons.size(); i++) {
+		for (size_t i = 0; i < buttons.size(); i++) {
 			buttons.at(i)->hover(x, y);
 		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			for (int i = 0; i < buttons.size(); i++) {
-				buttons.at(i)->clicked(x, y);
+			for (size_t i = 0; i < buttons.size(); i++) {
+				if (buttons.at(i)->clicked(x, y))
+				{
+					break;
+				}
 			}
 		}
 		break;
@@ -92,7 +95,7 @@ void MenuState::handleEvents(SDL_Event mainEvent) {
 void MenuState::draw() {
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), bermudaTextTexture, NULL, &bermudaTextRect);
-	for (int i = 0; i < buttons.size(); i++) {
+	for (size_t i = 0; i < buttons.size(); i++) {
 		buttons.at(i)->draw();
 	}
 }
@@ -113,7 +116,7 @@ void MenuState::resume() {
 void MenuState::cleanup() {
 	SDL_DestroyTexture(backgroundTexture);
 
-	for (int i = 0; i < buttons.size(); i++)
+	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];
 	}

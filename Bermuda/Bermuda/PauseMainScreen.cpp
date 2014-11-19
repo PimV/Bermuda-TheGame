@@ -96,7 +96,7 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
-		for (int i = 0; i < buttons.size(); i++)
+		for (size_t i = 0; i < buttons.size(); i++)
 		{
 			buttons.at(i)->hover(x, y, gsm);
 		}
@@ -104,7 +104,7 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT)
 		{
-			for (int i = 0; i < buttons.size(); i++)
+			for (size_t i = 0; i < buttons.size(); i++)
 			{
 				if (buttons.at(i)->clicked(x, y, gsm))
 				{
@@ -120,7 +120,7 @@ void PauseMainScreen::draw()
 {
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 
-	for (int i = 0; i < buttons.size(); i++)
+	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		buttons[i]->draw(GameStateManager::Instance());
 	}
@@ -128,7 +128,7 @@ void PauseMainScreen::draw()
 
 void PauseMainScreen::cleanup()
 {
-	for (int i = 0; i < buttons.size(); i++)
+	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];
 	}
