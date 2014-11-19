@@ -4,15 +4,15 @@
 #include "Image.h"
 enum class Items;
 
-class ItemFish :
+class ItemWater :
 	public virtual Consumable
 {
 public:
-	ItemFish(Image* image);
-	
+	ItemWater(Image* image);
+
 	void init();
 	void consume(Player* player);
 
-	virtual ~ItemFish();
+	virtual ~ItemWater();
 };
 

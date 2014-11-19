@@ -3,11 +3,15 @@
 #include "Image.h"
 #include "header_loader.h"
 #include "ItemCarrot.h"
+#include "ItemApple.h"
+#include "ItemWater.h"
 #include "ItemFish.h"
 #include "ItemRock.h"
 #include "ItemWood.h"
+#include "ItemGold.h"
 #include "ToolAxe.h"
 #include "ToolPickaxe.h"
+#include "ToolFlint.h"
 #include <map>
 
 class ItemFactory
@@ -20,11 +24,15 @@ public:
 	ItemFactory();
 	void loadItemTileSets(ImageLoader* imgLoader);
 	ItemCarrot* createCarrot();
+	ItemApple* createApple();
+	ItemWater* createWater();
 	ItemFish* createFish();
 	ItemRock* createRock();
 	ItemWood* createWood();
+	ItemGold* createGold();
 	ToolAxe* createAxe();
 	ToolPickaxe* createPickaxe();
+	ToolFlint* createFlint();
 
 	~ItemFactory();
 	static ItemFactory* Instance() {
