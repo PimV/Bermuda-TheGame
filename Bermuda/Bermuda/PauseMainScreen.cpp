@@ -128,6 +128,7 @@ void PauseMainScreen::draw()
 
 void PauseMainScreen::cleanup()
 {
+	SDL_DestroyTexture(backgroundTexture);
 	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];

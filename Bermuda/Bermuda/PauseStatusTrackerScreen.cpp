@@ -165,6 +165,7 @@ void PauseStatusTrackerScreen::draw()
 
 void PauseStatusTrackerScreen::cleanup()
 {
+	SDL_DestroyTexture(backgroundTexture);
 	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		SDL_DestroyTexture(nameTextures.at(i));
