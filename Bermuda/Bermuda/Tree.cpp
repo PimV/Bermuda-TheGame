@@ -1,5 +1,4 @@
 #include "Tree.h"
-#include "GameStateManager.h"
 #include "ItemWood.h"
 #include "Player.h"
 #include "ItemFactory.h"

@@ -102,6 +102,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Bat.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
+    <ClInclude Include="Cactus.h" />
     <ClInclude Include="Carrot.h" />
     <ClInclude Include="ClickAction.h" />
     <ClInclude Include="CollidableContainer.h" />
@@ -110,12 +111,14 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ContainerType.h" />
     <ClInclude Include="DayTimeTimer.h" />
     <ClInclude Include="DrawableContainer.h" />
+    <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="GoldRock.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableEntity.h" />
@@ -124,6 +127,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Game.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="CollidableEntity.h" />
+    <ClInclude Include="Ice.h" />
     <ClInclude Include="IEntityContainer.h" />
     <ClInclude Include="Defensive.h" />
     <ClInclude Include="Evasive.h" />
@@ -133,6 +137,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Aggressive.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="InteractableCactus.h" />
     <ClInclude Include="InteractableContainer.h" />
     <ClInclude Include="InteractableEntity.h" />
     <ClInclude Include="Inventory.h" />
@@ -146,6 +151,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MovableEntity.h" />
     <ClInclude Include="NPCFactory.h" />
     <ClInclude Include="Pickaxe.h" />
+    <ClInclude Include="RockSpikes.h" />
     <ClInclude Include="SpawnpointContainer.h" />
     <ClInclude Include="StatusTracker.h" />
     <ClInclude Include="ToolAxe.h" />
@@ -191,6 +197,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
+    <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Carrot.cpp" />
     <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="CollidableContainer.cpp" />
@@ -198,6 +205,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="DayTimeTimer.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
+    <ClCompile Include="EasterHead.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityChunkContainer.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
@@ -206,6 +214,9 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Equipable.cpp" />
+    <ClCompile Include="GoldRock.cpp" />
+    <ClCompile Include="Ice.cpp" />
+    <ClCompile Include="InteractableCactus.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -219,6 +230,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="MovableEntity.cpp" />
     <ClCompile Include="NPCFactory.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
+    <ClCompile Include="RockSpikes.cpp" />
     <ClCompile Include="SpawnpointContainer.cpp" />
     <ClCompile Include="StatusTracker.cpp" />
     <ClCompile Include="ToolAxe.cpp" />
