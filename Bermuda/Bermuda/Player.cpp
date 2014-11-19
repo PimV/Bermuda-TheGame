@@ -203,10 +203,10 @@ int Player::getThirst() {
 void Player::directionsAndMove(double dt)
 {
 	if (sprinting) {
-		maxSpeed = 50;
+		moveSpeed = 50;
 	}
 	else {
-		maxSpeed = 3;
+		moveSpeed = 3;
 	}
 
 	if (moveClick) {

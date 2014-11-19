@@ -13,76 +13,30 @@ MovableEntity::~MovableEntity(void)
 
 void MovableEntity::move(double dt)
 {
+	this->dx = 0;
+	this->dy = 0;
 	double stepX = 0;
 	double stepY = 0;
 
 	if (movingLeft) {
 		dx -= moveSpeed *dt;
-		if (dx < -maxSpeed *dt) {
-			dx = -maxSpeed *dt;
-		}
 		stepX = -10;
 	}
 	else if (movingRight) {
 		dx += moveSpeed *dt;
-		if (dx > maxSpeed *dt) {
-			dx = maxSpeed *dt;
-		}
 		stepX = 10;
 	}
-	else
-	{
-		dx = 0;
-	}
-	/*else {
-	if (dx > 0) {
-	dx -= stopSpeed *dt;
-	if (dx < 0) {
-	dx = 0;
-	}
-	}
-	else if (dx < 0) {
-	dx += stopSpeed *dt;
-	if (dx > 0) {
-	dx = 0;
-	}
-	}
-	}*/
 
 	if (movingUp) {
 		dy -= moveSpeed *dt;
-		if (dy < -maxSpeed *dt) {
-			dy = -maxSpeed *dt;
-		}
 		stepY = -10;
 	}
 	else if (movingDown) {
 		dy += moveSpeed *dt;
-		if (dy > maxSpeed *dt) {
-			dy = maxSpeed *dt;
-		}
 		stepY = 10;
-	}
-	else
-	{
-		dy = 0;
-	}
-	/*else {
-	if (dy > 0) {
-	dy -= stopSpeed *dt;
-	if (dy < 0) {
-	dy = 0;
-	}
-	}
-	else if (dy < 0) {
-	dy += stopSpeed *dt;
-	if (dy > 0) {
-	dy = 0;
-	}
-	}
-	}*/
+	} 
 
-
+	//No movement
 	if (dx == 0 && dy == 0) {
 		if(this->keepAnimationWhenIdle) 
 		{  
@@ -90,9 +44,6 @@ void MovableEntity::move(double dt)
 		}
 		return;
 	}
-
-	//this->setTempX(getX() + dx);
-	//this->setTempY(getY() + dy);
 
 	this->setTempX(getX());
 	this->setTempY(getY());
