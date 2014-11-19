@@ -8,11 +8,9 @@ private:
 	//variables
 	std::vector<SDL_Texture*> nameTextures;
 	std::vector<SDL_Rect> nameRectangles;
-	std::vector<SDL_Surface*> nameSurfaces;
 
 	std::vector<SDL_Texture*> countTextures;
 	std::vector<SDL_Rect> countRectangles;
-	std::vector<SDL_Surface*> countSurfaces;
 
 	//background
 	SDL_Texture* backgroundTexture;
