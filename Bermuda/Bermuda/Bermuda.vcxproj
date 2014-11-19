@@ -137,6 +137,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Aggressive.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="InteractableCactus.h" />
     <ClInclude Include="InteractableContainer.h" />
     <ClInclude Include="InteractableEntity.h" />
     <ClInclude Include="Inventory.h" />
@@ -215,6 +216,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="GoldRock.cpp" />
     <ClCompile Include="Ice.cpp" />
+    <ClCompile Include="InteractableCactus.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />

@@ -402,6 +402,9 @@
     <ClCompile Include="Ice.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
+    <ClCompile Include="InteractableCactus.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -690,6 +693,9 @@
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
     <ClInclude Include="Ice.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableCactus.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
   </ItemGroup>

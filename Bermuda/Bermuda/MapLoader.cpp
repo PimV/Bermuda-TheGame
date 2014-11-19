@@ -12,6 +12,7 @@
 #include "RuinStatue.h"
 #include "EasterHead.h"
 #include "Cactus.h"
+#include "InteractableCactus.h"
 #include "CollidableTile.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
@@ -327,6 +328,10 @@ void MapLoader::createObjects(Value& objects)
 		else if (objectClasses[objectID] == "Cactus")
 		{
 			new Cactus(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "InteractableCactus")
+		{
+			new InteractableCactus(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{
