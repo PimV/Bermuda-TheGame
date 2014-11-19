@@ -1,10 +1,8 @@
 #include "AppleTree.h"
 #include "GameStateManager.h"
-//#include "ItemApple.h"
 #include "Player.h"
 #include "ItemFactory.h"
 
-//TODO: Make tree give apples
 
 AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
 	Entity(id,x,y,chunkSize), 
