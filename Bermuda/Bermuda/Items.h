@@ -3,6 +3,7 @@ enum class Items
 {
 	Rock,
 	Carrot,
+	Fish,
 	Wood,
 	Axe,
 	Pickaxe
@@ -10,6 +11,7 @@ enum class Items
 static const char* item_strings[] = {
 	"Rock",
 	"Carrot",
+	"Fish",
 	"Wood",
 	"Axe",
 	"Pickaxe"

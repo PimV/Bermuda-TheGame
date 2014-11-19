@@ -4,6 +4,7 @@
 #include "AppleTree.h"
 #include "Rock.h"
 #include "Carrot.h"
+#include "Fish.h"
 #include "Pillar.h"
 #include "RuinStatue.h"
 #include "CollidableTile.h"
@@ -25,18 +26,20 @@ MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
 
 void MapLoader::setPercentage(int percentage)
 {
-	//cout << "loadPercentage: " << loadPercentage << endl;
 	this->loadPercentage = percentage;
 	LoadingState::Instance()->setPercentage(percentage);
+	LoadingState::Instance()->draw();
 }
 
 void MapLoader::loadMap()
 {
 	this->setPercentage(0);
+	this->firstImgID = imgLoader->getCurrentImageCount();
 	double startLoadPercentage = 0;
 	double loadWeight = 10;
 	double totalJSONLines = -1;
 	double processedJSONLines = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Reading map file.";
 
 	//Create file stream.
@@ -73,12 +76,13 @@ void MapLoader::loadMap()
 			json += line;
 
 			processedJSONLines++;
-			this->setPercentage(startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight));
+			tempPercentage = startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight);
+			if (tempPercentage != this->loadPercentage) {
+				this->setPercentage(tempPercentage);
+			}
 		}
 	}
 	this->setPercentage(loadWeight); //Just to be sure (file might contain wrong line count),  set the loadPercentage to the total loadWeight of this part. 
-
-	std::cout << "Map file read" << std::endl;
 
 	//Close stream.
 	stream.close();
@@ -87,11 +91,8 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
-	std::cout << "Map file parsed" << std::endl;
-
 	extractMapInfo(d);
 
-	
 }
 
 void MapLoader::extractMapInfo(Document& d)
@@ -109,10 +110,9 @@ void MapLoader::extractMapInfo(Document& d)
 
 	//Set the containers
 	mec->initContainerSizes(floor(mapHeight/chunkSize) +1, floor(mapWidth/chunkSize) +1);
-	std::cout << "Map info extracted" << std::endl;
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
-	
+
 	for(int i = 0; i < d["layers"].Capacity(); i++)
 	{
 		Value& layer = d["layers"][i];
@@ -140,6 +140,7 @@ void MapLoader::createTileSets(Value& tilesets)
 	double loadWeight = 20;
 	double totalTilesets = tilesets.Capacity();
 	double processedTilesets = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Loading tilesets.";
 
 	for(int i = 0; i < tilesets.Capacity(); i++)
@@ -170,7 +171,11 @@ void MapLoader::createTileSets(Value& tilesets)
 			}
 		}
 		processedTilesets++;
-		this->setPercentage(startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight));
+		tempPercentage = startLoadPercentage + ((processedTilesets / totalTilesets) * loadWeight);
+		if (tempPercentage != this->loadPercentage) {
+			this->setPercentage(tempPercentage);
+		}
+
 	}
 }
 
@@ -180,6 +185,7 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 	double loadWeight = 40;
 	double totalTiles = mapTileHeight * mapTileWidth;
 	double processedTiles = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Creating tiles.";
 
 	for (int y = 0; y < mapTileHeight; y++)
@@ -191,15 +197,18 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
 			{
 				//Tile is in collision vector. Create collisionTile.
-				CollidableTile* tile = new CollidableTile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));
+				CollidableTile* tile = new CollidableTile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(firstImgID + tileID));
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
-				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(tileID));				
+				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(firstImgID + tileID));				
 			}
 			processedTiles++;
-			this->setPercentage(startLoadPercentage + ((processedTiles / totalTiles) * loadWeight));
+			tempPercentage = startLoadPercentage + ((processedTiles / totalTiles) * loadWeight);
+			if (tempPercentage != this->loadPercentage) {
+				this->setPercentage(tempPercentage);
+			}
 		}
 	}
 }
@@ -219,47 +228,48 @@ void MapLoader::createObjects(Value& objects)
 	double loadWeight = 20;
 	double totalObjects = objects.Capacity();
 	double processedObjects = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Creating objects.";
 
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
-		Image* objectImg = imgLoader->getMapImage(objectID);
+		Image* objectImg = imgLoader->getMapImage(firstImgID + objectID);
 		double objectX = object["x"].GetDouble();
 		double objectY = object["y"].GetDouble() - objectImg->getHeight(); // -getHeight() Because all 'tiled' objects use bottom left for image positioning;
 
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
 		{
-			new Tree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
+			new Tree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
-			Tree* tree = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			Tree* tree = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			tree->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "AppleTree")
 		{
-			new AppleTree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1), imgLoader->getMapImage(objectID+2));
+			new AppleTree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1), imgLoader->getMapImage(firstImgID + objectID + 2));
 		}
 		else if(objectClasses[objectID] == "AppleTreeEmpty")
 		{
-			AppleTree* tree = new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg, imgLoader->getMapImage(objectID+1));
+			AppleTree* tree = new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 			tree->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "AppleTreeStump")
 		{
 			//TODO: Currently, AppleTrees use only the full and empty state. Stump is not used. For now, the stump creates a full AppleTree
-			new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-2), imgLoader->getMapImage(objectID-1), objectImg);
+			new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 2), imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
-			new Rock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(objectID+1));
+			new Rock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID+1));
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			Rock* rock = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(objectID-1), objectImg);
+			Rock* rock = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			rock->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "Carrot")
@@ -274,8 +284,15 @@ void MapLoader::createObjects(Value& objects)
 		{
 			new RuinStatue(objectID, objectX, objectY, chunkSize, mec, objectImg);
 		}
+		else if(objectClasses[objectID] == "Fish")
+		{
+			new Fish(objectID, objectX, objectY, chunkSize, objectImg);
+		}
 		processedObjects++;
-		this->setPercentage(startLoadPercentage + ((processedObjects / totalObjects) * loadWeight));
+		tempPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);
+		if (tempPercentage != this->loadPercentage) {
+			this->setPercentage(tempPercentage);
+		}
 	}
 }
 
@@ -285,26 +302,29 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 	double loadWeight = 10;
 	double totalSpawnpoints = spawnpoints.Capacity();
 	double processedSpawnpoints = 0;
+	int tempPercentage = loadPercentage;
 	loadStatus = "Creating spawnpoints.";
 
-	//TODO: Create spawnpoint objects with correct types
 	for(int j = 0; j < spawnpoints.Capacity(); j++)
 	{
 		Value& object = spawnpoints[j];
 		Value& properties = object["properties"];
 
 		string spawnType = properties["SpawnType"].GetString();
-		if(spawnType == "Player")
+		if(spawnType == "player")
 		{
 			startPosX = object["x"].GetDouble();
 			startPosY = object["y"].GetDouble();
 		}
 		else
 		{
-			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize);
+			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize, spawnType, 3, 400);
 		}
 		processedSpawnpoints++;
-		this->setPercentage(startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight));
+		tempPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
+		if (tempPercentage != this->loadPercentage) {
+			this->setPercentage(tempPercentage);
+		}
 	}
 
 

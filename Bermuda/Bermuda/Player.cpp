@@ -1,14 +1,14 @@
 #include "Player.h"
 #include "header_loader.h"
+#include "GameOverState.h"
 #include <iostream>
 #include "Inventory.h"
+#include "PlayState.h"
 
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), IMovable(moveSpeed)
+Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
+	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
 {
-	this->mec = mec;
 	this->camera = camera;
-	this->gsm = gsm;
 
 	//Entity -> dimension values
 	this->setWidth(64);
@@ -17,17 +17,12 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	//this->playerTimer = new PlayerUpdateTimer();
 	this->hungerUpdate = 0; this->hungerUpdateTime = 2200;
 	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
-	this->health = 20; this->hunger = 20; this->thirst = 100;
-
-	//CollidableEnity - collision values
-	/*this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth()/4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);*/
+	this->health = 100; this->hunger = 100; this->thirst = 100;
 
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
+	this->moveSpeed = 3;
 	this->sprinting = false;
 	this->sprintSpeed = 15;
 
@@ -42,25 +37,23 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
-	this->playerAnimationWalkUpRow = 8, this->playerAnimationWalkLeftRow = 9;
-	this->playerAnimationWalkDownRow = 10, this->playerAnimationWalkRightRow = 11;
-	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 8;
-	this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
+	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+	this->currentAnimationRow = this->animationWalkDownRow;
+	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
-	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 
 	this->StopAnimation();
 
-	//Add to containers
-	mec->getDrawableContainer()->add(this);
-	mec->getCollidableContainer()->add(this);
-	//TODO : collision container
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->inventory = new Inventory();
 	this->statusTracker = new StatusTracker();
@@ -86,42 +79,16 @@ void Player::resetMovement() {
 	}
 }
 
-bool Player::checkCollision(CollidableContainer* container) {
-	//TODO: werkend maken met nieuwe collidablecontainer shit
-	double currentX = this->getX();
-	double currentY = this->getY();
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
-	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
-	int beginChunkX = this->getChunkX() - 1;
-	int endChunkX = this->getChunkX() + 1;
-	int beginChunkY = this->getChunkY() - 1;
-	int endChunkY = this->getChunkY() + 1;
-
-	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++) {
-		for(int j = beginChunkX; j <= endChunkX; j++) {
-			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
-			if(vec != nullptr) {
-				for(CollidableEntity* e : *vec) {
-					if (this->intersects(e)) {
-						this->setX(currentX);
-						this->setY(currentY);
-						this->StopAnimation();
-						return true;
-					}
-				}
-			}
-		}
+void Player::update(double dt) {
+	// check if player died
+	if (this->getHealth() < 1)
+	{
+		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
+		return;
 	}
 
-	return false;
-}
-
-void Player::update(double dt) {
 	this->updatePlayerStatuses();
-	this->move(dt);
+	this->directionsAndMove(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
 	/*if (interaction)
@@ -144,7 +111,7 @@ void Player::updatePlayerStatuses()
 		this->incrementHunger(-1);
 		hungerUpdate = 0;
 	}
-	
+
 	// check if thirst needs to be updated
 	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
 	if (this->thirstUpdate > thirstUpdateTime) {
@@ -233,89 +200,20 @@ int Player::getThirst() {
 }
 #pragma endregion PlayerStatusUpdates
 
-void Player::move(double dt) {
+void Player::directionsAndMove(double dt)
+{
 	if (sprinting) {
 		maxSpeed = 50;
-	} else {
+	}
+	else {
 		maxSpeed = 3;
 	}
-	
-	if(moveClick) {
+
+	if (moveClick) {
 		clickMove();
 	}
 
-	if (movingLeft) {
-		dx -= moveSpeed *dt;
-		if (dx < -maxSpeed *dt) {
-			dx = -maxSpeed *dt;
-		}
-	} else if (movingRight) {
-		dx += moveSpeed *dt;
-		if (dx > maxSpeed *dt) {
-			dx = maxSpeed *dt;
-		}
-	} else {
-		if (dx > 0) {
-			dx -= stopSpeed *dt;
-			if (dx < 0) {
-				dx = 0;
-			}
-		} else if (dx < 0) {
-			dx += stopSpeed *dt;
-			if (dx > 0) {
-				dx = 0;
-			}
-		}
-	}
-
-	if (movingUp) {
-		dy -= moveSpeed *dt;
-		if (dy < -maxSpeed *dt) {
-			dy = -maxSpeed *dt;
-		}
-	} else if (movingDown) {
-		dy += moveSpeed *dt;
-		if (dy > maxSpeed *dt) {
-			dy = maxSpeed *dt;
-		}
-	} else {
-		if (dy > 0) {
-			dy -= stopSpeed *dt;
-			if (dy < 0) {
-				dy = 0;
-			}
-		} else if (dy < 0) {
-			dy += stopSpeed *dt;
-			if (dy > 0) {
-				dy = 0;
-			}
-		}
-	}
-
-	if (dx == 0 && dy == 0) {
-		return;
-	}
-
-	//Move player
-	this->setTempX(getX() + dx);
-	this->setTempY(getY() + dy);
-
-	if (!this->checkCollision(mec->getCollidableContainer())) 
-	{
-		this->setPosition();
-
-		// set animation row
-		if (this->movingLeft)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
-		else if (this->movingRight)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
-		else if (this->movingUp)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
-		else if (this->movingDown)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-
-		PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
-	}
+	this->move(dt);
 }
 
 void::Player::interact()
@@ -327,7 +225,8 @@ void::Player::interact()
 	int endChunkY = this->getChunkY() + 1;
 
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
-	int playerOffsetY = this->getY() + (this->getHeight() / 2);
+	//De -7 wordt gebruikt omdat het plaatje niet helemaal klopt. In de breedte staat de speler idd precies in het midden van het plaatje. In de hoogte niet...
+	int playerOffsetY = this->getY() + (this->getHeight() / 2) +7;
 
 	double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
@@ -335,15 +234,15 @@ void::Player::interact()
 	//Loop through all chunks
 	for(int i = beginChunkY; i <= endChunkY; i++) {
 		for(int j = beginChunkX; j <= endChunkX; j++) {
-			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
+			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
 			if(vec != nullptr) {
 
 				for(InteractableEntity* e : *vec) {
-					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
-						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
+					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
+						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
 					{
-						double centerX = (e->getInteractAreaStartX() + e->getInteractAreaEndX()) / 2;
-						double centerY = (e->getInteractAreaStartY() + e->getInteractAreaEndY()) / 2;
+						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
+						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
 
 						double diffX = centerX - playerOffsetX;
 						double diffY = centerY - playerOffsetY;
@@ -359,11 +258,9 @@ void::Player::interact()
 						if (diffX + diffY < diff) {
 							diff = diffX + diffY;
 							closestEntity = e;
-							//std::cout << "New Closest Entity" << std::endl;
 						}
 
 						//e->interact(this);
-						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
 						//TODO : juiste animatie laten zien e.d.
 						//break;
 					}
@@ -391,20 +288,7 @@ void::Player::interact()
 }
 
 void Player::setPosition() {
-	//this->setX(getX() + dx);
-	//this->setY(getY() + dy);
-
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
-	//Chance chunks if needed
-	if(floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX()) 
-	{  
-		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
-		this->mec->getDrawableContainer()->remove(this);
-		this->setChunks(); 
-		this->mec->getDrawableContainer()->add(this);
-	} 
+	MovableEntity::setPosition();
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -452,23 +336,25 @@ void Player::clickMove() {
 	}
 }
 
-void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt) {
-	double animationDelay = (maxSpeed / 100)  * 40;
-	animationSpeed -= animationDelay;
-	if ( animationSpeed < animationDelay) {
-		this->currentPlayerAnimationRow = Row;
-		if (EndFrame <= CurrentFrame)
-			CurrentFrame = BeginFrame;
-		else
-			CurrentFrame++;
-
-		this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
-		animationSpeed = maxSpeed * 3;
-	}
+void Player::setImage(Image* image)
+{
+	this->setDrawImage(image);
 }
 
-void Player::StopAnimation() {
-	this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn));
+void Player::ResetDrawableEntityAndSetChunk()
+{
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	this->setChunks(); 
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+}
+
+bool Player::checkIntersects(CollidableEntity* collidableEntity)
+{
+	return this->intersects(collidableEntity);
 }
 
 Player::~Player(void) {

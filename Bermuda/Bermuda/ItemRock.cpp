@@ -3,14 +3,14 @@
 #include <ctime>
 #include <iostream>
 
-ItemRock::ItemRock() 
+ItemRock::ItemRock(Image* image) 
 {
+	this->setImage(image);
 	init();
 }
 
 void ItemRock::init() {
 	this->setId((int)Items::Rock);
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Rock.png", 30,22)));
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Material);
@@ -25,6 +25,6 @@ void ItemRock::init() {
 }
 
 
-ItemRock::~ItemRock(void)
+ItemRock::~ItemRock()
 {
 }

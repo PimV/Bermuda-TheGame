@@ -7,7 +7,6 @@
 #include "MoveAction.h"
 #include "PauseState.h"
 #include "LoadingState.h"
-#include "GameOverState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
@@ -32,68 +31,28 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-
-	//this->gsm->pushGameState(LoadingState::Instance());
+	ready = false;
+	showCol = false;
+	showInter = false;
+	showSpawnArea = false;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
-
-	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
-	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	for (size_t i = 0; i < 5; i++)
-	{
-		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
-	}
-
-	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	for (size_t i = 0; i < 5; i++)
-	{
-		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
-	}
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
 
 	//TEMPORARY AXE SPAWN:
-	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
-	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
-
-
-	//std::thread t(&PlayState::doSomething, this);
-	//t.detach();
+	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\Iron_axe.png", 22, 27)));
+	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\Iron_pickaxe.png",32, 32)));
 
 	SoundLoader::Instance()->playGameMusic();
+	ready = true;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
 {
 	return this->mec;
-}
-
-void PlayState::doSomething()
-{
-	//mapLoader->loadMap();
-	//camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	//p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
-
-	//// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
-	//Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	//for (size_t i = 0; i < 20; i++)
-	//{
-	//	rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
-	//}
-
-	//Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	//for (size_t i = 0; i < 20; i++)
-	//{
-	//	wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
-	//}
-
-	////TEMPORARY AXE SPAWN:
-	//new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
-	//new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
-	//
-	//this->gsm->popState();
 }
 
 void PlayState::cleanup() {
@@ -114,7 +73,9 @@ void PlayState::resume() {
 
 
 void PlayState::handleEvents(SDL_Event mainEvent) {
-
+	if (!ready) {
+		return;
+	}
 	//p->handleEvents();
 	//Process Input
 
@@ -170,6 +131,15 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_F1:
 			//Print player location
 			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
+			break;
+		case SDLK_F2:
+			this->showCol = !this->showCol;
+			break;
+		case SDLK_F3:
+			this->showInter = !this->showInter;
+			break;
+		case SDLK_F4:
+			this->showSpawnArea = !this->showSpawnArea;
 			break;
 		case SDLK_F5: 
 			{
@@ -277,41 +247,66 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 
 void PlayState::update(double dt) {
 	// check if player died
-	if (p->getHealth() < 1)
-	{
-		this->gsm->changeGameState(GameOverState::Instance());
+	if (!ready) {
+		return;
 	}
 
 	this->updateGameTimers();
-	//TODO: Player collision check in de player.move() zelf afhandelen? 
-	this->gsm->getActionContainer()->executeAllActions(dt);
 
-	p->update(dt);
-	/*if (!p->checkCollision(mec->getCollidableContainer())) {
-	p->setPosition();
-	}*/
-
-	// TEMPORARY RABBIT UPDATE
-	for (Rabbit *rb : this->rabbits)
-	{
-		rb->update(dt);
-		/*if (!rb->checkCollision(mec->getCollidableContainer())) {
-		rb->setPosition();
-		}*/
-	}
-
-	// TEMPORARY WASP UPDATE
-	for (Wasp *wa : this->wasps)
-	{
-		wa->update(dt);
-		/*if (!wa->checkCollision(mec->getCollidableContainer())) {
-		wa->setPosition();
-		}*/
-	}
+	//TODO: moet dit nog?
+	//this->gsm->getActionContainer()->executeAllActions(dt);
 
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
+	}
+
+	//Update all spawnpoints and moving entities
+	//Calculate begin and end chunks for the camera (+5 and -5 to make it bigger than the screen)
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 5;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 5;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 5;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Spawnpoints
+			std::vector<Spawnpoint*>* spawnpoints = this->mec->getSpawnpointContainer()->getChunk(i, j);
+			if (spawnpoints != nullptr)
+			{
+				for (Spawnpoint* e : *spawnpoints)
+				{
+					e->update();
+				}
+			}
+
+			//Oude manier! LATEN STAAN
+			////Moving entities
+			//std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
+			//if (movingEntities != nullptr)
+			//{
+			//	for (MovableEntity* e : *movingEntities)
+			//	{
+			//		//TODO: enable when movableEntities get an 'update' method. 
+			//		e->update(dt);
+			//	}
+			//}
+
+			//NIEUWE MANIER! is dit de juiste manier?
+			////Moving entities
+			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
+			if(movingEntities != nullptr && movingEntities->size() > 0)
+			{
+				std::vector<MovableEntity*> copyMovingEntities = std::vector<MovableEntity*>(*movingEntities);
+				for (MovableEntity* e : copyMovingEntities)
+				{
+					e->update(dt);
+				}
+			}
+		}
 	}
 }
 
@@ -328,6 +323,9 @@ long PlayState::getGameTimer() {
 
 void PlayState::draw() 
 {
+	if (!ready) {
+		return;
+	}
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
@@ -348,6 +346,17 @@ void PlayState::draw()
 				for (DrawableEntity* e : *vec)
 				{
 					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
+					//Draw collision area
+					if(this->showCol)
+					{
+						//TEMP draw collision area
+						CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+						if(ce != NULL)
+						{
+							ce->drawCollidableArea();
+						}
+					}
 				}
 			}
 			//Objecten
@@ -363,6 +372,26 @@ void PlayState::draw()
 		}
 	}
 
+	//Draw spawnpoint area
+	if(this->showSpawnArea)
+	{
+		//Loop through all chunks
+		for (int i = beginChunkY; i <= endChunkY; i++)
+		{
+			for (int j = beginChunkX; j <= endChunkX; j++)
+			{
+				std::vector<Spawnpoint*>* vec = this->mec->getSpawnpointContainer()->getChunk(i, j);
+				if(vec != nullptr)
+				{
+					for (Spawnpoint* sp : *vec)
+					{
+						sp->drawSpawnpointArea();
+					}
+				}
+			}
+		}
+	}
+
 	//Sort drawable object vector
 	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
 
@@ -370,6 +399,27 @@ void PlayState::draw()
 	for (DrawableEntity* e : drawableVector)
 	{
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
+		//Draw interactable area
+		if(this->showInter)
+		{
+			InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
+			if(ie != NULL)
+			{
+				ie->drawInteractableArea();
+			}	
+		}
+
+		//Draw collision area
+		if(this->showCol)
+		{
+			//TEMP draw collision area
+			CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+			if(ce != NULL)
+			{
+				ce->drawCollidableArea();
+			}
+		}
 	}
 
 	if (this->p->getInventory()->isOpen()) {
@@ -390,6 +440,11 @@ void PlayState::draw()
 Player* PlayState::getPlayer()
 {
 	return this->p;
+}
+
+Camera* PlayState::getCamera()
+{
+	return this->camera;
 }
 
 //ERROR Deze methode word nooit aangeroepen volgens mij.

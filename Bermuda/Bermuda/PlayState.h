@@ -6,8 +6,6 @@
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
 #include "GameTimer.h"
-#include "Rabbit.h"
-#include "Wasp.h"
 
 class PlayState : public IGameState
 {
@@ -29,7 +27,8 @@ private:
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 
-	void doSomething();
+	bool ready;
+	bool showCol, showInter, showSpawnArea; 
 
 public:
 	Player* getPlayer();
@@ -49,16 +48,12 @@ public:
 
 	void draw();
 
+	Camera* getCamera();
+
 	static PlayState* Instance() {
 		return &m_PlayState;
 	};
 
 	PlayState(void);
 	~PlayState(void);
-
-private:
-
-	// TEMPORARY RABBIT CONTAINER
-	std::vector<Rabbit*> rabbits;
-	std::vector<Wasp*> wasps;
 };

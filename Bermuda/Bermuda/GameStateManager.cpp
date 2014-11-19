@@ -2,6 +2,8 @@
 #include "IGameState.h"
 #include "MenuState.h"
 #include "PlayState.h"
+#include "NPCFactory.h"
+#include "ItemFactory.h"
 #include <iostream>
 #include <Windows.h>
 #include <SDL_ttf.h>
@@ -16,6 +18,8 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 	soundLoader = new SoundLoader();
+	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
+	ItemFactory::Instance()->loadItemTileSets(imgLoader);
 	//states = new std::vector<IGameState*>();
 
 
@@ -106,9 +110,7 @@ void GameStateManager::handleEvents() {
 			switch(mainEvent.key.keysym.sym) 
 			{
 			case SDLK_TAB:
-				if (GameStateManager::Instance()->showFps == false) {
-					GameStateManager::Instance()->showFps = true;
-				}
+				GameStateManager::Instance()->showFps = !GameStateManager::Instance()->showFps;
 				break;
 			case SDLK_r:
 				GameStateManager::Instance()->changeGameState(PlayState::Instance());
@@ -120,11 +122,6 @@ void GameStateManager::handleEvents() {
 			break;
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
-			case SDLK_TAB:
-				if (GameStateManager::Instance()->showFps == true) {
-					GameStateManager::Instance()->showFps = false;
-				}
-				break;
 			default:
 				states.back()->handleEvents(mainEvent);
 				break;

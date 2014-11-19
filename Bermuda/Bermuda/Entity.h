@@ -23,6 +23,8 @@ public:
 	int getChunkX();
 	double getX();
 	double getY();
+	double getTempX();
+	double getTempY();
 	double getZ();
 	double getWidth();
 	double getHeight();
