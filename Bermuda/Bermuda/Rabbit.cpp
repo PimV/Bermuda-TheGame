@@ -144,7 +144,7 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 
 bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
 {
-	return this->intersects(collidableEntity);
+	return this->intersects(collidableEntity, this);
 }
 
 Rabbit::~Rabbit()

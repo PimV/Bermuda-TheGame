@@ -142,7 +142,7 @@ void Wasp::ResetDrawableEntityAndSetChunk()
 
 bool Wasp::checkIntersects(CollidableEntity* collidableEntity)
 {
-	return this->intersects(collidableEntity);
+	return this->intersects(collidableEntity, this);
 }
 
 Wasp::~Wasp()
