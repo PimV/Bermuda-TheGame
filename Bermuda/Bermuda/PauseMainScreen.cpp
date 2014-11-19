@@ -13,22 +13,69 @@ PauseMainScreen::PauseMainScreen()
 
 void PauseMainScreen::init()
 {
-	std::cout << "add buttons" << endl;
-
-	PauzeResumeButton* resumeButton = new PauzeResumeButton(GameStateManager::Instance());
-	PauzeMenuButton* menuButton = new PauzeMenuButton(GameStateManager::Instance());
-	PauzeExitButton* exitButton = new PauzeExitButton(GameStateManager::Instance());
-	PauzeAchievementsButton* achievementsButton = new PauzeAchievementsButton(GameStateManager::Instance());
+	//Buttons
+	PauzeResumeButton* resumeButton = new PauzeResumeButton();
+	PauzeMenuButton* menuButton = new PauzeMenuButton();
+	PauzeExitButton* exitButton = new PauzeExitButton();
+	PauzeAchievementsButton* achievementsButton = new PauzeAchievementsButton();
 
 	achievementsButton->placeAbove(menuButton);
 	resumeButton->placeAbove(achievementsButton);
 	exitButton->placeUnder(menuButton);
 
-
 	buttons.push_back(achievementsButton);
 	buttons.push_back(resumeButton);
 	buttons.push_back(menuButton);
 	buttons.push_back(exitButton);
+
+	//Background
+	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/menuBackground.png").c_str());
+	setBackground();
+}
+
+void PauseMainScreen::setBackground()
+{
+	backgroundRect.x = ScreenWidth;
+	for each (BasePauzeButton* var in buttons)
+	{
+		if (var->getX() <= backgroundRect.x)
+		{
+			backgroundRect.x = var->getX();
+		}
+	}
+	//Move backgound left
+	backgroundRect.x = backgroundRect.x - 30;
+
+	backgroundRect.y = ScreenHeight;
+	for each (BasePauzeButton* var in buttons)
+	{
+		if (var->getY() <= backgroundRect.y)
+		{
+			backgroundRect.y = var->getY(); 
+		}
+	}
+	//Move background up
+	backgroundRect.y = backgroundRect.y - 30;
+
+	backgroundRect.w = 0;
+	backgroundRect.h = 0;
+
+	for each (BasePauzeButton* var in buttons)
+	{
+		if (var->getWidth() >= backgroundRect.w)
+		{
+			backgroundRect.w = var->getWidth();
+		}
+	}
+	//Make background wider
+	backgroundRect.w += 60;
+
+	for each (BasePauzeButton* var in buttons)
+	{
+		backgroundRect.h += var->getHeight() * 2;
+	}
+	//Make background higher
+	backgroundRect.h += 0;
 }
 
 void PauseMainScreen::handleEvents(SDL_Event mainEvent)
@@ -49,17 +96,17 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
-		for (int i = 0; i < buttons.size(); i++)
+		for (size_t i = 0; i < buttons.size(); i++)
 		{
-			buttons.at(i)->hover(x, y, gsm);
+			buttons.at(i)->hover(x, y);
 		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT)
 		{
-			for (int i = 0; i < buttons.size(); i++)
+			for (size_t i = 0; i < buttons.size(); i++)
 			{
-				if (buttons.at(i)->clicked(x, y, gsm))
+				if (buttons.at(i)->clicked(x, y))
 				{
 					break;
 				}
@@ -71,15 +118,18 @@ void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 
 void PauseMainScreen::draw()
 {
-	for (int i = 0; i < buttons.size(); i++)
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
+
+	for (size_t i = 0; i < buttons.size(); i++)
 	{
-		buttons[i]->draw(GameStateManager::Instance());
+		buttons[i]->draw();
 	}
 }
 
 void PauseMainScreen::cleanup()
 {
-	for (int i = 0; i < buttons.size(); i++)
+	SDL_DestroyTexture(backgroundTexture);
+	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];
 	}
@@ -88,4 +138,5 @@ void PauseMainScreen::cleanup()
 
 PauseMainScreen::~PauseMainScreen()
 {
+	cleanup();
 }

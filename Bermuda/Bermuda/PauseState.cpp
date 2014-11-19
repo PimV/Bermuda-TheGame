@@ -1,4 +1,5 @@
 #include "PauseState.h"
+#include <iostream>
 
 PauseState PauseState::m_PauseState;
 PauseState::PauseState()
@@ -65,5 +66,5 @@ void PauseState::cleanup()
 
 PauseState::~PauseState()
 {
-	cleanup();
+
 }

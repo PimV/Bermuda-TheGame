@@ -1,16 +1,17 @@
-#include "ToolAxe.h"
+#include "ToolFlint.h"
 #include "Items.h"
 #include "Player.h"
 #include <iostream>
 
-ToolAxe::ToolAxe(Image* image) 
+
+ToolFlint::ToolFlint(Image* image) 
 {
 	this->setImage(image);
 	init();
 }
 
-void ToolAxe::init() {
-	this->setId((int)Items::Axe);
+void ToolFlint::init() {
+	this->setId((int)Items::Flint);
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Tool);
@@ -21,10 +22,10 @@ void ToolAxe::init() {
 	this->setStackSize(itemCount);
 }
 
-void ToolAxe::equip(Player* player) {
+void ToolFlint::equip(Player* player) {
 	Equipable::equip(player);
 }
 
-ToolAxe::~ToolAxe()
+ToolFlint::~ToolFlint()
 {
 }
