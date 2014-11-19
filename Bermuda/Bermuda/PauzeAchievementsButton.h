@@ -4,12 +4,12 @@ class PauzeAchievementsButton :
 	public BasePauzeButton
 {
 private:
-	void action(GameStateManager* gsm);
+	void action();
 
 public:
-	void init(GameStateManager* gsm);
+	void init();
 
-	PauzeAchievementsButton(GameStateManager* gsm);
+	PauzeAchievementsButton();
 	virtual ~PauzeAchievementsButton();
 };
 
