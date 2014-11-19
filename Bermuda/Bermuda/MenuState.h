@@ -18,10 +18,6 @@ private:
 	std::vector<BaseButton*> buttons;
 
 	static MenuState m_MenuState;
-	GameStateManager* gsm;
-
-	SDL_Surface* bg;
-	int alpha;
 
 public:
 	//TODO: put buttons in array
