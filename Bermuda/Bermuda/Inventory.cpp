@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Items.h"
 #include "Item.h"
+#include "Image.h"
 
 
 
@@ -15,8 +16,18 @@ Inventory::Inventory(void)
 void Inventory::init() {
 	std::cout<< "Created inv"<<std::endl;
 	this->open = false;
-	this->slots = 20;
+	this->slots = 15;
 	this->itemVector = std::vector<Item*>();
+
+	sizeX = ScreenWidth / 2;
+	sizeY = ScreenHeight / 20;
+	posX = ScreenWidth / 2 - sizeX / 2;
+	posY = ScreenHeight - sizeY - 10; //10 = margin from bottom
+
+
+	int id = GameStateManager::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
+	img = GameStateManager::Instance()->getImageLoader()->getMapImage(id);
+	std::cout << "Creating inv img" << std::endl;
 }
 
 void Inventory::cleanup() {
@@ -59,6 +70,10 @@ bool Inventory::addItem(Item* item) {
 			//No inventory slots left;
 		}
 	}
+
+	if (item->getStackSize() <= 0) {
+		delete item;
+	}
 	return true;
 }
 
@@ -94,16 +109,16 @@ bool Inventory::hasItemById(int itemId) {
 	}
 	return false;
 }
+//Mem leak fixed?
 void Inventory::deleteItem(Item* item, int count) {
 
 	item->setStackSize(item->getStackSize() - count);
 
-	if (item->getStackSize() == 0) {
+	if (item->getStackSize() <= 0) {
 		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), item);
+		delete *it;
 		this->itemVector.erase(it);
 	}
-
-
 }
 
 bool Inventory::hasAxe() {
@@ -148,15 +163,43 @@ void Inventory::toggleInventory() {
 }
 
 void Inventory::draw() {
-	int y = 50;
-	for (size_t i = 0; i < 20; i++) {
+	//int y = 50;
+	//for (size_t i = 0; i < 20; i++) {
+	//	if (i < this->getSize()) {
+	//		GameStateManager::Instance()->sdlInitializer->drawText(
+	//			std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 24*i + 5,100, 32
+	//			);
+	//	}
+	//}
+
+	//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), drawImage->getTileSet(), drawImage->getCroppingRect(), sizeRect);
+
+	SDL_Rect txtRect;
+	txtRect.x = posX;
+	txtRect.y = posY;
+	txtRect.w = sizeX;
+	txtRect.h = sizeY;
+
+
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), img->getTileSet(), NULL, &txtRect);
+
+
+
+	for (size_t i = 0; i < this->slots; i++) {
 		if (i < this->getSize()) {
-			GameStateManager::Instance()->sdlInitializer->drawText(
-				std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 24*i + 5,100, 32
-				);
+			SDL_Rect imgRect;
+			imgRect.x = posX + (i *(sizeX / 15)) + 10;
+			imgRect.y = posY + 5;
+			imgRect.w = 28;
+			imgRect.h = 28;
+			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->itemVector[i]->getImage()->getTileSet(), NULL, &imgRect);
+			if (this->itemVector[i]->getMaxStackSize() != 1) {
+				GameStateManager::Instance()->sdlInitializer->drawText(
+					std::string(std::to_string(this->itemVector[i]->getStackSize())), posX + (i *(sizeX / 15)) + (sizeX / 15) - 15, posY  + sizeY - 22,10, 22
+					);
+			}
 		}
 	}
-
 }
 
 

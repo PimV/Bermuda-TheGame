@@ -2,6 +2,7 @@
 #include <vector>
 
 class Item;
+class Image;
 class Inventory
 {
 public:
@@ -33,6 +34,11 @@ public:
 
 	~Inventory(void);
 private:
+	Image* img;
+	int posX;
+	int posY;
+	int sizeX;
+	int sizeY;
 	bool open;
 	int slots; //Total item slots
 	std::vector<Item*> itemVector;

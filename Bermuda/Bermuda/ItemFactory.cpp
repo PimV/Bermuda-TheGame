@@ -12,8 +12,8 @@ void ItemFactory::loadItemTileSets(ImageLoader* imgLoader)
 	itemImages["fish"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemFish.png", 30, 24));
 	itemImages["rock"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemRock.png", 30,22));
 	itemImages["wood"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemLogs.png", 32,25));
-	itemImages["axe"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\Iron_pickaxe.png", 32,32));
-	itemImages["pickaxe"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\Iron_axe.png", 22,27));
+	itemImages["axe"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\Iron_axe.png", 32,32));
+	itemImages["pickaxe"] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\Iron_pickaxe.png", 22,27));
 }
 
 ItemCarrot* ItemFactory::createCarrot()
