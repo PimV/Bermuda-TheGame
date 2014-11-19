@@ -41,7 +41,7 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
-
+	this->p->getInventory()->toggleInventory();
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\Iron_axe.png", 22, 27)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\Iron_pickaxe.png",32, 32)));
@@ -93,7 +93,14 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->moveClick = true;
 		}
 		break;
+	case SDL_MOUSEWHEEL: 
+		if (mainEvent.wheel.y > 0) {
+			p->getInventory()->incrementSelectedIndex();
+		} else if (mainEvent.wheel.y < 0){
+			p->getInventory()->decrementSelectedIndex();
+		}
 
+		break;
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
@@ -127,6 +134,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_LSHIFT:
 			//Sprint
 			p->sprinting = true;
+			break;
+		case SDLK_e:
+			p->getInventory()->interactCurrent(p);
+			break;
+		case SDLK_q:
+			p->getInventory()->dropCurrent();
 			break;
 		case SDLK_F1:
 			//Print player location
@@ -427,14 +440,15 @@ void PlayState::draw()
 	}
 
 	// Draw the player status
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), 1150, 5, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
+
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), ScreenWidth - 120, 35, 100, 25);
 	//this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
 	// if current hour is smaller then 9 
 	if (GameTimer::Instance()->getCurrentDayPart() > 9)
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
 	else
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
 }
 
 Player* PlayState::getPlayer()

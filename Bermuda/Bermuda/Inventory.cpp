@@ -3,6 +3,9 @@
 #include "Items.h"
 #include "Item.h"
 #include "Image.h"
+#include "Consumable.h"
+#include "Equipable.h"
+#include "Player.h"
 
 
 
@@ -18,7 +21,7 @@ void Inventory::init() {
 	this->open = false;
 	this->slots = 15;
 	this->itemVector = std::vector<Item*>();
-
+	selectedIndex = 0;
 	sizeX = ScreenWidth / 2;
 	sizeY = ScreenHeight / 20;
 	posX = ScreenWidth / 2 - sizeX / 2;
@@ -32,6 +35,26 @@ void Inventory::init() {
 
 void Inventory::cleanup() {
 
+}
+
+void Inventory::incrementSelectedIndex() {
+	selectedIndex++;
+	if (selectedIndex > this->slots - 1) {
+		selectedIndex = 0;
+	}
+}
+
+void Inventory::decrementSelectedIndex() {
+	selectedIndex--;
+	if (selectedIndex < 0) {
+		selectedIndex = this->slots - 1;
+	}
+}
+
+Item* Inventory::getSelectedItem() {
+	if (selectedIndex < this->getSize()) {
+		return this->itemVector[selectedIndex];
+	}
 }
 
 
@@ -55,8 +78,11 @@ bool Inventory::addItem(Item* item) {
 			while (item->getStackSize() > 0) {
 				//	std::cout << "Item to add stacksize: " << item->getStackSize() << std::endl;
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
-					this->itemVector.push_back(item);
-					break;
+					inInvItem = this->getItemById(item->getId(), false);
+					if (inInvItem == nullptr) {
+						this->itemVector.push_back(item);
+						break;
+					}
 				} else {
 					inInvItem->setStackSize(inInvItem->getStackSize() + 1);
 					item->setStackSize(item->getStackSize() - 1);
@@ -118,6 +144,28 @@ void Inventory::deleteItem(Item* item, int count) {
 		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), item);
 		delete *it;
 		this->itemVector.erase(it);
+	}
+}
+
+void Inventory::interactCurrent(Player* p) {
+	if (selectedIndex < this->getSize()) {
+		Item* item = this->itemVector[selectedIndex];
+		if (item != nullptr) {
+			if (item->isConsumable()) {
+				Consumable* c = (Consumable*)item;
+				c->consume(p);
+			} else if (item->isEquipable()) {
+				Equipable* e = (Equipable*)item;
+				e->equip(p);
+			}
+		}
+	}
+}
+
+void Inventory::dropCurrent() {
+	if (selectedIndex < this->getSize()) {
+		Item* item = this->itemVector[selectedIndex];
+		this->deleteItem(item, 1);
 	}
 }
 
@@ -189,15 +237,28 @@ void Inventory::draw() {
 		if (i < this->getSize()) {
 			SDL_Rect imgRect;
 			imgRect.x = posX + (i *(sizeX / 15)) + 10;
-			imgRect.y = posY + 5;
-			imgRect.w = 28;
-			imgRect.h = 28;
+			imgRect.y = posY + sizeY / 2 - (ScreenHeight / 30) / 2;
+			imgRect.w = ScreenWidth / 50;
+			imgRect.h = ScreenHeight / 30;
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->itemVector[i]->getImage()->getTileSet(), NULL, &imgRect);
 			if (this->itemVector[i]->getMaxStackSize() != 1) {
 				GameStateManager::Instance()->sdlInitializer->drawText(
 					std::string(std::to_string(this->itemVector[i]->getStackSize())), posX + (i *(sizeX / 15)) + (sizeX / 15) - 15, posY  + sizeY - 22,10, 22
 					);
 			}
+		}
+		if (i == selectedIndex) {
+			int x = posX + (i *(sizeX / 15));
+
+			SDL_Rect rectToDraw = {
+				x,
+				posY,
+				(sizeX / 15),
+				sizeY
+			}; 
+			SDL_SetRenderDrawColor(GameStateManager::Instance()->sdlInitializer->getRenderer(), 0, 255, 0, 255);
+			SDL_RenderDrawRect(GameStateManager::Instance()->sdlInitializer->getRenderer(), &rectToDraw);
+			SDL_SetRenderDrawColor(GameStateManager::Instance()->sdlInitializer->getRenderer(), 0, 0, 0, 255);
 		}
 	}
 }

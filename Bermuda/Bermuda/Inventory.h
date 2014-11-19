@@ -3,6 +3,7 @@
 
 class Item;
 class Image;
+class Player;
 class Inventory
 {
 public:
@@ -10,6 +11,13 @@ public:
 
 	void init();
 	void cleanup();
+
+	void incrementSelectedIndex();
+	void decrementSelectedIndex();
+
+	void interactCurrent(Player* p);
+	void dropCurrent();
+	Item* getSelectedItem();
 
 	bool addItem(Item* item);
 	bool hasItem(Item* item);
@@ -34,11 +42,15 @@ public:
 
 	~Inventory(void);
 private:
+	//Draw
 	Image* img;
 	int posX;
 	int posY;
 	int sizeX;
 	int sizeY;
+
+	//Selected Index
+	int selectedIndex;
 	bool open;
 	int slots; //Total item slots
 	std::vector<Item*> itemVector;

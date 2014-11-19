@@ -19,7 +19,7 @@ void ItemCarrot::init() {
 	this->setMaxStackSize(16);
 
 	srand(time(NULL));
-	int itemCount = rand() % 2 + 1;	
+	int itemCount = rand() % 15 + 1;	
 	this->setStackSize(itemCount);
 
 	std::cout << "Harvested " << itemCount << " carrots." << std::endl;
