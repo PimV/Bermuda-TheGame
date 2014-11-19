@@ -2,6 +2,8 @@
 #include "entity.h"
 #include "header_loader.h"
 
+class MovableEntity;
+
 class CollidableEntity :
 	virtual public Entity
 {
@@ -30,7 +32,7 @@ public:
 	double getCollisionWidth();
 	double getCollisionHeight();
 
-	bool intersects(CollidableEntity* collidableEntity);
+	bool intersects(CollidableEntity* collidableEntity, MovableEntity* movableEntity);
 
 	virtual ~CollidableEntity();
 };

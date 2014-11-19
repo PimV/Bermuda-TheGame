@@ -100,29 +100,29 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			//Arrow left key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingLeft = true;
 			p->movingRight = false;
+			p->movingLeft = true;
 			break;
 		case SDLK_RIGHT:
 			//Arrow right key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingRight = true;
 			p->movingLeft = false;
+			p->movingRight = true;
 			break;
 		case SDLK_UP:
 			//Arrow up key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingUp = true;
 			p->movingDown = false;
+			p->movingUp = true;
 			break;
 		case SDLK_DOWN:
 			//Arrow down key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingDown = true;
 			p->movingUp = false;
+			p->movingDown = true;
 			break;
 		case SDLK_LSHIFT:
 			//Sprint

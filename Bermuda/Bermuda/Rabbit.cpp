@@ -67,7 +67,7 @@ void Rabbit::directionsAndMove(double dt)
 	else {
 		timeSinceLastAction = 0;
 
-		uniform_int_distribution<int> dist2(1, 10);
+		uniform_int_distribution<int> dist2(1, 8);
 		int randomNumberMoveDirection = dist2(dre);
 
 		this->StopAnimation();
@@ -144,7 +144,7 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 
 bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
 {
-	return this->intersects(collidableEntity);
+	return this->intersects(collidableEntity, this);
 }
 
 Rabbit::~Rabbit()

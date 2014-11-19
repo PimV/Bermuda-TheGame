@@ -398,6 +398,24 @@
     </ClCompile>
     <ClCompile Include="ToolFlint.cpp">
       <Filter>Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="Cactus.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EasterHead.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldRock.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RockSpikes.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Ice.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableCactus.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -685,6 +703,24 @@
     </ClInclude>
     <ClInclude Include="ToolFlint.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EasterHead.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldRock.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RockSpikes.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Ice.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableCactus.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
