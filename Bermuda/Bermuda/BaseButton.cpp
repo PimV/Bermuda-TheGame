@@ -22,7 +22,6 @@ void BaseButton::placeUnder(BaseButton* button)
 void BaseButton::createButton(std::string message)
 {
 	//making colors and opening font
-	SDL_Color black = { 0, 0, 0 };
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color orange = { 235, 167, 8 };
 	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 60);
