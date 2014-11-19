@@ -65,7 +65,7 @@ void Bat::directionsAndMove(double dt)
 	else {
 		timeSinceLastAction = 0;
 
-		uniform_int_distribution<int> dist2(1, 10);
+		uniform_int_distribution<int> dist2(1, 8);
 		int randomNumberMoveDirection = dist2(dre);
 
 		switch (randomNumberMoveDirection)
