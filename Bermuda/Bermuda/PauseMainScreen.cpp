@@ -43,6 +43,7 @@ void PauseMainScreen::setBackground()
 			backgroundRect.x = var->getX();
 		}
 	}
+	//Move backgound left
 	backgroundRect.x = backgroundRect.x - 30;
 
 	backgroundRect.y = ScreenHeight;
@@ -53,6 +54,7 @@ void PauseMainScreen::setBackground()
 			backgroundRect.y = var->getY(); 
 		}
 	}
+	//Move background up
 	backgroundRect.y = backgroundRect.y - 30;
 
 	backgroundRect.w = 0;
@@ -65,13 +67,15 @@ void PauseMainScreen::setBackground()
 			backgroundRect.w = var->getWidth();
 		}
 	}
+	//Make background wider
 	backgroundRect.w += 60;
 
 	for each (BasePauzeButton* var in buttons)
 	{
 		backgroundRect.h += var->getHeight() * 2;
 	}
-	backgroundRect.h += 40;
+	//Make background higher
+	backgroundRect.h += 0;
 }
 
 void PauseMainScreen::handleEvents(SDL_Event mainEvent)

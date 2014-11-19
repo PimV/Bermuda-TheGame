@@ -9,13 +9,13 @@ void BasePauzeButton::placeAbove(BasePauzeButton* button)
 {
 
 	ButtonRect.x = ((int)ScreenWidth - ButtonRect.w) / 2;
-	ButtonRect.y = button->ButtonRect.y - button->ButtonRect.h * 2;
+	ButtonRect.y = button->ButtonRect.y - button->ButtonRect.h -15;
 }
 
 void BasePauzeButton::placeUnder(BasePauzeButton* button)
 {
 	ButtonRect.x = ((int)ScreenWidth - ButtonRect.w) / 2;
-	ButtonRect.y = button->ButtonRect.y + button->ButtonRect.h * 2;
+	ButtonRect.y = button->ButtonRect.y + button->ButtonRect.h +15;
 }
 
 int BasePauzeButton::getX()
@@ -44,7 +44,7 @@ void BasePauzeButton::createButton(std::string message)
 	SDL_Color black = { 0, 0, 0 };
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color orange = { 235, 167, 8 };
-	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 24);
+	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\andyb.ttf").c_str(), 24);
 
 	//Create menu button textures
 	SDL_Surface* MessageSurface = TTF_RenderText_Blended(staryDarzy, message.c_str(), black);
