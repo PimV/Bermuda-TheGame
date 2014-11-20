@@ -232,7 +232,7 @@ void Inventory::draw() {
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), img->getTileSet(), NULL, &txtRect);
 
 
-
+	int offset = 0;
 	for (size_t i = 0; i < this->slots; i++) {
 		if (i < this->getSize()) {
 			SDL_Rect imgRect;
@@ -248,6 +248,7 @@ void Inventory::draw() {
 			}
 		}
 		if (i == selectedIndex) {
+			
 			int x = posX + (i *(sizeX / 15));
 
 			SDL_Rect rectToDraw = {
