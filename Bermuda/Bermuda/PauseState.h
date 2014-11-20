@@ -1,6 +1,6 @@
 #pragma once
 #include "igamestate.h"
-#include "BasePauzeButton.h"
+#include "PauzeBaseButton.h"
 #include "PauseMainScreen.h"
 #include "PauseStatusTrackerScreen.h"
 #include "BasePauseScreen.h"

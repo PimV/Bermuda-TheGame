@@ -115,17 +115,17 @@
     <Filter Include="Header Files\Model\Entity\Interactive objects">
       <UniqueIdentifier>{c554fe2a-4530-460b-924e-19bcf4eb40a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Model\PauseScreens">
-      <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Model\PauseScreen">
-      <UniqueIdentifier>{2a950ad5-ee96-41ad-8440-bfe5fd53a722}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Entity\NPC%27s">
       <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Model\Entity\NPC%27s">
       <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\PauseScreens">
+      <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\PauseScreen">
+      <UniqueIdentifier>{2a950ad5-ee96-41ad-8440-bfe5fd53a722}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="MapLoader.cpp">
       <Filter>Source Files\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files\View\Component</Filter>
     </ClCompile>
     <ClCompile Include="ActionContainer.cpp">
       <Filter>Source Files\Model\Container\Action</Filter>
@@ -219,15 +216,6 @@
     <ClCompile Include="CollidableContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="ExitButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseButton.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="PauseState.cpp">
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
@@ -242,9 +230,6 @@
     </ClCompile>
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files\Model\GameState</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePauzeButton.cpp">
-      <Filter>Source Files\Controller</Filter>
     </ClCompile>
     <ClCompile Include="PauzeExitButton.cpp">
       <Filter>Source Files\View\Component</Filter>
@@ -364,10 +349,10 @@
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
     <ClCompile Include="PauseMainScreen.cpp">
-      <Filter>Source Files\Model\PauseScreens</Filter>
+      <Filter>Source Files\View\PauseScreens</Filter>
     </ClCompile>
     <ClCompile Include="PauseStatusTrackerScreen.cpp">
-      <Filter>Source Files\Model\PauseScreens</Filter>
+      <Filter>Source Files\View\PauseScreens</Filter>
     </ClCompile>
     <ClCompile Include="SpawnpointContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
@@ -398,7 +383,7 @@
     </ClCompile>
     <ClCompile Include="ToolFlint.cpp">
       <Filter>Source Files</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Cactus.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
@@ -418,7 +403,19 @@
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
     <ClCompile Include="BasePauseScreen.cpp">
-      <Filter>Source Files\Model\PauseScreens</Filter>
+      <Filter>Source Files\View\PauseScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuExitButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuPlayButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuBaseButton.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeBaseButton.cpp">
+      <Filter>Source Files\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -454,9 +451,6 @@
     </ClInclude>
     <ClInclude Include="MapLoader.h">
       <Filter>Header Files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files\View\Component</Filter>
     </ClInclude>
     <ClInclude Include="ActionContainer.h">
       <Filter>Header Files\Model\Container\Action</Filter>
@@ -518,15 +512,6 @@
     <ClInclude Include="CollidableContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="ExitButton.h">
-      <Filter>Header Files\View\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayButton.h">
-      <Filter>Header Files\View\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseButton.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="PauseState.h">
       <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
@@ -541,9 +526,6 @@
     </ClInclude>
     <ClInclude Include="GameOverState.h">
       <Filter>Header Files\Model\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePauzeButton.h">
-      <Filter>Header Files\Controller</Filter>
     </ClInclude>
     <ClInclude Include="PauzeExitButton.h">
       <Filter>Header Files\View\Component</Filter>
@@ -675,10 +657,10 @@
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
     <ClInclude Include="PauseMainScreen.h">
-      <Filter>Header Files\Model\PauseScreen</Filter>
+      <Filter>Header Files\View\PauseScreen</Filter>
     </ClInclude>
     <ClInclude Include="PauseStatusTrackerScreen.h">
-      <Filter>Header Files\Model\PauseScreen</Filter>
+      <Filter>Header Files\View\PauseScreen</Filter>
     </ClInclude>
     <ClInclude Include="SpawnpointContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
@@ -726,7 +708,19 @@
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
     <ClInclude Include="BasePauseScreen.h">
-      <Filter>Header Files\Model\PauseScreen</Filter>
+      <Filter>Header Files\View\PauseScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuExitButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuPlayButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBaseButton.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeBaseButton.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

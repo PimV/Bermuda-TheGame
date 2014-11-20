@@ -1,22 +1,22 @@
-#include "PlayButton.h"
+#include "MenuPlayButton.h"
 
 
-PlayButton::PlayButton()
+MenuPlayButton::MenuPlayButton()
 {
 	init();
 }
 
-void PlayButton::init()
+void MenuPlayButton::init()
 {
 	std::string Message = "Play";
 	createButton(Message);
 }
 
-void PlayButton::action()
+void MenuPlayButton::action()
 {
 	GameStateManager::Instance()->changeGameState(PlayState::Instance());
 }
 
-PlayButton::~PlayButton()
+MenuPlayButton::~MenuPlayButton()
 {
 }

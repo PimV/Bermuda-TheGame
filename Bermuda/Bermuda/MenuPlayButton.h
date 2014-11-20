@@ -1,12 +1,12 @@
 #pragma once
-#include "BaseButton.h"
+#include "MenuBaseButton.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 #include "PlayState.h"
 
-class PlayButton :
-	public BaseButton
+class MenuPlayButton :
+	public MenuBaseButton
 {
 public:
 	//Methodes
@@ -14,7 +14,7 @@ public:
 	void action();
 
 	//Constructor and destructor
-	PlayButton();
-	virtual ~PlayButton();
+	MenuPlayButton();
+	virtual ~MenuPlayButton();
 };
 

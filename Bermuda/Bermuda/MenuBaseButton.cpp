@@ -1,25 +1,25 @@
-#include "BaseButton.h"
+#include "MenuBaseButton.h"
 
 
-BaseButton::BaseButton()
+MenuBaseButton::MenuBaseButton()
 {
 	active = false;
 }
 
-void BaseButton::placeAbove(BaseButton* button)
+void MenuBaseButton::placeAbove(MenuBaseButton* button)
 {
 
 	buttonRect.x = button->buttonRect.x;
 	buttonRect.y = button->buttonRect.y - button->buttonRect.h - 15;
 }
 
-void BaseButton::placeUnder(BaseButton* button)
+void MenuBaseButton::placeUnder(MenuBaseButton* button)
 {
 	buttonRect.x = button->buttonRect.x;
 	buttonRect.y = button->buttonRect.y + button->buttonRect.h + 15;
 }
 
-void BaseButton::createButton(std::string message)
+void MenuBaseButton::createButton(std::string message)
 {
 	//making colors and opening font
 	SDL_Color white = { 255, 255, 255 };
@@ -44,7 +44,7 @@ void BaseButton::createButton(std::string message)
 	TTF_CloseFont(staryDarzy);
 }
 
-void BaseButton::hover(int x, int y)
+void MenuBaseButton::hover(int x, int y)
 {
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
 		y >= buttonRect.y && y <= (buttonRect.y + buttonRect.h))
@@ -63,7 +63,7 @@ void BaseButton::hover(int x, int y)
 	}
 }
 
-bool BaseButton::clicked(int x, int y)
+bool MenuBaseButton::clicked(int x, int y)
 {
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
 		y >= buttonRect.y && y <= (buttonRect.y + buttonRect.h))
@@ -74,7 +74,7 @@ bool BaseButton::clicked(int x, int y)
 	return false;
 }
 
-void BaseButton::draw()
+void MenuBaseButton::draw()
 {
 	if (active == false)
 	{
@@ -86,13 +86,13 @@ void BaseButton::draw()
 	}
 }
 
-void BaseButton::cleanup()
+void MenuBaseButton::cleanup()
 {
 	SDL_DestroyTexture(buttonTexture);
 	SDL_DestroyTexture(buttonHoverTexture);
 }
 
-BaseButton::~BaseButton()
+MenuBaseButton::~MenuBaseButton()
 {
 	cleanup();
 }

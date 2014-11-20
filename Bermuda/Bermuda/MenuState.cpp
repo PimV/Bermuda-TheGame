@@ -1,7 +1,6 @@
 #include "header_loader.h"
 #include "MenuState.h"
 #include "PlayState.h"
-#include "Button.h"
 #include "GameStateManager.h"
 #include <iostream>
 #include <SDL_ttf.h>
@@ -25,8 +24,8 @@ void MenuState::init(GameStateManager* gsm) {
 
 	//Create Buttons
 	if (buttons.size() < 2) {
-		PlayButton* playButton = new PlayButton();
-		ExitButton* exitButton = new ExitButton();
+		MenuPlayButton* playButton = new MenuPlayButton();
+		MenuExitButton* exitButton = new MenuExitButton();
 
 		playButton->placeAbove(exitButton);
 

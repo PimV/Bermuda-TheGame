@@ -1,6 +1,6 @@
 #pragma once
-#include "ExitButton.h"
-#include "PlayButton.h"
+#include "MenuExitButton.h"
+#include "MenuPlayButton.h"
 #include <SDL_image.h>
 #include <SDL.h>
 #include "igamestate.h"
@@ -15,7 +15,7 @@ private:
 	SDL_Rect bermudaTextRect;
 
 	static const int totalButtons = 2;
-	std::vector<BaseButton*> buttons;
+	std::vector<MenuBaseButton*> buttons;
 
 	static MenuState m_MenuState;
 

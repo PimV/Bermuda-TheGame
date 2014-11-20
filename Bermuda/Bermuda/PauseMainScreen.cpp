@@ -36,7 +36,7 @@ void PauseMainScreen::init()
 void PauseMainScreen::setBackground()
 {
 	backgroundRect.x = ScreenWidth;
-	for each (BasePauzeButton* var in buttons)
+	for each (PauzeBaseButton* var in buttons)
 	{
 		if (var->getX() <= backgroundRect.x)
 		{
@@ -47,7 +47,7 @@ void PauseMainScreen::setBackground()
 	backgroundRect.x = backgroundRect.x - 30;
 
 	backgroundRect.y = ScreenHeight;
-	for each (BasePauzeButton* var in buttons)
+	for each (PauzeBaseButton* var in buttons)
 	{
 		if (var->getY() <= backgroundRect.y)
 		{
@@ -60,7 +60,7 @@ void PauseMainScreen::setBackground()
 	backgroundRect.w = 0;
 	backgroundRect.h = 0;
 
-	for each (BasePauzeButton* var in buttons)
+	for each (PauzeBaseButton* var in buttons)
 	{
 		if (var->getWidth() >= backgroundRect.w)
 		{
@@ -70,7 +70,7 @@ void PauseMainScreen::setBackground()
 	//Make background wider
 	backgroundRect.w += 60;
 
-	for each (BasePauzeButton* var in buttons)
+	for each (PauzeBaseButton* var in buttons)
 	{
 		backgroundRect.h += var->getHeight() * 2;
 	}

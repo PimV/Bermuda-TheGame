@@ -1,11 +1,11 @@
 #pragma once
-#include "BaseButton.h"
+#include "MenuBaseButton.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 
-class ExitButton :
-	public BaseButton
+class MenuExitButton :
+	public MenuBaseButton
 {
 public:
 	//methodes
@@ -13,7 +13,7 @@ public:
 	void action();
 
 	//Constructors and destructors
-	ExitButton();
-	virtual ~ExitButton();
+	MenuExitButton();
+	virtual ~MenuExitButton();
 };
 

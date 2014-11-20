@@ -1,12 +1,12 @@
 #pragma once
-#include "BasePauzeButton.h"
+#include "PauzeBaseButton.h"
 #include "BasePauseScreen.h" 
 
 class PauseMainScreen : public BasePauseScreen
 {
 private:
 	//variables
-	std::vector<BasePauzeButton*> buttons;
+	std::vector<PauzeBaseButton*> buttons;
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
 	

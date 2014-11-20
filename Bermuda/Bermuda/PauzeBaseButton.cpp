@@ -1,44 +1,44 @@
-#include "BasePauzeButton.h"
+#include "PauzeBaseButton.h"
 
-BasePauzeButton::BasePauzeButton()
+PauzeBaseButton::PauzeBaseButton()
 {
 	active = false;
 }
 
-void BasePauzeButton::placeAbove(BasePauzeButton* button)
+void PauzeBaseButton::placeAbove(PauzeBaseButton* button)
 {
 
 	ButtonRect.x = ((int)ScreenWidth - ButtonRect.w) / 2;
 	ButtonRect.y = button->ButtonRect.y - button->ButtonRect.h -15;
 }
 
-void BasePauzeButton::placeUnder(BasePauzeButton* button)
+void PauzeBaseButton::placeUnder(PauzeBaseButton* button)
 {
 	ButtonRect.x = ((int)ScreenWidth - ButtonRect.w) / 2;
 	ButtonRect.y = button->ButtonRect.y + button->ButtonRect.h +15;
 }
 
-int BasePauzeButton::getX()
+int PauzeBaseButton::getX()
 {
 	return ButtonRect.x;
 }
 
-int BasePauzeButton::getY()
+int PauzeBaseButton::getY()
 {
 	return ButtonRect.y;
 }
 
-int BasePauzeButton::getHeight()
+int PauzeBaseButton::getHeight()
 {
 	return ButtonRect.h;
 }
 
-int BasePauzeButton::getWidth()
+int PauzeBaseButton::getWidth()
 {
 	return ButtonRect.w;
 }
 
-void BasePauzeButton::createButton(std::string message)
+void PauzeBaseButton::createButton(std::string message)
 {
 	//making colors and opening font
 	SDL_Color black = { 0, 0, 0 };
@@ -64,7 +64,7 @@ void BasePauzeButton::createButton(std::string message)
 	TTF_CloseFont(staryDarzy);
 }
 
-void BasePauzeButton::hover(int x, int y)
+void PauzeBaseButton::hover(int x, int y)
 {
 	if (x >= ButtonRect.x && x <= (ButtonRect.x + ButtonRect.w) &&
 		y >= ButtonRect.y && y <= (ButtonRect.y + ButtonRect.h))
@@ -83,7 +83,7 @@ void BasePauzeButton::hover(int x, int y)
 	}
 }
 
-bool BasePauzeButton::clicked(int x, int y)
+bool PauzeBaseButton::clicked(int x, int y)
 {
 	if (x >= ButtonRect.x && x <= (ButtonRect.x + ButtonRect.w) &&
 		y >= ButtonRect.y && y <= (ButtonRect.y + ButtonRect.h))
@@ -94,7 +94,7 @@ bool BasePauzeButton::clicked(int x, int y)
 	return false;
 }
 
-void BasePauzeButton::draw()
+void PauzeBaseButton::draw()
 {
 	SDL_Renderer* renderer = GameStateManager::Instance()->sdlInitializer->getRenderer();
 	if (active == false)
@@ -107,13 +107,13 @@ void BasePauzeButton::draw()
 	}
 }
 
-void BasePauzeButton::cleanup()
+void PauzeBaseButton::cleanup()
 {
 	SDL_DestroyTexture(ButtonTexture);
 	SDL_DestroyTexture(HoverButtonTexture);
 }
 
-BasePauzeButton::~BasePauzeButton()
+PauzeBaseButton::~PauzeBaseButton()
 {
 	cleanup();
 }

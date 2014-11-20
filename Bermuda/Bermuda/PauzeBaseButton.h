@@ -3,7 +3,7 @@
 #include <SDL_ttf.h>
 #include "GameStateManager.h"
 
-class BasePauzeButton
+class PauzeBaseButton
 {
 private:
 	//Variables
@@ -21,8 +21,8 @@ protected:
 public:
 	//methodes
 	void createButton(std::string);
-	void placeAbove(BasePauzeButton* button);
-	void placeUnder(BasePauzeButton* button);
+	void placeAbove(PauzeBaseButton* button);
+	void placeUnder(PauzeBaseButton* button);
 	int getX();
 	int getY();
 	int getHeight();
@@ -33,9 +33,9 @@ public:
 	bool clicked(int, int);
 
 	//constructors initialize, cleanup and delete
-	BasePauzeButton();
+	PauzeBaseButton();
 	virtual void init() = 0;
 	void cleanup();
-	virtual ~BasePauzeButton();
+	virtual ~PauzeBaseButton();
 };
 

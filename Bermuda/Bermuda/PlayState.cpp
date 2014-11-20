@@ -1,6 +1,5 @@
 #include "PlayState.h"
 #include "MenuState.h"
-#include "Button.h"
 #include "GameStateManager.h"
 #include "ActionContainer.h"
 #include "ClickAction.h"
