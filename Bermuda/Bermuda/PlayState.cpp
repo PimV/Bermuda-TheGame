@@ -37,7 +37,7 @@ void PlayState::init(GameStateManager *gsm) {
 	showCol = false;
 	showInter = false;
 	showSpawnArea = false;
-	showDayLight = true;
+	showDayLight = false;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
