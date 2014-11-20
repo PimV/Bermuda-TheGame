@@ -28,7 +28,11 @@ private:
 	std::vector<DrawableEntity*> temp;
 
 	bool ready;
-	bool showCol, showInter, showSpawnArea; 
+	bool showCol, showInter, showSpawnArea, showDayLight; 
+
+	// temp
+	SDL_Texture* dayLightTexture;
+	SDL_Rect dayLightRect;
 
 public:
 	Player* getPlayer();

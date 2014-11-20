@@ -20,6 +20,8 @@
 #include "Axe.h"
 #include "Pickaxe.h"
 
+#include "sdl_gpu.h"
+
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
@@ -35,6 +37,7 @@ void PlayState::init(GameStateManager *gsm) {
 	showCol = false;
 	showInter = false;
 	showSpawnArea = false;
+	showDayLight = true;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -48,6 +51,9 @@ void PlayState::init(GameStateManager *gsm) {
 
 	SoundLoader::Instance()->playGameMusic();
 	ready = true;
+
+	// temp 
+	this->dayLightTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelBlack.png").c_str());
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -173,6 +179,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 				}
 				break;
 			}
+		case SDLK_F7:
+			this->showDayLight = !this->showDayLight;
+			break;
 		case SDLK_F11:
 			//Enable collision
 			p->setCollisionHeight(10);
@@ -426,15 +435,31 @@ void PlayState::draw()
 		this->p->getInventory()->draw();
 	}
 
+
+	if (showDayLight)
+	{
+		// Draw daylight (temp location)
+		this->dayLightRect.x = 0;
+		this->dayLightRect.y = 0;
+		this->dayLightRect.w = ScreenWidth;
+		this->dayLightRect.h = ScreenHeight;
+
+		//std::cout << "Rect X:" << dayLightRect.x << " Y:" << dayLightRect.y << " W:" << dayLightRect.w << " H:" << dayLightRect.h << std::endl;
+
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->dayLightTexture, &this->dayLightRect, NULL);
+	}
+
 	// Draw the player status
 	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), 1150, 5, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(p->getHunger())), 1150, 35, 100, 25);
 	//this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(p->getThirst())), 1150, 65, 100, 25);
 	// if current hour is smaller then 9 
-	if (GameTimer::Instance()->getCurrentDayPart() > 9)
+	if (GameTimer::Instance()->getCurrentDayPart() > 9) {
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
-	else
+	}
+	else {
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), 1150, 95, 90, 25);
+	}
 }
 
 Player* PlayState::getPlayer()

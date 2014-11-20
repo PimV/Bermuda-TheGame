@@ -1,4 +1,6 @@
 #include "SDLInitializer.h"
+#include <iostream>
+
 
 SDLInitializer::SDLInitializer(void)
 {
@@ -52,8 +54,6 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 	SDL_DestroyTexture(imgTxture);
 	SDL_FreeSurface(imgTxt);
 }
-
-
 
 void SDLInitializer::clearScreen() {
 	SDL_RenderClear(renderer);

@@ -8,6 +8,7 @@ public:
 	void init(const char* title, int width, int height, int bpp, bool fullscreen);
 	void clearScreen();
 	void drawTexture(SDL_Texture* texture,  const SDL_Rect* destRect,SDL_Rect* crop);
+	void drawRect(SDL_Rect rect);
 	void drawScreen();
 	void drawText(std::string msg, int x, int y, int w, int h);
 	SDL_Renderer* getRenderer();
