@@ -87,10 +87,17 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			p->destX = x + this->camera->getX();
-			p->destY = y + this->camera->getY();
-			p->resetMovement();
-			p->moveClick = true;
+			if (p->getInventory()->clicked(x,y, "select", p)) {
+			} else {
+				p->destX = x + this->camera->getX();
+				p->destY = y + this->camera->getY();
+				p->resetMovement();
+				p->moveClick = true;
+			}
+		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
+			if (p->getInventory()->clicked(x, y, "use", p)) {
+
+			}
 		}
 		break;
 	case SDL_MOUSEWHEEL: 

@@ -4,6 +4,7 @@
 class Item;
 class Image;
 class Player;
+class Equipable;
 class Inventory
 {
 public:
@@ -28,6 +29,9 @@ public:
 	bool hasAxe();
 	bool hasPickaxe();
 
+	bool axeSelected();
+	bool pickAxeSelected();
+
 	void draw();
 
 	Item* getItemById(int id, bool full);
@@ -38,16 +42,29 @@ public:
 	void toggleInventory();
 	bool isOpen();
 
+	bool clicked(int x, int y, std::string mode, Player* player);
+
 	void printInventory();
 
 	~Inventory(void);
 private:
 	//Draw
 	Image* img;
+	Image* singleImg;
+	Image* singleSelectedImg;
 	int posX;
 	int posY;
 	int sizeX;
 	int sizeY;
+	
+	int startX;
+	int endX;
+	int startY;
+
+	int slotWidth;
+	int slotHeight; 
+	int itemWidth;
+	int itemHeight;
 
 	//Selected Index
 	int selectedIndex;

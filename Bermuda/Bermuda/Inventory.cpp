@@ -28,8 +28,20 @@ void Inventory::init() {
 	posY = ScreenHeight - sizeY - 10; //10 = margin from bottom
 
 
+	slotWidth = ScreenWidth / 32;
+	slotHeight = ScreenHeight / 18;
+	itemWidth = ScreenWidth / 50;
+	itemHeight = ScreenHeight / 30;
+
 	int id = GameStateManager::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
 	img = GameStateManager::Instance()->getImageLoader()->getMapImage(id);
+
+	int singleId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item.png", 69,69);
+	singleImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleId);
+
+	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
+	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
+
 	std::cout << "Creating inv img" << std::endl;
 }
 
@@ -54,6 +66,8 @@ void Inventory::decrementSelectedIndex() {
 Item* Inventory::getSelectedItem() {
 	if (selectedIndex < this->getSize()) {
 		return this->itemVector[selectedIndex];
+	} else {
+		return nullptr;
 	}
 }
 
@@ -169,6 +183,24 @@ void Inventory::dropCurrent() {
 	}
 }
 
+bool Inventory::pickAxeSelected() {
+	if (this->getSelectedItem() != nullptr) {
+		if (this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Inventory::axeSelected() {
+	if (this->getSelectedItem() != nullptr) {
+		if (this->getSelectedItem()->getId() == (int)Items::Axe) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Inventory::hasAxe() {
 	return this->hasItemById((int)Items::Axe);
 }
@@ -187,7 +219,6 @@ int Inventory::getSize() {
 
 
 void Inventory::printInventory() {
-	std::cout << "INVENTORY: " << std::endl;
 	for (size_t i = 0; i < 20; i++) {
 		/*if (i % 4 == 0) {
 		std::cout <<  std::endl;
@@ -210,58 +241,74 @@ void Inventory::toggleInventory() {
 	this->open = !this->open;
 }
 
+bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
+	if (x >= startX && x <= endX && y >= startY  && y <= startY + slotHeight) {
+		int clickedIndex = -1;
+
+		for (int i = 0; i < this->slots; i++) {
+			int startSlotX = startX + i*slotWidth;
+			int endSlotX = startSlotX + slotWidth;
+
+			if (x >= startSlotX && x <= endSlotX) {
+				selectedIndex = i;
+				break;
+			}
+		}
+		if (mode == "use") {
+			interactCurrent(player);
+		}
+
+		return true;
+	}
+	return false;
+
+}
+
 void Inventory::draw() {
-	//int y = 50;
-	//for (size_t i = 0; i < 20; i++) {
-	//	if (i < this->getSize()) {
-	//		GameStateManager::Instance()->sdlInitializer->drawText(
-	//			std::string(item_strings[this->itemVector[i]->getId()] + std::string(":") + std::to_string(this->itemVector[i]->getStackSize())), 20, 24*i + 5,100, 32
-	//			);
-	//	}
-	//}
-
-	//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), drawImage->getTileSet(), drawImage->getCroppingRect(), sizeRect);
-
-	SDL_Rect txtRect;
-	txtRect.x = posX;
-	txtRect.y = posY;
-	txtRect.w = sizeX;
-	txtRect.h = sizeY;
-
-
-	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), img->getTileSet(), NULL, &txtRect);
-
-
-	int offset = 0;
 	for (size_t i = 0; i < this->slots; i++) {
+
+
+		int slotX =  posX + ScreenWidth / 32 +  i*(ScreenWidth / 32);
+		int slotY = posY - 20;
+
+		if (i == 0) {
+			startX = slotX;
+			startY = slotY;
+		} else if (i == this->slots - 1){ 
+			endX = slotX + slotWidth;
+		}
+
+
+		SDL_Rect slotRect;
+		slotRect.x = slotX;
+		slotRect.y = slotY;
+		slotRect.w = slotWidth;
+		slotRect.h = slotHeight;
+
+		if (i == selectedIndex) {
+			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+		} else {
+			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleImg->getTileSet(), NULL, &slotRect);
+		}
 		if (i < this->getSize()) {
+			int itemX = slotX + slotWidth / 2 - itemWidth / 2;
+			int itemY = slotY + slotHeight / 2 - itemHeight / 2;
+
 			SDL_Rect imgRect;
-			imgRect.x = posX + (i *(sizeX / 15)) + 10;
-			imgRect.y = posY + sizeY / 2 - (ScreenHeight / 30) / 2;
-			imgRect.w = ScreenWidth / 50;
-			imgRect.h = ScreenHeight / 30;
+			imgRect.x = itemX;
+			imgRect.y = itemY;
+			imgRect.w = itemWidth;
+			imgRect.h = itemHeight;
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->itemVector[i]->getImage()->getTileSet(), NULL, &imgRect);
 			if (this->itemVector[i]->getMaxStackSize() != 1) {
 				GameStateManager::Instance()->sdlInitializer->drawText(
-					std::string(std::to_string(this->itemVector[i]->getStackSize())), posX + (i *(sizeX / 15)) + (sizeX / 15) - 15, posY  + sizeY - 22,10, 22
+					std::string(std::to_string(this->itemVector[i]->getStackSize())), slotX + slotWidth - 4*(slotWidth / 10), slotY + slotHeight - 5*(slotHeight / 10),10, 22
 					);
 			}
 		}
-		if (i == selectedIndex) {
-
-			int x = posX + (i *(sizeX / 15)) + i;
-
-			SDL_Rect rectToDraw = {
-				x,
-				posY,
-				(sizeX / 15),
-				sizeY
-			}; 
-			SDL_SetRenderDrawColor(GameStateManager::Instance()->sdlInitializer->getRenderer(), 0, 255, 0, 255);
-			SDL_RenderDrawRect(GameStateManager::Instance()->sdlInitializer->getRenderer(), &rectToDraw);
-			SDL_SetRenderDrawColor(GameStateManager::Instance()->sdlInitializer->getRenderer(), 0, 0, 0, 255);
-		}
 	}
+
+
 }
 
 

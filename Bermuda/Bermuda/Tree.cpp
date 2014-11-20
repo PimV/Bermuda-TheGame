@@ -23,7 +23,7 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 }
 
 void Tree::interact(Player* player) {
-	if (player->getInventory()->hasAxe()) {
+	if (player->getInventory()->axeSelected()) {
 		InteractableEntity::interact(player);
 
 		if (this->trackInteractTimes()) {
