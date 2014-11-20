@@ -9,27 +9,33 @@ class PauseState :
 	public IGameState
 {
 private:
+	//self (needed for instance)
 	static PauseState m_PauseState;
-	BasePauseScreen* curWindow = nullptr;
+
+	//variables		screens
+	class BasePauseScreen* curWindow;
 
 	PauseMainScreen* mainScr;
 	PauseStatusTrackerScreen* statScr;
 
 public:
-	void setCurWindow(BasePauseScreen*);
-
-	void pause();
-	void resume();
-
+	//Methodes
+	void pause();								//unused
+	void resume();								//unused
 	void handleEvents(SDL_Event mainEvent);
 	void update(double dt);
 	void draw();
+	//			Screens
+	void setCurWindow(BasePauseScreen* curwindow);
+	BasePauseScreen* getMainPauseScreen();
+	BasePauseScreen* getMainAchievementsScreen();
 
+	//getInstance
 	static PauseState* Instance() {
 		return &m_PauseState;
 	};
 
-	//constructors destructors
+	//constructors destructors etc
 	PauseState();
 	void init(GameStateManager* gsm);
 	void cleanup();

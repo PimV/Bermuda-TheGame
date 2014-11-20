@@ -3,7 +3,7 @@
 #include <vector>
 #include "BasePauseScreen.h"
 
-class PauseStatusTrackerScreen : BasePauseScreen
+class PauseStatusTrackerScreen : public BasePauseScreen
 {
 private:
 	//variables

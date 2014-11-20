@@ -15,7 +15,7 @@ void PauzeAchievementsButton::init()
 
 void PauzeAchievementsButton::action()
 {
-	PauseState::Instance()->setCurWindow(1);
+	PauseState::Instance()->setCurWindow(PauseState::Instance()->getMainAchievementsScreen());
 }
 
 PauzeAchievementsButton::~PauzeAchievementsButton()

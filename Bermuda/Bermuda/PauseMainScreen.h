@@ -2,7 +2,7 @@
 #include "BasePauzeButton.h"
 #include "BasePauseScreen.h" 
 
-class PauseMainScreen : BasePauseScreen
+class PauseMainScreen : public BasePauseScreen
 {
 private:
 	//variables
