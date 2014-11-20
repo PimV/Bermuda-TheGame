@@ -29,9 +29,8 @@ void Ice::interact(Player* player)
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
-			//TODO: give ice/water
-			//player->getInventory()->addItem(ItemFactory::Instance()->createRock());
-			//player->getStatusTracker()->rockMined();
+			player->getInventory()->addItem(ItemFactory::Instance()->createWater());
+			//TODO: add to statustracker
 		}
 	}
 }
