@@ -54,7 +54,7 @@ Rock::~Rock()
 {
 	if(this->destroyed)
 	{
-		this->getMainEntityContainer()->getBackgroundContainer()->add(this);
+		this->getMainEntityContainer()->getBackgroundContainer()->remove(this);
 	}
 	else
 	{

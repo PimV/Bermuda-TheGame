@@ -4,12 +4,12 @@ class PauzeExitButton :
 	public BasePauzeButton
 {
 private:
-	void action(GameStateManager* gsm);
+	void action();
 
 public:
-	void init(GameStateManager* gsm);
+	void init();
 
-	PauzeExitButton(GameStateManager* gsm);
+	PauzeExitButton();
 	virtual ~PauzeExitButton();
 };
 

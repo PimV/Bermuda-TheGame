@@ -4,12 +4,12 @@ class PauzeResumeButton :
 	public BasePauzeButton
 {
 private:
-	void action(GameStateManager* gsm);
+	void action();
 
 public:
-	void init(GameStateManager* gsm);
+	void init();
 
-	PauzeResumeButton(GameStateManager* gsm);
+	PauzeResumeButton();
 	virtual ~PauzeResumeButton();
 };
 

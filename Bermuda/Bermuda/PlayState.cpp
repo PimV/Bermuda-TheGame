@@ -43,8 +43,8 @@ void PlayState::init(GameStateManager *gsm) {
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
 	this->p->getInventory()->toggleInventory();
 	//TEMPORARY AXE SPAWN:
-	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\Iron_axe.png", 22, 27)));
-	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\Iron_pickaxe.png",32, 32)));
+	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
+	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png",32, 32)));
 
 	SoundLoader::Instance()->playGameMusic();
 	ready = true;
@@ -107,29 +107,29 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			//Arrow left key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingLeft = true;
 			p->movingRight = false;
+			p->movingLeft = true;
 			break;
 		case SDLK_RIGHT:
 			//Arrow right key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingRight = true;
 			p->movingLeft = false;
+			p->movingRight = true;
 			break;
 		case SDLK_UP:
 			//Arrow up key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingUp = true;
 			p->movingDown = false;
+			p->movingUp = true;
 			break;
 		case SDLK_DOWN:
 			//Arrow down key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingDown = true;
 			p->movingUp = false;
+			p->movingDown = true;
 			break;
 		case SDLK_LSHIFT:
 			//Sprint
