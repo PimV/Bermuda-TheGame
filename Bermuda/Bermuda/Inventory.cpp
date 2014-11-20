@@ -248,8 +248,8 @@ void Inventory::draw() {
 			}
 		}
 		if (i == selectedIndex) {
-			
-			int x = posX + (i *(sizeX / 15));
+
+			int x = posX + (i *(sizeX / 15)) + i;
 
 			SDL_Rect rectToDraw = {
 				x,
