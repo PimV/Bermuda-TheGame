@@ -99,6 +99,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
+    <ClInclude Include="BasePauseScreen.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
@@ -198,6 +199,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="AppleTree.cpp" />
     <ClCompile Include="Axe.cpp" />
     <ClCompile Include="BackgroundContainer.cpp" />
+    <ClCompile Include="BasePauseScreen.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />

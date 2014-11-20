@@ -417,6 +417,9 @@
     <ClCompile Include="InteractableCactus.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
+    <ClCompile Include="BasePauseScreen.cpp">
+      <Filter>Source Files\Model\PauseScreens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -721,6 +724,9 @@
     </ClInclude>
     <ClInclude Include="InteractableCactus.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePauseScreen.h">
+      <Filter>Header Files\Model\PauseScreen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

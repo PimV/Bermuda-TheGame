@@ -3,19 +3,20 @@
 #include "BasePauzeButton.h"
 #include "PauseMainScreen.h"
 #include "PauseStatusTrackerScreen.h"
+#include "BasePauseScreen.h"
 
 class PauseState :
 	public IGameState
 {
 private:
-	GameStateManager* gsm;
 	static PauseState m_PauseState;
-	int curWindow;
+	BasePauseScreen* curWindow = nullptr;
+
 	PauseMainScreen* mainScr;
 	PauseStatusTrackerScreen* statScr;
 
 public:
-	void setCurWindow(int);
+	void setCurWindow(BasePauseScreen*);
 
 	void pause();
 	void resume();

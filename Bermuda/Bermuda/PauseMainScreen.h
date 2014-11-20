@@ -1,7 +1,8 @@
 #pragma once
 #include "BasePauzeButton.h"
+#include "BasePauseScreen.h" 
 
-class PauseMainScreen
+class PauseMainScreen : BasePauseScreen
 {
 private:
 	//variables
