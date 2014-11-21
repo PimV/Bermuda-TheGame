@@ -1,20 +1,16 @@
 #include "PlayState.h"
-#include "MenuState.h"
 #include "Button.h"
 #include "GameStateManager.h"
 #include "ActionContainer.h"
-#include "ClickAction.h"
-#include "MoveAction.h"
 #include "PauseState.h"
-#include "LoadingState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
-#include "Inventory.h"
 #include "Item.h"
 #include <thread>
-#include "ToolAxe.h"
-#include "ItemCarrot.h"
+#include "Items.h"
+#include "Consumable.h"
+#include "Equipable.h"
 
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
@@ -173,6 +169,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 				}
 				break;
 			}
+		case SDLK_F8:
+			p->getCraftingSystem()->craftItem(Items::Axe);
+			break;
 		case SDLK_F11:
 			//Enable collision
 			p->setCollisionHeight(10);
