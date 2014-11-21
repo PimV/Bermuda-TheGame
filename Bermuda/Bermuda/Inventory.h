@@ -25,6 +25,7 @@ public:
 
 	int getSize();
 	void setSize(int size);
+	int getSlots();
 
 	void toggleInventory();
 	bool isOpen();

@@ -122,6 +122,9 @@ int Inventory::getSize() {
 	return this->itemVector.size();
 }
 
+int Inventory::getSlots() {
+	return this->slots;
+}
 
 void Inventory::printInventory() {
 	std::cout << "INVENTORY: " << std::endl;

@@ -1,19 +1,19 @@
 #pragma once
 #include "Inventory.h"
-#include "Item.h"
 #include "Items.h"
+#include <map>
 
 class Crafting
 {
 private:
 	bool open;
-	map<int, map<int, int>> recipes;
+	std::map<Items, std::map<Items, int>> recipes;
 	void createRecipes();
 public:
 	Crafting();
 	void init();
-	bool canCraft(Inventory* inv, int itemID);
-	Item* craftItem(Inventory* inv, int itemID);
+	bool canCraft(Inventory* inv, Items item);
+	void craftItem(Inventory* inv, Items item);
 	void draw();
 	void toggleCraftMenu();
 	void cleanup();

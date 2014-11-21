@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include "Player.h"
 #include "ItemFactory.h"
+#include "Items.h"
 
 
 AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
@@ -27,7 +28,7 @@ void AppleTree::interact(Player* player) {
 
 	if (this->trackInteractTimes()) {
 		this->setDestroyedState();
-		player->getInventory()->addItem(ItemFactory::Instance()->createApple());
+		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Apple));
 		player->getStatusTracker()->applePicked();
 	}
 }

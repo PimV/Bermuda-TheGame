@@ -420,9 +420,6 @@
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Recipe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -729,9 +726,6 @@
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
     <ClInclude Include="Crafting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Recipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

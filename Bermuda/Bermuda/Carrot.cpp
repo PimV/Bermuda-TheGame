@@ -1,7 +1,7 @@
 #include "Carrot.h"
 #include "Player.h"
-#include "ItemCarrot.h"
 #include "ItemFactory.h"
+#include "Items.h"
 
 Carrot::Carrot(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* carrotImage)
 	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, carrotImage), InteractableEntity(id,x,y,chunkSize, -25, -25, this->getWidth() + 50, this->getHeight() + 50)
@@ -18,7 +18,7 @@ void Carrot::update(double dt) {
 
 void Carrot::interact(Player* player)
 {
-	player->getInventory()->addItem(ItemFactory::Instance()->createCarrot());
+	player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Carrot));
 	player->getStatusTracker()->carrotPicked();
 	this->setDestroyedState();
 	//std::cout << "interact met CARROT X: " << this->getX() << " Y: " << this->getY() << std::endl;
