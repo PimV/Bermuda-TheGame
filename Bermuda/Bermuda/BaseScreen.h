@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-class BasePauseScreen
+class BaseScreen
 {
 private:
 	//Methodes
@@ -13,7 +13,7 @@ public:
 	virtual void handleEvents(SDL_Event) = 0;
 	virtual void draw() = 0;
 
-	BasePauseScreen();
-	virtual ~BasePauseScreen();
+	BaseScreen();
+	virtual ~BaseScreen();
 };
 

@@ -32,17 +32,17 @@ void PauseState::update(double dt)
 
 }
 
-void PauseState::setCurWindow(BasePauseScreen* window)
+void PauseState::setCurWindow(BaseScreen* window)
 {
 	curWindow = window;
 }
 
-BasePauseScreen* PauseState::getMainPauseScreen()
+BaseScreen* PauseState::getMainPauseScreen()
 {
 	return mainScr;
 }
 
-BasePauseScreen* PauseState::getMainAchievementsScreen()
+BaseScreen* PauseState::getMainAchievementsScreen()
 {
 	return statScr;
 }

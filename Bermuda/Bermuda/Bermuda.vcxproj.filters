@@ -46,12 +46,6 @@
     <Filter Include="Source Files\Model\GameState">
       <UniqueIdentifier>{e93a9f76-4a81-4201-bc87-81ecf97ce84c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\View\Component">
-      <UniqueIdentifier>{5b43c53c-206d-4ce0-a2dc-6ebb216fcbc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\View\Component">
-      <UniqueIdentifier>{0fd01313-c957-43cd-a8e9-cac5499436a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Container">
       <UniqueIdentifier>{cba41278-beeb-41d5-a37b-1a5d073554c4}</UniqueIdentifier>
     </Filter>
@@ -121,11 +115,29 @@
     <Filter Include="Header Files\Model\Entity\NPC%27s">
       <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\View\PauseScreens">
-      <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
+    <Filter Include="Header Files\View\Buttons">
+      <UniqueIdentifier>{5b43c53c-206d-4ce0-a2dc-6ebb216fcbc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\View\PauseScreen">
+    <Filter Include="Source Files\View\Buttons">
+      <UniqueIdentifier>{0fd01313-c957-43cd-a8e9-cac5499436a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Screens">
+      <UniqueIdentifier>{e7234566-2a6c-4cfc-9839-3cc8a425edf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Screens\PauseScreens">
       <UniqueIdentifier>{2a950ad5-ee96-41ad-8440-bfe5fd53a722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Screens\MenuScreens">
+      <UniqueIdentifier>{cd7e6ff4-8b99-441d-bd16-0722ed1571f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\Screens">
+      <UniqueIdentifier>{240494a1-cc3d-4b1b-bc55-bda91dfa09fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\Screens\MenuScreens">
+      <UniqueIdentifier>{351fda18-f582-4eae-a8fe-aaedb514cc08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\Screens\PauseScreens">
+      <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -232,10 +244,10 @@
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
     <ClCompile Include="PauzeExitButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
+      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="PauzeMenuButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
+      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="EntityChunkContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
@@ -322,10 +334,10 @@
       <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
     <ClCompile Include="PauzeAchievementsButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
+      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="PauzeResumeButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
+      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="Wasp.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
@@ -349,10 +361,10 @@
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
     <ClCompile Include="PauseMainScreen.cpp">
-      <Filter>Source Files\View\PauseScreens</Filter>
+      <Filter>Source Files\View\Screens\PauseScreens</Filter>
     </ClCompile>
     <ClCompile Include="PauseStatusTrackerScreen.cpp">
-      <Filter>Source Files\View\PauseScreens</Filter>
+      <Filter>Source Files\View\Screens\PauseScreens</Filter>
     </ClCompile>
     <ClCompile Include="SpawnpointContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
@@ -402,20 +414,23 @@
     <ClCompile Include="InteractableCactus.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
-    <ClCompile Include="BasePauseScreen.cpp">
-      <Filter>Source Files\View\PauseScreens</Filter>
-    </ClCompile>
     <ClCompile Include="MenuExitButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
+      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="MenuPlayButton.cpp">
-      <Filter>Source Files\View\Component</Filter>
+      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="MenuBaseButton.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
     <ClCompile Include="PauzeBaseButton.cpp">
       <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuCreditsButton.cpp">
+      <Filter>Source Files\View\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseScreen.cpp">
+      <Filter>Source Files\View\Screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -528,10 +543,10 @@
       <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
     <ClInclude Include="PauzeExitButton.h">
-      <Filter>Header Files\View\Component</Filter>
+      <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="PauzeMenuButton.h">
-      <Filter>Header Files\View\Component</Filter>
+      <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
@@ -624,10 +639,10 @@
       <Filter>Header Files\Model\Entity\Items</Filter>
     </ClInclude>
     <ClInclude Include="PauzeAchievementsButton.h">
-      <Filter>Header Files\View\Component</Filter>
+      <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="PauzeResumeButton.h">
-      <Filter>Header Files\View\Component</Filter>
+      <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="Wasp.h">
       <Filter>Header Files\Model\Entity\NPC%27s</Filter>
@@ -657,10 +672,10 @@
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
     <ClInclude Include="PauseMainScreen.h">
-      <Filter>Header Files\View\PauseScreen</Filter>
+      <Filter>Header Files\View\Screens\PauseScreens</Filter>
     </ClInclude>
     <ClInclude Include="PauseStatusTrackerScreen.h">
-      <Filter>Header Files\View\PauseScreen</Filter>
+      <Filter>Header Files\View\Screens\PauseScreens</Filter>
     </ClInclude>
     <ClInclude Include="SpawnpointContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
@@ -707,20 +722,23 @@
     <ClInclude Include="InteractableCactus.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
-    <ClInclude Include="BasePauseScreen.h">
-      <Filter>Header Files\View\PauseScreen</Filter>
-    </ClInclude>
     <ClInclude Include="MenuExitButton.h">
-      <Filter>Header Files\View\Component</Filter>
+      <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="MenuPlayButton.h">
-      <Filter>Header Files\View\Component</Filter>
+      <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="MenuBaseButton.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
     <ClInclude Include="PauzeBaseButton.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuCreditsButton.h">
+      <Filter>Header Files\View\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseScreen.h">
+      <Filter>Header Files\View\Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,10 +1,6 @@
 #pragma once
 #include "MenuBaseButton.h"
-#include <SDL.h>
-#include <SDL_image.h>
-#include <iostream>
-
-class MenuExitButton :
+class MenuCreditsButton :
 	public MenuBaseButton
 {
 public:
@@ -13,7 +9,7 @@ public:
 	void action();
 
 	//Constructors and destructors
-	MenuExitButton();
-	virtual ~MenuExitButton();
+	MenuCreditsButton();
+	virtual ~MenuCreditsButton();
 };
 

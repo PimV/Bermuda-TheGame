@@ -1,6 +1,7 @@
 #include "header_loader.h"
 #include "MenuState.h"
 #include "PlayState.h"
+#include "MenuCreditsButton.h"
 #include "GameStateManager.h"
 #include <iostream>
 #include <SDL_ttf.h>
@@ -13,6 +14,7 @@ MenuState::MenuState(void)
 
 //TODO: remove GSM
 void MenuState::init(GameStateManager* gsm) {
+	std::cout << "initializing menustate" << std::endl;
 	//Background
 	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
 	if (backgroundTexture == NULL)
@@ -23,15 +25,16 @@ void MenuState::init(GameStateManager* gsm) {
 	align();
 
 	//Create Buttons
-	if (buttons.size() < 2) {
-		MenuPlayButton* playButton = new MenuPlayButton();
-		MenuExitButton* exitButton = new MenuExitButton();
-
-		playButton->placeAbove(exitButton);
-
-		buttons.push_back(playButton);
-		buttons.push_back(exitButton);
-	}
+	MenuPlayButton* playButton = new MenuPlayButton();
+	MenuExitButton* exitButton = new MenuExitButton();
+	MenuCreditsButton* creditsButton = new MenuCreditsButton();
+	
+	creditsButton->placeAbove(exitButton);
+	playButton->placeAbove(creditsButton);
+	
+	buttons.push_back(playButton);
+	buttons.push_back(exitButton);
+	buttons.push_back(creditsButton);
 
 	//Bermuda text
 	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 80);
@@ -113,6 +116,7 @@ void MenuState::resume() {
 }
 
 void MenuState::cleanup() {
+	std::cout << "cleaning up menustate" << std::endl;
 	SDL_DestroyTexture(backgroundTexture);
 
 	for (size_t i = 0; i < buttons.size(); i++)

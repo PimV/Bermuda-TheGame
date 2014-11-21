@@ -1,9 +1,9 @@
 #pragma once
 #include <SDL.h>
 #include <vector>
-#include "BasePauseScreen.h"
+#include "BaseScreen.h"
 
-class PauseStatusTrackerScreen : public BasePauseScreen
+class PauseStatusTrackerScreen : public BaseScreen
 {
 private:
 	//variables
