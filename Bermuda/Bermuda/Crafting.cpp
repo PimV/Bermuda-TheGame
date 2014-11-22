@@ -40,13 +40,18 @@ bool Crafting::canCraft(Items item)
 			int itemID = (int)pair.first;
 			int amount = pair.second;
 
+			//Check if player has enough of the item in his inventory.
 			if (this->inventory->hasItemById(itemID) && this->inventory->getItemById(itemID, true)->getStackSize() >= amount)
 			{
-				//Remove the item from player inventory to check if slots become available after removal.
+				//Temporary remove the item from player inventory because slots might get freed during the crafting process.
 				Item* item = this->inventory->getItemById(itemID, true);
-				item->setStackSize(amount);
-				reservedResources.push_back(item);
 				this->inventory->deleteItem(item, amount);
+
+				//Add removed items to collection of items to return after the canCraft check. 
+				Items itemEnum = static_cast<Items>(itemID);
+				Item* reservedItem = ItemFactory::Instance()->createItem(itemEnum);
+				reservedItem->setStackSize(amount);
+				reservedResources.push_back(reservedItem);
 			}
 			else
 			{
@@ -56,13 +61,13 @@ bool Crafting::canCraft(Items item)
 			}
 		}
 
-		//If it is still possible to craft the item, check if there is an inventory slot available.
+		//If it is possible to craft the item from inventory resources, check if there is an inventory slot available.
 		if (canCraft && !(this->inventory->getSize() < this->inventory->getSlots()))
 		{
 			canCraft = false;
 		}
 
-		//Return all resources. 
+		//Return all resources to the inventory. 
 		for (Item* item : reservedResources)
 		{
 			this->inventory->addItem(item);
