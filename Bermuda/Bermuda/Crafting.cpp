@@ -105,6 +105,11 @@ void Crafting::toggleCraftMenu()
 	open = !open;
 }
 
+void Crafting::draw()
+{
+
+}
+
 void Crafting::cleanup()
 {
 
