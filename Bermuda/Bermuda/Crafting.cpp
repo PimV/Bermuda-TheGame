@@ -47,9 +47,8 @@ bool Crafting::canCraft(Items item)
 				Item* item = this->inventory->getItemById(itemID, true);
 				this->inventory->deleteItem(item, amount);
 
-				//Add removed items to collection of items to return after the canCraft check. 
-				Items itemEnum = static_cast<Items>(itemID);
-				Item* reservedItem = ItemFactory::Instance()->createItem(itemEnum);
+				//Add removed items to collection of items to return after the canCraft check.
+				Item* reservedItem = ItemFactory::Instance()->createItem(pair.first);
 				reservedItem->setStackSize(amount);
 				reservedResources.push_back(reservedItem);
 			}
