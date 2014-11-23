@@ -16,9 +16,10 @@ DrawableEntity::DrawableEntity(int id, double x, double y, int chunkSize, Image*
 void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 {
 	//Only draw if entity is inside the camera view and the buffer area
-	if((getX() + getWidth()) > (camera->getX() - DRAWBUFFER) &&
+	if(	this->getEnabled() &&
+		getX() + getWidth() > (camera->getX() - DRAWBUFFER) &&
 		getX() < (camera->getX() + camera->getWidth() + DRAWBUFFER) &&
-		(getY() + getHeight()) > (camera->getY() - DRAWBUFFER) &&
+		getY() + getHeight() > (camera->getY() - DRAWBUFFER) &&
 		getY() < (camera->getY() + camera->getHeight() + DRAWBUFFER))
 	{
 		sizeRect->x = getX() - camera->getX();

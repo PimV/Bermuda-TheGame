@@ -10,6 +10,7 @@ Entity::Entity(int id, double x, double y, int chunkSize)
 	this->x = x;
 	this->y = y;
 	this->setChunkSize(chunkSize);
+	this->setEnabled(true);
 }
 
 #pragma region Setters
@@ -55,6 +56,10 @@ void Entity::setChunks()
 {
 	this->chunkY = floor(this->y / this->chunkSize);
 	this->chunkX = floor(this->x / this->chunkSize);
+}
+void Entity::setEnabled(bool enabled)
+{
+	this->enabled = enabled;
 }
 #pragma endregion
 #pragma region Getters
@@ -111,6 +116,10 @@ MainEntityContainer* Entity::getMainEntityContainer() {
 	return this->mec;
 }
 
+bool Entity::getEnabled()
+{
+	return this->enabled;
+}
 #pragma endregion
 
 Entity::~Entity(void)

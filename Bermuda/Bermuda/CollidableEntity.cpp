@@ -22,14 +22,17 @@ CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize)
 
 void CollidableEntity::drawCollidableArea()
 {
-	Camera* c = PlayState::Instance()->getCamera();
+	if (this->getEnabled())
+	{
+		Camera* c = PlayState::Instance()->getCamera();
 
-	collidableRect.x = this->getX() - c->getX() + this->getCollisionX();
-	collidableRect.y = this->getY() - c->getY() + this->getCollisionY();
-	collidableRect.w = this->getCollisionWidth();
-	collidableRect.h = this->getCollisionHeight();
+		collidableRect.x = this->getX() - c->getX() + this->getCollisionX();
+		collidableRect.y = this->getY() - c->getY() + this->getCollisionY();
+		collidableRect.w = this->getCollisionWidth();
+		collidableRect.h = this->getCollisionHeight();
 
-	GameStateManager::Instance()->sdlInitializer->drawTexture(this->collidableTexture,&this->collidableRect,NULL);
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->collidableTexture, &this->collidableRect, NULL);
+	}
 }
 
 #pragma region Setters
@@ -77,49 +80,14 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity, MovableEnt
 	double thisTop = this->getTempY() + this->getCollisionY();
 	double thisBot = this->getTempY() + this->getCollisionY() + this->getCollisionHeight();
 
-	if (thisLeft < targetRight &&
-	thisRight > targetLeft &&
-	thisTop < targetBot &&
-	thisBot > targetTop)
+	if (this->getEnabled() &&
+		thisLeft < targetRight &&
+		thisRight > targetLeft &&
+		thisTop < targetBot &&
+		thisBot > targetTop)
 	{
-	return true;
+		return true;
 	}
-
-	/*if(movableEntity->getId() == 1)
-	{
-		if(movableEntity->movingUp && movableEntity->movingLeft)
-		{
-			std::cout << "UP-LEFT" << std::endl;
-		}
-		else if(movableEntity->movingUp && movableEntity->movingRight)
-		{
-			std::cout << "UP-RIGHT" << std::endl;
-		}
-		else if(movableEntity->movingDown && movableEntity->movingRight)
-		{
-			std::cout << "DOWN-RIGHT" << std::endl;
-		}
-		else if(movableEntity->movingDown && movableEntity->movingLeft)
-		{
-			std::cout << "DOWN-LEFT" << std::endl;
-		}
-		else if(movableEntity->movingUp)
-		{
-			std::cout << "UP" << std::endl;
-		}
-		else if(movableEntity->movingRight)
-		{
-			std::cout << "RIGHT" << std::endl;
-		}
-		else if(movableEntity->movingDown)
-		{
-			std::cout << "DOWN" << std::endl;
-		}
-		else if(movableEntity->movingLeft)
-		{
-			std::cout << "LEFT" << std::endl;
-		}
-	}*/
 
 	return false;
 }

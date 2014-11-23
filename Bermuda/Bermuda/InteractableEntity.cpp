@@ -21,20 +21,26 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 void InteractableEntity::interact(Player* player)
 {
 	//TODO : oplossen op manier zonder casten
-	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
-	cout << percentage << endl;
+	if (this->getEnabled())
+	{
+		int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
+		cout << percentage << endl;
+	}
 }
 
 void InteractableEntity::drawInteractableArea()
 {
-	Camera* c = PlayState::Instance()->getCamera();
+	if (this->getEnabled())
+	{
+		Camera* c = PlayState::Instance()->getCamera();
 
-	interactRect.x = this->getX() - c->getX() + this->getInteractStartX();
-	interactRect.y = this->getY() - c->getY() + this->getInteractStartY();
-	interactRect.w = this->getInteractWidth();
-	interactRect.h = this->getInteractHeight();
-	
-	GameStateManager::Instance()->sdlInitializer->drawTexture(this->interactTexture,&this->interactRect,NULL);
+		interactRect.x = this->getX() - c->getX() + this->getInteractStartX();
+		interactRect.y = this->getY() - c->getY() + this->getInteractStartY();
+		interactRect.w = this->getInteractWidth();
+		interactRect.h = this->getInteractHeight();
+
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->interactTexture, &this->interactRect, NULL);
+	}
 }
 
 bool InteractableEntity::trackInteractTimes() {

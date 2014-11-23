@@ -396,9 +396,6 @@
     <ClCompile Include="ItemWater.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="ToolFlint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Cactus.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
@@ -418,7 +415,16 @@
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
     <ClCompile Include="Crafting.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolFlint.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemCampfire.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Placeable.cpp">
+      <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -704,9 +710,6 @@
     <ClInclude Include="ItemWater.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
-    <ClInclude Include="ToolFlint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cactus.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
@@ -726,7 +729,16 @@
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
     <ClInclude Include="Crafting.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolFlint.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemCampfire.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Placeable.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

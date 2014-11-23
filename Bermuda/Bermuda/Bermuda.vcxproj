@@ -144,6 +144,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemApple.h" />
+    <ClInclude Include="ItemCampfire.h" />
     <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="ItemFish.h" />
     <ClInclude Include="ItemGold.h" />
@@ -155,6 +156,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MovableEntity.h" />
     <ClInclude Include="NPCFactory.h" />
     <ClInclude Include="Pickaxe.h" />
+    <ClInclude Include="Placeable.h" />
     <ClInclude Include="RockSpikes.h" />
     <ClInclude Include="SpawnpointContainer.h" />
     <ClInclude Include="StatusTracker.h" />
@@ -228,6 +230,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemApple.cpp" />
+    <ClCompile Include="ItemCampfire.cpp" />
     <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="ItemFish.cpp" />
     <ClCompile Include="ItemGold.cpp" />
@@ -239,6 +242,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="MovableEntity.cpp" />
     <ClCompile Include="NPCFactory.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
+    <ClCompile Include="Placeable.cpp" />
     <ClCompile Include="RockSpikes.cpp" />
     <ClCompile Include="SpawnpointContainer.cpp" />
     <ClCompile Include="StatusTracker.cpp" />

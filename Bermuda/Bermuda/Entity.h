@@ -16,6 +16,7 @@ public:
 	void setChunkSize(int chunkSize);
 	void setChunks(); //According to the chunksize
 	void setMainEntityContainer(MainEntityContainer* mec);
+	void setEnabled(bool enabled);
 	//Getters
 	int getId();
 	int getChunkSize();
@@ -29,6 +30,8 @@ public:
 	double getWidth();
 	double getHeight();
 	MainEntityContainer* getMainEntityContainer();
+	bool getEnabled();
+
 	//Destructor
 	virtual ~Entity(void);
 	double tempX;
@@ -53,5 +56,7 @@ private:
 
 	//Entity Container
 	MainEntityContainer* mec;
+
+	bool enabled;
 };
 
