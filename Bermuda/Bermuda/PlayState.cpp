@@ -15,6 +15,7 @@
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
 #include "Pickaxe.h"
+#include "ItemFactory.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -40,7 +41,9 @@ void PlayState::init(GameStateManager *gsm) {
 
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
-	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png",32, 32)));
+	new Pickaxe(9002, p->getX() + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png", 32, 32)));
+
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
 	SoundLoader::Instance()->playGameMusic();
 	ready = true;
