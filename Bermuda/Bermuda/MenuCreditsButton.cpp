@@ -1,4 +1,5 @@
 #include "MenuCreditsButton.h"
+#include "MenuState.h"
 
 
 MenuCreditsButton::MenuCreditsButton()
@@ -14,7 +15,7 @@ void MenuCreditsButton::init()
 
 void MenuCreditsButton::action()
 {
-
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuCreditsScreen());
 }
 
 MenuCreditsButton::~MenuCreditsButton()

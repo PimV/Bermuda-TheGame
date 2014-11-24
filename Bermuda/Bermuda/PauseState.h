@@ -18,17 +18,17 @@ private:
 	PauseStatusTrackerScreen* statScr;
 
 public:
-	//variables		Screens
-	void setCurWindow(BaseScreen* curwindow);
-	BaseScreen* getMainPauseScreen();
-	BaseScreen* getMainAchievementsScreen();
-
 	//Methodes
 	void pause();								//unused
 	void resume();								//unused
 	void handleEvents(SDL_Event mainEvent);
 	void update(double dt);
 	void draw();
+
+	//Methodes		Screens
+	void setCurWindow(BaseScreen* curwindow);
+	BaseScreen* getMainPauseScreen();
+	BaseScreen* getMainAchievementsScreen();
 
 	//getInstance
 	static PauseState* Instance() {

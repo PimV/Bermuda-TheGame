@@ -432,6 +432,12 @@
     <ClCompile Include="BaseScreen.cpp">
       <Filter>Source Files\View\Screens</Filter>
     </ClCompile>
+    <ClCompile Include="MenuMainScreen.cpp">
+      <Filter>Source Files\View\Screens\MenuScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuCreditsScreen.cpp">
+      <Filter>Source Files\View\Screens\MenuScreens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -739,6 +745,12 @@
     </ClInclude>
     <ClInclude Include="BaseScreen.h">
       <Filter>Header Files\View\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuMainScreen.h">
+      <Filter>Header Files\View\Screens\MenuScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuCreditsScreen.h">
+      <Filter>Header Files\View\Screens\MenuScreens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
