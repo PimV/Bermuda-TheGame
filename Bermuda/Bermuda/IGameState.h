@@ -7,7 +7,6 @@ protected:
 	IGameState() { }
 public:
 
-
 	virtual void init(GameStateManager *gsm) = 0;
 	virtual void cleanup() = 0;
 

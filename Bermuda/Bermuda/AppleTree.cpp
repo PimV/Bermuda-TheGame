@@ -1,14 +1,13 @@
 #include "AppleTree.h"
 #include "GameStateManager.h"
-//#include "ItemApple.h"
 #include "Player.h"
+#include "ItemFactory.h"
 
-//TODO: Make tree give apples
 
 AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
 	Entity(id,x,y,chunkSize), 
 	DrawableEntity(id,x,y,chunkSize, treeImage), 
-	InteractableEntity(id,x,y,chunkSize, 15),
+	InteractableEntity(id,x,y,chunkSize, 14, 80, 68, 48),
 	CollidableEntity(id,x,y,chunkSize, 34, 102, 27, 15), treeImage(treeImage), treeEmptyImage(treeEmptyImage), stumpImage(stumpImage)
 {
 	this->setMainEntityContainer(mec);
@@ -28,7 +27,8 @@ void AppleTree::interact(Player* player) {
 
 	if (this->trackInteractTimes()) {
 		this->setDestroyedState();
-		//player->getInventory()->addItem(new ItemApple());
+		player->getInventory()->addItem(ItemFactory::Instance()->createApple());
+		player->getStatusTracker()->applePicked();
 	}
 }
 
@@ -47,6 +47,7 @@ void AppleTree::respawn() {
 	this->setDrawImage(this->treeImage);
 	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
+
 }
 
 void AppleTree::setDestroyedState() 

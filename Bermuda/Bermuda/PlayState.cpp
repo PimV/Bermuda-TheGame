@@ -31,68 +31,28 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-
-	//this->gsm->pushGameState(LoadingState::Instance());
+	ready = false;
+	showCol = false;
+	showInter = false;
+	showSpawnArea = false;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
-
-	// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
-	Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
-	{
-		rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
-	}
-
-	Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	for (size_t i = 0; i < 20; i++)
-	{
-		wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
-	}
-
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
+	this->p->getInventory()->toggleInventory();
 	//TEMPORARY AXE SPAWN:
-	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
-	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
-	
+	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
+	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png",32, 32)));
 
-	//std::thread t(&PlayState::doSomething, this);
-	//t.detach();
-	
 	SoundLoader::Instance()->playGameMusic();
+	ready = true;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
 {
 	return this->mec;
-}
-
-void PlayState::doSomething()
-{
-	//mapLoader->loadMap();
-	//camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	//p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera, gsm, mec);
-
-	//// TEMPORARY SPAWNPOINT & RABBIT SPAWN 
-	//Spawnpoint *sp1 = new Spawnpoint(1000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY() + 1000, mapLoader->getChunkSize());
-	//for (size_t i = 0; i < 20; i++)
-	//{
-	//	rabbits.push_back(new Rabbit(1001 + i, mapLoader->getChunkSize(), sp1, gsm, mec));
-	//}
-
-	//Spawnpoint *sp2 = new Spawnpoint(2000, mapLoader->getStartPosX() + 1000, mapLoader->getStartPosY(), mapLoader->getChunkSize());
-	//for (size_t i = 0; i < 20; i++)
-	//{
-	//	wasps.push_back(new Wasp(2001 + i, mapLoader->getChunkSize(), sp2, gsm, mec));
-	//}
-
-	////TEMPORARY AXE SPAWN:
-	//new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Axe.png", 48, 48)));
-	//new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Pickaxe.png", 48, 48)));
-	//
-	//this->gsm->popState();
 }
 
 void PlayState::cleanup() {
@@ -113,6 +73,9 @@ void PlayState::resume() {
 
 
 void PlayState::handleEvents(SDL_Event mainEvent) {
+	if (!ready) {
+		return;
+	}
 	//p->handleEvents();
 	//Process Input
 
@@ -124,50 +87,90 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			p->destX = x + this->camera->getX();
-			p->destY = y + this->camera->getY();
-			p->resetMovement();
-			p->moveClick = true;
+			if (p->getInventory()->clicked(x,y, "select", p)) {
+			} else {
+				p->destX = x + this->camera->getX();
+				p->destY = y + this->camera->getY();
+				p->resetMovement();
+				p->moveClick = true;
+			}
+		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
+			if (p->getInventory()->clicked(x, y, "use", p)) {
+
+			}
 		}
 		break;
+	case SDL_MOUSEWHEEL: 
+		if (mainEvent.wheel.y > 0) {
+			p->getInventory()->incrementSelectedIndex();
+		} else if (mainEvent.wheel.y < 0){
+			p->getInventory()->decrementSelectedIndex();
+		}
 
+		break;
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+		case SDLK_a:
 			//Arrow left key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingLeft = true;
 			p->movingRight = false;
+			p->movingLeft = true;
 			break;
+
 		case SDLK_RIGHT:
+		case SDLK_d:
 			//Arrow right key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingRight = true;
 			p->movingLeft = false;
+			p->movingRight = true;
 			break;
 		case SDLK_UP:
+		case SDLK_w:
 			//Arrow up key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingUp = true;
 			p->movingDown = false;
+			p->movingUp = true;
 			break;
 		case SDLK_DOWN:
+		case SDLK_s:
 			//Arrow down key
 			p->resetMovement();
 			p->moveClick = false;
-			p->movingDown = true;
 			p->movingUp = false;
+			p->movingDown = true;
 			break;
 		case SDLK_LSHIFT:
 			//Sprint
 			p->sprinting = true;
 			break;
+		case SDLK_e:
+			p->getInventory()->interactCurrent(p);
+			break;
+		case SDLK_q:
+			p->getInventory()->dropCurrent();
+			break;
+		case SDLK_z:
+			p->getInventory()->decrementSelectedIndex();
+			break;
+		case SDLK_c:
+			p->getInventory()->incrementSelectedIndex();
+			break;
 		case SDLK_F1:
 			//Print player location
 			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
+			break;
+		case SDLK_F2:
+			this->showCol = !this->showCol;
+			break;
+		case SDLK_F3:
+			this->showInter = !this->showInter;
+			break;
+		case SDLK_F4:
+			this->showSpawnArea = !this->showSpawnArea;
 			break;
 		case SDLK_F5: 
 			{
@@ -203,12 +206,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			}
 		case SDLK_F11:
 			//Enable collision
-			p->setCollisionHeight(p->getHeight() - 15);
-			p->setCollisionWidth(p->getWidth()/4);
-			p->setCollisionX((p->getWidth() - p->getCollisionWidth()) / 2);
-			p->setCollisionY(0);
+			p->setCollisionHeight(10);
+			p->setCollisionWidth(24);
+			p->setCollisionX(20);
+			p->setCollisionY(52);
 			break;
-		case SDLK_F12:
+		case SDLK_F10:
 			//Disable collision
 			p->setCollisionHeight(0);
 			p->setCollisionWidth(0);
@@ -238,6 +241,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYUP:
 		switch (mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+		case SDLK_a:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingLeft = false;
@@ -246,18 +250,21 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->sprinting = false;
 			break;
 		case SDLK_RIGHT:
+		case SDLK_d:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingRight = false;
 			break;
 
 		case SDLK_UP:
+		case SDLK_w:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingUp = false;
 			break;
 
 		case SDLK_DOWN:
+		case SDLK_s:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingDown = false;
@@ -274,40 +281,86 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
-	//TODO: Player collision check in de player.move() zelf afhandelen? 
-	this->gsm->getActionContainer()->executeAllActions(dt);
-
-	p->update(dt);
-	/*if (!p->checkCollision(mec->getCollidableContainer())) {
-		p->setPosition();
-	}*/
-
-	// TEMPORARY RABBIT UPDATE
-	for (Rabbit *rb : this->rabbits)
-	{
-		rb->update(dt);
-		/*if (!rb->checkCollision(mec->getCollidableContainer())) {
-			rb->setPosition();
-		}*/
+	// check if player died
+	if (!ready) {
+		return;
 	}
 
-	// TEMPORARY WASP UPDATE
-	for (Wasp *wa : this->wasps)
-	{
-		wa->update(dt);
-		/*if (!wa->checkCollision(mec->getCollidableContainer())) {
-			wa->setPosition();
-		}*/
-	}
+	this->updateGameTimers();
+
+	//TODO: moet dit nog?
+	//this->gsm->getActionContainer()->executeAllActions(dt);
 
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
 
+	//Update all spawnpoints and moving entities
+	//Calculate begin and end chunks for the camera (+5 and -5 to make it bigger than the screen)
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 5;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 5;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 5;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Spawnpoints
+			std::vector<Spawnpoint*>* spawnpoints = this->mec->getSpawnpointContainer()->getChunk(i, j);
+			if (spawnpoints != nullptr)
+			{
+				for (Spawnpoint* e : *spawnpoints)
+				{
+					e->update();
+				}
+			}
+
+			//Oude manier! LATEN STAAN
+			////Moving entities
+			//std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
+			//if (movingEntities != nullptr)
+			//{
+			//	for (MovableEntity* e : *movingEntities)
+			//	{
+			//		//TODO: enable when movableEntities get an 'update' method. 
+			//		e->update(dt);
+			//	}
+			//}
+
+			//NIEUWE MANIER! is dit de juiste manier?
+			////Moving entities
+			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
+			if(movingEntities != nullptr && movingEntities->size() > 0)
+			{
+				std::vector<MovableEntity*> copyMovingEntities = std::vector<MovableEntity*>(*movingEntities);
+				for (MovableEntity* e : copyMovingEntities)
+				{
+					e->update(dt);
+				}
+			}
+		}
+	}
 }
 
-void PlayState::draw() {
+void PlayState::updateGameTimers() {
+
+	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
+	//DayTimeTimer::Instance()->updateDayTime();
+	GameTimer::Instance()->updateDayTime();
+}
+
+long PlayState::getGameTimer() {
+	return GameTimer::Instance()->getGameTime();
+}
+
+void PlayState::draw() 
+{
+	if (!ready) {
+		return;
+	}
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
@@ -328,6 +381,17 @@ void PlayState::draw() {
 				for (DrawableEntity* e : *vec)
 				{
 					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
+					//Draw collision area
+					if(this->showCol)
+					{
+						//TEMP draw collision area
+						CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+						if(ce != NULL)
+						{
+							ce->drawCollidableArea();
+						}
+					}
 				}
 			}
 			//Objecten
@@ -343,6 +407,26 @@ void PlayState::draw() {
 		}
 	}
 
+	//Draw spawnpoint area
+	if(this->showSpawnArea)
+	{
+		//Loop through all chunks
+		for (int i = beginChunkY; i <= endChunkY; i++)
+		{
+			for (int j = beginChunkX; j <= endChunkX; j++)
+			{
+				std::vector<Spawnpoint*>* vec = this->mec->getSpawnpointContainer()->getChunk(i, j);
+				if(vec != nullptr)
+				{
+					for (Spawnpoint* sp : *vec)
+					{
+						sp->drawSpawnpointArea();
+					}
+				}
+			}
+		}
+	}
+
 	//Sort drawable object vector
 	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
 
@@ -350,16 +434,61 @@ void PlayState::draw() {
 	for (DrawableEntity* e : drawableVector)
 	{
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+
+		//Draw interactable area
+		if(this->showInter)
+		{
+			InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
+			if(ie != NULL)
+			{
+				ie->drawInteractableArea();
+			}	
+		}
+
+		//Draw collision area
+		if(this->showCol)
+		{
+			//TEMP draw collision area
+			CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
+			if(ce != NULL)
+			{
+				ce->drawCollidableArea();
+			}
+		}
 	}
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
 	}
+
+	// Draw the player status
+
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
+	// if current hour is smaller then 9 
+	if (GameTimer::Instance()->getCurrentDayPart() > 9)
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
+	else
+		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
 }
 
+Player* PlayState::getPlayer()
+{
+	return this->p;
+}
+
+Camera* PlayState::getCamera()
+{
+	return this->camera;
+}
+
+//ERROR Deze methode word nooit aangeroepen volgens mij.
+//Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)
 {
 	delete camera;
 	delete mec;
 	delete mapLoader;
+	std::cout << "deleting playstate" << endl; 
 }

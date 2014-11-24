@@ -9,6 +9,7 @@ enum class ContainerType
 	Destroyable,
 	Collidable,
 	Background,
-	Respawnable
+	Respawnable,
+	Spawnpoint
 };
 
