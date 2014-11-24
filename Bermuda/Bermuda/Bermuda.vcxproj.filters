@@ -423,11 +423,8 @@
     <ClCompile Include="ItemCampfire.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Placeable.cpp">
-      <Filter>Source Files\Model\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Campfire.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -738,9 +735,6 @@
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemCampfire.h">
-      <Filter>Header Files\Model\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Placeable.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="Campfire.h">
