@@ -43,8 +43,9 @@ public:
 	SoundLoader* getSoundLoader();
 
 	double getSpeedMultiplier();
+	void setSpeedMultiplier(double multiplier);
 
-	
+
 	static GameStateManager* Instance() {
 		return &m_Gsm;
 	};

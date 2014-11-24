@@ -31,6 +31,7 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+	GameStateManager::Instance()->setSpeedMultiplier(1);
 	ready = false;
 	showCol = false;
 	showInter = false;

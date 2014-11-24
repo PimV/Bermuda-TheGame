@@ -45,6 +45,20 @@ long GameStateManager::getUpdateLength() {
 	return this->updateLength * speedMultiplier;
 }
 
+void GameStateManager::setSpeedMultiplier(double multiplier) {
+	if (multiplier > 10) {
+		this->speedMultiplier = 10;
+	} else if (multiplier < 0.1) {
+		this->speedMultiplier = 0.1;
+	} else {
+		this->speedMultiplier = multiplier;
+	}
+}
+
+double GameStateManager::getSpeedMultiplier() {
+	return this->speedMultiplier;
+}
+
 void GameStateManager::setFps(int fps) {
 	GameStateManager::Instance()->fps = fps;
 }
@@ -119,16 +133,18 @@ void GameStateManager::handleEvents() {
 				GameStateManager::Instance()->changeGameState(PlayState::Instance());
 				break;
 			case SDLK_PAGEUP:
-				speedMultiplier += 0.1;
-				if (speedMultiplier > 5) {
-					speedMultiplier = 5;
+				if (this->getSpeedMultiplier() > 0.9) {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() + 1);
+				} else {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() + 0.1);
 				}
 				std::cout << "SPEED UP: " << speedMultiplier << std::endl;
 				break;
 			case SDLK_PAGEDOWN:
-				speedMultiplier -= 0.1;
-				if (speedMultiplier < 0.1) {
-					speedMultiplier = 0.1;
+				if (this->getSpeedMultiplier() <= 1) {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() - 0.1);
+				} else {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() - 1);
 				}
 				std::cout << "SPEED DOWN: " << speedMultiplier << std::endl;
 				break;
