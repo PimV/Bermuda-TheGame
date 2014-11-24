@@ -48,6 +48,7 @@ void AppleTree::respawn() {
 	this->setDrawImage(this->treeImage);
 	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
+
 }
 
 void AppleTree::setDestroyedState() 

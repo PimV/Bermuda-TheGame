@@ -420,6 +420,9 @@
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ToolFlint.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -704,9 +707,6 @@
     <ClInclude Include="ItemWater.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
-    <ClInclude Include="ToolFlint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cactus.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
@@ -727,6 +727,9 @@
     </ClInclude>
     <ClInclude Include="Crafting.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolFlint.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

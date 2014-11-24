@@ -39,6 +39,7 @@ void MapLoader::setPercentage(int percentage)
 
 void MapLoader::loadMap()
 {
+	LoadingState::Instance()->init(nullptr);
 	this->setPercentage(0);
 	this->firstImgID = imgLoader->getCurrentImageCount();
 	double startLoadPercentage = 0;
