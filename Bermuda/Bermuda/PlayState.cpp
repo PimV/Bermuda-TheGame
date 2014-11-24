@@ -36,6 +36,7 @@ void PlayState::init(GameStateManager *gsm) {
 	showInter = false;
 	showSpawnArea = false;
 
+
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
@@ -159,6 +160,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_c:
 			p->getInventory()->incrementSelectedIndex();
 			break;
+
 		case SDLK_F1:
 			//Print player location
 			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
