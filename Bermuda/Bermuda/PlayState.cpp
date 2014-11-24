@@ -181,7 +181,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		{
 			Item* i = p->getInventory()->getItemById((int)Items::Campfire, true);
 			if (i != nullptr) {
-				Placeable* campfire = (Placeable*)i;
+				ItemCampfire* campfire = (ItemCampfire*)i;
 				campfire->use(p);
 			}
 			break;
