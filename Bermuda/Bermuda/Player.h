@@ -65,7 +65,7 @@ private:
 	Inventory* inventory;
 	StatusTracker* statusTracker;
 
-	void updatePlayerStatuses();
+	void updatePlayerStatuses(double dt);
 
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();

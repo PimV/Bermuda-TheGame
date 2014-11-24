@@ -87,7 +87,7 @@ void Player::update(double dt) {
 		return;
 	}
 
-	this->updatePlayerStatuses();
+	this->updatePlayerStatuses(dt);
 	this->directionsAndMove(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
@@ -102,18 +102,18 @@ void Player::update(double dt) {
 }
 
 #pragma region PlayerStatusUpdates
-void Player::updatePlayerStatuses()
+void Player::updatePlayerStatuses(double dt)
 {
 
 	// check if hunger needs to be updated
-	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
 	if (this->hungerUpdate > hungerUpdateTime) {
 		this->incrementHunger(-1);
 		hungerUpdate = 0;
 	}
 
 	// check if thirst needs to be updated
-	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
 	if (this->thirstUpdate > thirstUpdateTime) {
 		this->incrementThirst(-1);
 		thirstUpdate = 0;
