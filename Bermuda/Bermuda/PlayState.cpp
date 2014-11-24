@@ -111,13 +111,16 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+		case SDLK_a:
 			//Arrow left key
 			p->resetMovement();
 			p->moveClick = false;
 			p->movingRight = false;
 			p->movingLeft = true;
 			break;
+
 		case SDLK_RIGHT:
+		case SDLK_d:
 			//Arrow right key
 			p->resetMovement();
 			p->moveClick = false;
@@ -125,6 +128,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingRight = true;
 			break;
 		case SDLK_UP:
+		case SDLK_w:
 			//Arrow up key
 			p->resetMovement();
 			p->moveClick = false;
@@ -132,6 +136,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingUp = true;
 			break;
 		case SDLK_DOWN:
+		case SDLK_s:
 			//Arrow down key
 			p->resetMovement();
 			p->moveClick = false;
@@ -147,6 +152,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_q:
 			p->getInventory()->dropCurrent();
+			break;
+		case SDLK_z:
+			p->getInventory()->decrementSelectedIndex();
+			break;
+		case SDLK_c:
+			p->getInventory()->incrementSelectedIndex();
 			break;
 		case SDLK_F1:
 			//Print player location
@@ -230,6 +241,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_KEYUP:
 		switch (mainEvent.key.keysym.sym) {
 		case SDLK_LEFT:
+		case SDLK_a:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingLeft = false;
@@ -238,18 +250,21 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->sprinting = false;
 			break;
 		case SDLK_RIGHT:
+		case SDLK_d:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingRight = false;
 			break;
 
 		case SDLK_UP:
+		case SDLK_w:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingUp = false;
 			break;
 
 		case SDLK_DOWN:
+		case SDLK_s:
 			p->StopAnimation();
 			p->moveClick = false;
 			p->movingDown = false;
