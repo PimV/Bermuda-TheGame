@@ -86,6 +86,7 @@ bool Inventory::addItem(Item* item) {
 			} else {
 				//Could not add, no inventory slots left!
 				std::cout << "Could not add into a new inventory slot, since the inventory was filled! (all slots filled)" << std::endl;
+				return false;
 			}
 		} else {
 			//Try to up stacksize of an existing inventory slot
@@ -108,11 +109,8 @@ bool Inventory::addItem(Item* item) {
 			this->itemVector.push_back(item);
 		} else {
 			//No inventory slots left;
+			return false;
 		}
-	}
-
-	if (item->getStackSize() <= 0) {
-		delete item;
 	}
 	return true;
 }

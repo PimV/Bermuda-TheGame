@@ -31,7 +31,7 @@ int Item::getStackSize() {
 
 void Item::setStackSize(int size) {
 	this->stackSize = size;
-	if (this->stackSize < 0) {
+	if (this->stackSize <= 0) {
 		delete this;
 		//this->stackSize = 0;
 	}

@@ -417,10 +417,10 @@
     <ClCompile Include="InteractableCactus.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
-    <ClCompile Include="Crafting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ToolFlint.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
   </ItemGroup>
@@ -725,10 +725,10 @@
     <ClInclude Include="InteractableCactus.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
-    <ClInclude Include="Crafting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ToolFlint.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Crafting.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
