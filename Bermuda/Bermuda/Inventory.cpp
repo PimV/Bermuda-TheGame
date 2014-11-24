@@ -64,13 +64,12 @@ void Inventory::decrementSelectedIndex() {
 }
 
 Item* Inventory::getSelectedItem() {
-	if (selectedIndex < this->getSize()) {
+   	if (selectedIndex < this->getSize()) {
 		return this->itemVector[selectedIndex];
 	} else {
 		return nullptr;
 	}
 }
-
 
 bool Inventory::addItem(Item* item) {
 	if (hasItem(item)) {
@@ -94,7 +93,7 @@ bool Inventory::addItem(Item* item) {
 				//	std::cout << "Item to add stacksize: " << item->getStackSize() << std::endl;
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
 					inInvItem = this->getItemById(item->getId(), false);
-					if (inInvItem == nullptr) {
+					if (inInvItem == nullptr && this->getSize() <= slots) {
 						this->itemVector.push_back(item);
 						break;
 					}
@@ -111,6 +110,10 @@ bool Inventory::addItem(Item* item) {
 			//No inventory slots left;
 			return false;
 		}
+	}
+
+	if (item->getStackSize() <= 0) {
+		delete item;
 	}
 	return true;
 }
@@ -147,13 +150,48 @@ bool Inventory::hasItemById(int itemId) {
 	}
 	return false;
 }
-//Mem leak fixed?
-void Inventory::deleteItem(Item* item, int count) {
 
-	item->setStackSize(item->getStackSize() - count);
+int Inventory::getItemCount(int itemID) 
+{
+	int amount = 0;
+	for (size_t i = 0; i < this->itemVector.size(); i++) {
+		if (this->itemVector[i] != NULL && this->itemVector[i]->getId() == itemID) {
+			amount += this->itemVector[i]->getStackSize();
+		}
+	}
+	return amount;
+}
 
-	if (item->getStackSize() <= 0) {
-		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), item);
+int Inventory::getStackCount(int itemID)
+{
+	int amount = 0;
+	for (size_t i = 0; i < this->itemVector.size(); i++) {
+		if (this->itemVector[i] != NULL && this->itemVector[i]->getId() == itemID) {
+			amount++;
+		}
+	}
+	return amount;
+}
+
+void Inventory::deleteItem(int itemID, int count) {
+	while (count > 0 && this->hasItemById(itemID))
+	{
+		Item* stack = this->getItemById(itemID, true);
+		int stackSize = stack->getStackSize();
+		stack->setStackSize(stack->getStackSize() - count);
+		count -= stackSize;
+		if (stack->getStackSize() <= 0) {
+			std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
+			delete *it;
+			this->itemVector.erase(it);
+		}
+	}
+}
+
+void Inventory::deleteItemFromStack(Item* stack, int count) {
+	stack->setStackSize(stack->getStackSize() - count);
+	if (stack->getStackSize() <= 0) {
+		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
 		delete *it;
 		this->itemVector.erase(it);
 	}
@@ -177,7 +215,7 @@ void Inventory::interactCurrent(Player* p) {
 void Inventory::dropCurrent() {
 	if (selectedIndex < this->getSize()) {
 		Item* item = this->itemVector[selectedIndex];
-		this->deleteItem(item, 1);
+		this->deleteItemFromStack(item, 1);
 	}
 }
 
