@@ -11,20 +11,16 @@ class MenuState :
 private:
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
+	SDL_Texture* bermudaTextTexture;
+	SDL_Rect bermudaTextRect;
+
 	static const int totalButtons = 2;
 	std::vector<BaseButton*> buttons;
 
 	static MenuState m_MenuState;
 
-	GameStateManager* gsm;
-
-	SDL_Surface* bg;
-	int alpha;
-
 public:
 	//TODO: put buttons in array
-	PlayButton* playButton;
-	ExitButton* exitButton;
 
 	void align();
 

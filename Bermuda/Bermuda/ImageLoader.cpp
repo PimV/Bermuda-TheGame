@@ -55,6 +55,11 @@ SDL_Texture* ImageLoader::loadSpriteSheet(string filename)
 	return spriteSheet;
 }
 
+int ImageLoader::getCurrentImageCount()
+{
+	return images.size();
+}
+
 Image* ImageLoader::getMapImage(int tileID)
 {
 	if(tileID > 0 && tileID <= images.size())

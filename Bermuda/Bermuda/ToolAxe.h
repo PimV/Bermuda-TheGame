@@ -1,16 +1,18 @@
 #pragma once
 #include "item.h"
 #include "Tool.h"
+#include "Image.h"
 enum class Items;
+
 class ToolAxe :
 	public Tool
 {
 public:
-	ToolAxe();
+	ToolAxe(Image* image);
 
 	void init();
 	void equip(Player* player);
 
-	virtual ~ToolAxe(void);
+	virtual ~ToolAxe();
 };
 

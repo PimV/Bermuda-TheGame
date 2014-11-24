@@ -6,16 +6,45 @@ BaseButton::BaseButton()
 	active = false;
 }
 
-void BaseButton::align(int position, int total)
+void BaseButton::placeAbove(BaseButton* button)
 {
-	PosY = ScreenHeight / 2 - (total + position * 2) * ConstHeight / 2;
-	buttonRect.h = ConstHeight;
-	buttonRect.w = ConstWidth;
-	buttonRect.x = PosX;
-	buttonRect.y = PosY;
+
+	buttonRect.x = button->buttonRect.x;
+	buttonRect.y = button->buttonRect.y - button->buttonRect.h - 15;
 }
 
-void BaseButton::hover(int x, int y, GameStateManager *gsm)
+void BaseButton::placeUnder(BaseButton* button)
+{
+	buttonRect.x = button->buttonRect.x;
+	buttonRect.y = button->buttonRect.y + button->buttonRect.h + 15;
+}
+
+void BaseButton::createButton(std::string message)
+{
+	//making colors and opening font
+	SDL_Color white = { 255, 255, 255 };
+	SDL_Color orange = { 235, 167, 8 };
+	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), 60);
+
+	//Create menu button textures
+	SDL_Surface* MessageSurface = TTF_RenderText_Blended(staryDarzy, message.c_str(), white);
+	buttonTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), MessageSurface);
+
+	SDL_Surface* HoverMessageSurface = TTF_RenderText_Blended(staryDarzy, message.c_str(), orange);
+	buttonHoverTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), HoverMessageSurface);
+
+	buttonRect.h = MessageSurface->h;
+	buttonRect.w = MessageSurface->w;
+
+	buttonRect.x = 50;
+	buttonRect.y = ((int)ScreenHeight - MessageSurface->h) / 2;
+
+	SDL_FreeSurface(MessageSurface);
+	SDL_FreeSurface(HoverMessageSurface);
+	TTF_CloseFont(staryDarzy);
+}
+
+void BaseButton::hover(int x, int y)
 {
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
 		y >= buttonRect.y && y <= (buttonRect.y + buttonRect.h))
@@ -23,7 +52,6 @@ void BaseButton::hover(int x, int y, GameStateManager *gsm)
 		if (active == false)
 		{
 			active = true;
-			loadHoverPicture(gsm);
 		}
 	}
 	else
@@ -31,25 +59,40 @@ void BaseButton::hover(int x, int y, GameStateManager *gsm)
 		if (active == true)
 		{
 			active = false;
-			loadNormalPicture(gsm);
 		}
 	}
 }
 
-void BaseButton::clicked(int x, int y, GameStateManager *gsm)
+bool BaseButton::clicked(int x, int y)
 {
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
 		y >= buttonRect.y && y <= (buttonRect.y + buttonRect.h))
 	{
-		action(gsm);
+		action();
+		return true;
+	}
+	return false;
+}
+
+void BaseButton::draw()
+{
+	if (active == false)
+	{
+		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), buttonTexture, NULL, &buttonRect);
+	}
+	else
+	{
+		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), buttonHoverTexture, NULL, &buttonRect);
 	}
 }
 
-void BaseButton::draw(GameStateManager *gsm)
+void BaseButton::cleanup()
 {
-	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), buttonImage, NULL, &buttonRect);
+	SDL_DestroyTexture(buttonTexture);
+	SDL_DestroyTexture(buttonHoverTexture);
 }
 
 BaseButton::~BaseButton()
 {
+	cleanup();
 }

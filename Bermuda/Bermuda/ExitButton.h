@@ -10,12 +10,10 @@ class ExitButton :
 public:
 	//methodes
 	void init();
-	void loadHoverPicture(GameStateManager *gsm);
-	void loadNormalPicture(GameStateManager *gsm);
-	void action(GameStateManager *gsm);
+	void action();
 
 	//Constructors and destructors
-	ExitButton(GameStateManager *gsm);
+	ExitButton();
 	virtual ~ExitButton();
 };
 

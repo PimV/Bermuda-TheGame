@@ -85,20 +85,11 @@
     <Filter Include="Source Files\Model\Entity\Behaviour">
       <UniqueIdentifier>{c23db13e-3987-4200-841e-0c722b6bf752}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Model\Entity\Entities">
-      <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Model\Entity\Entities">
-      <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Container\Tile">
       <UniqueIdentifier>{0b5bd2ae-4d0b-44bb-8038-82aae156ecd5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Model\Container\Tile">
       <UniqueIdentifier>{ddd9e1dc-147b-4b55-af41-a0b18b490747}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Model\Container\Interactive">
-      <UniqueIdentifier>{be7ae0cc-0742-4e68-8b12-6ab94637c53d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Model\Item">
       <UniqueIdentifier>{097e5ade-cb4e-4841-9a10-36e47053f69c}</UniqueIdentifier>
@@ -124,6 +115,18 @@
     <Filter Include="Header Files\Model\Entity\Interactive objects">
       <UniqueIdentifier>{c554fe2a-4530-460b-924e-19bcf4eb40a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\PauseScreens">
+      <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\PauseScreen">
+      <UniqueIdentifier>{2a950ad5-ee96-41ad-8440-bfe5fd53a722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entity\NPC%27s">
+      <UniqueIdentifier>{28cb73eb-818c-45e9-a6c0-500822a6f071}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Entity\NPC%27s">
+      <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -133,9 +136,6 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Model\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="IMovable.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -202,7 +202,7 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Rabbit.cpp">
-      <Filter>Source Files\Model\Entity\Entities</Filter>
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
     <ClCompile Include="Spawnpoint.cpp">
       <Filter>Source Files\Model\Entity</Filter>
@@ -240,6 +240,18 @@
     <ClCompile Include="CollidableEntity.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Source Files\Model\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePauzeButton.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeExitButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeMenuButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
     <ClCompile Include="EntityChunkContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
@@ -257,6 +269,12 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="DayTimeTimer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ItemCarrot.cpp">
       <Filter>Source Files\Model\Item</Filter>
@@ -318,14 +336,86 @@
     <ClCompile Include="Pickaxe.cpp">
       <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
+    <ClCompile Include="PauzeAchievementsButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeResumeButton.cpp">
+      <Filter>Source Files\View\Component</Filter>
+    </ClCompile>
     <ClCompile Include="Wasp.cpp">
-      <Filter>Source Files\Model\Entity\Entities</Filter>
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
     <ClCompile Include="MovableContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
     <ClCompile Include="MovableEntity.cpp">
       <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusTracker.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Achievement.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMainScreen.cpp">
+      <Filter>Source Files\Model\PauseScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseStatusTrackerScreen.cpp">
+      <Filter>Source Files\Model\PauseScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnpointContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCFactory.cpp">
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFish.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Fish.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFactory.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemApple.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGold.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemWater.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EasterHead.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldRock.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RockSpikes.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Ice.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableCactus.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolFlint.cpp">
+      <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -336,9 +426,6 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="IMovable.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -411,7 +498,7 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Rabbit.h">
-      <Filter>Header Files\Model\Entity\Entities</Filter>
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="Spawnpoint.h">
       <Filter>Header Files\Model\Entity</Filter>
@@ -449,6 +536,18 @@
     <ClInclude Include="CollidableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>Header Files\Model\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePauzeButton.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeExitButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeMenuButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
@@ -469,6 +568,12 @@
     </ClInclude>
     <ClInclude Include="ItemType.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="DayTimeTimer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ItemCarrot.h">
       <Filter>Header Files\Model\Item</Filter>
@@ -533,8 +638,14 @@
     <ClInclude Include="Pickaxe.h">
       <Filter>Header Files\Model\Entity\Items</Filter>
     </ClInclude>
+    <ClInclude Include="PauzeAchievementsButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PauzeResumeButton.h">
+      <Filter>Header Files\View\Component</Filter>
+    </ClInclude>
     <ClInclude Include="Wasp.h">
-      <Filter>Header Files\Model\Entity\Entities</Filter>
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="StateType.h">
       <Filter>Header Files\Model\GameState</Filter>
@@ -544,6 +655,72 @@
     </ClInclude>
     <ClInclude Include="MovableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCFactory.h">
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusTracker.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Achievement.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMainScreen.h">
+      <Filter>Header Files\Model\PauseScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseStatusTrackerScreen.h">
+      <Filter>Header Files\Model\PauseScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnpointContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFish.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Fish.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Bat.h">
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemApple.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGold.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemWater.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EasterHead.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldRock.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RockSpikes.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Ice.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableCactus.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolFlint.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
