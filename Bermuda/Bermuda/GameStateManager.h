@@ -42,6 +42,8 @@ public:
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
 
+	double getSpeedMultiplier();
+
 	
 	static GameStateManager* Instance() {
 		return &m_Gsm;
@@ -51,6 +53,7 @@ public:
 
 private: 
 	long updateLength;
+	double speedMultiplier;
 	int fps;
 	std::vector<IGameState*> states;
 	IGameState* currentState;
