@@ -144,6 +144,7 @@ void MapLoader::extractMapInfo(Document& d)
 		}
 		loadStatus = "Map loading finished.";
 	}
+	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::createTileSets(Value& tilesets)
