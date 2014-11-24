@@ -426,6 +426,9 @@
     <ClCompile Include="Placeable.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Campfire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -739,6 +742,9 @@
     </ClInclude>
     <ClInclude Include="Placeable.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Campfire.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

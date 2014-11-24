@@ -16,6 +16,8 @@
 #include "Axe.h"
 #include "Pickaxe.h"
 #include "ItemFactory.h"
+#include "ItemCampfire.h"
+#include "Campfire.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -173,8 +175,17 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 				break;
 			}
 		case SDLK_F8:
-			p->getCraftingSystem()->craftItem(Items::Axe);
+			p->getCraftingSystem()->craftItem(Items::Campfire);
 			break;
+		case SDLK_F9:
+		{
+			Item* i = p->getInventory()->getItemById((int)Items::Campfire, true);
+			if (i != nullptr) {
+				Placeable* campfire = (Placeable*)i;
+				campfire->use(p);
+			}
+			break;
+		}
 		case SDLK_F11:
 			//Enable collision
 			p->setCollisionHeight(10);

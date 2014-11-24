@@ -1,4 +1,6 @@
 #include "ItemCampfire.h"
+#include "Campfire.h"
+#include "GameStateManager.h"
 
 
 ItemCampfire::ItemCampfire(Image* image)
@@ -15,9 +17,19 @@ void ItemCampfire::init()
 	this->itemTypes.push_back(ItemType::Buildable);
 	this->setMaxStackSize(1);
 	this->setStackSize(1);
+}
 
-	//Todo: set the entity to place when using this item. (new campfire entity)
-	//this->setPlaceEntity();
+void ItemCampfire::use(Player* p)
+{
+	int x = p->getX() + p->getWidth() + 10;
+	int y = p->getY() + p->getHeight() - 52;
+
+	Campfire* campfire = new Campfire(0, x, y, 300, GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Objects\\Campfire 50x52.png", 50, 52)));
+
+	//TODO: Somehow check collision? 
+	//if collision, delete Campfire
+
+	p->getInventory()->deleteItem(p->getInventory()->getItemById(this->getId(), true), 1);
 }
 
 ItemCampfire::~ItemCampfire()

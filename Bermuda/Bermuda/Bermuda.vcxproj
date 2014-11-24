@@ -103,6 +103,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
     <ClInclude Include="Cactus.h" />
+    <ClInclude Include="Campfire.h" />
     <ClInclude Include="Carrot.h" />
     <ClInclude Include="ClickAction.h" />
     <ClInclude Include="CollidableContainer.h" />
@@ -205,6 +206,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
     <ClCompile Include="Cactus.cpp" />
+    <ClCompile Include="Campfire.cpp" />
     <ClCompile Include="Carrot.cpp" />
     <ClCompile Include="ClickAction.cpp" />
     <ClCompile Include="CollidableContainer.cpp" />
