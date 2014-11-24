@@ -1,6 +1,7 @@
 #include "LoadingState.h"
 #include "GameStateManager.h"
 #include <iostream>
+#include <ctime>
 
 LoadingState LoadingState::m_LoadingState;
 
@@ -10,10 +11,6 @@ LoadingState::LoadingState(void)
 
 void LoadingState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-
-
-
-
 }
 
 void LoadingState::setPercentage(int percentage)
@@ -56,6 +53,19 @@ void LoadingState::draw()
 		textBackground = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\campfire.jpg").c_str());
 	}
 
+	if(textAdvertisement == nullptr)
+	{
+
+		char* filenames[]={"basicfit.png", "bosch.png", "dolcegusto.png", "electroworld.png", "exact.png", "kijk.png", "mediamarkt.png", "mediamarkt_2.png", "mediamarkt_3.pn", "nissan.png", "postnl.png", "t_mobile_2.png", "t_mobile_3.png", "t-mobile.png", "tele2.png", "ziggo.png"};
+
+		srand(time(NULL));
+		int random = rand() % 16;
+
+		std::cout << (RESOURCEPATH + "Advertisement\\" + filenames[random]).c_str() << std::endl;
+
+		textAdvertisement = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Advertisement\\" + filenames[random]).c_str());
+	}
+
 	rect1.x = ScreenWidth / 3;
 	rect1.y = ScreenHeight / 2 - ScreenHeight / 40;
 	rect1.h = ScreenHeight / 20;
@@ -65,6 +75,11 @@ void LoadingState::draw()
 	rect2.y = ScreenHeight / 2 - ScreenHeight / 40;
 	rect2.h = ScreenHeight / 20;
 	rect2.w = ((ScreenWidth / 3) / 100) * this->percentage;
+
+	rect2.x = 0;
+	rect2.y = 0;
+	rect2.h = 85;
+	rect2.w = 690;
 
 	rectBackground.x = 0;
 	rectBackground.y = 0;
@@ -78,6 +93,9 @@ void LoadingState::draw()
 	//Loadingbar
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text1, &rect1, NULL);
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text2, &rect2, NULL);
+
+	//Advertisement	
+	GameStateManager::Instance()->sdlInitializer->drawTexture(textAdvertisement, &rectAdvertisement, NULL);
 
 	//Loading text
 	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Loading game"), ScreenWidth / 2 - 100, (ScreenHeight / 2) - (ScreenHeight / 30) - 100, 200, 50);
