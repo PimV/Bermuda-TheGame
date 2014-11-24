@@ -24,7 +24,7 @@ void GoldRock::update(double dt) {
 
 void GoldRock::interact(Player* player)
 {
-	if (player->getInventory()->hasPickaxe()) {
+	if (player->getInventory()->pickAxeSelected()) {
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
