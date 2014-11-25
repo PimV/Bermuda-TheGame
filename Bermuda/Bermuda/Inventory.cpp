@@ -245,6 +245,12 @@ void Inventory::interactCurrent(Player* p) {
 	}
 }
 
+void Inventory::interacSpecific(Player* p, int stackIndex) {
+	if (stackIndex < this->getSize()) {
+		this->itemVector[stackIndex]->use(p);
+	}
+}
+
 void Inventory::dropCurrent() {
 	if (selectedIndex < this->getSize()) {
 		Item* item = this->itemVector[selectedIndex];
@@ -313,6 +319,15 @@ void Inventory::toggleInventory() {
 	this->open = !this->open;
 }
 
+void Inventory::selectStack(Item* stack)
+{
+	int pos = std::find(itemVector.begin(), itemVector.end(), stack) - itemVector.begin();
+	if (pos < itemVector.size())
+	{
+		this->selectedIndex = pos;
+	}
+}
+
 bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 	if (this->open && x >= this->startX && x <= this->endX && y >= this->startY  && y <= this->startY + this->slotHeight) {
 		int clickedIndex = -1;
@@ -322,12 +337,16 @@ bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 			int endSlotX = startSlotX + slotWidth;
 
 			if (x >= startSlotX && x <= endSlotX) {
-				selectedIndex = i;
+				clickedIndex = i;
 				break;
 			}
 		}
-		if (mode == "use") {
-			interactCurrent(player);
+
+		if (mode == "select") {
+			this->selectedIndex = clickedIndex;
+		}
+		else if (mode == "use") {
+			this->interacSpecific(player, clickedIndex);
 		}
 
 		return true;

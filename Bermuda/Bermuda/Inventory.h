@@ -17,6 +17,7 @@ public:
 	void decrementSelectedIndex();
 
 	void interactCurrent(Player* p);
+	void interacSpecific(Player* p, int stackIndex);
 	void dropCurrent();
 	Item* getSelectedItem();
 
@@ -47,6 +48,7 @@ public:
 	void toggleInventory();
 	bool isOpen();
 
+	void selectStack(Item* stack);
 	bool clicked(int x, int y, std::string mode, Player* player);
 
 	void printInventory();

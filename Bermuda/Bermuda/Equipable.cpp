@@ -8,7 +8,7 @@ Equipable::Equipable(void)
 }
 
 void Equipable::use(Player* player) {
-	std::cout << "Equipping item with id: " << this->getId() << std::endl;
+	player->getInventory()->selectStack(this);
 }
 
 Equipable::~Equipable(void)
