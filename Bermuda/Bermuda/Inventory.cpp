@@ -1,14 +1,16 @@
 #include "Inventory.h"
-#include <iostream>
 #include "Items.h"
 #include "Item.h"
 #include "Image.h"
 #include "Consumable.h"
 #include "Equipable.h"
 #include "Player.h"
+#include <iostream>
+#include <algorithm>
 
 
-
+//Needed for vector sort
+bool Inventory::stackSortFunction(Item* one, Item* two) { return (one->getStackSize() < two->getStackSize()); }
 
 Inventory::Inventory(void)
 {
@@ -173,17 +175,57 @@ int Inventory::getStackCount(int itemID)
 	return amount;
 }
 
-void Inventory::deleteItem(int itemID, int count) {
-	while (count > 0 && this->hasItemById(itemID))
-	{
-		Item* stack = this->getItemById(itemID, true);
-		int stackSize = stack->getStackSize();
-		stack->setStackSize(stack->getStackSize() - count);
-		count -= stackSize;
-		if (stack->getStackSize() <= 0) {
+int Inventory::getSlotsFreedWhenDeleting(int itemID, int count)
+{
+	vector<Item*> stackVector;
+	int slots = 0; 
+
+	for (size_t i = 0; i < this->itemVector.size(); i++) {
+		if (this->itemVector[i]->getId() == itemID) {
+			stackVector.push_back(itemVector[i]);
+		}
+	}
+	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
+	for (size_t i = 0; i < stackVector.size(); i++) {
+		if (stackVector[i]->getStackSize() <= count)
+		{
+			count -= stackVector[i]->getStackSize();
+			slots++;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return slots;
+}
+
+void Inventory::deleteItem(int itemID, int count)
+{
+	vector<Item*> stackVector;
+
+	for (size_t i = 0; i < this->itemVector.size(); i++) {
+		if (this->itemVector[i]->getId() == itemID) {
+			stackVector.push_back(itemVector[i]);
+		}
+	}
+	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
+	for (size_t i = 0; i < stackVector.size(); i++) {
+		Item* stack = stackVector[i];
+		if (stackVector[i]->getStackSize() <= count)
+		{
+			count -= stack->getStackSize();
+			stack->setStackSize(stack->getStackSize() - stack->getStackSize());
+
 			std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
 			delete *it;
 			this->itemVector.erase(it);
+		}
+		else
+		{
+			stack->setStackSize(stack->getStackSize() - count);
+			break;
 		}
 	}
 }

@@ -25,6 +25,7 @@ public:
 	bool hasItemById(int itemId);
 	int getItemCount(int itemID);
 	int getStackCount(int itemID);
+	int getSlotsFreedWhenDeleting(int itemID, int count);
 	void deleteItem(int itemID, int count);
 	void deleteItemFromStack(Item* stack, int count);
 	std::vector<Item*> getItems();
@@ -75,5 +76,7 @@ private:
 	bool open;
 	int slots; //Total item slots
 	std::vector<Item*> itemVector;
+
+	static bool stackSortFunction(Item* one, Item* two);
 };
 
