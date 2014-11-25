@@ -23,18 +23,7 @@ private:
 	SDL_Rect rect2;
 	SDL_Rect rectBackground;
 	SDL_Rect rectAdvertisement;
-
 	
-	SDL_Rect rectTimeSec;
-	SDL_Rect rectCircleSec;
-	SDL_Texture* textCircleSec;
-	SDL_Texture* textTimeSec;
-
-	SDL_Rect rectTime;
-	SDL_Rect rectCircle;
-	SDL_Texture* textCircle;
-	SDL_Texture* textTime;
-
 	int degrees;
 
 	int percentage;

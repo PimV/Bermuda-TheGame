@@ -48,6 +48,32 @@ void PlayState::init(GameStateManager *gsm) {
 
 	SoundLoader::Instance()->playGameMusic();
 	ready = true;
+
+
+	/*temp timer*/
+	if (textFrame == nullptr) {
+		textFrame = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\frame.png").c_str());
+		textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circle.png").c_str());
+		textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
+	}
+
+	this->degrees = 0;
+
+	rectFrame.x = 100;
+	rectFrame.y = 100;
+	rectFrame.w = 160;
+	rectFrame.h = 160;
+
+	rectCircle.x = 105;
+	rectCircle.y = 105;
+	rectCircle.w = 150;
+	rectCircle.h = 150;
+
+	rectArrow.x = 175;
+	rectArrow.y = 110;
+	rectArrow.w = 9;
+	rectArrow.h = 72;
+	/*/temp timer*/
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -468,9 +494,31 @@ void PlayState::draw()
 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
 	// if current hour is smaller then 9 
 	if (GameTimer::Instance()->getCurrentDayPart() > 9)
+	{
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
+	}
 	else
+	{
 		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
+
+	}
+
+	/*temp timer*/
+	//Time
+	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(textFrame, &rectFrame, NULL);
+	SDL_Point p = { 4, 69 };
+	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
+		textArrow,
+		NULL,
+		&rectArrow,
+		this->degrees,
+		&p,
+		SDL_FLIP_NONE);
+
+	this->degrees++;
+	if(this->degrees > 360) { this->degrees = 0; }
+	/*/temp timer*/
 }
 
 Player* PlayState::getPlayer()

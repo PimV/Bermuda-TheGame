@@ -23,43 +23,12 @@ void LoadingState::init(GameStateManager* gsm) {
 		textBackground = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\campfire.jpg").c_str());
 	}
 
-	if (textTime == nullptr) {
-		textTime = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\frameTEMP.png").c_str());
-		textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\circleTEMP.png").c_str());
-
-		textTimeSec = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\frameTEMP.png").c_str());
-		textCircleSec = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\circleTEMP.png").c_str());
-	}
-
-	this->degrees = 0;
-
-	rectTime.x = 100;
-	rectTime.y = 100;
-	rectTime.w = 160;
-	rectTime.h = 160;
-	rectCircle.x = 105;
-	rectCircle.y = 105;
-	rectCircle.w = 150;
-	rectCircle.h = 150;
-
-	
-	rectTimeSec.x = 100;
-	rectTimeSec.y = 300;
-	rectTimeSec.w = 160;
-	rectTimeSec.h = 160;
-	rectCircleSec.x = 105;
-	rectCircleSec.y = 305;
-	rectCircleSec.w = 150;
-	rectCircleSec.h = 150;
-
 	if(textAdvertisement == nullptr) {
 
 		char* filenames[]={"basicfit.png", "bosch.png", "dolcegusto.png", "electroworld.png", "exact.png", "kijk.png", "mediamarkt.png", "mediamarkt_2.png", "mediamarkt_3.png", "nissan.png", "postnl.png", "t_mobile_2.png", "t_mobile_3.png", "t-mobile.png", "tele2.png", "ziggo.png"};
 
 		srand(time(NULL));
 		int random = rand() % 16;
-
-		std::cout << (RESOURCEPATH + "Advertisement\\" + filenames[random]).c_str() << std::endl;
 
 		textAdvertisement = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Advertisement\\" + filenames[random]).c_str());
 	}
@@ -138,26 +107,6 @@ void LoadingState::draw()
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text1, &rect1, NULL);
 	GameStateManager::Instance()->sdlInitializer->drawTexture(text2, &rect2, NULL);
 	
-	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
-	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
-		textTime,
-		NULL,
-		&rectTime,
-		this->degrees,
-		NULL,
-		SDL_FLIP_NONE);
-
-	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
-		textCircleSec,
-		NULL,
-		&rectCircleSec,
-		this->degrees,
-		NULL,
-		SDL_FLIP_NONE);
-	GameStateManager::Instance()->sdlInitializer->drawTexture(textTimeSec, &rectTimeSec, NULL);
-
-	this->degrees += 5;
-
 	//Advertisement	
 	GameStateManager::Instance()->sdlInitializer->drawTexture(textAdvertisement, &rectAdvertisement, NULL);
 
