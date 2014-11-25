@@ -22,7 +22,7 @@
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
-bool drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
+bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
 PlayState::PlayState(void)
 {
@@ -441,7 +441,7 @@ void PlayState::draw()
 	}
 
 	//Sort drawable object vector
-	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
+	std::sort(drawableVector.begin(), drawableVector.end(), PlayState::drawableSortFunction);
 
 	//Draw sorted object vector
 	for (DrawableEntity* e : drawableVector)

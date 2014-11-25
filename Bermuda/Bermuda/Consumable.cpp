@@ -16,7 +16,7 @@ void Consumable::use(Player* player) {
 		player->setHealth(player->getHealth() + this->getHealthRefill());
 
 		//player->getInventory()->deleteItem(player->getInventory()->getItemById(this->getId(), true), 1);
-		player->getInventory()->deleteItem(player->getInventory()->getSelectedItem(), 1);
+		player->getInventory()->deleteItemFromStack(this, 1);
 
 	} else {
 		std::cout << "Item not in inventory" << std::endl;
