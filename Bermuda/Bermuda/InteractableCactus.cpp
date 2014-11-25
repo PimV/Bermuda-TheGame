@@ -38,7 +38,7 @@ void InteractableCactus::respawn() {
 
 void InteractableCactus::interact(Player* player)
 {
-	if (player->getInventory()->hasAxe()) {
+	if (player->getInventory()->axeSelected()) {
 		if (player->getInventory()->hasAxe()) {
 			InteractableEntity::interact(player);
 			if (this->trackInteractTimes()) {
