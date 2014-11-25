@@ -66,6 +66,8 @@ void Item::setImage(Image* image) {
 	this->image = image;
 }
 
+void Item::use(Player* p){}
+
 void Item::addItemType(ItemType itemType) {
 	//Get iterator for value
 	std::vector<ItemType>::iterator it = std::find(this->itemTypes.begin(), this->itemTypes.end(), itemType);

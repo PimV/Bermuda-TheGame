@@ -2,6 +2,7 @@
 //Includes
 #include "ItemType.h"
 #include "GameStateManager.h"
+#include "Player.h"
 #include <vector>
 
 //Forward Declarations
@@ -26,6 +27,7 @@ public:
 	void setStackable(bool stackable);
 	Image* getImage();
 	void setImage(Image* image);
+	virtual void use(Player* p);
 
 	void addItemType(ItemType itemType);
 	bool hasItemType(ItemType itemType);
