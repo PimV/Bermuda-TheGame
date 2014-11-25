@@ -55,8 +55,7 @@ public:
 	void handleEvents(SDL_Event mainEvent) ;
 
 	void update(double dt);
-	void updateGameTimers();
-	long getGameTimer();
+	void updateGameTimers(double dt);
 	
 
 	void draw();

@@ -63,18 +63,18 @@ void PlayState::init(GameStateManager *gsm) {
 
 	rectFrame.x = 100;
 	rectFrame.y = 100;
-	rectFrame.w = 160;
-	rectFrame.h = 160;
+	rectFrame.w = 120;
+	rectFrame.h = 120;
 
 	rectCircle.x = 105;
 	rectCircle.y = 105;
-	rectCircle.w = 150;
-	rectCircle.h = 150;
+	rectCircle.w = 110;
+	rectCircle.h = 110;
 
-	rectArrow.x = 175;
-	rectArrow.y = 110;
-	rectArrow.w = 9;
-	rectArrow.h = 72;
+	rectArrow.x = 157;
+	rectArrow.y = 113;
+	rectArrow.w = 6;
+	rectArrow.h = 48;
 	/*/temp timer*/
 }
 
@@ -315,7 +315,7 @@ void PlayState::update(double dt) {
 		return;
 	}
 
-	this->updateGameTimers();
+	this->updateGameTimers(dt);
 
 	//TODO: moet dit nog?
 	//this->gsm->getActionContainer()->executeAllActions(dt);
@@ -374,15 +374,11 @@ void PlayState::update(double dt) {
 	}
 }
 
-void PlayState::updateGameTimers() {
+void PlayState::updateGameTimers(double dt) {
 
-	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
+	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	//DayTimeTimer::Instance()->updateDayTime();
-	GameTimer::Instance()->updateDayTime();
-}
-
-long PlayState::getGameTimer() {
-	return GameTimer::Instance()->getGameTime();
+	//GameTimer::Instance()->updateDayTime();
 }
 
 void PlayState::draw() 
@@ -495,22 +491,22 @@ void PlayState::draw()
 	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
-	// if current hour is smaller then 9 
-	if (GameTimer::Instance()->getCurrentDayPart() > 9)
-	{
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
-	}
-	else
-	{
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
+	//// if current hour is smaller then 9 
+	//if (GameTimer::Instance()->getCurrentDayPart() > 9)
+	//{
+	//	this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
+	//}
+	//else
+	//{
+	//	this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
 
-	}
+	//}
 
 	/*temp timer*/
 	//Time
 	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
 	GameStateManager::Instance()->sdlInitializer->drawTexture(textFrame, &rectFrame, NULL);
-	SDL_Point p = { 4, 69 };
+	SDL_Point p = { 2, 46 };
 	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
 		textArrow,
 		NULL,
