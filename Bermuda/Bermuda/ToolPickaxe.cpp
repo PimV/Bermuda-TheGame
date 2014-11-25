@@ -22,10 +22,6 @@ void ToolPickaxe::init() {
 	this->setStackSize(itemCount);
 }
 
-void ToolPickaxe::equip(Player* player) {
-	Equipable::equip(player);
-}
-
 ToolPickaxe::~ToolPickaxe()
 {
 }

@@ -241,16 +241,7 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 
 void Inventory::interactCurrent(Player* p) {
 	if (selectedIndex < this->getSize()) {
-		Item* item = this->itemVector[selectedIndex];
-		if (item != nullptr) {
-			if (item->isConsumable()) {
-				Consumable* c = (Consumable*)item;
-				c->consume(p);
-			} else if (item->isEquipable()) {
-				Equipable* e = (Equipable*)item;
-				e->equip(p);
-			}
-		}
+		this->itemVector[selectedIndex]->use(p);
 	}
 }
 
@@ -323,7 +314,7 @@ void Inventory::toggleInventory() {
 }
 
 bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
-	if (x >= startX && x <= endX && y >= startY  && y <= startY + slotHeight) {
+	if (this->open && x >= this->startX && x <= this->endX && y >= this->startY  && y <= this->startY + this->slotHeight) {
 		int clickedIndex = -1;
 
 		for (int i = 0; i < this->slots; i++) {

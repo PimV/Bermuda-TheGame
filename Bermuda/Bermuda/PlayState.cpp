@@ -172,51 +172,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_F4:
 			this->showSpawnArea = !this->showSpawnArea;
-			break;
-		case SDLK_F5: 
-			{
-				//Consume Carrot (Same method as 9)
-				Item* i = p->getInventory()->getItemById(1, true);
-				if (i != nullptr) {
-					std::cout << "Item found!" << std::endl;
-					if (i->isConsumable()) {
-						Consumable* c = (Consumable*)i;
-						c->consume(p);
-					} else if (i->isEquipable()) {
-						Equipable* e = (Equipable*)i;
-						e->equip(p);
-					}
-				}
-				break;
-			}
-		case SDLK_F6: 
-			{
-				//Equip Axe (Same method as 0)
-				Item* i = p->getInventory()->getItemById(3, true);
-				if (i != nullptr) {
-					std::cout << "Item found!" << std::endl;
-					if (i->isConsumable()) {
-						Consumable* c = (Consumable*)i;
-						c->consume(p);
-					} else if (i->isEquipable()) {
-						Equipable* e = (Equipable*)i;
-						e->equip(p);
-					}
-				}
-				break;
-			}
 		case SDLK_F8:
 			p->getCraftingSystem()->craftItem(Items::Campfire);
 			break;
-		case SDLK_F9:
-		{
-			Item* i = p->getInventory()->getItemById((int)Items::Campfire, true);
-			if (i != nullptr) {
-				ItemCampfire* campfire = (ItemCampfire*)i;
-				campfire->use(p);
-			}
-			break;
-		}
 		case SDLK_F11:
 			//Enable collision
 			p->setCollisionHeight(10);

@@ -22,10 +22,6 @@ void ToolFlint::init() {
 	this->setStackSize(itemCount);
 }
 
-void ToolFlint::equip(Player* player) {
-	Equipable::equip(player);
-}
-
 ToolFlint::~ToolFlint()
 {
 }

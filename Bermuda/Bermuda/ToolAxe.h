@@ -11,7 +11,6 @@ public:
 	ToolAxe(Image* image);
 
 	void init();
-	void equip(Player* player);
 
 	virtual ~ToolAxe();
 };

@@ -11,7 +11,6 @@ public:
 	ToolPickaxe(Image* image);
 
 	void init();
-	void equip(Player* player);
 
 	virtual ~ToolPickaxe();
 };

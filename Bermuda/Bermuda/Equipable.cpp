@@ -7,7 +7,7 @@ Equipable::Equipable(void)
 {
 }
 
-void Equipable::equip(Player* player) {
+void Equipable::use(Player* player) {
 	std::cout << "Equipping item with id: " << this->getId() << std::endl;
 }
 

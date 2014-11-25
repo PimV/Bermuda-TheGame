@@ -29,7 +29,7 @@ void ItemCampfire::use(Player* p)
 	//TODO: Somehow check collision? 
 	//if collision, delete Campfire
 
-	p->getInventory()->deleteItem(p->getInventory()->getItemById(this->getId(), true), 1);
+	p->getInventory()->deleteItemFromStack(this, 1);
 }
 
 ItemCampfire::~ItemCampfire()

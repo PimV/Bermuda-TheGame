@@ -7,7 +7,7 @@ class Equipable :
 public:
 	Equipable(void);
 
-	virtual void equip(Player* p);
+	virtual void use(Player* p);
 
 	virtual ~Equipable(void);
 };
