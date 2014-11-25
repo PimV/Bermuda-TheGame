@@ -29,6 +29,7 @@ private:
 
 	bool ready;
 	bool showCol, showInter, showSpawnArea; 
+	
 
 	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
 
@@ -47,6 +48,7 @@ public:
 	void update(double dt);
 	void updateGameTimers();
 	long getGameTimer();
+	
 
 	void draw();
 
