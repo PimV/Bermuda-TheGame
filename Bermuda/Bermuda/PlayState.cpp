@@ -31,10 +31,12 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+	GameStateManager::Instance()->setSpeedMultiplier(1);
 	ready = false;
 	showCol = false;
 	showInter = false;
 	showSpawnArea = false;
+
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -159,6 +161,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_c:
 			p->getInventory()->incrementSelectedIndex();
 			break;
+
 		case SDLK_F1:
 			//Print player location
 			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;

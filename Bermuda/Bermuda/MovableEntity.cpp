@@ -128,7 +128,7 @@ void MovableEntity::move(double dt)
 
 void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 {
-	double animationDelay = (maxSpeed / 100) * 40;
+	double animationDelay = (maxSpeed / 100) * 40 * dt;
 	animationSpeed -= animationDelay;
 	if (animationSpeed < animationDelay)
 	{
