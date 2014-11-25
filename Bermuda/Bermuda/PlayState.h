@@ -40,6 +40,7 @@ private:
 
 	bool ready;
 	bool showCol, showInter, showSpawnArea; 
+	
 
 public:
 	Player* getPlayer();
@@ -56,6 +57,7 @@ public:
 	void update(double dt);
 	void updateGameTimers();
 	long getGameTimer();
+	
 
 	void draw();
 
