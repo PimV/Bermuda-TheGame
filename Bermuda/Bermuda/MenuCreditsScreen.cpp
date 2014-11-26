@@ -179,6 +179,7 @@ void MenuCreditsScreen::cleanup()
 	{
 		delete var;
 	}
+	buttons.clear();
 }
 
 MenuCreditsScreen::~MenuCreditsScreen()
