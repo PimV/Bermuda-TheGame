@@ -61,6 +61,14 @@ void MenuMainScreen::setBackground()
 	backgroundRect.h = ScreenHeight;
 }
 
+void MenuMainScreen::resetButtons()
+{
+	for each (BaseButton* var in buttons)
+	{
+		var->reset();
+	}
+}
+
 void MenuMainScreen::handleEvents(SDL_Event mainEvent)
 {
 	int x, y;

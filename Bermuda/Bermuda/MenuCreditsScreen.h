@@ -29,6 +29,7 @@ private:
 
 public:
 	//methodes
+	void resetButtons();
 	void handleEvents(SDL_Event);
 	void draw();
 

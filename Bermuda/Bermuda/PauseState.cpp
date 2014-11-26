@@ -35,6 +35,7 @@ void PauseState::update(double dt)
 void PauseState::setCurWindow(BaseScreen* window)
 {
 	curWindow = window;
+	curWindow->resetButtons();
 }
 
 BaseScreen* PauseState::getMainPauseScreen()

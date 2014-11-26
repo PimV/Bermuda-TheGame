@@ -26,6 +26,7 @@ void MenuState::init(GameStateManager* gsm)
 void MenuState::setCurWindow(BaseScreen* curwindow)
 {
 	curScreen = curwindow;
+	curScreen->resetButtons();
 }
 
 BaseScreen* MenuState::getMenuMainScreen()

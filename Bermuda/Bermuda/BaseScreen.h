@@ -10,6 +10,7 @@ private:
 
 public:
 	//Methodes
+	virtual void resetButtons() = 0;
 	virtual void handleEvents(SDL_Event) = 0;
 	virtual void draw() = 0;
 

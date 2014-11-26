@@ -23,6 +23,7 @@ public:
 	
 	//methodes
 	void createButton(std::string buttonText, int fontSize, int initialColor);
+	void reset();
 	void placeLeftAboveButton(BaseButton* button);
 	void placeLeftUnderButton(BaseButton* button);
 	void placeMidScreenAbove(BaseButton* button);

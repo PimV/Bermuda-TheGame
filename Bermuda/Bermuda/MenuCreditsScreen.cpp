@@ -114,6 +114,14 @@ void MenuCreditsScreen::setBackground()
 	backgroundRect.h = ScreenHeight;
 }
 
+void MenuCreditsScreen::resetButtons()
+{
+	for each (BaseButton* var in buttons)
+	{
+		var->reset();
+	}
+}
+
 void MenuCreditsScreen::handleEvents(SDL_Event mainEvent)
 {
 	int x, y;

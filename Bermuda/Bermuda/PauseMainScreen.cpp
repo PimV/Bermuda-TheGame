@@ -80,6 +80,14 @@ void PauseMainScreen::setBackground()
 	backgroundRect.h += 0;
 }
 
+void PauseMainScreen::resetButtons()
+{
+	for each (BaseButton* var in buttons)
+	{
+		var->reset();
+	}
+}
+
 void PauseMainScreen::handleEvents(SDL_Event mainEvent)
 {
 	GameStateManager* gsm = GameStateManager::Instance();

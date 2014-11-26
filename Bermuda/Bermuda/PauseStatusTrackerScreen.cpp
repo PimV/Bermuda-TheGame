@@ -127,6 +127,11 @@ void PauseStatusTrackerScreen::setBackground()
 	backgroundRect.w += 100;
 }
 
+void PauseStatusTrackerScreen::resetButtons()
+{
+
+}
+
 void PauseStatusTrackerScreen::handleEvents(SDL_Event mainEvent)
 {
 	int x, y;
