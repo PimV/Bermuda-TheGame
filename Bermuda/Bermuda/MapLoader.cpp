@@ -39,6 +39,7 @@ void MapLoader::setPercentage(int percentage)
 
 void MapLoader::loadMap()
 {
+	LoadingState::Instance()->init(nullptr);
 	this->setPercentage(0);
 	this->firstImgID = imgLoader->getCurrentImageCount();
 	double startLoadPercentage = 0;
@@ -143,6 +144,7 @@ void MapLoader::extractMapInfo(Document& d)
 		}
 		loadStatus = "Map loading finished.";
 	}
+	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::createTileSets(Value& tilesets)

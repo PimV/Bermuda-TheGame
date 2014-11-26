@@ -1,6 +1,7 @@
 #include "Ice.h"
 #include "Player.h"
 #include "ItemFactory.h"
+#include "Items.h"
 
 
 Ice::Ice(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* rockImage, Image* rockPiecesImage) :
@@ -25,11 +26,11 @@ void Ice::update(double dt) {
 
 void Ice::interact(Player* player)
 {
-	if (player->getInventory()->hasPickaxe()) {
+	if (player->getInventory()->pickAxeSelected()) {
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
-			player->getInventory()->addItem(ItemFactory::Instance()->createWater());
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
 			//TODO: add to statustracker
 		}
 	}
