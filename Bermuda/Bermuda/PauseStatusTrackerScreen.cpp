@@ -3,6 +3,7 @@
 #include "Achievement.h"
 #include "PauseState.h"
 #include <sstream>
+#include <iostream>
 
 
 PauseStatusTrackerScreen::PauseStatusTrackerScreen()
@@ -16,57 +17,114 @@ void PauseStatusTrackerScreen::init()
 
 	int total = 0;
 
+	SDL_Color black = { 0, 0, 0 };
 	SDL_Color white = { 255, 255, 255 };
-	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 16);
+	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 24);
 
 	for each (Achievement* var in achievements)
 	{
+		//Make achievements names
 		std::string achievementName = var->getName();
-		SDL_Surface* achievementNameSurface = TTF_RenderText_Blended(staryDarzy, achievementName.c_str(), white);
+		SDL_Surface* achievementNameSurface = TTF_RenderText_Blended(staryDarzy, achievementName.c_str(), black);
 		SDL_Texture* achievementNameTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), achievementNameSurface);
 		
 		total += achievementNameSurface->h;
-		nameSurfaces.push_back(achievementNameSurface);
 		nameTextures.push_back(achievementNameTexture);
 
 		int achievementCountInt = var->getAmount();
 		ostringstream convert;
 		convert << achievementCountInt;
 
+		//Make achievements number/count
 		std::string achievementCount = convert.str();
-		SDL_Surface* achievementCountSurface = TTF_RenderText_Blended(staryDarzy, achievementCount.c_str(), white);
+		SDL_Surface* achievementCountSurface = TTF_RenderText_Blended(staryDarzy, achievementCount.c_str(), black);
 		SDL_Texture* achievementCountTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), achievementCountSurface);
 
-		countSurfaces.push_back(achievementCountSurface);
 		countTextures.push_back(achievementCountTexture);
-	}
 
-	int minSur =  ((int)ScreenHeight - total) / 2;
-	for (int i = 0; i < nameSurfaces.size(); i++)
-	{
+		//Setting the rectangle heights and widths
 		SDL_Rect rectangeName;
 		SDL_Rect rectangeCount;
 
-		rectangeName.h = nameSurfaces.at(i)->h;
-		rectangeName.w = nameSurfaces.at(i)->w;
-		rectangeName.x = (ScreenWidth / 2) - nameSurfaces.at(i)->w;
-		rectangeName.y = minSur;
+		rectangeName.h = achievementNameSurface->h;
+		rectangeName.w = achievementNameSurface->w;
 
-		rectangeCount.h = countSurfaces.at(i)->h;
-		rectangeCount.w = countSurfaces.at(i)->w;
-		rectangeCount.x = (ScreenWidth / 2) + 10;
-		rectangeCount.y = minSur;
-
-		minSur += nameSurfaces.at(i)->h;
+		rectangeCount.h = achievementCountSurface->h;
+		rectangeCount.w = achievementCountSurface->w;
 
 		nameRectangles.push_back(rectangeName);
 		countRectangles.push_back(rectangeCount);
 
-		SDL_FreeSurface(nameSurfaces.at(i));
-		SDL_FreeSurface(countSurfaces.at(i));
+		//Free the surfaces
+		SDL_FreeSurface(achievementNameSurface);
+		SDL_FreeSurface(achievementCountSurface);
+	}
+
+	int minSur =  ((int)ScreenHeight - total) / 2;
+	for (int i = 0; i < nameTextures.size(); i++)
+	{
+		nameRectangles.at(i).x = (ScreenWidth / 2) - nameRectangles.at(i).w - countRectangles.at(i).w ;
+		nameRectangles.at(i).y = minSur;
+
+		countRectangles.at(i).x = (ScreenWidth / 2) + 10;
+		countRectangles.at(i).y = minSur;
+
+		//placing it somewhat in the middle
+		nameRectangles.at(i).x += 100;
+		countRectangles.at(i).x += 100;
+
+		minSur += nameRectangles.at(i).h;
 	}
 
 	TTF_CloseFont(staryDarzy);
+
+	//Background
+	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/menuBackground.png").c_str());
+	setBackground();
+}
+
+void PauseStatusTrackerScreen::setBackground()
+{
+	backgroundRect.x = ScreenWidth;
+	for each (SDL_Rect var in nameRectangles)
+	{
+		if (var.x <= backgroundRect.x)
+		{
+			backgroundRect.x = var.x;
+		}
+	}
+	//Move background left
+	backgroundRect.x = backgroundRect.x - 35;
+
+	backgroundRect.y = ScreenHeight;
+	for each (SDL_Rect var in nameRectangles)
+	{
+		if (var.y <= backgroundRect.y)
+		{
+			backgroundRect.y = var.y;
+		}
+	}
+	//Move background up
+	backgroundRect.y = backgroundRect.y - 30;
+
+	backgroundRect.w = 0;
+	backgroundRect.h = 0;
+	for each (SDL_Rect var in nameRectangles)
+	{
+		backgroundRect.h += var.h;
+	}
+	//Make background higher
+	backgroundRect.h += 60;
+
+	for (size_t i = 0; i < nameRectangles.size(); i++)
+	{
+		if (nameRectangles.at(i).w + countRectangles.at(i).w >= backgroundRect.w)
+		{
+			backgroundRect.w = nameRectangles.at(i).w + countRectangles.at(i).w;
+		}
+	}
+	//Make background wider
+	backgroundRect.w += 100;
 }
 
 void PauseStatusTrackerScreen::handleEvents(SDL_Event mainEvent)
@@ -93,11 +151,13 @@ void PauseStatusTrackerScreen::handleEvents(SDL_Event mainEvent)
 
 void PauseStatusTrackerScreen::draw()
 {
-	for (int i = 0; i < nameTextures.size(); i++)
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
+	
+	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameTextures.at(i), NULL, &nameRectangles.at(i));
 	}
-	for (int i = 0; i < countTextures.size(); i++)
+	for (size_t i = 0; i < countTextures.size(); i++)
 	{
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), countTextures.at(i), NULL, &countRectangles.at(i));
 	}
@@ -105,15 +165,16 @@ void PauseStatusTrackerScreen::draw()
 
 void PauseStatusTrackerScreen::cleanup()
 {
-	for (int i = 0; i < nameTextures.size(); i++)
+	SDL_DestroyTexture(backgroundTexture);
+	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		SDL_DestroyTexture(nameTextures.at(i));
 	}
-	for (int i = 0; i < countTextures.size(); i++)
+	nameTextures.clear();
+	for (size_t i = 0; i < countTextures.size(); i++)
 	{
 		SDL_DestroyTexture(countTextures.at(i));
 	}
-	nameTextures.clear();
 	countTextures.clear();
 }
 

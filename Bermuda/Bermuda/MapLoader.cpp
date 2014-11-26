@@ -3,10 +3,16 @@
 #include "Tree.h"
 #include "AppleTree.h"
 #include "Rock.h"
+#include "RockSpikes.h"
+#include "GoldRock.h"
+#include "Ice.h"
 #include "Carrot.h"
 #include "Fish.h"
 #include "Pillar.h"
 #include "RuinStatue.h"
+#include "EasterHead.h"
+#include "Cactus.h"
+#include "InteractableCactus.h"
 #include "CollidableTile.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
@@ -33,6 +39,7 @@ void MapLoader::setPercentage(int percentage)
 
 void MapLoader::loadMap()
 {
+	LoadingState::Instance()->init(nullptr);
 	this->setPercentage(0);
 	this->firstImgID = imgLoader->getCurrentImageCount();
 	double startLoadPercentage = 0;
@@ -56,25 +63,30 @@ void MapLoader::loadMap()
 	string json;
 	string line;
 	bool firstLine = true;
-	while (getline(stream, line)) 
+	while (getline(stream, line))
 	{
-		if(firstLine)
+		if (firstLine)
 		{
+			firstLine = false;
 			//First line contains total file lines.
 			istringstream iss(line);
 			string type;
 			iss >> type >> totalJSONLines;
-			if(type != "JsonLines:" && totalJSONLines > 0)
+			if (type == "JsonLines:" && totalJSONLines > 0)
 			{
-				cout << "Could not load map. Incorrect file structure. Missing line count." << endl;
-				return;
+				continue;
 			}
-			firstLine = false;
+			else
+			{
+				cout << "Missing line count. Can't calculate file load percentage." << endl;
+				totalJSONLines = 0;
+			}
 		}
-		else
-		{
-			json += line;
 
+		json += line;
+
+		if (totalJSONLines > 0)
+		{
 			processedJSONLines++;
 			tempPercentage = startLoadPercentage + ((processedJSONLines / totalJSONLines) * loadWeight);
 			if (tempPercentage != this->loadPercentage) {
@@ -132,6 +144,7 @@ void MapLoader::extractMapInfo(Document& d)
 		}
 		loadStatus = "Map loading finished.";
 	}
+	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::createTileSets(Value& tilesets)
@@ -272,6 +285,32 @@ void MapLoader::createObjects(Value& objects)
 			Rock* rock = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			rock->setDestroyedState();
 		}
+		else if (objectClasses[objectID] == "RockSpikes")
+		{
+			new RockSpikes(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "GoldRock")
+		{
+			new GoldRock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "GoldRockPieces")
+		{
+			GoldRock* goldRock = new GoldRock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			goldRock->setDestroyedState();
+		}
+		else if (objectClasses[objectID] == "Ice")
+		{
+			new Ice(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "IceSpikes")
+		{
+			new Ice(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
+		}
+		else if (objectClasses[objectID] == "IcePieces")
+		{
+			Ice* ice = new Ice(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			ice->setDestroyedState();
+		}
 		else if(objectClasses[objectID] == "Carrot")
 		{
 			new Carrot(objectID, objectX, objectY, chunkSize, mec, objectImg);
@@ -283,6 +322,18 @@ void MapLoader::createObjects(Value& objects)
 		else if(objectClasses[objectID] == "RuinStatue")
 		{
 			new RuinStatue(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "EasterHead" || objectClasses[objectID] == "EasterHeadDestroyed")
+		{
+			new EasterHead(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "Cactus")
+		{
+			new Cactus(objectID, objectX, objectY, chunkSize, mec, objectImg);
+		}
+		else if (objectClasses[objectID] == "InteractableCactus")
+		{
+			new InteractableCactus(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{

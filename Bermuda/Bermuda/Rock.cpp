@@ -26,7 +26,7 @@ void Rock::update(double dt) {
 
 void Rock::interact(Player* player)
 {
-	if (player->getInventory()->hasPickaxe()) {
+	if (player->getInventory()->pickAxeSelected()) {
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
@@ -54,7 +54,7 @@ Rock::~Rock()
 {
 	if(this->destroyed)
 	{
-		this->getMainEntityContainer()->getBackgroundContainer()->add(this);
+		this->getMainEntityContainer()->getBackgroundContainer()->remove(this);
 	}
 	else
 	{

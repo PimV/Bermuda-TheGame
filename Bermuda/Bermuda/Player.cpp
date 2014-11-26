@@ -38,10 +38,17 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->interaction = false;
 
 	//this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Empty_Handed_ChopLeft.png", 64, 64);
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Empty_Handed_Chop.png", 64, 64);
+	
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+
+	this->animationChopUp = 12, this->animationChopLeft = 13;
+	this->animationChopDown = 14, this->animationChopRight = 15;
+	this->animationChopStartColumn = 1, this->animationChopEndColumn = 9;
+
 	this->currentAnimationRow = this->animationWalkDownRow;
+
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
@@ -88,33 +95,27 @@ void Player::update(double dt) {
 		return;
 	}
 
-	this->updatePlayerStatuses();
-	this->directionsAndMove(dt);
+	this->updatePlayerStatuses(dt);
 
-	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
-	/*if (interaction)
-	{
-		interact(dt);
-	}
+	if (this->interaction)
+		this->interact(dt);
 	else
-	{
-	this->move(dt);
-	}*/
+		this->directionsAndMove(dt);
 }
 
 #pragma region PlayerStatusUpdates
-void Player::updatePlayerStatuses()
+void Player::updatePlayerStatuses(double dt)
 {
 
 	// check if hunger needs to be updated
-	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
 	if (this->hungerUpdate > hungerUpdateTime) {
 		this->incrementHunger(-1);
 		hungerUpdate = 0;
 	}
 
 	// check if thirst needs to be updated
-	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
 	if (this->thirstUpdate > thirstUpdateTime) {
 		this->incrementThirst(-1);
 		thirstUpdate = 0;
@@ -187,7 +188,6 @@ void Player::setThirst(int value) {
 	}
 }
 
-
 int Player::getHealth() {
 	return this->health;
 }
@@ -204,10 +204,10 @@ int Player::getThirst() {
 void Player::directionsAndMove(double dt)
 {
 	if (sprinting) {
-		maxSpeed = 50;
+		moveSpeed = 50;
 	}
 	else {
-		maxSpeed = 3;
+		moveSpeed = 3;
 	}
 
 	if (moveClick) {
@@ -217,7 +217,7 @@ void Player::directionsAndMove(double dt)
 	this->move(dt);
 }
 
-void::Player::interact()
+void::Player::interact(double dt)
 {
 	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
 	int beginChunkX = this->getChunkX() - 1;
@@ -264,6 +264,8 @@ void::Player::interact()
 						//e->interact(this);
 						//TODO : juiste animatie laten zien e.d.
 						//break;
+						if (e->getAnimationEnumType() != AnimationEnumType::None)
+							this->setAnimationType(e->getAnimationEnumType());
 					}
 				}
 			}
@@ -272,6 +274,7 @@ void::Player::interact()
 
 	if (closestEntity != nullptr) {
 		closestEntity->interact(this);
+		this->PlayAnimation(this->animationActionStartColumn, this->animationActionEndColumn, this->currentAnimationRow, dt);
 	}
 
 	//ROELS CODE HIERONDER UITGEZET, ANIMATIE IS AFHANKELIJK VAN WAARMEE GEINTERACT WORDT??????
@@ -285,12 +288,37 @@ void::Player::interact()
 	//else if (this->currentPlayerAnimationRow == this->playerAnimationWalkRightRow)
 	//	this->currentPlayerAnimationRow += 4;
 
-	//this->PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
+	//this->PlayAnimation(this->animationActionStartColumn, this->animationActionEndColumn, this->currentAnimationRow, 0);
+}
 
-	/*
-
-	*/
-	this->PlayAnimation(0, 7, 21, 1);
+void Player::setAnimationType(AnimationEnumType type)
+{
+	switch (type)
+	{
+	case AnimationEnumType::None:
+		std::cout << "Animation type is None" << std::endl;
+		break;
+	case AnimationEnumType::Chop:
+		std::cout << "No Chop animation" << std::endl;
+		if (this->currentAnimationRow < this->animationChopUp )// && this->currentAnimationRow > this->animationChopRight)
+		{
+			this->currentAnimationRow += 4;
+ 			this->animationActionStartColumn = this->animationChopStartColumn;
+			this->animationActionEndColumn = this->animationChopEndColumn;
+		}
+		break;
+	case AnimationEnumType::Mine:
+		std::cout << "No Mine animation" << std::endl;
+		break;
+	case AnimationEnumType::Pick:
+		std::cout << "No pick animation" << std::endl;
+		break;
+	case AnimationEnumType::Attack:
+		std::cout << "No attack animation" << std::endl;
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::setPosition() {
@@ -360,7 +388,7 @@ void Player::ResetDrawableEntityAndSetChunk()
 
 bool Player::checkIntersects(CollidableEntity* collidableEntity)
 {
-	return this->intersects(collidableEntity);
+	return this->intersects(collidableEntity, this);
 }
 
 Player::~Player(void) {

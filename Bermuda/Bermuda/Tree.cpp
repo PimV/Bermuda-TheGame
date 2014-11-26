@@ -1,5 +1,4 @@
 #include "Tree.h"
-#include "GameStateManager.h"
 #include "ItemWood.h"
 #include "Player.h"
 #include "ItemFactory.h"
@@ -17,14 +16,16 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
+	this->interactTime = 5000;
 
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
+
+	this->animationType = AnimationEnumType::Chop;
 }
 
 void Tree::interact(Player* player) {
-	if (player->getInventory()->hasAxe()) {
+	if (player->getInventory()->axeSelected()) {
 		InteractableEntity::interact(player);
 
 		if (this->trackInteractTimes()) {

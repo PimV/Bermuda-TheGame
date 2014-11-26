@@ -61,7 +61,7 @@ double CollidableEntity::getCollisionY() {
 }
 #pragma endregion
 
-bool CollidableEntity::intersects(CollidableEntity* collidableEntity) {
+bool CollidableEntity::intersects(CollidableEntity* collidableEntity, MovableEntity* movableEntity) {
 	if(this == collidableEntity)
 	{
 		return false;
@@ -78,12 +78,49 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity) {
 	double thisBot = this->getTempY() + this->getCollisionY() + this->getCollisionHeight();
 
 	if (thisLeft < targetRight &&
-		thisRight > targetLeft &&
-		thisTop < targetBot &&
-		thisBot > targetTop)
+	thisRight > targetLeft &&
+	thisTop < targetBot &&
+	thisBot > targetTop)
 	{
-		return true;
+	return true;
 	}
+
+	/*if(movableEntity->getId() == 1)
+	{
+		if(movableEntity->movingUp && movableEntity->movingLeft)
+		{
+			std::cout << "UP-LEFT" << std::endl;
+		}
+		else if(movableEntity->movingUp && movableEntity->movingRight)
+		{
+			std::cout << "UP-RIGHT" << std::endl;
+		}
+		else if(movableEntity->movingDown && movableEntity->movingRight)
+		{
+			std::cout << "DOWN-RIGHT" << std::endl;
+		}
+		else if(movableEntity->movingDown && movableEntity->movingLeft)
+		{
+			std::cout << "DOWN-LEFT" << std::endl;
+		}
+		else if(movableEntity->movingUp)
+		{
+			std::cout << "UP" << std::endl;
+		}
+		else if(movableEntity->movingRight)
+		{
+			std::cout << "RIGHT" << std::endl;
+		}
+		else if(movableEntity->movingDown)
+		{
+			std::cout << "DOWN" << std::endl;
+		}
+		else if(movableEntity->movingLeft)
+		{
+			std::cout << "LEFT" << std::endl;
+		}
+	}*/
+
 	return false;
 }
 

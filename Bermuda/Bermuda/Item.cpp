@@ -1,5 +1,7 @@
 #include "Item.h"
 #include "Image.h"
+#include "Items.h"
+#include <iostream>
 
 Item::Item()
 {
@@ -30,7 +32,8 @@ int Item::getStackSize() {
 void Item::setStackSize(int size) {
 	this->stackSize = size;
 	if (this->stackSize < 0) {
-		this->stackSize = 0;
+		delete this;
+		//this->stackSize = 0;
 	}
 	if (this->stackSize > 0) {
 		if (stackable == false) {
@@ -106,5 +109,5 @@ bool Item::isEquipable() {
 
 Item::~Item(void)
 {
-
+	std::cout << "Deleting " << item_strings[this->getId()] << std::endl;
 }

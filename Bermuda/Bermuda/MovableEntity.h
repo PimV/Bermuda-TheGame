@@ -37,6 +37,7 @@ protected:
 	int currentAnimationRow, animationIdleColumn;
 	int animationWalkUpRow, animationWalkLeftRow, animationWalkDownRow, animationWalkRightRow;
 	int animationWalkStartColumn, animationWalkEndColumn;
+	int animationChopStartColumn, animationChopEndColumn;
 	int animationActionStartColumn, animationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
 	double animationSpeed, animationDelay;

@@ -11,12 +11,10 @@ class PlayButton :
 public:
 	//Methodes
 	void init();
-	void loadHoverPicture(GameStateManager *gsm);
-	void loadNormalPicture(GameStateManager *gsm);
-	void action(GameStateManager *gsm);
+	void action();
 
 	//Constructor and destructor
-	PlayButton(GameStateManager *gsm);
+	PlayButton();
 	virtual ~PlayButton();
 };
 

@@ -15,6 +15,8 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 	this->interactWidth = interactWidth;
 	this->interactHeight = interactHeight;
 
+	this->animationType = AnimationEnumType::None;
+
 	this->interactTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelOrange.png").c_str());
 }
 
@@ -70,6 +72,11 @@ int InteractableEntity::getInteractHeight()
 }
 
 void InteractableEntity::setDestroyedState() {}
+
+AnimationEnumType InteractableEntity::getAnimationEnumType()
+{
+	return this->animationType;
+}
 
 InteractableEntity::~InteractableEntity()
 {

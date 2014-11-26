@@ -38,7 +38,7 @@ public:
 
 
 
-	~Item();
+	virtual ~Item();
 private:
 	int id;
 	int stackSize;

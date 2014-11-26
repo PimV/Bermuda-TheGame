@@ -13,60 +13,30 @@ MovableEntity::~MovableEntity(void)
 
 void MovableEntity::move(double dt)
 {
+	this->dx = 0;
+	this->dy = 0;
+	double stepX = 0;
+	double stepY = 0;
+
 	if (movingLeft) {
 		dx -= moveSpeed *dt;
-		if (dx < -maxSpeed *dt) {
-			dx = -maxSpeed *dt;
-		}
+		stepX = -10;
 	}
 	else if (movingRight) {
 		dx += moveSpeed *dt;
-		if (dx > maxSpeed *dt) {
-			dx = maxSpeed *dt;
-		}
-	}
-	else {
-		if (dx > 0) {
-			dx -= stopSpeed *dt;
-			if (dx < 0) {
-				dx = 0;
-			}
-		}
-		else if (dx < 0) {
-			dx += stopSpeed *dt;
-			if (dx > 0) {
-				dx = 0;
-			}
-		}
+		stepX = 10;
 	}
 
 	if (movingUp) {
 		dy -= moveSpeed *dt;
-		if (dy < -maxSpeed *dt) {
-			dy = -maxSpeed *dt;
-		}
+		stepY = -10;
 	}
 	else if (movingDown) {
 		dy += moveSpeed *dt;
-		if (dy > maxSpeed *dt) {
-			dy = maxSpeed *dt;
-		}
-	}
-	else {
-		if (dy > 0) {
-			dy -= stopSpeed *dt;
-			if (dy < 0) {
-				dy = 0;
-			}
-		}
-		else if (dy < 0) {
-			dy += stopSpeed *dt;
-			if (dy > 0) {
-				dy = 0;
-			}
-		}
-	}
+		stepY = 10;
+	} 
 
+	//No movement
 	if (dx == 0 && dy == 0) {
 		if(this->keepAnimationWhenIdle) 
 		{  
@@ -75,30 +45,90 @@ void MovableEntity::move(double dt)
 		return;
 	}
 
-	//Move wasp
-	this->setTempX(getX() + dx);
-	this->setTempY(getY() + dy);
+	this->setTempX(getX());
+	this->setTempY(getY());
 
-	if (!this->checkCollision(PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()))
+	double destX = getX() + dx;
+	double destY = getY() + dy;
+
+	bool col = false;
+
+	while(this->getTempX() != destX || this->getTempY() != destY)
 	{
-		this->setPosition();
+		//x
+		double diffX = this->getTempX() - destX;
+		if(diffX > -10 && diffX < 10)
+		{
+			stepX = -diffX;
+		}
 
-		// set animation row
-		if (this->movingLeft)
-			this->currentAnimationRow = this->animationWalkLeftRow;
-		else if (this->movingRight)
-			this->currentAnimationRow = this->animationWalkRightRow;
-		else if (this->movingUp)
-			this->currentAnimationRow = this->animationWalkUpRow;
-		else if (this->movingDown)
-			this->currentAnimationRow = this->animationWalkDownRow;
+		//y
+		double diffY = this->getTempY() - destY;
+		if(diffY > -10 && diffY < 10)
+		{
+			stepY = -diffY;
+		}
 
-		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, 0);
+		this->setTempX(getX() + stepX);
+		this->setTempY(getY() + stepY);
+
+
+		if (!this->checkCollision(PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()))
+		{
+			this->setPosition();
+		}
+		else
+		{
+			col = true;
+			break;
+		}
 	}
+	// set animation row
+	if (this->movingLeft)
+	{
+		this->currentAnimationRow = this->animationWalkLeftRow;
+	}
+	else if (this->movingRight)
+	{
+		this->currentAnimationRow = this->animationWalkRightRow;
+	}
+	else if (this->movingUp)
+	{
+		this->currentAnimationRow = this->animationWalkUpRow;
+	}
+	else if (this->movingDown)
+	{
+		this->currentAnimationRow = this->animationWalkDownRow;
+	}
+
+	if(!col)
+	{
+		PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
+	}
+
+	//PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
+
+	//if (!this->checkCollision(PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()))
+	//{
+	//	this->setPosition();
+
+	//	// set animation row
+	//	if (this->movingLeft)
+	//		this->currentAnimationRow = this->animationWalkLeftRow;
+	//	else if (this->movingRight)
+	//		this->currentAnimationRow = this->animationWalkRightRow;
+	//	else if (this->movingUp)
+	//		this->currentAnimationRow = this->animationWalkUpRow;
+	//	else if (this->movingDown)
+	//		this->currentAnimationRow = this->animationWalkDownRow;
+
+	//	PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
+	//}
 }
 
 void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
 {
+	/*
 	double animationDelay = 0;
 	if (dt < 1)
 		animationDelay = (maxSpeed / 100) * 40;
@@ -106,7 +136,11 @@ void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double 
 		animationDelay = (maxSpeed / 100) * 70;
 
 	this->animationSpeed -= animationDelay;
-	if (this->animationSpeed < animationDelay)
+	*/
+
+	double animationDelay = (maxSpeed / 100) * 40 * dt;
+	animationSpeed -= animationDelay;
+	if (animationSpeed < animationDelay)
 	{
 		this->currentAnimationRow = Row;
 

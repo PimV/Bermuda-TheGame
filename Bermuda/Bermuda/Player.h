@@ -40,7 +40,7 @@ public:
 	//void clickMove();
 	void clickMove();
 	void setPosition();
-	void interact();
+	void interact(double dt);
 	void resetMovement();
 
 	bool moveClick;
@@ -60,14 +60,22 @@ private:
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
 
+	int animationChopUp, animationChopLeft;
+	int animationChopDown, animationChopRight;
+
+	int animationMineUp, animationMineLeft;
+	int animationMineDown, animationMineRight;
+
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
 	Inventory* inventory;
 	StatusTracker* statusTracker;
 
-	void updatePlayerStatuses();
+	void updatePlayerStatuses(double dt);
 
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 	bool checkIntersects(CollidableEntity* collidableEntity);
+
+	void setAnimationType(AnimationEnumType type);
 };
