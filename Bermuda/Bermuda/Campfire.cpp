@@ -10,7 +10,19 @@ Campfire::Campfire(int id, double x, double y, int chunkSize, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
-	setAnimation(1, 3, 100);
+	this->creationTime = GameTimer::Instance()->getGameTime();
+	this->lifeTime = 6000;
+	setAnimation(1, 3, 100, 3000, 0);
+}
+
+void Campfire::animate(double dt)
+{
+	AnimatingEntity::animate(dt);
+	long currentTime = GameTimer::Instance()->getGameTime();
+	if (this->creationTime + lifeTime < currentTime)
+	{
+		delete this;
+	}
 }
 
 Campfire::~Campfire()

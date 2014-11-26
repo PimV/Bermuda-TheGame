@@ -8,16 +8,23 @@ class AnimatingEntity :
 {
 private:
 	int firstImgID;
-	int animateSpeed;
+	double animateSpeed;
 	bool animating;
 	int animationStartIndex;
 	int animationEndIndex;
 	int currentImageIndex;
 	long lastFrameTime;
+
+	bool animateLoop;
+	double animationStartTime;
+	double animateTime;
+	int finishedIndex;
+
 public:
 	AnimatingEntity(int id, double x, double y, int chunkSize, int firstImgID);
-	void animate(double dt);
+	virtual void animate(double dt);
 	void setAnimation(int startIndex, int endIndex, double animateSpeed);
+	void setAnimation(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex);
 	void setStaticImage(int index);
 	void setCurrentlyAnimating(bool animating);
 	bool getCurrentlyAnimating();
