@@ -53,31 +53,6 @@ void PlayState::init(GameStateManager *gsm) {
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
 	this->ready = true;
-	
-	/*temp timer*/
-	if (textFrame == nullptr) {
-		textFrame = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\frame.png").c_str());
-		textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circle.png").c_str());
-		textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
-	}
-
-	this->degrees = 0;
-
-	rectFrame.x = 100;
-	rectFrame.y = 100;
-	rectFrame.w = 120;
-	rectFrame.h = 120;
-
-	rectCircle.x = 105;
-	rectCircle.y = 105;
-	rectCircle.w = 110;
-	rectCircle.h = 110;
-
-	rectArrow.x = 157;
-	rectArrow.y = 113;
-	rectArrow.w = 6;
-	rectArrow.h = 48;
-	/*/temp timer*/
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -386,8 +361,6 @@ void PlayState::update(double dt) {
 void PlayState::updateGameTimers(double dt) {
 
 	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
-	//DayTimeTimer::Instance()->updateDayTime();
-	//GameTimer::Instance()->updateDayTime();
 }
 
 void PlayState::draw() 
@@ -495,29 +468,16 @@ void PlayState::draw()
 		this->p->getInventory()->draw();
 	}
 
+	//Draw timer
+	GameTimer::Instance()->draw();
+
+	//TODO : dit moet weg als HUD werkt
 	// Draw the player status
 	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Days: " + to_string(GameTimer::Instance()->getDaysSurvived())), ScreenWidth - 120, 95, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Part: " + daypart_strings[((int)GameTimer::Instance()->getCurrentDayPart())]), ScreenWidth - 120, 125, 100, 25);
-	
-	/*temp timer*/
-	//Time
-	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
-	GameStateManager::Instance()->sdlInitializer->drawTexture(textFrame, &rectFrame, NULL);
-	SDL_Point p = { 2, 46 };
-	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
-		textArrow,
-		NULL,
-		&rectArrow,
-		3.6 * GameTimer::Instance()->getPercentage(),
-		&p,
-		SDL_FLIP_NONE);
-
-	this->degrees++;
-	if(this->degrees > 360) { this->degrees = 0; }
-	/*/temp timer*/
+	this->gsm->sdlInitializer->drawText(std::string("Days: " + to_string(GameTimer::Instance()->getDaysSurvived())), 130, 150, 100, 25);
+	//this->gsm->sdlInitializer->drawText(std::string("Part: " + daypart_strings[((int)GameTimer::Instance()->getCurrentDayPart())]), ScreenWidth - 120, 125, 100, 25);
 }
 
 Player* PlayState::getPlayer()

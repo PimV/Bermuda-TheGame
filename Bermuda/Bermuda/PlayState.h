@@ -10,17 +10,6 @@
 class PlayState : public IGameState
 {
 private:
-	/*temp timer*/
-	SDL_Rect rectArrow;
-	SDL_Rect rectFrame;
-	SDL_Rect rectCircle;
-	SDL_Texture* textCircle;
-	SDL_Texture* textFrame;
-	SDL_Texture* textArrow;
-
-	int degrees;
-	/*/temp timer*/
-
 	static PlayState m_PlayState;
 
 	GameStateManager* gsm;

@@ -1,4 +1,5 @@
 #include "GameTimer.h"
+#include "GameStateManager.h"
 
 GameTimer GameTimer::s_GameTimer;
 
@@ -13,6 +14,28 @@ void GameTimer::init()
 	this->startDay = 0;
 	this->days = 0;
 	this->currentDayPart = DAYPART::Day;
+
+	//Draw part
+	if (textFrame == nullptr) {
+		textFrame = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\frame.png").c_str());
+		textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circle.png").c_str());
+		textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
+
+		rectFrame.x = 100;
+		rectFrame.y = 100;
+		rectFrame.w = 120;
+		rectFrame.h = 120;
+
+		rectCircle.x = 105;
+		rectCircle.y = 105;
+		rectCircle.w = 110;
+		rectCircle.h = 110;
+
+		rectArrow.x = 157;
+		rectArrow.y = 113;
+		rectArrow.w = 6;
+		rectArrow.h = 48;
+	}
 }
 
 void GameTimer::updateGameTime(long gameTime)
@@ -71,6 +94,16 @@ int GameTimer::getDaysSurvived()
 
 void GameTimer::draw()
 {
+	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(textFrame, &rectFrame, NULL);
+	SDL_Point p = { 2, 46 };
+	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
+		textArrow,
+		NULL,
+		&rectArrow,
+		3.6 * this->getPercentage(),
+		&p,
+		SDL_FLIP_NONE);
 }
 
 
