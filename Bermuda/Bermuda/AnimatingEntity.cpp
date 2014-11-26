@@ -1,5 +1,7 @@
 #include "AnimatingEntity.h"
 #include "GameStateManager.h"
+#include "GameTimer.h"
+#include <iostream>
 
 
 AnimatingEntity::AnimatingEntity(int id, double x, double y, int chunkSize, int firstImgID) :
@@ -7,7 +9,7 @@ AnimatingEntity::AnimatingEntity(int id, double x, double y, int chunkSize, int 
 	DrawableEntity(id, x, y, chunkSize, nullptr)
 {
 	this->firstImgID = firstImgID;
-	this->timeSinceLastFrame = 0;
+	this->lastFrameTime = GameTimer::Instance()->getGameTime();
 	setStaticImage(0);
 }
 
@@ -16,16 +18,18 @@ void AnimatingEntity::animate(double dt)
 	if (this->animating)
 	{
 		//wait for next frame
-		this->timeSinceLastFrame += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (timeSinceLastFrame >= this->animateSpeed)
+		
+		long currentTime = GameTimer::Instance()->getGameTime();
+		if (lastFrameTime + animateSpeed < currentTime)
 		{
-			int nextFrame = this->currentImageIndex++;
+			int nextFrame = ++this->currentImageIndex;
 			if (nextFrame > this->animationEndIndex)
 			{
+				currentImageIndex = this->animationStartIndex;
 				nextFrame = this->animationStartIndex;
 			}
-			setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(nextFrame));
-			timeSinceLastFrame = 0;
+			setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + nextFrame));
+			this->lastFrameTime = currentTime;
 		}
 	}
 }
@@ -37,6 +41,7 @@ void AnimatingEntity::setAnimation(int startIndex, int endIndex, double animateS
 	{
 		//New animation started;
 		this->currentImageIndex = startIndex;
+		this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
 	}
 	this->setCurrentlyAnimating(true);
 	this->animationStartIndex = startIndex;

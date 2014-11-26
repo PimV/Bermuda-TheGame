@@ -13,7 +13,7 @@ private:
 	int animationStartIndex;
 	int animationEndIndex;
 	int currentImageIndex;
-	long timeSinceLastFrame;
+	long lastFrameTime;
 public:
 	AnimatingEntity(int id, double x, double y, int chunkSize, int firstImgID);
 	void animate(double dt);

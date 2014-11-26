@@ -10,7 +10,7 @@ Campfire::Campfire(int id, double x, double y, int chunkSize, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
-	setAnimation(1, 3, 10);
+	setAnimation(1, 3, 100);
 }
 
 Campfire::~Campfire()
