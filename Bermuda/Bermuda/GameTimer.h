@@ -9,10 +9,8 @@ private:
 	static GameTimer s_GameTimer;
 
 	SDL_Rect rectArrow;
-	SDL_Rect rectFrame;
 	SDL_Rect rectCircle;
 	SDL_Texture* textCircle;
-	SDL_Texture* textFrame;
 	SDL_Texture* textArrow;
 
 	DAYPART currentDayPart;

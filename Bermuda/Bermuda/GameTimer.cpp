@@ -9,32 +9,27 @@ GameTimer::GameTimer(void)
 
 void GameTimer::init()
 {
-	this->dayLength = 30000;
+	this->dayLength = 60000;
 	this->gameTime = 0;
 	this->startDay = 0;
 	this->days = 0;
 	this->currentDayPart = DAYPART::Day;
 
 	//Draw part
-	if (textFrame == nullptr) {
-		textFrame = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\frame.png").c_str());
-		textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circle.png").c_str());
+	if (textCircle == nullptr) 
+	{
+		textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circleTotal.png").c_str());
 		textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
-
-		rectFrame.x = 100;
-		rectFrame.y = 100;
-		rectFrame.w = 120;
-		rectFrame.h = 120;
-
-		rectCircle.x = 105;
-		rectCircle.y = 105;
-		rectCircle.w = 110;
-		rectCircle.h = 110;
-
-		rectArrow.x = 157;
-		rectArrow.y = 113;
+		
+		rectCircle.w = ScreenWidth / 10;
+		rectCircle.h = rectCircle.w;
+		rectCircle.x = ScreenWidth - rectCircle.w - rectCircle.w / 4;
+		rectCircle.y = rectCircle.w / 4;
+		
 		rectArrow.w = 6;
-		rectArrow.h = 48;
+		rectArrow.h = rectCircle.h / 2 - rectCircle.h / 10;
+		rectArrow.x = rectCircle.x + rectCircle.w / 2 - rectArrow.w / 2;
+		rectArrow.y = rectCircle.y + rectCircle.h / 2 - rectArrow.h + 2;
 	}
 }
 
@@ -94,16 +89,21 @@ int GameTimer::getDaysSurvived()
 
 void GameTimer::draw()
 {
+	//Draw circle
 	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
-	GameStateManager::Instance()->sdlInitializer->drawTexture(textFrame, &rectFrame, NULL);
-	SDL_Point p = { 2, 46 };
+
+	SDL_Point rotatePoint = { rectArrow.w / 2, rectArrow.h - 3 };
+	//Draw arrow in right direction
 	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
 		textArrow,
 		NULL,
 		&rectArrow,
 		3.6 * this->getPercentage(),
-		&p,
+		&rotatePoint,
 		SDL_FLIP_NONE);
+
+	//Draw amount of days
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day: " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 6, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4);
 }
 
 
