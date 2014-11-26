@@ -426,6 +426,9 @@
     <ClCompile Include="Campfire.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatingEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -728,6 +731,9 @@
     <ClInclude Include="InteractableCactus.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
+    <ClInclude Include="Crafting.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
     <ClInclude Include="ToolFlint.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
@@ -737,8 +743,8 @@
     <ClInclude Include="Campfire.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
-    <ClInclude Include="Crafting.h">
-      <Filter>Header Files\Model\Item</Filter>
+    <ClInclude Include="AnimatingEntity.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
