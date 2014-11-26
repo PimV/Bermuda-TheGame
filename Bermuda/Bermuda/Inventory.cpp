@@ -219,6 +219,10 @@ void Inventory::deleteItem(int itemID, int count)
 			stack->setStackSize(stack->getStackSize() - stack->getStackSize());
 
 			std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
+			if (selectedIndex > it - this->itemVector.begin())
+			{
+				selectedIndex--;
+			}
 			delete *it;
 			this->itemVector.erase(it);
 		}
@@ -234,6 +238,10 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 	stack->setStackSize(stack->getStackSize() - count);
 	if (stack->getStackSize() <= 0) {
 		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
+		if (selectedIndex > it - this->itemVector.begin())
+		{
+			selectedIndex--;
+		}
 		delete *it;
 		this->itemVector.erase(it);
 	}
