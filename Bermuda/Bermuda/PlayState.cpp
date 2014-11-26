@@ -16,8 +16,6 @@
 #include "Axe.h"
 #include "Pickaxe.h"
 #include "ItemFactory.h"
-#include "ItemCampfire.h"
-#include "Campfire.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -105,9 +103,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		break;
 	case SDL_MOUSEWHEEL: 
 		if (mainEvent.wheel.y > 0) {
-			p->getInventory()->incrementSelectedIndex();
-		} else if (mainEvent.wheel.y < 0){
 			p->getInventory()->decrementSelectedIndex();
+		} else if (mainEvent.wheel.y < 0){
+			p->getInventory()->incrementSelectedIndex();
 		}
 
 		break;
@@ -161,6 +159,20 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_c:
 			p->getInventory()->incrementSelectedIndex();
+			break;
+		case SDLK_0:
+			p->getInventory()->setSelectedIndex(9);
+			break;
+		case SDLK_1:
+		case SDLK_2:
+		case SDLK_3:
+		case SDLK_4:
+		case SDLK_5:
+		case SDLK_6:
+		case SDLK_7:
+		case SDLK_8:
+		case SDLK_9:
+			p->getInventory()->setSelectedIndex(mainEvent.key.keysym.sym - 49);
 			break;
 
 		case SDLK_F1:
@@ -262,14 +274,44 @@ void PlayState::update(double dt) {
 
 	this->updateGameTimers();
 
-	//TODO: moet dit nog?
-	//this->gsm->getActionContainer()->executeAllActions(dt);
-
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
 
+	this->updateVisibleEntities(dt);
+	this->updateMediumAreaEntities(dt);
+}
+
+void PlayState::updateVisibleEntities(double dt) 
+{
+	//Update all animating entities
+	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
+	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//animating entities
+			std::vector<AnimatingEntity*>* vec = this->mec->getAnimatingContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (AnimatingEntity* e : *vec)
+				{
+					e->animate(dt);
+				}
+			}
+		}
+	}
+}
+
+void PlayState::updateMediumAreaEntities(double dt)
+{
 	//Update all spawnpoints and moving entities
 	//Calculate begin and end chunks for the camera (+5 and -5 to make it bigger than the screen)
 	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
@@ -292,23 +334,11 @@ void PlayState::update(double dt) {
 				}
 			}
 
-			//Oude manier! LATEN STAAN
-			////Moving entities
-			//std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
-			//if (movingEntities != nullptr)
-			//{
-			//	for (MovableEntity* e : *movingEntities)
-			//	{
-			//		//TODO: enable when movableEntities get an 'update' method. 
-			//		e->update(dt);
-			//	}
-			//}
-
-			//NIEUWE MANIER! is dit de juiste manier?
 			////Moving entities
 			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
-			if(movingEntities != nullptr && movingEntities->size() > 0)
+			if (movingEntities != nullptr && movingEntities->size() > 0)
 			{
+				//Copy of container so moving entities can change chunks while we loop through them.
 				std::vector<MovableEntity*> copyMovingEntities = std::vector<MovableEntity*>(*movingEntities);
 				for (MovableEntity* e : copyMovingEntities)
 				{

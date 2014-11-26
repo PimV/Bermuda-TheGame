@@ -1,12 +1,12 @@
 #pragma once
-#include "DrawableEntity.h"
+#include "AnimatingEntity.h"
 #include "CollidableEntity.h"
 
 class Campfire :
-	public DrawableEntity, public CollidableEntity
+	public AnimatingEntity, public CollidableEntity
 {
 public:
-	Campfire(int id, double x, double y, int chunkSize, Image* image);
+	Campfire(int id, double x, double y, int chunkSize, int firstImgID);
 	virtual ~Campfire();
 };
 

@@ -3,17 +3,21 @@
 MainEntityContainer::MainEntityContainer(void)
 {
 	m_container[ContainerType::Drawable] = new DrawableContainer();
+	m_container[ContainerType::Animating] = new DrawableContainer();
 	m_container[ContainerType::Collidable] = new CollidableContainer();
 	m_container[ContainerType::Background] = new BackgroundContainer();
 	m_container[ContainerType::Interactable] = new InteractableContainer();
 	m_container[ContainerType::Respawnable] = new RespawnContainer();
 	m_container[ContainerType::Movable] = new MovableContainer();
-	//TODO: werkt onderstaande container naar behoren? (johan/bas)
 	m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {
 	return static_cast<DrawableContainer*>(m_container[ContainerType::Drawable]);
+}
+
+AnimatingContainer* MainEntityContainer::getAnimatingContainer() {
+	return static_cast<AnimatingContainer*>(m_container[ContainerType::Animating]);
 }
 
 CollidableContainer* MainEntityContainer::getCollidableContainer() {
@@ -45,6 +49,7 @@ void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)
 	//Init all containers with chunks
 	m_container[ContainerType::Collidable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Drawable]->initChunks(chunksY, chunksX);
+	m_container[ContainerType::Animating]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Background]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Interactable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Movable]->initChunks(chunksY, chunksX);

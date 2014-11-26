@@ -35,6 +35,11 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 void DrawableEntity::setDrawImage(Image* image)
 {
 	drawImage = image;
+	if (this->getWidth() < 0 && this->getHeight() < 0)
+	{
+		setWidth(drawImage->getWidth());
+		setHeight(drawImage->getHeight());
+	}
 }
 
 DrawableEntity::~DrawableEntity()

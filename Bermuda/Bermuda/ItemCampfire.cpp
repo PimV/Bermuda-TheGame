@@ -24,7 +24,7 @@ void ItemCampfire::use(Player* p)
 	int x = p->getX() + p->getWidth() + 10;
 	int y = p->getY() + p->getHeight() - 52;
 
-	Campfire* campfire = new Campfire(0, x, y, 300, GameStateManager::Instance()->getImageLoader()->getMapImage(GameStateManager::Instance()->getImageLoader()->loadTileset("Objects\\Campfire 50x52.png", 50, 52)));
+	Campfire* campfire = new Campfire(0, x, y, 300, GameStateManager::Instance()->getImageLoader()->loadTileset("Objects\\Campfire 50x52.png", 50, 52));
 
 	//TODO: Somehow check collision? 
 	//if collision, delete Campfire

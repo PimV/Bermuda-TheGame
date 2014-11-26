@@ -2,6 +2,7 @@
 #include "ContainerType.h"
 #include "IEntityContainer.h"
 #include "DrawableContainer.h"
+#include "AnimatingContainer.h"
 #include "CollidableContainer.h"
 #include "BackgroundContainer.h"
 #include "InteractableContainer.h"
@@ -15,6 +16,7 @@ class MainEntityContainer
 public:
 	MainEntityContainer();
 	DrawableContainer* getDrawableContainer();
+	AnimatingContainer* getAnimatingContainer();
 	CollidableContainer* getCollidableContainer();
 	BackgroundContainer* getBackgroundContainer();
 	InteractableContainer* getInteractableContainer();

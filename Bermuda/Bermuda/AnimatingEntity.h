@@ -1,5 +1,7 @@
 #pragma once
 #include "DrawableEntity.h"
+#include "Camera.h"
+#include "header_loader.h"
 
 class AnimatingEntity :
 	public DrawableEntity

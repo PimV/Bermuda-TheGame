@@ -327,13 +327,18 @@ void Inventory::toggleInventory() {
 	this->open = !this->open;
 }
 
+void Inventory::setSelectedIndex(int index)
+{
+	if (index < this->getSlots()-1)
+	{
+		this->selectedIndex = index;
+	}
+}
+
 void Inventory::selectStack(Item* stack)
 {
 	int pos = std::find(itemVector.begin(), itemVector.end(), stack) - itemVector.begin();
-	if (pos < itemVector.size())
-	{
-		this->selectedIndex = pos;
-	}
+	this->setSelectedIndex(pos);
 }
 
 bool Inventory::clicked(int x, int y, std::string mode, Player* player) {

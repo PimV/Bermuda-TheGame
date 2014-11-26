@@ -46,6 +46,8 @@ public:
 	void handleEvents(SDL_Event mainEvent) ;
 
 	void update(double dt);
+	void updateVisibleEntities(double dt);
+	void updateMediumAreaEntities(double dt);
 	void updateGameTimers();
 	long getGameTimer();
 	

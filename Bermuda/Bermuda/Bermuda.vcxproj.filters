@@ -429,6 +429,9 @@
     <ClCompile Include="AnimatingEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatingContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -744,6 +747,9 @@
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
     <ClInclude Include="AnimatingEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatingContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

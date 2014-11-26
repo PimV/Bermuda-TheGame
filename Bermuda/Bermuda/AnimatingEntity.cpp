@@ -7,7 +7,8 @@ AnimatingEntity::AnimatingEntity(int id, double x, double y, int chunkSize, int 
 	DrawableEntity(id, x, y, chunkSize, nullptr)
 {
 	this->firstImgID = firstImgID;
-	setStaticImage(this->firstImgID);
+	this->timeSinceLastFrame = 0;
+	setStaticImage(0);
 }
 
 void AnimatingEntity::animate(double dt)
@@ -24,6 +25,7 @@ void AnimatingEntity::animate(double dt)
 				nextFrame = this->animationStartIndex;
 			}
 			setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(nextFrame));
+			timeSinceLastFrame = 0;
 		}
 	}
 }

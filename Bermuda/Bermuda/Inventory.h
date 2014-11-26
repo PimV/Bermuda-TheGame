@@ -49,6 +49,7 @@ public:
 	bool isOpen();
 
 	void selectStack(Item* stack);
+	void setSelectedIndex(int index);
 	bool clicked(int x, int y, std::string mode, Player* player);
 
 	void printInventory();

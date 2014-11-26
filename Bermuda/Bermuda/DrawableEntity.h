@@ -13,7 +13,7 @@ private:
 	SDL_Rect* sizeRect;
 public:
 	DrawableEntity(int id, double x, double y, int chunkSize, Image* image);
-	void draw(Camera* camera, SDL_Renderer* renderer);
+	virtual void draw(Camera* camera, SDL_Renderer* renderer);
 	void setDrawImage(Image* image);
 	virtual ~DrawableEntity();
 };
