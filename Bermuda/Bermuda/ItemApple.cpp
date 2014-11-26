@@ -22,8 +22,6 @@ void ItemApple::init() {
 	int itemCount = rand() % 2 + 1;	
 	this->setStackSize(itemCount);
 
-	std::cout << "Harvested " << itemCount << " apples." << std::endl;
-
 	this->setHungerRefill(5);
 	this->setThirstRefill(5);
 	this->setHealthRefill(0);

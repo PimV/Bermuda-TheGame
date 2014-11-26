@@ -12,27 +12,20 @@
 #include "ToolAxe.h"
 #include "ToolPickaxe.h"
 #include "ToolFlint.h"
+#include "Items.h"
 #include <map>
 
 class ItemFactory
 {
 private:
 	static ItemFactory itemFactory;
-	std::map<std::string, Image*> itemImages;
+	std::map<Items, Image*> itemImages;
 
 public:
 	ItemFactory();
 	void loadItemTileSets(ImageLoader* imgLoader);
-	ItemCarrot* createCarrot();
-	ItemApple* createApple();
-	ItemWater* createWater();
-	ItemFish* createFish();
-	ItemRock* createRock();
-	ItemWood* createWood();
-	ItemGold* createGold();
-	ToolAxe* createAxe();
-	ToolPickaxe* createPickaxe();
-	ToolFlint* createFlint();
+	Item* createItem(Items item);
+	Image* getItemImage(Items item);
 
 	~ItemFactory();
 	static ItemFactory* Instance() {

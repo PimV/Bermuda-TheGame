@@ -2,7 +2,6 @@
 #include "header_loader.h"
 #include "GameOverState.h"
 #include <iostream>
-#include "Inventory.h"
 #include "PlayState.h"
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
@@ -83,11 +82,17 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->inventory = new Inventory();
+	this->crafting = new Crafting(this->inventory);
 	this->statusTracker = new StatusTracker();
 }
 
 Inventory* Player::getInventory() {
 	return this->inventory;
+}
+
+Crafting* Player::getCraftingSystem()
+{
+	return this->crafting;
 }
 
 StatusTracker* Player::getStatusTracker()
