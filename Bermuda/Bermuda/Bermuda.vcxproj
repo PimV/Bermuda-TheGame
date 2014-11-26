@@ -110,6 +110,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ContainerType.h" />
     <ClInclude Include="DAYPART.h" />
+    <ClInclude Include="Crafting.h" />
     <ClInclude Include="DrawableContainer.h" />
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
@@ -207,6 +208,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="CollidableContainer.cpp" />
     <ClCompile Include="CollidableTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
+    <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="EasterHead.cpp" />
     <ClCompile Include="Entity.cpp" />

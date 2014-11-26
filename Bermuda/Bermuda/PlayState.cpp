@@ -1,21 +1,19 @@
 #include "PlayState.h"
-#include "MenuState.h"
 #include "Button.h"
 #include "GameStateManager.h"
 #include "ActionContainer.h"
-#include "ClickAction.h"
-#include "MoveAction.h"
 #include "PauseState.h"
-#include "LoadingState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
-#include "Inventory.h"
 #include "Item.h"
 #include <thread>
 #include "ToolAxe.h"
 #include "ItemCarrot.h"
 #include "DAYPART.h"
+#include "Items.h"
+#include "Consumable.h"
+#include "Equipable.h"
 
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
@@ -24,7 +22,7 @@
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
-bool drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
+bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
 PlayState::PlayState(void)
 {
@@ -210,6 +208,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 				}
 				break;
 			}
+		case SDLK_F8:
+			p->getCraftingSystem()->craftItem(Items::Axe);
+			break;
 		case SDLK_F11:
 			//Enable collision
 			p->setCollisionHeight(10);
@@ -435,7 +436,7 @@ void PlayState::draw()
 	}
 
 	//Sort drawable object vector
-	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
+	std::sort(drawableVector.begin(), drawableVector.end(), PlayState::drawableSortFunction);
 
 	//Draw sorted object vector
 	for (DrawableEntity* e : drawableVector)

@@ -396,6 +396,9 @@
     <ClCompile Include="ItemWater.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ToolFlint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Cactus.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
@@ -419,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="GameTimer.cpp">
       <Filter>Source Files\Model\Timer</Filter>
+	</ClCompile>
+    <ClCompile Include="Crafting.cpp">
+      <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -724,6 +730,9 @@
     </ClInclude>
     <ClInclude Include="DAYPART.h">
       <Filter>Header Files\Model\Timer</Filter>
+	</ClInclude>
+    <ClInclude Include="Crafting.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

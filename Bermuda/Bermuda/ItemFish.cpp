@@ -24,8 +24,6 @@ void ItemFish::init()
 	int itemCount = rand() % 3 + 1;	
 	this->setStackSize(itemCount);
 
-	std::cout << "Caught " << itemCount << " fish." << std::endl;
-
 	this->setHungerRefill(5);
 	this->setThirstRefill(0);
 	this->setHealthRefill(0);

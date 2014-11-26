@@ -23,7 +23,11 @@ public:
 	bool addItem(Item* item);
 	bool hasItem(Item* item);
 	bool hasItemById(int itemId);
-	void deleteItem(Item* item, int count);
+	int getItemCount(int itemID);
+	int getStackCount(int itemID);
+	int getSlotsFreedWhenDeleting(int itemID, int count);
+	void deleteItem(int itemID, int count);
+	void deleteItemFromStack(Item* stack, int count);
 	std::vector<Item*> getItems();
 
 	bool hasAxe();
@@ -38,6 +42,7 @@ public:
 
 	int getSize();
 	void setSize(int size);
+	int getSlots();
 
 	void toggleInventory();
 	bool isOpen();
@@ -71,5 +76,7 @@ private:
 	bool open;
 	int slots; //Total item slots
 	std::vector<Item*> itemVector;
+
+	static bool stackSortFunction(Item* one, Item* two);
 };
 
