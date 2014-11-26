@@ -389,7 +389,7 @@ void Player::drawHealthBar(int x, int y) {
 	healthRect.y = y + 1;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBar,&healthRect,NULL);
 	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHealth()), x + (this->getInventory()->getWidth() / 5) / 2 - 10, y, 20, 18);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("HP:"), x , y - 24, 30, 24);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("HEALTH:"), x , y - 24, 30, 24);
 }
 
 void Player::drawHungerBar(int x, int y) {
@@ -408,7 +408,7 @@ void Player::drawHungerBar(int x, int y) {
 	hungerRect.y = y + 1;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBar,&hungerRect,NULL);
 	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHunger()), x + (this->getInventory()->getWidth() / 5) / 2 - 10, y, 15, 18);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("HUN:"), x , y - 24, 30, 24);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("HUNGER:"), x , y - 24, 30, 24);
 }
 
 void Player::drawThirstBar(int x, int y) {
@@ -426,7 +426,7 @@ void Player::drawThirstBar(int x, int y) {
 	thirstRect.y = y + 1;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBar,&thirstRect,NULL);
 	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getThirst()), x + (this->getInventory()->getWidth() / 5) / 2 - 10, y, 15, 18);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("WAT:"), x , y - 24, 30, 24);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("THIRST:"), x , y - 24, 30, 24);
 }
 
 
