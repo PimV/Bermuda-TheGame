@@ -511,7 +511,7 @@ void PlayState::draw()
 		textArrow,
 		NULL,
 		&rectArrow,
-		3.6 * GameTimer::Instance()->getPercentageDay(),
+		3.6 * GameTimer::Instance()->getPercentage(),
 		&p,
 		SDL_FLIP_NONE);
 

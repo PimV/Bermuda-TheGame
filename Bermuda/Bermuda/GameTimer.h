@@ -26,7 +26,7 @@ public:
 	long getGameTime();
 
 	int getDaysSurvived();
-	double getPercentageDay();
+	double getPercentage();
 	DAYPART getCurrentDayPart();
 
 	void draw();

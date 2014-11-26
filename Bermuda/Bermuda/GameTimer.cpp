@@ -8,7 +8,7 @@ GameTimer::GameTimer(void)
 
 void GameTimer::init()
 {
-	this->dayLength = 300000;
+	this->dayLength = 30000;
 	this->gameTime = 0;
 	this->startDay = 0;
 	this->days = 0;
@@ -17,8 +17,6 @@ void GameTimer::init()
 
 void GameTimer::updateGameTime(long gameTime)
 {
-	std::cout << "New: " << gameTime;
-	std::cout << "Cur: " << this->gameTime << std::endl;
 	this->gameTime += gameTime;
 	this->updateDay();
 }
@@ -30,40 +28,35 @@ long GameTimer::getGameTime()
 
 void GameTimer::updateDay()
 {
-	//TODO PERCENTAGE IN VAR
+	double percentage = this->getPercentage();
 
 	//If 90% -> night
-	if(this->getPercentageDay() > 90)
+	if(percentage >= 90 && percentage < 100 && this->currentDayPart != DAYPART::Night)
 	{
 		this->currentDayPart = DAYPART::Night;
 	}
 	//If 70& -> evening
-	else if(this->getPercentageDay() > 70)
+	else if(percentage >= 70 && percentage < 90 && this->currentDayPart != DAYPART::Evening)
 	{
 		this->currentDayPart = DAYPART::Evening;
 	}
 	//If 0% -> day
-	else if(this->getPercentageDay() < 70 && this->currentDayPart != DAYPART::Day)
+	else if(percentage < 70 && this->currentDayPart != DAYPART::Day)
 	{
 		this->currentDayPart = DAYPART::Day;
 	}
-	//std::cout << this->getPercentageDay() << std::endl;
+
 	//Day passed
 	if((this->startDay + this->dayLength) < this->gameTime)
 	{
 		this->startDay = this->gameTime;
 		this->days++;
-		//std::cout << "days: " << this->days << std::endl;
 	}
 }
 
-double GameTimer::getPercentageDay()
+double GameTimer::getPercentage()
 {
-	//double diff = this->gameTime - this->startDay;
-	//double div = diff / this->dayLength;
-	//double per = div * 100;
-	double percentage = ((this->gameTime - this->startDay) / this->dayLength) * 100;
-	return percentage;
+	return ((this->gameTime - this->startDay) / this->dayLength) * 100;
 }
 
 DAYPART GameTimer::getCurrentDayPart()
