@@ -37,11 +37,17 @@ public:
 	int getHunger();
 	int getThirst();
 
+	void drawHealthBar(int x, int y);
+	void drawHungerBar(int x, int y);
+	void drawThirstBar(int x, int y);
+
 	//void clickMove();
 	void clickMove();
 	void setPosition();
 	void interact();
 	void resetMovement();
+
+	void draw();
 
 	bool moveClick;
 	bool interaction;
@@ -54,6 +60,12 @@ public:
 private:
 	const char* path;
 	Camera* camera;
+	SDL_Texture* healthBar;
+	SDL_Texture* hungerBar;
+	SDL_Texture* thirstBar;
+	SDL_Texture* healthBarContainer;
+	SDL_Texture* thirstBarContainer;
+	SDL_Texture* hungerBarContainer;
 
 	//PlayerUpdateTimer* playerTimer;
 	int health, hunger, thirst;
@@ -66,6 +78,8 @@ private:
 	StatusTracker* statusTracker;
 
 	void updatePlayerStatuses(double dt);
+
+
 
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();

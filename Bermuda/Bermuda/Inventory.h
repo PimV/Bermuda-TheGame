@@ -33,6 +33,9 @@ public:
 	bool pickAxeSelected();
 
 	void draw();
+	int getStartingX();
+	int getStartingY();
+	int getWidth();
 
 	Item* getItemById(int id, bool full);
 
