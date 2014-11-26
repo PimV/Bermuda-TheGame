@@ -67,9 +67,9 @@ void MenuState::resume()
 void MenuState::cleanup()
 {
 	delete mainScr;
+	delete creditsScr;
 }
 
 MenuState::~MenuState()
 {
-	cleanup();
 }
