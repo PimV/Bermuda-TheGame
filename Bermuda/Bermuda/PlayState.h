@@ -38,6 +38,7 @@ private:
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 
+	int timesUpdate;
 	bool ready;
 	bool showCol, showInter, showSpawnArea; 
 	

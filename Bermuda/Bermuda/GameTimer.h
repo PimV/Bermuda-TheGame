@@ -1,4 +1,5 @@
 #pragma once
+#include "DAYPART.h"
 #include <iostream>
 
 class GameTimer
@@ -6,14 +7,12 @@ class GameTimer
 private:
 	static GameTimer s_GameTimer;
 
+	DAYPART currentDayPart;
+
 	long gameTime;
-
-	double startDay;
 	double dayLength;
-	double days;
-
-	/*long lastDayPartUpdate, nextDayUpdate;
-	int dayParts, currentDayPart;*/
+	double startDay;
+	int days;
 
 public:
 	GameTimer(void);
@@ -21,15 +20,14 @@ public:
 
 	static GameTimer* Instance() { return &s_GameTimer; };
 
-
-	void updateGameTime(long _gameTime);
+	void init();
+	void updateGameTime(long gameTime);
 	void updateDay();
 	long getGameTime();
 
-	//bool checkTimerAction(long* lastUpdate, long* nextUpdate);
-
-	//void updateDayTime();
-	//int getCurrentDayPart();
+	int getDaysSurvived();
+	double getPercentageDay();
+	DAYPART getCurrentDayPart();
 
 	void draw();
 };

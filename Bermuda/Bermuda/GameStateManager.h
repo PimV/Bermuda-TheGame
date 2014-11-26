@@ -37,7 +37,7 @@ public:
 
 	bool running();
 	void quit();
-	long lastUpdateLength;
+	//long lastUpdateLength;
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();

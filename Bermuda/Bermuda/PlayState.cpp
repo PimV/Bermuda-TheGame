@@ -15,6 +15,7 @@
 #include <thread>
 #include "ToolAxe.h"
 #include "ItemCarrot.h"
+#include "DAYPART.h"
 
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
@@ -32,10 +33,11 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	GameStateManager::Instance()->setSpeedMultiplier(1);
-	ready = false;
-	showCol = false;
-	showInter = false;
-	showSpawnArea = false;
+	this->ready = false;
+	this->showCol = false;
+	this->showInter = false;
+	this->showSpawnArea = false;
+	this->timesUpdate = 0;
 
 
 	mec = new MainEntityContainer();
@@ -48,10 +50,10 @@ void PlayState::init(GameStateManager *gsm) {
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png",32, 32)));
 
+	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
-	ready = true;
-
-
+	this->ready = true;
+	
 	/*temp timer*/
 	if (textFrame == nullptr) {
 		textFrame = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\frame.png").c_str());
@@ -315,7 +317,14 @@ void PlayState::update(double dt) {
 		return;
 	}
 
-	this->updateGameTimers(dt);
+	if(this->timesUpdate > 2)
+	{
+		this->updateGameTimers(dt);
+	}
+	else
+	{
+		this->timesUpdate++;
+	}
 
 	//TODO: moet dit nog?
 	//this->gsm->getActionContainer()->executeAllActions(dt);
@@ -487,21 +496,12 @@ void PlayState::draw()
 	}
 
 	// Draw the player status
-
 	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
-	//// if current hour is smaller then 9 
-	//if (GameTimer::Instance()->getCurrentDayPart() > 9)
-	//{
-	//	this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
-	//}
-	//else
-	//{
-	//	this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
-
-	//}
-
+	this->gsm->sdlInitializer->drawText(std::string("Days: " + to_string(GameTimer::Instance()->getDaysSurvived())), ScreenWidth - 120, 95, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Part: " + daypart_strings[((int)GameTimer::Instance()->getCurrentDayPart())]), ScreenWidth - 120, 125, 100, 25);
+	
 	/*temp timer*/
 	//Time
 	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
@@ -511,7 +511,7 @@ void PlayState::draw()
 		textArrow,
 		NULL,
 		&rectArrow,
-		this->degrees,
+		3.6 * GameTimer::Instance()->getPercentageDay(),
 		&p,
 		SDL_FLIP_NONE);
 
