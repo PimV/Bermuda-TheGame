@@ -18,8 +18,6 @@ void ItemGold::init() {
 
 	int itemCount = 1;
 	this->setStackSize(itemCount);
-
-	std::cout << "Mined " << itemCount << " gold." << std::endl;
 }
 
 ItemGold::~ItemGold()

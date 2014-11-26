@@ -31,6 +31,8 @@ private:
 	bool showCol, showInter, showSpawnArea; 
 	
 
+	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
+
 public:
 	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
