@@ -9,7 +9,7 @@ MenuPlayButton::MenuPlayButton()
 void MenuPlayButton::init()
 {
 	std::string Message = "Play";
-	createButton(Message);
+	createButton(Message, 60);
 }
 
 void MenuPlayButton::action()

@@ -9,14 +9,14 @@ private:
 	//Variables
 	bool active;
 
-	//Methodes
-	virtual void action() = 0;
-
 protected:
 	//Variables
 	SDL_Texture* ButtonTexture;
 	SDL_Texture* HoverButtonTexture;
 	SDL_Rect ButtonRect;
+
+	//Methodes
+	virtual void action() = 0;
 
 public:
 	//methodes

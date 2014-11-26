@@ -1,16 +1,18 @@
 #pragma once
 #include "BaseScreen.h"
 #include "GameStateManager.h"
+#include "MenuBaseButton.h"
 
 class MenuCreditsScreen :
 	public BaseScreen
 {
 private:
 	//variables
-	SDL_Texture* bermudaTextTexture;
-	SDL_Rect bermudaTextRect;
+	SDL_Texture* creditsTextTexture;
+	SDL_Rect creditsTextRect;
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
+	std::vector<MenuBaseButton*> buttons;
 	std::vector<std::string> names;
 	std::vector<SDL_Texture*> nameTextures;
 	std::vector<SDL_Rect> nameRectangles;
@@ -22,6 +24,7 @@ private:
 
 	void setNames();
 	void createNameTextures();
+	void createReturnButton();
 	void align();
 
 public:

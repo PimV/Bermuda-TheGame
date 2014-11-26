@@ -9,7 +9,7 @@ MenuExitButton::MenuExitButton()
 void MenuExitButton::init()
 {
 	std::string Message = "Exit";
-	createButton(Message);
+	createButton(Message, 60);
 }
 
 void MenuExitButton::action()

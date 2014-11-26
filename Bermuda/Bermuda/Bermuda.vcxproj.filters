@@ -420,9 +420,6 @@
     <ClCompile Include="MenuPlayButton.cpp">
       <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
-    <ClCompile Include="MenuBaseButton.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="PauzeBaseButton.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
@@ -437,6 +434,12 @@
     </ClCompile>
     <ClCompile Include="MenuCreditsScreen.cpp">
       <Filter>Source Files\View\Screens\MenuScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuMainButton.cpp">
+      <Filter>Source Files\View\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuBaseButton.cpp">
+      <Filter>Source Files\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -734,9 +737,6 @@
     <ClInclude Include="MenuPlayButton.h">
       <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
-    <ClInclude Include="MenuBaseButton.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="PauzeBaseButton.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
@@ -751,6 +751,12 @@
     </ClInclude>
     <ClInclude Include="MenuCreditsScreen.h">
       <Filter>Header Files\View\Screens\MenuScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuMainButton.h">
+      <Filter>Header Files\View\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBaseButton.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

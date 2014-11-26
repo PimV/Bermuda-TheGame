@@ -8,8 +8,6 @@ class MenuBaseButton
 {
 public:
 	//variables
-	int PosY;
-	int position;
 	bool active;
 
 protected:
@@ -22,15 +20,14 @@ protected:
 	virtual void action() = 0;
 
 public:
-	//variables
-	static const int ConstHeight = 80;
-	static const int ConstWidth = 260;
-	static const int PosX = 30;		//TODO: write Y position calc
-	void createButton(std::string);
 	
 	//methodes
+	void createButton(std::string buttonText, int fontSize);
 	void placeAbove(MenuBaseButton* button);
 	void placeUnder(MenuBaseButton* button);
+	void placeMidUnder(int x, int y);
+	int getHeight();
+	int getWidth();
 	void draw();
 	void hover(int, int);
 	bool clicked(int, int);

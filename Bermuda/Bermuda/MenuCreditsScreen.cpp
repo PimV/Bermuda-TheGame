@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include "MenuState.h"
+#include "MenuMainButton.h"
 
 
 MenuCreditsScreen::MenuCreditsScreen()
@@ -14,8 +15,11 @@ void MenuCreditsScreen::init()
 	setBackground();
 	setNames();
 	createNameTextures();
-	align();
 
+	MenuMainButton* returnButton = new MenuMainButton();
+	buttons.push_back(returnButton);
+
+	align();
 }
 
 void MenuCreditsScreen::setNames()
@@ -24,7 +28,7 @@ void MenuCreditsScreen::setNames()
 	names.push_back(std::string("Bas van den Heuvel"));
 	names.push_back(std::string("Johan Beekers"));
 	names.push_back(std::string("James Hay"));
-	names.push_back(std::string("Roel Atteveld"));
+	names.push_back(std::string("Roel van Atteveld"));
 	names.push_back(std::string("Sagar Gangabisoensingh"));
 }
 
@@ -57,6 +61,12 @@ void MenuCreditsScreen::align()
 	{
 		total += var.h;
 	}
+
+	for each (MenuBaseButton* var in buttons)
+	{
+		total += var->getHeight();
+	}
+
 	int minSur = ((int)ScreenHeight - total) / 2;
 
 	for (size_t i = 0; i < nameRectangles.size(); i++)
@@ -65,24 +75,30 @@ void MenuCreditsScreen::align()
 		nameRectangles.at(i).y = minSur;
 		minSur += nameRectangles.at(i).h;
 	}
+
+	for each (MenuBaseButton* var in buttons)
+	{
+		var->placeMidUnder(((ScreenWidth - var->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
+		minSur += var->getHeight();
+	}
 }
 
 void MenuCreditsScreen::setBackground()
 {
 	//Bermuda text
-	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 80);
+	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 60);
 	SDL_Color white = { 255, 255, 255 };
-	std::string bermudaMessage = "Bermuda";
-	SDL_Surface* bermudaMessageSurface = TTF_RenderText_Blended(staryDarzyLarge, bermudaMessage.c_str(), white);
-	bermudaTextTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), bermudaMessageSurface);
+	std::string creditsMessage = "credits";
+	SDL_Surface* creditsMessageSurface = TTF_RenderText_Blended(staryDarzyLarge, creditsMessage.c_str(), white);
+	creditsTextTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), creditsMessageSurface);
 
-	bermudaTextRect.x = ((int)ScreenWidth - bermudaMessageSurface->w) / 2;
-	bermudaTextRect.y = 50;
-	bermudaTextRect.h = bermudaMessageSurface->h;
-	bermudaTextRect.w = bermudaMessageSurface->w;
+	creditsTextRect.x = ((int)ScreenWidth - creditsMessageSurface->w) / 2;
+	creditsTextRect.y = 50;
+	creditsTextRect.h = creditsMessageSurface->h;
+	creditsTextRect.w = creditsMessageSurface->w;
 
 	//clearing surfaces
-	SDL_FreeSurface(bermudaMessageSurface);
+	SDL_FreeSurface(creditsMessageSurface);
 	TTF_CloseFont(staryDarzyLarge);
 
 	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
@@ -111,12 +127,21 @@ void MenuCreditsScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
-
+		for each (MenuBaseButton* var in buttons)
+		{
+			var->hover(x, y);
+		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT)
 		{
-
+			for each (MenuBaseButton* var in buttons)
+			{
+				if (var->clicked(x, y))
+				{
+					break;
+				}
+			}
 		}
 		break;
 	}
@@ -125,20 +150,30 @@ void MenuCreditsScreen::handleEvents(SDL_Event mainEvent)
 void MenuCreditsScreen::draw()
 {
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
-	//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), bermudaTextTexture, NULL, &bermudaTextRect);
-	
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), creditsTextTexture, NULL, &creditsTextRect);
+
 	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameTextures.at(i), NULL, &nameRectangles.at(i));
+	}
+
+	for each (MenuBaseButton* var in buttons)
+	{
+		var->draw();
 	}
 }
 
 void MenuCreditsScreen::cleanup()
 {
 	SDL_DestroyTexture(backgroundTexture);
-	SDL_DestroyTexture(bermudaTextTexture);
+	SDL_DestroyTexture(creditsTextTexture);
+	for each (MenuBaseButton* var in buttons)
+	{
+		delete var;
+	}
 }
 
 MenuCreditsScreen::~MenuCreditsScreen()
 {
+	cleanup();
 }

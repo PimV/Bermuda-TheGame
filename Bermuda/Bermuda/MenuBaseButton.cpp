@@ -1,4 +1,4 @@
-#include "MenuBaseButton.h"
+#include "BaseButton.h"
 
 
 MenuBaseButton::MenuBaseButton()
@@ -19,12 +19,28 @@ void MenuBaseButton::placeUnder(MenuBaseButton* button)
 	buttonRect.y = button->buttonRect.y + button->buttonRect.h + 15;
 }
 
-void MenuBaseButton::createButton(std::string message)
+void MenuBaseButton::placeMidUnder(int x, int y)
+{
+	buttonRect.x = x - buttonRect.h / 2;
+	buttonRect.y = y;
+}
+
+int MenuBaseButton::getHeight()
+{
+	return buttonRect.h;
+}
+
+int MenuBaseButton::getWidth()
+{
+	return buttonRect.w;
+}
+
+void MenuBaseButton::createButton(std::string message, int fontSize)
 {
 	//making colors and opening font
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color orange = { 235, 167, 8 };
-	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), 60);
+	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), fontSize);
 
 	//Create menu button textures
 	SDL_Surface* MessageSurface = TTF_RenderText_Blended(staryDarzy, message.c_str(), white);
