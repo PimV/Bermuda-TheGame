@@ -10,7 +10,7 @@ PauzeAchievementsButton::PauzeAchievementsButton()
 void PauzeAchievementsButton::init()
 {
 	std::string Message = "Achievements";
-	createButton(Message);
+	createButton(Message, 24, 1);
 }
 
 void PauzeAchievementsButton::action()

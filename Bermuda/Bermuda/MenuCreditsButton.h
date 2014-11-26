@@ -1,7 +1,7 @@
 #pragma once
-#include "MenuBaseButton.h"
+#include "BaseButton.h"
 class MenuCreditsButton :
-	public MenuBaseButton
+	public BaseButton
 {
 public:
 	//Methodes

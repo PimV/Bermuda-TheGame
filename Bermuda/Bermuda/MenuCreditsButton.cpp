@@ -10,7 +10,7 @@ MenuCreditsButton::MenuCreditsButton()
 void MenuCreditsButton::init()
 {
 	std::string Message = "Credits";
-	createButton(Message , 60);
+	createButton(Message , 60, 0);
 }
 
 void MenuCreditsButton::action()

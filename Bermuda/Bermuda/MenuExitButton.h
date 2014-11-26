@@ -1,11 +1,11 @@
 #pragma once
-#include "MenuBaseButton.h"
+#include "BaseButton.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 
 class MenuExitButton :
-	public MenuBaseButton
+	public BaseButton
 {
 public:
 	//Methodes

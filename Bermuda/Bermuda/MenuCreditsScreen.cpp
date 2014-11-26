@@ -62,7 +62,7 @@ void MenuCreditsScreen::align()
 		total += var.h;
 	}
 
-	for each (MenuBaseButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		total += var->getHeight();
 	}
@@ -76,7 +76,7 @@ void MenuCreditsScreen::align()
 		minSur += nameRectangles.at(i).h;
 	}
 
-	for each (MenuBaseButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		var->placeMidUnder(((ScreenWidth - var->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
 		minSur += var->getHeight();
@@ -127,7 +127,7 @@ void MenuCreditsScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
-		for each (MenuBaseButton* var in buttons)
+		for each (BaseButton* var in buttons)
 		{
 			var->hover(x, y);
 		}
@@ -135,7 +135,7 @@ void MenuCreditsScreen::handleEvents(SDL_Event mainEvent)
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT)
 		{
-			for each (MenuBaseButton* var in buttons)
+			for each (BaseButton* var in buttons)
 			{
 				if (var->clicked(x, y))
 				{
@@ -157,7 +157,7 @@ void MenuCreditsScreen::draw()
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameTextures.at(i), NULL, &nameRectangles.at(i));
 	}
 
-	for each (MenuBaseButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		var->draw();
 	}
@@ -167,7 +167,7 @@ void MenuCreditsScreen::cleanup()
 {
 	SDL_DestroyTexture(backgroundTexture);
 	SDL_DestroyTexture(creditsTextTexture);
-	for each (MenuBaseButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		delete var;
 	}

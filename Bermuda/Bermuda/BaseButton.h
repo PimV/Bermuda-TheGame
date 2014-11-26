@@ -4,7 +4,7 @@
 #include <string>
 #include "GameStateManager.h"
 
-class MenuBaseButton
+class BaseButton
 {
 public:
 	//variables
@@ -22,19 +22,26 @@ protected:
 public:
 	
 	//methodes
-	void createButton(std::string buttonText, int fontSize);
-	void placeAbove(MenuBaseButton* button);
-	void placeUnder(MenuBaseButton* button);
+	void createButton(std::string buttonText, int fontSize, int initialColor);
+	void placeLeftAboveButton(BaseButton* button);
+	void placeLeftUnderButton(BaseButton* button);
+	void placeMidScreenAbove(BaseButton* button);
+	void placeMidScreenUnder(BaseButton* button);
+	void placeMid();
+	void placeLeftMid();
 	void placeMidUnder(int x, int y);
+	int getX();
+	int getY();
 	int getHeight();
 	int getWidth();
+
 	void draw();
 	void hover(int, int);
 	bool clicked(int, int);
 
-	MenuBaseButton();
+	BaseButton();
 	virtual void init() = 0;
 	void cleanup();
-	virtual ~MenuBaseButton();
+	virtual ~BaseButton();
 };
 

@@ -101,7 +101,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="BackgroundContainer.h" />
     <ClInclude Include="BaseScreen.h" />
     <ClInclude Include="Bat.h" />
-    <ClInclude Include="MenuBaseButton.h" />
+    <ClInclude Include="BaseButton.h" />
     <ClInclude Include="Cactus.h" />
     <ClInclude Include="Carrot.h" />
     <ClInclude Include="ClickAction.h" />
@@ -174,7 +174,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MoveAction.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Pillar.h" />
-    <ClInclude Include="PauzeBaseButton.h" />
     <ClInclude Include="PauzeExitButton.h" />
     <ClInclude Include="PauzeMenuButton.h" />
     <ClInclude Include="PauzeResumeButton.h" />
@@ -204,7 +203,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="BackgroundContainer.cpp" />
     <ClCompile Include="BaseScreen.cpp" />
     <ClCompile Include="Bat.cpp" />
-    <ClCompile Include="MenuBaseButton.cpp" />
+    <ClCompile Include="BaseButton.cpp" />
     <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Carrot.cpp" />
     <ClCompile Include="ClickAction.cpp" />
@@ -256,7 +255,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Pillar.cpp" />
     <ClCompile Include="RespawnContainer.cpp" />
     <ClCompile Include="GameOverState.cpp" />
-    <ClCompile Include="PauzeBaseButton.cpp" />
     <ClCompile Include="PauzeExitButton.cpp" />
     <ClCompile Include="PauzeMenuButton.cpp" />
     <ClCompile Include="PauzeResumeButton.cpp" />

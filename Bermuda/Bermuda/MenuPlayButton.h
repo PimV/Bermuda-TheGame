@@ -1,12 +1,12 @@
 #pragma once
-#include "MenuBaseButton.h"
+#include "BaseButton.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 #include "PlayState.h"
 
 class MenuPlayButton :
-	public MenuBaseButton
+	public BaseButton
 {
 public:
 	//Methodes

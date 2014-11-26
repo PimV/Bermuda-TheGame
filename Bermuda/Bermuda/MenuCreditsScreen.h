@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScreen.h"
 #include "GameStateManager.h"
-#include "MenuBaseButton.h"
+#include "BaseButton.h"
 
 class MenuCreditsScreen :
 	public BaseScreen
@@ -12,7 +12,7 @@ private:
 	SDL_Rect creditsTextRect;
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
-	std::vector<MenuBaseButton*> buttons;
+	std::vector<BaseButton*> buttons;
 	std::vector<std::string> names;
 	std::vector<SDL_Texture*> nameTextures;
 	std::vector<SDL_Rect> nameRectangles;

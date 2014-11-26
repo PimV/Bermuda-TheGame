@@ -1,9 +1,9 @@
 #pragma once
-#include "MenuBaseButton.h"
+#include "BaseButton.h"
 #include "MenuState.h"
 
 class MenuMainButton :
-	public MenuBaseButton
+	public BaseButton
 {
 public:
 	//Methodes

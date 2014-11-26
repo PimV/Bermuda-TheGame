@@ -19,8 +19,9 @@ void MenuMainScreen::init()
 	MenuCreditsButton* creditsButton = new MenuCreditsButton();
 	
 	//place buttons
-	creditsButton->placeAbove(exitButton);
-	playButton->placeAbove(creditsButton);
+	exitButton->placeLeftMid();
+	creditsButton->placeLeftAboveButton(exitButton);
+	playButton->placeLeftAboveButton(creditsButton);
 	
 	//place in button vector
 	buttons.push_back(playButton);

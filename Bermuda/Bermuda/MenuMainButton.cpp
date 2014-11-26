@@ -9,7 +9,7 @@ MenuMainButton::MenuMainButton()
 void MenuMainButton::init()
 {
 	std::string Message = "Return to main menu";
-	createButton(Message, 40);
+	createButton(Message, 40, 0);
 }
 
 void MenuMainButton::action()
