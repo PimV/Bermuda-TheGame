@@ -17,6 +17,23 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	thirstBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "ThirstBar.png").c_str());
 	thirstBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "ThirstBarContainerBas.png").c_str());
 
+	SDL_SetTextureBlendMode(hungerBar, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(hungerBarContainer, SDL_BLENDMODE_BLEND);
+
+	SDL_SetTextureBlendMode(healthBar, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(healthBarContainer, SDL_BLENDMODE_BLEND);
+
+	SDL_SetTextureBlendMode(thirstBar, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(thirstBarContainer, SDL_BLENDMODE_BLEND);
+
+	healthAlphaFade = true;
+	hungerAlphaFade = true;
+	thirstAlphaFade = true;
+
+	healthAlpha = 255;
+	hungerAlpha = 255;
+	thirstAlpha = 255;
+
 
 	this->camera = camera;
 
@@ -374,68 +391,150 @@ bool Player::checkIntersects(CollidableEntity* collidableEntity)
 }
 
 void Player::drawHealthBar(int x, int y) {
+	if (this->getHealth() < 30) {
+		if (healthAlpha < 30) {
+			healthAlphaFade = false;
+		}
+
+		if (healthAlphaFade == true) {
+			healthAlpha = healthAlpha -  (40-this->getHealth());
+			if (healthAlpha < 0) {
+				healthAlphaFade = false;
+				healthAlpha = 0;
+			}
+		} else {
+			healthAlpha = healthAlpha +  (40-this->getHealth());
+			if (healthAlpha > 255) {
+				healthAlphaFade = true;
+				healthAlpha = 255;
+			}
+
+		}
+		SDL_SetTextureAlphaMod(healthBar, healthAlpha);
+		SDL_SetTextureAlphaMod(healthBarContainer, healthAlpha);
+
+	} else {
+		healthAlpha = 255;
+		healthAlphaFade = true;
+	}
+
 	SDL_Rect healthContainerRect;
-	healthContainerRect.h = 16;
-	healthContainerRect.w = (this->getInventory()->getWidth() / 5);
+	healthContainerRect.h = 20;
+	healthContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
 	healthContainerRect.x = x;
 	healthContainerRect.y = y;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBarContainer,&healthContainerRect,NULL);
 
 
 	SDL_Rect healthRect;
-	healthRect.h = 14;
-	healthRect.w = 2*(this->getInventory()->getWidth() / 10) * this->getHealth() / 100;
+	healthRect.h = 18;
+	healthRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getHealth() / 100;
 	healthRect.x = x + 1;
 	healthRect.y = y + 1;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBar,&healthRect,NULL);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHealth()), x + (this->getInventory()->getWidth() / 5) / 2 - 10, y, 20, 18);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("HEALTH:"), x , y - 24, 30, 24);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHealth()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
+	//if (GameStateManager::Instance()->showHelp()) {
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("HEALTH:"), x , y - 24, 30, 24);
+	//}
 }
 
 void Player::drawHungerBar(int x, int y) {
+	//SDL_SetRenderDrawBlendMode(GameStateManager::Instance()->sdlInitializer->getRenderer(), SDL_BLENDMODE_BLEND);
+	if (this->getHunger() < 30) {
+		if (hungerAlpha < 30) {
+			hungerAlphaFade = false;
+		}
+
+		if (hungerAlphaFade == true) {
+			hungerAlpha = hungerAlpha -  (40-this->getHunger());
+			if (hungerAlpha < 0) {
+				hungerAlphaFade = false;
+				hungerAlpha = 0;
+			}
+		} else {
+			hungerAlpha = hungerAlpha +  (40-this->getHunger());
+			if (hungerAlpha > 255) {
+				hungerAlphaFade = true;
+				hungerAlpha = 255;
+			}
+
+		}
+		SDL_SetTextureAlphaMod(hungerBar, hungerAlpha);
+		SDL_SetTextureAlphaMod(hungerBarContainer, hungerAlpha);
+	} else {
+		hungerAlpha = 255;
+		hungerAlphaFade = true;
+	}
+
 	SDL_Rect hungerContainerRect;
-	hungerContainerRect.h = 16;
-	hungerContainerRect.w = (this->getInventory()->getWidth() / 5);
+	hungerContainerRect.h = 20;
+	hungerContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
 	hungerContainerRect.x = x;
 	hungerContainerRect.y = y;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBarContainer,&hungerContainerRect,NULL);
 
-
 	SDL_Rect hungerRect;
-	hungerRect.h = 14;
-	hungerRect.w = (this->getInventory()->getWidth() / 5) * this->getHunger() / 100;
+	hungerRect.h = 18;
+	hungerRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getHunger() / 100;
 	hungerRect.x = x + 1;
 	hungerRect.y = y + 1;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBar,&hungerRect,NULL);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHunger()), x + (this->getInventory()->getWidth() / 5) / 2 - 10, y, 15, 18);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("HUNGER:"), x , y - 24, 30, 24);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHunger()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 15, 18);
+	//GameStateManager::Instance()->sdlInitializer->drawText(std::string("FOOD:"), x , y - 24, 30, 24);
+
 }
 
 void Player::drawThirstBar(int x, int y) {
+	if (this->getThirst() < 30) {
+		if (thirstAlpha < 30) {
+			thirstAlphaFade = false;
+		}
+
+		if (thirstAlphaFade == true) {
+			thirstAlpha = thirstAlpha - (40-this->getThirst());
+			if (thirstAlpha < 0) {
+				thirstAlphaFade = false;
+				thirstAlpha = 0;
+			}
+		} else {
+			thirstAlpha = thirstAlpha + (40-this->getThirst());
+			if (thirstAlpha > 255) {
+				thirstAlphaFade = true;
+				thirstAlpha = 255;
+			}
+
+		}
+		SDL_SetTextureAlphaMod(thirstBar, thirstAlpha);
+		SDL_SetTextureAlphaMod(thirstBarContainer, thirstAlpha);
+	} else {
+		thirstAlpha = 255;
+		thirstAlphaFade = true;
+	}
+
 	SDL_Rect thirstContainerRect;
-	thirstContainerRect.h = 16;
-	thirstContainerRect.w = (this->getInventory()->getWidth() / 5);
+	thirstContainerRect.h = 20;
+	thirstContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
 	thirstContainerRect.x = x;
 	thirstContainerRect.y = y;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBarContainer,&thirstContainerRect,NULL);
 
 	SDL_Rect thirstRect;
-	thirstRect.h = 14;
-	thirstRect.w = (this->getInventory()->getWidth() / 5) * this->getThirst() / 100;
+	thirstRect.h = 18;
+	thirstRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getThirst() / 100;
 	thirstRect.x = x + 1;
 	thirstRect.y = y + 1;
 	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBar,&thirstRect,NULL);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getThirst()), x + (this->getInventory()->getWidth() / 5) / 2 - 10, y, 15, 18);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("THIRST:"), x , y - 24, 30, 24);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getThirst()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
+	//GameStateManager::Instance()->sdlInitializer->drawText(std::string("WATER:"), x , y - 24, 30, 24);
 }
 
 
 void Player::draw() {
 	this->drawHealthBar(this->getInventory()->getStartingX(), this->getInventory()->getStartingY() - 30);
 
-	this->drawThirstBar(this->getInventory()->getStartingX() + 2*((this->getInventory()->getWidth()) / 5), this->getInventory()->getStartingY() - 30);
+	this->drawThirstBar(this->getInventory()->getStartingX() + 35*((this->getInventory()->getWidth()) / 100), this->getInventory()->getStartingY() - 30);
 
-	this->drawHungerBar(this->getInventory()->getStartingX() + 4*((this->getInventory()->getWidth())/ 5), this->getInventory()->getStartingY() - 30);
+	this->drawHungerBar(this->getInventory()->getStartingX() + 7*((this->getInventory()->getWidth())/ 10), this->getInventory()->getStartingY() - 30);
 }
 
 Player::~Player(void) {

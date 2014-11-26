@@ -67,6 +67,14 @@ private:
 	SDL_Texture* thirstBarContainer;
 	SDL_Texture* hungerBarContainer;
 
+	bool healthAlphaFade;
+	bool hungerAlphaFade;
+	bool thirstAlphaFade;
+
+	int healthAlpha;
+	int hungerAlpha;
+	int thirstAlpha;
+
 	//PlayerUpdateTimer* playerTimer;
 	int health, hunger, thirst;
 	long hungerUpdate, hungerUpdateTime;
