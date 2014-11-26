@@ -2,6 +2,7 @@
 #include "MenuExitButton.h"
 #include "MenuPlayButton.h"
 #include "MenuCreditsButton.h"
+#include "MenuHelpButton.h"
 
 
 MenuMainScreen::MenuMainScreen()
@@ -17,17 +18,20 @@ void MenuMainScreen::init()
 	MenuPlayButton* playButton = new MenuPlayButton();
 	MenuExitButton* exitButton = new MenuExitButton();
 	MenuCreditsButton* creditsButton = new MenuCreditsButton();
+	MenuHelpButton* helpButton = new MenuHelpButton();
 	
 	//place buttons
-	exitButton->placeLeftMid();
-	creditsButton->placeLeftAboveButton(exitButton);
+	helpButton->placeLeftMid();
+	exitButton->placeLeftUnderButton(helpButton);
+	creditsButton->placeLeftAboveButton(helpButton);
 	playButton->placeLeftAboveButton(creditsButton);
 	
 	//place in button vector
 	buttons.push_back(playButton);
 	buttons.push_back(exitButton);
 	buttons.push_back(creditsButton);
-
+	buttons.push_back(helpButton);
+	std::cout << "make button" << endl;
 }
 
 void MenuMainScreen::setBackground()

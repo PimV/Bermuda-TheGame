@@ -5,16 +5,17 @@
 #include "header_loader.h"
 #include "MenuMainScreen.h"
 #include "MenuCreditsScreen.h"
+#include "MenuHelpScreen.h"
 
 class MenuState :
 	public IGameState
 {
 private:
-
 	//variables		Screens
 	BaseScreen* curScreen;
 	MenuMainScreen* mainScr;
 	MenuCreditsScreen* creditsScr;
+	MenuHelpScreen* helpScr;
 
 	//self
 	static MenuState m_MenuState;
@@ -31,6 +32,7 @@ public:
 	void setCurWindow(BaseScreen* curwindow);
 	BaseScreen* getMenuMainScreen();
 	BaseScreen* getMenuCreditsScreen();
+	BaseScreen* getMenuHelpScreen();
 
 	//Get instance self
 	static MenuState* Instance() {
