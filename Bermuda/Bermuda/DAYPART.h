@@ -7,8 +7,8 @@ enum class DAYPART
 	Evening,
 	Night
 };
-static const std::string daypart_strings[] = {
-	"Day",
-	"Evening",
-	"Night"
-};
+//static const std::string daypart_strings[] = {
+//	"Day",
+//	"Evening",
+//	"Night"
+//};

@@ -36,4 +36,5 @@ public:
 	DAYPART getCurrentDayPart();
 
 	void draw();
+	void cleanUp();
 };

@@ -16,21 +16,19 @@ void GameTimer::init()
 	this->currentDayPart = DAYPART::Day;
 
 	//Draw part
-	if (textCircle == nullptr) 
-	{
-		textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circleTotal.png").c_str());
-		textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
-		
-		rectCircle.w = ScreenWidth / 10;
-		rectCircle.h = rectCircle.w;
-		rectCircle.x = ScreenWidth - rectCircle.w - rectCircle.w / 4;
-		rectCircle.y = rectCircle.w / 4;
-		
-		rectArrow.w = 6;
-		rectArrow.h = rectCircle.h / 2 - rectCircle.h / 10;
-		rectArrow.x = rectCircle.x + rectCircle.w / 2 - rectArrow.w / 2;
-		rectArrow.y = rectCircle.y + rectCircle.h / 2 - rectArrow.h + 2;
-	}
+	textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circleTotal.png").c_str());
+	textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
+
+	rectCircle.w = ScreenWidth / 10;
+	rectCircle.h = rectCircle.w;
+	rectCircle.x = ScreenWidth - rectCircle.w - rectCircle.w / 4;
+	rectCircle.y = rectCircle.w / 4;
+
+	rectArrow.w = 6;
+	rectArrow.h = rectCircle.h / 2 - rectCircle.h / 10;
+	rectArrow.x = rectCircle.x + rectCircle.w / 2 - rectArrow.w / 2;
+	rectArrow.y = rectCircle.y + rectCircle.h / 2 - rectArrow.h + 2;
+
 }
 
 void GameTimer::updateGameTime(long gameTime)
@@ -106,8 +104,12 @@ void GameTimer::draw()
 	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day: " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 6, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4);
 }
 
+void GameTimer::cleanUp()
+{
+	SDL_DestroyTexture(textCircle);
+	SDL_DestroyTexture(textArrow);
+}
 
 GameTimer::~GameTimer(void)
 {
-	this->gameTime = NULL;
 }

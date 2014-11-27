@@ -59,7 +59,7 @@ MainEntityContainer* PlayState::getMainEntityContainer()
 }
 
 void PlayState::cleanup() {
-
+	GameTimer::Instance()->cleanUp();
 }
 
 void PlayState::pause() {
