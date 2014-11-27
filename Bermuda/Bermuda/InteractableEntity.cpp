@@ -41,7 +41,7 @@ bool InteractableEntity::trackInteractTimes() {
 	if (destroyed) {
 		return false;
 	}
-	//currentInteractTime += GameStateManager::Instance()->getUpdateLength();
+
 	currentInteractTime += GameTimer::Instance()->getFrameTime();
 	if (currentInteractTime > interactTime) {
 		currentInteractTime = 0;
