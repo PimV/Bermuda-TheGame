@@ -14,7 +14,7 @@ AnimatingEntity::AnimatingEntity(int id, double x, double y, int chunkSize, int 
 	setStaticImage(0);
 }
 
-void AnimatingEntity::animate(double dt)
+void AnimatingEntity::animate()
 {
 	if (this->animating)
 	{

@@ -42,9 +42,12 @@ void PlayState::init(GameStateManager *gsm) {
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
 	this->p->getInventory()->toggleInventory();
 	//TEMPORARY AXE SPAWN:
-	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
-	new Pickaxe(9002, p->getX() + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png", 32, 32)));
+	//new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
+	//new Pickaxe(9002, p->getX() + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png", 32, 32)));
 
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
 	SoundLoader::Instance()->playGameMusic();
@@ -304,7 +307,7 @@ void PlayState::updateVisibleEntities(double dt)
 			{
 				for (AnimatingEntity* e : *vec)
 				{
-					e->animate(dt);
+					e->animate();
 				}
 			}
 		}

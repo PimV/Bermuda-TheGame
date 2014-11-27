@@ -15,9 +15,9 @@ Campfire::Campfire(int id, double x, double y, int chunkSize, int firstImgID) :
 	setAnimation(1, 3, 100, 3000, 0);
 }
 
-void Campfire::animate(double dt)
+void Campfire::animate()
 {
-	AnimatingEntity::animate(dt);
+	AnimatingEntity::animate();
 	long currentTime = GameTimer::Instance()->getGameTime();
 	if (this->creationTime + lifeTime < currentTime)
 	{

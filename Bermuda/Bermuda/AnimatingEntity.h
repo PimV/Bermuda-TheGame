@@ -22,7 +22,7 @@ private:
 
 public:
 	AnimatingEntity(int id, double x, double y, int chunkSize, int firstImgID);
-	virtual void animate(double dt);
+	virtual void animate();
 	void setAnimation(int startIndex, int endIndex, double animateSpeed);
 	void setAnimation(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex);
 	void setStaticImage(int index);
