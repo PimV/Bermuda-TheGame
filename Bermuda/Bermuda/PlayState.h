@@ -27,6 +27,7 @@ private:
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 
+	int timesUpdate;
 	bool ready;
 	bool showCol, showInter, showSpawnArea; 
 	
@@ -48,8 +49,8 @@ public:
 	void update(double dt);
 	void updateVisibleEntities(double dt);
 	void updateMediumAreaEntities(double dt);
-	void updateGameTimers();
-	long getGameTimer();
+
+	void updateGameTimers(double dt);
 	
 
 	void draw();

@@ -50,9 +50,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
 		long updateLength = (currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart;
-
-		gsm->setUpdateLength(updateLength);
-
+		
 		//Previous time = current time
 		previousTime = currentTime;
 		//Calculate delta
@@ -61,7 +59,9 @@ void Game::gameLoop(GameStateManager* gsm) {
 		lastFpsTime += updateLength;
 		//Increase FPS since one frame has passed
 		fps++;
-		gsm->updateGameTime(updateLength);
+
+		//gsm->updateGameTime(updateLength);
+
 		//If lastFpsTime > 1000 ms, set FPS to 0 and start re-calculating
 		if (lastFpsTime >= 1000) {
 			gsm->setFps(fps);
@@ -77,6 +77,8 @@ void Game::gameLoop(GameStateManager* gsm) {
 		gsm->update(delta);
 		//gsm->draw();
 		gsm->draw();
+		
+		gsm->setUpdateLength(updateLength);
 
 		//Get time after loop
 		QueryPerformanceCounter(&afterLoopTime);

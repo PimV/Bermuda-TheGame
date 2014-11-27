@@ -1,7 +1,7 @@
 #pragma once
-#include "BasePauzeButton.h"
+#include "BaseButton.h"
 class PauzeExitButton :
-	public BasePauzeButton
+	public BaseButton
 {
 private:
 	void action();

@@ -127,6 +127,11 @@ void PauseStatusTrackerScreen::setBackground()
 	backgroundRect.w += 100;
 }
 
+void PauseStatusTrackerScreen::resetButtons()
+{
+
+}
+
 void PauseStatusTrackerScreen::handleEvents(SDL_Event mainEvent)
 {
 	int x, y;
@@ -138,7 +143,7 @@ void PauseStatusTrackerScreen::handleEvents(SDL_Event mainEvent)
 		switch (mainEvent.key.keysym.sym)
 		{
 		case SDLK_ESCAPE:
-			PauseState::Instance()->setCurWindow(0);
+			PauseState::Instance()->setCurWindow(PauseState::Instance()->getMainPauseScreen());
 			break;
 		}
 		break;
