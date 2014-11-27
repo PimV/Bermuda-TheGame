@@ -293,9 +293,11 @@ void PlayState::update(double dt) {
 		return;
 	}
 
+	//TODO: eerste 2 keer doen we dit niet. probleem met loadingstate..
+	//Update gametimer
 	if(this->timesUpdate > 2)
 	{
-		this->updateGameTimers(dt);
+		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	}
 	else
 	{
@@ -357,11 +359,6 @@ void PlayState::update(double dt) {
 			}
 		}
 	}
-}
-
-void PlayState::updateGameTimers(double dt) {
-
-	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 }
 
 void PlayState::draw() 

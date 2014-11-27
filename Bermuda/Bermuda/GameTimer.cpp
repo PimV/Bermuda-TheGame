@@ -31,10 +31,10 @@ void GameTimer::init()
 
 }
 
-void GameTimer::updateGameTime(long gameTime)
+void GameTimer::updateGameTime(double frameTime)
 {
-	this->frameTime = gameTime;
-	this->gameTime += gameTime;
+	this->frameTime = frameTime;
+	this->gameTime += frameTime;
 	this->updateDay();
 }
 
@@ -43,7 +43,7 @@ long GameTimer::getGameTime()
 	return this->gameTime;
 }
 
-long GameTimer::getFrameTime()
+double GameTimer::getFrameTime()
 {
 	return this->frameTime;
 }

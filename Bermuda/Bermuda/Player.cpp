@@ -14,9 +14,13 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->setHeight(64);
 
 	//this->playerTimer = new PlayerUpdateTimer();
-	this->hungerUpdate = 0; this->hungerUpdateTime = 2200;
-	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
-	this->health = 100; this->hunger = 100; this->thirst = 100;
+	this->hungerUpdate = 0; 
+	this->hungerUpdateTime = 2200;
+	this->thirstUpdate = 0; 
+	this->thirstUpdateTime = 1000;
+	this->health = 100; 
+	this->hunger = 100; 
+	this->thirst = 100;
 
 	this->dx = 0;
 	this->dy = 0;
@@ -94,34 +98,23 @@ void Player::update(double dt) {
 
 	this->updatePlayerStatuses(dt);
 	this->directionsAndMove(dt);
-
-	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
-	/*if (interaction)
-	{
-	interact(dt);
-	}
-	else
-	{
-	this->move(dt);
-	}*/
 }
 
 #pragma region PlayerStatusUpdates
 void Player::updatePlayerStatuses(double dt)
 {
+	long currentTime = GameTimer::Instance()->getGameTime();
 
 	// check if hunger needs to be updated
-	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
-	if (this->hungerUpdate > hungerUpdateTime) {
+	if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
 		this->incrementHunger(-1);
-		hungerUpdate = 0;
+		hungerUpdate = currentTime;
 	}
 
 	// check if thirst needs to be updated
-	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
-	if (this->thirstUpdate > thirstUpdateTime) {
+	if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
 		this->incrementThirst(-1);
-		thirstUpdate = 0;
+		thirstUpdate = currentTime;
 	}
 }
 
