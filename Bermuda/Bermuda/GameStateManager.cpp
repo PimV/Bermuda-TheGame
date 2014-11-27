@@ -32,6 +32,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	m_running = true;
 	showFps = false;
+	showHelp = false;
 
 	GameStateManager::Instance()->setFps(0);
 	this->updateLength = 0;
@@ -39,6 +40,14 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 void GameStateManager::setUpdateLength(long updateLength) {
 	this->updateLength = updateLength;
+}
+
+bool GameStateManager::helpEnabled() {
+	return this->showHelp;
+}
+
+void GameStateManager::toggleHelpEnabled() {
+	this->showHelp = !this->showHelp;
 }
 
 long GameStateManager::getUpdateLength() {

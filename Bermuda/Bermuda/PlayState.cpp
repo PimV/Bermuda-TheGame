@@ -11,10 +11,10 @@
 #include "Items.h"
 #include "Consumable.h"
 #include "Equipable.h"
-
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
 #include "Pickaxe.h"
+
 
 PlayState PlayState::m_PlayState;
 
@@ -203,6 +203,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 				}
 				break;
 			}
+		case SDLK_F9:
+			//MINEE MWUAHHAHAHAHA (PIM)
+			GameStateManager::Instance()->toggleHelpEnabled();
+			break;
 		case SDLK_F8:
 			p->getCraftingSystem()->craftItem(Items::Axe);
 			break;
@@ -461,22 +465,8 @@ void PlayState::draw()
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
+		this->p->draw();
 	}
-
-	// Draw the player status
-
-	//this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
-	//this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
-	//this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
-	// if current hour is smaller then 9 
-	if (GameTimer::Instance()->getCurrentDayPart() > 9)
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
-	else
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
-
-	p->draw();
-
-
 }
 
 Player* PlayState::getPlayer()

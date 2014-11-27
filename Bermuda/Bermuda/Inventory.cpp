@@ -43,8 +43,6 @@ void Inventory::init() {
 
 	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
 	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
-
-	std::cout << "Creating inv img" << std::endl;
 }
 
 void Inventory::cleanup() {

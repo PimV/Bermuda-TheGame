@@ -82,6 +82,7 @@ private:
 	int health, hunger, thirst;
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
+	long healthUpdate, healthUpdateTime;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
