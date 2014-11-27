@@ -23,6 +23,8 @@ private:
 	SDL_Rect rect2;
 	SDL_Rect rectBackground;
 	SDL_Rect rectAdvertisement;
+	
+	int degrees;
 
 	int percentage;
 

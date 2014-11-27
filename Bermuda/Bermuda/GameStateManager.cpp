@@ -76,10 +76,6 @@ int GameStateManager::getFps() {
 	return GameStateManager::Instance()->fps;
 }
 
-void GameStateManager::updateGameTime(long time) {
-	this->lastUpdateLength = time;
-}
-
 void GameStateManager::cleanup() {
 	//While there are states on the stack, clean them up
 	while (!states.empty()) {

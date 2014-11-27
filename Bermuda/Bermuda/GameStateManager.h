@@ -39,7 +39,6 @@ public:
 	bool helpEnabled();
 	void toggleHelpEnabled();
 	void quit();
-	long lastUpdateLength;
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
