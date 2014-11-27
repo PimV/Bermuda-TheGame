@@ -11,6 +11,7 @@ void GameTimer::init()
 {
 	this->dayLength = 60000;
 	this->gameTime = 0;
+	this->frameTime = 0;
 	this->startDay = 0;
 	this->days = 0;
 	this->currentDayPart = DAYPART::Day;

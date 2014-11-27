@@ -293,7 +293,7 @@ void PlayState::update(double dt) {
 		return;
 	}
 
-	//TODO: eerste 2 keer doen we dit niet. probleem met loadingstate..
+	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
 	//Update gametimer
 	if(this->timesUpdate > 2)
 	{
