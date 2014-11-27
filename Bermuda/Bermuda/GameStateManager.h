@@ -24,6 +24,8 @@ public:
 	void pushGameState(IGameState* gameState);
 	void popState();
 
+	void updateGameTime(long time);
+
 	void update(double delta);
 	void handleEvents();
 	void draw();
@@ -34,22 +36,28 @@ public:
 	ActionContainer* getActionContainer();
 
 	bool running();
+	bool helpEnabled();
+	void toggleHelpEnabled();
 	void quit();
-
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
 
-	
+	double getSpeedMultiplier();
+	void setSpeedMultiplier(double multiplier);
+
+
 	static GameStateManager* Instance() {
 		return &m_Gsm;
 	};
 
-
 	~GameStateManager(void);
+
 private: 
 	long updateLength;
+	double speedMultiplier;
 	int fps;
+	bool showHelp;
 	std::vector<IGameState*> states;
 	IGameState* currentState;
 	ImageLoader* imgLoader;
@@ -58,7 +66,5 @@ private:
 
 	static GameStateManager m_Gsm;
 
-
 	ActionContainer* actionContainer;
 };
-

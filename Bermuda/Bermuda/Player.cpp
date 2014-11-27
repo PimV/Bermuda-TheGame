@@ -1,28 +1,55 @@
 #include "Player.h"
 #include "header_loader.h"
+#include "GameOverState.h"
 #include <iostream>
-#include "Inventory.h"
+#include "PlayState.h"
 
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camera* camera, GameStateManager* gsm, MainEntityContainer* mec)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), IMovable(moveSpeed)
+Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
+	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
 {
-	this->mec = mec;
+	healthBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBar.png").c_str());
+	healthBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBarContainerBas.png").c_str());
+
+	hungerBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Hungerbar.png").c_str());
+	hungerBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HungerBarContainerBas.png").c_str());
+
+	thirstBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "ThirstBar.png").c_str());
+	thirstBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "ThirstBarContainerBas.png").c_str());
+
+	SDL_SetTextureBlendMode(hungerBar, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(hungerBarContainer, SDL_BLENDMODE_BLEND);
+
+	SDL_SetTextureBlendMode(healthBar, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(healthBarContainer, SDL_BLENDMODE_BLEND);
+
+	SDL_SetTextureBlendMode(thirstBar, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(thirstBarContainer, SDL_BLENDMODE_BLEND);
+
+	healthAlphaFade = true;
+	hungerAlphaFade = true;
+	thirstAlphaFade = true;
+
+	healthAlpha = 255;
+	hungerAlpha = 255;
+	thirstAlpha = 255;
+
+
 	this->camera = camera;
-	this->gsm = gsm;
 
 	//Entity -> dimension values
 	this->setWidth(64);
 	this->setHeight(64);
 
-	//CollidableEnity - collision values
-	/*this->setCollisionHeight(this->getHeight() - 15);
-	this->setCollisionWidth(this->getWidth()/4);
-	this->setCollisionX((this->getWidth() - this->getCollisionWidth()) / 2);
-	this->setCollisionY(0);*/
+	//this->playerTimer = new PlayerUpdateTimer();
+	this->hungerUpdate = 0; this->hungerUpdateTime = 2200;
+	this->thirstUpdate = 0; this->thirstUpdateTime = 1500;
+	this->healthUpdate = 0; this->healthUpdateTime = 2500;
+	this->health = 100; this->hunger = 100; this->thirst = 100;
 
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 3;
+	this->moveSpeed = 3;
 	this->sprinting = false;
 	this->sprintSpeed = 15;
 
@@ -37,37 +64,45 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize,Camer
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = gsm->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
-	this->playerAnimationWalkUpRow = 8, this->playerAnimationWalkLeftRow = 9;
-	this->playerAnimationWalkDownRow = 10, this->playerAnimationWalkRightRow = 11;
-	this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-	this->playerAnimationIdleColumn = 0; this->playerAnimationWalkStartColumn = 1, this->playerAnimationWalkEndColumn = 8;
-	this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
+	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+	this->currentAnimationRow = this->animationWalkDownRow;
+	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
-	//Set camera
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 
 	this->StopAnimation();
 
-	//Add to containers
-	mec->getDrawableContainer()->add(this);
-	mec->getCollidableContainer()->add(this);
-	//TODO : collision container
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->inventory = new Inventory();
+	this->crafting = new Crafting(this->inventory);
+	this->statusTracker = new StatusTracker();
 }
 
 Inventory* Player::getInventory() {
 	return this->inventory;
 }
 
-void Player::resetMovement()
+Crafting* Player::getCraftingSystem()
 {
-	if (this->moveClick)
-	{
+	return this->crafting;
+}
+
+StatusTracker* Player::getStatusTracker()
+{
+	return this->statusTracker;
+}
+
+void Player::resetMovement() {
+	if (this->moveClick) {
 		this->movingLeft = false;
 		this->movingRight = false;
 		this->movingDown = false;
@@ -77,47 +112,16 @@ void Player::resetMovement()
 	}
 }
 
-bool Player::checkCollision(CollidableContainer* container) {
-	//TODO: werkend maken met nieuwe collidablecontainer shit
-	double currentX = this->getX();
-	double currentY = this->getY();
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
-	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
-	int beginChunkX = this->getChunkX() - 1;
-	int endChunkX = this->getChunkX() + 1;
-	int beginChunkY = this->getChunkY() - 1;
-	int endChunkY = this->getChunkY() + 1;
-
-	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
+void Player::update(double dt) {
+	// check if player died
+	if (this->getHealth() < 1)
 	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
-			std::vector<CollidableEntity*>* vec = this->mec->getCollidableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
-				for(CollidableEntity* e : *vec)
-				{
-					if (this->intersects(e)) {
-						this->setX(currentX);
-						this->setY(currentY);
-						this->StopAnimation();
-						return true;
-					}
-				}
-			}
-		}
+		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
+		return;
 	}
 
-	return false;
-}
-
-void Player::update(double dt) {
-
-
-	this->move(dt);
+	this->updatePlayerStatuses(dt);
+	this->directionsAndMove(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
 	/*if (interaction)
@@ -130,90 +134,135 @@ void Player::update(double dt) {
 	}*/
 }
 
-void Player::move(double dt) {
-	if (sprinting) {
-		maxSpeed = 50;
-	} else {
-		maxSpeed = 3;
+#pragma region PlayerStatusUpdates
+void Player::updatePlayerStatuses(double dt)
+{
+
+	// check if hunger needs to be updated
+	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
+	if (this->hungerUpdate > hungerUpdateTime) {
+		this->setHunger(this->getHunger() - 1);
+		if (this->getHunger() <= 0) {
+			this->setHealth(this->getHealth() - 1);
+		}
+		hungerUpdate = 0;
 	}
 
-	if(moveClick)
-	{
+	// check if thirst needs to be updated
+	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
+	if (this->thirstUpdate > thirstUpdateTime) {
+		this->setThirst(this->getThirst() - 1);
+		if (this->getThirst() <= 0) {
+			this->setHealth(this->getHealth() - 1);
+		}
+		thirstUpdate = 0;
+	}
+
+	this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
+	if (this->healthUpdate > this->healthUpdateTime) {
+		if (this->getThirst() > 80 && this->getHunger() > 80) {
+			this->setHealth(this->getHealth() + 3);
+		} else if (this->getThirst() > 40 && this->getHunger() > 40) {
+			this->setHealth(this->getHealth() + 2);
+		}
+		healthUpdate = 0;
+	}
+}
+
+void Player::incrementHealth(int value)
+{
+	if (this->getHealth() + value > 100) {
+		this->setHealth(100);
+	} else if (this->getHealth() + value < 0) {
+		this->setHealth(0);
+	} else {
+		this->setHealth(this->getHealth() + value);
+	}
+}
+
+void Player::incrementHunger(int value)
+{
+	if (this->getHunger()+value > 100) {
+		this->setHunger(100);
+	} else if (this->getHunger() + value < 0) {
+		this->setHunger(0);
+		this->setHealth(this->getHealth() + value);
+	} else {
+		this->setHunger(this->getHunger() + value);
+	}
+}
+
+void Player::incrementThirst(int value)
+{
+	if (this->getThirst()+value > 100) {
+		this->setThirst(100);
+	} else if (this->getThirst() < 0) {
+		this->setThirst(0);
+		this->setHealth(this->getHealth() + value);
+	} else {
+		this->setThirst(this->getThirst() + value);
+	}
+}
+
+void Player::setHealth(int value) {
+
+	if (value > 100) {
+		this->health = 100;
+	} else if (value < 0 ) {
+		this->health = 0;
+	} else {
+		this->health = value;
+	}
+}
+
+void Player::setHunger(int value) {
+	if (value > 100) {
+		this->hunger = 100;
+	} else if (value < 0 ) {
+		this->hunger = 0;
+	} else {
+		this->hunger = value;
+	}
+}
+
+void Player::setThirst(int value) {
+	if (value > 100) {
+		this->thirst = 100;
+	} else if (value < 0 ) {
+		this->thirst = 0;
+	} else {
+		this->thirst = value;
+	}
+}
+
+
+int Player::getHealth() {
+	return this->health;
+}
+
+int Player::getHunger() {
+	return this->hunger;
+}
+
+int Player::getThirst() {
+	return this->thirst;
+}
+#pragma endregion PlayerStatusUpdates
+
+void Player::directionsAndMove(double dt)
+{
+	if (sprinting) {
+		moveSpeed = 50;
+	}
+	else {
+		moveSpeed = 3;
+	}
+
+	if (moveClick) {
 		clickMove();
 	}
 
-	if (movingLeft) {
-		dx -= moveSpeed *dt;
-		if (dx < -maxSpeed *dt) {
-			dx = -maxSpeed *dt;
-		}
-	} else if (movingRight) {
-		dx += moveSpeed *dt;
-		if (dx > maxSpeed *dt) {
-			dx = maxSpeed *dt;
-		}
-	} else {
-		if (dx > 0) {
-			dx -= stopSpeed *dt;
-			if (dx < 0) {
-				dx = 0;
-			}
-		} else if (dx < 0) {
-			dx += stopSpeed *dt;
-			if (dx > 0) {
-				dx = 0;
-			}
-		}
-	}
-
-	if (movingUp) {
-		dy -= moveSpeed *dt;
-		if (dy < -maxSpeed *dt) {
-			dy = -maxSpeed *dt;
-		}
-	} else if (movingDown) {
-		dy += moveSpeed *dt;
-		if (dy > maxSpeed *dt) {
-			dy = maxSpeed *dt;
-		}
-	} else {
-		if (dy > 0) {
-			dy -= stopSpeed *dt;
-			if (dy < 0) {
-				dy = 0;
-			}
-		} else if (dy < 0) {
-			dy += stopSpeed *dt;
-			if (dy > 0) {
-				dy = 0;
-			}
-		}
-	}
-
-	if (dx == 0 && dy == 0) {
-		return;
-	}
-
-	//Move player
-	this->setTempX(getX() + dx);
-	this->setTempY(getY() + dy);
-
-	if (!this->checkCollision(mec->getCollidableContainer())) 
-	{
-		this->setPosition();
-
-		// set animation row
-		if (this->movingLeft)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkLeftRow;
-		else if (this->movingRight)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkRightRow;
-		else if (this->movingUp)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkUpRow;
-		else if (this->movingDown)
-			this->currentPlayerAnimationRow = this->playerAnimationWalkDownRow;
-
-		PlayAnimation(this->playerAnimationWalkStartColumn, this->playerAnimationWalkEndColumn, this->currentPlayerAnimationRow, dt);
-	}
+	this->move(dt);
 }
 
 void::Player::interact()
@@ -225,29 +274,24 @@ void::Player::interact()
 	int endChunkY = this->getChunkY() + 1;
 
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
-	int playerOffsetY = this->getY() + (this->getHeight() / 2);
+	//De -7 wordt gebruikt omdat het plaatje niet helemaal klopt. In de breedte staat de speler idd precies in het midden van het plaatje. In de hoogte niet...
+	int playerOffsetY = this->getY() + (this->getHeight() / 2) +7;
 
 	double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for(int j = beginChunkX; j <= endChunkX; j++)
-		{
-			std::vector<InteractableEntity*>* vec = this->mec->getInteractableContainer()->getChunk(i, j);
-			if(vec != nullptr)
-			{
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
+			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
+			if(vec != nullptr) {
 
-
-				for(InteractableEntity* e : *vec)
-				{
-
-					if((playerOffsetX >= e->getInteractAreaStartX() && playerOffsetX <= e->getInteractAreaEndX()) && 
-						(playerOffsetY >= e->getInteractAreaStartY() && playerOffsetY <= e->getInteractAreaEndY()))
+				for(InteractableEntity* e : *vec) {
+					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
+						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
 					{
-						double centerX = (e->getInteractAreaStartX() + e->getInteractAreaEndX()) / 2;
-						double centerY = (e->getInteractAreaStartY() + e->getInteractAreaEndY()) / 2;
+						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
+						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
 
 						double diffX = centerX - playerOffsetX;
 						double diffY = centerY - playerOffsetY;
@@ -263,13 +307,9 @@ void::Player::interact()
 						if (diffX + diffY < diff) {
 							diff = diffX + diffY;
 							closestEntity = e;
-							//std::cout << "New Closest Entity" << std::endl;
 						}
 
-
-
 						//e->interact(this);
-						//TODO : let op, nu pakt die het eerste object dat die tegen komt om mee te interacten, dit is niet persee de dichtsbijzijnde
 						//TODO : juiste animatie laten zien e.d.
 						//break;
 					}
@@ -297,20 +337,7 @@ void::Player::interact()
 }
 
 void Player::setPosition() {
-	//this->setX(getX() + dx);
-	//this->setY(getY() + dy);
-
-	this->setX(this->tempX);
-	this->setY(this->tempY);
-
-	//Chance chunks if needed
-	if(floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX()) 
-	{  
-		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
-		this->mec->getDrawableContainer()->remove(this);
-		this->setChunks(); 
-		this->mec->getDrawableContainer()->add(this);
-	} 
+	MovableEntity::setPosition();
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -358,30 +385,204 @@ void Player::clickMove() {
 	}
 }
 
-void Player::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
+void Player::setImage(Image* image)
 {
-	double animationDelay = (maxSpeed / 100)  * 40;
-	animationSpeed -= animationDelay;
-	if ( animationSpeed < animationDelay)
-	{
-		this->currentPlayerAnimationRow = Row;
-		if (EndFrame <= CurrentFrame)
-			CurrentFrame = BeginFrame;
-		else
-			CurrentFrame++;
+	this->setDrawImage(image);
+}
 
-		this->setDrawImage(gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + CurrentFrame));
-		animationSpeed = maxSpeed * 3;
+void Player::ResetDrawableEntityAndSetChunk()
+{
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	this->setChunks(); 
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+}
+
+bool Player::checkIntersects(CollidableEntity* collidableEntity)
+{
+	return this->intersects(collidableEntity, this);
+}
+
+void Player::drawHealthBar(int x, int y) {
+	if (this->getHealth() < 30) {
+		if (healthAlpha < 30) {
+			healthAlphaFade = false;
+		}
+
+		if (healthAlphaFade == true) {
+			healthAlpha = healthAlpha -  (40-this->getHealth());
+			if (healthAlpha < 0) {
+				healthAlphaFade = false;
+				healthAlpha = 0;
+			}
+		} else {
+			healthAlpha = healthAlpha +  (40-this->getHealth());
+			if (healthAlpha > 255) {
+				healthAlphaFade = true;
+				healthAlpha = 255;
+			}
+
+		}
+		SDL_SetTextureAlphaMod(healthBar, healthAlpha);
+		SDL_SetTextureAlphaMod(healthBarContainer, healthAlpha);
+
+	} else {
+		if (healthAlpha != 255) {
+
+			healthAlpha = 255;
+			healthAlphaFade = true;
+			SDL_SetTextureAlphaMod(healthBar, healthAlpha);
+			SDL_SetTextureAlphaMod(healthBarContainer, healthAlpha);
+		}
+	}
+
+	SDL_Rect healthContainerRect;
+	healthContainerRect.h = 20;
+	healthContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
+	healthContainerRect.x = x;
+	healthContainerRect.y = y;
+	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBarContainer,&healthContainerRect,NULL);
+
+
+	SDL_Rect healthRect;
+	healthRect.h = 18;
+	healthRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getHealth() / 100;
+	healthRect.x = x + 1;
+	healthRect.y = y + 1;
+	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBar,&healthRect,NULL);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHealth()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
+	if (GameStateManager::Instance()->helpEnabled()) {
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("HEALTH:"), x , y - 24, 30, 24);
 	}
 }
 
-void Player::StopAnimation()
-{
-	this->setDrawImage( gsm->getImageLoader()->getMapImage(firstImgID + (currentPlayerAnimationRow * frameAmountX) + playerAnimationIdleColumn) );
+void Player::drawHungerBar(int x, int y) {
+	if (this->getHunger() < 30) {
+		if (hungerAlpha < 30) {
+			hungerAlphaFade = false;
+		}
+
+		if (hungerAlphaFade == true) {
+			hungerAlpha = hungerAlpha -  (40-this->getHunger());
+			if (hungerAlpha < 0) {
+				hungerAlphaFade = false;
+				hungerAlpha = 0;
+			}
+		} else {
+			hungerAlpha = hungerAlpha +  (40-this->getHunger());
+			if (hungerAlpha > 255) {
+				hungerAlphaFade = true;
+				hungerAlpha = 255;
+			}
+
+		}
+		SDL_SetTextureAlphaMod(hungerBar, hungerAlpha);
+		SDL_SetTextureAlphaMod(hungerBarContainer, hungerAlpha);
+	} else {
+		if (hungerAlpha != 255) {
+
+			hungerAlpha = 255;
+			hungerAlphaFade = true;
+			SDL_SetTextureAlphaMod(hungerBar, hungerAlpha);
+			SDL_SetTextureAlphaMod(hungerBarContainer, hungerAlpha);
+		}
+	}
+
+	SDL_Rect hungerContainerRect;
+	hungerContainerRect.h = 20;
+	hungerContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
+	hungerContainerRect.x = x;
+	hungerContainerRect.y = y;
+	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBarContainer,&hungerContainerRect,NULL);
+
+	SDL_Rect hungerRect;
+	hungerRect.h = 18;
+	hungerRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getHunger() / 100;
+	hungerRect.x = x + 1;
+	hungerRect.y = y + 1;
+	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBar,&hungerRect,NULL);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHunger()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 15, 18);
+	if (GameStateManager::Instance()->helpEnabled()) {
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("FOOD:"), x , y - 24, 30, 24);
+	}
+
+}
+
+void Player::drawThirstBar(int x, int y) {
+	if (this->getThirst() < 30) {
+		if (thirstAlpha < 30) {
+			thirstAlphaFade = false;
+		}
+
+		if (thirstAlphaFade == true) {
+			thirstAlpha = thirstAlpha - (40-this->getThirst());
+			if (thirstAlpha < 0) {
+				thirstAlphaFade = false;
+				thirstAlpha = 0;
+			}
+		} else {
+			thirstAlpha = thirstAlpha + (40-this->getThirst());
+			if (thirstAlpha > 255) {
+				thirstAlphaFade = true;
+				thirstAlpha = 255;
+			}
+
+		}
+		SDL_SetTextureAlphaMod(thirstBar, thirstAlpha);
+		SDL_SetTextureAlphaMod(thirstBarContainer, thirstAlpha);
+
+	} else {
+		if (thirstAlpha != 255) {
+
+			thirstAlpha = 255;
+			thirstAlphaFade = true;
+			SDL_SetTextureAlphaMod(thirstBar, thirstAlpha);
+			SDL_SetTextureAlphaMod(thirstBarContainer, thirstAlpha);
+		}
+	}
+
+
+	SDL_Rect thirstContainerRect;
+	thirstContainerRect.h = 20;
+	thirstContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
+	thirstContainerRect.x = x;
+	thirstContainerRect.y = y;
+	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBarContainer,&thirstContainerRect,NULL);
+
+	SDL_Rect thirstRect;
+	thirstRect.h = 18;
+	thirstRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getThirst() / 100;
+	thirstRect.x = x + 1;
+	thirstRect.y = y + 1;
+	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBar,&thirstRect,NULL);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getThirst()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
+	if (GameStateManager::Instance()->helpEnabled()) {
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("WATER:"), x , y - 24, 30, 24);
+	}
 }
 
 
-Player::~Player(void)
-{
+void Player::draw() {
+	this->drawHealthBar(this->getInventory()->getStartingX(), this->getInventory()->getStartingY() - 30);
+
+	this->drawThirstBar(this->getInventory()->getStartingX() + 35*((this->getInventory()->getWidth()) / 100), this->getInventory()->getStartingY() - 30);
+
+	this->drawHungerBar(this->getInventory()->getStartingX() + 7*((this->getInventory()->getWidth())/ 10), this->getInventory()->getStartingY() - 30);
+}
+
+Player::~Player(void) {
+	SDL_DestroyTexture(hungerBar);
+	SDL_DestroyTexture(hungerBarContainer);
+
+	SDL_DestroyTexture(healthBar);
+	SDL_DestroyTexture(healthBarContainer);
+
+	SDL_DestroyTexture(thirstBar);
+	SDL_DestroyTexture(thirstBarContainer);
+
 	delete this->inventory;
+	delete this->statusTracker;
 }

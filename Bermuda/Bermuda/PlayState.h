@@ -5,8 +5,7 @@
 #include "Camera.h"
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
-#include "Rabbit.h"
-#include "Wasp.h"
+#include "GameTimer.h"
 
 class PlayState : public IGameState
 {
@@ -22,11 +21,21 @@ private:
 	int alpha;
 
 	int counter;
+	bool mapLoaded;
 	Camera* camera;
 
-	void doSomething();
+	Player* p;
+	std::vector<DrawableEntity*> temp;
+
+	int timesUpdate;
+	bool ready;
+	bool showCol, showInter, showSpawnArea; 
+	
+
+	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
 
 public:
+	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
 
 	void init(GameStateManager *gsm);
@@ -36,8 +45,14 @@ public:
 	void resume();
 
 	void handleEvents(SDL_Event mainEvent) ;
+
 	void update(double dt);
+	void updateGameTimers(double dt);
+	
+
 	void draw();
+
+	Camera* getCamera();
 
 	static PlayState* Instance() {
 		return &m_PlayState;
@@ -45,11 +60,4 @@ public:
 
 	PlayState(void);
 	~PlayState(void);
-
-private:
-	Player* p;
-
-	// TEMPORARY RABBIT CONTAINER
-	std::vector<Rabbit*> rabbits;
-	std::vector<Wasp*> wasps;
 };

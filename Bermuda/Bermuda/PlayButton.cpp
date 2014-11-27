@@ -1,33 +1,20 @@
 #include "PlayButton.h"
 
 
-PlayButton::PlayButton(GameStateManager *gsm) : BaseButton()
+PlayButton::PlayButton()
 {
 	init();
-	loadNormalPicture(gsm);
 }
 
 void PlayButton::init()
 {
-	normalPicture = RESOURCEPATH + "Textures/play.png";
-	hoverPicure = RESOURCEPATH + "Textures/play_hover.png";
+	std::string Message = "Play";
+	createButton(Message);
 }
 
-void PlayButton::action(GameStateManager *gsm)
+void PlayButton::action()
 {
-	gsm->changeGameState(PlayState::Instance());
-}
-
-void PlayButton::loadNormalPicture(GameStateManager *gsm)
-{
-	SDL_DestroyTexture(buttonImage);
-	buttonImage = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), normalPicture.c_str());
-}
-
-void PlayButton::loadHoverPicture(GameStateManager *gsm)
-{
-	SDL_DestroyTexture(buttonImage);
-	buttonImage = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), hoverPicure.c_str());
+	GameStateManager::Instance()->changeGameState(PlayState::Instance());
 }
 
 PlayButton::~PlayButton()
