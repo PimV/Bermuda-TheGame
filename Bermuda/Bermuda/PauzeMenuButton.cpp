@@ -10,7 +10,7 @@ PauzeMenuButton::PauzeMenuButton()
 void PauzeMenuButton::init()
 {
 	std::string Message = "Save and back to menu";
-	createButton(Message);
+	createButton(Message, 24, 1);
 }
 
 void PauzeMenuButton::action()

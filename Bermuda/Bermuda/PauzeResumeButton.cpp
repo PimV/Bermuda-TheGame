@@ -10,7 +10,7 @@ PauzeResumeButton::PauzeResumeButton()
 void PauzeResumeButton::init()
 {
 	std::string Message = "Resume";
-	createButton(Message);
+	createButton(Message, 24, 1);
 }
 
 void PauzeResumeButton::action()

@@ -1,15 +1,23 @@
 #pragma once
+#include "BaseScreen.h"
+#include "GameStateManager.h"
 #include "BaseButton.h"
-#include "BaseScreen.h" 
+#include <SDL_image.h>
+#include <iostream>
 
-class PauseMainScreen : public BaseScreen
+class MenuMainScreen :
+	public BaseScreen
 {
 private:
 	//variables
-	std::vector<BaseButton*> buttons;
+	SDL_Texture* bermudaTextTexture;
+	SDL_Rect bermudaTextRect;
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
-	
+
+	//variables buttons
+	std::vector<BaseButton*> buttons;
+
 	//methodes
 	void init();
 	void cleanup();
@@ -22,7 +30,7 @@ public:
 	void draw();
 
 	//constructors destructors
-	PauseMainScreen();
-	virtual ~PauseMainScreen();
+	MenuMainScreen();
+	virtual ~MenuMainScreen();
 };
 

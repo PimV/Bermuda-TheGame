@@ -1,8 +1,9 @@
 #pragma once
 #include <SDL.h>
 #include <vector>
+#include "BaseScreen.h"
 
-class PauseStatusTrackerScreen
+class PauseStatusTrackerScreen : public BaseScreen
 {
 private:
 	//variables
@@ -23,6 +24,7 @@ private:
 
 public:
 	//Methodes
+	void resetButtons();
 	void handleEvents(SDL_Event);
 	void draw();
 

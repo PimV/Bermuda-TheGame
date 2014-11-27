@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "MenuState.h"
+#include "GameTimer.h"
 
 GameOverState GameOverState::m_GameOverState;
 
