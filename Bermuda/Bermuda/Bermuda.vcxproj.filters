@@ -145,6 +145,12 @@
     <Filter Include="Header Files\Model\Timer">
       <UniqueIdentifier>{e7c0fa02-296a-4ec0-8cd3-1155d1e50f29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\ParticleEngine">
+      <UniqueIdentifier>{343e998e-94d3-4fd5-a361-1822b1f493d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\ParticleEngine">
+      <UniqueIdentifier>{68e5e99c-fec4-4f60-aba2-46370840d69f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -446,6 +452,12 @@
     </ClCompile>
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Model\ParticleEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEngine.cpp">
+      <Filter>Source Files\Model\ParticleEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -763,6 +775,15 @@
     </ClInclude>
     <ClInclude Include="Crafting.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\Model\ParticleEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEngine.h">
+      <Filter>Header Files\Model\ParticleEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="PARTICLETYPES.h">
+      <Filter>Header Files\Model\ParticleEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
