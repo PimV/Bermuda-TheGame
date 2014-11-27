@@ -8,6 +8,9 @@
 #include "Windows.h" 
 #include "Item.h"
 #include <thread>
+#include "ToolAxe.h"
+#include "ItemCarrot.h"
+#include "DAYPART.h"
 #include "Items.h"
 #include "Consumable.h"
 #include "Equipable.h"
@@ -28,10 +31,11 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	GameStateManager::Instance()->setSpeedMultiplier(1);
-	ready = false;
-	showCol = false;
-	showInter = false;
-	showSpawnArea = false;
+	this->ready = false;
+	this->showCol = false;
+	this->showInter = false;
+	this->showSpawnArea = false;
+	this->timesUpdate = 0;
 
 
 	mec = new MainEntityContainer();
@@ -44,8 +48,9 @@ void PlayState::init(GameStateManager *gsm) {
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png",32, 32)));
 
+	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
-	ready = true;
+	this->ready = true;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -54,7 +59,7 @@ MainEntityContainer* PlayState::getMainEntityContainer()
 }
 
 void PlayState::cleanup() {
-
+	GameTimer::Instance()->cleanUp();
 }
 
 void PlayState::pause() {
@@ -288,7 +293,14 @@ void PlayState::update(double dt) {
 		return;
 	}
 
-	this->updateGameTimers();
+	if(this->timesUpdate > 2)
+	{
+		this->updateGameTimers(dt);
+	}
+	else
+	{
+		this->timesUpdate++;
+	}
 
 	//TODO: moet dit nog?
 	//this->gsm->getActionContainer()->executeAllActions(dt);
@@ -347,15 +359,9 @@ void PlayState::update(double dt) {
 	}
 }
 
-void PlayState::updateGameTimers() {
+void PlayState::updateGameTimers(double dt) {
 
-	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
-	//DayTimeTimer::Instance()->updateDayTime();
-	GameTimer::Instance()->updateDayTime();
-}
-
-long PlayState::getGameTimer() {
-	return GameTimer::Instance()->getGameTime();
+	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 }
 
 void PlayState::draw() 
@@ -463,16 +469,13 @@ void PlayState::draw()
 		this->p->getInventory()->draw();
 	}
 
-	// Draw the player status
+	//Draw timer
+	GameTimer::Instance()->draw();
 
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
-	// if current hour is smaller then 9 
-	if (GameTimer::Instance()->getCurrentDayPart() > 9)
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
-	else
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
+	//TODO : WEG ALS PIMS BALKEN ER IN ZITTEN
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, ScreenHeight - 100, 100, 25);
+ 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
+ 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
 }
 
 Player* PlayState::getPlayer()

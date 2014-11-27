@@ -1,24 +1,40 @@
 #pragma once
+#include "header_loader.h"
+#include "DAYPART.h"
 #include <iostream>
 
 class GameTimer
 {
+private:
+	static GameTimer s_GameTimer;
+
+	SDL_Rect rectArrow;
+	SDL_Rect rectCircle;
+	SDL_Texture* textCircle;
+	SDL_Texture* textArrow;
+
+	DAYPART currentDayPart;
+
+	long gameTime;
+	double dayLength;
+	double startDay;
+	int days;
+
 public:
 	GameTimer(void);
 	~GameTimer(void);
 
 	static GameTimer* Instance() { return &s_GameTimer; };
-	void updateGameTime(long _gameTime);
+
+	void init();
+	void updateGameTime(long gameTime);
+	void updateDay();
 	long getGameTime();
 
-	bool checkTimerAction(long* lastUpdate, long* nextUpdate);
+	int getDaysSurvived();
+	double getPercentage();
+	DAYPART getCurrentDayPart();
 
-	void updateDayTime();
-	int getCurrentDayPart();
-
-private:
-	static GameTimer s_GameTimer;
-	long gameTime;
-	long lastDayPartUpdate, nextDayUpdate;
-	int dayParts, currentDayPart;
+	void draw();
+	void cleanUp();
 };

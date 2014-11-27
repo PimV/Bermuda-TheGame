@@ -1,63 +1,115 @@
 #include "GameTimer.h"
+#include "GameStateManager.h"
 
 GameTimer GameTimer::s_GameTimer;
+
 GameTimer::GameTimer(void)
 {
-	this->dayParts = 24;
-	this->currentDayPart = 0;
+}
+
+void GameTimer::init()
+{
+	this->dayLength = 60000;
 	this->gameTime = 0;
-	this->nextDayUpdate = 0;
+	this->startDay = 0;
+	this->days = 0;
+	this->currentDayPart = DAYPART::Day;
 
-	//this->lastDayPartUpdate = 57391; // +- 60 seconds
-	//this->lastDayPartUpdate = 25686; // +- ? seconds
-	//this->lastDayPartUpdate = 12843; // +- ? seconds
-	//this->lastDayPartUpdate = 5422; // +- 11 seconds
-	//this->lastDayPartUpdate = 2911; // +- 6 seconds
-	this->lastDayPartUpdate = 1500; // +- 3.1 seconds
+	//Draw part
+	textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circleTotal.png").c_str());
+	textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
+
+	rectCircle.w = ScreenWidth / 10;
+	rectCircle.h = rectCircle.w;
+	rectCircle.x = ScreenWidth - rectCircle.w - rectCircle.w / 4;
+	rectCircle.y = rectCircle.w / 4;
+
+	rectArrow.w = 6;
+	rectArrow.h = rectCircle.h / 2 - rectCircle.h / 10;
+	rectArrow.x = rectCircle.x + rectCircle.w / 2 - rectArrow.w / 2;
+	rectArrow.y = rectCircle.y + rectCircle.h / 2 - rectArrow.h + 2;
+
 }
 
-GameTimer::~GameTimer(void)
+void GameTimer::updateGameTime(long gameTime)
 {
-	this->gameTime = NULL;
+	this->gameTime += gameTime;
+	this->updateDay();
 }
-
-void GameTimer::updateGameTime(long _gameTime)
-{
-	this->gameTime += _gameTime;
-}
-
-/*
-bool GameTimer::checkTimerAction(long* lastUpdate, long* nextUpdate)
-{
-	long elapsedTime = this->gameTime - *nextUpdate;
-	if ( *lastUpdate < elapsedTime ) {
-		*nextUpdate = this->gameTime + *lastUpdate;
-		return true;
-	}
-	return false;
-}
-*/
 
 long GameTimer::getGameTime()
 {
 	return this->gameTime;
 }
 
-void GameTimer::updateDayTime()
+void GameTimer::updateDay()
 {
-	long elapsedTime = (this->getGameTime() - this->nextDayUpdate);
-	if ( this->lastDayPartUpdate < elapsedTime )
-	{
-		this->nextDayUpdate = GameTimer::Instance()->getGameTime() + this->lastDayPartUpdate;
+	double percentage = this->getPercentage();
 
-		if (this->currentDayPart < this->dayParts)
-			this->currentDayPart++;
-		else
-			this->currentDayPart = 0;
+	//If 90% -> night
+	if(percentage >= 90 && percentage < 100 && this->currentDayPart != DAYPART::Night)
+	{
+		this->currentDayPart = DAYPART::Night;
+	}
+	//If 70& -> evening
+	else if(percentage >= 70 && percentage < 90 && this->currentDayPart != DAYPART::Evening)
+	{
+		this->currentDayPart = DAYPART::Evening;
+	}
+	//If 0% -> day
+	else if(percentage < 70 && this->currentDayPart != DAYPART::Day)
+	{
+		this->currentDayPart = DAYPART::Day;
+	}
+
+	//Day passed
+	if((this->startDay + this->dayLength) < this->gameTime)
+	{
+		this->startDay = this->gameTime;
+		this->days++;
 	}
 }
 
-int GameTimer::getCurrentDayPart()
+double GameTimer::getPercentage()
+{
+	return ((this->gameTime - this->startDay) / this->dayLength) * 100;
+}
+
+DAYPART GameTimer::getCurrentDayPart()
 {
 	return this->currentDayPart;
+}
+
+int GameTimer::getDaysSurvived()
+{
+	return this->days;
+}
+
+void GameTimer::draw()
+{
+	//Draw circle
+	GameStateManager::Instance()->sdlInitializer->drawTexture(textCircle, &rectCircle, NULL);
+
+	SDL_Point rotatePoint = { rectArrow.w / 2, rectArrow.h - 3 };
+	//Draw arrow in right direction
+	SDL_RenderCopyEx(	GameStateManager::Instance()->sdlInitializer->getRenderer(),
+		textArrow,
+		NULL,
+		&rectArrow,
+		3.6 * this->getPercentage(),
+		&rotatePoint,
+		SDL_FLIP_NONE);
+
+	//Draw amount of days
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day: " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 6, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4);
+}
+
+void GameTimer::cleanUp()
+{
+	SDL_DestroyTexture(textCircle);
+	SDL_DestroyTexture(textArrow);
+}
+
+GameTimer::~GameTimer(void)
+{
 }

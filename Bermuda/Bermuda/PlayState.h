@@ -27,6 +27,7 @@ private:
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 
+	int timesUpdate;
 	bool ready;
 	bool showCol, showInter, showSpawnArea; 
 	
@@ -46,8 +47,7 @@ public:
 	void handleEvents(SDL_Event mainEvent) ;
 
 	void update(double dt);
-	void updateGameTimers();
-	long getGameTimer();
+	void updateGameTimers(double dt);
 	
 
 	void draw();
