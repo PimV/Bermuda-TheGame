@@ -30,6 +30,10 @@ public:
 	void updateGameTime(long gameTime);
 	void updateDay();
 	long getGameTime();
+	double getFullDayLength();
+	double getDayLength();
+	double getEveningLength();
+	double getNightLength();
 
 	int getDaysSurvived();
 	double getPercentage();
