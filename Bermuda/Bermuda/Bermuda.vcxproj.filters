@@ -139,6 +139,12 @@
     <Filter Include="Source Files\View\Screens\PauseScreens">
       <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Timer">
+      <UniqueIdentifier>{776605e2-4b2b-48c9-a5b9-4fac22932242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Timer">
+      <UniqueIdentifier>{e7c0fa02-296a-4ec0-8cd3-1155d1e50f29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -267,12 +273,6 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="GameTimer.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="DayTimeTimer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ItemCarrot.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -395,7 +395,7 @@
     </ClCompile>
     <ClCompile Include="ToolFlint.cpp">
       <Filter>Source Files</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Cactus.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
@@ -440,6 +440,9 @@
     </ClCompile>
     <ClCompile Include="ToolFlint.cpp">
       <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files\Model\Timer</Filter>
     </ClCompile>
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
@@ -580,12 +583,6 @@
     </ClInclude>
     <ClInclude Include="ItemType.h">
       <Filter>Header Files\Model\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="GameTimer.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="DayTimeTimer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ItemCarrot.h">
       <Filter>Header Files\Model\Item</Filter>
@@ -757,6 +754,12 @@
     </ClInclude>
     <ClInclude Include="ToolFlint.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Header Files\Model\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="DAYPART.h">
+      <Filter>Header Files\Model\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Crafting.h">
       <Filter>Header Files\Model\Item</Filter>
