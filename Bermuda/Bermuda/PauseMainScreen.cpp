@@ -19,9 +19,11 @@ void PauseMainScreen::init()
 	PauzeExitButton* exitButton = new PauzeExitButton();
 	PauzeAchievementsButton* achievementsButton = new PauzeAchievementsButton();
 
-	achievementsButton->placeAbove(menuButton);
-	resumeButton->placeAbove(achievementsButton);
-	exitButton->placeUnder(menuButton);
+	//place buttons
+	menuButton->placeMid();
+	achievementsButton->placeMidScreenAbove(menuButton);
+	resumeButton->placeMidScreenAbove(achievementsButton);
+	exitButton->placeMidScreenUnder(menuButton);
 
 	buttons.push_back(achievementsButton);
 	buttons.push_back(resumeButton);
@@ -36,7 +38,7 @@ void PauseMainScreen::init()
 void PauseMainScreen::setBackground()
 {
 	backgroundRect.x = ScreenWidth;
-	for each (BasePauzeButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		if (var->getX() <= backgroundRect.x)
 		{
@@ -47,7 +49,7 @@ void PauseMainScreen::setBackground()
 	backgroundRect.x = backgroundRect.x - 30;
 
 	backgroundRect.y = ScreenHeight;
-	for each (BasePauzeButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		if (var->getY() <= backgroundRect.y)
 		{
@@ -60,7 +62,7 @@ void PauseMainScreen::setBackground()
 	backgroundRect.w = 0;
 	backgroundRect.h = 0;
 
-	for each (BasePauzeButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		if (var->getWidth() >= backgroundRect.w)
 		{
@@ -70,12 +72,20 @@ void PauseMainScreen::setBackground()
 	//Make background wider
 	backgroundRect.w += 60;
 
-	for each (BasePauzeButton* var in buttons)
+	for each (BaseButton* var in buttons)
 	{
 		backgroundRect.h += var->getHeight() * 2;
 	}
 	//Make background higher
 	backgroundRect.h += 0;
+}
+
+void PauseMainScreen::resetButtons()
+{
+	for each (BaseButton* var in buttons)
+	{
+		var->reset();
+	}
 }
 
 void PauseMainScreen::handleEvents(SDL_Event mainEvent)

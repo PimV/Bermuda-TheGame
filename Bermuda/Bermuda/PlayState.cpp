@@ -1,5 +1,5 @@
 #include "PlayState.h"
-#include "Button.h"
+#include "MenuState.h"
 #include "GameStateManager.h"
 #include "ActionContainer.h"
 #include "PauseState.h"
@@ -92,11 +92,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			if (p->getInventory()->clicked(x,y, "select", p)) {
 			} else {
-				p->destX = x + this->camera->getX();
-				p->destY = y + this->camera->getY();
-				p->resetMovement();
-				p->moveClick = true;
-			}
+			p->destX = x + this->camera->getX();
+			p->destY = y + this->camera->getY();
+			p->resetMovement();
+			p->moveClick = true;
+		}
 		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
 			if (p->getInventory()->clicked(x, y, "use", p)) {
 
