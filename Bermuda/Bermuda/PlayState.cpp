@@ -471,14 +471,6 @@ void PlayState::draw()
 
 	//Draw timer
 	GameTimer::Instance()->draw();
-
-	//TODO : dit moet weg als HUD werkt
-	// Draw the player status
-	//this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
-	//this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
-	//this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
-	//this->gsm->sdlInitializer->drawText(std::string("Days: " + to_string(GameTimer::Instance()->getDaysSurvived())), 130, 150, 100, 25);
-	//this->gsm->sdlInitializer->drawText(std::string("Part: " + daypart_strings[((int)GameTimer::Instance()->getCurrentDayPart())]), ScreenWidth - 120, 125, 100, 25);
 }
 
 Player* PlayState::getPlayer()
