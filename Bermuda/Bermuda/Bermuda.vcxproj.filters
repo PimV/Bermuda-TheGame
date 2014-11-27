@@ -422,7 +422,7 @@
     </ClCompile>
     <ClCompile Include="GameTimer.cpp">
       <Filter>Source Files\Model\Timer</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
