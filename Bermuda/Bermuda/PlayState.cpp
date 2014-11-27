@@ -273,6 +273,7 @@ void PlayState::update(double dt) {
 	}
 
 	this->updateGameTimers();
+	mec->getDestroyContainer()->destroyAllEntities();
 
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {

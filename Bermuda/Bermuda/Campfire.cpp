@@ -21,7 +21,7 @@ void Campfire::animate(double dt)
 	long currentTime = GameTimer::Instance()->getGameTime();
 	if (this->creationTime + lifeTime < currentTime)
 	{
-		delete this;
+		PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 	}
 }
 
