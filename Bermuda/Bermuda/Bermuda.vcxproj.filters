@@ -450,14 +450,14 @@
     <ClCompile Include="Campfire.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatingEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AnimatingContainer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatingEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="DestroyContainer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -782,14 +782,14 @@
     <ClInclude Include="Campfire.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatingEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AnimatingContainer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
     <ClInclude Include="DestroyContainer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatingEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
