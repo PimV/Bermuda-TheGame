@@ -10,6 +10,7 @@ MainEntityContainer::MainEntityContainer(void)
 	m_container[ContainerType::Respawnable] = new RespawnContainer();
 	m_container[ContainerType::Movable] = new MovableContainer();
 	m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
+	m_container[ContainerType::Destroyed] = new DestroyContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {
@@ -42,6 +43,10 @@ MovableContainer* MainEntityContainer::getMovableContainer() {
 
 SpawnpointContainer* MainEntityContainer::getSpawnpointContainer() {
 	return static_cast<SpawnpointContainer*>(m_container[ContainerType::Spawnpoint]);
+}
+
+DestroyContainer* MainEntityContainer::getDestroyContainer() {
+	return static_cast<DestroyContainer*>(m_container[ContainerType::Destroyed]);
 }
 
 void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)

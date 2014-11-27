@@ -114,6 +114,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ContainerType.h" />
     <ClInclude Include="Crafting.h" />
     <ClInclude Include="DayTimeTimer.h" />
+    <ClInclude Include="DestroyContainer.h" />
     <ClInclude Include="DrawableContainer.h" />
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
@@ -217,6 +218,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="DayTimeTimer.cpp" />
+    <ClCompile Include="DestroyContainer.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="EasterHead.cpp" />
     <ClCompile Include="Entity.cpp" />

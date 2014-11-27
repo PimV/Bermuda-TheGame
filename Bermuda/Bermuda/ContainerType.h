@@ -1,13 +1,11 @@
 #pragma once
 enum class ContainerType
 {
-	Visible,
-	Invisible,
 	Movable,
 	Interactable,
 	Drawable,
 	Animating,
-	Destroyable,
+	Destroyed,
 	Collidable,
 	Background,
 	Respawnable,
