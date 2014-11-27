@@ -4,6 +4,11 @@ class MenuHelpScreen :
 	public BaseScreen
 {
 private:
+	//variables
+	SDL_Texture* tempTexture;
+	SDL_Rect tempRect;
+	SDL_Texture* temp2Texture;
+	SDL_Rect temp2Rect;
 
 	//methodes
 	void init();

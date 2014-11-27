@@ -139,6 +139,12 @@
     <Filter Include="Source Files\View\Screens\PauseScreens">
       <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\View\Buttons\MenuButtons">
+      <UniqueIdentifier>{08e5b615-3e72-4520-9632-98fe77bedd71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\Buttons\PauzeButtons">
+      <UniqueIdentifier>{7b9138f8-27fa-4050-9cb7-0076a04a314d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -243,12 +249,6 @@
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
-    <ClCompile Include="PauzeExitButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeMenuButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="EntityChunkContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
@@ -333,12 +333,6 @@
     <ClCompile Include="Pickaxe.cpp">
       <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
-    <ClCompile Include="PauzeAchievementsButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeResumeButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="Wasp.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
@@ -414,15 +408,6 @@
     <ClCompile Include="InteractableCactus.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
-    <ClCompile Include="MenuExitButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuPlayButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuCreditsButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="BaseScreen.cpp">
       <Filter>Source Files\View\Screens</Filter>
     </ClCompile>
@@ -431,9 +416,6 @@
     </ClCompile>
     <ClCompile Include="MenuCreditsScreen.cpp">
       <Filter>Source Files\View\Screens\MenuScreens</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuMainButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="BaseButton.cpp">
       <Filter>Source Files\Controller</Filter>
@@ -444,11 +426,35 @@
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="MenuHelpButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="MenuHelpScreen.cpp">
       <Filter>Source Files\View\Screens\MenuScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuCreditsButton.cpp">
+      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuExitButton.cpp">
+      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuHelpButton.cpp">
+      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuMainButton.cpp">
+      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuPlayButton.cpp">
+      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeAchievementsButton.cpp">
+      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeExitButton.cpp">
+      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeMenuButton.cpp">
+      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="PauzeResumeButton.cpp">
+      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
