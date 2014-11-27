@@ -16,6 +16,7 @@ private:
 	DAYPART currentDayPart;
 
 	long gameTime;
+	long frameTime;
 	double dayLength;
 	double startDay;
 	int days;
@@ -30,6 +31,7 @@ public:
 	void updateGameTime(long gameTime);
 	void updateDay();
 	long getGameTime();
+	long getFrameTime();
 
 	int getDaysSurvived();
 	double getPercentage();

@@ -226,10 +226,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->setCollisionY(-10000);
 			break;
 		case SDLK_SPACE:
-			//Current interact button (= space)
-			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
 			p->interaction = true;
 			p->interact();
+			break;
+		default:
 			break;
 
 

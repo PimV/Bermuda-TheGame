@@ -17,10 +17,8 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
-
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	this->interactTime = 1000;
+	//this->currentInteractTime = 0;
 }
 
 void Tree::interact(Player* player) {
@@ -37,8 +35,7 @@ void Tree::interact(Player* player) {
 
 void Tree::update(double dt) {
 	if (this->destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -46,7 +43,6 @@ void Tree::update(double dt) {
 
 void Tree::respawn() {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->treeImage);
 	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
@@ -54,7 +50,7 @@ void Tree::respawn() {
 
 void Tree::setDestroyedState() 
 {
-	// pims code, doesn't work with GameTimer
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);
 	this->getMainEntityContainer()->getRespawnContainer()->add(this);

@@ -14,9 +14,7 @@ Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
 	this->destroyed = false;
 	this->respawnTime = 10000;
 	this->interactTime = 500;
-
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	//this->currentInteractTime = 0;
 }
 
 void Fish::interact(Player* player) 
@@ -34,8 +32,7 @@ void Fish::interact(Player* player)
 void Fish::update(double dt) 
 {
 	if (this->destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -44,7 +41,6 @@ void Fish::update(double dt)
 void Fish::respawn() 
 {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
@@ -52,6 +48,7 @@ void Fish::respawn()
 
 void Fish::setDestroyedState() 
 {
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
