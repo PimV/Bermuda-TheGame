@@ -19,7 +19,6 @@ Inventory::Inventory(void)
 }
 
 void Inventory::init() {
-	std::cout<< "Created inv"<<std::endl;
 	this->open = false;
 	this->slots = 15;
 	this->itemVector = std::vector<Item*>();
@@ -43,8 +42,6 @@ void Inventory::init() {
 
 	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
 	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
-
-	std::cout << "Creating inv img" << std::endl;
 }
 
 void Inventory::cleanup() {
