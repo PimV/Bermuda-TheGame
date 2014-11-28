@@ -112,11 +112,11 @@ Particle* ParticleEngine::createParticle(PARTICLETYPES particleType)
 		pDy = -0.5;
 		if(pX < this->x + 5 || pX > this->x + 20)
 		{
-			lifeTime = 300 + rand() % 600;
+			lifeTime = 200 + rand() % 800;
 		}
 		else
 		{
-			lifeTime = 400 + rand() % 1200;
+			lifeTime = 200 + rand() % 1400;
 		}
 
 		width = 3;

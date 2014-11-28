@@ -56,7 +56,7 @@ void PlayState::init(GameStateManager *gsm) {
 
 	
 	//pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, PARTICLETYPES::SMOKE);
-	pEngine = new ParticleEngine(600,420, PARTICLETYPES::SMOKE);
+	pEngine = new ParticleEngine(400,400, PARTICLETYPES::SMOKE);
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()

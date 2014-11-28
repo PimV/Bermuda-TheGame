@@ -20,7 +20,6 @@ Particle::Particle(float x, float y, float dx, float dy, int life, SDL_Texture* 
 
 void Particle::move(double dt)
 {
-	//TODO:: Make speed working with the gamespeedup / slowdown
 	this->x += this->dx * dt;
 	this->y += this->dy * dt;
 
