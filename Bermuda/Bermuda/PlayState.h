@@ -6,11 +6,14 @@
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
 #include "GameTimer.h"
+#include "ParticleEngine.h"
 
 class PlayState : public IGameState
 {
 private:
 	static PlayState m_PlayState;
+	
+	ParticleEngine* pEngine;
 
 	GameStateManager* gsm;
 

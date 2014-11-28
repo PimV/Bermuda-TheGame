@@ -15,6 +15,8 @@
 #include "Consumable.h"
 #include "Equipable.h"
 
+#include "PARTICLETYPES.h"
+
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
 #include "Pickaxe.h"
@@ -51,6 +53,10 @@ void PlayState::init(GameStateManager *gsm) {
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
 	this->ready = true;
+
+	
+	//pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, PARTICLETYPES::SMOKE);
+	pEngine = new ParticleEngine(600,420, PARTICLETYPES::SMOKE);
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -357,6 +363,9 @@ void PlayState::update(double dt) {
 			}
 		}
 	}
+
+	
+	this->pEngine->updateParticles(dt);
 }
 
 void PlayState::updateGameTimers(double dt) {
@@ -476,6 +485,9 @@ void PlayState::draw()
 	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, ScreenHeight - 100, 100, 25);
  	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
  	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
+
+	
+	this->pEngine->drawParticles();
 }
 
 Player* PlayState::getPlayer()

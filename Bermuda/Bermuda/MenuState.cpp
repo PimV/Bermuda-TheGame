@@ -2,7 +2,6 @@
 #include "MenuState.h"
 #include "PlayState.h"
 #include "GameStateManager.h"
-#include "PARTICLETYPES.h"
 #include <iostream>
 #include <SDL_ttf.h>
 
@@ -15,8 +14,6 @@ MenuState::MenuState(void)
 //TODO: remove GSM
 void MenuState::init(GameStateManager* gsm)
 {
-	//pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, PARTICLETYPES::SMOKE);
-	pEngine = new ParticleEngine(0,0, PARTICLETYPES::SNOW);
 	mainScr = new MenuMainScreen;
 	creditsScr = new MenuCreditsScreen;
 	setCurWindow(getMenuMainScreen());
@@ -50,12 +47,10 @@ void MenuState::handleEvents(SDL_Event mainEvent)
 void MenuState::draw()
 {
 	curScreen->draw();
-	this->pEngine->drawParticles();
 }
 
 void MenuState::update(double dt)
 {
-	this->pEngine->updateParticles(dt);
 }
 
 void MenuState::pause()

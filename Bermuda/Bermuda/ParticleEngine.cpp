@@ -8,6 +8,7 @@ ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 	this->x = x;
 	this->y = y;
 	this->particleType = particleType;
+	this->currentMaxParticles = 0;
 	//this->textPixel = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelGrey.png").c_str());
 
 
@@ -24,7 +25,7 @@ ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 		this->height = 10;
 		break;		
 	case PARTICLETYPES::SMOKE:		
-		this->maxParticles = 200;
+		this->maxParticles = 300;
 		SDL_SetTextureColorMod(this->textPixel,155,155,155);
 		SDL_SetTextureAlphaMod(this->textPixel, 100);
 		this->width = 25;
@@ -38,8 +39,7 @@ ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 		this->height = 1;
 		break;		
 	case PARTICLETYPES::SNOW:		
-		this->maxParticles = 75;
-		this->currentMaxParticles = 1;
+		this->maxParticles = 750;
 		SDL_SetTextureColorMod(this->textPixel,255,255,255);
 		SDL_SetTextureAlphaMod(this->textPixel, 255);
 		this->width = ScreenWidth;
@@ -53,17 +53,10 @@ ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 	{
 		this->particles.push_back(nullptr);
 	}
-
-	for(int i = 0; i < this->currentMaxParticles; i++)
-	{
-		this->particles.push_back(this->createParticle(particleType));
-	}
-
 }
 
 void ParticleEngine::updateParticles(double dt)
 {
-	std::cout << this->currentMaxParticles << std::endl;
 	for(int i = 0; i < this->currentMaxParticles; i++)
 	{
 		if(this->particles[i] == nullptr || this->particles[i]->getIsDead())
@@ -116,16 +109,24 @@ Particle* ParticleEngine::createParticle(PARTICLETYPES particleType)
 		break;
 	case PARTICLETYPES::SMOKE:
 		pDx = 0.05;
-		pDy = -0.3;
-		lifeTime = 400 + rand() % 1200;
-		width = 2;
-		height = 2;
+		pDy = -0.5;
+		if(pX < this->x + 5 || pX > this->x + 20)
+		{
+			lifeTime = 300 + rand() % 600;
+		}
+		else
+		{
+			lifeTime = 400 + rand() % 1200;
+		}
+
+		width = 3;
+		height = 3;
 
 		break;
 	case PARTICLETYPES::SNOW:
 		pDx = -0.05;
 		pDy = 3;
-		lifeTime = 5000 + rand() % 1000;
+		lifeTime = 3000 + rand() % 1000;
 		width = 3;
 		height = 3;
 

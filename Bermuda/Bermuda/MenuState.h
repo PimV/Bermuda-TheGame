@@ -5,14 +5,12 @@
 #include "header_loader.h"
 #include "MenuMainScreen.h"
 #include "MenuCreditsScreen.h"
-#include "ParticleEngine.h"
 
 
 class MenuState :
 	public IGameState
 {
 private:
-	ParticleEngine* pEngine;
 	//variables		Screens
 	BaseScreen* curScreen;
 	MenuMainScreen* mainScr;
