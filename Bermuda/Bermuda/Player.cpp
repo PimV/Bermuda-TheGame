@@ -361,5 +361,6 @@ bool Player::checkCollision(double newX, double newY)
 
 Player::~Player(void) {
 	delete this->inventory;
+	delete this->crafting;
 	delete this->statusTracker;
 }
