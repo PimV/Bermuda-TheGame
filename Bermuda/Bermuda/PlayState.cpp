@@ -489,7 +489,7 @@ void PlayState::draw()
 	
 	this->pEngine->drawParticles();
 
-	blackSurface =  SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth / 2, ScreenHeight / 2, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0x00000000);
+	blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth / 2, ScreenHeight / 2, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 
 	SDL_Rect screenRect = {0, 0, ScreenWidth / 2 -1, ScreenHeight / 2 -1};
 	SDL_FillRect(blackSurface, &screenRect, 0xFF00D9FF);
@@ -503,11 +503,12 @@ void PlayState::draw()
     Uint32* srcPixels = (Uint32*)image->pixels;
 	int locX = 400;
 	int locY = 400;
+	Uint32 pixel = SDL_MapRGBA(blackSurface->format, 255, 0, 220, 150);
 
 	int i = 0;
 	while(i < 20000)
 	{
-		destPixels[i] = 0x16FF35B8;
+		destPixels[i] = pixel;
 		i++;
 	}
 	//for(int x = 0; x < image->w; ++x)
