@@ -24,9 +24,6 @@ Bat::Bat(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 	this->movingUp = false;
 	//this->interaction = false;
 
-	this->setTempX(this->getX());
-	this->setTempY(this->getY());
-
 	this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 0, this->animationWalkLeftRow = 1;
@@ -138,9 +135,9 @@ void Bat::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Bat::checkIntersects(CollidableEntity* collidableEntity)
+bool Bat::checkCollision(double newX, double newY)
 {
-	return this->intersects(collidableEntity, this);
+	return CollidableEntity::checkCollision(newX, newY);
 }
 
 Bat::~Bat()

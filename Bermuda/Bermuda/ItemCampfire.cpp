@@ -27,10 +27,15 @@ void ItemCampfire::use(Player* p)
 	//TODO: object factory
 	Campfire* campfire = new Campfire(0, x, y, 300, GameStateManager::Instance()->getImageLoader()->loadTileset("Objects\\Campfire 50x52.png", 50, 52));
 
-	//TODO: Somehow check collision? 
-	//if collision, delete Campfire
-
-	p->getInventory()->deleteItemFromStack(this, 1);
+	//if collision, delete Campfire and keep item.
+	if (campfire->checkCollision())
+	{
+		delete campfire;
+	}
+	else
+	{
+		p->getInventory()->deleteItemFromStack(this, 1);
+	}
 }
 
 ItemCampfire::~ItemCampfire()

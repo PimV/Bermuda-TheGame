@@ -26,14 +26,6 @@ void Entity::setZ(double z) {
 	this->z = z;
 }
 
-void Entity::setTempX(double x) {
-	this->tempX = x;
-}
-
-void Entity::setTempY(double y) {
-	this->tempY = y;
-}
-
 void Entity::setWidth(double width) {
 	this->width = width;
 }
@@ -73,16 +65,6 @@ double Entity::getX() {
 
 double Entity::getY() {
 	return this->y;
-}
-
-double Entity::getTempX()
-{
-	return this->tempX;
-}
-
-double Entity::getTempY()
-{
-	return this->tempY;
 }
 
 double Entity::getZ() {

@@ -26,9 +26,6 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 	this->movingUp = false;
 	//this->interaction = false;
 
-	this->setTempX(this->getX());
-	this->setTempY(this->getY());
-
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;
 	this->animationWalkDownRow = 0, this->animationWalkRightRow = 2;
@@ -142,9 +139,9 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
+bool Rabbit::checkCollision(double newX, double newY)
 {
-	return this->intersects(collidableEntity, this);
+	return CollidableEntity::checkCollision(newX, newY);
 }
 
 Rabbit::~Rabbit()

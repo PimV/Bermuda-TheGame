@@ -41,7 +41,7 @@ public:
 
 	//void clickMove();
 	void clickMove();
-	void setPosition();
+	void setPosition(double newX, double newY);
 	void interact();
 	void resetMovement();
 
@@ -73,5 +73,5 @@ private:
 
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkIntersects(CollidableEntity* collidableEntity);
+	bool checkCollision(double newX, double newY);
 };

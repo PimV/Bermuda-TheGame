@@ -23,12 +23,10 @@ public:
 protected:
 	virtual void setImage(Image* image) = 0;
 	virtual void ResetDrawableEntityAndSetChunk() = 0;
-	virtual bool checkIntersects(CollidableEntity* collidableEntity) = 0;
+	virtual bool checkCollision(double newX, double newY) = 0;
 
 	virtual void move(double dt);
-	virtual void setPosition();
-	
-	bool checkCollision(CollidableContainer* container);
+	virtual void setPosition(double newX, double newY);
 
 	double dx, dy;
 

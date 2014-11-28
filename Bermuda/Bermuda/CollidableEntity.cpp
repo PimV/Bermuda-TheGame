@@ -64,7 +64,40 @@ double CollidableEntity::getCollisionY() {
 }
 #pragma endregion
 
-bool CollidableEntity::intersects(CollidableEntity* collidableEntity, MovableEntity* movableEntity) {
+bool CollidableEntity::checkCollision(double x, double y) {
+	//Calculate begin and end chunks for the collision check (+1 and -1 to make it a little bigger then the current chunk)
+	int beginChunkX = this->getChunkX() - 1;
+	int endChunkX = this->getChunkX() + 1;
+	int beginChunkY = this->getChunkY() - 1;
+	int endChunkY = this->getChunkY() + 1;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			std::vector<CollidableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (CollidableEntity* e : *vec)
+				{
+					if (this->intersects(x, y, e))
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool CollidableEntity::checkCollision() 
+{
+	return this->checkCollision(this->getX(), this->getY());
+}
+
+bool CollidableEntity::intersects(double x, double y, CollidableEntity* collidableEntity) {
 	if(this == collidableEntity)
 	{
 		return false;
@@ -75,10 +108,10 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity, MovableEnt
 	double targetTop = collidableEntity->getY() + collidableEntity->getCollisionY();
 	double targetBot = collidableEntity->getY() + collidableEntity->getCollisionY() + collidableEntity->getCollisionHeight();
 
-	double thisLeft = this->getTempX() + this->getCollisionX();
-	double thisRight = this->getTempX() + this->getCollisionX() + this->getCollisionWidth();
-	double thisTop = this->getTempY() + this->getCollisionY();
-	double thisBot = this->getTempY() + this->getCollisionY() + this->getCollisionHeight();
+	double thisLeft = x + this->getCollisionX();
+	double thisRight = x + this->getCollisionX() + this->getCollisionWidth();
+	double thisTop = y + this->getCollisionY();
+	double thisBot = y + this->getCollisionY() + this->getCollisionHeight();
 
 	if (this->getEnabled() &&
 		thisLeft < targetRight &&
@@ -90,6 +123,11 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity, MovableEnt
 	}
 
 	return false;
+}
+
+bool CollidableEntity::intersects(CollidableEntity* collidableEntity)
+{
+	return this->intersects(this->getX(), this->getY(), collidableEntity);
 }
 
 CollidableEntity::~CollidableEntity()

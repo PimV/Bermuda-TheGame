@@ -26,9 +26,6 @@ Wasp::Wasp(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 	this->movingUp = false;
 	//this->interaction = false;
 
-	this->setTempX(this->getX());
-	this->setTempY(this->getY());
-
 	this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 0, this->animationWalkLeftRow = 1;
@@ -140,9 +137,9 @@ void Wasp::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Wasp::checkIntersects(CollidableEntity* collidableEntity)
+bool Wasp::checkCollision(double newX, double newY)
 {
-	return this->intersects(collidableEntity, this);
+	return CollidableEntity::checkCollision(newX, newY);
 }
 
 Wasp::~Wasp()

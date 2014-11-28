@@ -45,41 +45,34 @@ void MovableEntity::move(double dt)
 		return;
 	}
 
-	this->setTempX(getX());
-	this->setTempY(getY());
-
 	double destX = getX() + dx;
 	double destY = getY() + dy;
 
-	bool col = false;
+	bool collision = false;
 
-	while(this->getTempX() != destX || this->getTempY() != destY)
+	while (this->getX() != destX || this->getY() != destY)
 	{
 		//x
-		double diffX = this->getTempX() - destX;
+		double diffX = this->getX() - destX;
 		if(diffX > -10 && diffX < 10)
 		{
 			stepX = -diffX;
 		}
 
 		//y
-		double diffY = this->getTempY() - destY;
+		double diffY = this->getY() - destY;
 		if(diffY > -10 && diffY < 10)
 		{
 			stepY = -diffY;
 		}
 
-		this->setTempX(getX() + stepX);
-		this->setTempY(getY() + stepY);
-
-
-		if (!this->checkCollision(PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()))
+		if (!this->checkCollision(this->getX() + stepX, this->getY() + stepY))
 		{
-			this->setPosition();
+			this->setPosition(this->getX() + stepX, this->getY() + stepY);
 		}
 		else
 		{
-			col = true;
+			collision = true;
 			break;
 		}
 	}
@@ -101,9 +94,13 @@ void MovableEntity::move(double dt)
 		this->currentAnimationRow = this->animationWalkDownRow;
 	}
 
-	if(!col)
+	if (!collision || this->keepAnimationWhenIdle)
 	{
 		PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
+	}
+	else
+	{
+		this->StopAnimation();
 	}
 
 	//PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
@@ -148,39 +145,9 @@ void MovableEntity::StopAnimation()
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }
 
-bool MovableEntity::checkCollision(CollidableContainer* container) {
-	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger then the current chunk)
-	int beginChunkX = this->getChunkX() - 1;
-	int endChunkX = this->getChunkX() + 1;
-	int beginChunkY = this->getChunkY() - 1;
-	int endChunkY = this->getChunkY() + 1;
-
-	//Loop through all chunks
-	for (int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for (int j = beginChunkX; j <= endChunkX; j++)
-		{
-			std::vector<CollidableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->getChunk(i, j);
-			if (vec != nullptr)
-			{
-				for (CollidableEntity* e : *vec)
-				{
-					if (this->checkIntersects(e)) 
-					{
-						this->StopAnimation();
-						return true;
-					}
-				}
-			}
-		}
-	}
-
-	return false;
-}
-
-void MovableEntity::setPosition() {
-	this->setX(this->tempX);
-	this->setY(this->tempY);
+void MovableEntity::setPosition(double newX, double newY) {
+	this->setX(newX);
+	this->setY(newY);
 
 	//Chance chunks if needed
 	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())

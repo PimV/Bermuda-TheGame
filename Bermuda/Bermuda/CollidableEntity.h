@@ -32,7 +32,10 @@ public:
 	double getCollisionWidth();
 	double getCollisionHeight();
 
-	bool intersects(CollidableEntity* collidableEntity, MovableEntity* movableEntity);
+	bool checkCollision(double x, double y);
+	bool checkCollision();
+	bool intersects(CollidableEntity* collidableEntity);
+	bool intersects(double x, double y, CollidableEntity* collidableEntity);
 
 	virtual ~CollidableEntity();
 };

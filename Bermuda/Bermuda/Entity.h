@@ -8,8 +8,6 @@ public:
 	//Setters
 	void setX(double x);
 	void setY(double y);
-	void setTempX(double x);
-	void setTempY(double y);
 	void setZ(double z);
 	void setWidth(double width);
 	void setHeight(double height);
@@ -24,8 +22,6 @@ public:
 	int getChunkX();
 	double getX();
 	double getY();
-	double getTempX();
-	double getTempY();
 	double getZ();
 	double getWidth();
 	double getHeight();
@@ -34,8 +30,6 @@ public:
 
 	//Destructor
 	virtual ~Entity(void);
-	double tempX;
-	double tempY;
 
 private:
 	//Entity ID
