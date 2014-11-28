@@ -488,6 +488,63 @@ void PlayState::draw()
 
 	
 	this->pEngine->drawParticles();
+
+	blackSurface =  SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth / 2, ScreenHeight / 2, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0x00000000);
+
+	SDL_Rect screenRect = {0, 0, ScreenWidth / 2 -1, ScreenHeight / 2 -1};
+	SDL_FillRect(blackSurface, &screenRect, 0xFF00D9FF);
+
+	SDL_Surface* image = IMG_Load((RESOURCEPATH + "hole.png").c_str());
+
+	//Lock so you can edit pixels
+	SDL_LockSurface(blackSurface);
+	
+    Uint32* destPixels = (Uint32*)blackSurface->pixels;
+    Uint32* srcPixels = (Uint32*)image->pixels;
+	int locX = 400;
+	int locY = 400;
+
+	int i = 0;
+	while(i < 20000)
+	{
+		destPixels[i] = 0x16FF35B8;
+		i++;
+	}
+	//for(int x = 0; x < image->w; ++x)
+ //   {
+ //       for(int y = 0; y < image->h; ++y)
+ //       {
+	//		Uint32* destPixel = destPixels + (y + locY) * blackSurface->w + locX + x;
+ //           Uint32* srcPixel = srcPixels + y * image->w + x;
+	//		
+ //           unsigned char* destAlpha = (unsigned char*)destPixel + 3; // fetch alpha channel
+ //           unsigned char* srcAlpha = (unsigned char*)srcPixel + 3; // fetch alpha channel
+ //           //if(keepFogRemoved == true && *srcAlpha > 0)
+ //           //{
+ //           //    continue; // skip this pixel
+ //           //}
+
+	//		*destAlpha = *srcAlpha;
+ //       }
+ //   }
+
+	//Unlock
+    SDL_UnlockSurface(blackSurface);
+
+	SDL_Texture* text2 = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurface);
+	//SDL_Texture* text = SDL_CreateTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, ScreenWidth, ScreenHeight);
+	//SDL_UpdateTexture(text, NULL, blackSurface->pixels, blackSurface->pitch);
+	 
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), text2, NULL, &screenRect);
+
+	SDL_DestroyTexture(text2);
+	SDL_FreeSurface(blackSurface);
+	
+	/*SDL_Rect Dest = { 0, 0, 0, 0 };
+	SDL_BlitSurface(blackSurface, NULL, SDL_GetWindowSurface(GameStateManager::Instance()->sdlInitializer->window), &Dest);
+	
+    SDL_UpdateWindowSurface(GameStateManager::Instance()->sdlInitializer->window);*/
+	//std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 }
 
 Player* PlayState::getPlayer()

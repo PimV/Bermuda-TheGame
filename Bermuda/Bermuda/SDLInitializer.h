@@ -11,10 +11,10 @@ public:
 	void drawScreen();
 	void drawText(std::string msg, int x, int y, int w, int h);
 	SDL_Renderer* getRenderer();
+	SDL_Window* window;
 	virtual ~SDLInitializer(void);
 private:
 	SDL_Surface* screen;
-	SDL_Window* window;
 	SDL_Renderer* renderer;
 	TTF_Font* font;
 
