@@ -14,6 +14,7 @@ private:
 	int width;
 	int height;
 	int maxParticles;
+	int currentMaxParticles;
 
 	PARTICLETYPES particleType;
 
@@ -23,7 +24,7 @@ private:
 	Particle* createParticle(PARTICLETYPES particleType);
 
 public:
-	ParticleEngine(int x, int y, int width, int height, PARTICLETYPES);
+	ParticleEngine(int x, int y, PARTICLETYPES);
 	virtual ~ParticleEngine();
 
 	void updateParticles(double dt);

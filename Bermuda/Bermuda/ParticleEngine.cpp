@@ -1,13 +1,12 @@
 #include "ParticleEngine.h"
 #include "GameStateManager.h"
+#include <thread>
+#include <iostream>
 
-
-ParticleEngine::ParticleEngine(int x, int y, int width, int height, PARTICLETYPES particleType)
+ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 {
 	this->x = x;
 	this->y = y;
-	this->width = width;
-	this->height = height;
 	this->particleType = particleType;
 	//this->textPixel = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelGrey.png").c_str());
 
@@ -21,21 +20,30 @@ ParticleEngine::ParticleEngine(int x, int y, int width, int height, PARTICLETYPE
 		this->maxParticles = 1000;
 		SDL_SetTextureColorMod(this->textPixel,255,255,255);
 		SDL_SetTextureAlphaMod(this->textPixel, 255);
+		this->width = 10;
+		this->height = 10;
 		break;		
 	case PARTICLETYPES::SMOKE:		
-		this->maxParticles = 100;
+		this->maxParticles = 200;
 		SDL_SetTextureColorMod(this->textPixel,155,155,155);
 		SDL_SetTextureAlphaMod(this->textPixel, 100);
+		this->width = 25;
+		this->height = 5;
 		break;		
 	case PARTICLETYPES::RAIN:		
 		this->maxParticles = 2000;
 		SDL_SetTextureColorMod(this->textPixel,255,255,255);
 		SDL_SetTextureAlphaMod(this->textPixel, 155);
+		this->width = ScreenWidth;
+		this->height = 1;
 		break;		
 	case PARTICLETYPES::SNOW:		
-		this->maxParticles = 750;
+		this->maxParticles = 75;
+		this->currentMaxParticles = 1;
 		SDL_SetTextureColorMod(this->textPixel,255,255,255);
 		SDL_SetTextureAlphaMod(this->textPixel, 255);
+		this->width = ScreenWidth;
+		this->height = 1;
 		break;
 	}
 
@@ -43,15 +51,22 @@ ParticleEngine::ParticleEngine(int x, int y, int width, int height, PARTICLETYPE
 
 	for(int i = 0; i < this->maxParticles; i++)
 	{
+		this->particles.push_back(nullptr);
+	}
+
+	for(int i = 0; i < this->currentMaxParticles; i++)
+	{
 		this->particles.push_back(this->createParticle(particleType));
 	}
+
 }
 
 void ParticleEngine::updateParticles(double dt)
 {
-	for(int i = 0; i < this->maxParticles; i++)
+	std::cout << this->currentMaxParticles << std::endl;
+	for(int i = 0; i < this->currentMaxParticles; i++)
 	{
-		if(this->particles[i]->getIsDead())
+		if(this->particles[i] == nullptr || this->particles[i]->getIsDead())
 		{
 			delete this->particles[i];
 			this->particles[i] = this->createParticle(particleType);
@@ -61,13 +76,21 @@ void ParticleEngine::updateParticles(double dt)
 			this->particles[i]->move(dt);
 		}
 	}
+
+	if(this->currentMaxParticles < this->maxParticles)
+	{
+		this->currentMaxParticles++;
+	}
 }
 
 void ParticleEngine::drawParticles()
 {
-	for(int i = 0; i < this->maxParticles; i++)
+	for(int i = 0; i < this->currentMaxParticles; i++)
 	{
-		this->particles[i]->draw();
+		if(this->particles[i] != nullptr)
+		{
+			this->particles[i]->draw();
+		}
 	}
 }
 
@@ -92,17 +115,17 @@ Particle* ParticleEngine::createParticle(PARTICLETYPES particleType)
 
 		break;
 	case PARTICLETYPES::SMOKE:
-		pDx = -0.05;
+		pDx = 0.05;
 		pDy = -0.3;
-		lifeTime = 800 + rand() % 800;
-		width = 3;
-		height = 3;
+		lifeTime = 400 + rand() % 1200;
+		width = 2;
+		height = 2;
 
 		break;
 	case PARTICLETYPES::SNOW:
 		pDx = -0.05;
-		pDy = 6;
-		lifeTime = 1000 + rand() % 800;
+		pDy = 3;
+		lifeTime = 5000 + rand() % 1000;
 		width = 3;
 		height = 3;
 

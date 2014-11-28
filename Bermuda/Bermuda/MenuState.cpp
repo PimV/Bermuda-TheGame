@@ -15,7 +15,8 @@ MenuState::MenuState(void)
 //TODO: remove GSM
 void MenuState::init(GameStateManager* gsm)
 {
-	pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, 20, 1, PARTICLETYPES::SMOKE);
+	//pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, PARTICLETYPES::SMOKE);
+	pEngine = new ParticleEngine(0,0, PARTICLETYPES::SNOW);
 	mainScr = new MenuMainScreen;
 	creditsScr = new MenuCreditsScreen;
 	setCurWindow(getMenuMainScreen());

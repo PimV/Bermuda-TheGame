@@ -20,34 +20,13 @@ Particle::Particle(float x, float y, float dx, float dy, int life, SDL_Texture* 
 
 void Particle::move(double dt)
 {
+	//TODO:: Make speed working with the gamespeedup / slowdown
 	this->x += this->dx * dt;
 	this->y += this->dy * dt;
 
-	//Left
-	if(this->x < 0)
+	//Check if outside of screen
+	if(this->x < 0 || this->x >= ScreenWidth || this->y < 0 || this->y >= ScreenHeight)
 	{
-		this->x = 0;
-		this->isDead = true;
-	}
-
-	//Top
-	if(this->y < 0)
-	{
-		this->y = 0;
-		this->isDead = true;
-	}
-
-	//Right
-	if(this->x >= ScreenWidth)
-	{
-		this->x = ScreenWidth -1;
-		this->isDead = true;
-	}
-
-	//Down
-	if(this->y >= ScreenHeight)
-	{
-		this->y = ScreenHeight -1;
 		this->isDead = true;
 	}
 }
