@@ -489,83 +489,83 @@ void PlayState::draw()
 	
 	this->pEngine->drawParticles();
 
-	blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+	//blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 
-	SDL_Rect screenRect = {0, 0, ScreenWidth, ScreenHeight};
-	SDL_FillRect(blackSurface, &screenRect, 0xFF00D9FF);
+	//SDL_Rect screenRect = {0, 0, ScreenWidth, ScreenHeight};
+	//SDL_FillRect(blackSurface, &screenRect, 0xFF00D9FF);
 
-	SDL_Surface* image = IMG_Load((RESOURCEPATH + "hole.png").c_str());
+	//SDL_Surface* image = IMG_Load((RESOURCEPATH + "hole.png").c_str());
 
-	const int halfWidth = image->w / 2;
-	const int halfHeight = image->h / 2;
+	//const int halfWidth = image->w / 2;
+	//const int halfHeight = image->h / 2;
 
-	SDL_Rect sourceRect = { 0, 0, image->w, image->h };
-	SDL_Rect destRect = { 300 - halfWidth, 300 - halfHeight, image->w, image->h };
+	//SDL_Rect sourceRect = { 0, 0, image->w, image->h };
+	//SDL_Rect destRect = { 300 - halfWidth, 300 - halfHeight, image->w, image->h };
 
-	// Make sure our rects stays within bounds
-	if (destRect.x < 0)
-	{
-		sourceRect.x -= destRect.x; // remove the pixels outside of the surface
-		sourceRect.w -= sourceRect.x; // shrink to the surface, not to offset fog
-		destRect.x = 0;
-		destRect.w -= sourceRect.x; // shrink the width to stay within bounds
-	}
-	if (destRect.y < 0)
-	{
-		sourceRect.y -= destRect.y; // remove the pixels outside
-		sourceRect.h -= sourceRect.y; // shrink to the surface, not to offset fog
-		destRect.y = 0;
-		destRect.h -= sourceRect.y; // shrink the height to stay within bounds
-	}
+	//// Make sure our rects stays within bounds
+	//if (destRect.x < 0)
+	//{
+	//	sourceRect.x -= destRect.x; // remove the pixels outside of the surface
+	//	sourceRect.w -= sourceRect.x; // shrink to the surface, not to offset fog
+	//	destRect.x = 0;
+	//	destRect.w -= sourceRect.x; // shrink the width to stay within bounds
+	//}
+	//if (destRect.y < 0)
+	//{
+	//	sourceRect.y -= destRect.y; // remove the pixels outside
+	//	sourceRect.h -= sourceRect.y; // shrink to the surface, not to offset fog
+	//	destRect.y = 0;
+	//	destRect.h -= sourceRect.y; // shrink the height to stay within bounds
+	//}
 
-	int xDistanceFromEdge = (destRect.x + destRect.w) - blackSurface->w;
-	if (xDistanceFromEdge > 0) // we're busting
-	{
-		sourceRect.w -= xDistanceFromEdge;
-		destRect.w -= xDistanceFromEdge;
-	}
-	int yDistanceFromEdge = (destRect.y + destRect.h) - blackSurface->h;
-	if (yDistanceFromEdge > 0) // we're busting
-	{
-		sourceRect.h -= yDistanceFromEdge;
-		destRect.h -= yDistanceFromEdge;
-	}
+	//int xDistanceFromEdge = (destRect.x + destRect.w) - blackSurface->w;
+	//if (xDistanceFromEdge > 0) // we're busting
+	//{
+	//	sourceRect.w -= xDistanceFromEdge;
+	//	destRect.w -= xDistanceFromEdge;
+	//}
+	//int yDistanceFromEdge = (destRect.y + destRect.h) - blackSurface->h;
+	//if (yDistanceFromEdge > 0) // we're busting
+	//{
+	//	sourceRect.h -= yDistanceFromEdge;
+	//	destRect.h -= yDistanceFromEdge;
+	//}
 
-	SDL_LockSurface(blackSurface);
+	//SDL_LockSurface(blackSurface);
 
-	Uint32* destPixels = (Uint32*)blackSurface->pixels;
-	Uint32* srcPixels = (Uint32*)image->pixels;
+	//Uint32* destPixels = (Uint32*)blackSurface->pixels;
+	//Uint32* srcPixels = (Uint32*)image->pixels;
 
-	static bool keepFogRemoved = false;
+	//static bool keepFogRemoved = false;
 
-	for (int x = 0; x < destRect.w; ++x)
-	{
-		for (int y = 0; y < destRect.h; ++y)
-		{
-			Uint32* destPixel = destPixels + (y + destRect.y) * blackSurface->w + destRect.x + x;
-			Uint32* srcPixel = srcPixels + (y + sourceRect.y) * image->w + sourceRect.x + x;
+	//for (int x = 0; x < destRect.w; ++x)
+	//{
+	//	for (int y = 0; y < destRect.h; ++y)
+	//	{
+	//		Uint32* destPixel = destPixels + (y + destRect.y) * blackSurface->w + destRect.x + x;
+	//		Uint32* srcPixel = srcPixels + (y + sourceRect.y) * image->w + sourceRect.x + x;
 
-			unsigned char* destAlpha = (unsigned char*)destPixel + 3; // fetch alpha channel
-			unsigned char* srcAlpha = (unsigned char*)srcPixel + 3; // fetch alpha channel
-			if (keepFogRemoved == true && *srcAlpha > 0)
-			{
-				continue; // skip this pixel
-			}
+	//		unsigned char* destAlpha = (unsigned char*)destPixel + 3; // fetch alpha channel
+	//		unsigned char* srcAlpha = (unsigned char*)srcPixel + 3; // fetch alpha channel
+	//		if (keepFogRemoved == true && *srcAlpha > 0)
+	//		{
+	//			continue; // skip this pixel
+	//		}
 
-			*destAlpha = *srcAlpha;
-		}
-	}
+	//		*destAlpha = *srcAlpha;
+	//	}
+	//}
 
-	SDL_UnlockSurface(blackSurface);
+	//SDL_UnlockSurface(blackSurface);
 
-	SDL_Texture* text2 = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurface);
-	//SDL_Texture* text = SDL_CreateTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, ScreenWidth, ScreenHeight);
-	//SDL_UpdateTexture(text, NULL, blackSurface->pixels, blackSurface->pitch);
-	 
-	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), text2, NULL, &screenRect);
+	//SDL_Texture* text2 = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurface);
+	////SDL_Texture* text = SDL_CreateTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, ScreenWidth, ScreenHeight);
+	////SDL_UpdateTexture(text, NULL, blackSurface->pixels, blackSurface->pitch);
+	// 
+	//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), text2, NULL, &screenRect);
 
-	SDL_DestroyTexture(text2);
-	SDL_FreeSurface(blackSurface);
+	//SDL_DestroyTexture(text2);
+	//SDL_FreeSurface(blackSurface);
 	
 	/*SDL_Rect Dest = { 0, 0, 0, 0 };
 	SDL_BlitSurface(blackSurface, NULL, SDL_GetWindowSurface(GameStateManager::Instance()->sdlInitializer->window), &Dest);
