@@ -5,12 +5,12 @@
 #include <random>
 #include "PlayState.h"
 
-Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, chunkSize, 5, 1, 50, spawnPoint),
-Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
+Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
+NPC(id, 5, 1, 50, spawnPoint),
+Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
+CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(36);
 	this->setHeight(36);

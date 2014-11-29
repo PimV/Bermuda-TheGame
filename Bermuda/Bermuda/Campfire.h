@@ -10,7 +10,7 @@ private:
 	double creationTime;
 	double lifeTime;
 public:
-	Campfire(int id, double x, double y, int chunkSize, int firstImgID);
+	Campfire(int id, double x, double y, int firstImgID);
 	void animate();
 	virtual ~Campfire();
 };

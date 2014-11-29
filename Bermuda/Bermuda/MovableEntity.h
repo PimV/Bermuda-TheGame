@@ -8,7 +8,7 @@ class MovableEntity :
 {
 
 public:
-	MovableEntity(int id, double x, double y, int chunkSize);
+	MovableEntity(int id, double x, double y);
 	virtual ~MovableEntity(void);
 
 	virtual void directionsAndMove(double dt) = 0;

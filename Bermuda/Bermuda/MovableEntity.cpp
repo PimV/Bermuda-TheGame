@@ -1,8 +1,8 @@
 #include "MovableEntity.h"
 #include "PlayState.h"
 
-MovableEntity::MovableEntity(int id, double x, double y, int chunkSize)
-	: Entity(id,x,y,chunkSize)
+MovableEntity::MovableEntity(int id, double x, double y) : 
+	Entity(id,x,y)
 {
 	this->keepAnimationWhenIdle = false;
 }
@@ -150,7 +150,8 @@ void MovableEntity::setPosition(double newX, double newY) {
 	this->setY(newY);
 
 	//Chance chunks if needed
-	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
+	int chunkSize = PlayState::Instance()->getMainEntityContainer()->getChunkSize();
+	if (floor(this->getY() / chunkSize) != this->getChunkY() || floor(this->getX() / chunkSize) != this->getChunkX())
 	{
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->ResetDrawableEntityAndSetChunk();

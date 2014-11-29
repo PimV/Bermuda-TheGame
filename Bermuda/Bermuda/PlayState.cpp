@@ -5,19 +5,11 @@
 #include "PauseState.h"
 #include <iostream>
 #include <algorithm>
-#include "Windows.h" 
-#include "Item.h"
+#include "Windows.h"
 #include <thread>
-#include "ToolAxe.h"
-#include "ItemCarrot.h"
-#include "DAYPART.h"
 #include "Items.h"
-#include "Consumable.h"
-#include "Equipable.h"
 
 //TEMPORARY AXE SPAWN:
-#include "Axe.h"
-#include "Pickaxe.h"
 #include "ItemFactory.h"
 
 PlayState PlayState::m_PlayState;
@@ -43,11 +35,7 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
-	this->p->getInventory()->toggleInventory();
-	//TEMPORARY AXE SPAWN:
-	//new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
-	//new Pickaxe(9002, p->getX() + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png", 32, 32)));
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
 
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
@@ -304,10 +292,10 @@ void PlayState::updateVisibleEntities(double dt)
 {
 	//Update all animating entities
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
 
 	//Loop through all chunks
 	for (int i = beginChunkY; i <= endChunkY; i++)
@@ -331,10 +319,10 @@ void PlayState::updateMediumAreaEntities(double dt)
 {
 	//Update all spawnpoints and moving entities
 	//Calculate begin and end chunks for the camera (+5 and -5 to make it bigger than the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 5;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 5;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 5;
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 5;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 5;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 5;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 5;
 
 	//Loop through all chunks
 	for (int i = beginChunkY; i <= endChunkY; i++)
@@ -377,10 +365,10 @@ void PlayState::draw()
 		return;
 	}
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
 
 	std::vector<DrawableEntity*> drawableVector;
 

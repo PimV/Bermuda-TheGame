@@ -1,11 +1,9 @@
 #include "CollidableEntity.h"
 #include "PlayState.h"
-#include "Camera.h"
-#include <iostream>
 
 
-CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize, double collisionX, double collisionY, double collisionWidth, double collisionHeight)
-	: Entity(id,x,y,chunkSize)
+CollidableEntity::CollidableEntity(int id, double x, double y, double collisionX, double collisionY, double collisionWidth, double collisionHeight) : 
+	Entity(id,x,y)
 {
 	this->collisionHeight = collisionHeight;
 	this->collisionWidth = collisionWidth;
@@ -15,8 +13,8 @@ CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize, do
 	this->collidableTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelRed.png").c_str());
 }
 
-CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize)
-	: Entity(id,x,y,chunkSize)
+CollidableEntity::CollidableEntity(int id, double x, double y)
+	: Entity(id,x,y)
 {
 }
 

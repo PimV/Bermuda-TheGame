@@ -3,12 +3,12 @@
 #include <random>
 
 
-Bat::Bat(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, chunkSize, 5, 1, 50, spawnPoint),
-	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 8, 20, 16, 12),
-	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
+Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
+	NPC(id, 5, 1, 50, spawnPoint),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(32);
 	this->setHeight(32);

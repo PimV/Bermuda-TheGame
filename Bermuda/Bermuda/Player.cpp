@@ -1,11 +1,14 @@
 #include "Player.h"
-#include "header_loader.h"
 #include "GameOverState.h"
-#include <iostream>
+#include "GameStateManager.h"
 #include "PlayState.h"
+#include <vector>
 
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
+Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
+	Entity(id,x,y), 
+	DrawableEntity(id,x,y, nullptr), 
+	CollidableEntity(id,x,y, 20, 52, 24, 10), 
+	MovableEntity(id, x, y)
 {
 	this->camera = camera;
 

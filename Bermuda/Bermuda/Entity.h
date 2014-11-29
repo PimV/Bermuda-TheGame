@@ -1,23 +1,20 @@
 #pragma once
-class MainEntityContainer;
+
 class Entity
 {
 public:
 	//Constructor
-	Entity(int id, double x, double y, int chunkSize);
+	Entity(int id, double x, double y);
 	//Setters
 	void setX(double x);
 	void setY(double y);
 	void setZ(double z);
 	void setWidth(double width);
 	void setHeight(double height);
-	void setChunkSize(int chunkSize);
 	void setChunks(); //According to the chunksize
-	void setMainEntityContainer(MainEntityContainer* mec);
 	void setEnabled(bool enabled);
 	//Getters
 	int getId();
-	int getChunkSize();
 	int getChunkY();
 	int getChunkX();
 	double getX();
@@ -25,7 +22,6 @@ public:
 	double getZ();
 	double getWidth();
 	double getHeight();
-	MainEntityContainer* getMainEntityContainer();
 	bool getEnabled();
 
 	//Destructor
@@ -44,12 +40,8 @@ private:
 	double height;
 
 	//Entity chunk
-	int chunkSize;
 	int chunkY;
 	int chunkX;
-
-	//Entity Container
-	MainEntityContainer* mec;
 
 	bool enabled;
 };

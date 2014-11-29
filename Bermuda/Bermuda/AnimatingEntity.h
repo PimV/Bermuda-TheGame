@@ -1,7 +1,5 @@
 #pragma once
 #include "DrawableEntity.h"
-#include "Camera.h"
-#include "header_loader.h"
 
 class AnimatingEntity :
 	public DrawableEntity
@@ -21,7 +19,7 @@ private:
 	int finishedIndex;
 
 public:
-	AnimatingEntity(int id, double x, double y, int chunkSize, int firstImgID);
+	AnimatingEntity(int id, double x, double y, int firstImgID);
 	virtual void animate();
 	void setAnimation(int startIndex, int endIndex, double animateSpeed);
 	void setAnimation(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex);

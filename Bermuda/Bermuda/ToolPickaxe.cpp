@@ -1,8 +1,6 @@
 #include "ToolPickaxe.h"
 #include "Items.h"
-#include <ctime>
 #include <iostream>
-#include "Player.h"
 
 ToolPickaxe::ToolPickaxe(Image* image) 
 {

@@ -2,10 +2,10 @@
 #include "PlayState.h"
 
 
-Campfire::Campfire(int id, double x, double y, int chunkSize, int firstImgID) :
-	Entity(id, x, y, chunkSize),
-	AnimatingEntity(id, x, y, chunkSize, firstImgID),
-	CollidableEntity(id, x, y, chunkSize, 0, 31, 50, 21)
+Campfire::Campfire(int id, double x, double y, int firstImgID) :
+	Entity(id, x, y),
+	AnimatingEntity(id, x, y, firstImgID),
+	CollidableEntity(id, x, y, 0, 31, 50, 21)
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->add(this);

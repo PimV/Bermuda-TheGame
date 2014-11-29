@@ -1,15 +1,9 @@
 #pragma once
-#include "entity.h"
 #include "MovableEntity.h"
-#include "header_loader.h"
-#include "Camera.h"
-#include "DrawableEntity.h"
 #include "CollidableEntity.h"
-#include "GameStateManager.h"
-#include "SDLInitializer.h"
-#include "MainEntityContainer.h"
+#include "DrawableEntity.h"
+#include "Camera.h"
 #include "StatusTracker.h"
-#include "GameTimer.h"
 #include "Inventory.h"
 #include "Crafting.h"
 
@@ -21,7 +15,7 @@ class Player :
 	public CollidableEntity
 {
 public:
-	Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera);
+	Player(int id, double moveSpeed, double x, double y, Camera* camera);
 	~Player(void);
 
 	void update(double dt);

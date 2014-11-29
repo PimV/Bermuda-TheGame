@@ -2,8 +2,6 @@
 #include "entity.h"
 #include "header_loader.h"
 
-class MovableEntity;
-
 class CollidableEntity :
 	virtual public Entity
 {
@@ -16,8 +14,8 @@ private:
 	SDL_Rect collidableRect;
 	SDL_Texture* collidableTexture;
 public:
-	CollidableEntity(int id, double x, double y, int chunkSize, double collisionX, double collisionY, double collisionWidth, double collisionHeight);
-	CollidableEntity(int id, double x, double y, int chunkSize);
+	CollidableEntity(int id, double x, double y, double collisionX, double collisionY, double collisionWidth, double collisionHeight);
+	CollidableEntity(int id, double x, double y);
 	CollidableEntity();
 
 	void setCollisionX(double x);

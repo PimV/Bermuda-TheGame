@@ -2,8 +2,8 @@
 
 double DrawableEntity::DRAWBUFFER = 64;
 
-DrawableEntity::DrawableEntity(int id, double x, double y, int chunkSize, Image* image)
-	: Entity(id,x,y,chunkSize), drawImage(image)
+DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) : 
+	Entity(id,x,y), drawImage(image)
 {
 	if(image != nullptr)
 	{

@@ -1,15 +1,15 @@
 #include "Carrot.h"
-#include "Player.h"
+#include "PlayState.h"
 #include "ItemFactory.h"
 #include "Items.h"
 
-Carrot::Carrot(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* carrotImage)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, carrotImage), InteractableEntity(id,x,y,chunkSize, -25, -25, this->getWidth() + 50, this->getHeight() + 50)
+Carrot::Carrot(int id, double x, double y, Image* carrotImage) : 
+	Entity(id,x,y), 
+	DrawableEntity(id,x,y, carrotImage), 
+	InteractableEntity(id,x,y, -25, -25, this->getWidth() + 50, this->getHeight() + 50)
 {
-	this->setMainEntityContainer(mec);
-
-	this->getMainEntityContainer()->getDrawableContainer()->add(this);
-	this->getMainEntityContainer()->getInteractableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 }
 
 void Carrot::update(double dt) {
@@ -26,8 +26,8 @@ void Carrot::interact(Player* player)
 
 void Carrot::setDestroyedState()
 {
-	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }
 
 Carrot::~Carrot()

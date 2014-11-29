@@ -1,9 +1,8 @@
 #include "Inventory.h"
-#include "Items.h"
+#include "GameStateManager.h"
 #include "Item.h"
+#include "Items.h"
 #include "Image.h"
-#include "Consumable.h"
-#include "Equipable.h"
 #include "Player.h"
 #include <iostream>
 #include <algorithm>
@@ -12,7 +11,7 @@
 //Needed for vector sort
 bool Inventory::stackSortFunction(Item* one, Item* two) { return (one->getStackSize() < two->getStackSize()); }
 
-Inventory::Inventory(void)
+Inventory::Inventory()
 {
 	this->init();
 
@@ -20,7 +19,7 @@ Inventory::Inventory(void)
 
 void Inventory::init() {
 	std::cout<< "Created inv"<<std::endl;
-	this->open = false;
+	this->open = true;
 	this->slots = 15;
 	this->itemVector = std::vector<Item*>();
 	selectedIndex = 0;
@@ -416,6 +415,6 @@ void Inventory::draw() {
 }
 
 
-Inventory::~Inventory(void)
+Inventory::~Inventory()
 {
 }

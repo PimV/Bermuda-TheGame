@@ -1,6 +1,7 @@
 #include "ItemCampfire.h"
 #include "Campfire.h"
-#include "GameStateManager.h"
+#include "ObjectFactory.h"
+#include "Objects.h"
 
 
 ItemCampfire::ItemCampfire(Image* image)
@@ -25,7 +26,7 @@ void ItemCampfire::use(Player* p)
 	int y = p->getY() + p->getHeight() - 52;
 
 	//TODO: object factory
-	Campfire* campfire = new Campfire(0, x, y, 300, GameStateManager::Instance()->getImageLoader()->loadTileset("Objects\\Campfire 50x52.png", 50, 52));
+	Campfire* campfire = dynamic_cast<Campfire*>(ObjectFactory::Instance()->createObject(Objects::Campfire, 0, x, y));
 
 	//if collision, delete Campfire and keep item.
 	if (campfire->checkCollision())

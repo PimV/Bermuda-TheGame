@@ -28,10 +28,11 @@ public:
 
 	virtual ~MainEntityContainer();
 
-	void initContainerSizes(int chunksY, int chunksX);
-
+	void initContainerSizes(int mapHeight, int mapWidth);
+	int getChunkSize();
 
 private: 
 	std::map<ContainerType, IEntityContainer*> m_container;
+	const int chunkSize;
 };
 

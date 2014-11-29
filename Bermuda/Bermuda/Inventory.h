@@ -1,14 +1,14 @@
 #pragma once
+#include "Image.h"
 #include <vector>
 
-class Item;
-class Image;
 class Player;
-class Equipable;
+class Item;
+
 class Inventory
 {
 public:
-	Inventory(void);
+	Inventory();
 
 	void init();
 	void cleanup();
@@ -54,7 +54,7 @@ public:
 
 	void printInventory();
 
-	~Inventory(void);
+	~Inventory();
 private:
 	//Draw
 	Image* img;

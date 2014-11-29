@@ -4,9 +4,9 @@
 #include <iostream>
 
 
-AnimatingEntity::AnimatingEntity(int id, double x, double y, int chunkSize, int firstImgID) :
-	Entity(id, x, y, chunkSize),
-	DrawableEntity(id, x, y, chunkSize, nullptr)
+AnimatingEntity::AnimatingEntity(int id, double x, double y, int firstImgID) :
+	Entity(id, x, y),
+	DrawableEntity(id, x, y, nullptr)
 {
 	this->firstImgID = firstImgID;
 	this->lastFrameTime = GameTimer::Instance()->getGameTime();

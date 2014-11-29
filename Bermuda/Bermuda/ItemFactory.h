@@ -18,7 +18,7 @@ public:
 	Item* createItem(Items item);
 	Image* getItemImage(Items item);
 
-	~ItemFactory();
+	virtual ~ItemFactory();
 	static ItemFactory* Instance() {
 		return &itemFactory;
 	};

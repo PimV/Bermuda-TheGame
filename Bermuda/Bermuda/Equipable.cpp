@@ -1,9 +1,7 @@
 #include "Equipable.h"
-#include "Player.h"
-#include <iostream>
 
 
-Equipable::Equipable(void)
+Equipable::Equipable()
 {
 }
 
@@ -11,6 +9,6 @@ void Equipable::use(Player* player) {
 	player->getInventory()->selectStack(this);
 }
 
-Equipable::~Equipable(void)
+Equipable::~Equipable()
 {
 }

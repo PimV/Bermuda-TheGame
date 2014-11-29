@@ -13,7 +13,7 @@ class Rabbit :
 	public MovableEntity
 {
 public:
-	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
+	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
 	~Rabbit();
 	void update(double dt);
 private:

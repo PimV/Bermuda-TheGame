@@ -1,6 +1,4 @@
 #include "Item.h"
-#include "Image.h"
-#include "Items.h"
 #include <iostream>
 
 Item::Item()

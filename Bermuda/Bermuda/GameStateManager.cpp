@@ -4,6 +4,7 @@
 #include "PlayState.h"
 #include "NPCFactory.h"
 #include "ItemFactory.h"
+#include "ObjectFactory.h"
 #include <iostream>
 #include <Windows.h>
 #include <SDL_ttf.h>
@@ -23,6 +24,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	soundLoader = new SoundLoader();
 	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
 	ItemFactory::Instance()->loadItemTileSets(imgLoader);
+	ObjectFactory::Instance()->loadObjectTileSets(imgLoader);
 	//states = new std::vector<IGameState*>();
 
 

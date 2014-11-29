@@ -13,7 +13,7 @@ class Wasp :
 	public MovableEntity
 {
 public:
-	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
+	Wasp(int id, Spawnpoint *spawnPoint, int firstImgID);
 	~Wasp();
 	void directionsAndMove(double dt);
 	void update(double dt);

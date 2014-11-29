@@ -1,14 +1,15 @@
 #include "InteractableCactus.h"
+#include "PlayState.h"
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
 
-InteractableCactus::InteractableCactus(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* cactusImage, Image* stumpImage) :
-	Entity(id, x, y, chunkSize),
-	Cactus(id, x, y, chunkSize, mec, cactusImage),
-	InteractableEntity(id, x, y, chunkSize, 0, 37, 64, 70)
+InteractableCactus::InteractableCactus(int id, double x, double y, Image* cactusImage, Image* stumpImage) :
+	Entity(id, x, y),
+	Cactus(id, x, y, cactusImage),
+	InteractableEntity(id, x, y, 0, 37, 64, 70)
 {
-	this->getMainEntityContainer()->getInteractableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->cactusImage = cactusImage;
 	this->stumpImage = stumpImage;
@@ -32,8 +33,8 @@ void InteractableCactus::respawn() {
 	this->destroyed = false;
 	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->cactusImage);
-	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
-	this->getMainEntityContainer()->getInteractableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 }
 
 void InteractableCactus::interact(Player* player)
@@ -55,8 +56,8 @@ void InteractableCactus::setDestroyedState()
 	// pims code, doesn't work with GameTimer
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);
-	this->getMainEntityContainer()->getRespawnContainer()->add(this);
-	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	currentInteractTime = 0;
 }
 
@@ -64,10 +65,10 @@ InteractableCactus::~InteractableCactus()
 {
 	if (this->destroyed)
 	{
-		this->getMainEntityContainer()->getRespawnContainer()->remove(this);
+		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	}
 	else
 	{
-		this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	}
 }

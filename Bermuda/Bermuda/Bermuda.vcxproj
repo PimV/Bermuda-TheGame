@@ -157,6 +157,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemWater.h" />
     <ClInclude Include="MenuMainButton.h" />
     <ClInclude Include="MenuMainScreen.h" />
+    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="Objects.h" />
     <ClInclude Include="PauseMainScreen.h" />
     <ClInclude Include="PauseStatusTrackerScreen.h" />
     <ClInclude Include="PauzeAchievementsButton.h" />
@@ -248,6 +250,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="MenuCreditsScreen.cpp" />
     <ClCompile Include="MenuMainButton.cpp" />
     <ClCompile Include="MenuMainScreen.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PauseMainScreen.cpp" />
     <ClCompile Include="PauseStatusTrackerScreen.cpp" />
     <ClCompile Include="PauzeAchievementsButton.cpp" />

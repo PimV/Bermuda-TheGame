@@ -1,16 +1,14 @@
 #include "Entity.h"
-#include "MainEntityContainer.h"
+#include "PlayState.h"
 #include <cmath>
 
-#include <iostream>
-
-Entity::Entity(int id, double x, double y, int chunkSize)
+Entity::Entity(int id, double x, double y)
 {
 	this->id = id;
 	this->x = x;
 	this->y = y;
-	this->setChunkSize(chunkSize);
 	this->setEnabled(true);
+	this->setChunks();
 }
 
 #pragma region Setters
@@ -34,26 +32,19 @@ void Entity::setHeight(double height) {
 	this->height = height;
 }
 
-void Entity::setChunkSize(int chunkSize)
-{
-	this->chunkSize = chunkSize;
-	this->setChunks();
-}
-
-void Entity::setMainEntityContainer(MainEntityContainer* mec) {
-	this->mec = mec;
-}
-
 void Entity::setChunks()
 {
-	this->chunkY = floor(this->y / this->chunkSize);
-	this->chunkX = floor(this->x / this->chunkSize);
+	int chunkSize = PlayState::Instance()->getMainEntityContainer()->getChunkSize();
+	this->chunkY = floor(this->y / chunkSize);
+	this->chunkX = floor(this->x / chunkSize);
 }
+
 void Entity::setEnabled(bool enabled)
 {
 	this->enabled = enabled;
 }
 #pragma endregion
+
 #pragma region Getters
 int Entity::getId() {
 	return this->id;
@@ -87,15 +78,6 @@ int Entity::getChunkY()
 int Entity::getChunkX()
 {
 	return this->chunkX;
-}
-
-int Entity::getChunkSize()
-{
-	return this->chunkSize;
-}
-
-MainEntityContainer* Entity::getMainEntityContainer() {
-	return this->mec;
 }
 
 bool Entity::getEnabled()

@@ -1,6 +1,7 @@
 #include "MainEntityContainer.h"
 
-MainEntityContainer::MainEntityContainer(void)
+MainEntityContainer::MainEntityContainer(void) : 
+	chunkSize(300)
 {
 	m_container[ContainerType::Drawable] = new DrawableContainer();
 	m_container[ContainerType::Animating] = new DrawableContainer();
@@ -49,8 +50,16 @@ DestroyContainer* MainEntityContainer::getDestroyContainer() {
 	return static_cast<DestroyContainer*>(m_container[ContainerType::Destroyed]);
 }
 
-void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)
+int MainEntityContainer::getChunkSize()
 {
+	return this->chunkSize;
+}
+
+void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
+{
+	int chunksY = floor(mapHeight / chunkSize) + 1;
+	int chunksX = floor(mapWidth / chunkSize) + 1;
+
 	//Init all containers with chunks
 	m_container[ContainerType::Collidable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Drawable]->initChunks(chunksY, chunksX);

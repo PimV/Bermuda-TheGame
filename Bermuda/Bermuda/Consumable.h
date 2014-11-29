@@ -1,7 +1,6 @@
 #pragma once
 #include "item.h"
 #include "Player.h"
-//class Player;
 
 class Consumable :
 	public  Item

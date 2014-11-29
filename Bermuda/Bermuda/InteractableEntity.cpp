@@ -6,8 +6,8 @@
 #include <iostream>
 
 
-InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize, int interactStartX, int interactStartY, int interactWidth, int interactHeight)
-	: Entity(id,x,y,chunkSize)
+InteractableEntity::InteractableEntity(int id, double x, double y, int interactStartX, int interactStartY, int interactWidth, int interactHeight) : 
+	Entity(id,x,y)
 {
 	this->destroyed = false;
 	this->interactStartX = interactStartX;
@@ -15,6 +15,7 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 	this->interactWidth = interactWidth;
 	this->interactHeight = interactHeight;
 
+	//TODO: pixel word voor elke interactable entity opnieuw ingeladen.
 	this->interactTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelOrange.png").c_str());
 }
 
