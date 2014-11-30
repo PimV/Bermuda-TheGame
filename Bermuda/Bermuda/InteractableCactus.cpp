@@ -40,15 +40,13 @@ void InteractableCactus::respawn() {
 void InteractableCactus::interact(Player* player)
 {
 	if (player->getInventory()->axeSelected()) {
-		if (player->getInventory()->hasAxe()) {
-			player->setCorrectToolSelected(true);
-			InteractableEntity::interact(player);
-			if (this->trackInteractTimes()) {
-				player->setCorrectToolSelected(false);
-				this->setDestroyedState();
-				player->getInventory()->addItem(ItemFactory::Instance()->createWater());
-				//TODO: add to statustracker
-			}
+		player->setCorrectToolSelected(true);
+		InteractableEntity::interact(player);
+		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
+			this->setDestroyedState();
+			player->getInventory()->addItem(ItemFactory::Instance()->createWater());
+			//TODO: add to statustracker
 		}
 	} else {
 		player->setCorrectToolSelected(false);

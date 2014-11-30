@@ -34,10 +34,11 @@ void GoldRock::interact(Player* player)
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createGold());
 			//TODO: add to statustracker
-		} else {
-			player->setCorrectToolSelected(false);
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
+
 }
 
 void GoldRock::setDestroyedState()
