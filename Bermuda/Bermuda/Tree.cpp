@@ -16,7 +16,7 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 5000;
+	this->interactTime = 500;
 
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
@@ -26,13 +26,16 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 
 void Tree::interact(Player* player) {
 	if (player->getInventory()->axeSelected()) {
+		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);
-
 		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createWood());
 			player->getStatusTracker()->treeCut();
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 

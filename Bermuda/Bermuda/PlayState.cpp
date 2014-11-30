@@ -274,6 +274,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 
 		case SDLK_SPACE:
 			p->interaction = false;
+			p->setCorrectToolSelected(false);
 			p->StopAnimation();
 			break;
 

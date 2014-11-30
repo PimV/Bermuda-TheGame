@@ -417,9 +417,6 @@
     <ClCompile Include="ToolFlint.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationEnum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -726,6 +723,9 @@
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="AnimationEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovmentDirectionEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

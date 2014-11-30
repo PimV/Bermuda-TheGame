@@ -13,7 +13,7 @@ InteractableCactus::InteractableCactus(int id, double x, double y, int chunkSize
 	this->stumpImage = stumpImage;
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 5000;
+	this->interactTime = 500;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
 
@@ -41,13 +41,17 @@ void InteractableCactus::interact(Player* player)
 {
 	if (player->getInventory()->axeSelected()) {
 		if (player->getInventory()->hasAxe()) {
+			player->setCorrectToolSelected(true);
 			InteractableEntity::interact(player);
 			if (this->trackInteractTimes()) {
+				player->setCorrectToolSelected(false);
 				this->setDestroyedState();
 				player->getInventory()->addItem(ItemFactory::Instance()->createWater());
 				//TODO: add to statustracker
 			}
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 

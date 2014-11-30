@@ -19,12 +19,15 @@ AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContai
 	this->interactTime = 500;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
+
+	this->animationType = AnimationEnumType::Pick;
 }
 
 void AppleTree::interact(Player* player) {
 	InteractableEntity::interact(player);
-
+	player->setCorrectToolSelected(true);
 	if (this->trackInteractTimes()) {
+		player->setCorrectToolSelected(false);
 		this->setDestroyedState();
 		player->getInventory()->addItem(ItemFactory::Instance()->createApple());
 		player->getStatusTracker()->applePicked();
@@ -63,12 +66,10 @@ AppleTree::~AppleTree()
 {
 	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
+	if(this->destroyed) { 
 		this->getMainEntityContainer()->getRespawnContainer()->remove(this); 
 	}
-	else 
-	{ 
+	else { 
 		this->getMainEntityContainer()->getInteractableContainer()->remove(this); 
 	}
 }

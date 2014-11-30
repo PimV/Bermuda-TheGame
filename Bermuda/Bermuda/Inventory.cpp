@@ -8,12 +8,9 @@
 #include "Player.h"
 
 
-
-
 Inventory::Inventory(void)
 {
 	this->init();
-
 }
 
 void Inventory::init() {
@@ -70,7 +67,6 @@ Item* Inventory::getSelectedItem() {
 		return nullptr;
 	}
 }
-
 
 bool Inventory::addItem(Item* item) {
 	if (hasItem(item)) {

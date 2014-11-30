@@ -7,12 +7,3 @@ enum class AnimationEnumType
 	Pick,
 	Attack
 };
-
-/*
-class AnimationEnum
-{
-	public:
-		AnimationEnum(void);
-		~AnimationEnum(void);
-};
-*/

@@ -10,6 +10,7 @@
 #include "MainEntityContainer.h"
 #include "StatusTracker.h"
 #include "GameTimer.h"
+#include "MovmentDirectionEnum.h"
 
 class Inventory;
 
@@ -51,6 +52,9 @@ public:
 	Inventory* getInventory();
 	StatusTracker* getStatusTracker();
 
+	bool getCorrectToolSelected();
+	void setCorrectToolSelected(bool tool);
+
 private:
 	const char* path;
 	Camera* camera;
@@ -60,11 +64,19 @@ private:
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
 
+	int animationPickUp, animationPickLeft;
+	int animationPickDown, animationPickRight;
+	int animationPickStartColumn, animationPickEndColumn;
+
 	int animationChopUp, animationChopLeft;
 	int animationChopDown, animationChopRight;
+	int animationChopStartColumn, animationChopEndColumn;
 
 	int animationMineUp, animationMineLeft;
 	int animationMineDown, animationMineRight;
+	int animationMineStartColumn, animationMineEndColumn;
+
+	bool correctToolSelected;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
