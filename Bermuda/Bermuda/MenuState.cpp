@@ -1,9 +1,9 @@
 #include "header_loader.h"
 #include "MenuState.h"
 #include "PlayState.h"
-#include "Button.h"
 #include "GameStateManager.h"
 #include <iostream>
+#include <SDL_ttf.h>
 
 MenuState MenuState::m_MenuState;
 
@@ -11,102 +11,65 @@ MenuState::MenuState(void)
 {
 }
 
-void MenuState::init(GameStateManager *gsm) {
-	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
-	if (backgroundTexture == NULL)
-	{
-		std::cout << "Error loading startmenu background" << std::endl << "Error 2" << std::endl;
-		system("pause");
-	}
-	this->gsm = gsm;
-	align();
-	//Create Buttons
-	buttons.push_back(new PlayButton(gsm));
-	buttons.push_back(new ExitButton(gsm));
-	//playButton = new PlayButton(gsm);
-	//exitButton = new ExitButton(gsm);
-	for (int i = 0; i < buttons.size(); i++) {
-		buttons.at(i)->align(buttons.size() - i, buttons.size());
-	}
-
-	//SoundLoader::Instance()->playMenuMusic();
-
-	//playButton->align(1, totalButtons);
-	//exitButton->align(0, totalButtons);
-}
-
-void MenuState::align()
+//TODO: remove GSM
+void MenuState::init(GameStateManager* gsm)
 {
-	backgroundRect.x = 0;
-	backgroundRect.y = 0;
-	backgroundRect.w = ScreenWidth;
-	backgroundRect.h = ScreenHeight;
-}
+	mainScr = new MenuMainScreen;
+	creditsScr = new MenuCreditsScreen;
+	setCurWindow(getMenuMainScreen());
 
-void MenuState::cleanup() {
-	SDL_FreeSurface(bg);
-}
-
-void MenuState::pause() {
+	//soundloader
+	SoundLoader::Instance()->playMenuMusic();
 
 }
 
-void MenuState::resume() {
-
-}
-
-
-void MenuState::handleEvents(SDL_Event mainEvent) {
-	//	SDL_Event mainEvent;
-
-
-	int x, y;
-	SDL_GetMouseState(&x, &y);
-	switch(mainEvent.type) {
-	case SDL_KEYDOWN:
-		switch(mainEvent.key.keysym.sym) {
-		case SDLK_SPACE:
-			this->gsm->changeGameState(PlayState::Instance());
-			break;
-		}
-		break;
-	case SDL_MOUSEMOTION: 
-		for (int i = 0; i < buttons.size(); i++) {
-			buttons.at(i)->hover(x, y, gsm);
-		}
-		//playButton->hover(x, y, gsm);
-		//exitButton->hover(x, y, gsm);
-		break;
-	case SDL_MOUSEBUTTONDOWN:
-		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			for (int i = 0; i < buttons.size(); i++) {
-				buttons.at(i)->clicked(x, y, gsm);
-			}
-			//playButton->clicked(x, y, gsm);
-			//exitButton->clicked(x, y, gsm);
-		}
-		break;
-	}
-
-}
-
-void MenuState::update(double dt) {
-	//std::cout << "Pim rocks " << counter <<  std::endl;
-}
-
-void MenuState::draw() {
-	//gsm->sdlInitializer->clearScreen();
-	SDL_RenderCopy(gsm->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
-	for (int i = 0; i < buttons.size(); i++) {
-		buttons.at(i)->draw( gsm);
-	}
-}
-
-
-
-MenuState::~MenuState(void)
+void MenuState::setCurWindow(BaseScreen* curwindow)
 {
-	SDL_DestroyTexture(backgroundTexture);
-	delete playButton;
-	delete exitButton;
+	curScreen = curwindow;
+	curScreen->resetButtons();
+}
+
+BaseScreen* MenuState::getMenuMainScreen()
+{
+	return mainScr;
+}
+
+BaseScreen* MenuState::getMenuCreditsScreen()
+{
+	return creditsScr;
+}
+
+void MenuState::handleEvents(SDL_Event mainEvent)
+{
+	curScreen->handleEvents(mainEvent);
+}
+
+void MenuState::draw()
+{
+	curScreen->draw();
+}
+
+void MenuState::update(double dt)
+{
+	
+}
+
+void MenuState::pause()
+{
+
+}
+
+void MenuState::resume()
+{
+
+}
+
+void MenuState::cleanup()
+{
+	delete mainScr;
+	delete creditsScr;
+}
+
+MenuState::~MenuState()
+{
 }

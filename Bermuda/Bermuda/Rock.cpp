@@ -1,13 +1,14 @@
 #include "Rock.h"
 #include "Player.h"
-#include "ItemRock.h"
+#include "ItemFactory.h"
+#include "Items.h"
 
 
 Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* rockImage, Image* rockPiecesImage) :
 	Entity(id,x,y,chunkSize), 
 	DrawableEntity(id,x,y,chunkSize, rockImage), 
 	CollidableEntity(id,x,y,chunkSize, 0, 14, 32, 18), rockImage(rockImage), rockPiecesImage(rockPiecesImage),
-	InteractableEntity(id,x,y,chunkSize, 35)
+	InteractableEntity(id,x,y,chunkSize, -35, -35, this->getWidth() + 70, this->getHeight() + 70)
 {
 	this->setMainEntityContainer(mec);
 
@@ -25,11 +26,12 @@ void Rock::update(double dt) {
 
 void Rock::interact(Player* player)
 {
-	if (player->getInventory()->hasPickaxe()) {
+	if (player->getInventory()->pickAxeSelected()) {
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
-			player->getInventory()->addItem(new ItemRock());
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Rock));
+			player->getStatusTracker()->rockMined();
 		}
 	}
 }
@@ -37,7 +39,10 @@ void Rock::interact(Player* player)
 void Rock::setDestroyedState()
 {
 	this->destroyed = true;
+	this->setCollisionX(0);
+	this->setCollisionWidth(0);
 	this->setCollisionY(0);
+	this->setCollisionHeight(0);
 	this->setDrawImage(this->rockPiecesImage);
 	this->getMainEntityContainer()->getBackgroundContainer()->add(this);
 	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
@@ -49,7 +54,7 @@ Rock::~Rock()
 {
 	if(this->destroyed)
 	{
-		this->getMainEntityContainer()->getBackgroundContainer()->add(this);
+		this->getMainEntityContainer()->getBackgroundContainer()->remove(this);
 	}
 	else
 	{

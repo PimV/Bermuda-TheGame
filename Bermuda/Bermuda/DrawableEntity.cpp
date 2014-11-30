@@ -38,4 +38,5 @@ void DrawableEntity::setDrawImage(Image* image)
 
 DrawableEntity::~DrawableEntity()
 {
+
 }

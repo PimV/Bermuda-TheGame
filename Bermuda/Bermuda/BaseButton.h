@@ -8,35 +8,41 @@ class BaseButton
 {
 public:
 	//variables
-	int PosY;
-	int position;
 	bool active;
 
 protected:
 	//variables
-	SDL_Texture* buttonImage;
+	SDL_Texture* buttonTexture;
+	SDL_Texture* buttonHoverTexture;
 	SDL_Rect buttonRect;
-	std::string normalPicture;
-	std::string hoverPicure;
 
 	//virtual methodes
-	virtual void loadHoverPicture(GameStateManager *gsm) = 0;
-	virtual void loadNormalPicture(GameStateManager *gsm) = 0;
-	virtual void action(GameStateManager *gsm) = 0;
+	virtual void action() = 0;
 
 public:
-	//variables
-	static const int ConstHeight = 80;
-	static const int ConstWidth = 260;
-	static const int PosX = 30;		//TODO: write Y position calc
 	
 	//methodes
-	void align(int, int);
-	void draw(GameStateManager *gsm);
-	void hover(int, int, GameStateManager *gsm);
-	void clicked(int, int, GameStateManager *gsm);
+	void createButton(std::string buttonText, int fontSize, int initialColor);
+	void reset();
+	void placeLeftAboveButton(BaseButton* button);
+	void placeLeftUnderButton(BaseButton* button);
+	void placeMidScreenAbove(BaseButton* button);
+	void placeMidScreenUnder(BaseButton* button);
+	void placeMid();
+	void placeLeftMid();
+	void placeMidUnder(int x, int y);
+	int getX();
+	int getY();
+	int getHeight();
+	int getWidth();
+
+	void draw();
+	void hover(int, int);
+	bool clicked(int, int);
 
 	BaseButton();
+	virtual void init() = 0;
+	void cleanup();
 	virtual ~BaseButton();
 };
 

@@ -2,18 +2,16 @@
 #include <iostream>
 
 PauseState PauseState::m_PauseState;
-
 PauseState::PauseState()
 {
 }
 
 void PauseState::init(GameStateManager* gsm)
 {
-	this->gsm = gsm;
-}
+	mainScr = new PauseMainScreen;
+	statScr = new PauseStatusTrackerScreen;
 
-void PauseState::cleanup()
-{
+	setCurWindow(mainScr);
 }
 
 void PauseState::pause()
@@ -26,48 +24,42 @@ void PauseState::resume()
 
 void PauseState::handleEvents(SDL_Event mainEvent)
 {
-	switch(mainEvent.type) 
-	{
-	case SDL_KEYDOWN:
-		switch(mainEvent.key.keysym.sym) 
-		{
-		case SDLK_ESCAPE:
-			GameStateManager::Instance()->popState();
-			break;
-		}
-		break;
-	}
-
+	curWindow->handleEvents(mainEvent);
 }
 
 void PauseState::update(double dt)
 {
+
+}
+
+void PauseState::setCurWindow(BaseScreen* window)
+{
+	curWindow = window;
+	curWindow->resetButtons();
+}
+
+BaseScreen* PauseState::getMainPauseScreen()
+{
+	return mainScr;
+}
+
+BaseScreen* PauseState::getMainAchievementsScreen()
+{
+	return statScr;
 }
 
 void PauseState::draw()
 {
-	//this->gsm->sdlInitializer->clearScreen();
-	//TODO: MEMORY LEAK omdat ik nog niet CLEAR sdl window aanroep omdat dat het beeld van playstate word weggehaald
-	/*
-	IS DIT EEN LEAK?
-	*/
-
-	SDL_Texture* texture = IMG_LoadTexture(this->gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "pausemenu.png").c_str());
-	SDL_Rect rect;
-	rect.w = 200;
-	rect.h = 400;
-	rect.x = 200;
-	rect.y = 200;
-	this->gsm->sdlInitializer->drawTexture(texture, &rect, NULL);
-
-	SDL_DestroyTexture(texture);  
+	curWindow->draw();
 }
 
-void PauseState::removeState()
+void PauseState::cleanup()
 {
-	this->gsm->popState();
+	delete mainScr;
+	delete statScr;
 }
 
 PauseState::~PauseState()
 {
+
 }

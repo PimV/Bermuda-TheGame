@@ -2,6 +2,8 @@
 #include "IGameState.h"
 #include "MenuState.h"
 #include "PlayState.h"
+#include "NPCFactory.h"
+#include "ItemFactory.h"
 #include <iostream>
 #include <Windows.h>
 #include <SDL_ttf.h>
@@ -12,10 +14,15 @@ GameStateManager::GameStateManager(void) {
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
+
+	speedMultiplier = 1;
+
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
 	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 	soundLoader = new SoundLoader();
+	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
+	ItemFactory::Instance()->loadItemTileSets(imgLoader);
 	//states = new std::vector<IGameState*>();
 
 
@@ -25,9 +32,8 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	m_running = true;
 	showFps = false;
+
 	GameStateManager::Instance()->setFps(0);
-
-
 	this->updateLength = 0;
 }
 
@@ -36,7 +42,21 @@ void GameStateManager::setUpdateLength(long updateLength) {
 }
 
 long GameStateManager::getUpdateLength() {
-	return this->updateLength;
+	return this->updateLength * speedMultiplier;
+}
+
+void GameStateManager::setSpeedMultiplier(double multiplier) {
+	if (multiplier > 10) {
+		this->speedMultiplier = 10;
+	} else if (multiplier < 0.1) {
+		this->speedMultiplier = 0.1;
+	} else {
+		this->speedMultiplier = multiplier;
+	}
+}
+
+double GameStateManager::getSpeedMultiplier() {
+	return this->speedMultiplier;
 }
 
 void GameStateManager::setFps(int fps) {
@@ -103,12 +123,29 @@ void GameStateManager::handleEvents() {
 			switch(mainEvent.key.keysym.sym) 
 			{
 			case SDLK_TAB:
-				if (GameStateManager::Instance()->showFps == false) {
-					GameStateManager::Instance()->showFps = true;
-				}
+				GameStateManager::Instance()->showFps = !GameStateManager::Instance()->showFps;
 				break;
 			case SDLK_r:
 				GameStateManager::Instance()->changeGameState(PlayState::Instance());
+				break;
+			case SDLK_PAGEUP:
+				if (this->getSpeedMultiplier() > 0.9) {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() + 1);
+				} else {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() + 0.1);
+				}
+				std::cout << "SPEED UP: " << speedMultiplier << std::endl;
+				break;
+			case SDLK_PAGEDOWN:
+				if (this->getSpeedMultiplier() <= 1) {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() - 0.1);
+				} else {
+					this->setSpeedMultiplier(this->getSpeedMultiplier() - 1);
+				}
+				std::cout << "SPEED DOWN: " << speedMultiplier << std::endl;
+				break;
+			case SDLK_HOME:
+				speedMultiplier = 1;
 				break;
 			default: 
 				states.back()->handleEvents(mainEvent);
@@ -117,11 +154,6 @@ void GameStateManager::handleEvents() {
 			break;
 		case SDL_KEYUP:
 			switch(mainEvent.key.keysym.sym) {
-			case SDLK_TAB:
-				if (GameStateManager::Instance()->showFps == true) {
-					GameStateManager::Instance()->showFps = false;
-				}
-				break;
 			default:
 				states.back()->handleEvents(mainEvent);
 				break;
@@ -132,25 +164,24 @@ void GameStateManager::handleEvents() {
 			break;
 		}
 	}
-
-
-
 }
 
 void GameStateManager::update(double deltaTime) {
-	states.back()->update(deltaTime);
+	states.back()->update(deltaTime * speedMultiplier);
 }
 
 void GameStateManager::draw() {
 	//Clear Screen
 	GameStateManager::Instance()->sdlInitializer->clearScreen();
 
-	//Draw GameState
-	/*for (size_t  i = 0; i < states.size(); i++) {
-	states.at(i)->draw();
-	}*/
+	//OPTION ONE: Draw all GameStates
+	for (size_t  i = 0; i < states.size(); i++) 
+	{
+		states.at(i)->draw();
+	}
 
-	states.back()->draw();
+	//OPTION TWO: Draw only top state (does not work when pause state is on ... background will be black)
+	//states.back()->draw();
 
 	//Draw FPS
 	if (GameStateManager::Instance()->showFps == true) {
@@ -190,6 +221,3 @@ GameStateManager::~GameStateManager(void) {
 
 	delete actionContainer;
 }
-
-
-
