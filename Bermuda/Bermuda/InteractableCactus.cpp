@@ -1,6 +1,7 @@
 #include "InteractableCactus.h"
 #include "Player.h"
 #include "ItemFactory.h"
+#include "Items.h"
 
 InteractableCactus::InteractableCactus(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* cactusImage, Image* stumpImage) :
 	Entity(id, x, y, chunkSize),
@@ -45,7 +46,7 @@ void InteractableCactus::interact(Player* player)
 		if (this->trackInteractTimes()) {
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
-			player->getInventory()->addItem(ItemFactory::Instance()->createWater());
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
 			//TODO: add to statustracker
 		}
 	} else {
@@ -65,12 +66,10 @@ void InteractableCactus::setDestroyedState()
 
 InteractableCactus::~InteractableCactus()
 {
-	if (this->destroyed)
-	{
+	if (this->destroyed) {
 		this->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	}
-	else
-	{
+	else {
 		this->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	}
 }

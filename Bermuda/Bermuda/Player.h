@@ -11,6 +11,8 @@
 #include "StatusTracker.h"
 #include "GameTimer.h"
 #include "MovmentDirectionEnum.h"
+#include "Inventory.h"
+#include "Crafting.h"
 
 class Inventory;
 
@@ -50,6 +52,7 @@ public:
 	int destY;
 
 	Inventory* getInventory();
+	Crafting* getCraftingSystem();
 	StatusTracker* getStatusTracker();
 
 	bool getCorrectToolSelected();
@@ -81,6 +84,7 @@ private:
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
 	Inventory* inventory;
+	Crafting* crafting;
 	StatusTracker* statusTracker;
 
 	void updatePlayerStatuses(double dt);
