@@ -100,8 +100,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
+    <ClInclude Include="BaseScreen.h" />
     <ClInclude Include="Bat.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="BaseButton.h" />
     <ClInclude Include="Cactus.h" />
     <ClInclude Include="Carrot.h" />
@@ -110,12 +110,15 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="CollidableTile.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="ContainerType.h" />
-    <ClInclude Include="DayTimeTimer.h" />
+    <ClInclude Include="DAYPART.h" />
+    <ClInclude Include="Crafting.h" />
     <ClInclude Include="DrawableContainer.h" />
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
-    <ClInclude Include="ExitButton.h" />
+    <ClInclude Include="MenuCreditsButton.h" />
+    <ClInclude Include="MenuCreditsScreen.h" />
+    <ClInclude Include="MenuExitButton.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameTimer.h" />
@@ -148,6 +151,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemFish.h" />
     <ClInclude Include="ItemGold.h" />
     <ClInclude Include="ItemWater.h" />
+    <ClInclude Include="MenuMainButton.h" />
+    <ClInclude Include="MenuMainScreen.h" />
     <ClInclude Include="PauseMainScreen.h" />
     <ClInclude Include="PauseStatusTrackerScreen.h" />
     <ClInclude Include="PauzeAchievementsButton.h" />
@@ -172,11 +177,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MoveAction.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Pillar.h" />
-    <ClInclude Include="BasePauzeButton.h" />
     <ClInclude Include="PauzeExitButton.h" />
     <ClInclude Include="PauzeMenuButton.h" />
     <ClInclude Include="PauzeResumeButton.h" />
-    <ClInclude Include="PlayButton.h" />
+    <ClInclude Include="MenuPlayButton.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
@@ -200,8 +204,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="AppleTree.cpp" />
     <ClCompile Include="Axe.cpp" />
     <ClCompile Include="BackgroundContainer.cpp" />
+    <ClCompile Include="BaseScreen.cpp" />
     <ClCompile Include="Bat.cpp" />
-    <ClCompile Include="Button.cpp" />
     <ClCompile Include="BaseButton.cpp" />
     <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Carrot.cpp" />
@@ -209,7 +213,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="CollidableContainer.cpp" />
     <ClCompile Include="CollidableTile.cpp" />
     <ClCompile Include="Consumable.cpp" />
-    <ClCompile Include="DayTimeTimer.cpp" />
+    <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="DrawableContainer.cpp" />
     <ClCompile Include="EasterHead.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -232,6 +236,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemFish.cpp" />
     <ClCompile Include="ItemGold.cpp" />
     <ClCompile Include="ItemWater.cpp" />
+    <ClCompile Include="MenuCreditsButton.cpp" />
+    <ClCompile Include="MenuCreditsScreen.cpp" />
+    <ClCompile Include="MenuMainButton.cpp" />
+    <ClCompile Include="MenuMainScreen.cpp" />
     <ClCompile Include="PauseMainScreen.cpp" />
     <ClCompile Include="PauseStatusTrackerScreen.cpp" />
     <ClCompile Include="PauzeAchievementsButton.cpp" />
@@ -250,7 +258,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Pillar.cpp" />
     <ClCompile Include="RespawnContainer.cpp" />
     <ClCompile Include="GameOverState.cpp" />
-    <ClCompile Include="BasePauzeButton.cpp" />
     <ClCompile Include="PauzeExitButton.cpp" />
     <ClCompile Include="PauzeMenuButton.cpp" />
     <ClCompile Include="PauzeResumeButton.cpp" />
@@ -267,7 +274,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawableEntity.cpp" />
     <ClCompile Include="Evasive.cpp" />
-    <ClCompile Include="ExitButton.cpp" />
+    <ClCompile Include="MenuExitButton.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IAction.cpp" />
     <ClCompile Include="CollidableEntity.cpp" />
@@ -282,7 +289,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="NPC.cpp" />
-    <ClCompile Include="PlayButton.cpp" />
+    <ClCompile Include="MenuPlayButton.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />

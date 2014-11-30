@@ -1,11 +1,12 @@
 #pragma once
-#include "BasePauzeButton.h"
+#include "BaseButton.h"
+#include "BaseScreen.h" 
 
-class PauseMainScreen
+class PauseMainScreen : public BaseScreen
 {
 private:
 	//variables
-	std::vector<BasePauzeButton*> buttons;
+	std::vector<BaseButton*> buttons;
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
 	
@@ -16,6 +17,7 @@ private:
 
 public:
 	//methodes
+	void resetButtons();
 	void handleEvents(SDL_Event);
 	void draw();
 

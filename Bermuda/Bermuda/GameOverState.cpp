@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "MenuState.h"
+#include "GameTimer.h"
 
 GameOverState GameOverState::m_GameOverState;
 
@@ -25,7 +26,7 @@ void GameOverState::init(GameStateManager* gsm) {
 
 	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 32);
 	SDL_Color white = { 255, 255, 255 };
-	std::string gameOverMessage = "You died. You survived X days";
+	std::string gameOverMessage = "You died. You survived " + to_string(GameTimer::Instance()->getDaysSurvived()) + " days";
 	SDL_Surface* gameOverMessageSurface = TTF_RenderText_Blended(staryDarzyLarge, gameOverMessage.c_str(), white);
 
 	TTF_Font* staryDarzySmall = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 16);

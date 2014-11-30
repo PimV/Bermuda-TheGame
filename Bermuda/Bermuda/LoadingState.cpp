@@ -11,7 +11,6 @@ LoadingState::LoadingState()
 
 void LoadingState::init(GameStateManager* gsm) {
 
-
 	if (text1 == nullptr) {
 		text1 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.png").c_str());
 	}
@@ -31,8 +30,6 @@ void LoadingState::init(GameStateManager* gsm) {
 		srand(time(NULL));
 		int random = rand() % 16;
 
-		std::cout << (RESOURCEPATH + "Advertisement\\" + filenames[random]).c_str() << std::endl;
-
 		textAdvertisement = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Advertisement\\" + filenames[random]).c_str());
 	}
 
@@ -51,7 +48,7 @@ void LoadingState::init(GameStateManager* gsm) {
 	rectBackground.y = 0;
 	rectBackground.w = ScreenWidth;
 	rectBackground.h = ScreenHeight;
-	
+
 	int advWidth = 0;
 	int advHeight = 0;
 	SDL_QueryTexture(textAdvertisement, nullptr, nullptr, &advWidth, &advHeight);

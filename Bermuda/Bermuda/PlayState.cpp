@@ -1,20 +1,19 @@
 #include "PlayState.h"
 #include "MenuState.h"
-#include "Button.h"
 #include "GameStateManager.h"
 #include "ActionContainer.h"
-#include "ClickAction.h"
-#include "MoveAction.h"
 #include "PauseState.h"
-#include "LoadingState.h"
 #include <iostream>
 #include <algorithm>
 #include "Windows.h" 
-#include "Inventory.h"
 #include "Item.h"
 #include <thread>
 #include "ToolAxe.h"
 #include "ItemCarrot.h"
+#include "DAYPART.h"
+#include "Items.h"
+#include "Consumable.h"
+#include "Equipable.h"
 
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
@@ -23,7 +22,7 @@
 PlayState PlayState::m_PlayState;
 
 //Needed for vector sort
-bool drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
+bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
 PlayState::PlayState(void)
 {
@@ -32,10 +31,11 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	GameStateManager::Instance()->setSpeedMultiplier(1);
-	ready = false;
-	showCol = false;
-	showInter = false;
-	showSpawnArea = false;
+	this->ready = false;
+	this->showCol = false;
+	this->showInter = false;
+	this->showSpawnArea = false;
+	this->timesUpdate = 0;
 
 
 	mec = new MainEntityContainer();
@@ -48,8 +48,9 @@ void PlayState::init(GameStateManager *gsm) {
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
 	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png",32, 32)));
 
+	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
-	ready = true;
+	this->ready = true;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -58,7 +59,7 @@ MainEntityContainer* PlayState::getMainEntityContainer()
 }
 
 void PlayState::cleanup() {
-
+	GameTimer::Instance()->cleanUp();
 }
 
 void PlayState::pause() {
@@ -91,11 +92,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			if (p->getInventory()->clicked(x,y, "select", p)) {
 			} else {
-				p->destX = x + this->camera->getX();
-				p->destY = y + this->camera->getY();
-				p->resetMovement();
-				p->moveClick = true;
-			}
+			p->destX = x + this->camera->getX();
+			p->destY = y + this->camera->getY();
+			p->resetMovement();
+			p->moveClick = true;
+		}
 		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
 			if (p->getInventory()->clicked(x, y, "use", p)) {
 
@@ -207,6 +208,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 				}
 				break;
 			}
+		case SDLK_F8:
+			p->getCraftingSystem()->craftItem(Items::Axe);
+			break;
 		case SDLK_F11:
 			//Enable collision
 			p->setCollisionHeight(10);
@@ -289,7 +293,14 @@ void PlayState::update(double dt) {
 		return;
 	}
 
-	this->updateGameTimers();
+	if(this->timesUpdate > 2)
+	{
+		this->updateGameTimers(dt);
+	}
+	else
+	{
+		this->timesUpdate++;
+	}
 
 	//TODO: moet dit nog?
 	//this->gsm->getActionContainer()->executeAllActions(dt);
@@ -348,15 +359,9 @@ void PlayState::update(double dt) {
 	}
 }
 
-void PlayState::updateGameTimers() {
+void PlayState::updateGameTimers(double dt) {
 
-	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
-	//DayTimeTimer::Instance()->updateDayTime();
-	GameTimer::Instance()->updateDayTime();
-}
-
-long PlayState::getGameTimer() {
-	return GameTimer::Instance()->getGameTime();
+	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 }
 
 void PlayState::draw() 
@@ -431,7 +436,7 @@ void PlayState::draw()
 	}
 
 	//Sort drawable object vector
-	std::sort(drawableVector.begin(), drawableVector.end(), drawableSortFunction);
+	std::sort(drawableVector.begin(), drawableVector.end(), PlayState::drawableSortFunction);
 
 	//Draw sorted object vector
 	for (DrawableEntity* e : drawableVector)
@@ -464,16 +469,13 @@ void PlayState::draw()
 		this->p->getInventory()->draw();
 	}
 
-	// Draw the player status
+	//Draw timer
+	GameTimer::Instance()->draw();
 
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, 5, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, 35, 100, 25);
-	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, 65, 100, 25);
-	// if current hour is smaller then 9 
-	if (GameTimer::Instance()->getCurrentDayPart() > 9)
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: " + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
-	else
-		this->gsm->sdlInitializer->drawText(std::string("  Hour: 0" + to_string(GameTimer::Instance()->getCurrentDayPart())), ScreenWidth - 120, 95, 90, 25);
+	//TODO : WEG ALS PIMS BALKEN ER IN ZITTEN
+	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, ScreenHeight - 100, 100, 25);
+ 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
+ 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
 }
 
 Player* PlayState::getPlayer()

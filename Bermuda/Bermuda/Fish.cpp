@@ -1,7 +1,7 @@
 #include "Fish.h"
 #include "PlayState.h"
-#include "ItemFish.h"
 #include "ItemFactory.h"
+#include "Items.h"
 
 Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
 	Entity(id,x,y,chunkSize), 
@@ -27,7 +27,7 @@ void Fish::interact(Player* player)
 	if (this->trackInteractTimes()) {
 		player->setCorrectToolSelected(false);
 		this->setDestroyedState();		
-		player->getInventory()->addItem(ItemFactory::Instance()->createFish());
+		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
 		//TODO: add fish caught in statustracker
 	} else {
 		player->setCorrectToolSelected(false);

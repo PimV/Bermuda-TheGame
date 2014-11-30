@@ -20,8 +20,6 @@ void ItemRock::init() {
 	srand(time(NULL));
 	int itemCount = rand() % 5 + 1;	
 	this->setStackSize(itemCount);
-
-	std::cout << "Mined " << itemCount << " stone." << std::endl;
 }
 
 

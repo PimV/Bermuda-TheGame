@@ -19,8 +19,6 @@ void ItemWater::init() {
 	int itemCount = 1;
 	this->setStackSize(itemCount);
 
-	std::cout << "Gained " << itemCount << " water." << std::endl;
-
 	this->setHungerRefill(0);
 	this->setThirstRefill(10);
 	this->setHealthRefill(0);

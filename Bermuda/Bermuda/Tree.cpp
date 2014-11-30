@@ -2,6 +2,7 @@
 #include "ItemWood.h"
 #include "Player.h"
 #include "ItemFactory.h"
+#include "Items.h"
 
 Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y,chunkSize), 
@@ -31,7 +32,7 @@ void Tree::interact(Player* player) {
 		if (this->trackInteractTimes()) {
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
-			player->getInventory()->addItem(ItemFactory::Instance()->createWood());
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Wood));
 			player->getStatusTracker()->treeCut();
 		}
 	} else {
