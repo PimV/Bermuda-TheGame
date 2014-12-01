@@ -101,7 +101,9 @@ void GameTimer::draw()
 		SDL_FLIP_NONE);
 
 	//Draw amount of days
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day: " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 6, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4);
+	GameStateManager::Instance()->sdlInitializer->setRenderDrawColor(255,255,255);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 6, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4, 0, 0, 0);
+	GameStateManager::Instance()->sdlInitializer->resetRenderDrawColor();
 }
 
 void GameTimer::cleanUp()

@@ -14,10 +14,10 @@
 #include "Items.h"
 #include "Consumable.h"
 #include "Equipable.h"
-
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
 #include "Pickaxe.h"
+
 
 PlayState PlayState::m_PlayState;
 
@@ -208,6 +208,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 				}
 				break;
 			}
+		case SDLK_F9:
+			//MINEE MWUAHHAHAHAHA (PIM)
+			GameStateManager::Instance()->toggleHelpEnabled();
+			break;
 		case SDLK_F8:
 			p->getCraftingSystem()->craftItem(Items::Axe);
 			break;
@@ -467,15 +471,11 @@ void PlayState::draw()
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
+		this->p->drawStats();
 	}
 
 	//Draw timer
 	GameTimer::Instance()->draw();
-
-	//TODO : WEG ALS PIMS BALKEN ER IN ZITTEN
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, ScreenHeight - 100, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
 }
 
 Player* PlayState::getPlayer()

@@ -1,4 +1,5 @@
 #include "SDLInitializer.h"
+#include <iostream>
 
 SDLInitializer::SDLInitializer(void)
 {
@@ -28,7 +29,7 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 	//SDL_RenderSetLogicalSize(renderer, 1600, 900);
 }
 
-void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
+void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h, int r, int g, int b) {
 	font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), h);
 
 	SDL_Surface* imgTxt;
@@ -39,8 +40,10 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 	txtRect.y = y;
 	txtRect.w = msg.length() * h / 3;
 	txtRect.h = h;
-
-	fColor.r = fColor.g = fColor.b = 245;
+	
+	fColor.r = r;
+	fColor.g = g;
+	fColor.b = b;
 	imgTxt = TTF_RenderText_Blended(font, msg.c_str(), fColor);
 
 	SDL_Texture* imgTxture = SDL_CreateTextureFromSurface(this->getRenderer(), imgTxt);
@@ -51,6 +54,14 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h) {
 	TTF_CloseFont(font);
 	SDL_DestroyTexture(imgTxture);
 	SDL_FreeSurface(imgTxt);
+}
+
+void SDLInitializer::setRenderDrawColor(int r, int g, int b) {
+	SDL_SetRenderDrawColor(this->getRenderer(), r,g,b,255);
+}
+
+void SDLInitializer::resetRenderDrawColor() {
+	SDL_SetRenderDrawColor(this->getRenderer(), 0,0,0,255);
 }
 
 
