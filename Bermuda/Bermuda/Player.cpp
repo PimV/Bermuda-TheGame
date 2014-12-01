@@ -5,7 +5,8 @@
 #include "PlayState.h"
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr), CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
+	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr),
+	CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
 {
 	healthBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBar.png").c_str());
 	healthBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBarContainerBas.png").c_str());
@@ -67,14 +68,36 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	//this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Empty_Handed_Pick_Chop_Mine.png", 64, 64);
+	
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
-	this->currentAnimationRow = this->animationWalkDownRow;
+
+	this->animationChopUp = 12, this->animationChopLeft = 13;
+	this->animationChopDown = 14, this->animationChopRight = 15;
+	this->animationChopStartColumn = 1, this->animationChopEndColumn = 9;
+
+	this->animationMineUp = 16, this->animationMineLeft = 17;
+	this->animationMineDown = 18, this->animationMineRight = 18;
+	this->animationMineStartColumn = 1, this->animationMineEndColumn = 9;
+
+	this->animationPickUp = 0, this->animationPickLeft = 1;
+	this->animationPickDown = 2, this->animationPickRight = 3;
+	this->animationPickStartColumn = 1, this->animationPickEndColumn = 6;
+
+	//this->currentAnimationRow = this->animationWalkDownRow;
+	this->movementDirection = (int)MovementDirectionEnum::Down;
+	this->currentAnimationRow = ( this->animationWalkUpRow + this->movementDirection );
+
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
+	this->defaultAnimationSpeed = 40;
+	this->defaultAnimationActionSpeed = 50;
+
+	this->correctToolSelected = false;
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -124,7 +147,13 @@ void Player::update(double dt) {
 	}
 
 	this->updatePlayerStatuses(dt);
-	this->directionsAndMove(dt);
+
+	if (this->interaction) {
+		this->interact(dt);
+	}
+	else {
+		this->directionsAndMove(dt);
+	}
 }
 
 #pragma region PlayerStatusUpdates
@@ -229,7 +258,6 @@ void Player::setThirst(int value) {
 	}
 }
 
-
 int Player::getHealth() {
 	return this->health;
 }
@@ -259,7 +287,7 @@ void Player::directionsAndMove(double dt)
 	this->move(dt);
 }
 
-void::Player::interact()
+void::Player::interact(double dt)
 {
 	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
 	int beginChunkX = this->getChunkX() - 1;
@@ -303,9 +331,6 @@ void::Player::interact()
 							closestEntity = e;
 						}
 
-						//e->interact(this);
-						//TODO : juiste animatie laten zien e.d.
-						//break;
 					}
 				}
 			}
@@ -313,21 +338,46 @@ void::Player::interact()
 	}
 
 	if (closestEntity != nullptr) {
+		// execure interate first, for it is needed to get the correct animation
 		closestEntity->interact(this);
+
+		// set and play animation
+		if (closestEntity->getAnimationEnumType() != AnimationEnumType::None && this->getCorrectToolSelected()) {
+			this->setAnimationType(closestEntity->getAnimationEnumType());
+			this->PlayAnimation(this->animationActionStartColumn, this->animationActionEndColumn, this->currentAnimationRow, dt, this->defaultAnimationActionSpeed);
+		}
 	}
+}
 
-	//ROELS CODE HIERONDER UITGEZET, ANIMATIE IS AFHANKELIJK VAN WAARMEE GEINTERACT WORDT??????
-	//// this is for setting the new animation, the value only needs to be added once
-	//if (this->currentPlayerAnimationRow == this->playerAnimationWalkUpRow)
-	//	this->currentPlayerAnimationRow += 4;
-	//else if (this->currentPlayerAnimationRow == this->playerAnimationWalkLeftRow)
-	//	this->currentPlayerAnimationRow += 4;
-	//else if (this->currentPlayerAnimationRow == this->playerAnimationWalkDownRow)
-	//	this->currentPlayerAnimationRow += 4;
-	//else if (this->currentPlayerAnimationRow == this->playerAnimationWalkRightRow)
-	//	this->currentPlayerAnimationRow += 4;
-
-	//this->PlayAnimation(this->playerAnimationActionStartColumn, this->playerAnimationActionEndColumn, this->currentPlayerAnimationRow, dt);
+void Player::setAnimationType(AnimationEnumType type)
+{
+	switch (type)
+	{
+	case AnimationEnumType::None:
+		std::cout << "Animation type is None" << std::endl;
+		break;
+	case AnimationEnumType::Chop:
+			this->currentAnimationRow = this->animationChopUp + this->movementDirection;
+ 			this->animationActionStartColumn = this->animationChopStartColumn;
+			this->animationActionEndColumn = this->animationChopEndColumn;
+		break;
+	case AnimationEnumType::Mine:
+			this->currentAnimationRow = this->animationMineUp + this->movementDirection;
+ 			this->animationActionStartColumn = this->animationMineStartColumn;
+			this->animationActionEndColumn = this->animationMineEndColumn;
+		break;
+	case AnimationEnumType::Pick:
+		std::cout << "No pick animation" << std::endl;
+			this->currentAnimationRow = this->animationPickUp + this->movementDirection;
+ 			this->animationActionStartColumn = this->animationPickStartColumn;
+			this->animationActionEndColumn = this->animationPickEndColumn;
+		break;
+	case AnimationEnumType::Attack:
+		std::cout << "No attack animation" << std::endl;
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::setPosition() {
@@ -398,6 +448,16 @@ void Player::ResetDrawableEntityAndSetChunk()
 bool Player::checkIntersects(CollidableEntity* collidableEntity)
 {
 	return this->intersects(collidableEntity, this);
+}
+
+bool Player::getCorrectToolSelected()
+{
+	return this->correctToolSelected;
+}
+
+void Player::setCorrectToolSelected(bool tool)
+{
+	this->correctToolSelected = tool;
 }
 
 void Player::drawHealthBar(int x, int y) {

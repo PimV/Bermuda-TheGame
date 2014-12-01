@@ -10,6 +10,7 @@
 #include "MainEntityContainer.h"
 #include "StatusTracker.h"
 #include "GameTimer.h"
+#include "MovementDirectionEnum.h"
 #include "Inventory.h"
 #include "Crafting.h"
 
@@ -46,7 +47,7 @@ public:
 	//void clickMove();
 	void clickMove();
 	void setPosition();
-	void interact();
+	void interact(double dt);
 	void resetMovement();
 
 	void drawStats();
@@ -59,6 +60,9 @@ public:
 	Inventory* getInventory();
 	Crafting* getCraftingSystem();
 	StatusTracker* getStatusTracker();
+
+	bool getCorrectToolSelected();
+	void setCorrectToolSelected(bool tool);
 
 private:
 	Camera* camera;
@@ -83,6 +87,20 @@ private:
 	long thirstUpdate, thirstUpdateTime;
 	long healthUpdate, healthUpdateTime;
 
+	int animationPickUp, animationPickLeft;
+	int animationPickDown, animationPickRight;
+	int animationPickStartColumn, animationPickEndColumn;
+
+	int animationChopUp, animationChopLeft;
+	int animationChopDown, animationChopRight;
+	int animationChopStartColumn, animationChopEndColumn;
+
+	int animationMineUp, animationMineLeft;
+	int animationMineDown, animationMineRight;
+	int animationMineStartColumn, animationMineEndColumn;
+
+	bool correctToolSelected;
+
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
 	Inventory* inventory;
@@ -91,9 +109,9 @@ private:
 
 	void updatePlayerStatuses(double dt);
 
-
-
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 	bool checkIntersects(CollidableEntity* collidableEntity);
+
+	void setAnimationType(AnimationEnumType type);
 };

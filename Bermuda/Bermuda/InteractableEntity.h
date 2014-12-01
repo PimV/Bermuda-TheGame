@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Inventory.h"
 #include "header_loader.h"
+#include "AnimationEnum.h"
 
 class Player;
 class GameStateManager;
@@ -14,6 +15,8 @@ protected:
 	long interactTime;
 	long timeDestroyed;
 	long respawnTime;
+
+	AnimationEnumType animationType;
 
 private:
 	int interactStartX;
@@ -39,6 +42,8 @@ public:
 
 	virtual void interact(Player* p);
 	virtual void setDestroyedState();
+
+	virtual AnimationEnumType getAnimationEnumType();
 
 	virtual ~InteractableEntity();
 };

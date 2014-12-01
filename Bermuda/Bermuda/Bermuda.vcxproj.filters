@@ -764,5 +764,11 @@
     <ClInclude Include="Crafting.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementDirectionEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

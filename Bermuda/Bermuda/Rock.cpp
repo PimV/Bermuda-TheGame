@@ -16,7 +16,8 @@ Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 	this->getMainEntityContainer()->getCollidableContainer()->add(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
-	this->interactTime = 1000;
+	this->interactTime = 5000;
+	this->animationType = AnimationEnumType::Mine;
 }
 
 void Rock::update(double dt) {
@@ -27,11 +28,15 @@ void Rock::interact(Player* player)
 {
 	if (player->getInventory()->pickAxeSelected()) {
 		InteractableEntity::interact(player);
+		player->setCorrectToolSelected(true);
 		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Rock));
 			player->getStatusTracker()->rockMined();
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 
