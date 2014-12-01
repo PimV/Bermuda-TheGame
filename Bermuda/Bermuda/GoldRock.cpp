@@ -16,7 +16,6 @@ GoldRock::GoldRock(int id, double x, double y, int chunkSize, MainEntityContaine
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->interactTime = 1000;
-	//this->currentInteractTime = 0;
 }
 
 void GoldRock::update(double dt) {

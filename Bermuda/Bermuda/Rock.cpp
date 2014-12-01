@@ -17,7 +17,6 @@ Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->interactTime = 1000;
-	//this->currentInteractTime = 0;
 }
 
 void Rock::update(double dt) {

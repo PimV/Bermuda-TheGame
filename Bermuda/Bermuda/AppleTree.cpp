@@ -19,7 +19,6 @@ AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContai
 	this->destroyed = false;
 	this->respawnTime = 5000;
 	this->interactTime = 500;
-	//this->currentInteractTime = 0;
 }
 
 void AppleTree::interact(Player* player) {

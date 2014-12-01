@@ -17,7 +17,6 @@ Ice::Ice(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Im
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->interactTime = 1000;
-	//this->currentInteractTime = 0;
 }
 
 void Ice::update(double dt) {

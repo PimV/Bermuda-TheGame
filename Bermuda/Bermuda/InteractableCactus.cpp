@@ -15,7 +15,6 @@ InteractableCactus::InteractableCactus(int id, double x, double y, int chunkSize
 	this->destroyed = false;
 	this->respawnTime = 5000;
 	this->interactTime = 500;
-	//this->currentInteractTime = 0;
 }
 
 void InteractableCactus::update(double dt) {

@@ -14,7 +14,6 @@ Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
 	this->destroyed = false;
 	this->respawnTime = 10000;
 	this->interactTime = 500;
-	//this->currentInteractTime = 0;
 }
 
 void Fish::interact(Player* player) 

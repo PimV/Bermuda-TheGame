@@ -18,7 +18,6 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 	this->destroyed = false;
 	this->respawnTime = 5000;
 	this->interactTime = 1000;
-	//this->currentInteractTime = 0;
 }
 
 void Tree::interact(Player* player) {
@@ -56,15 +55,6 @@ void Tree::setDestroyedState()
 	this->getMainEntityContainer()->getRespawnContainer()->add(this);
 	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	currentInteractTime = 0;
-
-	/*
-	this->destroyed = true;
-	this->setDrawImage(this->stumpImage);
-	this->nextRespawnUpdate = GameTimer::Instance()->getGameTime() + this->respawnTime;
-	this->getMainEntityContainer()->getRespawnContainer()->add(this);
-	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	currentInteractTime = 0;
-	*/
 }
 
 Tree::~Tree()
