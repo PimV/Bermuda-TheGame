@@ -22,14 +22,12 @@ private:
 	void spawnMob();
 
 public:
+	Spawnpoint(int id, double x, double y, std::string spawnType, int maxChildren, int walkRange);
 
 	void decreaseChildren();
 	int getWalkRange();
 	void update();
 	void drawSpawnpointArea();
 
-	//Constructor destructor
-	Spawnpoint(int id, double x, double y, int chunkSize, std::string spawnType, int maxChildren, int walkRange);
 	virtual ~Spawnpoint();
 };
-

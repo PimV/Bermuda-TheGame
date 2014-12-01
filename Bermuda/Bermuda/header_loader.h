@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <string>
 
+
 static const std::string BASEPATH = SDL_GetBasePath();
 static const std::string RESOURCEPATH = BASEPATH + "Resources\\";
 //static const double OPTIMALRESOLUTIONW = 1600;

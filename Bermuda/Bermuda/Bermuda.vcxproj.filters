@@ -145,6 +145,15 @@
     <Filter Include="Header Files\Model\Timer">
       <UniqueIdentifier>{e7c0fa02-296a-4ec0-8cd3-1155d1e50f29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Factory">
+      <UniqueIdentifier>{39248f75-6861-4d17-8d78-1955ad095746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Factory">
+      <UniqueIdentifier>{bd6820f2-d31b-42aa-ac19-f8645c583fbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Enums">
+      <UniqueIdentifier>{6db163ab-45a0-4f3d-a487-4c28f818c436}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -369,9 +378,6 @@
     <ClCompile Include="SpawnpointContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="NPCFactory.cpp">
-      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
-    </ClCompile>
     <ClCompile Include="ItemFish.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -381,9 +387,6 @@
     <ClCompile Include="Bat.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
-    <ClCompile Include="ItemFactory.cpp">
-      <Filter>Source Files\Model\Item</Filter>
-    </ClCompile>
     <ClCompile Include="ItemApple.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -392,9 +395,6 @@
     </ClCompile>
     <ClCompile Include="ItemWater.cpp">
       <Filter>Source Files\Model\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolFlint.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cactus.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
@@ -441,11 +441,35 @@
     <ClCompile Include="ToolFlint.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ItemCampfire.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
     <ClCompile Include="GameTimer.cpp">
       <Filter>Source Files\Model\Timer</Filter>
     </ClCompile>
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Campfire.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatingContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatingEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFactory.cpp">
+      <Filter>Source Files\Model\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCFactory.cpp">
+      <Filter>Source Files\Model\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Source Files\Model\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -497,13 +521,7 @@
     <ClInclude Include="ClickAction.h">
       <Filter>Header Files\Model\Container\Action</Filter>
     </ClInclude>
-    <ClInclude Include="ContainerType.h">
-      <Filter>Header Files\Model\Container\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="MoveAction.h">
-      <Filter>Header Files\Model\Container\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="EnumDirection.h">
       <Filter>Header Files\Model\Container\Action</Filter>
     </ClInclude>
     <ClInclude Include="Aggressive.h">
@@ -587,9 +605,6 @@
     <ClInclude Include="ItemCarrot.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Items.h">
-      <Filter>Header Files\Model\Item</Filter>
-    </ClInclude>
     <ClInclude Include="ItemRock.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
@@ -656,17 +671,11 @@
     <ClInclude Include="Wasp.h">
       <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
-    <ClInclude Include="StateType.h">
-      <Filter>Header Files\Model\GameState</Filter>
-    </ClInclude>
     <ClInclude Include="MovableContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
     <ClInclude Include="MovableEntity.h">
       <Filter>Header Files\Model\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="NPCFactory.h">
-      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="StatusTracker.h">
       <Filter>Header Files\Model</Filter>
@@ -697,9 +706,6 @@
     </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>Header Files\Model\Entity\NPC%27s</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemFactory.h">
-      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemApple.h">
       <Filter>Header Files\Model\Item</Filter>
@@ -755,6 +761,9 @@
     <ClInclude Include="ToolFlint.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
+    <ClInclude Include="ItemCampfire.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
     <ClInclude Include="GameTimer.h">
       <Filter>Header Files\Model\Timer</Filter>
     </ClInclude>
@@ -763,6 +772,48 @@
     </ClInclude>
     <ClInclude Include="Crafting.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Campfire.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatingContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatingEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h">
+      <Filter>Header Files\Model\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCFactory.h">
+      <Filter>Header Files\Model\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files\Model\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="StateType.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumDirection.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerType.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementDirectionEnum.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

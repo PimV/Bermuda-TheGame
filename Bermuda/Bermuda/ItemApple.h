@@ -1,8 +1,7 @@
 #pragma once
-#include "item.h"
 #include "Consumable.h"
 #include "Image.h"
-enum class Items;
+#include "Player.h"
 
 class ItemApple : 
 	public virtual Consumable

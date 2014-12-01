@@ -2,8 +2,8 @@
 
 double DrawableEntity::DRAWBUFFER = 64;
 
-DrawableEntity::DrawableEntity(int id, double x, double y, int chunkSize, Image* image)
-	: Entity(id,x,y,chunkSize), drawImage(image)
+DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) : 
+	Entity(id,x,y), drawImage(image)
 {
 	if(image != nullptr)
 	{
@@ -16,9 +16,10 @@ DrawableEntity::DrawableEntity(int id, double x, double y, int chunkSize, Image*
 void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 {
 	//Only draw if entity is inside the camera view and the buffer area
-	if((getX() + getWidth()) > (camera->getX() - DRAWBUFFER) &&
+	if(	this->getEnabled() &&
+		getX() + getWidth() > (camera->getX() - DRAWBUFFER) &&
 		getX() < (camera->getX() + camera->getWidth() + DRAWBUFFER) &&
-		(getY() + getHeight()) > (camera->getY() - DRAWBUFFER) &&
+		getY() + getHeight() > (camera->getY() - DRAWBUFFER) &&
 		getY() < (camera->getY() + camera->getHeight() + DRAWBUFFER))
 	{
 		sizeRect->x = getX() - camera->getX();
@@ -34,9 +35,14 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 void DrawableEntity::setDrawImage(Image* image)
 {
 	drawImage = image;
+	if (this->getWidth() < 0 && this->getHeight() < 0)
+	{
+		setWidth(drawImage->getWidth());
+		setHeight(drawImage->getHeight());
+	}
 }
 
 DrawableEntity::~DrawableEntity()
 {
-
+	delete sizeRect;
 }

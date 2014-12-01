@@ -1,12 +1,10 @@
 #pragma once
 //Includes
 #include "ItemType.h"
-#include "GameStateManager.h"
+#include "Image.h"
+#include "Player.h"
 #include <vector>
 
-//Forward Declarations
-class Image;
-enum class Items;
 //Class definition
 class Item
 {
@@ -26,6 +24,7 @@ public:
 	void setStackable(bool stackable);
 	Image* getImage();
 	void setImage(Image* image);
+	virtual void use(Player* p);
 
 	void addItemType(ItemType itemType);
 	bool hasItemType(ItemType itemType);
@@ -35,9 +34,6 @@ public:
 	bool isConsumable();
 	bool isEquipable();
 
-
-
-
 	virtual ~Item();
 private:
 	int id;
@@ -45,7 +41,6 @@ private:
 	int maxStackSize;
 	bool stackable;
 	Image* image;
-	ImageLoader* imgLoader;
 
 protected:
 	std::vector<ItemType> itemTypes;

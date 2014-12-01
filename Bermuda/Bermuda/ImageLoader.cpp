@@ -45,7 +45,7 @@ int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeigh
 	return startID;
 }
 
-SDL_Texture* ImageLoader::loadSpriteSheet(string filename)
+/*SDL_Texture* ImageLoader::loadSpriteSheet(string filename)
 {
 	SDL_Texture* spriteSheet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
 
@@ -53,7 +53,7 @@ SDL_Texture* ImageLoader::loadSpriteSheet(string filename)
 		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
 
 	return spriteSheet;
-}
+}*/
 
 int ImageLoader::getCurrentImageCount()
 {

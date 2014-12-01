@@ -13,7 +13,7 @@ class Bat :
 	public MovableEntity
 {
 public:
-	Bat(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
+	Bat(int id, Spawnpoint *spawnPoint, int firstImgID);
 	~Bat();
 	void directionsAndMove(double dt);
 	void update(double dt);
@@ -21,6 +21,6 @@ private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkIntersects(CollidableEntity* collidableEntity);
+	bool checkCollision(double newX, double newY);
 };
 

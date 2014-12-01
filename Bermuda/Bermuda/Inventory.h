@@ -1,14 +1,14 @@
 #pragma once
+#include "Image.h"
 #include <vector>
 
-class Item;
-class Image;
 class Player;
-class Equipable;
+class Item;
+
 class Inventory
 {
 public:
-	Inventory(void);
+	Inventory();
 
 	void init();
 	void cleanup();
@@ -17,6 +17,7 @@ public:
 	void decrementSelectedIndex();
 
 	void interactCurrent(Player* p);
+	void interacSpecific(Player* p, int stackIndex);
 	void dropCurrent();
 	Item* getSelectedItem();
 
@@ -37,6 +38,9 @@ public:
 	bool pickAxeSelected();
 
 	void draw();
+	int getStartingX();
+	int getStartingY();
+	int getWidth();
 
 	Item* getItemById(int id, bool full);
 
@@ -47,11 +51,13 @@ public:
 	void toggleInventory();
 	bool isOpen();
 
+	void selectStack(Item* stack);
+	void setSelectedIndex(int index);
 	bool clicked(int x, int y, std::string mode, Player* player);
 
 	void printInventory();
 
-	~Inventory(void);
+	~Inventory();
 private:
 	//Draw
 	Image* img;

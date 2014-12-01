@@ -21,10 +21,6 @@ void ToolAxe::init() {
 	this->setStackSize(itemCount);
 }
 
-void ToolAxe::equip(Player* player) {
-	Equipable::equip(player);
-}
-
 ToolAxe::~ToolAxe()
 {
 }
