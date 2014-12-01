@@ -184,9 +184,9 @@ void Player::updatePlayerStatuses(double dt)
 	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
 	if (this->healthUpdate + this->healthUpdateTime < currentTime) {
 		if (this->getThirst() > 80 && this->getHunger() > 80) {
-			this->setHealth(this->getHealth() + 3);
-		} else if (this->getThirst() > 40 && this->getHunger() > 40) {
 			this->setHealth(this->getHealth() + 2);
+		} else if (this->getThirst() > 40 && this->getHunger() > 40) {
+			this->setHealth(this->getHealth() + 1);
 		}
 		this->healthUpdate = currentTime;
 	}
