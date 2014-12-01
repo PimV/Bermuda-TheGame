@@ -10,7 +10,6 @@ Axe::Axe(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Im
 
 	this->getMainEntityContainer()->getBackgroundContainer()->add(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
-	LightRadius = 100;
 }
 
 void Axe::update(double dt) {

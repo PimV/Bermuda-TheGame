@@ -21,8 +21,6 @@
 
 PlayState PlayState::m_PlayState;
 
-//Needed for vector sort
-bool lightableSortFunction(Entity* a, Entity* b) { return (a->entityLightRadiusXMin < b->entityLightRadiusXMin); }
 bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
 PlayState::PlayState(void)
@@ -48,27 +46,12 @@ void PlayState::init(GameStateManager *gsm) {
 	this->p->getInventory()->toggleInventory();
 	
 	//TEMPORARY AXE SPAWN:
-	axe = new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
+	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
 	new Pickaxe(9002, p->getX() + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png", 32, 32)));
 
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
-	ready = true;
-
-	// temp 
-	this->dayLightTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelBlack.png").c_str());
-	lightEntities.push_back(p);
-	lightEntities.push_back(axe);
-
-	mFogOfWar = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-	if (mFogOfWar == NULL) {
-		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
-		exit(1);
-	}
-	mWindowSurface = SDL_GetWindowSurface(GameStateManager::Instance()->sdlInitializer->getWindow());
-
-	this->blackPixel = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelBlack.png").c_str());
-	this->alphaCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "lightsource2.png").c_str());
+	
 	this->ready = true;
 }
 
@@ -498,10 +481,7 @@ void PlayState::draw()
 
 	if (showDayLight)
 	{
-		//displayDarkness1();
-		//displayDarkness2();
-		//displayDarkness3(); // only works at top of draw() method
-		//displayDarkness4();
+		// display darkness and light sources
 	}
 
 	//Draw timer
@@ -527,160 +507,8 @@ Camera* PlayState::getCamera()
 //Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)
 {
-	// temp?
-	SDL_FreeSurface(mFogOfWar);
-	SDL_FreeSurface(mWindowSurface);
-
 	delete camera;
 	delete mec;
 	delete mapLoader;
 	std::cout << "deleting playstate" << endl;
-}
-
-
-/// temp
-void PlayState::displayDarkness4()
-{
-	//Clear screen
-	SDL_SetRenderDrawColor(GameStateManager::Instance()->sdlInitializer->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-	//SDL_RenderClear(GameStateManager::Instance()->sdlInitializer->getRenderer());
-
-	SDL_SetRenderDrawBlendMode(GameStateManager::Instance()->sdlInitializer->getRenderer(), SDL_BLENDMODE_BLEND);
-	SDL_SetTextureBlendMode(alphaCircle, SDL_BLENDMODE_BLEND);
-	SDL_SetTextureBlendMode(blackPixel, SDL_BLENDMODE_BLEND);
-
-	SDL_Rect rectAlpha = { (ScreenWidth / 2) - 32, (ScreenHeight / 2) - 35, 64, 64 };
-	SDL_SetTextureAlphaMod(alphaCircle, 200);
-	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), alphaCircle, NULL, &rectAlpha);
-
-	SDL_Rect rectBlack = { 0, 0, ScreenWidth, ScreenHeight };
-	SDL_SetTextureAlphaMod(blackPixel, 100);
-	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackPixel, NULL, &rectBlack);
-
-	//Update screen
-	//SDL_RenderPresent(GameStateManager::Instance()->sdlInitializer->getRenderer());
-}
-
-void PlayState::displayDarkness3()
-{
-	SDL_Rect screenRect = { 0, 0, ScreenWidth, ScreenHeight };
-	SDL_FillRect(mFogOfWar, NULL, 0xFF202020);
-
-	SDL_BlitSurface(mFogOfWar, NULL, mWindowSurface, NULL);
-	//SDL_UpdateWindowSurface(GameStateManager::Instance()->sdlInitializer->getWindow());
-	//SDL_RenderClear(GameStateManager::Instance()->sdlInitializer->getRenderer());
-	SDL_RenderPresent(GameStateManager::Instance()->sdlInitializer->getRenderer());
-}
-
-void PlayState::displayDarkness2()
-{
-	for (Entity* e : lightEntities)
-	{
-		int entityX = e->getX() - this->getCamera()->getX();
-		int entityY = e->getY() - this->getCamera()->getY();
-		e->entityLightRadiusXMax = entityX + e->LightRadius;
-		e->entityLightRadiusYMax = entityY + e->LightRadius;
-		e->entityLightRadiusXMin = entityX - e->LightRadius;
-		e->entityLightRadiusYMin = entityY - e->LightRadius;
-
-		SDL_Rect *rect = new SDL_Rect();
-		rect->x = e->entityLightRadiusXMin;
-		rect->y = e->entityLightRadiusYMin;
-		rect->w = e->entityLightRadiusXMax - e->entityLightRadiusXMin;
-		rect->h = e->entityLightRadiusYMax - e->entityLightRadiusYMin;
-		darkRects.push_back(rect);
-	}
-
-	for (SDL_Rect *r : darkRects)
-	{
-		GameStateManager::Instance()->sdlInitializer->drawTexture(this->dayLightTexture, r, NULL);
-	}
-
-	darkRects.clear();
-}
-
-void PlayState::displayDarkness1()
-{
-
-	int nextXPosition = 0;
-	int nextYPosition = 0;
-	int calculatedHeight = 0;
-
-	for (size_t y = 0; y < ScreenHeight; y++)
-	{
-		for (size_t x = 0; x < ScreenWidth; x++)
-		{
-			for (Entity* e : lightEntities)
-			{
-				int entityX = e->getX() - this->getCamera()->getX();
-				int entityY = e->getY() - this->getCamera()->getY();
-				e->entityLightRadiusXMax = entityX + e->LightRadius;
-				e->entityLightRadiusYMax = entityY + e->LightRadius;
-				e->entityLightRadiusXMin = entityX - e->LightRadius;
-				e->entityLightRadiusYMin = entityY - e->LightRadius;
-
-				if (x < e->entityLightRadiusXMax && x > e->entityLightRadiusXMin
-					&& y < e->entityLightRadiusYMax && y > e->entityLightRadiusYMin)
-				{
-					e->lineContainsLightSource = true;
-				}
-			}
-
-		}
-
-		std::sort(lightEntities.begin(), lightEntities.end(), lightableSortFunction);
-
-		if (lightEntities.size() != 0)
-		{
-			SDL_Rect *rect = new SDL_Rect();
-			rect->x = 0;
-			rect->y = y;
-			rect->w = ScreenWidth;
-			rect->h = calculatedHeight;
-			darkRects.push_back(rect);
-		}
-		else
-		{
-			calculatedHeight++;
-		}
-
-		if (calculatedHeight == ScreenHeight)
-		{
-			SDL_Rect *rect = new SDL_Rect();
-			rect->x = 0;
-			rect->y = 0;
-			rect->w = ScreenWidth;
-			rect->h = calculatedHeight;
-			darkRects.push_back(rect);
-		}
-
-		for (Entity *e : lightEntities)
-		{
-			if (e->lineContainsLightSource)
-			{
-				if (lightEntities.front() == e)
-				{
-
-				}
-				else if (lightEntities.back() == e)
-				{
-
-				}
-				else
-				{
-
-				}
-
-				e->lineContainsLightSource = false;
-			}
-		}
-	}
-
-	for (SDL_Rect *r : darkRects)
-	{
-		GameStateManager::Instance()->sdlInitializer->drawTexture(this->dayLightTexture, r, NULL);
-	}
-
-	calculatedHeight = 0;
-	darkRects.clear();
 }

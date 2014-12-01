@@ -34,13 +34,6 @@ public:
 	double tempX;
 	double tempY;
 
-	// temp
-	int LightRadius;
-	bool lineContainsLightSource;
-	int entityLightRadiusXMax;
-	int entityLightRadiusYMax;
-	int entityLightRadiusXMin;
-	int entityLightRadiusYMin;
 private:
 	//Entity ID
 	int id;
