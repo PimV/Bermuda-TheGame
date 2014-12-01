@@ -1,44 +1,46 @@
 #pragma once
-#include "ExitButton.h"
-#include "PlayButton.h"
 #include <SDL_image.h>
 #include <SDL.h>
 #include "igamestate.h"
 #include "header_loader.h"
+#include "MenuMainScreen.h"
+#include "MenuCreditsScreen.h"
+
 class MenuState :
 	public IGameState
 {
 private:
-	SDL_Texture* backgroundTexture;
-	SDL_Rect backgroundRect;
-	SDL_Texture* bermudaTextTexture;
-	SDL_Rect bermudaTextRect;
 
-	static const int totalButtons = 2;
-	std::vector<BaseButton*> buttons;
+	//variables		Screens
+	BaseScreen* curScreen;
+	MenuMainScreen* mainScr;
+	MenuCreditsScreen* creditsScr;
 
+	//self
 	static MenuState m_MenuState;
 
 public:
-	//TODO: put buttons in array
-
-	void align();
-
-	MenuState(void);
-	void init(GameStateManager *gsm) ;
-	void cleanup();
-
-	void pause();
-	void resume();
-
+	//Methodes
+	void pause();								//unused
+	void resume();								//unused
 	void handleEvents(SDL_Event mainEvent) ;
 	void update(double dt) ;
 	void draw() ;
 
+	//Methodes		Screens
+	void setCurWindow(BaseScreen* curwindow);
+	BaseScreen* getMenuMainScreen();
+	BaseScreen* getMenuCreditsScreen();
+
+	//Get instance self
 	static MenuState* Instance() {
 		return &m_MenuState;
 	}
 
+	//constructors destructors etc
+	MenuState();
+	void init(GameStateManager *gsm) ;
+	void cleanup();
 	~MenuState(void);
 };
 

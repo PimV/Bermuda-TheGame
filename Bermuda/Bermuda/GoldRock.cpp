@@ -1,6 +1,7 @@
 #include "GoldRock.h"
 #include "Player.h"
 #include "ItemFactory.h"
+#include "Items.h"
 
 GoldRock::GoldRock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* rockImage, Image* rockPiecesImage) :
 	Entity(id, x, y, chunkSize),
@@ -24,13 +25,12 @@ void GoldRock::update(double dt) {
 
 void GoldRock::interact(Player* player)
 {
-	if (player->getInventory()->hasPickaxe()) {
+	if (player->getInventory()->pickAxeSelected()) {
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
 			this->setDestroyedState();
-			//TODO: give gold
-			//player->getInventory()->addItem(ItemFactory::Instance()->createRock());
-			//player->getStatusTracker()->rockMined();
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Gold));
+			//TODO: add to statustracker
 		}
 	}
 }

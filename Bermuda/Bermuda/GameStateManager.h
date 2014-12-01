@@ -37,12 +37,14 @@ public:
 
 	bool running();
 	void quit();
-	long lastUpdateLength;
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
 
-	
+	double getSpeedMultiplier();
+	void setSpeedMultiplier(double multiplier);
+
+
 	static GameStateManager* Instance() {
 		return &m_Gsm;
 	};
@@ -51,6 +53,7 @@ public:
 
 private: 
 	long updateLength;
+	double speedMultiplier;
 	int fps;
 	std::vector<IGameState*> states;
 	IGameState* currentState;

@@ -3,9 +3,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
-#include "PlayState.h"
 
-class PlayButton :
+class MenuExitButton :
 	public BaseButton
 {
 public:
@@ -13,8 +12,8 @@ public:
 	void init();
 	void action();
 
-	//Constructor and destructor
-	PlayButton();
-	virtual ~PlayButton();
+	//Constructors and destructors
+	MenuExitButton();
+	virtual ~MenuExitButton();
 };
 

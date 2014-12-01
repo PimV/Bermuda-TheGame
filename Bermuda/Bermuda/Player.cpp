@@ -2,7 +2,6 @@
 #include "header_loader.h"
 #include "GameOverState.h"
 #include <iostream>
-#include "Inventory.h"
 #include "PlayState.h"
 
 Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
@@ -59,11 +58,17 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->inventory = new Inventory();
+	this->crafting = new Crafting(this->inventory);
 	this->statusTracker = new StatusTracker();
 }
 
 Inventory* Player::getInventory() {
 	return this->inventory;
+}
+
+Crafting* Player::getCraftingSystem()
+{
+	return this->crafting;
 }
 
 StatusTracker* Player::getStatusTracker()
@@ -90,7 +95,7 @@ void Player::update(double dt) {
 		return;
 	}
 
-	this->updatePlayerStatuses();
+	this->updatePlayerStatuses(dt);
 	this->directionsAndMove(dt);
 
 	//ROELS CODE HIERONDER TIJDELIJK UITGEZET
@@ -105,18 +110,18 @@ void Player::update(double dt) {
 }
 
 #pragma region PlayerStatusUpdates
-void Player::updatePlayerStatuses()
+void Player::updatePlayerStatuses(double dt)
 {
 
 	// check if hunger needs to be updated
-	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
 	if (this->hungerUpdate > hungerUpdateTime) {
 		this->incrementHunger(-1);
 		hungerUpdate = 0;
 	}
 
 	// check if thirst needs to be updated
-	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength();// * dt;
+	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
 	if (this->thirstUpdate > thirstUpdateTime) {
 		this->incrementThirst(-1);
 		thirstUpdate = 0;
