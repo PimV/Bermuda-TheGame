@@ -385,8 +385,18 @@ void Inventory::draw() {
 			}
 		}
 	}
+}
 
+int Inventory::getStartingX() {
+	return this->startX;
+}
 
+int Inventory::getStartingY() {
+	return this->startY;
+}
+
+int Inventory::getWidth() {
+	return this->slots * this->slotWidth;
 }
 
 
