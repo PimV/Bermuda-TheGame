@@ -43,9 +43,9 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 
 	//this->playerTimer = new PlayerUpdateTimer();
 	this->hungerUpdate = 0; 
-	this->hungerUpdateTime = 2200;
+	this->hungerUpdateTime = 3000;
 	this->thirstUpdate = 0; 
-	this->thirstUpdateTime = 1000;
+	this->thirstUpdateTime = 2000;
 	this->health = 100; 
 	this->hunger = 100; 
 	this->thirst = 100;
@@ -162,7 +162,7 @@ void Player::updatePlayerStatuses(double dt)
 	long currentTime = GameTimer::Instance()->getGameTime();
 
 	// check if hunger needs to be updated
-	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
+	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
 	if (this->hungerUpdate > hungerUpdateTime) {
 		this->setHunger(this->getHunger() - 1);
 		if (this->getHunger() <= 0) {
@@ -172,7 +172,7 @@ void Player::updatePlayerStatuses(double dt)
 	}
 
 	// check if thirst needs to be updated
-	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;// * dt;
+	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
 	if (this->thirstUpdate > thirstUpdateTime) {
 		this->setThirst(this->getThirst() - 1);
 		if (this->getThirst() <= 0) {
