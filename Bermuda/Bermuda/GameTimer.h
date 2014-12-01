@@ -34,6 +34,7 @@ public:
 	int getDaysSurvived();
 	double getPercentage();
 	DAYPART getCurrentDayPart();
+	double getDayLength();
 
 	void draw();
 	void cleanUp();

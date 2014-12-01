@@ -29,7 +29,7 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-	
+
 	GameStateManager::Instance()->setSpeedMultiplier(1);
 	this->ready = false;
 	this->showCol = false;
@@ -44,15 +44,18 @@ void PlayState::init(GameStateManager *gsm) {
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
 	this->p->getInventory()->toggleInventory();
-	
+
 	//TEMPORARY AXE SPAWN:
 	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
 	new Pickaxe(9002, p->getX() + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png", 32, 32)));
 
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
-	
+
 	this->ready = true;
+
+	this->lightSourceImage = IMG_Load((RESOURCEPATH + "hole.png").c_str());
+	this->blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -92,23 +95,26 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			if (p->getInventory()->clicked(x,y, "select", p)) {
-			} else {
-			p->destX = x + this->camera->getX();
-			p->destY = y + this->camera->getY();
-			p->resetMovement();
-			p->moveClick = true;
+			if (p->getInventory()->clicked(x, y, "select", p)) {
+			}
+			else {
+				p->destX = x + this->camera->getX();
+				p->destY = y + this->camera->getY();
+				p->resetMovement();
+				p->moveClick = true;
+			}
 		}
-		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
+		else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
 			if (p->getInventory()->clicked(x, y, "use", p)) {
 
 			}
 		}
 		break;
-	case SDL_MOUSEWHEEL: 
+	case SDL_MOUSEWHEEL:
 		if (mainEvent.wheel.y > 0) {
 			p->getInventory()->incrementSelectedIndex();
-		} else if (mainEvent.wheel.y < 0){
+		}
+		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->decrementSelectedIndex();
 		}
 
@@ -301,7 +307,7 @@ void PlayState::update(double dt) {
 		return;
 	}
 
-	if(this->timesUpdate > 2)
+	if (this->timesUpdate > 2)
 	{
 		this->updateGameTimers(dt);
 	}
@@ -482,6 +488,7 @@ void PlayState::draw()
 	if (showDayLight)
 	{
 		// display darkness and light sources
+		drawDarkness();
 	}
 
 	//Draw timer
@@ -489,8 +496,8 @@ void PlayState::draw()
 
 	//TODO : WEG ALS PIMS BALKEN ER IN ZITTEN
 	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, ScreenHeight - 100, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100 - p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
+	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100 - p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
 }
 
 Player* PlayState::getPlayer()
@@ -507,8 +514,107 @@ Camera* PlayState::getCamera()
 //Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState(void)
 {
+	SDL_FreeSurface(lightSourceImage);
+	SDL_FreeSurface(blackSurface);
+
 	delete camera;
 	delete mec;
 	delete mapLoader;
 	std::cout << "deleting playstate" << endl;
+}
+
+void PlayState::drawDarkness()
+{
+	SDL_Surface* blackSurfaceCopy = SDL_ConvertSurface(blackSurface, blackSurface->format, SDL_SWSURFACE);
+
+	SDL_Rect screenRect = { 0, 0, ScreenWidth, ScreenHeight };
+	SDL_FillRect(blackSurfaceCopy, &screenRect, 0xF9000000);
+
+	const int halfWidth = lightSourceImage->w / 2;
+	const int halfHeight = lightSourceImage->h / 2;
+
+	SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
+	SDL_Rect destRect = { 640 - halfWidth, 365 - halfHeight, lightSourceImage->w, lightSourceImage->h };
+
+	// Make sure our rects stays within bounds
+	if (destRect.x < 0)
+	{
+		sourceRect.x -= destRect.x; // remove the pixels outside of the surface
+		sourceRect.w -= sourceRect.x; // shrink to the surface, not to offset fog
+		destRect.x = 0;
+		destRect.w -= sourceRect.x; // shrink the width to stay within bounds
+	}
+	if (destRect.y < 0)
+	{
+		sourceRect.y -= destRect.y; // remove the pixels outside
+		sourceRect.h -= sourceRect.y; // shrink to the surface, not to offset fog
+		destRect.y = 0;
+		destRect.h -= sourceRect.y; // shrink the height to stay within bounds
+	}
+
+	int xDistanceFromEdge = (destRect.x + destRect.w) - blackSurfaceCopy->w;
+	if (xDistanceFromEdge > 0) // we're busting
+	{
+		sourceRect.w -= xDistanceFromEdge;
+		destRect.w -= xDistanceFromEdge;
+	}
+	int yDistanceFromEdge = (destRect.y + destRect.h) - blackSurfaceCopy->h;
+	if (yDistanceFromEdge > 0) // we're busting
+	{
+		sourceRect.h -= yDistanceFromEdge;
+		destRect.h -= yDistanceFromEdge;
+	}
+
+	SDL_LockSurface(blackSurfaceCopy);
+
+	Uint32* destPixels = (Uint32*)blackSurfaceCopy->pixels;
+	Uint32* srcPixels = (Uint32*)lightSourceImage->pixels;
+
+	static bool keepFogRemoved = false;
+
+	for (int x = 0; x < destRect.w; ++x)
+	{
+		for (int y = 0; y < destRect.h; ++y)
+		{
+			Uint32* destPixel = destPixels + (y + destRect.y) * blackSurfaceCopy->w + destRect.x + x;
+			Uint32* srcPixel = srcPixels + (y + sourceRect.y) * lightSourceImage->w + sourceRect.x + x;
+
+			unsigned char* destAlpha = (unsigned char*)destPixel + 3; // fetch alpha channel
+			unsigned char* srcAlpha = (unsigned char*)srcPixel + 3; // fetch alpha channel
+			if (*srcAlpha > *destAlpha)
+			{
+				continue; // skip this pixel
+			}
+
+			*destAlpha = *srcAlpha;
+		}
+	}
+
+	SDL_UnlockSurface(blackSurfaceCopy);
+
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurfaceCopy);
+	calculateAlpha(texture);
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), texture, NULL, &screenRect);
+
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(blackSurfaceCopy);
+
+}
+
+void PlayState::calculateAlpha(SDL_Texture* texture)
+{
+	double p = GameTimer::Instance()->getPercentage();
+
+	if (p >= 60)
+	{
+		double i = p - 60;
+		double j = (i / 30) * 100;
+		alphaLevel = (255 / 100) * j;
+	}
+	else if (p >= 0)
+	{
+		alphaLevel = 0;
+	}
+
+	SDL_SetTextureAlphaMod(texture, alphaLevel);
 }

@@ -32,10 +32,15 @@ private:
 
 	int timesUpdate;
 	bool ready;
-	
-	bool showCol, showInter, showSpawnArea, showDayLight; 
+
+	bool showCol, showInter, showSpawnArea, showDayLight;
 
 	//std::vector<Entity*> lightEntities;
+	SDL_Surface* blackSurface;
+	SDL_Surface* lightSourceImage;
+	void calculateAlpha(SDL_Texture* texture);
+	void drawDarkness();
+	int alphaLevel;
 
 	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
 
@@ -49,11 +54,11 @@ public:
 	void pause();
 	void resume();
 
-	void handleEvents(SDL_Event mainEvent) ;
+	void handleEvents(SDL_Event mainEvent);
 
 	void update(double dt);
 	void updateGameTimers(double dt);
-	
+
 
 	void draw();
 

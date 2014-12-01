@@ -42,6 +42,11 @@ long GameTimer::getGameTime()
 	return this->gameTime;
 }
 
+double GameTimer::getDayLength()
+{
+	return this->dayLength;
+}
+
 void GameTimer::updateDay()
 {
 	double percentage = this->getPercentage();
