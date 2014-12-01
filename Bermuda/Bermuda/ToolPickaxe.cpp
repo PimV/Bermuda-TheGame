@@ -1,8 +1,6 @@
 #include "ToolPickaxe.h"
 #include "Items.h"
-#include <ctime>
 #include <iostream>
-#include "Player.h"
 
 ToolPickaxe::ToolPickaxe(Image* image) 
 {
@@ -20,10 +18,6 @@ void ToolPickaxe::init() {
 
 	int itemCount = 1;	
 	this->setStackSize(itemCount);
-}
-
-void ToolPickaxe::equip(Player* player) {
-	Equipable::equip(player);
 }
 
 ToolPickaxe::~ToolPickaxe()

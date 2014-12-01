@@ -1,18 +1,18 @@
 #include "Pillar.h"
+#include "PlayState.h"
 
-Pillar::Pillar(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* image) :
-	Entity(id,x,y,chunkSize), 
-	DrawableEntity(id, x, y, chunkSize, image), 
-	CollidableEntity(id, x, y, chunkSize, 0, 64, 32, 32)
+Pillar::Pillar(int id, double x, double y, Image* image) :
+	Entity(id,x,y), 
+	DrawableEntity(id, x, y, image), 
+	CollidableEntity(id, x, y, 0, 64, 32, 32)
 {
-	this->setMainEntityContainer(mec);
-	this->getMainEntityContainer()->getDrawableContainer()->add(this);
-	this->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 }
 
 
 Pillar::~Pillar()
 {
-	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 }

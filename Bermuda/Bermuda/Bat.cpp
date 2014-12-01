@@ -3,12 +3,12 @@
 #include <random>
 
 
-Bat::Bat(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, chunkSize, 5, 1, 50, spawnPoint),
-	Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 8, 20, 16, 12),
-	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
+Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
+	NPC(id, 5, 1, 50, spawnPoint),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(32);
 	this->setHeight(32);
@@ -23,9 +23,6 @@ Bat::Bat(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
 	this->movingDown = false;
 	this->movingUp = false;
 	//this->interaction = false;
-
-	this->setTempX(this->getX());
-	this->setTempY(this->getY());
 
 	this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;
@@ -138,9 +135,9 @@ void Bat::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Bat::checkIntersects(CollidableEntity* collidableEntity)
+bool Bat::checkCollision(double newX, double newY)
 {
-	return this->intersects(collidableEntity, this);
+	return CollidableEntity::checkCollision(newX, newY);
 }
 
 Bat::~Bat()

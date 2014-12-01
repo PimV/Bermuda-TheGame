@@ -3,10 +3,10 @@
 #include "ItemFactory.h"
 #include "Items.h"
 
-Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
-	Entity(id,x,y,chunkSize), 
-	DrawableEntity(id,x,y,chunkSize, fishImage), 
-	InteractableEntity(id,x,y,chunkSize, -64, -64, 192, 192)
+Fish::Fish(int id, double x, double y, Image* fishImage) :
+	Entity(id,x,y), 
+	DrawableEntity(id,x,y, fishImage), 
+	InteractableEntity(id,x,y, -64, -64, 192, 192)
 {
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);

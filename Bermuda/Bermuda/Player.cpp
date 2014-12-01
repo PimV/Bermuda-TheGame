@@ -1,12 +1,14 @@
 #include "Player.h"
-#include "header_loader.h"
 #include "GameOverState.h"
-#include <iostream>
+#include "GameStateManager.h"
 #include "PlayState.h"
+#include <vector>
 
-Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, nullptr),
-	CollidableEntity(id,x,y,chunkSize, 20, 52, 24, 10), MovableEntity(id, x, y, chunkSize)
+Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
+	Entity(id,x,y), 
+	DrawableEntity(id,x,y, nullptr), 
+	CollidableEntity(id,x,y, 20, 52, 24, 10), 
+	MovableEntity(id, x, y)
 {
 	healthBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBar.png").c_str());
 	healthBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBarContainerBas.png").c_str());
@@ -58,9 +60,6 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->moveSpeed = 3;
 	this->sprinting = false;
 	this->sprintSpeed = 15;
-
-	this->setTempX(this->getX());
-	this->setTempY(this->getY());
 
 	this->stopSpeed = 0.8;
 	this->movingLeft = false;
@@ -289,7 +288,7 @@ void Player::directionsAndMove(double dt)
 
 void::Player::interact(double dt)
 {
-	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger thent he current chunk)
+	//Calculate begin and end chunks for the interact check (+1 and -1 to make it a little bigger thent he current chunk)
 	int beginChunkX = this->getChunkX() - 1;
 	int endChunkX = this->getChunkX() + 1;
 	int beginChunkY = this->getChunkY() - 1;
@@ -380,8 +379,8 @@ void Player::setAnimationType(AnimationEnumType type)
 	}
 }
 
-void Player::setPosition() {
-	MovableEntity::setPosition();
+void Player::setPosition(double newX, double newY) {
+	MovableEntity::setPosition(newX, newY);
 
 	this->camera->setX((this->getX() + this->getWidth() / 2) - (this->camera->getWidth() / 2));
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
@@ -445,9 +444,9 @@ void Player::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Player::checkIntersects(CollidableEntity* collidableEntity)
+bool Player::checkCollision(double newX, double newY)
 {
-	return this->intersects(collidableEntity, this);
+	return CollidableEntity::checkCollision(newX, newY);
 }
 
 bool Player::getCorrectToolSelected()
@@ -638,5 +637,6 @@ Player::~Player(void) {
 	SDL_DestroyTexture(thirstBarContainer);
 
 	delete this->inventory;
+	delete this->crafting;
 	delete this->statusTracker;
 }

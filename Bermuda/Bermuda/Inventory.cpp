@@ -1,22 +1,22 @@
 #include "Inventory.h"
-#include "Items.h"
+#include "GameStateManager.h"
 #include "Item.h"
+#include "Items.h"
 #include "Image.h"
-#include "Consumable.h"
-#include "Equipable.h"
 #include "Player.h"
 #include <iostream>
 #include <algorithm>
 
 //Needed for vector sort
 bool Inventory::stackSortFunction(Item* one, Item* two) { return (one->getStackSize() < two->getStackSize()); }
-Inventory::Inventory(void)
+
+Inventory::Inventory()
 {
 	this->init();
 }
 
 void Inventory::init() {
-	this->open = false;
+	this->open = true;
 	this->slots = 15;
 	this->itemVector = std::vector<Item*>();
 	selectedIndex = 0;
@@ -207,6 +207,10 @@ void Inventory::deleteItem(int itemID, int count)
 			stack->setStackSize(stack->getStackSize() - stack->getStackSize());
 
 			std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
+			if (selectedIndex > it - this->itemVector.begin())
+			{
+				selectedIndex--;
+			}
 			delete *it;
 			this->itemVector.erase(it);
 		} else {
@@ -220,6 +224,10 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 	stack->setStackSize(stack->getStackSize() - count);
 	if (stack->getStackSize() <= 0) {
 		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
+		if (selectedIndex > it - this->itemVector.begin())
+		{
+			selectedIndex--;
+		}
 		delete *it;
 		this->itemVector.erase(it);
 	}
@@ -227,16 +235,13 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 
 void Inventory::interactCurrent(Player* p) {
 	if (selectedIndex < this->getSize()) {
-		Item* item = this->itemVector[selectedIndex];
-		if (item != nullptr) {
-			if (item->isConsumable()) {
-				Consumable* c = (Consumable*)item;
-				c->consume(p);
-			} else if (item->isEquipable()) {
-				Equipable* e = (Equipable*)item;
-				e->equip(p);
-			}
-		}
+		this->itemVector[selectedIndex]->use(p);
+	}
+}
+
+void Inventory::interacSpecific(Player* p, int stackIndex) {
+	if (stackIndex < this->getSize()) {
+		this->itemVector[stackIndex]->use(p);
 	}
 }
 
@@ -304,8 +309,22 @@ void Inventory::toggleInventory() {
 	this->open = !this->open;
 }
 
+void Inventory::setSelectedIndex(int index)
+{
+	if (index < this->getSlots()-1)
+	{
+		this->selectedIndex = index;
+	}
+}
+
+void Inventory::selectStack(Item* stack)
+{
+	int pos = std::find(itemVector.begin(), itemVector.end(), stack) - itemVector.begin();
+	this->setSelectedIndex(pos);
+}
+
 bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
-	if (x >= startX && x <= endX && y >= startY  && y <= startY + slotHeight) {
+	if (this->open && x >= this->startX && x <= this->endX && y >= this->startY  && y <= this->startY + this->slotHeight) {
 		int clickedIndex = -1;
 
 		for (int i = 0; i < this->slots; i++) {
@@ -313,12 +332,16 @@ bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 			int endSlotX = startSlotX + slotWidth;
 
 			if (x >= startSlotX && x <= endSlotX) {
-				selectedIndex = i;
+				clickedIndex = i;
 				break;
 			}
 		}
-		if (mode == "use") {
-			interactCurrent(player);
+
+		if (mode == "select") {
+			this->selectedIndex = clickedIndex;
+		}
+		else if (mode == "use") {
+			this->interacSpecific(player, clickedIndex);
 		}
 
 		return true;
@@ -384,6 +407,6 @@ int Inventory::getWidth() {
 	return this->slots * this->slotWidth;
 }
 
-Inventory::~Inventory(void)
+Inventory::~Inventory()
 {
 }

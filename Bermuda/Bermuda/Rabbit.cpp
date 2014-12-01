@@ -5,12 +5,12 @@
 #include <random>
 #include "PlayState.h"
 
-Rabbit::Rabbit(int id, int chunkSize, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, chunkSize, 5, 1, 50, spawnPoint),
-Entity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize),
-DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize, 4, 20, 28, 12),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
+Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
+NPC(id, 5, 1, 50, spawnPoint),
+Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
+CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(36);
 	this->setHeight(36);
@@ -25,9 +25,6 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY(), chunkSize)
 	this->movingDown = false;
 	this->movingUp = false;
 	//this->interaction = false;
-
-	this->setTempX(this->getX());
-	this->setTempY(this->getY());
 
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;
@@ -142,9 +139,9 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Rabbit::checkIntersects(CollidableEntity* collidableEntity)
+bool Rabbit::checkCollision(double newX, double newY)
 {
-	return this->intersects(collidableEntity, this);
+	return CollidableEntity::checkCollision(newX, newY);
 }
 
 Rabbit::~Rabbit()

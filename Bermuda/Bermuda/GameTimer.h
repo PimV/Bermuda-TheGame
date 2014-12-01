@@ -31,6 +31,12 @@ public:
 	void updateGameTime(double frameTime);
 	void updateDay();
 	long getGameTime();
+
+	double getFullDayLength();
+	double getDayLength();
+	double getEveningLength();
+	double getNightLength();
+
 	double getFrameTime();
 
 	int getDaysSurvived();

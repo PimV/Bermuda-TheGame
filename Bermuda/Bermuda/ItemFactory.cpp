@@ -1,8 +1,19 @@
 #include "ItemFactory.h"
+#include "ItemCarrot.h"
+#include "ItemApple.h"
+#include "ItemWater.h"
+#include "ItemFish.h"
+#include "ItemRock.h"
+#include "ItemWood.h"
+#include "ItemGold.h"
+#include "ItemCampfire.h"
+#include "ToolAxe.h"
+#include "ToolPickaxe.h"
+#include "ToolFlint.h"
 
 ItemFactory ItemFactory::itemFactory;
 
-ItemFactory::ItemFactory(void)
+ItemFactory::ItemFactory()
 {
 }
 
@@ -10,14 +21,15 @@ void ItemFactory::loadItemTileSets(ImageLoader* imgLoader)
 {
 	itemImages[Items::Carrot] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemCarrot.png", 30, 22));
 	itemImages[Items::Fish] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemFish.png", 30, 24));
-	itemImages[Items::Apple] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemApple.png", 30,34));
-	itemImages[Items::Rock] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemRock.png", 30,22));
-	itemImages[Items::Wood] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemLogs.png", 32,25));
-	itemImages[Items::Gold] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemGold.png", 34,22));
-	itemImages[Items::Water] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemWater.png", 22,34));
-	itemImages[Items::Pickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolPickaxe.png", 32,32));
-	itemImages[Items::Axe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolAxe.png", 22,27));
-	itemImages[Items::Flint] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolFlint.png", 38,22));
+	itemImages[Items::Apple] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemApple.png", 30, 34));
+	itemImages[Items::Rock] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemRock.png", 30, 22));
+	itemImages[Items::Wood] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemLogs.png", 32, 25));
+	itemImages[Items::Gold] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemGold.png", 34, 22));
+	itemImages[Items::Water] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemWater.png", 22, 34));
+	itemImages[Items::Campfire] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemCampfire.png", 38, 22));
+	itemImages[Items::Pickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolPickaxe.png", 32, 32));
+	itemImages[Items::Axe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolAxe.png", 22, 27));
+	itemImages[Items::Flint] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolFlint.png", 38, 22));
 }
 
 Item* ItemFactory::createItem(Items item)
@@ -45,6 +57,9 @@ Item* ItemFactory::createItem(Items item)
 	case Items::Wood:
 		return new ItemWood(itemImages[Items::Wood]);
 		break;
+	case Items::Campfire:
+		return new ItemCampfire(itemImages[Items::Campfire]);
+		break;
 	case Items::Axe:
 		return new ToolAxe(itemImages[Items::Axe]);
 		break;
@@ -65,6 +80,6 @@ Image* ItemFactory::getItemImage(Items item)
 	return itemImages[item];
 }
 
-ItemFactory::~ItemFactory(void)
+ItemFactory::~ItemFactory()
 {
 }

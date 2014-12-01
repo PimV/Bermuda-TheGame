@@ -44,6 +44,26 @@ long GameTimer::getGameTime()
 	return this->gameTime;
 }
 
+double GameTimer::getFullDayLength()
+{
+	return this->dayLength;
+}
+
+double GameTimer::getDayLength()
+{
+	return this->dayLength / 100 * 70;
+}
+
+double GameTimer::getEveningLength()
+{
+	return this->dayLength / 100 * 20;
+}
+
+double GameTimer::getNightLength()
+{
+	return this->dayLength / 100 * 10;
+}
+
 double GameTimer::getFrameTime()
 {
 	return this->frameTime;
@@ -58,7 +78,7 @@ void GameTimer::updateDay()
 	{
 		this->currentDayPart = DAYPART::Night;
 	}
-	//If 70& -> evening
+	//If 70% -> evening
 	else if(percentage >= 70 && percentage < 90 && this->currentDayPart != DAYPART::Evening)
 	{
 		this->currentDayPart = DAYPART::Evening;

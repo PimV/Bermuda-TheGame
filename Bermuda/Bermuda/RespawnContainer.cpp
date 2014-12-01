@@ -1,6 +1,5 @@
 #include "RespawnContainer.h"
 
-//TODO : remove methode zoals in drawablecontainer
 RespawnContainer::RespawnContainer()
 {
 }

@@ -1,8 +1,8 @@
 #include "MovableEntity.h"
 #include "PlayState.h"
 
-MovableEntity::MovableEntity(int id, double x, double y, int chunkSize)
-	: Entity(id,x,y,chunkSize)
+MovableEntity::MovableEntity(int id, double x, double y) : 
+	Entity(id,x,y)
 {
 	this->keepAnimationWhenIdle = false;
 
@@ -49,41 +49,34 @@ void MovableEntity::move(double dt)
 		return;
 	}
 
-	this->setTempX(getX());
-	this->setTempY(getY());
-
 	double destX = getX() + dx;
 	double destY = getY() + dy;
 
-	bool col = false;
+	bool collision = false;
 
-	while(this->getTempX() != destX || this->getTempY() != destY)
+	while (this->getX() != destX || this->getY() != destY)
 	{
 		//x
-		double diffX = this->getTempX() - destX;
+		double diffX = this->getX() - destX;
 		if(diffX > -10 && diffX < 10)
 		{
 			stepX = -diffX;
 		}
 
 		//y
-		double diffY = this->getTempY() - destY;
+		double diffY = this->getY() - destY;
 		if(diffY > -10 && diffY < 10)
 		{
 			stepY = -diffY;
 		}
 
-		this->setTempX(getX() + stepX);
-		this->setTempY(getY() + stepY);
-
-
-		if (!this->checkCollision(PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()))
+		if (!this->checkCollision(this->getX() + stepX, this->getY() + stepY))
 		{
-			this->setPosition();
+			this->setPosition(this->getX() + stepX, this->getY() + stepY);
 		}
 		else
 		{
-			col = true;
+			collision = true;
 			break;
 		}
 	}
@@ -109,24 +102,18 @@ void MovableEntity::move(double dt)
 		this->currentAnimationRow = this->animationWalkDownRow;
 	}
 
-	if(!col)
+	if (!collision || this->keepAnimationWhenIdle)
 	{
 		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
+	}
+	else
+	{
+		this->StopAnimation();
 	}
 }
 
 void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt, int animationSpeed)
 {
-	/*
-	double animationDelay = 0;
-	if (dt < 1)
-		animationDelay = (maxSpeed / 100) * 40;
-	else
-		animationDelay = (maxSpeed / 100) * 70;
-
-	this->animationSpeed -= animationDelay;
-	*/
-
 	double animationDelay = (maxSpeed / 100) * animationSpeed * dt;
 	this->animationSpeed -= animationDelay;
 	if (this->animationSpeed < animationDelay)
@@ -134,9 +121,13 @@ void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double 
 		this->currentAnimationRow = Row;
 
 		if (EndFrame <= CurrentFrame)
+		{
 			this->CurrentFrame = BeginFrame;
+		}
 		else
+		{
 			this->CurrentFrame++;
+		}
 
 		this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
 		this->animationSpeed = this->maxSpeed * 3;
@@ -148,42 +139,13 @@ void MovableEntity::StopAnimation()
 	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }
 
-bool MovableEntity::checkCollision(CollidableContainer* container) {
-	//Calculate begin and end chunks for the player collision (+1 and -1 to make it a little bigger then the current chunk)
-	int beginChunkX = this->getChunkX() - 1;
-	int endChunkX = this->getChunkX() + 1;
-	int beginChunkY = this->getChunkY() - 1;
-	int endChunkY = this->getChunkY() + 1;
-
-	//Loop through all chunks
-	for (int i = beginChunkY; i <= endChunkY; i++)
-	{
-		for (int j = beginChunkX; j <= endChunkX; j++)
-		{
-			std::vector<CollidableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->getChunk(i, j);
-			if (vec != nullptr)
-			{
-				for (CollidableEntity* e : *vec)
-				{
-					if (this->checkIntersects(e)) 
-					{
-						this->StopAnimation();
-						return true;
-					}
-				}
-			}
-		}
-	}
-
-	return false;
-}
-
-void MovableEntity::setPosition() {
-	this->setX(this->tempX);
-	this->setY(this->tempY);
+void MovableEntity::setPosition(double newX, double newY) {
+	this->setX(newX);
+	this->setY(newY);
 
 	//Chance chunks if needed
-	if (floor(this->getY() / this->getChunkSize()) != this->getChunkY() || floor(this->getX() / this->getChunkSize()) != this->getChunkX())
+	int chunkSize = PlayState::Instance()->getMainEntityContainer()->getChunkSize();
+	if (floor(this->getY() / chunkSize) != this->getChunkY() || floor(this->getX() / chunkSize) != this->getChunkX())
 	{
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->ResetDrawableEntityAndSetChunk();
