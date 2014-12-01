@@ -12,6 +12,7 @@ public:
 	void drawScreen();
 	void drawText(std::string msg, int x, int y, int w, int h);
 	SDL_Renderer* getRenderer();
+	SDL_Window* getWindow();
 	virtual ~SDLInitializer(void);
 private:
 	SDL_Surface* screen;

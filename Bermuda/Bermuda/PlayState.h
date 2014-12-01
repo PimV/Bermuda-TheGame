@@ -7,6 +7,9 @@
 #include "MapLoader.h"
 #include "GameTimer.h"
 
+//temp
+class Axe;
+
 class PlayState : public IGameState
 {
 private:
@@ -33,7 +36,18 @@ private:
 	// temp
 	SDL_Texture* dayLightTexture;
 	SDL_Rect dayLightRect;
+	Axe* axe;
+	std::vector<Entity*> lightEntities;
+	std::vector<SDL_Rect*> darkRects;
+	SDL_Surface* mFogOfWar;
+	SDL_Surface* mWindowSurface;
+	SDL_Texture* blackPixel;
+	SDL_Texture* alphaCircle;
 
+	void displayDarkness1();
+	void displayDarkness2();
+	void displayDarkness3();
+	void displayDarkness4();
 public:
 	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();

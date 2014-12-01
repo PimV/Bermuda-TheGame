@@ -26,6 +26,9 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->sprinting = false;
 	this->sprintSpeed = 15;
 
+	// temp
+	LightRadius = 100;
+
 	this->setTempX(this->getX());
 	this->setTempY(this->getY());
 

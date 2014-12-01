@@ -223,6 +223,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="ItemFish.cpp" />
+    <ClCompile Include="LightTest.cpp" />
     <ClCompile Include="PauseMainScreen.cpp" />
     <ClCompile Include="PauseStatusTrackerScreen.cpp" />
     <ClCompile Include="PauzeAchievementsButton.cpp" />

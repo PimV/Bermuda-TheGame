@@ -405,6 +405,9 @@
     <ClCompile Include="InteractableCactus.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
+    <ClCompile Include="LightTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
