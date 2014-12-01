@@ -4,7 +4,6 @@
 #include "ItemFactory.h"
 #include "Items.h"
 
-
 AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
 	Entity(id,x,y,chunkSize), 
 	DrawableEntity(id,x,y,chunkSize, treeImage), 
@@ -18,15 +17,18 @@ AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContai
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
+	this->interactTime = 3000;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
+
+	this->animationType = AnimationEnumType::Pick;
 }
 
 void AppleTree::interact(Player* player) {
 	InteractableEntity::interact(player);
-
+	player->setCorrectToolSelected(true);
 	if (this->trackInteractTimes()) {
+		player->setCorrectToolSelected(false);
 		this->setDestroyedState();
 		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Apple));
 		player->getStatusTracker()->applePicked();
@@ -65,12 +67,10 @@ AppleTree::~AppleTree()
 {
 	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
+	if(this->destroyed) { 
 		this->getMainEntityContainer()->getRespawnContainer()->remove(this); 
 	}
-	else 
-	{ 
+	else { 
 		this->getMainEntityContainer()->getInteractableContainer()->remove(this); 
 	}
 }

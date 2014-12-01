@@ -15,8 +15,10 @@ GoldRock::GoldRock(int id, double x, double y, int chunkSize, MainEntityContaine
 	this->getMainEntityContainer()->getCollidableContainer()->add(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
-	this->interactTime = 1000;
+	this->interactTime = 5000;
 	this->currentInteractTime = 0;
+
+	this->animationType = AnimationEnumType::Mine;
 }
 
 void GoldRock::update(double dt) {
@@ -26,13 +28,18 @@ void GoldRock::update(double dt) {
 void GoldRock::interact(Player* player)
 {
 	if (player->getInventory()->pickAxeSelected()) {
+		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Gold));
 			//TODO: add to statustracker
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
+
 }
 
 void GoldRock::setDestroyedState()

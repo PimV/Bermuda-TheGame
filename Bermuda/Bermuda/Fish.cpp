@@ -13,7 +13,7 @@ Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
 
 	this->destroyed = false;
 	this->respawnTime = 10000;
-	this->interactTime = 500;
+	this->interactTime = 9000;
 
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
@@ -23,11 +23,14 @@ void Fish::interact(Player* player)
 {
 	//TODO: check if player has fishingrod or fishing harpoon
 	InteractableEntity::interact(player);
-
+	player->setCorrectToolSelected(true);
 	if (this->trackInteractTimes()) {
+		player->setCorrectToolSelected(false);
 		this->setDestroyedState();		
 		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
 		//TODO: add fish caught in statustracker
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 
@@ -59,16 +62,13 @@ void Fish::setDestroyedState()
 	currentInteractTime = 0;
 }
 
-
 Fish::~Fish()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
+	if(this->destroyed) { 
 		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this); 
 	}
-	else 
-	{ 
+	else { 
 		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this); 
 	}
 }

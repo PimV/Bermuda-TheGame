@@ -96,6 +96,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   <ItemGroup>
     <ClInclude Include="Achievement.h" />
     <ClInclude Include="ActionContainer.h" />
+    <ClInclude Include="AnimationEnum.h" />
     <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
@@ -159,6 +160,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MovableEntity.h" />
     <ClInclude Include="NPCFactory.h" />
     <ClInclude Include="Pickaxe.h" />
+    <ClInclude Include="MovementDirectionEnum.h" />
     <ClInclude Include="RockSpikes.h" />
     <ClInclude Include="SpawnpointContainer.h" />
     <ClInclude Include="StatusTracker.h" />

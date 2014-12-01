@@ -8,14 +8,11 @@
 #include <iostream>
 #include <algorithm>
 
-
 //Needed for vector sort
 bool Inventory::stackSortFunction(Item* one, Item* two) { return (one->getStackSize() < two->getStackSize()); }
-
 Inventory::Inventory(void)
 {
 	this->init();
-
 }
 
 void Inventory::init() {
@@ -28,7 +25,6 @@ void Inventory::init() {
 	sizeY = ScreenHeight / 20;
 	posX = ScreenWidth / 2 - sizeX / 2;
 	posY = ScreenHeight - sizeY - 10; //10 = margin from bottom
-
 
 	slotWidth = ScreenWidth / 32;
 	slotHeight = ScreenHeight / 18;
@@ -90,7 +86,6 @@ bool Inventory::addItem(Item* item) {
 		} else {
 			//Try to up stacksize of an existing inventory slot
 			while (item->getStackSize() > 0) {
-				//	std::cout << "Item to add stacksize: " << item->getStackSize() << std::endl;
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
 					inInvItem = this->getItemById(item->getId(), false);
 					if (inInvItem == nullptr && this->getSize() <= slots) {
@@ -185,13 +180,10 @@ int Inventory::getSlotsFreedWhenDeleting(int itemID, int count)
 	}
 	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
 	for (size_t i = 0; i < stackVector.size(); i++) {
-		if (stackVector[i]->getStackSize() <= count)
-		{
+		if (stackVector[i]->getStackSize() <= count) {
 			count -= stackVector[i]->getStackSize();
 			slots++;
-		}
-		else
-		{
+		} else {
 			break;
 		}
 	}
@@ -211,17 +203,14 @@ void Inventory::deleteItem(int itemID, int count)
 	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
 	for (size_t i = 0; i < stackVector.size(); i++) {
 		Item* stack = stackVector[i];
-		if (stackVector[i]->getStackSize() <= count)
-		{
+		if (stackVector[i]->getStackSize() <= count) {
 			count -= stack->getStackSize();
 			stack->setStackSize(stack->getStackSize() - stack->getStackSize());
 
 			std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
 			delete *it;
 			this->itemVector.erase(it);
-		}
-		else
-		{
+		} else {
 			stack->setStackSize(stack->getStackSize() - count);
 			break;
 		}
@@ -299,10 +288,6 @@ int Inventory::getSlots() {
 
 void Inventory::printInventory() {
 	for (size_t i = 0; i < 20; i++) {
-		/*if (i % 4 == 0) {
-		std::cout <<  std::endl;
-		}*/
-
 		if (i < this->getSize()) {
 			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
@@ -399,7 +384,6 @@ int Inventory::getStartingY() {
 int Inventory::getWidth() {
 	return this->slots * this->slotWidth;
 }
-
 
 Inventory::~Inventory(void)
 {

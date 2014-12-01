@@ -14,9 +14,11 @@ InteractableCactus::InteractableCactus(int id, double x, double y, int chunkSize
 	this->stumpImage = stumpImage;
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
+	this->interactTime = 4500;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
+
+	this->animationType = AnimationEnumType::Chop;
 }
 
 void InteractableCactus::update(double dt) {
@@ -39,14 +41,16 @@ void InteractableCactus::respawn() {
 void InteractableCactus::interact(Player* player)
 {
 	if (player->getInventory()->axeSelected()) {
-		if (player->getInventory()->hasAxe()) {
-			InteractableEntity::interact(player);
-			if (this->trackInteractTimes()) {
-				this->setDestroyedState();
-				player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
-				//TODO: add to statustracker
-			}
+		player->setCorrectToolSelected(true);
+		InteractableEntity::interact(player);
+		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
+			this->setDestroyedState();
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
+			//TODO: add to statustracker
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 
@@ -62,12 +66,10 @@ void InteractableCactus::setDestroyedState()
 
 InteractableCactus::~InteractableCactus()
 {
-	if (this->destroyed)
-	{
+	if (this->destroyed) {
 		this->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	}
-	else
-	{
+	else {
 		this->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	}
 }

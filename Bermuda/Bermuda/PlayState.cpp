@@ -233,9 +233,8 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			//Current interact button (= space)
 			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
 			p->interaction = true;
-			p->interact();
+			//p->interact();
 			break;
-
 
 		case SDLK_ESCAPE:
 			//Go to pause state on 'Escape'
@@ -283,6 +282,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 
 		case SDLK_SPACE:
 			p->interaction = false;
+			p->setCorrectToolSelected(false);
 			p->StopAnimation();
 			break;
 

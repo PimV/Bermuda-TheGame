@@ -2,6 +2,7 @@
 #include "entity.h"
 #include "CollidableContainer.h"
 #include "Image.h"
+#include "MovementDirectionEnum.h"
 
 class MovableEntity :
 	virtual public Entity
@@ -14,7 +15,7 @@ public:
 	virtual void directionsAndMove(double dt) = 0;
 	virtual void update(double dt) = 0;
 
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt, int animationSpeed);
 	void StopAnimation();
 
 	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
@@ -39,7 +40,10 @@ protected:
 	int animationWalkStartColumn, animationWalkEndColumn;
 	int animationActionStartColumn, animationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
+	int defaultAnimationSpeed, defaultAnimationActionSpeed;
 	double animationSpeed, animationDelay;
 	
+	int movementDirection;
+
 	long timeSinceLastAction;
 };
