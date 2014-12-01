@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "header_loader.h"
+#include "AnimationEnum.h"
 
 class Player;
 class GameStateManager;
@@ -9,10 +10,12 @@ class InteractableEntity :
 {
 protected:
 	bool destroyed;
-	long interactTime;
-	long timeSinceDestroy;
-	long respawnTime;
 	long currentInteractTime;
+	long interactTime;
+	long timeDestroyed;
+	long respawnTime;
+
+	AnimationEnumType animationType;
 
 private:
 	int interactStartX;
@@ -38,6 +41,8 @@ public:
 
 	virtual void interact(Player* p);
 	virtual void setDestroyedState();
+
+	virtual AnimationEnumType getAnimationEnumType();
 
 	virtual ~InteractableEntity();
 };

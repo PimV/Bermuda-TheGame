@@ -7,18 +7,15 @@
 #include <iostream>
 #include <algorithm>
 
-
 //Needed for vector sort
 bool Inventory::stackSortFunction(Item* one, Item* two) { return (one->getStackSize() < two->getStackSize()); }
 
 Inventory::Inventory()
 {
 	this->init();
-
 }
 
 void Inventory::init() {
-	std::cout<< "Created inv"<<std::endl;
 	this->open = true;
 	this->slots = 15;
 	this->itemVector = std::vector<Item*>();
@@ -27,7 +24,6 @@ void Inventory::init() {
 	sizeY = ScreenHeight / 20;
 	posX = ScreenWidth / 2 - sizeX / 2;
 	posY = ScreenHeight - sizeY - 10; //10 = margin from bottom
-
 
 	slotWidth = ScreenWidth / 32;
 	slotHeight = ScreenHeight / 18;
@@ -42,8 +38,6 @@ void Inventory::init() {
 
 	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
 	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
-
-	std::cout << "Creating inv img" << std::endl;
 }
 
 void Inventory::cleanup() {
@@ -91,7 +85,6 @@ bool Inventory::addItem(Item* item) {
 		} else {
 			//Try to up stacksize of an existing inventory slot
 			while (item->getStackSize() > 0) {
-				//	std::cout << "Item to add stacksize: " << item->getStackSize() << std::endl;
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
 					inInvItem = this->getItemById(item->getId(), false);
 					if (inInvItem == nullptr && this->getSize() <= slots) {
@@ -186,13 +179,10 @@ int Inventory::getSlotsFreedWhenDeleting(int itemID, int count)
 	}
 	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
 	for (size_t i = 0; i < stackVector.size(); i++) {
-		if (stackVector[i]->getStackSize() <= count)
-		{
+		if (stackVector[i]->getStackSize() <= count) {
 			count -= stackVector[i]->getStackSize();
 			slots++;
-		}
-		else
-		{
+		} else {
 			break;
 		}
 	}
@@ -212,8 +202,7 @@ void Inventory::deleteItem(int itemID, int count)
 	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
 	for (size_t i = 0; i < stackVector.size(); i++) {
 		Item* stack = stackVector[i];
-		if (stackVector[i]->getStackSize() <= count)
-		{
+		if (stackVector[i]->getStackSize() <= count) {
 			count -= stack->getStackSize();
 			stack->setStackSize(stack->getStackSize() - stack->getStackSize());
 
@@ -224,9 +213,7 @@ void Inventory::deleteItem(int itemID, int count)
 			}
 			delete *it;
 			this->itemVector.erase(it);
-		}
-		else
-		{
+		} else {
 			stack->setStackSize(stack->getStackSize() - count);
 			break;
 		}
@@ -305,10 +292,6 @@ int Inventory::getSlots() {
 
 void Inventory::printInventory() {
 	for (size_t i = 0; i < 20; i++) {
-		/*if (i % 4 == 0) {
-		std::cout <<  std::endl;
-		}*/
-
 		if (i < this->getSize()) {
 			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
@@ -410,10 +393,19 @@ void Inventory::draw() {
 			}
 		}
 	}
-
-
 }
 
+int Inventory::getStartingX() {
+	return this->startX;
+}
+
+int Inventory::getStartingY() {
+	return this->startY;
+}
+
+int Inventory::getWidth() {
+	return this->slots * this->slotWidth;
+}
 
 Inventory::~Inventory()
 {

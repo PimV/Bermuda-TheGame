@@ -11,6 +11,7 @@ void GameTimer::init()
 {
 	this->dayLength = 60000;
 	this->gameTime = 0;
+	this->frameTime = 0;
 	this->startDay = 0;
 	this->days = 0;
 	this->currentDayPart = DAYPART::Day;
@@ -31,9 +32,10 @@ void GameTimer::init()
 
 }
 
-void GameTimer::updateGameTime(long gameTime)
+void GameTimer::updateGameTime(double frameTime)
 {
-	this->gameTime += gameTime;
+	this->frameTime = frameTime;
+	this->gameTime += frameTime;
 	this->updateDay();
 }
 
@@ -60,6 +62,11 @@ double GameTimer::getEveningLength()
 double GameTimer::getNightLength()
 {
 	return this->dayLength / 100 * 10;
+}
+
+double GameTimer::getFrameTime()
+{
+	return this->frameTime;
 }
 
 void GameTimer::updateDay()
@@ -121,7 +128,9 @@ void GameTimer::draw()
 		SDL_FLIP_NONE);
 
 	//Draw amount of days
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day: " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 6, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4);
+	GameStateManager::Instance()->sdlInitializer->setRenderDrawColor(255,255,255);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 6, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4, 0, 0, 0);
+	GameStateManager::Instance()->sdlInitializer->resetRenderDrawColor();
 }
 
 void GameTimer::cleanUp()

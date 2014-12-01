@@ -9,8 +9,8 @@
 #include <thread>
 #include "Items.h"
 
-//TEMPORARY AXE SPAWN:
 #include "ItemFactory.h"
+
 
 PlayState PlayState::m_PlayState;
 
@@ -183,6 +183,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_F4:
 			this->showSpawnArea = !this->showSpawnArea;
+		case SDLK_F9:
+			GameStateManager::Instance()->toggleHelpEnabled();
+			break;
 		case SDLK_F8:
 			p->getCraftingSystem()->craftItem(Items::Campfire);
 			break;
@@ -201,12 +204,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->setCollisionY(-10000);
 			break;
 		case SDLK_SPACE:
-			//Current interact button (= space)
-			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
 			p->interaction = true;
-			p->interact();
+			//p->interact();
 			break;
-
+		default:
+			break;
 
 		case SDLK_ESCAPE:
 			//Go to pause state on 'Escape'
@@ -254,6 +256,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 
 		case SDLK_SPACE:
 			p->interaction = false;
+			p->setCorrectToolSelected(false);
 			p->StopAnimation();
 			break;
 
@@ -270,9 +273,11 @@ void PlayState::update(double dt) {
 
 	mec->getDestroyContainer()->destroyAllEntities();
 
+	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
+	//Update gametimer
 	if(this->timesUpdate > 2)
 	{
-		this->updateGameTimers(dt);
+		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	}
 	else
 	{
@@ -352,11 +357,6 @@ void PlayState::updateMediumAreaEntities(double dt)
 			}
 		}
 	}
-}
-
-void PlayState::updateGameTimers(double dt) {
-
-	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 }
 
 void PlayState::draw() 
@@ -462,15 +462,11 @@ void PlayState::draw()
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
+		this->p->drawStats();
 	}
 
 	//Draw timer
 	GameTimer::Instance()->draw();
-
-	//TODO : WEG ALS PIMS BALKEN ER IN ZITTEN
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, ScreenHeight - 100, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
 }
 
 Player* PlayState::getPlayer()

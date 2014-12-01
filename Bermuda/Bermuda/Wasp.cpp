@@ -59,7 +59,7 @@ void Wasp::directionsAndMove(double dt)
 
 	if (timeSinceLastAction < timeWait)
 	{
-		timeSinceLastAction += GameStateManager::Instance()->getUpdateLength() * dt;
+		timeSinceLastAction += GameTimer::Instance()->getFrameTime();
 	}
 	else {
 		timeSinceLastAction = 0;

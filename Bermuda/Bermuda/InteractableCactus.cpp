@@ -15,15 +15,14 @@ InteractableCactus::InteractableCactus(int id, double x, double y, Image* cactus
 	this->stumpImage = stumpImage;
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	this->interactTime = 4500;
+
+	this->animationType = AnimationEnumType::Chop;
 }
 
 void InteractableCactus::update(double dt) {
 	if (this->destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed  + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -31,7 +30,6 @@ void InteractableCactus::update(double dt) {
 
 void InteractableCactus::respawn() {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->cactusImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
@@ -40,20 +38,22 @@ void InteractableCactus::respawn() {
 void InteractableCactus::interact(Player* player)
 {
 	if (player->getInventory()->axeSelected()) {
-		if (player->getInventory()->hasAxe()) {
-			InteractableEntity::interact(player);
-			if (this->trackInteractTimes()) {
-				this->setDestroyedState();
-				player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
-				//TODO: add to statustracker
-			}
+		player->setCorrectToolSelected(true);
+		InteractableEntity::interact(player);
+		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
+			this->setDestroyedState();
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
+			//TODO: add to statustracker
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 
 void InteractableCactus::setDestroyedState()
 {
-	// pims code, doesn't work with GameTimer
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);

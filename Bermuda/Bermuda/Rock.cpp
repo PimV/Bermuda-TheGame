@@ -14,8 +14,8 @@ Rock::Rock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage)
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
-	this->interactTime = 1000;
-	this->currentInteractTime = 0;
+	this->interactTime = 5000;
+	this->animationType = AnimationEnumType::Mine;
 }
 
 void Rock::update(double dt) {
@@ -26,11 +26,15 @@ void Rock::interact(Player* player)
 {
 	if (player->getInventory()->pickAxeSelected()) {
 		InteractableEntity::interact(player);
+		player->setCorrectToolSelected(true);
 		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Rock));
 			player->getStatusTracker()->rockMined();
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 

@@ -5,7 +5,6 @@
 #include "ItemFactory.h"
 #include "Items.h"
 
-
 AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
 	Entity(id,x,y), 
 	DrawableEntity(id,x,y, treeImage), 
@@ -18,15 +17,16 @@ AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEm
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	this->interactTime = 3000;
+
+	this->animationType = AnimationEnumType::Pick;
 }
 
 void AppleTree::interact(Player* player) {
 	InteractableEntity::interact(player);
-
+	player->setCorrectToolSelected(true);
 	if (this->trackInteractTimes()) {
+		player->setCorrectToolSelected(false);
 		this->setDestroyedState();
 		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Apple));
 		player->getStatusTracker()->applePicked();
@@ -35,8 +35,7 @@ void AppleTree::interact(Player* player) {
 
 void AppleTree::update(double dt) {
 	if (destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed + this->respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -44,7 +43,6 @@ void AppleTree::update(double dt) {
 
 void AppleTree::respawn() {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->treeImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
@@ -53,6 +51,7 @@ void AppleTree::respawn() {
 
 void AppleTree::setDestroyedState() 
 {
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->treeEmptyImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);

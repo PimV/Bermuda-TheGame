@@ -5,6 +5,10 @@ MovableEntity::MovableEntity(int id, double x, double y) :
 	Entity(id,x,y)
 {
 	this->keepAnimationWhenIdle = false;
+
+	// set the value just to be sure
+	this->defaultAnimationSpeed = 40;
+	this->defaultAnimationActionSpeed = 40;
 }
 
 MovableEntity::~MovableEntity(void)
@@ -40,7 +44,7 @@ void MovableEntity::move(double dt)
 	if (dx == 0 && dy == 0) {
 		if(this->keepAnimationWhenIdle) 
 		{  
-			PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
+			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 		}
 		return;
 	}
@@ -79,64 +83,54 @@ void MovableEntity::move(double dt)
 	// set animation row
 	if (this->movingLeft)
 	{
+		this->movementDirection = (int)MovementDirectionEnum::Left;
 		this->currentAnimationRow = this->animationWalkLeftRow;
 	}
 	else if (this->movingRight)
 	{
+		this->movementDirection = (int)MovementDirectionEnum::Right;
 		this->currentAnimationRow = this->animationWalkRightRow;
 	}
 	else if (this->movingUp)
 	{
+		this->movementDirection = (int)MovementDirectionEnum::Up;
 		this->currentAnimationRow = this->animationWalkUpRow;
 	}
 	else if (this->movingDown)
 	{
+		this->movementDirection = (int)MovementDirectionEnum::Down;
 		this->currentAnimationRow = this->animationWalkDownRow;
 	}
 
 	if (!collision || this->keepAnimationWhenIdle)
 	{
-		PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
+		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 	}
 	else
 	{
 		this->StopAnimation();
 	}
-
-	//PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
-
-	//if (!this->checkCollision(PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()))
-	//{
-	//	this->setPosition();
-
-	//	// set animation row
-	//	if (this->movingLeft)
-	//		this->currentAnimationRow = this->animationWalkLeftRow;
-	//	else if (this->movingRight)
-	//		this->currentAnimationRow = this->animationWalkRightRow;
-	//	else if (this->movingUp)
-	//		this->currentAnimationRow = this->animationWalkUpRow;
-	//	else if (this->movingDown)
-	//		this->currentAnimationRow = this->animationWalkDownRow;
-
-	//	PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt);
-	//}
 }
 
-void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt)
+void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt, int animationSpeed)
 {
-	double animationDelay = (maxSpeed / 100) * 40 * dt;
-	animationSpeed -= animationDelay;
-	if (animationSpeed < animationDelay)
+	double animationDelay = (maxSpeed / 100) * animationSpeed * dt;
+	this->animationSpeed -= animationDelay;
+	if (this->animationSpeed < animationDelay)
 	{
 		this->currentAnimationRow = Row;
-		if (EndFrame <= CurrentFrame)
-			CurrentFrame = BeginFrame;
-		else
-			CurrentFrame++;
 
-		this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + CurrentFrame));
-		animationSpeed = maxSpeed * 3;
+		if (EndFrame <= CurrentFrame)
+		{
+			this->CurrentFrame = BeginFrame;
+		}
+		else
+		{
+			this->CurrentFrame++;
+		}
+
+		this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
+		this->animationSpeed = this->maxSpeed * 3;
 	}
 }
 

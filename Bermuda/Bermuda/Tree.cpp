@@ -17,28 +17,28 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
-
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	this->interactTime = 5000;
+	this->animationType = AnimationEnumType::Chop;
 }
 
 void Tree::interact(Player* player) {
 	if (player->getInventory()->axeSelected()) {
+		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);
-
 		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Wood));
 			player->getStatusTracker()->treeCut();
 		}
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 
 void Tree::update(double dt) {
 	if (this->destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -46,7 +46,6 @@ void Tree::update(double dt) {
 
 void Tree::respawn() {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->treeImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
@@ -54,7 +53,7 @@ void Tree::respawn() {
 
 void Tree::setDestroyedState() 
 {
-	// pims code, doesn't work with GameTimer
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);

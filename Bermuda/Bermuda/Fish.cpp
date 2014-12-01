@@ -13,29 +13,28 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 
 	this->destroyed = false;
 	this->respawnTime = 10000;
-	this->interactTime = 500;
-
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	this->interactTime = 9000;
 }
 
 void Fish::interact(Player* player) 
 {
 	//TODO: check if player has fishingrod or fishing harpoon
 	InteractableEntity::interact(player);
-
+	player->setCorrectToolSelected(true);
 	if (this->trackInteractTimes()) {
+		player->setCorrectToolSelected(false);
 		this->setDestroyedState();		
 		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
 		//TODO: add fish caught in statustracker
+	} else {
+		player->setCorrectToolSelected(false);
 	}
 }
 
 void Fish::update(double dt) 
 {
 	if (this->destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -44,7 +43,6 @@ void Fish::update(double dt)
 void Fish::respawn() 
 {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
@@ -52,6 +50,7 @@ void Fish::respawn()
 
 void Fish::setDestroyedState() 
 {
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
@@ -59,16 +58,13 @@ void Fish::setDestroyedState()
 	currentInteractTime = 0;
 }
 
-
 Fish::~Fish()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
+	if(this->destroyed) { 
 		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this); 
 	}
-	else 
-	{ 
+	else { 
 		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this); 
 	}
 }
