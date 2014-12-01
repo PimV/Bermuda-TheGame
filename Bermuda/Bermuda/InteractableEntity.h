@@ -11,10 +11,10 @@ class InteractableEntity :
 {
 protected:
 	bool destroyed;
-	long interactTime;
-	long timeSinceDestroy;
-	long respawnTime;
 	long currentInteractTime;
+	long interactTime;
+	long timeDestroyed;
+	long respawnTime;
 
 	AnimationEnumType animationType;
 

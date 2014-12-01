@@ -15,16 +15,13 @@ InteractableCactus::InteractableCactus(int id, double x, double y, int chunkSize
 	this->destroyed = false;
 	this->respawnTime = 5000;
 	this->interactTime = 4500;
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
 
 	this->animationType = AnimationEnumType::Chop;
 }
 
 void InteractableCactus::update(double dt) {
 	if (this->destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed  + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -32,7 +29,6 @@ void InteractableCactus::update(double dt) {
 
 void InteractableCactus::respawn() {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->cactusImage);
 	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
@@ -56,7 +52,7 @@ void InteractableCactus::interact(Player* player)
 
 void InteractableCactus::setDestroyedState()
 {
-	// pims code, doesn't work with GameTimer
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);
 	this->getMainEntityContainer()->getRespawnContainer()->add(this);

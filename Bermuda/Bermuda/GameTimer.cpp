@@ -11,6 +11,7 @@ void GameTimer::init()
 {
 	this->dayLength = 60000;
 	this->gameTime = 0;
+	this->frameTime = 0;
 	this->startDay = 0;
 	this->days = 0;
 	this->currentDayPart = DAYPART::Day;
@@ -31,15 +32,21 @@ void GameTimer::init()
 
 }
 
-void GameTimer::updateGameTime(long gameTime)
+void GameTimer::updateGameTime(double frameTime)
 {
-	this->gameTime += gameTime;
+	this->frameTime = frameTime;
+	this->gameTime += frameTime;
 	this->updateDay();
 }
 
 long GameTimer::getGameTime()
 {
 	return this->gameTime;
+}
+
+double GameTimer::getFrameTime()
+{
+	return this->frameTime;
 }
 
 void GameTimer::updateDay()

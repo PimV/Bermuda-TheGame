@@ -17,7 +17,6 @@ Ice::Ice(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Im
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->interactTime = 5000;
-	this->currentInteractTime = 0;
 
 	this->animationType = AnimationEnumType::Mine;
 }
@@ -36,9 +35,11 @@ void Ice::interact(Player* player)
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
 			//TODO: add to statustracker
-		} else {
+		} 
+	}
+	else 
+	{
 			player->setCorrectToolSelected(false);
-		}
 	}
 }
 

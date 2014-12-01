@@ -18,8 +18,6 @@ AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContai
 	this->destroyed = false;
 	this->respawnTime = 5000;
 	this->interactTime = 3000;
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
 
 	this->animationType = AnimationEnumType::Pick;
 }
@@ -37,8 +35,7 @@ void AppleTree::interact(Player* player) {
 
 void AppleTree::update(double dt) {
 	if (destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed + this->respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -46,7 +43,6 @@ void AppleTree::update(double dt) {
 
 void AppleTree::respawn() {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->treeImage);
 	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
@@ -55,6 +51,7 @@ void AppleTree::respawn() {
 
 void AppleTree::setDestroyedState() 
 {
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->treeEmptyImage);
 	this->getMainEntityContainer()->getRespawnContainer()->add(this);

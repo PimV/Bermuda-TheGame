@@ -17,8 +17,6 @@ Rock::Rock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->interactTime = 5000;
-	this->currentInteractTime = 0;
-
 	this->animationType = AnimationEnumType::Mine;
 }
 

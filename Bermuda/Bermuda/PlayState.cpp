@@ -230,10 +230,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->setCollisionY(-10000);
 			break;
 		case SDLK_SPACE:
-			//Current interact button (= space)
-			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
 			p->interaction = true;
 			//p->interact();
+			break;
+		default:
 			break;
 
 		case SDLK_ESCAPE:
@@ -297,9 +297,11 @@ void PlayState::update(double dt) {
 		return;
 	}
 
+	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
+	//Update gametimer
 	if(this->timesUpdate > 2)
 	{
-		this->updateGameTimers(dt);
+		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	}
 	else
 	{
@@ -361,11 +363,6 @@ void PlayState::update(double dt) {
 			}
 		}
 	}
-}
-
-void PlayState::updateGameTimers(double dt) {
-
-	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 }
 
 void PlayState::draw() 

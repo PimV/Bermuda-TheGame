@@ -16,7 +16,6 @@ Inventory::Inventory(void)
 }
 
 void Inventory::init() {
-	std::cout<< "Created inv"<<std::endl;
 	this->open = false;
 	this->slots = 15;
 	this->itemVector = std::vector<Item*>();

@@ -14,9 +14,9 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int chunkSize
 	this->interactStartY = interactStartY;
 	this->interactWidth = interactWidth;
 	this->interactHeight = interactHeight;
+	this->currentInteractTime = 0;
 
 	this->animationType = AnimationEnumType::None;
-
 	this->interactTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelOrange.png").c_str());
 }
 
@@ -43,7 +43,8 @@ bool InteractableEntity::trackInteractTimes() {
 	if (destroyed) {
 		return false;
 	}
-	currentInteractTime += GameStateManager::Instance()->getUpdateLength();
+
+	currentInteractTime += GameTimer::Instance()->getFrameTime();
 	if (currentInteractTime > interactTime) {
 		currentInteractTime = 0;
 		return true;

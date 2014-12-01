@@ -16,7 +16,6 @@ GoldRock::GoldRock(int id, double x, double y, int chunkSize, MainEntityContaine
 	this->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->interactTime = 5000;
-	this->currentInteractTime = 0;
 
 	this->animationType = AnimationEnumType::Mine;
 }
