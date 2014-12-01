@@ -49,7 +49,7 @@ public:
 	void interact();
 	void resetMovement();
 
-	void draw();
+	void drawStats();
 
 	bool moveClick;
 	bool interaction;

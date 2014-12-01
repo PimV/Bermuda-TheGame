@@ -471,7 +471,7 @@ void PlayState::draw()
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
-		this->p->draw();
+		this->p->drawStats();
 	}
 
 	//Draw timer

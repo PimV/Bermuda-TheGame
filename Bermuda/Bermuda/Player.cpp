@@ -565,7 +565,7 @@ void Player::drawThirstBar(int x, int y) {
 }
 
 
-void Player::draw() {
+void Player::drawStats() {
 	this->drawHealthBar(this->getInventory()->getStartingX(), this->getInventory()->getStartingY() - 30);
 
 	this->drawThirstBar(this->getInventory()->getStartingX() + 35*((this->getInventory()->getWidth()) / 100), this->getInventory()->getStartingY() - 30);
