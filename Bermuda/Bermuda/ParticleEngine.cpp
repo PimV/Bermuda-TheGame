@@ -30,7 +30,7 @@ ParticleEngine::ParticleEngine(int id, double x, double y, Image* image, PARTICL
 		this->height = 10;
 		break;		
 	case PARTICLETYPES::SMOKE:		
-		this->maxParticles = 300;
+		this->maxParticles = 150;
 		SDL_SetTextureColorMod(this->textPixel,155,155,155);
 		SDL_SetTextureAlphaMod(this->textPixel, 100);
 		this->width = 25;
