@@ -42,10 +42,12 @@ Player::Player(int id, double moveSpeed, double x, double y, int chunkSize, Came
 	this->setHeight(64);
 
 	//this->playerTimer = new PlayerUpdateTimer();
-	this->hungerUpdate = 0; 
+	this->hungerUpdate = GameTimer::Instance()->getGameTime(); 
+	this->thirstUpdate = GameTimer::Instance()->getGameTime();
+	this->healthUpdate = GameTimer::Instance()->getGameTime();
 	this->hungerUpdateTime = 3000;
-	this->thirstUpdate = 0; 
 	this->thirstUpdateTime = 2000;
+	this->healthUpdateTime = 3000;
 	this->health = 100; 
 	this->hunger = 100; 
 	this->thirst = 100;
@@ -162,33 +164,31 @@ void Player::updatePlayerStatuses(double dt)
 	long currentTime = GameTimer::Instance()->getGameTime();
 
 	// check if hunger needs to be updated
-	this->hungerUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
-	if (this->hungerUpdate > hungerUpdateTime) {
+	if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
 		this->setHunger(this->getHunger() - 1);
 		if (this->getHunger() <= 0) {
 			this->setHealth(this->getHealth() - 1);
 		}
-		hungerUpdate = 0;
+		this->hungerUpdate = currentTime;
 	}
 
 	// check if thirst needs to be updated
-	this->thirstUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
-	if (this->thirstUpdate > thirstUpdateTime) {
+	if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
 		this->setThirst(this->getThirst() - 1);
 		if (this->getThirst() <= 0) {
 			this->setHealth(this->getHealth() - 1);
 		}
-		thirstUpdate = 0;
+		this->thirstUpdate = currentTime;
 	}
 
-	this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
-	if (this->healthUpdate > this->healthUpdateTime) {
+	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
+	if (this->healthUpdate + this->healthUpdateTime < currentTime) {
 		if (this->getThirst() > 80 && this->getHunger() > 80) {
 			this->setHealth(this->getHealth() + 3);
 		} else if (this->getThirst() > 40 && this->getHunger() > 40) {
 			this->setHealth(this->getHealth() + 2);
 		}
-		healthUpdate = 0;
+		this->healthUpdate = currentTime;
 	}
 }
 
