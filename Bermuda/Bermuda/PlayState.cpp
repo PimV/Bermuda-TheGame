@@ -41,6 +41,11 @@ void PlayState::init(GameStateManager *gsm) {
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
@@ -313,7 +318,7 @@ void PlayState::updateVisibleEntities(double dt)
 			{
 				for (AnimatingEntity* e : *vec)
 				{
-					e->animate();
+					e->animate(dt);
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 #include "Particle.h"
 #include "GameStateManager.h"
+#include "GameTimer.h"
 
 
 Particle::Particle(float x, float y, float dx, float dy, int life, SDL_Texture* textPixel, int width, int height)
@@ -9,7 +10,7 @@ Particle::Particle(float x, float y, float dx, float dy, int life, SDL_Texture* 
 	this->dx = dx;
 	this->dy = dy;
 	this->textPixel = textPixel;
-	this->endTime = SDL_GetTicks() + life;
+	this->endTime = GameTimer::Instance()->getGameTime() + life;
 
 	this->isDead = false;
 
@@ -20,27 +21,27 @@ Particle::Particle(float x, float y, float dx, float dy, int life, SDL_Texture* 
 
 void Particle::move(double dt)
 {
-	this->x += this->dx * dt;
-	this->y += this->dy * dt;
+	this->x += this->dx * dt * GameStateManager::Instance()->getSpeedMultiplier();
+	this->y += this->dy * dt * GameStateManager::Instance()->getSpeedMultiplier();
 
 	//Check if outside of screen
-	if(this->x < 0 || this->x >= ScreenWidth || this->y < 0 || this->y >= ScreenHeight)
+	/*if(this->x < 0 || this->x >= ScreenWidth || this->y < 0 || this->y >= ScreenHeight)
 	{
 		this->isDead = true;
-	}
+	}*/
 }
 
-void Particle::draw()
+void Particle::draw(Camera* camera)
 {
-	rectPixel.x = this->x;
-	rectPixel.y = this->y;
+	rectPixel.x = this->x - camera->getX();
+	rectPixel.y = this->y - camera->getY();
 	GameStateManager::Instance()->sdlInitializer->drawTexture(textPixel, &rectPixel, NULL);
 
 }
 
 bool Particle::getIsDead()
 {
-	if(this->isDead || SDL_GetTicks() >= endTime)
+	if(this->isDead || endTime < GameTimer::Instance()->getGameTime())
 	{
 		return true;
 	}

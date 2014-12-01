@@ -154,6 +154,12 @@
     <Filter Include="Header Files\Model\Enums">
       <UniqueIdentifier>{6db163ab-45a0-4f3d-a487-4c28f818c436}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Engine">
+      <UniqueIdentifier>{a40204b8-ba6b-467c-9d4c-edcaf1a4ba0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Engine">
+      <UniqueIdentifier>{cab1ee3d-7dd8-4f6d-a4a1-cbb6bead61b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -470,6 +476,15 @@
     </ClCompile>
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files\Model\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Model\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEngine.cpp">
+      <Filter>Source Files\Model\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEngineContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -814,6 +829,18 @@
     </ClInclude>
     <ClInclude Include="MovementDirectionEnum.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleTypes.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\Model\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEngine.h">
+      <Filter>Header Files\Model\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEngineContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
