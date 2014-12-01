@@ -61,7 +61,6 @@ public:
 	StatusTracker* getStatusTracker();
 
 private:
-	const char* path;
 	Camera* camera;
 	SDL_Texture* healthBar;
 	SDL_Texture* hungerBar;
