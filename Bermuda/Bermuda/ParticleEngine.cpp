@@ -12,6 +12,7 @@ ParticleEngine::ParticleEngine(int id, double x, double y, Image* image, PARTICL
 
 	this->x = x;
 	this->y = y;
+	this->setHeight(0);
 	this->particleType = particleType;
 	this->currentMaxParticles = 0;
 
@@ -116,11 +117,11 @@ Particle* ParticleEngine::createParticle(PARTICLETYPES particleType)
 		pDy = -0.5;
 		if(pX < this->x + 5 || pX > this->x + 20)
 		{
-			lifeTime = (200 + rand() % 800);
+			lifeTime = (400 + rand() % 1000);
 		}
 		else
 		{
-			lifeTime = (200 + rand() % 1400);
+			lifeTime = (400 + rand() % 1600);
 		}
 
 		width = 3;
