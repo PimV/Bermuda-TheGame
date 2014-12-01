@@ -39,8 +39,6 @@ void Inventory::init() {
 
 	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
 	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
-
-	std::cout << "Creating inv img" << std::endl;
 }
 
 void Inventory::cleanup() {
@@ -88,7 +86,6 @@ bool Inventory::addItem(Item* item) {
 		} else {
 			//Try to up stacksize of an existing inventory slot
 			while (item->getStackSize() > 0) {
-				//	std::cout << "Item to add stacksize: " << item->getStackSize() << std::endl;
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
 					inInvItem = this->getItemById(item->getId(), false);
 					if (inInvItem == nullptr && this->getSize() <= slots) {
@@ -291,10 +288,6 @@ int Inventory::getSlots() {
 
 void Inventory::printInventory() {
 	for (size_t i = 0; i < 20; i++) {
-		/*if (i % 4 == 0) {
-		std::cout <<  std::endl;
-		}*/
-
 		if (i < this->getSize()) {
 			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
@@ -378,7 +371,18 @@ void Inventory::draw() {
 			}
 		}
 	}
+}
 
+int Inventory::getStartingX() {
+	return this->startX;
+}
+
+int Inventory::getStartingY() {
+	return this->startY;
+}
+
+int Inventory::getWidth() {
+	return this->slots * this->slotWidth;
 }
 
 Inventory::~Inventory(void)

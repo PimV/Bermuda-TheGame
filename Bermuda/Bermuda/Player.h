@@ -10,7 +10,7 @@
 #include "MainEntityContainer.h"
 #include "StatusTracker.h"
 #include "GameTimer.h"
-#include "MovmentDirectionEnum.h"
+#include "MovementDirectionEnum.h"
 #include "Inventory.h"
 #include "Crafting.h"
 

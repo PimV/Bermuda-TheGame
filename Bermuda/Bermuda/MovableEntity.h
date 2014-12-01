@@ -2,7 +2,7 @@
 #include "entity.h"
 #include "CollidableContainer.h"
 #include "Image.h"
-#include "MovmentDirectionEnum.h"
+#include "MovementDirectionEnum.h"
 
 class MovableEntity :
 	virtual public Entity
@@ -40,7 +40,7 @@ protected:
 	int animationWalkStartColumn, animationWalkEndColumn;
 	int animationActionStartColumn, animationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
-	int defaultAnemationSpeed, defaultAnemationActionSpeed;
+	int defaultAnimationSpeed, defaultAnimationActionSpeed;
 	double animationSpeed, animationDelay;
 	
 	int movementDirection;

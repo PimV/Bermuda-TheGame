@@ -1,5 +1,5 @@
 #pragma once
-enum class MovmentDirectionEnum
+enum class MovementDirectionEnum
 {
 	Up = 0,
 	Left = 1,

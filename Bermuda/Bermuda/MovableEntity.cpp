@@ -7,8 +7,8 @@ MovableEntity::MovableEntity(int id, double x, double y, int chunkSize)
 	this->keepAnimationWhenIdle = false;
 
 	// set the value just to be sure
-	this->defaultAnemationSpeed = 40;
-	this->defaultAnemationActionSpeed = 40;
+	this->defaultAnimationSpeed = 40;
+	this->defaultAnimationActionSpeed = 40;
 }
 
 MovableEntity::~MovableEntity(void)
@@ -44,7 +44,7 @@ void MovableEntity::move(double dt)
 	if (dx == 0 && dy == 0) {
 		if(this->keepAnimationWhenIdle) 
 		{  
-			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnemationSpeed);
+			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 		}
 		return;
 	}
@@ -90,28 +90,28 @@ void MovableEntity::move(double dt)
 	// set animation row
 	if (this->movingLeft)
 	{
-		this->movementDirection = (int)MovmentDirectionEnum::Left;
+		this->movementDirection = (int)MovementDirectionEnum::Left;
 		this->currentAnimationRow = this->animationWalkLeftRow;
 	}
 	else if (this->movingRight)
 	{
-		this->movementDirection = (int)MovmentDirectionEnum::Right;
+		this->movementDirection = (int)MovementDirectionEnum::Right;
 		this->currentAnimationRow = this->animationWalkRightRow;
 	}
 	else if (this->movingUp)
 	{
-		this->movementDirection = (int)MovmentDirectionEnum::Up;
+		this->movementDirection = (int)MovementDirectionEnum::Up;
 		this->currentAnimationRow = this->animationWalkUpRow;
 	}
 	else if (this->movingDown)
 	{
-		this->movementDirection = (int)MovmentDirectionEnum::Down;
+		this->movementDirection = (int)MovementDirectionEnum::Down;
 		this->currentAnimationRow = this->animationWalkDownRow;
 	}
 
 	if(!col)
 	{
-		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnemationSpeed);
+		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 	}
 }
 
