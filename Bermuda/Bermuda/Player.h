@@ -39,11 +39,17 @@ public:
 	int getHunger();
 	int getThirst();
 
+	void drawHealthBar(int x, int y);
+	void drawHungerBar(int x, int y);
+	void drawThirstBar(int x, int y);
+
 	//void clickMove();
 	void clickMove();
 	void setPosition();
 	void interact();
 	void resetMovement();
+
+	void drawStats();
 
 	bool moveClick;
 	bool interaction;
@@ -55,13 +61,27 @@ public:
 	StatusTracker* getStatusTracker();
 
 private:
-	const char* path;
 	Camera* camera;
+	SDL_Texture* healthBar;
+	SDL_Texture* hungerBar;
+	SDL_Texture* thirstBar;
+	SDL_Texture* healthBarContainer;
+	SDL_Texture* thirstBarContainer;
+	SDL_Texture* hungerBarContainer;
+
+	bool healthAlphaFade;
+	bool hungerAlphaFade;
+	bool thirstAlphaFade;
+
+	int healthAlpha;
+	int hungerAlpha;
+	int thirstAlpha;
 
 	//PlayerUpdateTimer* playerTimer;
 	int health, hunger, thirst;
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
+	long healthUpdate, healthUpdateTime;
 
 	double getDistence(int currentX, int currentY, int destX, int destY);
 
@@ -70,6 +90,8 @@ private:
 	StatusTracker* statusTracker;
 
 	void updatePlayerStatuses(double dt);
+
+
 
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
