@@ -17,7 +17,7 @@ AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContai
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
+	this->interactTime = 3000;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
 

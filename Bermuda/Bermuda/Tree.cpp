@@ -17,7 +17,7 @@ Tree::Tree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, 
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
+	this->interactTime = 5000;
 
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;

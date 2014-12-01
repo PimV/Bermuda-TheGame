@@ -14,7 +14,7 @@ InteractableCactus::InteractableCactus(int id, double x, double y, int chunkSize
 	this->stumpImage = stumpImage;
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 500;
+	this->interactTime = 4500;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
 

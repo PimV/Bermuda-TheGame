@@ -13,7 +13,7 @@ Fish::Fish(int id, double x, double y, int chunkSize, Image* fishImage) :
 
 	this->destroyed = false;
 	this->respawnTime = 10000;
-	this->interactTime = 500;
+	this->interactTime = 9000;
 
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
