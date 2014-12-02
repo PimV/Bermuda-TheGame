@@ -17,7 +17,6 @@ protected:
 	SDL_Rect buttonRect;
 
 	//virtual methodes
-	void (*action) ();
 
 public:
 	
@@ -39,9 +38,9 @@ public:
 	void draw();
 	void hover(int, int);
 	bool clicked(int, int);
+	void (*action) ();
 
 	BaseButton();
-	virtual void init() = 0;
 	void cleanup();
 	virtual ~BaseButton();
 };

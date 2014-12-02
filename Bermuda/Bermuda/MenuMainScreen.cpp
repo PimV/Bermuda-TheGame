@@ -1,9 +1,9 @@
 #include "MenuMainScreen.h"
-#include "MenuExitButton.h"
-#include "MenuPlayButton.h"
-#include "MenuCreditsButton.h"
-#include "MenuHelpButton.h"
-
+#include "PlayState.h"
+#ifndef BUTTONACTIONS
+#define BUTTONACTIONS
+#include "ButtonActions.h"
+#endif
 
 MenuMainScreen::MenuMainScreen()
 {
@@ -15,10 +15,21 @@ void MenuMainScreen::init()
 	setBackground();
 
 	//Create Buttons
-	MenuPlayButton* playButton = new MenuPlayButton();
-	MenuExitButton* exitButton = new MenuExitButton();
-	MenuCreditsButton* creditsButton = new MenuCreditsButton();
-	MenuHelpButton* helpButton = new MenuHelpButton();
+	BaseButton* playButton = new BaseButton();
+	playButton->action = playAction;
+	playButton->createButton("Play", 60, 0);
+
+	BaseButton* exitButton = new BaseButton();
+	exitButton->action = exitAction;
+	exitButton->createButton("Exit", 60, 0);
+
+	BaseButton* creditsButton = new BaseButton();
+	creditsButton->action = setCreditsScreenAction;
+	creditsButton->createButton("Credits", 60, 0);
+
+	BaseButton* helpButton = new BaseButton();
+	helpButton->action = menuSetHelpScreenAction;
+	helpButton->createButton("Help", 60, 0);
 	
 	//place buttons
 	helpButton->placeLeftMid();

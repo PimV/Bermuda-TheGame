@@ -115,12 +115,6 @@
     <Filter Include="Header Files\Model\Entity\NPC%27s">
       <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\View\Buttons">
-      <UniqueIdentifier>{5b43c53c-206d-4ce0-a2dc-6ebb216fcbc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\View\Buttons">
-      <UniqueIdentifier>{0fd01313-c957-43cd-a8e9-cac5499436a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\View\Screens">
       <UniqueIdentifier>{e7234566-2a6c-4cfc-9839-3cc8a425edf2}</UniqueIdentifier>
     </Filter>
@@ -139,26 +133,8 @@
     <Filter Include="Source Files\View\Screens\PauseScreens">
       <UniqueIdentifier>{50d971a9-0485-4fa9-ba36-2b3e281a6378}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\View\Buttons\MenuButtons">
-      <UniqueIdentifier>{08e5b615-3e72-4520-9632-98fe77bedd71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\View\Buttons\PauzeButtons">
-      <UniqueIdentifier>{7b9138f8-27fa-4050-9cb7-0076a04a314d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\View\Buttons\HelpButtons">
-      <UniqueIdentifier>{3fe0ebe5-f283-4b48-b7ef-5248c978d11c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\View\Screens\HelpScreens">
       <UniqueIdentifier>{1fd427ce-914c-4fed-9885-30a0bacbaec7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\View\Buttons\MenuButtons">
-      <UniqueIdentifier>{eabc5fce-f8ae-4c83-9db5-cb02b81ddf89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\View\Buttons\PauzeButtons">
-      <UniqueIdentifier>{a7ce0c61-b2aa-419f-895d-213c77252170}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\View\Buttons\HelpButtons">
-      <UniqueIdentifier>{04abd5a2-454a-4306-9980-da834ec2cf99}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\View\Screens\HelpScreens">
       <UniqueIdentifier>{3bb98897-63c3-46cb-bd32-c3fc3e7b4f59}</UniqueIdentifier>
@@ -447,38 +423,11 @@
     <ClCompile Include="MenuHelpScreen.cpp">
       <Filter>Source Files\View\Screens\MenuScreens</Filter>
     </ClCompile>
-    <ClCompile Include="MenuCreditsButton.cpp">
-      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuExitButton.cpp">
-      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuHelpButton.cpp">
-      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuMainButton.cpp">
-      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuPlayButton.cpp">
-      <Filter>Source Files\View\Buttons\MenuButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeAchievementsButton.cpp">
-      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeExitButton.cpp">
-      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeMenuButton.cpp">
-      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeResumeButton.cpp">
-      <Filter>Source Files\View\Buttons\PauzeButtons</Filter>
-    </ClCompile>
-    <ClCompile Include="HelpButtons.cpp">
-      <Filter>Source Files\View\Buttons\HelpButtons</Filter>
-    </ClCompile>
     <ClCompile Include="BaseHelpScreen.cpp">
       <Filter>Source Files\View\Screens\HelpScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonActions.cpp">
+      <Filter>Source Files\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -776,38 +725,11 @@
     <ClInclude Include="MenuHelpScreen.h">
       <Filter>Header Files\View\Screens\MenuScreens</Filter>
     </ClInclude>
-    <ClInclude Include="MenuCreditsButton.h">
-      <Filter>Header Files\View\Buttons\MenuButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuExitButton.h">
-      <Filter>Header Files\View\Buttons\MenuButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuHelpButton.h">
-      <Filter>Header Files\View\Buttons\MenuButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuMainButton.h">
-      <Filter>Header Files\View\Buttons\MenuButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuPlayButton.h">
-      <Filter>Header Files\View\Buttons\MenuButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeAchievementsButton.h">
-      <Filter>Header Files\View\Buttons\PauzeButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeExitButton.h">
-      <Filter>Header Files\View\Buttons\PauzeButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeMenuButton.h">
-      <Filter>Header Files\View\Buttons\PauzeButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeResumeButton.h">
-      <Filter>Header Files\View\Buttons\PauzeButtons</Filter>
-    </ClInclude>
-    <ClInclude Include="HelpButtons.h">
-      <Filter>Header Files\View\Buttons\HelpButtons</Filter>
-    </ClInclude>
     <ClInclude Include="BaseHelpScreen.h">
       <Filter>Header Files\View\Screens\HelpScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonActions.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

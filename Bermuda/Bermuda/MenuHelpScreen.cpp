@@ -1,6 +1,5 @@
 #include "MenuHelpScreen.h"
 #include "MenuState.h"
-#include "HelpButtons.h"
 
 MenuHelpScreen::MenuHelpScreen()
 {
@@ -27,10 +26,6 @@ void MenuHelpScreen::init()
 
 	tempScreen = new BaseHelpScreen(tempRect.w);
 	setCurWindow(tempScreen);
-
-	HelpButtons helpbuttonTemp;
-	helpbuttonTemp.function = tempFunction;
-	helpbuttonTemp.function();
 
 //	SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 99, 232, 72));
 //	temp2Texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), s);
