@@ -5,21 +5,15 @@
 #include "PauseState.h"
 #include <iostream>
 #include <algorithm>
-#include "Windows.h" 
-#include "Item.h"
+#include "Windows.h"
 #include <thread>
-#include "ToolAxe.h"
-#include "ItemCarrot.h"
-#include "DAYPART.h"
 #include "Items.h"
-#include "Consumable.h"
-#include "Equipable.h"
-
 #include "PARTICLETYPES.h"
 
 //TEMPORARY AXE SPAWN:
 #include "Axe.h"
 #include "Pickaxe.h"
+#include "ItemFactory.h"
 
 PlayState PlayState::m_PlayState;
 
@@ -44,11 +38,12 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), mapLoader->getChunkSize(), camera);
-	this->p->getInventory()->toggleInventory();
-	//TEMPORARY AXE SPAWN:
-	new Axe(9001, p->getX() - 50, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolAxe.png", 22, 27)));
-	new Pickaxe(9002, p->getX()  + 90, p->getY(), mapLoader->getChunkSize(), mec, gsm->getImageLoader()->getMapImage(gsm->getImageLoader()->loadTileset("Items\\ToolPickaxe.png",32, 32)));
+	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
+
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
@@ -57,6 +52,12 @@ void PlayState::init(GameStateManager *gsm) {
 	
 	//pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, PARTICLETYPES::SMOKE);
 	pEngine = new ParticleEngine(400,400, PARTICLETYPES::SMOKE);
+
+	// test for particle inplementation
+	for (int i = 0; i < 10; i++)
+	{
+		p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	}
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -111,9 +112,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		break;
 	case SDL_MOUSEWHEEL: 
 		if (mainEvent.wheel.y > 0) {
-			p->getInventory()->incrementSelectedIndex();
-		} else if (mainEvent.wheel.y < 0){
 			p->getInventory()->decrementSelectedIndex();
+		} else if (mainEvent.wheel.y < 0){
+			p->getInventory()->incrementSelectedIndex();
 		}
 
 		break;
@@ -168,6 +169,20 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_c:
 			p->getInventory()->incrementSelectedIndex();
 			break;
+		case SDLK_0:
+			p->getInventory()->setSelectedIndex(9);
+			break;
+		case SDLK_1:
+		case SDLK_2:
+		case SDLK_3:
+		case SDLK_4:
+		case SDLK_5:
+		case SDLK_6:
+		case SDLK_7:
+		case SDLK_8:
+		case SDLK_9:
+			p->getInventory()->setSelectedIndex(mainEvent.key.keysym.sym - 49);
+			break;
 
 		case SDLK_F1:
 			//Print player location
@@ -181,41 +196,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_F4:
 			this->showSpawnArea = !this->showSpawnArea;
+		case SDLK_F9:
+			GameStateManager::Instance()->toggleHelpEnabled();
 			break;
-		case SDLK_F5: 
-			{
-				//Consume Carrot (Same method as 9)
-				Item* i = p->getInventory()->getItemById(1, true);
-				if (i != nullptr) {
-					std::cout << "Item found!" << std::endl;
-					if (i->isConsumable()) {
-						Consumable* c = (Consumable*)i;
-						c->consume(p);
-					} else if (i->isEquipable()) {
-						Equipable* e = (Equipable*)i;
-						e->equip(p);
-					}
-				}
-				break;
-			}
-		case SDLK_F6: 
-			{
-				//Equip Axe (Same method as 0)
-				Item* i = p->getInventory()->getItemById(3, true);
-				if (i != nullptr) {
-					std::cout << "Item found!" << std::endl;
-					if (i->isConsumable()) {
-						Consumable* c = (Consumable*)i;
-						c->consume(p);
-					} else if (i->isEquipable()) {
-						Equipable* e = (Equipable*)i;
-						e->equip(p);
-					}
-				}
-				break;
-			}
 		case SDLK_F8:
-			p->getCraftingSystem()->craftItem(Items::Axe);
+			p->getCraftingSystem()->craftItem(Items::Campfire);
 			break;
 		case SDLK_F11:
 			//Enable collision
@@ -232,12 +217,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->setCollisionY(-10000);
 			break;
 		case SDLK_SPACE:
-			//Current interact button (= space)
-			//TIJDELIJK ROELS INTERACTION UITGESCHAKELT
 			p->interaction = true;
-			p->interact();
+			//p->interact();
 			break;
-
+		default:
+			break;
 
 		case SDLK_ESCAPE:
 			//Go to pause state on 'Escape'
@@ -285,6 +269,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 
 		case SDLK_SPACE:
 			p->interaction = false;
+			p->setCorrectToolSelected(false);
 			p->StopAnimation();
 			break;
 
@@ -299,29 +284,63 @@ void PlayState::update(double dt) {
 		return;
 	}
 
+	mec->getDestroyContainer()->destroyAllEntities();
+
+	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
+	//Update gametimer
 	if(this->timesUpdate > 2)
 	{
-		this->updateGameTimers(dt);
+		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	}
 	else
 	{
 		this->timesUpdate++;
 	}
 
-	//TODO: moet dit nog?
-	//this->gsm->getActionContainer()->executeAllActions(dt);
-
 	//Update all respawnable entities
 	for (size_t i = 0; i < mec->getRespawnContainer()->getContainer()->size(); i++) {
 		mec->getRespawnContainer()->getContainer()->at(i)->update(dt);
 	}
 
+	this->updateVisibleEntities(dt);
+	this->updateMediumAreaEntities(dt);
+}
+
+void PlayState::updateVisibleEntities(double dt) 
+{
+	//Update all animating entities
+	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//animating entities
+			std::vector<AnimatingEntity*>* vec = this->mec->getAnimatingContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (AnimatingEntity* e : *vec)
+				{
+					e->animate();
+				}
+			}
+		}
+	}
+}
+
+void PlayState::updateMediumAreaEntities(double dt)
+{
 	//Update all spawnpoints and moving entities
 	//Calculate begin and end chunks for the camera (+5 and -5 to make it bigger than the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 5;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 5;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 5;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 5;
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 5;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 5;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 5;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 5;
 
 	//Loop through all chunks
 	for (int i = beginChunkY; i <= endChunkY; i++)
@@ -338,23 +357,11 @@ void PlayState::update(double dt) {
 				}
 			}
 
-			//Oude manier! LATEN STAAN
-			////Moving entities
-			//std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
-			//if (movingEntities != nullptr)
-			//{
-			//	for (MovableEntity* e : *movingEntities)
-			//	{
-			//		//TODO: enable when movableEntities get an 'update' method. 
-			//		e->update(dt);
-			//	}
-			//}
-
-			//NIEUWE MANIER! is dit de juiste manier?
 			////Moving entities
 			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
-			if(movingEntities != nullptr && movingEntities->size() > 0)
+			if (movingEntities != nullptr && movingEntities->size() > 0)
 			{
+				//Copy of container so moving entities can change chunks while we loop through them.
 				std::vector<MovableEntity*> copyMovingEntities = std::vector<MovableEntity*>(*movingEntities);
 				for (MovableEntity* e : copyMovingEntities)
 				{
@@ -366,11 +373,7 @@ void PlayState::update(double dt) {
 
 	
 	this->pEngine->updateParticles(dt);
-}
-
-void PlayState::updateGameTimers(double dt) {
-
-	GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
+	this->getMainEntityContainer()->getParticleContainer()->update(dt);
 }
 
 void PlayState::draw() 
@@ -379,10 +382,10 @@ void PlayState::draw()
 		return;
 	}
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
-	int beginChunkX = floor(camera->getX() / mapLoader->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mapLoader->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mapLoader->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mapLoader->getChunkSize()) + 1;
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
 
 	std::vector<DrawableEntity*> drawableVector;
 
@@ -420,7 +423,6 @@ void PlayState::draw()
 					drawableVector.push_back(e);
 				}
 			}
-
 		}
 	}
 
@@ -476,6 +478,7 @@ void PlayState::draw()
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
+		this->p->drawStats();
 	}
 
 	//Draw timer
@@ -487,8 +490,10 @@ void PlayState::draw()
  	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
 
 	
-	this->pEngine->drawParticles();
+	//this->pEngine->drawParticles();
+	this->getMainEntityContainer()->getParticleContainer()->draw();
 
+	/*
 	blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 
 	SDL_Rect screenRect = {0, 0, ScreenWidth, ScreenHeight};
@@ -564,6 +569,7 @@ void PlayState::draw()
 	SDL_DestroyTexture(texture);
 	SDL_FreeSurface(image);
 	SDL_FreeSurface(blackSurface);
+	//*/
 }
 
 Player* PlayState::getPlayer()

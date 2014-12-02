@@ -29,10 +29,6 @@ void ItemFish::init()
 	this->setHealthRefill(0);
 }
 
-void ItemFish::consume(Player* player) {
-	Consumable::consume(player);
-}
-
 ItemFish::~ItemFish()
 {
 }

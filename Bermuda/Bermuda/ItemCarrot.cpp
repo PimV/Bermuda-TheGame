@@ -27,11 +27,6 @@ void ItemCarrot::init() {
 	this->setHealthRefill(0);
 }
 
-void ItemCarrot::consume(Player* player) {
-	Consumable::consume(player);
-}
-
-
 ItemCarrot::~ItemCarrot()
 {
 }

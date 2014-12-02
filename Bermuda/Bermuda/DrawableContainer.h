@@ -1,6 +1,7 @@
 #pragma once
-#include "ientitycontainer.h"
+#include "IEntityContainer.h"
 #include "DrawableEntity.h"
+
 class DrawableContainer :
 	public IEntityContainer
 {

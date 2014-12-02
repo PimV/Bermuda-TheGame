@@ -2,19 +2,20 @@
 #include "entity.h"
 #include "CollidableContainer.h"
 #include "Image.h"
+#include "MovementDirectionEnum.h"
 
 class MovableEntity :
 	virtual public Entity
 {
 
 public:
-	MovableEntity(int id, double x, double y, int chunkSize);
+	MovableEntity(int id, double x, double y);
 	virtual ~MovableEntity(void);
 
 	virtual void directionsAndMove(double dt) = 0;
 	virtual void update(double dt) = 0;
 
-	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt, int animationSpeed);
 	void StopAnimation();
 
 	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
@@ -23,12 +24,10 @@ public:
 protected:
 	virtual void setImage(Image* image) = 0;
 	virtual void ResetDrawableEntityAndSetChunk() = 0;
-	virtual bool checkIntersects(CollidableEntity* collidableEntity) = 0;
+	virtual bool checkCollision(double newX, double newY) = 0;
 
 	virtual void move(double dt);
-	virtual void setPosition();
-	
-	bool checkCollision(CollidableContainer* container);
+	virtual void setPosition(double newX, double newY);
 
 	double dx, dy;
 
@@ -39,7 +38,10 @@ protected:
 	int animationWalkStartColumn, animationWalkEndColumn;
 	int animationActionStartColumn, animationActionEndColumn;
 	int frameAmountX, frameAmountY, CurrentFrame;
+	int defaultAnimationSpeed, defaultAnimationActionSpeed;
 	double animationSpeed, animationDelay;
 	
+	int movementDirection;
+
 	long timeSinceLastAction;
 };

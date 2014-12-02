@@ -11,9 +11,9 @@ ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 	this->currentMaxParticles = 0;
 	//this->textPixel = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelGrey.png").c_str());
 
-
 	surfPixel= SDL_CreateRGBSurface(0, 3, 3, 8, 0x0, 0x0, 0x0, 255);
 	this->textPixel = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->surfPixel);
+	SDL_FreeSurface(this->surfPixel);
 
 	switch(this->particleType)
 	{
@@ -151,7 +151,6 @@ ParticleEngine::~ParticleEngine()
 		delete this->particles[i];
 	}
 
-	SDL_FreeSurface(this->surfPixel);
 	SDL_DestroyTexture(this->textPixel);
 	this->textPixel = nullptr;
 }

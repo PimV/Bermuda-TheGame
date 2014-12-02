@@ -1,15 +1,14 @@
 #include "Tile.h"
+#include "PlayState.h"
 
-
-Tile::Tile(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* image)
-	: Entity(id,x,y,chunkSize), DrawableEntity(id,x,y,chunkSize, image)
+Tile::Tile(int id, double x, double y, Image* image) : 
+	Entity(id,x,y), 
+	DrawableEntity(id,x,y, image)
 {
-	mec->getBackgroundContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getBackgroundContainer()->add(this);
 }
-
 
 Tile::~Tile()
 {
-	//TODO: Remove object from his containers here?
-	//mec->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getBackgroundContainer()->remove(this);
 }
