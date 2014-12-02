@@ -483,6 +483,9 @@
     <ClCompile Include="ParticleEngine.cpp">
       <Filter>Source Files\Model\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="SnowTree.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -835,6 +838,9 @@
     </ClInclude>
     <ClInclude Include="ParticleEngine.h">
       <Filter>Header Files\Model\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowTree.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
