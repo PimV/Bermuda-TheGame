@@ -475,6 +475,9 @@
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
     <ClCompile Include="LightContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="NightLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -826,6 +829,9 @@
     </ClInclude>
     <ClInclude Include="LightContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="NightLayer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

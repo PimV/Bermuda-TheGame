@@ -6,6 +6,7 @@
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
 #include "GameTimer.h"
+#include "NightLayer.h"
 
 //temp
 class Axe;
@@ -35,12 +36,7 @@ private:
 
 	bool showCol, showInter, showSpawnArea, showDayLight;
 
-	SDL_Surface* blackSurface;
-	SDL_Surface* lightSourceImage;
-	void calculateAlpha(SDL_Texture* texture);
-	void drawDarkness();
-	void drawLightSource(SDL_Surface* surface, SDL_Rect* screenRect, SDL_Rect* sourceRect, SDL_Rect* destRect);
-	double alphaLevel;
+	NightLayer* nightLayer;
 
 	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
 
