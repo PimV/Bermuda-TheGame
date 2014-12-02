@@ -17,6 +17,7 @@ public:
 
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt, int animationSpeed);
 	void StopAnimation();
+	MovementDirectionEnum getMovementDirection();
 
 	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
 	bool movingLeft, movingRight, movingDown, movingUp;
@@ -41,7 +42,7 @@ protected:
 	int defaultAnimationSpeed, defaultAnimationActionSpeed;
 	double animationSpeed, animationDelay;
 	
-	int movementDirection;
+	MovementDirectionEnum movementDirection;
 
 	long timeSinceLastAction;
 };

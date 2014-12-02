@@ -810,10 +810,10 @@
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="AnimationEnum.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="MovementDirectionEnum.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
