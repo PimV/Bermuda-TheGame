@@ -471,6 +471,9 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files\Model\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="SnowTree.cpp">
+      <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -814,6 +817,9 @@
     </ClInclude>
     <ClInclude Include="MovementDirectionEnum.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowTree.h">
+      <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
