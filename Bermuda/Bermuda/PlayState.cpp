@@ -41,7 +41,7 @@ void PlayState::init(GameStateManager *gsm) {
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	
+
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
 	this->ready = true;
@@ -86,11 +86,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			if (p->getInventory()->clicked(x,y, "select", p)) {
 			} else {
-			p->destX = x + this->camera->getX();
-			p->destY = y + this->camera->getY();
-			p->resetMovement();
-			p->moveClick = true;
-		}
+				p->destX = x + this->camera->getX();
+				p->destY = y + this->camera->getY();
+				p->resetMovement();
+				p->moveClick = true;
+			}
 		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
 			if (p->getInventory()->clicked(x, y, "use", p)) {
 
@@ -407,6 +407,8 @@ void PlayState::draw()
 				}
 			}
 
+
+
 		}
 	}
 
@@ -459,6 +461,27 @@ void PlayState::draw()
 			}
 		}
 	}
+
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//Particles / Top layer
+			std::vector<DrawableEntity*>* vec = this->mec->getParticleContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (DrawableEntity* e : *vec)
+				{
+					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
+				}
+			}
+
+
+
+		}
+	}
+
+
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();

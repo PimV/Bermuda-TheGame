@@ -8,7 +8,8 @@ ParticleEngine::ParticleEngine(int id, double x, double y, Image* image, PARTICL
 	Entity(0, x, y),
 	DrawableEntity(0, x, y, nullptr)
 {
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	//PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getParticleContainer()->add(this);
 
 	this->x = x;
 	this->y = y;
@@ -158,5 +159,6 @@ ParticleEngine::~ParticleEngine()
 	this->textPixel = nullptr;
 	this->surfPixel = nullptr;
 
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	//PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getParticleContainer()->remove(this);
 }
