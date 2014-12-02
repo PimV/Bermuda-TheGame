@@ -12,7 +12,7 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
-	this->lifeTime = GameTimer::Instance()->getNightLength() + 400000;
+	this->lifeTime = GameTimer::Instance()->getNightLength() + 40000;
 	this->setAnimation(1, 3, 100, GameTimer::Instance()->getNightLength() + 20000, 0);
 
 	this->particleEngine = new ParticleEngine(0,x + 10,y + 40,nullptr,PARTICLETYPES::SMOKE);
