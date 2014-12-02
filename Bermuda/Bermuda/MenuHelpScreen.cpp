@@ -1,10 +1,17 @@
 #include "MenuHelpScreen.h"
 #include "MenuState.h"
+#include "HelpButtons.h"
 
 MenuHelpScreen::MenuHelpScreen()
 {
 	init();
 }
+
+void tempFunction()
+{
+	cout << "tempFunction" << endl; 
+}
+
 
 void MenuHelpScreen::init()
 {
@@ -18,19 +25,26 @@ void MenuHelpScreen::init()
 	tempRect.x = 0;
 	tempRect.y = 0;
 
-	SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 99, 232, 72));
-	temp2Texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), s);
-	SDL_FreeSurface(s);
+	tempScreen = new BaseHelpScreen(tempRect.w);
+	setCurWindow(tempScreen);
 
-	temp2Rect.h = ScreenHeight;
-	temp2Rect.w = (ScreenWidth / 5) * 4;
-	temp2Rect.x = tempRect.w;
-	temp2Rect.y = 0;
+	HelpButtons helpbuttonTemp;
+	helpbuttonTemp.function = tempFunction;
+	helpbuttonTemp.function();
+
+//	SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 99, 232, 72));
+//	temp2Texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), s);
+//	SDL_FreeSurface(s);
+//
+//	temp2Rect.h = ScreenHeight;
+//	temp2Rect.w = (ScreenWidth / 5) * 4;
+//	temp2Rect.x = tempRect.w;
+//	temp2Rect.y = 0;
 }
 
-void MenuHelpScreen::cleanup()
+void MenuHelpScreen::setCurWindow(BaseHelpScreen* curwindow)
 {
-	SDL_DestroyTexture(tempTexture);
+	curWindow = curwindow;
 }
 
 void MenuHelpScreen::setBackground()
@@ -71,7 +85,14 @@ void MenuHelpScreen::draw()
 {
 	SDL_Renderer* renderer = GameStateManager::Instance()->sdlInitializer->getRenderer();
 	SDL_RenderCopy(renderer, tempTexture, NULL, &tempRect);
-	SDL_RenderCopy(renderer, temp2Texture, NULL, &temp2Rect);
+//	SDL_RenderCopy(renderer, temp2Texture, NULL, &temp2Rect);
+	curWindow->draw();
+}
+
+void MenuHelpScreen::cleanup()
+{
+	SDL_DestroyTexture(tempTexture);
+	delete tempScreen;
 }
 
 MenuHelpScreen::~MenuHelpScreen()

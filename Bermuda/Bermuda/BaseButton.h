@@ -17,7 +17,7 @@ protected:
 	SDL_Rect buttonRect;
 
 	//virtual methodes
-	virtual void action() = 0;
+	void (*action) ();
 
 public:
 	

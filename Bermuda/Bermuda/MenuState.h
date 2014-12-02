@@ -33,6 +33,7 @@ public:
 	BaseScreen* getMenuMainScreen();
 	BaseScreen* getMenuCreditsScreen();
 	BaseScreen* getMenuHelpScreen();
+	MenuHelpScreen* getHelpScreen();
 
 	//Get instance self
 	static MenuState* Instance() {

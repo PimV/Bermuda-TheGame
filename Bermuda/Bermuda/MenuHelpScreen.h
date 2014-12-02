@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseScreen.h"
+#include "BaseHelpScreen.h"
+
 class MenuHelpScreen :
 	public BaseScreen
 {
@@ -7,19 +9,23 @@ private:
 	//variables
 	SDL_Texture* tempTexture;
 	SDL_Rect tempRect;
-	SDL_Texture* temp2Texture;
-	SDL_Rect temp2Rect;
+	BaseHelpScreen* curWindow;
+	BaseHelpScreen* tempScreen;
 
 	//methodes
 	void init();
 	void cleanup();
 	void setBackground();
 
+
 public:
 	//methodes
 	void resetButtons();
 	void handleEvents(SDL_Event);
 	void draw();
+
+	//Methodes		Screens
+	void setCurWindow(BaseHelpScreen* curwindow);
 
 	//constructors destructors
 	MenuHelpScreen();

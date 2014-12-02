@@ -21,7 +21,6 @@ void MenuState::init(GameStateManager* gsm)
 
 	//soundloader
 	SoundLoader::Instance()->playMenuMusic();
-
 }
 
 void MenuState::setCurWindow(BaseScreen* curwindow)
