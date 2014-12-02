@@ -2,9 +2,10 @@
 #include "AnimatingEntity.h"
 #include "CollidableEntity.h"
 #include "InteractableEntity.h"
+#include "LightEntity.h"
 
 class Campfire :
-	public AnimatingEntity, public CollidableEntity
+	public AnimatingEntity, public CollidableEntity, public LightEntity
 {
 private:
 	double creationTime;

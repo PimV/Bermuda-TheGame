@@ -5,11 +5,13 @@
 Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	Entity(id, x, y),
 	AnimatingEntity(id, x, y, firstImgID),
-	CollidableEntity(id, x, y, 0, 31, 50, 21)
+	CollidableEntity(id, x, y, 0, 31, 50, 21),
+	LightEntity(id, x, y)
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getLightContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
 	this->lifeTime = GameTimer::Instance()->getNightLength() + 40000;
 	setAnimation(1, 3, 100, GameTimer::Instance()->getNightLength() + 20000, 0);
