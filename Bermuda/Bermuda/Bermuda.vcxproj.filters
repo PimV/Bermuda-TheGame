@@ -825,7 +825,7 @@
       <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="LightContainer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

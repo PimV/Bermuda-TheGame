@@ -539,10 +539,10 @@ void PlayState::drawDarkness()
 		for (int j = beginChunkX; j <= endChunkX; j++)
 		{
 			//animating entities
-			std::vector<AnimatingEntity*>* vec = this->mec->getAnimatingContainer()->getChunk(i, j);
+			std::vector<LightEntity*>* vec = this->mec->getLightContainer()->getChunk(i, j);
 			if (vec != nullptr)
 			{
-				for (AnimatingEntity* e : *vec)
+				for (LightEntity* e : *vec)
 				{
 					SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
 					SDL_Rect destRect = { (e->getX() - camera->getX()) - 125, (e->getY() - camera->getY()) - 125, lightSourceImage->w, lightSourceImage->h };

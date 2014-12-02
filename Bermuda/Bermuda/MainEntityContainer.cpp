@@ -73,7 +73,6 @@ void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
 	m_container[ContainerType::Interactable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Movable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Spawnpoint]->initChunks(chunksY, chunksX);
-	//destroyable?
 	m_container[ContainerType::Light]->initChunks(chunksY, chunksX);
 }
 
