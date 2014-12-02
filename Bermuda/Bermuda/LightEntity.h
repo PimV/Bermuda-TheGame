@@ -6,5 +6,10 @@ class LightEntity :
 public:
 	LightEntity(int id, double x, double y);
 	virtual ~LightEntity();
+
+	bool getShining();
+	void setShining(bool NewItem);
+private:
+	bool shining;
 };
 

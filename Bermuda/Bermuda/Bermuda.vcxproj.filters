@@ -478,7 +478,7 @@
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
     <ClCompile Include="NightLayer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -831,7 +831,7 @@
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
     <ClInclude Include="NightLayer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

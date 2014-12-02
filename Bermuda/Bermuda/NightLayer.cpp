@@ -5,13 +5,14 @@
 
 NightLayer::NightLayer()
 {
+	this->alphaLevel = 0;
 	this->lightSourceImage = IMG_Load((RESOURCEPATH + "hole.png").c_str());
 	this->blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 
-	screenRect.x = 0;
-	screenRect.y = 0;
-	screenRect.h = ScreenHeight;
-	screenRect.w = ScreenWidth;
+	this->screenRect.x = 0;
+	this->screenRect.y = 0;
+	this->screenRect.h = ScreenHeight;
+	this->screenRect.w = ScreenWidth;
 }
 
 NightLayer::~NightLayer() 
@@ -47,7 +48,7 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 			{
 				for (LightEntity* e : *vec)
 				{
-					if (e != nullptr)
+					if (e != nullptr && e->getShining() == true)
 					{
 						SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
 						SDL_Rect destRect = { (e->getX() - camera->getX()) - 120, (e->getY() - camera->getY()) - 120, lightSourceImage->w, lightSourceImage->h };
@@ -138,14 +139,12 @@ void NightLayer::calculateAlpha(SDL_Texture* texture)
 		double j = (i / 20) * 100;
 
 		alphaLevel = (((250 / 100) * j) <= 250) ? (250 / 100) * j : 250;
-
-		//std::cout << "Day%: " << p << " - alphaLevel: " << alphaLevel << std::endl;
 	}
-	else if (p >= 0)
+	else if (p >= 0 && alphaLevel != 0)
 	{
-		// TODO: gradually increase light (by decreasing alpha level)
-		alphaLevel = 0;
+		alphaLevel = (250 / 10) * (10 - p);
 	}
-
+	
+	//std::cout << "Day%: " << p << " - alphaLevel: " << alphaLevel << std::endl;
 	SDL_SetTextureAlphaMod(texture, alphaLevel);
 }
