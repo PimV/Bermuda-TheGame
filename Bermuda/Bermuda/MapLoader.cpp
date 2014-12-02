@@ -28,7 +28,7 @@ void MapLoader::setPercentage(int percentage)
 {
 	this->loadPercentage = percentage;
 	LoadingState::Instance()->setPercentage(percentage);
-	//LoadingState::Instance()->draw();
+	LoadingState::Instance()->draw();
 }
 
 void MapLoader::loadMap()
@@ -56,12 +56,14 @@ void MapLoader::loadMap()
 	string json;
 	string line;
 	bool firstLine = true;
+	istringstream iss(line);
 	while (getline(stream, line)) 
 	{
+
 		if(firstLine)
 		{
 			//First line contains total file lines.
-			istringstream iss(line);
+			iss.str(line);
 			string type;
 			iss >> type >> totalJSONLines;
 			if(type != "JsonLines:" && totalJSONLines > 0)
@@ -90,7 +92,7 @@ void MapLoader::loadMap()
 	Document d;
 	d.Parse(json.c_str());
 
-	extractMapInfo(d);;
+	extractMapInfo(d);
 
 
 }

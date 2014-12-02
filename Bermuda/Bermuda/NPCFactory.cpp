@@ -28,7 +28,6 @@ void NPCFactory::createWasp(Spawnpoint* sp)
 	new Wasp(2001, 300, sp, FirstImageIDs["wasp"]);
 }
 
-
 NPCFactory::~NPCFactory()
 {
 }

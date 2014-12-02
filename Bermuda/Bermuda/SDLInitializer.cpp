@@ -61,6 +61,7 @@ void SDLInitializer::clearScreen() {
 
 void SDLInitializer::drawTexture(SDL_Texture* texture, const SDL_Rect* destRect, SDL_Rect* crop) {
 	SDL_RenderCopy(renderer, texture, crop,destRect);
+	
 }
 
 void SDLInitializer::drawScreen() {

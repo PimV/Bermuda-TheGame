@@ -49,6 +49,7 @@ void BackgroundContainer::cleanup() {
 				delete this->getChunk(i,j)->at(k);
 			}
 			this->getChunk(i,j)->clear();
+			this->getChunk(i,j)->shrink_to_fit();
 		}
 	}
 	std::cout << "Background Container Cleared - " << itemsDeleted << " items deleted."  << std::endl;
