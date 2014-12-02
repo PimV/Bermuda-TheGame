@@ -7,9 +7,14 @@ NightLayer::NightLayer()
 {
 	this->lightSourceImage = IMG_Load((RESOURCEPATH + "hole.png").c_str());
 	this->blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+
+	screenRect.x = 0;
+	screenRect.y = 0;
+	screenRect.h = ScreenHeight;
+	screenRect.w = ScreenWidth;
 }
 
-NightLayer::~NightLayer()
+NightLayer::~NightLayer() 
 {
 	SDL_FreeSurface(lightSourceImage);
 	SDL_FreeSurface(blackSurface);
@@ -18,12 +23,10 @@ NightLayer::~NightLayer()
 void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 {
 	SDL_Surface* blackSurfaceCopy = SDL_ConvertSurface(blackSurface, blackSurface->format, SDL_SWSURFACE);
-
-	SDL_Rect screenRect = { 0, 0, ScreenWidth, ScreenHeight };
 	SDL_FillRect(blackSurfaceCopy, &screenRect, 0xF9000000);
 
-	const int halfWidth = lightSourceImage->w / 2;
-	const int halfHeight = lightSourceImage->h / 2;
+	//const int halfWidth = lightSourceImage->w / 2;
+	//const int halfHeight = lightSourceImage->h / 2;
 
 
 	//Update all animating entities
@@ -38,7 +41,7 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 	{
 		for (int j = beginChunkX; j <= endChunkX; j++)
 		{
-			//animating entities
+			//light entities
 			std::vector<LightEntity*>* vec = mec->getLightContainer()->getChunk(i, j);
 			if (vec != nullptr)
 			{
@@ -47,7 +50,7 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 					if (e != nullptr)
 					{
 						SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
-						SDL_Rect destRect = { (e->getX() - camera->getX()) - 125, (e->getY() - camera->getY()) - 125, lightSourceImage->w, lightSourceImage->h };
+						SDL_Rect destRect = { (e->getX() - camera->getX()) - 120, (e->getY() - camera->getY()) - 120, lightSourceImage->w, lightSourceImage->h };
 
 						drawLightSource(blackSurfaceCopy, &screenRect, &sourceRect, &destRect);
 					}
@@ -58,10 +61,10 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurfaceCopy);
 	calculateAlpha(texture);
+
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), texture, NULL, &screenRect);
 
 	SDL_DestroyTexture(texture);
-
 	SDL_FreeSurface(blackSurfaceCopy);
 }
 

@@ -14,6 +14,7 @@ private:
 	SDL_Surface* blackSurface;
 	SDL_Surface* lightSourceImage;
 	double alphaLevel;
+	SDL_Rect screenRect;
 
 	void calculateAlpha(SDL_Texture* texture);
 	void drawLightSource(SDL_Surface* surface, SDL_Rect* screenRect, SDL_Rect* sourceRect, SDL_Rect* destRect);

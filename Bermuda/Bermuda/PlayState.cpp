@@ -483,7 +483,7 @@ void PlayState::draw()
 		}
 	}
 
-	if (showDayLight)
+	if (showDayLight && GameTimer::Instance()->getPercentage() >= 65 || GameTimer::Instance()->getPercentage() <= 10)
 	{
 		nightLayer->draw(camera, mec);
 	}
