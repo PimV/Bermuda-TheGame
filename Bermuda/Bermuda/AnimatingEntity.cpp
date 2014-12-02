@@ -39,7 +39,7 @@ void AnimatingEntity::animate()
 	}
 }
 
-void AnimatingEntity::setAnimation(int startIndex, int endIndex, double animateSpeed)
+void AnimatingEntity::startAnimationLoopType(int startIndex, int endIndex, double animateSpeed)
 {
 	if (this->currentImageIndex < startIndex ||
 		this->currentImageIndex > endIndex)
@@ -55,13 +55,18 @@ void AnimatingEntity::setAnimation(int startIndex, int endIndex, double animateS
 	this->animateSpeed = animateSpeed;
 }
 
-void AnimatingEntity::setAnimation(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex)
+void AnimatingEntity::startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex, void(*callbackFunction)())
 {
 	this->setAnimation(startIndex, endIndex, animateSpeed);
 	this->animateLoop = false;
 	this->animationStartTime = GameTimer::Instance()->getGameTime();
 	this->animateTime = animateTime;
 	this->finishedIndex = finishedIndex;
+}
+
+void AnimationEntity::startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex, void(*callbackFunction)())
+{
+
 }
 
 void AnimatingEntity::setStaticImage(int index)

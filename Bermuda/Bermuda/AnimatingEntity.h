@@ -21,8 +21,9 @@ private:
 public:
 	AnimatingEntity(int id, double x, double y, int firstImgID);
 	virtual void animate();
-	void setAnimation(int startIndex, int endIndex, double animateSpeed);
-	void setAnimation(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex);
+	void startAnimationLoopType(int startIndex, int endIndex, double animateSpeed);
+	void startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex, void(*callbackFunction)());
+	void startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex, void(*callbackFunction)());
 	void setStaticImage(int index);
 	void setCurrentlyAnimating(bool animating);
 	bool getCurrentlyAnimating();
