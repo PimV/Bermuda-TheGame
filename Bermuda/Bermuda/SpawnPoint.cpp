@@ -45,13 +45,17 @@ void Spawnpoint::spawnMob()
 		{
 			NPCFactory::Instance()->createRabbit(this);
 		}
-		if (spawnType == "wasp")
+		else if (spawnType == "wasp")
 		{
 			NPCFactory::Instance()->createWasp(this);
 		}
-		if (spawnType == "bat")
+		else if (spawnType == "bat")
 		{
 			NPCFactory::Instance()->createBat(this);
+		}
+		else if (spawnType == "wolf")
+		{
+			NPCFactory::Instance()->createWolf(this);
 		}
 		this->curChildren++;
 		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
