@@ -22,13 +22,11 @@ void Carrot::interact(Player* player)
 	player->getInventory()->addItem(new ItemCarrot());
 	player->getStatusTracker()->carrotPicked();
 	this->setDestroyedState();
-	//std::cout << "interact met CARROT X: " << this->getX() << " Y: " << this->getY() << std::endl;
 }
 
 void Carrot::setDestroyedState()
 {
-	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	delete this;
 }
 
 Carrot::~Carrot()

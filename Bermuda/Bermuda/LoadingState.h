@@ -13,7 +13,6 @@ class LoadingState : public IGameState
 private:
 	static LoadingState m_LoadingState;
 
-	GameStateManager* gsm;
 	
 	SDL_Texture* text1;
 	SDL_Texture* text2;
@@ -25,7 +24,7 @@ private:
 	int percentage;
 
 public:
-	void init(GameStateManager *gsm);
+	void init(GameStateManager* gsm);
 	void cleanup();
 
 	void pause();
@@ -42,5 +41,5 @@ public:
 	};
 
 	LoadingState(void);
-	~LoadingState(void);
+	virtual ~LoadingState(void);
 };

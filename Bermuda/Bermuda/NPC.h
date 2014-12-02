@@ -26,5 +26,5 @@ public:
 private:
 	int healthPoints, attackPoints, walkRange, actionRange;
 	bool destroyed, respawnTime, interactTime, timeSinceDestroy, currentInteractTime;;
-	Spawnpoint *spawnPoint;
+	Spawnpoint* spawnPoint;
 };

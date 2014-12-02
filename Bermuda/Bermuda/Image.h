@@ -10,7 +10,7 @@ private:
 	double height;
 public:
 	Image(SDL_Texture* tileSet, SDL_Rect* cropRect, double width, double height);
-	~Image();
+	virtual ~Image();
 	SDL_Texture* getTileSet();
 	SDL_Rect* getCroppingRect();
 	double getWidth();

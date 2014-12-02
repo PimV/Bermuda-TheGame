@@ -29,6 +29,7 @@ void CollidableContainer::remove(CollidableEntity* entity)
 	if (it != vec->end()) {
 		vec->erase(it);
 	}
+	
 }
 
 std::vector<CollidableEntity*>* CollidableContainer::getChunk(int y, int x)
@@ -52,6 +53,7 @@ void CollidableContainer::cleanup() {
 			this->getChunk(i,j)->clear();
 			this->getChunk(i,j)->shrink_to_fit();
 		}
+		this->container.shrink_to_fit();
 	}
 	std::cout << "Collidable Container Cleared - " << itemsDeleted << " items deleted."  << std::endl;
 }

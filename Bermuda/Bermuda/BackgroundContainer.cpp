@@ -28,6 +28,7 @@ void BackgroundContainer::remove(DrawableEntity* entity)
 	if (it != vec->end()) {
 		vec->erase(it);
 	}
+	vec->shrink_to_fit();
 }
 
 std::vector<DrawableEntity*>* BackgroundContainer::getChunk(int y, int x)
@@ -51,6 +52,7 @@ void BackgroundContainer::cleanup() {
 			this->getChunk(i,j)->clear();
 			this->getChunk(i,j)->shrink_to_fit();
 		}
+		this->container.shrink_to_fit();
 	}
 	std::cout << "Background Container Cleared - " << itemsDeleted << " items deleted."  << std::endl;
 }

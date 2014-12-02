@@ -32,14 +32,15 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-	NPCFactory::Instance()->loadNPCTileSets(GameStateManager::Instance()->getImageLoader());
+	//NPCFactory::Instance()->loadNPCTileSets(GameStateManager::Instance()->getImageLoader());
 	ready = false;
 	showCol = false;
 	showInter = false;
 	showSpawnArea = false;
 
-
-	mec = new MainEntityContainer();
+	if (mec == nullptr) {
+		mec = new MainEntityContainer();
+	}
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
@@ -59,6 +60,9 @@ MainEntityContainer* PlayState::getMainEntityContainer()
 }
 
 void PlayState::cleanup() {
+
+	delete p;
+	p = nullptr;
 
 	std::cout << "Cleaning Playstate" << std::endl;
 	std::cout << "    - Cleaning Camera" << std::endl;

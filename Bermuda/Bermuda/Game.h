@@ -12,7 +12,7 @@ private:
 public:
 	Game(void);
 	static void gameLoop(GameStateManager* gsm);
-	~Game(void);
+	virtual ~Game(void);
 
 };
 

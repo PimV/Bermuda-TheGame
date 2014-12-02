@@ -55,5 +55,5 @@ public:
 	};
 
 	PlayState(void);
-	~PlayState(void);
+	virtual ~PlayState(void);
 };

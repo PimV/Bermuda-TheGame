@@ -31,7 +31,7 @@ public:
 
 	void printInventory();
 
-	~Inventory(void);
+	virtual ~Inventory(void);
 private:
 	bool open;
 	int slots; //Total item slots

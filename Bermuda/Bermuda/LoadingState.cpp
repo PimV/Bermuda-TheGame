@@ -4,16 +4,40 @@
 
 LoadingState LoadingState::m_LoadingState;
 
-LoadingState::LoadingState(void)
+LoadingState::LoadingState()
 {
 }
 
-void LoadingState::init(GameStateManager *gsm) {
-	this->gsm = gsm;
+void LoadingState::init(GameStateManager* gsm) {
 
 
+	if (text1 == nullptr) {
+		text1 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.png").c_str());
+	}
+
+	if (text2 == nullptr) {
+		text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.png").c_str());
+	}
+
+	if (textBackground == nullptr) {
+		textBackground = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\campfire.jpg").c_str());
+	}
+
+	rect1.x = ScreenWidth / 3;
+	rect1.y = ScreenHeight / 2 - ScreenHeight / 40;
+	rect1.h = ScreenHeight / 20;
+	rect1.w = ScreenWidth / 3;
 
 
+	rect2.x = ScreenWidth / 3;
+	rect2.y = ScreenHeight / 2 - ScreenHeight / 40;
+	rect2.h = ScreenHeight / 20;
+	rect2.w = 0;
+
+	rectBackground.x = 0;
+	rectBackground.y = 0;
+	rectBackground.w = ScreenWidth;
+	rectBackground.h = ScreenHeight;
 }
 
 void LoadingState::setPercentage(int percentage)
@@ -23,6 +47,13 @@ void LoadingState::setPercentage(int percentage)
 
 void LoadingState::cleanup() 
 {
+	SDL_DestroyTexture(textBackground);
+	SDL_DestroyTexture(text1);
+	SDL_DestroyTexture(text2);
+
+	textBackground = nullptr;
+	text1 = nullptr;
+	text2 = nullptr;
 }
 
 void LoadingState::pause() 
@@ -44,32 +75,8 @@ void LoadingState::update(double dt)
 void LoadingState::draw() 
 {	
 	GameStateManager::Instance()->sdlInitializer->clearScreen();
-	if (text1 == nullptr) {
-		text1 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_grey.png").c_str());
-	}
-
-	if (text2 == nullptr) {
-		text2 = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "loading_bar_green.png").c_str());
-	}
-
-	if (textBackground == nullptr) {
-		textBackground = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\campfire.jpg").c_str());
-	}
-
-	rect1.x = ScreenWidth / 3;
-	rect1.y = ScreenHeight / 2 - ScreenHeight / 40;
-	rect1.h = ScreenHeight / 20;
-	rect1.w = ScreenWidth / 3;
-
-	rect2.x = ScreenWidth / 3;
-	rect2.y = ScreenHeight / 2 - ScreenHeight / 40;
-	rect2.h = ScreenHeight / 20;
 	rect2.w = ((ScreenWidth / 3) / 100) * this->percentage;
 
-	rectBackground.x = 0;
-	rectBackground.y = 0;
-	rectBackground.w = ScreenWidth;
-	rectBackground.h = ScreenHeight;
 
 
 	//Background
@@ -91,9 +98,13 @@ void LoadingState::draw()
 
 LoadingState::~LoadingState(void)
 {
+	this->cleanup();
+
+
 	//delete camera;
 	//delete mec;
 	//delete mapLoader;
 	//TODO : DELETE MORE
 	//delete text1/ text2
+
 }

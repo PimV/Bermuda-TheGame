@@ -7,7 +7,7 @@ class DayTimeTimer
 {
 public:
 	DayTimeTimer();
-	~DayTimeTimer(void);
+	virtual ~DayTimeTimer(void);
 
 	static DayTimeTimer* Instance() { return &s_DayTimeTimer; };
 

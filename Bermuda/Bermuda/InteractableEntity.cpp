@@ -74,4 +74,5 @@ void InteractableEntity::setDestroyedState() {}
 InteractableEntity::~InteractableEntity()
 {
 	SDL_DestroyTexture(interactTexture);
+	interactTexture = nullptr;
 }

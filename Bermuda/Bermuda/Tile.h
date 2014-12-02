@@ -8,5 +8,5 @@ class Tile :
 {
 public:
 	Tile(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* image);
-	~Tile();
+	virtual ~Tile();
 };

@@ -43,6 +43,6 @@ public:
 		return &m_MenuState;
 	}
 
-	~MenuState(void);
+	virtual ~MenuState(void);
 };
 
