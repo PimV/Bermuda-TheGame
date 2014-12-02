@@ -54,10 +54,7 @@ ParticleEngine::ParticleEngine(int id, double x, double y, Image* image, PARTICL
 
 	srand(time(NULL));
 
-	for(int i = 0; i < this->maxParticles; i++)
-	{
-		this->particles.push_back(nullptr);
-	}
+	this->particles.resize(this->maxParticles);
 }
 
 void ParticleEngine::updateParticles(double dt)
