@@ -42,7 +42,6 @@ void MenuMainScreen::init()
 	buttons.push_back(exitButton);
 	buttons.push_back(creditsButton);
 	buttons.push_back(helpButton);
-	std::cout << "make button" << endl;
 }
 
 void MenuMainScreen::setBackground()

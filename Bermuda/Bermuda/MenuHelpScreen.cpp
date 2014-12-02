@@ -1,5 +1,9 @@
 #include "MenuHelpScreen.h"
 #include "MenuState.h"
+#ifndef BUTTONACTIONS
+#define BUTTONACTIONS
+#include "ButtonActions.h"
+#endif
 
 MenuHelpScreen::MenuHelpScreen()
 {
@@ -25,16 +29,9 @@ void MenuHelpScreen::init()
 	tempRect.y = 0;
 
 	tempScreen = new BaseHelpScreen(tempRect.w);
+	tempScreen->setPicture("HelpScreens/Movement.bmp");
+	tempScreen->setText("Gebruik de pijltjes toetsen om rond te lopen");
 	setCurWindow(tempScreen);
-
-//	SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 99, 232, 72));
-//	temp2Texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), s);
-//	SDL_FreeSurface(s);
-//
-//	temp2Rect.h = ScreenHeight;
-//	temp2Rect.w = (ScreenWidth / 5) * 4;
-//	temp2Rect.x = tempRect.w;
-//	temp2Rect.y = 0;
 }
 
 void MenuHelpScreen::setCurWindow(BaseHelpScreen* curwindow)
@@ -80,7 +77,6 @@ void MenuHelpScreen::draw()
 {
 	SDL_Renderer* renderer = GameStateManager::Instance()->sdlInitializer->getRenderer();
 	SDL_RenderCopy(renderer, tempTexture, NULL, &tempRect);
-//	SDL_RenderCopy(renderer, temp2Texture, NULL, &temp2Rect);
 	curWindow->draw();
 }
 

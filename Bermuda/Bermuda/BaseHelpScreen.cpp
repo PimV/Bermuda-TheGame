@@ -16,13 +16,29 @@ BaseHelpScreen::BaseHelpScreen(int x)
 	pictureRect.x = startXPos + screenWidth / 8 * 1;
 	pictureRect.w = screenWidth / 8 * 6;
 	textRect.x = pictureRect.x;
-	textRect.w = pictureRect.w;
+	textMaxWidth = pictureRect.w;
 
 	pictureRect.y = ScreenHeight / 12 * 1;
 	pictureRect.h = ScreenHeight / 12 * 7;
 
 	textRect.y = ScreenHeight / 12 * 9;
-	textRect.h = ScreenHeight / 12 * 2;
+	textMaxHeight = ScreenHeight / 12 * 2;
+}
+
+void BaseHelpScreen::setPicture(std::string pictureLocation)
+{
+	pictureTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + pictureLocation).c_str());
+}
+
+void BaseHelpScreen::setText(std::string text)
+{
+	TTF_Font* font = TTF_OpenFont((RESOURCEPATH + "fonts\\andyb.ttf").c_str(), 20);
+	SDL_Color white = { 255, 255, 255 };
+	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, text.c_str(), white, textMaxWidth);
+	textTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), textSurface);
+
+	textRect.h = textSurface->h;
+	textRect.w = textSurface->w;
 }
 
 void BaseHelpScreen::draw()

@@ -9,14 +9,9 @@ class BaseButton
 public:
 	//variables
 	bool active;
-
-protected:
-	//variables
 	SDL_Texture* buttonTexture;
 	SDL_Texture* buttonHoverTexture;
 	SDL_Rect buttonRect;
-
-	//virtual methodes
 
 public:
 	
@@ -30,6 +25,7 @@ public:
 	void placeMid();
 	void placeLeftMid();
 	void placeMidUnder(int x, int y);
+	void placeExactAt(int x, int y);
 	int getX();
 	int getY();
 	int getHeight();

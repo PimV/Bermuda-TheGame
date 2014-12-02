@@ -9,6 +9,7 @@ private:
 	//variables
 	SDL_Texture* tempTexture;
 	SDL_Rect tempRect;
+
 	BaseHelpScreen* curWindow;
 	BaseHelpScreen* tempScreen;
 
@@ -16,7 +17,6 @@ private:
 	void init();
 	void cleanup();
 	void setBackground();
-
 
 public:
 	//methodes

@@ -43,6 +43,12 @@ void BaseButton::placeMidUnder(int x, int y)
 	buttonRect.y = y;
 }
 
+void BaseButton::placeExactAt(int x, int y)
+{
+	buttonRect.x = x;
+	buttonRect.y = y;
+}
+
 int BaseButton::getX()
 {
 	return buttonRect.x;
