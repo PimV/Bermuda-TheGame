@@ -2,6 +2,7 @@
 #include "Rabbit.h"
 #include "Wasp.h"
 #include "Bat.h"
+#include "Wolf.h"
 #include "PlayState.h"
 #include "GameStateManager.h"
 
@@ -13,9 +14,10 @@ NPCFactory::NPCFactory()
 
 void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 {
-	FirstImageIDs["rabbit"] = imgLoader->loadTileset("rabbitsheet.png", 36, 36);
-	FirstImageIDs["wasp"] = imgLoader->loadTileset("wasp.png", 32, 32);
-	FirstImageIDs["bat"] = imgLoader->loadTileset("bat.png", 32, 32);
+	FirstImageIDs["rabbit"] = imgLoader->loadTileset("NPC\\rabbit.png", 36, 36);
+	FirstImageIDs["wasp"] = imgLoader->loadTileset("NPC\\wasp.png", 32, 32);
+	FirstImageIDs["bat"] = imgLoader->loadTileset("NPC\\bat.png", 32, 32);
+	FirstImageIDs["wolf"] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
 }
 
 void NPCFactory::createRabbit(Spawnpoint* sp)
@@ -36,6 +38,11 @@ void NPCFactory::createBat(Spawnpoint* sp)
 	new Bat(2001, sp, FirstImageIDs["bat"]);
 }
 
+void NPCFactory::createWolf(Spawnpoint* sp)
+{
+	//TODO: 300 chunksize ombouwen. (MapLoader singleton maken?)
+	new Wolf(2001, sp, FirstImageIDs["wolf"]);
+}
 
 NPCFactory::~NPCFactory()
 {
