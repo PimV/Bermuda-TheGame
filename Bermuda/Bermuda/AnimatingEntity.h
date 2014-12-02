@@ -20,7 +20,7 @@ private:
 
 public:
 	AnimatingEntity(int id, double x, double y, int firstImgID);
-	virtual void animate();
+	virtual void animate(double dt);
 	void setAnimation(int startIndex, int endIndex, double animateSpeed);
 	void setAnimation(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex);
 	void setStaticImage(int index);
