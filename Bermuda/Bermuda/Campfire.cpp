@@ -32,4 +32,5 @@ Campfire::~Campfire()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getLightContainer()->remove(this);
 }

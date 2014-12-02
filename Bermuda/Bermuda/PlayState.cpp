@@ -45,6 +45,13 @@ void PlayState::init(GameStateManager *gsm) {
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
@@ -544,16 +551,17 @@ void PlayState::drawDarkness()
 			{
 				for (LightEntity* e : *vec)
 				{
-					SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
-					SDL_Rect destRect = { (e->getX() - camera->getX()) - 125, (e->getY() - camera->getY()) - 125, lightSourceImage->w, lightSourceImage->h };
+					if (e != nullptr) 
+					{
+						SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
+						SDL_Rect destRect = { (e->getX() - camera->getX()) - 125, (e->getY() - camera->getY()) - 125, lightSourceImage->w, lightSourceImage->h };
 
-					drawLightSource(blackSurfaceCopy, &screenRect, &sourceRect, &destRect);
+						drawLightSource(blackSurfaceCopy, &screenRect, &sourceRect, &destRect);
+					}
 				}
 			}
 		}
 	}
-
-
 
 
 	//// start loop light entities in light container
