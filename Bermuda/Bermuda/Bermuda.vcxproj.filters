@@ -471,6 +471,12 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files\Model\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="LightEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="LightContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -813,6 +819,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MovementDirectionEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="LightContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

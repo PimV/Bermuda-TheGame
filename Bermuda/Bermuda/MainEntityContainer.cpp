@@ -12,6 +12,7 @@ MainEntityContainer::MainEntityContainer(void) :
 	m_container[ContainerType::Movable] = new MovableContainer();
 	m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
 	m_container[ContainerType::Destroyed] = new DestroyContainer();
+	m_container[ContainerType::Light] = new LightContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {
@@ -50,6 +51,10 @@ DestroyContainer* MainEntityContainer::getDestroyContainer() {
 	return static_cast<DestroyContainer*>(m_container[ContainerType::Destroyed]);
 }
 
+LightContainer* MainEntityContainer::getLightContainer() {
+	return static_cast<LightContainer*>(m_container[ContainerType::Light]);
+}
+
 int MainEntityContainer::getChunkSize()
 {
 	return this->chunkSize;
@@ -68,6 +73,8 @@ void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
 	m_container[ContainerType::Interactable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Movable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Spawnpoint]->initChunks(chunksY, chunksX);
+	//destroyable?
+	m_container[ContainerType::Light]->initChunks(chunksY, chunksX);
 }
 
 MainEntityContainer::~MainEntityContainer(void)

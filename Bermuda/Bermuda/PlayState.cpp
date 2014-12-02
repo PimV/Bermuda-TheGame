@@ -28,19 +28,22 @@ void PlayState::init(GameStateManager *gsm) {
 	this->showCol = false;
 	this->showInter = false;
 	this->showSpawnArea = false;
-	this->showDayLight = false;
+	this->showDayLight = true;
 	this->timesUpdate = 0;
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
-	
+
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
 
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
 	GameTimer::Instance()->init();
@@ -107,7 +110,8 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_MOUSEWHEEL:
 		if (mainEvent.wheel.y > 0) {
 			p->getInventory()->decrementSelectedIndex();
-		} else if (mainEvent.wheel.y < 0){
+		}
+		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->incrementSelectedIndex();
 		}
 
@@ -285,7 +289,7 @@ void PlayState::update(double dt) {
 
 	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
 	//Update gametimer
-	if(this->timesUpdate > 2)
+	if (this->timesUpdate > 2)
 	{
 		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	}
@@ -303,7 +307,7 @@ void PlayState::update(double dt) {
 	this->updateMediumAreaEntities(dt);
 }
 
-void PlayState::updateVisibleEntities(double dt) 
+void PlayState::updateVisibleEntities(double dt)
 {
 	//Update all animating entities
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
@@ -369,7 +373,7 @@ void PlayState::updateMediumAreaEntities(double dt)
 	}
 }
 
-void PlayState::draw() 
+void PlayState::draw()
 {
 	if (!ready) {
 		return;
@@ -472,16 +476,17 @@ void PlayState::draw()
 		}
 	}
 
+	if (showDayLight)
+	{
+		drawDarkness();
+	}
+
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
 		this->p->drawStats();
 	}
 
-	if (showDayLight)
-	{
-		// display darkness and light sources
-		drawDarkness();
-	}
+
 
 	//Draw timer
 	GameTimer::Instance()->draw();
@@ -520,51 +525,99 @@ void PlayState::drawDarkness()
 	const int halfWidth = lightSourceImage->w / 2;
 	const int halfHeight = lightSourceImage->h / 2;
 
-	SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
-	SDL_Rect destRect = { 640 - halfWidth, 365 - halfHeight, lightSourceImage->w, lightSourceImage->h };
 
+	//Update all animating entities
+	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			//animating entities
+			std::vector<AnimatingEntity*>* vec = this->mec->getAnimatingContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (AnimatingEntity* e : *vec)
+				{
+					SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
+					SDL_Rect destRect = { (e->getX() - camera->getX()) - 125, (e->getY() - camera->getY()) - 125, lightSourceImage->w, lightSourceImage->h };
+
+					drawLightSource(blackSurfaceCopy, &screenRect, &sourceRect, &destRect);
+				}
+			}
+		}
+	}
+
+
+
+
+	//// start loop light entities in light container
+	//SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
+	//SDL_Rect destRect = { 640 - halfWidth, 365 - halfHeight, lightSourceImage->w, lightSourceImage->h };
+
+	//drawLightSource(blackSurfaceCopy, &screenRect, &sourceRect, &destRect);
+	//// end loop
+
+
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurfaceCopy);
+	calculateAlpha(texture);
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), texture, NULL, &screenRect);
+
+	SDL_DestroyTexture(texture);
+
+	SDL_FreeSurface(blackSurfaceCopy);
+
+}
+
+void PlayState::drawLightSource(SDL_Surface* surface, SDL_Rect* screenRect, SDL_Rect* sourceRect, SDL_Rect* destRect)
+{
 	// Make sure our rects stays within bounds
-	if (destRect.x < 0)
+	if (destRect->x < 0)
 	{
-		sourceRect.x -= destRect.x; // remove the pixels outside of the surface
-		sourceRect.w -= sourceRect.x; // shrink to the surface, not to offset fog
-		destRect.x = 0;
-		destRect.w -= sourceRect.x; // shrink the width to stay within bounds
+		sourceRect->x -= destRect->x; // remove the pixels outside of the surface
+		sourceRect->w -= sourceRect->x; // shrink to the surface, not to offset fog
+		destRect->x = 0;
+		destRect->w -= sourceRect->x; // shrink the width to stay within bounds
 	}
-	if (destRect.y < 0)
+	if (destRect->y < 0)
 	{
-		sourceRect.y -= destRect.y; // remove the pixels outside
-		sourceRect.h -= sourceRect.y; // shrink to the surface, not to offset fog
-		destRect.y = 0;
-		destRect.h -= sourceRect.y; // shrink the height to stay within bounds
+		sourceRect->y -= destRect->y; // remove the pixels outside
+		sourceRect->h -= sourceRect->y; // shrink to the surface, not to offset fog
+		destRect->y = 0;
+		destRect->h -= sourceRect->y; // shrink the height to stay within bounds
 	}
 
-	int xDistanceFromEdge = (destRect.x + destRect.w) - blackSurfaceCopy->w;
+	int xDistanceFromEdge = (destRect->x + destRect->w) - surface->w;
 	if (xDistanceFromEdge > 0) // we're busting
 	{
-		sourceRect.w -= xDistanceFromEdge;
-		destRect.w -= xDistanceFromEdge;
+		sourceRect->w -= xDistanceFromEdge;
+		destRect->w -= xDistanceFromEdge;
 	}
-	int yDistanceFromEdge = (destRect.y + destRect.h) - blackSurfaceCopy->h;
+	int yDistanceFromEdge = (destRect->y + destRect->h) - surface->h;
 	if (yDistanceFromEdge > 0) // we're busting
 	{
-		sourceRect.h -= yDistanceFromEdge;
-		destRect.h -= yDistanceFromEdge;
+		sourceRect->h -= yDistanceFromEdge;
+		destRect->h -= yDistanceFromEdge;
 	}
 
-	SDL_LockSurface(blackSurfaceCopy);
+	SDL_LockSurface(surface);
 
-	Uint32* destPixels = (Uint32*)blackSurfaceCopy->pixels;
+	Uint32* destPixels = (Uint32*)surface->pixels;
 	Uint32* srcPixels = (Uint32*)lightSourceImage->pixels;
 
 	static bool keepFogRemoved = false;
 
-	for (int x = 0; x < destRect.w; ++x)
+	for (int x = 0; x < destRect->w; ++x)
 	{
-		for (int y = 0; y < destRect.h; ++y)
+		for (int y = 0; y < destRect->h; ++y)
 		{
-			Uint32* destPixel = destPixels + (y + destRect.y) * blackSurfaceCopy->w + destRect.x + x;
-			Uint32* srcPixel = srcPixels + (y + sourceRect.y) * lightSourceImage->w + sourceRect.x + x;
+			Uint32* destPixel = destPixels + (y + destRect->y) * surface->w + destRect->x + x;
+			Uint32* srcPixel = srcPixels + (y + sourceRect->y) * lightSourceImage->w + sourceRect->x + x;
 
 			unsigned char* destAlpha = (unsigned char*)destPixel + 3; // fetch alpha channel
 			unsigned char* srcAlpha = (unsigned char*)srcPixel + 3; // fetch alpha channel
@@ -577,29 +630,26 @@ void PlayState::drawDarkness()
 		}
 	}
 
-	SDL_UnlockSurface(blackSurfaceCopy);
-
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurfaceCopy);
-	calculateAlpha(texture);
-	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), texture, NULL, &screenRect);
-
-	SDL_DestroyTexture(texture);
-	SDL_FreeSurface(blackSurfaceCopy);
-
+	SDL_UnlockSurface(surface);
 }
 
 void PlayState::calculateAlpha(SDL_Texture* texture)
 {
 	double p = GameTimer::Instance()->getPercentage();
 
-	if (p >= 60)
+	// it works but can be improved
+	if (p >= 65)
 	{
-		double i = p - 60;
-		double j = (i / 30) * 100;
-		alphaLevel = (255 / 100) * j;
+		double i = p - 65;
+		double j = (i / 20) * 100;
+
+		alphaLevel = (((250 / 100) * j) <= 250) ? (250 / 100) * j : 250;
+
+		//std::cout << "Day%: " << p << " - alphaLevel: " << alphaLevel << std::endl;
 	}
 	else if (p >= 0)
 	{
+		// TODO: gradually increase light (by decreasing alpha level)
 		alphaLevel = 0;
 	}
 
