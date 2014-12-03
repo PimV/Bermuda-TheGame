@@ -206,6 +206,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ToolPickaxe.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Wasp.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponSpear.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Achievement.cpp" />
@@ -285,6 +287,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ToolPickaxe.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Wasp.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponSpear.cpp" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>

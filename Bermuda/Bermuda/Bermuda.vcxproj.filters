@@ -432,6 +432,12 @@
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSpear.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
     <ClCompile Include="Campfire.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
@@ -753,6 +759,12 @@
       <Filter>Header Files\Model\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Crafting.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSpear.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="Campfire.h">
