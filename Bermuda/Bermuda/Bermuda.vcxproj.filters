@@ -815,5 +815,8 @@
     <ClInclude Include="MovementDirectionEnum.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationType.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

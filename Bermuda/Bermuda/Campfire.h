@@ -11,6 +11,7 @@ private:
 	double lifeTime;
 public:
 	Campfire(int id, double x, double y, int firstImgID);
+	static void animationStopped();
 	void animate();
 	virtual ~Campfire();
 };
