@@ -39,6 +39,9 @@ void BaseHelpScreen::setText(std::string text)
 
 	textRect.h = textSurface->h;
 	textRect.w = textSurface->w;
+
+	SDL_FreeSurface(textSurface);
+	TTF_CloseFont(font);
 }
 
 void BaseHelpScreen::draw()

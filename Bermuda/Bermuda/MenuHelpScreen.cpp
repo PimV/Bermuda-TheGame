@@ -18,6 +18,7 @@ void MenuHelpScreen::init()
 	s = SDL_CreateRGBSurface(0, ScreenWidth, ScreenWidth, 32, 0, 0, 0, 0);
 	SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 255, 251, 0));
 	tempTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), s);
+	SDL_FreeSurface(s);
 
 	tempRect.h = ScreenHeight;
 	tempRect.w = (ScreenWidth / 5) * 1;
@@ -128,6 +129,12 @@ void MenuHelpScreen::cleanup()
 {
 	SDL_DestroyTexture(tempTexture);
 	delete movementScreen;
+	delete cutTreeScreen;
+	for (size_t i = 0; i < buttons.size(); i++)
+	{
+		delete buttons[i];
+	}
+	buttons.clear();
 }
 
 MenuHelpScreen::~MenuHelpScreen()
