@@ -26,7 +26,7 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 		sizeRect->y = getY() - camera->getY(); 
 		sizeRect->w = getWidth();
 		sizeRect->h = getHeight();
-
+		
 		//Draw the entity
 		SDL_RenderCopy(renderer, drawImage->getTileSet(), drawImage->getCroppingRect(), sizeRect);
 	}

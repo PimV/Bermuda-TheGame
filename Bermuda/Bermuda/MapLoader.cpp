@@ -255,7 +255,7 @@ void MapLoader::createObjects(Value& objects)
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
 		{
-			new Tree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			Tree* tree = new Tree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{

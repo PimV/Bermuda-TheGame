@@ -10,11 +10,14 @@ class Tree :
 private:
 	Image* treeImage;
 	Image* stumpImage;
+	SDL_Texture* canInteractTexture;
+	SDL_Texture* cantInteractTexture;
 public:
 	Tree(int id, double x, double y, Image* treeImage, Image* stumpImage);
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
 	void setDestroyedState();
+	bool canInteract(Player* player);
 	~Tree();
 };

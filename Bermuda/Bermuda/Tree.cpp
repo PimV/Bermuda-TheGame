@@ -19,6 +19,21 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 	this->respawnTime = 5000;
 	this->interactTime = 5000;
 	this->animationType = AnimationEnumType::Chop;
+
+	canInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_caninteract.png").c_str());
+	cantInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_cantinteract.png").c_str());
+
+	this->setHighlightTexture(cantInteractTexture);
+
+}
+
+bool Tree::canInteract(Player* player) {
+	if (player->getInventory()->axeSelected()) {
+		this->setHighlightTexture(canInteractTexture);
+	} else {
+		this->setHighlightTexture(cantInteractTexture);
+	}
+	return player->getInventory()->axeSelected();
 }
 
 void Tree::interact(Player* player) {
@@ -41,7 +56,7 @@ void Tree::update(double dt) {
 		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
-	}
+	} 
 }
 
 void Tree::respawn() {

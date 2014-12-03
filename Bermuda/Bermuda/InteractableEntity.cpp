@@ -16,6 +16,8 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int interactS
 	this->interactHeight = interactHeight;
 	this->currentInteractTime = 0;
 
+	this->highlightTexture = nullptr;
+
 	this->animationType = AnimationEnumType::None;
 
 	//TODO: pixel word voor elke interactable entity opnieuw ingeladen.
@@ -27,9 +29,34 @@ void InteractableEntity::interact(Player* player)
 	//TODO : oplossen op manier zonder casten
 	/*if (this->getEnabled())
 	{
-		int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
-		cout << percentage << endl;
+	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
+	cout << percentage << endl;
 	}*/
+}
+
+bool InteractableEntity::canInteract(Player* player) {
+	return true;
+}
+
+void InteractableEntity::setHighlightTexture(SDL_Texture* texture) {
+	this->highlightTexture = texture;
+}
+
+SDL_Texture* InteractableEntity::getHighlightTexture() {
+	return this->highlightTexture;
+}
+
+void InteractableEntity::highlight() {
+	if (this->highlightTexture != nullptr) {
+		Camera* c = PlayState::Instance()->getCamera();
+		SDL_Rect rect;
+		rect.x = this->getX() - c->getX();
+		rect.y = this->getY() - c->getY() + 4;
+		rect.w = 96;
+		rect.h = 128;
+
+		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->highlightTexture, NULL, &rect);
+	}
 }
 
 void InteractableEntity::drawInteractableArea()

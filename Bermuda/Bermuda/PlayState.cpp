@@ -24,6 +24,7 @@ PlayState::PlayState(void)
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 	GameStateManager::Instance()->setSpeedMultiplier(1);
+	GameTimer::Instance()->init();
 	this->ready = false;
 	this->showCol = false;
 	this->showInter = false;
@@ -35,6 +36,7 @@ void PlayState::init(GameStateManager *gsm) {
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
+
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
 
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
@@ -42,7 +44,7 @@ void PlayState::init(GameStateManager *gsm) {
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
-	GameTimer::Instance()->init();
+	
 	SoundLoader::Instance()->playGameMusic();
 	this->ready = true;
 }
@@ -480,6 +482,58 @@ void PlayState::draw()
 
 		}
 	}
+	//Calculate begin and end chunks for the interact check (+1 and -1 to make it a little bigger thent he current chunk)
+	beginChunkX = p->getChunkX() - 1;
+	 endChunkX = p->getChunkX() + 1;
+	 beginChunkY = p->getChunkY() - 1;
+	 endChunkY = p->getChunkY() + 1;
+
+	int playerOffsetX = p->getX() + (p->getWidth() / 2);
+	//De -7 wordt gebruikt omdat het plaatje niet helemaal klopt. In de breedte staat de speler idd precies in het midden van het plaatje. In de hoogte niet...
+	int playerOffsetY = p->getY() + (p->getHeight() / 2) +7;
+
+	double diff = 1000;
+	InteractableEntity* closestEntity = nullptr;
+
+	//Loop through all chunks
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
+			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
+			if(vec != nullptr) {
+				for(InteractableEntity* e : *vec) {
+					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
+						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
+					{
+						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
+						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
+
+						double diffX = centerX - playerOffsetX;
+						double diffY = centerY - playerOffsetY;
+
+						if (diffX < 0) {
+							diffX = -diffX;
+						}
+
+						if (diffY < 0) {
+							diffY = -diffY;
+						}
+
+						if (diffX + diffY < diff) {
+							diff = diffX + diffY;
+							closestEntity = e;
+						}
+
+					}
+				}
+			}
+		}
+	}
+
+	if (closestEntity != nullptr) {
+		closestEntity->canInteract(p);
+		closestEntity->highlight();
+	}
+
 
 
 
