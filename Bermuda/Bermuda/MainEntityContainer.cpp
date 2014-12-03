@@ -1,19 +1,26 @@
 #include "MainEntityContainer.h"
 
-MainEntityContainer::MainEntityContainer(void)
+MainEntityContainer::MainEntityContainer(void) : 
+	chunkSize(300)
 {
 	m_container[ContainerType::Drawable] = new DrawableContainer();
+	m_container[ContainerType::Animating] = new DrawableContainer();
 	m_container[ContainerType::Collidable] = new CollidableContainer();
 	m_container[ContainerType::Background] = new BackgroundContainer();
 	m_container[ContainerType::Interactable] = new InteractableContainer();
 	m_container[ContainerType::Respawnable] = new RespawnContainer();
 	m_container[ContainerType::Movable] = new MovableContainer();
-	//TODO: werkt onderstaande container naar behoren? (johan/bas)
 	m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
+	m_container[ContainerType::Destroyed] = new DestroyContainer();
+	m_container[ContainerType::Light] = new LightContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {
 	return static_cast<DrawableContainer*>(m_container[ContainerType::Drawable]);
+}
+
+AnimatingContainer* MainEntityContainer::getAnimatingContainer() {
+	return static_cast<AnimatingContainer*>(m_container[ContainerType::Animating]);
 }
 
 CollidableContainer* MainEntityContainer::getCollidableContainer() {
@@ -40,15 +47,33 @@ SpawnpointContainer* MainEntityContainer::getSpawnpointContainer() {
 	return static_cast<SpawnpointContainer*>(m_container[ContainerType::Spawnpoint]);
 }
 
-void MainEntityContainer::initContainerSizes(int chunksY, int chunksX)
+DestroyContainer* MainEntityContainer::getDestroyContainer() {
+	return static_cast<DestroyContainer*>(m_container[ContainerType::Destroyed]);
+}
+
+LightContainer* MainEntityContainer::getLightContainer() {
+	return static_cast<LightContainer*>(m_container[ContainerType::Light]);
+}
+
+int MainEntityContainer::getChunkSize()
 {
+	return this->chunkSize;
+}
+
+void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
+{
+	int chunksY = floor(mapHeight / chunkSize) + 1;
+	int chunksX = floor(mapWidth / chunkSize) + 1;
+
 	//Init all containers with chunks
 	m_container[ContainerType::Collidable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Drawable]->initChunks(chunksY, chunksX);
+	m_container[ContainerType::Animating]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Background]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Interactable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Movable]->initChunks(chunksY, chunksX);
 	m_container[ContainerType::Spawnpoint]->initChunks(chunksY, chunksX);
+	m_container[ContainerType::Light]->initChunks(chunksY, chunksX);
 }
 
 MainEntityContainer::~MainEntityContainer(void)

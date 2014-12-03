@@ -16,6 +16,7 @@ private:
 	DAYPART currentDayPart;
 
 	long gameTime;
+	double frameTime;
 	double dayLength;
 	double startDay;
 	int days;
@@ -27,9 +28,16 @@ public:
 	static GameTimer* Instance() { return &s_GameTimer; };
 
 	void init();
-	void updateGameTime(long gameTime);
+	void updateGameTime(double frameTime);
 	void updateDay();
 	long getGameTime();
+
+	double getFullDayLength();
+	double getDayLength();
+	double getEveningLength();
+	double getNightLength();
+
+	double getFrameTime();
 
 	int getDaysSurvived();
 	double getPercentage();

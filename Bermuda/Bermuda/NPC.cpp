@@ -2,8 +2,8 @@
 #include "Spawnpoint.h"
 #include <iostream>
 
-NPC::NPC(int id, int chunkSize, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
-	Entity(id,spawnPoint->getX(),spawnPoint->getY(), chunkSize)
+NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
+	Entity(id,spawnPoint->getX(),spawnPoint->getY())
 {
 	this->healthPoints = healthPoints;
 	this->attackPoints = attackPoints;
