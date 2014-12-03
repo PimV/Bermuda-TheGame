@@ -25,7 +25,7 @@ void MenuHelpScreen::init()
 
 	movementScreen = new BaseHelpScreen(firstRect.w);
 	movementScreen->setPicture("HelpScreens/movement.bmp");
-	movementScreen->setText("Use the arrow keys to walk around or click anywhere on the screen to the clicked point.");
+	movementScreen->setText("Use the arrow keys to walk around or click anywhere on the screen to move the clicked point.");
 
 	cutTreeScreen = new BaseHelpScreen(firstRect.w);
 	cutTreeScreen->setPicture("HelpScreens/cutTree.bmp");
