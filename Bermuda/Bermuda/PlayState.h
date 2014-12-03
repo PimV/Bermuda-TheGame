@@ -8,9 +8,6 @@
 #include "GameTimer.h"
 #include "NightLayer.h"
 
-//temp
-class Axe;
-
 class PlayState : public IGameState
 {
 private:
