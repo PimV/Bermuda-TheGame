@@ -14,6 +14,7 @@ public:
 	void setRenderDrawColor(int r, int g, int b);
 	void resetRenderDrawColor();
 	SDL_Renderer* getRenderer();
+	SDL_Window* getWindow();
 	virtual ~SDLInitializer(void);
 private:
 	SDL_Surface* screen;

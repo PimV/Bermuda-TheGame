@@ -477,6 +477,15 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files\Model\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="LightEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="LightContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="NightLayer.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Source Files\Model\Engine</Filter>
     </ClCompile>
@@ -844,6 +853,15 @@
     </ClInclude>
     <ClInclude Include="SnowTree.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="LightEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="LightContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="NightLayer.h">
+      <Filter>Header Files\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
