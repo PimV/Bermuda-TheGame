@@ -43,4 +43,3 @@ void ParticleContainer::removeEffect(ParticleEngine* _pe)
 		this->pEngines.erase(it);
 	}
 }
-

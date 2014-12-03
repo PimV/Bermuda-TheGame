@@ -15,7 +15,7 @@ private:
 	
 	SDL_Surface* mScreen;
 	SDL_Surface* blackSurface;
-	ParticleEngine* pEngine;
+	//ParticleEngine* pEngine;
 
 	GameStateManager* gsm;
 

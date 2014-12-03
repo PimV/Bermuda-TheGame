@@ -51,8 +51,8 @@ void PlayState::init(GameStateManager *gsm) {
 
 	
 	//pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, PARTICLETYPES::SMOKE);
-	pEngine = new ParticleEngine(400,400, PARTICLETYPES::SMOKE);
-
+	//pEngine = new ParticleEngine(400,400, PARTICLETYPES::SMOKE);
+	this->getMainEntityContainer()->getParticleContainer()->addEffect( new ParticleEngine(400,400, PARTICLETYPES::SMOKE) );
 	// test for particle inplementation
 	for (int i = 0; i < 10; i++)
 	{
@@ -372,7 +372,7 @@ void PlayState::updateMediumAreaEntities(double dt)
 	}
 
 	
-	this->pEngine->updateParticles(dt);
+	//this->pEngine->updateParticles(dt);
 	this->getMainEntityContainer()->getParticleContainer()->update(dt);
 }
 
