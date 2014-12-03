@@ -5,6 +5,7 @@
 #include "header_loader.h"
 #include "MenuMainScreen.h"
 #include "MenuCreditsScreen.h"
+#include "MenuHelpScreen.h"
 
 
 class MenuState :
@@ -15,6 +16,7 @@ private:
 	BaseScreen* curScreen;
 	MenuMainScreen* mainScr;
 	MenuCreditsScreen* creditsScr;
+	MenuHelpScreen* helpScr;
 
 	//self
 	static MenuState m_MenuState;
@@ -31,6 +33,8 @@ public:
 	void setCurWindow(BaseScreen* curwindow);
 	BaseScreen* getMenuMainScreen();
 	BaseScreen* getMenuCreditsScreen();
+	BaseScreen* getMenuHelpScreen();
+	MenuHelpScreen* getHelpScreen();
 
 	//Get instance self
 	static MenuState* Instance() {
