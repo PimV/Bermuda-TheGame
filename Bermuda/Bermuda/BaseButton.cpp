@@ -116,6 +116,11 @@ void BaseButton::placeLeftMid()
 	buttonRect.y = ((int)ScreenHeight - buttonRect.h) / 2;
 }
 
+void BaseButton::setHelpScr(MenuHelpScreen* scr)
+{
+	helpScr = scr;
+}
+
 void BaseButton::hover(int x, int y)
 {
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
@@ -215,5 +220,10 @@ void BaseButton::menuMainScreenAction()
 
 void BaseButton::helpMovementScreenAction()
 {
-	//parent->setCurWindow(helpScr->getMovementScr());
+	helpScr->setCurWindow(helpScr->getMovementScr());
+}
+
+void BaseButton::helpCutTreeScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getCutTreeScr());
 }

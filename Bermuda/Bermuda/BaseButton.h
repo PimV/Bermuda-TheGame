@@ -4,6 +4,7 @@
 #include <string>
 #include "GameStateManager.h"
 
+class MenuHelpScreen;
 class BaseButton
 {
 public:
@@ -12,6 +13,7 @@ public:
 	SDL_Texture* buttonTexture;
 	SDL_Texture* buttonHoverTexture;
 	SDL_Rect buttonRect;
+	MenuHelpScreen* helpScr;
 
 public:
 	//methodes
@@ -29,6 +31,7 @@ public:
 	int getY();
 	int getHeight();
 	int getWidth();
+	void setHelpScr(MenuHelpScreen*);
 
 	//buttonActions
 	void setCreditsScreenAction();
@@ -40,6 +43,7 @@ public:
 	void resumeGameAction();
 	void menuMainScreenAction();
 	void helpMovementScreenAction();
+	void helpCutTreeScreenAction();
 
 	void draw();
 	void hover(int, int);

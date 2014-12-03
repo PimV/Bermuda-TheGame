@@ -14,6 +14,7 @@ private:
 
 	BaseHelpScreen* curWindow;
 	BaseHelpScreen* movementScreen;
+	BaseHelpScreen* cutTreeScreen;
 
 	//methodes
 	void init();
@@ -29,6 +30,7 @@ public:
 	//Methodes		Screens
 	void setCurWindow(BaseHelpScreen* curwindow);
 	BaseHelpScreen* getMovementScr();
+	BaseHelpScreen* getCutTreeScr();
 
 	//constructors destructors
 	MenuHelpScreen();

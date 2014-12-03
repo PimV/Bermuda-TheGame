@@ -25,15 +25,31 @@ void MenuHelpScreen::init()
 	tempRect.y = 0;
 
 	movementScreen = new BaseHelpScreen(tempRect.w);
-	movementScreen->setPicture("HelpScreens/Movement.bmp");
-	movementScreen->setText("Gebruik de pijltjes toetsen om rond te lopen");
+	movementScreen->setPicture("HelpScreens/movement.bmp");
+	movementScreen->setText("Use the arrow keys to walk around");
+
+	cutTreeScreen = new BaseHelpScreen(tempRect.w);
+	cutTreeScreen->setPicture("HelpScreens/cutTree.bmp");
+	cutTreeScreen->setText("Stand close to a tree, select the axe in your inventory and press spacebar to cut down the tree");
 
 	BaseButton* movementButton = new BaseButton;
-	movementButton->createButton("movement", 20, 1);
+	movementButton->createButton("Movement", 30, 1);
+	movementButton->action = &BaseButton::helpMovementScreenAction;
+
+	BaseButton* cutTreeButton = new BaseButton;
+	cutTreeButton->createButton("Cut down trees", 30, 1);
+	cutTreeButton->action = &BaseButton::helpCutTreeScreenAction;
 	
 	movementButton->placeExactAt(10, 10);
+	cutTreeButton->placeLeftUnderButton(movementButton);
 
 	buttons.push_back(movementButton);
+	buttons.push_back(cutTreeButton);
+
+	for each (BaseButton* var in buttons)
+	{
+		var->setHelpScr(this);
+	}
 
 	setCurWindow(movementScreen);
 }
@@ -48,6 +64,11 @@ BaseHelpScreen* MenuHelpScreen::getMovementScr()
 	return movementScreen;
 }
 
+BaseHelpScreen* MenuHelpScreen::getCutTreeScr()
+{
+	return cutTreeScreen;
+}
+
 void MenuHelpScreen::setBackground()
 {
 
@@ -55,7 +76,10 @@ void MenuHelpScreen::setBackground()
 
 void MenuHelpScreen::resetButtons()
 {
-
+	for each (BaseButton* var in buttons)
+	{
+		var->reset();
+	}
 }
 
 void MenuHelpScreen::handleEvents(SDL_Event mainEvent)
@@ -71,12 +95,19 @@ void MenuHelpScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
-
+		for (size_t i = 0; i < buttons.size(); i++) {
+			buttons.at(i)->hover(x, y);
+		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT)
 		{
-
+			for (size_t i = 0; i < buttons.size(); i++) {
+				if (buttons.at(i)->clicked(x, y))
+				{
+					break;
+				}
+			}
 		}
 		break;
 	}
