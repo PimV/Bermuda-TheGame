@@ -15,7 +15,6 @@ private:
 	int currentImageIndex;
 	long lastFrameTime;
 	int finishedIndex;
-	void(*callbackFunction)();
 
 	//animate timer
 	double animationEndTime;
@@ -23,13 +22,14 @@ private:
 	//animate counter
 	int animationCount;
 	int targetAnimationCount;
-
+protected:
+	virtual void animationFinished();
 public:
 	AnimatingEntity(int id, double x, double y, int firstImgID);
 	virtual void animate();
 	void startAnimationLoopType(int startIndex, int endIndex, double animateSpeed);
-	void startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex, void(*callbackFunction)());
-	void startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, int animateCount, int finishedIndex, void(*callbackFunction)());
+	void startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex);
+	void startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, int animateCount, int finishedIndex);
 	void setStaticImage(int index);
 	void stopAnimating();
 	bool getCurrentlyAnimating();

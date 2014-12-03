@@ -9,9 +9,10 @@ class Campfire :
 private:
 	double creationTime;
 	double lifeTime;
+protected:
+	virtual void animationFinished();
 public:
 	Campfire(int id, double x, double y, int firstImgID);
-	static void animationStopped();
 	void animate();
 	virtual ~Campfire();
 };

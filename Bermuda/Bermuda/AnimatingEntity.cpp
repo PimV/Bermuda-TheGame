@@ -27,7 +27,7 @@ void AnimatingEntity::animate()
 				if (this->animationEndTime < currentTime)
 				{
 					setStaticImage(this->finishedIndex);
-					callbackFunction();
+					animationFinished();
 					return;
 				}
 				break;
@@ -35,7 +35,7 @@ void AnimatingEntity::animate()
 				if (this->animationCount >= this->targetAnimationCount)
 				{
 					setStaticImage(this->finishedIndex);
-					callbackFunction();
+					animationFinished();
 					return;
 				}
 				break;
@@ -68,7 +68,7 @@ void AnimatingEntity::startAnimationLoopType(int startIndex, int endIndex, doubl
 	this->animateSpeed = animateSpeed;
 }
 
-void AnimatingEntity::startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex, void(*callbackFunction)())
+void AnimatingEntity::startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex)
 {
 	this->currentAnimationType = AnimationType::TIMER;
 	this->animationEndTime = GameTimer::Instance()->getGameTime() + animateTime;
@@ -80,10 +80,9 @@ void AnimatingEntity::startAnimationTimerType(int startIndex, int endIndex, doub
 	this->animationEndIndex = endIndex;
 	this->animateSpeed = animateSpeed;
 	this->finishedIndex = finishedIndex;
-	this->callbackFunction = callbackFunction;
 }
 
-void AnimatingEntity::startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, int animateCount, int finishedIndex, void(*callbackFunction)())
+void AnimatingEntity::startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, int animateCount, int finishedIndex)
 {
 	this->currentAnimationType = AnimationType::COUNTER;
 	this->animationCount = 0;
@@ -96,7 +95,11 @@ void AnimatingEntity::startAnimationCounterType(int startIndex, int endIndex, do
 	this->animationEndIndex = endIndex;
 	this->animateSpeed = animateSpeed;
 	this->finishedIndex = finishedIndex;
-	this->callbackFunction = callbackFunction;
+}
+
+void AnimatingEntity::animationFinished()
+{
+	std::cout << "animation finished" << std::endl;
 }
 
 void AnimatingEntity::setStaticImage(int index)

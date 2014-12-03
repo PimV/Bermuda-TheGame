@@ -12,7 +12,7 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
 	this->lifeTime = GameTimer::Instance()->getNightLength() + 40000;
-	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() , 0, &animationStopped);
+	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() , 0);
 }
 
 void Campfire::animate()
@@ -25,9 +25,8 @@ void Campfire::animate()
 	}
 }
 
-void Campfire::animationStopped()
+void Campfire::animationFinished()
 {
-	std::cout << "TEST" << std::endl;
 }
 
 Campfire::~Campfire()
