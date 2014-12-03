@@ -95,6 +95,14 @@ private:
 	int animationMineDown, animationMineRight;
 	int animationMineStartColumn, animationMineEndColumn;
 
+	int animationSpearAttackUp, animationSpearAttackLeft;
+	int animationSpearAttackDown, animationSpearAttackRight;
+	int animationSpearAttackStartColumn, animationSpearAttackEndColumn;
+
+	int animationSpearWalkUp, animationSpearWalkLeft;
+	int animationSpearWalkDown, animationSpearWalkRight;
+	int animationSpearWalkStartColumn, animationSpearWalkEndColumn;
+
 	bool correctToolSelected;
 
 	double getDistance(int currentX, int currentY, int destX, int destY);
