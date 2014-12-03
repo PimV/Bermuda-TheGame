@@ -1,5 +1,6 @@
 #include "Campfire.h"
 #include "PlayState.h"
+#include "ParticleTypes.h"
 
 
 Campfire::Campfire(int id, double x, double y, int firstImgID) :
@@ -12,16 +13,19 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
 	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() + 10000, 0);
+	this->particleEngine = new ParticleEngine(0,x + 10,y + 40,nullptr,PARTICLETYPES::SMOKE);
 }
 
-void Campfire::animate()
+void Campfire::animate(double dt)
 {
-	AnimatingEntity::animate();
+	AnimatingEntity::animate(dt);
+	this->particleEngine->updateParticles(dt);
 
 	long currentTime = GameTimer::Instance()->getGameTime();
 	if (this->destroyTime > 0 && this->destroyTime < currentTime)
 	{
 		PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
+		delete this->particleEngine;
 	}
 }
 

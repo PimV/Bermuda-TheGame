@@ -26,7 +26,7 @@ protected:
 	virtual void animationFinished();
 public:
 	AnimatingEntity(int id, double x, double y, int firstImgID);
-	virtual void animate();
+	virtual void animate(double dt);
 	void startAnimationLoopType(int startIndex, int endIndex, double animateSpeed);
 	void startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex);
 	void startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, int animateCount, int finishedIndex);

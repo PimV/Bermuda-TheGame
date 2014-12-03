@@ -12,7 +12,7 @@ AnimatingEntity::AnimatingEntity(int id, double x, double y, int firstImgID) :
 	setStaticImage(0);
 }
 
-void AnimatingEntity::animate()
+void AnimatingEntity::animate(double dt)
 {
 	if (this->getCurrentlyAnimating())
 	{
