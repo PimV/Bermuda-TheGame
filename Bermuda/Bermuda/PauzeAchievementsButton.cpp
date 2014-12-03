@@ -10,12 +10,12 @@ PauzeAchievementsButton::PauzeAchievementsButton()
 void PauzeAchievementsButton::init()
 {
 	std::string Message = "Achievements";
-	createButton(Message);
+	createButton(Message, 24, 1);
 }
 
 void PauzeAchievementsButton::action()
 {
-	PauseState::Instance()->setCurWindow(1);
+	PauseState::Instance()->setCurWindow(PauseState::Instance()->getMainAchievementsScreen());
 }
 
 PauzeAchievementsButton::~PauzeAchievementsButton()

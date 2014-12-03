@@ -7,5 +7,6 @@ enum ItemType
 	Weapon,
 	Tool,
 	Armour,
-	Useless
+	Useless,
+	Buildable
 };

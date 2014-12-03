@@ -19,7 +19,7 @@ double Weapon::getAttackDamage() {
 	return this->attackDamage;
 }
 
-void Weapon::setAttackDamage(double attackSpeed) {
+void Weapon::setAttackSpeed(double attackSpeed) {
 	this->attackSpeed = attackSpeed;
 }
 

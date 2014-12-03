@@ -21,19 +21,19 @@ void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 void NPCFactory::createRabbit(Spawnpoint* sp)
 {
 	//TODO: 300 chunksize ombouwen. (MapLoader singleton maken?)
-	new Rabbit(1001, 300, sp, FirstImageIDs["rabbit"]);
+	new Rabbit(1001, sp, FirstImageIDs["rabbit"]);
 }
 
 void NPCFactory::createWasp(Spawnpoint* sp)
 {
 	//TODO: 300 chunksize ombouwen. (MapLoader singleton maken?)
-	new Wasp(2001, 300, sp, FirstImageIDs["wasp"]);
+	new Wasp(2001, sp, FirstImageIDs["wasp"]);
 }
 
 void NPCFactory::createBat(Spawnpoint* sp)
 {
 	//TODO: 300 chunksize ombouwen. (MapLoader singleton maken?)
-	new Bat(2001, 300, sp, FirstImageIDs["bat"]);
+	new Bat(2001, sp, FirstImageIDs["bat"]);
 }
 
 

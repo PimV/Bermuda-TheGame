@@ -23,9 +23,5 @@ public:
 private:
 	double attackDamage;
 	double attackRadius;
-	double attackSpeed
+	double attackSpeed;
 };
-
-
-
-

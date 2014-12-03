@@ -40,9 +40,7 @@ void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h, int r
 	txtRect.y = y;
 	txtRect.w = msg.length() * h / 3;
 	txtRect.h = h;
-
-	std::cout << r << std::endl;
-
+	
 	fColor.r = r;
 	fColor.g = g;
 	fColor.b = b;

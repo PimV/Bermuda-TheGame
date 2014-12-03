@@ -8,10 +8,10 @@ PauseState::PauseState()
 
 void PauseState::init(GameStateManager* gsm)
 {
-	this->gsm = gsm;
-	setCurWindow(0);
 	mainScr = new PauseMainScreen;
 	statScr = new PauseStatusTrackerScreen;
+
+	setCurWindow(mainScr);
 }
 
 void PauseState::pause()
@@ -24,15 +24,7 @@ void PauseState::resume()
 
 void PauseState::handleEvents(SDL_Event mainEvent)
 {
-	if (curWindow == 0)
-	{
-		mainScr->handleEvents(mainEvent);
-	}
-	else if (curWindow == 1)
-	{
-		statScr->handleEvents(mainEvent);
-	}
-
+	curWindow->handleEvents(mainEvent);
 }
 
 void PauseState::update(double dt)
@@ -40,22 +32,25 @@ void PauseState::update(double dt)
 
 }
 
-
-void PauseState::setCurWindow(int window)
+void PauseState::setCurWindow(BaseScreen* window)
 {
 	curWindow = window;
+	curWindow->resetButtons();
+}
+
+BaseScreen* PauseState::getMainPauseScreen()
+{
+	return mainScr;
+}
+
+BaseScreen* PauseState::getMainAchievementsScreen()
+{
+	return statScr;
 }
 
 void PauseState::draw()
 {
-	if (curWindow == 0)
-	{
-		mainScr->draw();
-	}
-	else if (curWindow == 1)
-	{
-		statScr->draw();
-	}
+	curWindow->draw();
 }
 
 void PauseState::cleanup()

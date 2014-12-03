@@ -19,10 +19,12 @@ void Crafting::init(Inventory* inv)
 
 void Crafting::createRecipes()
 {
-	this->recipes[Items::Axe][Items::Wood] = 3;
-	this->recipes[Items::Axe][Items::Rock] = 3;
-	this->recipes[Items::Pickaxe][Items::Wood] = 3;
-	this->recipes[Items::Pickaxe][Items::Rock] = 3;
+	this->recipes[Items::Axe][Items::Wood] = 2;
+	this->recipes[Items::Axe][Items::Rock] = 2;
+	this->recipes[Items::Pickaxe][Items::Wood] = 2;
+	this->recipes[Items::Pickaxe][Items::Rock] = 2;
+	this->recipes[Items::Campfire][Items::Wood] = 3;
+	this->recipes[Items::Campfire][Items::Rock] = 3;
 }
 
 bool Crafting::canCraft(Items item)

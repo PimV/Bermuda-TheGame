@@ -35,6 +35,7 @@ private:
 	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
 
 public:
+	PlayState();
 	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
 
@@ -47,8 +48,11 @@ public:
 	void handleEvents(SDL_Event mainEvent) ;
 
 	void update(double dt);
-	void updateGameTimers(double dt);
-	
+
+	void updateVisibleEntities(double dt);
+	void updateMediumAreaEntities(double dt);
+
+	void updateGameTimers(double dt);	
 
 	void draw();
 
@@ -58,6 +62,5 @@ public:
 		return &m_PlayState;
 	};
 
-	PlayState(void);
-	~PlayState(void);
+	~PlayState();
 };

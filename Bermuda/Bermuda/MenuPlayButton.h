@@ -3,17 +3,18 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include "PlayState.h"
 
-class ExitButton :
+class MenuPlayButton :
 	public BaseButton
 {
 public:
-	//methodes
+	//Methodes
 	void init();
 	void action();
 
-	//Constructors and destructors
-	ExitButton();
-	virtual ~ExitButton();
+	//Constructor and destructor
+	MenuPlayButton();
+	virtual ~MenuPlayButton();
 };
 

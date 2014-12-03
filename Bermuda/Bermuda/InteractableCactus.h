@@ -9,7 +9,7 @@ private:
 	Image* cactusImage;
 	Image* stumpImage;
 public:
-	InteractableCactus(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* image, Image* stumpImage);
+	InteractableCactus(int id, double x, double y, Image* image, Image* stumpImage);
 	void setCollidableValues();
 	void update(double dt);
 	void respawn();

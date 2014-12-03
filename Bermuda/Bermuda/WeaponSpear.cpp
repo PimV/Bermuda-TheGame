@@ -1,7 +1,7 @@
 #include "WeaponSpear.h"
 #include "Items.h"
-#include "Player.h"
 #include <iostream>
+class Player;
 
 WeaponSpear::WeaponSpear(Image* image)
 {
@@ -24,10 +24,11 @@ void WeaponSpear::init() {
 	this->setAttackRadius(10);
 }
 
+/*
 void WeaponSpear::use(Player* player) {
-	Equipable::equip(player);
+	Equipable::use(player);
 }
-
+*/
 
 WeaponSpear::~WeaponSpear(void)
 {
