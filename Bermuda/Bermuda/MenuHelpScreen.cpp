@@ -156,6 +156,7 @@ void MenuHelpScreen::cleanup()
 	SDL_DestroyTexture(secTexture);
 	delete movementScreen;
 	delete cutTreeScreen;
+	delete mineRockScreen;
 	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];
