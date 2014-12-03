@@ -13,6 +13,7 @@ public:
 private:
 	SDL_Surface* blackSurface;
 	SDL_Surface* lightSourceImage;
+	SDL_Texture* nightLayer;
 	double alphaLevel;
 	SDL_Rect screenRect;
 
