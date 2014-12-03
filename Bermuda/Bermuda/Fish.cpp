@@ -60,11 +60,7 @@ void Fish::setDestroyedState()
 
 Fish::~Fish()
 {
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	if(this->destroyed) { 
-		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this); 
-	}
-	else { 
-		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this); 
-	}
 }
