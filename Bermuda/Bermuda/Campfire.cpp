@@ -1,5 +1,6 @@
 #include "Campfire.h"
 #include "PlayState.h"
+#include "ParticleTypes.h"
 
 
 Campfire::Campfire(int id, double x, double y, int firstImgID) :
@@ -13,18 +14,26 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getLightContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
-	this->lifeTime = GameTimer::Instance()->getNightLength() + 40000;
-	setAnimation(1, 3, 100, GameTimer::Instance()->getNightLength() + 20000, 0);
+	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() + 10000, 0);
+	this->particleEngine = new ParticleEngine(0,x + 10,y + 40,nullptr,PARTICLETYPES::SMOKE);
 }
 
-void Campfire::animate()
+void Campfire::animate(double dt)
 {
-	AnimatingEntity::animate();
+	AnimatingEntity::animate(dt);
+	this->particleEngine->updateParticles(dt);
+
 	long currentTime = GameTimer::Instance()->getGameTime();
-	if (this->creationTime + lifeTime < currentTime)
+	if (this->destroyTime > 0 && this->destroyTime < currentTime)
 	{
 		PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
+		delete this->particleEngine;
 	}
+}
+
+void Campfire::animationFinished()
+{
+	this->destroyTime = GameTimer::Instance()->getGameTime() + 20000;
 }
 
 Campfire::~Campfire()

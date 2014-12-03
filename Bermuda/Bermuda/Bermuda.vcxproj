@@ -99,6 +99,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="AnimatingContainer.h" />
     <ClInclude Include="AnimatingEntity.h" />
     <ClInclude Include="AnimationEnum.h" />
+    <ClInclude Include="AnimationType.h" />
     <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
@@ -163,6 +164,9 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="NightLayer.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Objects.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleEngine.h" />
+    <ClInclude Include="ParticleTypes.h" />
     <ClInclude Include="PauseMainScreen.h" />
     <ClInclude Include="PauseStatusTrackerScreen.h" />
     <ClInclude Include="PauzeAchievementsButton.h" />
@@ -172,6 +176,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="MovementDirectionEnum.h" />
     <ClInclude Include="RockSpikes.h" />
+    <ClInclude Include="SnowTree.h" />
     <ClInclude Include="SpawnpointContainer.h" />
     <ClInclude Include="StatusTracker.h" />
     <ClInclude Include="ToolAxe.h" />
@@ -259,6 +264,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="MenuMainScreen.cpp" />
     <ClCompile Include="NightLayer.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleEngine.cpp" />
     <ClCompile Include="PauseMainScreen.cpp" />
     <ClCompile Include="PauseStatusTrackerScreen.cpp" />
     <ClCompile Include="PauzeAchievementsButton.cpp" />
@@ -267,6 +274,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="NPCFactory.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="RockSpikes.cpp" />
+    <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="SpawnpointContainer.cpp" />
     <ClCompile Include="StatusTracker.cpp" />
     <ClCompile Include="ToolAxe.cpp" />

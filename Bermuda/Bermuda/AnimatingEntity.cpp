@@ -3,33 +3,50 @@
 #include "GameTimer.h"
 #include <iostream>
 
-
 AnimatingEntity::AnimatingEntity(int id, double x, double y, int firstImgID) :
 	Entity(id, x, y),
 	DrawableEntity(id, x, y, nullptr)
 {
 	this->firstImgID = firstImgID;
-	this->lastFrameTime = GameTimer::Instance()->getGameTime();
-	this->animateLoop = false;
+	this->currentAnimationType = AnimationType::NONE;
 	setStaticImage(0);
 }
 
-void AnimatingEntity::animate()
+void AnimatingEntity::animate(double dt)
 {
-	if (this->animating)
+	if (this->getCurrentlyAnimating())
 	{
 		//wait for next frame
 		long currentTime = GameTimer::Instance()->getGameTime();
 		if (lastFrameTime + animateSpeed < currentTime)
 		{
 			int nextFrame = ++this->currentImageIndex;
-			if (!this->animateLoop && this->animationStartTime + this->animateTime < currentTime)
+			switch (this->currentAnimationType)
 			{
-				setStaticImage(this->finishedIndex);
-				return;
+			case AnimationType::TIMER:
+				if (this->animationEndTime < currentTime)
+				{
+					setStaticImage(this->finishedIndex);
+					animationFinished();
+					return;
+				}
+				break;
+			case AnimationType::COUNTER:
+				if (this->animationCount >= this->targetAnimationCount)
+				{
+					setStaticImage(this->finishedIndex);
+					animationFinished();
+					return;
+				}
+				break;
 			}
-			else if (nextFrame > this->animationEndIndex)
+
+			if (nextFrame > this->animationEndIndex)
 			{
+				if (currentAnimationType == AnimationType::COUNTER)
+				{
+					animationCount++;
+				}
 				currentImageIndex = this->animationStartIndex;
 				nextFrame = this->animationStartIndex;
 			}
@@ -39,46 +56,67 @@ void AnimatingEntity::animate()
 	}
 }
 
-void AnimatingEntity::setAnimation(int startIndex, int endIndex, double animateSpeed)
+void AnimatingEntity::startAnimationLoopType(int startIndex, int endIndex, double animateSpeed)
 {
-	if (this->currentImageIndex < startIndex ||
-		this->currentImageIndex > endIndex)
-	{
-		//New animation started;
-		this->currentImageIndex = startIndex;
-		this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
-	}
-	this->setCurrentlyAnimating(true);
-	this->animateLoop = true;
+	this->currentAnimationType = AnimationType::LOOP;
+
+	this->currentImageIndex = startIndex;
+	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
+	this->lastFrameTime = GameTimer::Instance()->getGameTime();
 	this->animationStartIndex = startIndex;
 	this->animationEndIndex = endIndex;
 	this->animateSpeed = animateSpeed;
 }
 
-void AnimatingEntity::setAnimation(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex)
+void AnimatingEntity::startAnimationTimerType(int startIndex, int endIndex, double animateSpeed, double animateTime, int finishedIndex)
 {
-	this->setAnimation(startIndex, endIndex, animateSpeed);
-	this->animateLoop = false;
-	this->animationStartTime = GameTimer::Instance()->getGameTime();
-	this->animateTime = animateTime;
+	this->currentAnimationType = AnimationType::TIMER;
+	this->animationEndTime = GameTimer::Instance()->getGameTime() + animateTime;
+
+	this->currentImageIndex = startIndex;
+	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
+	this->lastFrameTime = GameTimer::Instance()->getGameTime();
+	this->animationStartIndex = startIndex;
+	this->animationEndIndex = endIndex;
+	this->animateSpeed = animateSpeed;
 	this->finishedIndex = finishedIndex;
+}
+
+void AnimatingEntity::startAnimationCounterType(int startIndex, int endIndex, double animateSpeed, int animateCount, int finishedIndex)
+{
+	this->currentAnimationType = AnimationType::COUNTER;
+	this->animationCount = 0;
+	this->targetAnimationCount = animateCount;
+
+	this->currentImageIndex = startIndex;
+	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
+	this->lastFrameTime = GameTimer::Instance()->getGameTime();
+	this->animationStartIndex = startIndex;
+	this->animationEndIndex = endIndex;
+	this->animateSpeed = animateSpeed;
+	this->finishedIndex = finishedIndex;
+}
+
+void AnimatingEntity::animationFinished()
+{
+	std::cout << "animation finished" << std::endl;
 }
 
 void AnimatingEntity::setStaticImage(int index)
 {
-	this->setCurrentlyAnimating(false);
+	this->stopAnimating();
 	int currentImageIndex = firstImgID + index;
 	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(currentImageIndex));
 }
 
-void AnimatingEntity::setCurrentlyAnimating(bool animating)
+void AnimatingEntity::stopAnimating()
 {
-	this->animating = animating;
+	this->currentAnimationType = AnimationType::NONE;
 }
 
 bool AnimatingEntity::getCurrentlyAnimating()
 {
-	return this->animating;
+	return this->currentAnimationType != AnimationType::NONE;
 }
 
 AnimatingEntity::~AnimatingEntity()
