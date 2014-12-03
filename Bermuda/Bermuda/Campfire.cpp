@@ -1,40 +1,42 @@
 #include "Campfire.h"
 #include "PlayState.h"
+#include "ParticleTypes.h"
+#include "ParticleEngine.h"
 
 
 Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	Entity(id, x, y),
 	AnimatingEntity(id, x, y, firstImgID),
-	CollidableEntity(id, x, y, 0, 31, 50, 21)
+	CollidableEntity(id, x, y, 0, 31, 50, 21),
+	LightEntity(id, x, y)
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getLightContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
-	//this->lifeTime = GameTimer::Instance()->getNightLength() + 40000;
-	//this->setAnimation(1, 3, 100, GameTimer::Instance()->getNightLength() + 20000, 0);
-
-	// remove when particle are being show
-	this->lifeTime = GameTimer::Instance()->getNightLength() + 60000;
-	this->setAnimation(1, 3, 100, GameTimer::Instance()->getNightLength() + 40000, 0);
+	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() + 10000, 0);
+	this->particleEngine = new ParticleEngine(0,x + 10,y + 40,nullptr,PARTICLETYPES::SMOKE);
+	this->setShining(true);
 }
 
-void Campfire::animate()
+void Campfire::animate(double dt)
 {
-	AnimatingEntity::animate();
+	AnimatingEntity::animate(dt);
+	this->particleEngine->updateParticles(dt);
+
 	long currentTime = GameTimer::Instance()->getGameTime();
-	if (this->creationTime + lifeTime < currentTime)
+	if (this->destroyTime > 0 && this->destroyTime < currentTime)
 	{
 		PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
-		PlayState::Instance()->getMainEntityContainer()->getParticleContainer()->removeEffect(this->pe);
-		delete this->pe;
+		delete this->particleEngine;
 	}
 }
 
-void Campfire::setParticleEngine(ParticleEngine* _pe)
+void Campfire::animationFinished()
 {
-	this->pe = _pe;
-	PlayState::Instance()->getMainEntityContainer()->getParticleContainer()->addEffect(this->pe);
+	this->destroyTime = GameTimer::Instance()->getGameTime() + 20000;
+	this->setShining(false);
 }
 
 Campfire::~Campfire()
@@ -42,4 +44,5 @@ Campfire::~Campfire()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getLightContainer()->remove(this);
 }

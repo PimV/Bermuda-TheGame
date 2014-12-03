@@ -6,7 +6,7 @@
 #include "MainEntityContainer.h"
 #include "MapLoader.h"
 #include "GameTimer.h"
-#include "ParticleEngine.h"
+#include "NightLayer.h"
 
 class PlayState : public IGameState
 {
@@ -34,8 +34,10 @@ private:
 
 	int timesUpdate;
 	bool ready;
-	bool showCol, showInter, showSpawnArea; 
-	
+
+	bool showCol, showInter, showSpawnArea, showDayLight;
+
+	NightLayer* nightLayer;
 
 	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
 
@@ -50,7 +52,7 @@ public:
 	void pause();
 	void resume();
 
-	void handleEvents(SDL_Event mainEvent) ;
+	void handleEvents(SDL_Event mainEvent);
 
 	void update(double dt);
 

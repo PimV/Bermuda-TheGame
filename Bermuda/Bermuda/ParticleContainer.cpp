@@ -25,7 +25,7 @@ void ParticleContainer::draw()
 {
 	for( ParticleEngine* pe : this->pEngines)
 	{
-		pe->drawParticles();
+		//pe->drawParticles();
 	}
 }
 

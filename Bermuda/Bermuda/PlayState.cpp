@@ -17,7 +17,6 @@
 
 PlayState PlayState::m_PlayState;
 
-//Needed for vector sort
 bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
 PlayState::PlayState(void)
@@ -26,33 +25,37 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+
 	GameStateManager::Instance()->setSpeedMultiplier(1);
 	this->ready = false;
 	this->showCol = false;
 	this->showInter = false;
 	this->showSpawnArea = false;
+	this->showDayLight = true;
 	this->timesUpdate = 0;
-
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
+
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
 
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-
+	
 	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
+
+	nightLayer = new NightLayer();
+
 	this->ready = true;
 
 	
 	//pEngine = new ParticleEngine(ScreenWidth / 2, ScreenHeight / 2, PARTICLETYPES::SMOKE);
 	//pEngine = new ParticleEngine(400,400, PARTICLETYPES::SMOKE);
-	this->getMainEntityContainer()->getParticleContainer()->addEffect( new ParticleEngine(400,400, PARTICLETYPES::SMOKE) );
 	// test for particle inplementation
 	for (int i = 0; i < 10; i++)
 	{
@@ -97,23 +100,26 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			if (p->getInventory()->clicked(x,y, "select", p)) {
-			} else {
-			p->destX = x + this->camera->getX();
-			p->destY = y + this->camera->getY();
-			p->resetMovement();
-			p->moveClick = true;
+			if (p->getInventory()->clicked(x, y, "select", p)) {
+			}
+			else {
+				p->destX = x + this->camera->getX();
+				p->destY = y + this->camera->getY();
+				p->resetMovement();
+				p->moveClick = true;
+			}
 		}
-		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
+		else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
 			if (p->getInventory()->clicked(x, y, "use", p)) {
 
 			}
 		}
 		break;
-	case SDL_MOUSEWHEEL: 
+	case SDL_MOUSEWHEEL:
 		if (mainEvent.wheel.y > 0) {
 			p->getInventory()->decrementSelectedIndex();
-		} else if (mainEvent.wheel.y < 0){
+		}
+		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->incrementSelectedIndex();
 		}
 
@@ -198,6 +204,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			this->showSpawnArea = !this->showSpawnArea;
 		case SDLK_F9:
 			GameStateManager::Instance()->toggleHelpEnabled();
+			break;
+		case SDLK_F7:
+			this->showDayLight = !this->showDayLight;
 			break;
 		case SDLK_F8:
 			p->getCraftingSystem()->craftItem(Items::Campfire);
@@ -288,7 +297,7 @@ void PlayState::update(double dt) {
 
 	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
 	//Update gametimer
-	if(this->timesUpdate > 2)
+	if (this->timesUpdate > 2)
 	{
 		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	}
@@ -306,7 +315,7 @@ void PlayState::update(double dt) {
 	this->updateMediumAreaEntities(dt);
 }
 
-void PlayState::updateVisibleEntities(double dt) 
+void PlayState::updateVisibleEntities(double dt)
 {
 	//Update all animating entities
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
@@ -326,7 +335,7 @@ void PlayState::updateVisibleEntities(double dt)
 			{
 				for (AnimatingEntity* e : *vec)
 				{
-					e->animate();
+					e->animate(dt);
 				}
 			}
 		}
@@ -373,14 +382,16 @@ void PlayState::updateMediumAreaEntities(double dt)
 
 	
 	//this->pEngine->updateParticles(dt);
-	this->getMainEntityContainer()->getParticleContainer()->update(dt);
+	//this->getMainEntityContainer()->getParticleContainer()->update(dt);
 }
 
-void PlayState::draw() 
+void PlayState::draw()
 {
 	if (!ready) {
 		return;
 	}
+
+
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
@@ -403,11 +414,11 @@ void PlayState::draw()
 					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 
 					//Draw collision area
-					if(this->showCol)
+					if (this->showCol)
 					{
 						//TEMP draw collision area
 						CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
-						if(ce != NULL)
+						if (ce != NULL)
 						{
 							ce->drawCollidableArea();
 						}
@@ -427,7 +438,7 @@ void PlayState::draw()
 	}
 
 	//Draw spawnpoint area
-	if(this->showSpawnArea)
+	if (this->showSpawnArea)
 	{
 		//Loop through all chunks
 		for (int i = beginChunkY; i <= endChunkY; i++)
@@ -435,7 +446,7 @@ void PlayState::draw()
 			for (int j = beginChunkX; j <= endChunkX; j++)
 			{
 				std::vector<Spawnpoint*>* vec = this->mec->getSpawnpointContainer()->getChunk(i, j);
-				if(vec != nullptr)
+				if (vec != nullptr)
 				{
 					for (Spawnpoint* sp : *vec)
 					{
@@ -455,25 +466,30 @@ void PlayState::draw()
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 
 		//Draw interactable area
-		if(this->showInter)
+		if (this->showInter)
 		{
 			InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
-			if(ie != NULL)
+			if (ie != NULL)
 			{
 				ie->drawInteractableArea();
-			}	
+			}
 		}
 
 		//Draw collision area
-		if(this->showCol)
+		if (this->showCol)
 		{
 			//TEMP draw collision area
 			CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
-			if(ce != NULL)
+			if (ce != NULL)
 			{
 				ce->drawCollidableArea();
 			}
 		}
+	}
+
+	if (showDayLight && GameTimer::Instance()->getPercentage() >= 65 || GameTimer::Instance()->getPercentage() <= 10)
+	{
+		nightLayer->draw(camera, mec);
 	}
 
 	if (this->p->getInventory()->isOpen()) {
@@ -491,7 +507,7 @@ void PlayState::draw()
 
 	
 	//this->pEngine->drawParticles();
-	this->getMainEntityContainer()->getParticleContainer()->draw();
+	//this->getMainEntityContainer()->getParticleContainer()->draw();
 
 	/*
 	blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
@@ -589,5 +605,6 @@ PlayState::~PlayState(void)
 	delete camera;
 	delete mec;
 	delete mapLoader;
-	std::cout << "deleting playstate" << endl; 
+	delete nightLayer;
+	std::cout << "deleting playstate" << endl;
 }

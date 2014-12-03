@@ -97,7 +97,7 @@ private:
 
 	bool correctToolSelected;
 
-	double getDistence(int currentX, int currentY, int destX, int destY);
+	double getDistance(int currentX, int currentY, int destX, int destY);
 
 	Inventory* inventory;
 	Crafting* crafting;

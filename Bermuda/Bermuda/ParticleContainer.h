@@ -18,4 +18,3 @@ public:
 	void addEffect(ParticleEngine* _pe);
 	void removeEffect(ParticleEngine* _pe);
 };
-

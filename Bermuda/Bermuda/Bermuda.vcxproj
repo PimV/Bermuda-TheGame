@@ -99,6 +99,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="AnimatingContainer.h" />
     <ClInclude Include="AnimatingEntity.h" />
     <ClInclude Include="AnimationEnum.h" />
+    <ClInclude Include="AnimationType.h" />
     <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
@@ -120,6 +121,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
+    <ClInclude Include="LightContainer.h" />
+    <ClInclude Include="LightEntity.h" />
     <ClInclude Include="MenuCreditsButton.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
     <ClInclude Include="MenuExitButton.h" />
@@ -162,8 +165,12 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ParticleContainer.h" />
     <ClInclude Include="ParticleEngine.h" />
     <ClInclude Include="PARTICLETYPES.h" />
+    <ClInclude Include="NightLayer.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Objects.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleEngine.h" />
+    <ClInclude Include="ParticleTypes.h" />
     <ClInclude Include="PauseMainScreen.h" />
     <ClInclude Include="PauseStatusTrackerScreen.h" />
     <ClInclude Include="PauzeAchievementsButton.h" />
@@ -173,6 +180,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="MovementDirectionEnum.h" />
     <ClInclude Include="RockSpikes.h" />
+    <ClInclude Include="SnowTree.h" />
     <ClInclude Include="SpawnpointContainer.h" />
     <ClInclude Include="StatusTracker.h" />
     <ClInclude Include="ToolAxe.h" />
@@ -208,6 +216,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ToolPickaxe.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Wasp.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponSpear.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Achievement.cpp" />
@@ -252,14 +262,16 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemFish.cpp" />
     <ClCompile Include="ItemGold.cpp" />
     <ClCompile Include="ItemWater.cpp" />
+    <ClCompile Include="LightContainer.cpp" />
+    <ClCompile Include="LightEntity.cpp" />
     <ClCompile Include="MenuCreditsButton.cpp" />
     <ClCompile Include="MenuCreditsScreen.cpp" />
     <ClCompile Include="MenuMainButton.cpp" />
     <ClCompile Include="MenuMainScreen.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleContainer.cpp" />
-    <ClCompile Include="ParticleEngine.cpp" />
+    <ClCompile Include="NightLayer.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleEngine.cpp" />
     <ClCompile Include="PauseMainScreen.cpp" />
     <ClCompile Include="PauseStatusTrackerScreen.cpp" />
     <ClCompile Include="PauzeAchievementsButton.cpp" />
@@ -268,6 +280,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="NPCFactory.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="RockSpikes.cpp" />
+    <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="SpawnpointContainer.cpp" />
     <ClCompile Include="StatusTracker.cpp" />
     <ClCompile Include="ToolAxe.cpp" />
@@ -288,6 +301,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ToolPickaxe.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Wasp.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponSpear.cpp" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>

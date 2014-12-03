@@ -10,6 +10,6 @@ enum class ContainerType
 	Background,
 	Respawnable,
 	Spawnpoint,
-	ParticleEngine
+	Light
 };
 

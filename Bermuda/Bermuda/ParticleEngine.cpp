@@ -1,19 +1,24 @@
 #include "ParticleEngine.h"
 #include "GameStateManager.h"
+#include "PlayState.h"
 #include <thread>
 #include <iostream>
 
-ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
+ParticleEngine::ParticleEngine(int id, double x, double y, Image* image, PARTICLETYPES particleType) : 
+	Entity(0, x, y),
+	DrawableEntity(0, x, y, nullptr)
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+
 	this->x = x;
 	this->y = y;
+	this->setHeight(0);
 	this->particleType = particleType;
 	this->currentMaxParticles = 0;
-	//this->textPixel = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelGrey.png").c_str());
+
 
 	surfPixel= SDL_CreateRGBSurface(0, 3, 3, 8, 0x0, 0x0, 0x0, 255);
 	this->textPixel = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->surfPixel);
-	SDL_FreeSurface(this->surfPixel);
 
 	switch(this->particleType)
 	{
@@ -25,7 +30,7 @@ ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 		this->height = 10;
 		break;		
 	case PARTICLETYPES::SMOKE:		
-		this->maxParticles = 300;
+		this->maxParticles = 150;
 		SDL_SetTextureColorMod(this->textPixel,155,155,155);
 		SDL_SetTextureAlphaMod(this->textPixel, 100);
 		this->width = 25;
@@ -47,12 +52,9 @@ ParticleEngine::ParticleEngine(int x, int y, PARTICLETYPES particleType)
 		break;
 	}
 
-	srand(time(NULL));
+	std::srand(time(NULL));
 
-	for(int i = 0; i < this->maxParticles; i++)
-	{
-		this->particles.push_back(nullptr);
-	}
+	this->particles.resize(this->maxParticles);
 }
 
 void ParticleEngine::updateParticles(double dt)
@@ -76,13 +78,13 @@ void ParticleEngine::updateParticles(double dt)
 	}
 }
 
-void ParticleEngine::drawParticles()
+void ParticleEngine::draw(Camera* camera, SDL_Renderer* renderer)
 {
 	for(int i = 0; i < this->currentMaxParticles; i++)
 	{
 		if(this->particles[i] != nullptr)
 		{
-			this->particles[i]->draw();
+			this->particles[i]->draw(camera);
 		}
 	}
 }
@@ -112,11 +114,11 @@ Particle* ParticleEngine::createParticle(PARTICLETYPES particleType)
 		pDy = -0.5;
 		if(pX < this->x + 5 || pX > this->x + 20)
 		{
-			lifeTime = 200 + rand() % 800;
+			lifeTime = (400 + rand() % 1000);
 		}
 		else
 		{
-			lifeTime = 200 + rand() % 1400;
+			lifeTime = (400 + rand() % 1600);
 		}
 
 		width = 3;
@@ -151,6 +153,10 @@ ParticleEngine::~ParticleEngine()
 		delete this->particles[i];
 	}
 
+	SDL_FreeSurface(this->surfPixel);
 	SDL_DestroyTexture(this->textPixel);
 	this->textPixel = nullptr;
+	this->surfPixel = nullptr;
+
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 }

@@ -4,6 +4,8 @@
 #include "Items.h"
 #include "Image.h"
 #include "Player.h"
+#include "ItemFactory.h"
+
 #include <iostream>
 #include <algorithm>
 
@@ -38,6 +40,8 @@ void Inventory::init() {
 
 	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
 	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
+
+	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 }
 
 void Inventory::cleanup() {
@@ -255,6 +259,15 @@ void Inventory::dropCurrent() {
 bool Inventory::pickAxeSelected() {
 	if (this->getSelectedItem() != nullptr) {
 		if (this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Inventory::spearSelected() {
+	if (this->getSelectedItem() != nullptr) {
+		if (this->getSelectedItem()->getId() == (int)Items::Spear) {
 			return true;
 		}
 	}

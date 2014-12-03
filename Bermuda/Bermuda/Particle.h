@@ -1,5 +1,6 @@
 #pragma once
 #include "header_loader.h"
+#include "Camera.h"
 
 class Particle
 {
@@ -22,8 +23,7 @@ public:
 	virtual ~Particle();
 
 	void move(double dt);
-	void draw();
+	void draw(Camera* camera);
 	bool getIsDead();
 
 };
-
