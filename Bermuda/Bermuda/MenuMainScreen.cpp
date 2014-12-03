@@ -1,9 +1,5 @@
 #include "MenuMainScreen.h"
 #include "PlayState.h"
-#ifndef BUTTONACTIONS
-#define BUTTONACTIONS
-#include "ButtonActions.h"
-#endif
 
 MenuMainScreen::MenuMainScreen()
 {
@@ -16,19 +12,19 @@ void MenuMainScreen::init()
 
 	//Create Buttons
 	BaseButton* playButton = new BaseButton();
-	playButton->action = playAction;
+	playButton->action = &BaseButton::playAction;
 	playButton->createButton("Play", 60, 0);
 
 	BaseButton* exitButton = new BaseButton();
-	exitButton->action = exitAction;
+	exitButton->action = &BaseButton::exitAction;
 	exitButton->createButton("Exit", 60, 0);
 
 	BaseButton* creditsButton = new BaseButton();
-	creditsButton->action = setCreditsScreenAction;
+	creditsButton->action = &BaseButton::setCreditsScreenAction;
 	creditsButton->createButton("Credits", 60, 0);
 
 	BaseButton* helpButton = new BaseButton();
-	helpButton->action = menuSetHelpScreenAction;
+	helpButton->action = &BaseButton::menuSetHelpScreenAction;
 	helpButton->createButton("Help", 60, 0);
 	
 	//place buttons

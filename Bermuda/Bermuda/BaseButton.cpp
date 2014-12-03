@@ -1,5 +1,10 @@
 #include "BaseButton.h"
 
+//temp
+#include "MenuState.h"
+#include "PlayState.h"
+#include "PauseState.h"
+#include "MenuHelpScreen.h"
 
 BaseButton::BaseButton()
 {
@@ -135,7 +140,8 @@ bool BaseButton::clicked(int x, int y)
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
 		y >= buttonRect.y && y <= (buttonRect.y + buttonRect.h))
 	{
-		action();
+		BaseButton obj;
+		(obj.*action) ();
 		return true;
 	}
 	return false;
@@ -163,4 +169,52 @@ void BaseButton::cleanup()
 BaseButton::~BaseButton()
 {
 	cleanup();
+}
+
+
+//button actions
+
+void BaseButton::setCreditsScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuCreditsScreen());
+}
+
+void BaseButton::exitAction()
+{
+	exit(0);
+}
+
+void BaseButton::menuSetHelpScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuHelpScreen());
+}
+
+void BaseButton::playAction()
+{
+	GameStateManager::Instance()->changeGameState(PlayState::Instance());
+}
+
+void BaseButton::pauseSetAchievementScreenAction()
+{
+	PauseState::Instance()->setCurWindow(PauseState::Instance()->getMainAchievementsScreen());
+}
+
+void BaseButton::backToMenuAction()
+{
+	GameStateManager::Instance()->changeGameState(MenuState::Instance());
+}
+
+void BaseButton::resumeGameAction()
+{
+	GameStateManager::Instance()->popState();
+}
+
+void BaseButton::menuMainScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuMainScreen());
+}
+
+void BaseButton::helpMovementScreenAction()
+{
+	//parent->setCurWindow(helpScr->getMovementScr());
 }

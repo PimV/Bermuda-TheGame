@@ -12,10 +12,8 @@ public:
 	SDL_Texture* buttonTexture;
 	SDL_Texture* buttonHoverTexture;
 	SDL_Rect buttonRect;
-	BaseScreen* parent;
 
 public:
-	
 	//methodes
 	void createButton(std::string buttonText, int fontSize, int initialColor);
 	void reset();
@@ -32,10 +30,21 @@ public:
 	int getHeight();
 	int getWidth();
 
+	//buttonActions
+	void setCreditsScreenAction();
+	void exitAction();
+	void menuSetHelpScreenAction();
+	void playAction();
+	void pauseSetAchievementScreenAction();
+	void backToMenuAction();
+	void resumeGameAction();
+	void menuMainScreenAction();
+	void helpMovementScreenAction();
+
 	void draw();
 	void hover(int, int);
 	bool clicked(int, int);
-	void (*action) ();
+	void (BaseButton::*action) ();
 
 	BaseButton();
 	void cleanup();

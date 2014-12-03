@@ -2,10 +2,6 @@
 #include "PauseState.h"
 #include "MenuState.h"
 #include <iostream>
-#ifndef BUTTONACTIONS
-#define BUTTONACTIONS
-#include "ButtonActions.h"
-#endif
 
 PauseMainScreen::PauseMainScreen()
 {
@@ -16,19 +12,19 @@ void PauseMainScreen::init()
 {
 	//Buttons
 	BaseButton* resumeButton = new BaseButton();
-	resumeButton->action = resumeGameAction;
+	resumeButton->action = &BaseButton::resumeGameAction;
 	resumeButton->createButton("Resume", 24, 1);
 
 	BaseButton* menuButton = new BaseButton();
-	menuButton->action = backToMenuAction;
+	menuButton->action = &BaseButton::backToMenuAction;
 	menuButton->createButton("Save and back to menu", 24, 1);
 
 	BaseButton* exitButton = new BaseButton();
-	exitButton->action = exitAction;
+	exitButton->action = &BaseButton::exitAction;
 	exitButton->createButton("Save and exit", 24, 1);
 
 	BaseButton* achievementsButton = new BaseButton();
-	achievementsButton->action = pauseSetAchievementScreenAction;
+	achievementsButton->action = &BaseButton::pauseSetAchievementScreenAction;
 	achievementsButton->createButton("Achievements", 24, 1);
 
 	//place buttons

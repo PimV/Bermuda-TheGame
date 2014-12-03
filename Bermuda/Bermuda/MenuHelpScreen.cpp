@@ -1,9 +1,5 @@
 #include "MenuHelpScreen.h"
 #include "MenuState.h"
-#ifndef BUTTONACTIONS
-#define BUTTONACTIONS
-#include "ButtonActions.h"
-#endif
 
 MenuHelpScreen::MenuHelpScreen()
 {

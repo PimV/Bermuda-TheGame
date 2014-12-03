@@ -116,7 +116,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
-    <ClInclude Include="ButtonActions.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="GameOverState.h" />
@@ -201,7 +200,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="BaseScreen.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BaseButton.cpp" />
-    <ClCompile Include="ButtonActions.cpp" />
     <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Carrot.cpp" />
     <ClCompile Include="ClickAction.cpp" />
