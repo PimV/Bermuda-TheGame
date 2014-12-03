@@ -68,4 +68,6 @@ BaseHelpScreen::~BaseHelpScreen()
 {
 	SDL_DestroyTexture(pictureTexture);
 	SDL_DestroyTexture(textTexture);
+	SDL_DestroyTexture(picturePortraitTexture);
+	SDL_DestroyTexture(textPortraitTexture);
 }
