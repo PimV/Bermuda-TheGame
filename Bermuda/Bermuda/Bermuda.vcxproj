@@ -99,6 +99,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="AnimatingContainer.h" />
     <ClInclude Include="AnimatingEntity.h" />
     <ClInclude Include="AnimationEnum.h" />
+    <ClInclude Include="AnimationType.h" />
     <ClInclude Include="AppleTree.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />

@@ -825,10 +825,13 @@
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="AnimationEnum.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="MovementDirectionEnum.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationType.h">
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="ParticleTypes.h">
       <Filter>Header Files\Model\Enums</Filter>
