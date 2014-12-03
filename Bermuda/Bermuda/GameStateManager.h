@@ -36,8 +36,9 @@ public:
 	ActionContainer* getActionContainer();
 
 	bool running();
+	bool helpEnabled();
+	void toggleHelpEnabled();
 	void quit();
-	long lastUpdateLength;
 	SDLInitializer* sdlInitializer;
 	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
@@ -56,6 +57,7 @@ private:
 	long updateLength;
 	double speedMultiplier;
 	int fps;
+	bool showHelp;
 	std::vector<IGameState*> states;
 	IGameState* currentState;
 	ImageLoader* imgLoader;

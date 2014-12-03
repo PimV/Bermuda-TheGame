@@ -27,11 +27,6 @@ void ItemApple::init() {
 	this->setHealthRefill(0);
 }
 
-void ItemApple::consume(Player* player) {
-	Consumable::consume(player);
-}
-
-
 ItemApple::~ItemApple()
 {
 }

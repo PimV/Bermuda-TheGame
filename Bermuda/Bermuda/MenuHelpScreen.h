@@ -17,6 +17,7 @@ private:
 	BaseHelpScreen* curWindow;
 	BaseHelpScreen* movementScreen;
 	BaseHelpScreen* cutTreeScreen;
+	BaseHelpScreen* mineRockScreen;
 
 	//methodes
 	void init();
@@ -33,6 +34,7 @@ public:
 	void setCurWindow(BaseHelpScreen* curwindow);
 	BaseHelpScreen* getMovementScr();
 	BaseHelpScreen* getCutTreeScr();
+	BaseHelpScreen* getMineRockScr();
 
 	//constructors destructors
 	MenuHelpScreen();

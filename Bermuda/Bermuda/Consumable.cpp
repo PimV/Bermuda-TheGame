@@ -1,5 +1,4 @@
 #include "Consumable.h"
-#include "Player.h"
 #include <iostream>
 
 
@@ -7,7 +6,7 @@ Consumable::Consumable(void)
 {
 }
 
-void Consumable::consume(Player* player) {
+void Consumable::use(Player* player) {
 	if (player->getInventory()->hasItemById(this->getId())) {
 		std::cout << "Consuming item with id: " << this->getId() << std::endl;
 

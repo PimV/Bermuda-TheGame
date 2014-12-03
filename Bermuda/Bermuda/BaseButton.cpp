@@ -242,3 +242,8 @@ void BaseButton::helpCutTreeScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getCutTreeScr());
 }
+
+void BaseButton::helpMineTreeScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getMineRockScr());
+}

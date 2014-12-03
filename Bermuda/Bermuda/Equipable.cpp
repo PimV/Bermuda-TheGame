@@ -1,16 +1,14 @@
 #include "Equipable.h"
-#include "Player.h"
-#include <iostream>
 
 
-Equipable::Equipable(void)
+Equipable::Equipable()
 {
 }
 
-void Equipable::equip(Player* player) {
-	std::cout << "Equipping item with id: " << this->getId() << std::endl;
+void Equipable::use(Player* player) {
+	player->getInventory()->selectStack(this);
 }
 
-Equipable::~Equipable(void)
+Equipable::~Equipable()
 {
 }

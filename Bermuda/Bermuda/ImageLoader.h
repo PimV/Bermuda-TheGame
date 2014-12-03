@@ -16,6 +16,6 @@ public:
 	~ImageLoader();
 	int loadTileset(string filename, double tileWidth, double tileHeight);
 	int getCurrentImageCount();
-	SDL_Texture* loadSpriteSheet(string filename);
+	//SDL_Texture* loadSpriteSheet(string filename);
 	Image* getMapImage(int tileID);
 };

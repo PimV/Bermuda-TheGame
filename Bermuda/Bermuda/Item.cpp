@@ -1,6 +1,4 @@
 #include "Item.h"
-#include "Image.h"
-#include "Items.h"
 #include <iostream>
 
 Item::Item()
@@ -31,11 +29,6 @@ int Item::getStackSize() {
 
 void Item::setStackSize(int size) {
 	this->stackSize = size;
-	//Item delete logica komt in inventory. (Je kan niet meer de stacksize ophalen wanneer de item ineens gedelete is)
-	/*if (this->stackSize <= 0) {
-		delete this;
-		//this->stackSize = 0;
-	}*/
 	if (this->stackSize > 0) {
 		if (stackable == false) {
 			this->stackSize = 1;
@@ -66,6 +59,8 @@ Image* Item::getImage() {
 void Item::setImage(Image* image) {
 	this->image = image;
 }
+
+void Item::use(Player* p){}
 
 void Item::addItemType(ItemType itemType) {
 	//Get iterator for value
@@ -105,10 +100,6 @@ bool Item::isEquipable() {
 	return this->hasItemType(ItemType::Armour) || this->hasItemType(ItemType::Tool) || this->hasItemType(ItemType::Weapon);
 }
 
-
-
-
 Item::~Item(void)
 {
-	std::cout << "Deleting " << item_strings[this->getId()] << std::endl;
 }

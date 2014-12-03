@@ -47,6 +47,7 @@ public:
 	void menuMainScreenAction();
 	void helpMovementScreenAction();
 	void helpCutTreeScreenAction();
+	void helpMineTreeScreenAction();
 
 	void draw();
 	void hover(int, int);

@@ -1,11 +1,9 @@
 #include "CollidableEntity.h"
 #include "PlayState.h"
-#include "Camera.h"
-#include <iostream>
 
 
-CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize, double collisionX, double collisionY, double collisionWidth, double collisionHeight)
-	: Entity(id,x,y,chunkSize)
+CollidableEntity::CollidableEntity(int id, double x, double y, double collisionX, double collisionY, double collisionWidth, double collisionHeight) : 
+	Entity(id,x,y)
 {
 	this->collisionHeight = collisionHeight;
 	this->collisionWidth = collisionWidth;
@@ -15,21 +13,24 @@ CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize, do
 	this->collidableTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelRed.png").c_str());
 }
 
-CollidableEntity::CollidableEntity(int id, double x, double y, int chunkSize)
-	: Entity(id,x,y,chunkSize)
+CollidableEntity::CollidableEntity(int id, double x, double y)
+	: Entity(id,x,y)
 {
 }
 
 void CollidableEntity::drawCollidableArea()
 {
-	Camera* c = PlayState::Instance()->getCamera();
+	if (this->getEnabled())
+	{
+		Camera* c = PlayState::Instance()->getCamera();
 
-	collidableRect.x = this->getX() - c->getX() + this->getCollisionX();
-	collidableRect.y = this->getY() - c->getY() + this->getCollisionY();
-	collidableRect.w = this->getCollisionWidth();
-	collidableRect.h = this->getCollisionHeight();
+		collidableRect.x = this->getX() - c->getX() + this->getCollisionX();
+		collidableRect.y = this->getY() - c->getY() + this->getCollisionY();
+		collidableRect.w = this->getCollisionWidth();
+		collidableRect.h = this->getCollisionHeight();
 
-	GameStateManager::Instance()->sdlInitializer->drawTexture(this->collidableTexture,&this->collidableRect,NULL);
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->collidableTexture, &this->collidableRect, NULL);
+	}
 }
 
 #pragma region Setters
@@ -61,7 +62,40 @@ double CollidableEntity::getCollisionY() {
 }
 #pragma endregion
 
-bool CollidableEntity::intersects(CollidableEntity* collidableEntity, MovableEntity* movableEntity) {
+bool CollidableEntity::checkCollision(double x, double y) {
+	//Calculate begin and end chunks for the collision check (+1 and -1 to make it a little bigger then the current chunk)
+	int beginChunkX = this->getChunkX() - 1;
+	int endChunkX = this->getChunkX() + 1;
+	int beginChunkY = this->getChunkY() - 1;
+	int endChunkY = this->getChunkY() + 1;
+
+	//Loop through all chunks
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			std::vector<CollidableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->getChunk(i, j);
+			if (vec != nullptr)
+			{
+				for (CollidableEntity* e : *vec)
+				{
+					if (this->intersects(x, y, e))
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool CollidableEntity::checkCollision() 
+{
+	return this->checkCollision(this->getX(), this->getY());
+}
+
+bool CollidableEntity::intersects(double x, double y, CollidableEntity* collidableEntity) {
 	if(this == collidableEntity)
 	{
 		return false;
@@ -72,56 +106,26 @@ bool CollidableEntity::intersects(CollidableEntity* collidableEntity, MovableEnt
 	double targetTop = collidableEntity->getY() + collidableEntity->getCollisionY();
 	double targetBot = collidableEntity->getY() + collidableEntity->getCollisionY() + collidableEntity->getCollisionHeight();
 
-	double thisLeft = this->getTempX() + this->getCollisionX();
-	double thisRight = this->getTempX() + this->getCollisionX() + this->getCollisionWidth();
-	double thisTop = this->getTempY() + this->getCollisionY();
-	double thisBot = this->getTempY() + this->getCollisionY() + this->getCollisionHeight();
+	double thisLeft = x + this->getCollisionX();
+	double thisRight = x + this->getCollisionX() + this->getCollisionWidth();
+	double thisTop = y + this->getCollisionY();
+	double thisBot = y + this->getCollisionY() + this->getCollisionHeight();
 
-	if (thisLeft < targetRight &&
-	thisRight > targetLeft &&
-	thisTop < targetBot &&
-	thisBot > targetTop)
+	if (this->getEnabled() &&
+		thisLeft < targetRight &&
+		thisRight > targetLeft &&
+		thisTop < targetBot &&
+		thisBot > targetTop)
 	{
-	return true;
+		return true;
 	}
 
-	/*if(movableEntity->getId() == 1)
-	{
-		if(movableEntity->movingUp && movableEntity->movingLeft)
-		{
-			std::cout << "UP-LEFT" << std::endl;
-		}
-		else if(movableEntity->movingUp && movableEntity->movingRight)
-		{
-			std::cout << "UP-RIGHT" << std::endl;
-		}
-		else if(movableEntity->movingDown && movableEntity->movingRight)
-		{
-			std::cout << "DOWN-RIGHT" << std::endl;
-		}
-		else if(movableEntity->movingDown && movableEntity->movingLeft)
-		{
-			std::cout << "DOWN-LEFT" << std::endl;
-		}
-		else if(movableEntity->movingUp)
-		{
-			std::cout << "UP" << std::endl;
-		}
-		else if(movableEntity->movingRight)
-		{
-			std::cout << "RIGHT" << std::endl;
-		}
-		else if(movableEntity->movingDown)
-		{
-			std::cout << "DOWN" << std::endl;
-		}
-		else if(movableEntity->movingLeft)
-		{
-			std::cout << "LEFT" << std::endl;
-		}
-	}*/
-
 	return false;
+}
+
+bool CollidableEntity::intersects(CollidableEntity* collidableEntity)
+{
+	return this->intersects(this->getX(), this->getY(), collidableEntity);
 }
 
 CollidableEntity::~CollidableEntity()

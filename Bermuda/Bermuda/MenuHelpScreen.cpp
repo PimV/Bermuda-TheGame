@@ -25,32 +25,43 @@ void MenuHelpScreen::init()
 
 	movementScreen = new BaseHelpScreen(firstRect.w);
 	movementScreen->setPicture("HelpScreens/movement.bmp");
-	movementScreen->setText("Use the arrow keys to walk around.");
+	movementScreen->setText("Use the arrow keys to walk around or click anywhere on the screen to the clicked point.");
 
 	cutTreeScreen = new BaseHelpScreen(firstRect.w);
 	cutTreeScreen->setPicture("HelpScreens/cutTree.bmp");
 	cutTreeScreen->setText("Stand close to a tree, select the axe in your inventory and press spacebar to cut down the tree.");
 
+	mineRockScreen = new BaseHelpScreen(firstRect.w);
+	mineRockScreen->setPicture("HelpScreens/mineRock.bmp");
+	mineRockScreen->setText("Stand close to a rock, select the pickaxe in your inventory and press spacebar to mine the rock.");
+
 	BaseButton* movementButton = new BaseButton;
-	movementButton->createButton("Movement", 30, 0);
+	movementButton->createButton("Movement", 24, 0);
 	movementButton->action = &BaseButton::helpMovementScreenAction;
 	movementButton->setHoverAction(true);
 
 	BaseButton* cutTreeButton = new BaseButton;
-	cutTreeButton->createButton("Cut down trees", 30, 0);
+	cutTreeButton->createButton("Cut down trees", 24, 0);
 	cutTreeButton->action = &BaseButton::helpCutTreeScreenAction;
 	cutTreeButton->setHoverAction(true);
 
+	BaseButton* mineRockButton = new BaseButton;
+	mineRockButton->createButton("Mine Rock", 24, 0);
+	mineRockButton->action = &BaseButton::helpMineTreeScreenAction;
+	mineRockButton->setHoverAction(true);
+
 	BaseButton* returnButton = new BaseButton;
-	returnButton->createButton("Back to menu", 30, 0);
+	returnButton->createButton("Back to menu", 24, 0);
 	returnButton->action = &BaseButton::menuMainScreenAction;
 	
 	movementButton->placeExactAt(10, 10);
 	cutTreeButton->placeLeftUnderButton(movementButton);
+	mineRockButton->placeLeftUnderButton(cutTreeButton);
 	returnButton->placeLeftUnder(10, 10);
 
 	buttons.push_back(movementButton);
 	buttons.push_back(cutTreeButton);
+	buttons.push_back(mineRockButton);
 	buttons.push_back(returnButton);
 
 	for each (BaseButton* var in buttons)
@@ -75,6 +86,11 @@ BaseHelpScreen* MenuHelpScreen::getMovementScr()
 BaseHelpScreen* MenuHelpScreen::getCutTreeScr()
 {
 	return cutTreeScreen;
+}
+
+BaseHelpScreen* MenuHelpScreen::getMineRockScr()
+{
+	return mineRockScreen;
 }
 
 void MenuHelpScreen::setBackground()

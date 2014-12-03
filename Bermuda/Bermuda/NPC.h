@@ -6,7 +6,7 @@ class NPC :
 	public virtual Entity
 {
 public:
-	NPC(int id, int chunkSize, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
+	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
 	virtual ~NPC(void);
 
 #pragma region Getters
