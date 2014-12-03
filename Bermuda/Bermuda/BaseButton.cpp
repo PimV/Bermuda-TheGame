@@ -140,8 +140,7 @@ bool BaseButton::clicked(int x, int y)
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
 		y >= buttonRect.y && y <= (buttonRect.y + buttonRect.h))
 	{
-		BaseButton obj;
-		(obj.*action) ();
+		(this->*action) ();
 		return true;
 	}
 	return false;
