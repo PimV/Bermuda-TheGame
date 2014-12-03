@@ -456,6 +456,12 @@
     <ClCompile Include="Crafting.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSpear.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
     <ClCompile Include="Campfire.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
@@ -479,6 +485,15 @@
     </ClCompile>
     <ClCompile Include="Wolf.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
+    <ClCompile Include="LightEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="LightContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="NightLayer.cpp">
+      <Filter>Source Files\View</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Source Files\Model\Engine</Filter>
@@ -791,6 +806,12 @@
     <ClInclude Include="Crafting.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSpear.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
     <ClInclude Include="Campfire.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
@@ -828,10 +849,13 @@
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="AnimationEnum.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="MovementDirectionEnum.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationType.h">
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="Wolf.h">
       <Filter>Header Files\Model\Entity\NPC%27s</Filter>
@@ -847,6 +871,15 @@
     </ClInclude>
     <ClInclude Include="SnowTree.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="LightEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="LightContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="NightLayer.h">
+      <Filter>Header Files\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
