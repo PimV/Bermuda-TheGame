@@ -17,6 +17,19 @@ GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiec
 	this->interactTime = 5000;
 
 	this->animationType = AnimationEnumType::Mine;
+
+	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractRockImage();
+	cantInteractTexture = GameStateManager::Instance()->getImageLoader()->getCantInteractRockImage();
+
+}
+
+bool GoldRock::canInteract(Player* player) {
+	if (player->getInventory()->pickAxeSelected()) {
+		this->setHighlightTexture(canInteractTexture);
+	} else {
+		this->setHighlightTexture(cantInteractTexture);
+	}
+	return player->getInventory()->pickAxeSelected();
 }
 
 void GoldRock::update(double dt) {

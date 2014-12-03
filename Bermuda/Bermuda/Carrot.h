@@ -9,6 +9,8 @@ class Carrot :
 {
 private:
 	Image* carrot;
+	SDL_Texture* canInteractTexture;
+	SDL_Texture* cantInteractTexture;
 public:
 	Carrot(int id, double x, double y, Image* carrotImage);
 	void update(double dt);

@@ -10,6 +10,10 @@ Carrot::Carrot(int id, double x, double y, Image* carrotImage) :
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
+
+	//canInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\carrotoutline_caninteract.png").c_str());
+	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getCarrotInteractImage();
+	this->setHighlightTexture(canInteractTexture);
 }
 
 void Carrot::update(double dt) {
@@ -25,6 +29,7 @@ void Carrot::interact(Player* player)
 
 void Carrot::setDestroyedState()
 {
+	this->setHighlighted(false);
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }

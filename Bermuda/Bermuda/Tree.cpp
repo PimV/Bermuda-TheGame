@@ -5,6 +5,8 @@
 #include "ItemFactory.h"
 #include "Items.h"
 
+
+
 Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y), 
 	DrawableEntity(id,x,y, treeImage), 
@@ -20,8 +22,8 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 	this->interactTime = 5000;
 	this->animationType = AnimationEnumType::Chop;
 
-	canInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_caninteract.png").c_str());
-	cantInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_cantinteract.png").c_str());
+	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractTreeImage();
+	cantInteractTexture = GameStateManager::Instance()->getImageLoader()->getCantInteractTreeImage();
 
 	this->setHighlightTexture(cantInteractTexture);
 
@@ -68,6 +70,7 @@ void Tree::respawn() {
 
 void Tree::setDestroyedState() 
 {
+	this->setHighlighted(false);
 	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);

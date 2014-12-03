@@ -16,6 +16,18 @@ Rock::Rock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage)
 
 	this->interactTime = 5000;
 	this->animationType = AnimationEnumType::Mine;
+
+	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractRockImage();
+	cantInteractTexture = GameStateManager::Instance()->getImageLoader()->getCantInteractRockImage();
+}
+
+bool Rock::canInteract(Player* player) {
+	if (player->getInventory()->pickAxeSelected()) {
+		this->setHighlightTexture(canInteractTexture);
+	} else {
+		this->setHighlightTexture(cantInteractTexture);
+	}
+	return player->getInventory()->pickAxeSelected();
 }
 
 void Rock::update(double dt) {
@@ -40,6 +52,7 @@ void Rock::interact(Player* player)
 
 void Rock::setDestroyedState()
 {
+	this->setHighlighted(false);
 	this->destroyed = true;
 	this->setCollisionX(0);
 	this->setCollisionWidth(0);

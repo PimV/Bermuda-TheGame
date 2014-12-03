@@ -1,5 +1,6 @@
 #include "ImageLoader.h"
 #include <iostream>
+#include "GameStateManager.h"
 
 ImageLoader::ImageLoader(SDL_Renderer* renderer)
 {
@@ -17,7 +18,7 @@ int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeigh
 	{
 		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
 	}
-	
+
 	int x = 0;
 	int y = 0;
 	int fileWidth = 0;
@@ -47,12 +48,12 @@ int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeigh
 
 /*SDL_Texture* ImageLoader::loadSpriteSheet(string filename)
 {
-	SDL_Texture* spriteSheet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
+SDL_Texture* spriteSheet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
 
-	if (spriteSheet == nullptr)
-		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
+if (spriteSheet == nullptr)
+std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
 
-	return spriteSheet;
+return spriteSheet;
 }*/
 
 int ImageLoader::getCurrentImageCount()
@@ -70,6 +71,42 @@ Image* ImageLoader::getMapImage(int tileID)
 	{
 		return nullptr;
 	}
+}
+
+SDL_Texture* ImageLoader::getInteractTreeImage() {
+	if (canInteractTreeTexture == nullptr) {
+		canInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_caninteractv3.png").c_str());
+		//canInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treetest.png").c_str());
+	}
+	return canInteractTreeTexture;
+}
+SDL_Texture* ImageLoader::getCantInteractTreeImage() {
+	if (cantInteractTreeTexture == nullptr) {
+
+		cantInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_cantinteractv3.png").c_str());
+	}
+	return cantInteractTreeTexture;
+}
+
+SDL_Texture* ImageLoader::getCarrotInteractImage() {
+	if (carrotInteractOverlay == nullptr) {
+		carrotInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\carrotoutline_caninteract.png").c_str());
+	}
+	return carrotInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getInteractRockImage() {
+	if (rockInteractOverlay == nullptr) {
+		rockInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\rockoutline_caninteract.png").c_str());
+	}
+	return rockInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getCantInteractRockImage() {
+	if (rockCantInteractOverlay == nullptr) {
+		rockCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\rockoutline_cantinteract.png").c_str());
+	}
+	return rockCantInteractOverlay;
 }
 
 ImageLoader::~ImageLoader()

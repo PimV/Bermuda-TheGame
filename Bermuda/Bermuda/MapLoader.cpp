@@ -246,6 +246,7 @@ void MapLoader::createObjects(Value& objects)
 
 	for(int j = 0; j < objects.Capacity(); j++)
 	{
+
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
 		Image* objectImg = imgLoader->getMapImage(firstImgID + objectID);

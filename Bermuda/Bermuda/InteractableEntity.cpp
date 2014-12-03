@@ -42,6 +42,14 @@ void InteractableEntity::setHighlightTexture(SDL_Texture* texture) {
 	this->highlightTexture = texture;
 }
 
+void InteractableEntity::setHighlightImage(Image* img) {
+	this->highlightImage = img;
+}
+
+Image* InteractableEntity::getHighlightImage() {
+	return this->highlightImage;
+}
+
 SDL_Texture* InteractableEntity::getHighlightTexture() {
 	return this->highlightTexture;
 }
@@ -51,10 +59,10 @@ void InteractableEntity::highlight() {
 		Camera* c = PlayState::Instance()->getCamera();
 		SDL_Rect rect;
 		rect.x = this->getX() - c->getX();
-		rect.y = this->getY() - c->getY() + 4;
-		rect.w = 96;
-		rect.h = 128;
-
+		rect.y = this->getY() - c->getY();
+		rect.w = this->getWidth();
+		rect.h = this->getHeight();
+		//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), highlightImage->getTileSet(), highlightImage->getCroppingRect(), &rect);
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->highlightTexture, NULL, &rect);
 	}
 }

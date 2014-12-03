@@ -25,7 +25,13 @@ private:
 
 	SDL_Rect interactRect;
 	SDL_Texture* interactTexture;
+
 	SDL_Texture* highlightTexture;
+
+	SDL_Texture* canInteractTexture;
+	SDL_Texture* cantInteractTexture;
+
+	Image* highlightImage;
 
 public:
 	InteractableEntity(int id, double x, double y, int interactStartX, int interactStartY, int interactWidth, int interactHeight);
@@ -35,6 +41,9 @@ public:
 
 	void setHighlightTexture(SDL_Texture* texture);
 	SDL_Texture* getHighlightTexture();
+
+	void setHighlightImage(Image* img);
+	Image* getHighlightImage();
 
 	virtual bool canInteract(Player* player);
 

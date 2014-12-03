@@ -1,5 +1,5 @@
 #include "DrawableEntity.h"
-
+#include <iostream>
 double DrawableEntity::DRAWBUFFER = 64;
 
 DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) : 
@@ -27,7 +27,7 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 		sizeRect->y = getY() - camera->getY(); 
 		sizeRect->w = getWidth();
 		sizeRect->h = getHeight();
-		
+		//std::cout << getWidth() << ":" << getHeight() << std::endl;
 		//Draw the entity
 		SDL_RenderCopy(renderer, drawImage->getTileSet(), drawImage->getCroppingRect(), sizeRect);
 	}
