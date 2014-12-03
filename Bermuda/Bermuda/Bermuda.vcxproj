@@ -122,6 +122,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
+    <ClInclude Include="LightContainer.h" />
+    <ClInclude Include="LightEntity.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="GameOverState.h" />
@@ -158,6 +160,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemWater.h" />
     <ClInclude Include="MenuHelpScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
+    <ClInclude Include="NightLayer.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Particle.h" />
@@ -248,9 +251,12 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemFish.cpp" />
     <ClCompile Include="ItemGold.cpp" />
     <ClCompile Include="ItemWater.cpp" />
+    <ClCompile Include="LightContainer.cpp" />
+    <ClCompile Include="LightEntity.cpp" />
     <ClCompile Include="MenuCreditsScreen.cpp" />
     <ClCompile Include="MenuHelpScreen.cpp" />
     <ClCompile Include="MenuMainScreen.cpp" />
+    <ClCompile Include="NightLayer.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEngine.cpp" />
