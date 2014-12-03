@@ -11,6 +11,7 @@ GameOverState::GameOverState()
 }
 
 void GameOverState::init(GameStateManager* gsm) {
+	this->cleanup();
 	this->gsm = gsm;
 
 	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/gameover_Background.png").c_str());
@@ -47,7 +48,9 @@ void GameOverState::init(GameStateManager* gsm) {
 	continueMessageRect.w = continueMessageSurface->w;
 
 	SDL_FreeSurface(gameOverMessageSurface);
+	SDL_FreeSurface(continueMessageSurface);
 	TTF_CloseFont(staryDarzyLarge);
+	TTF_CloseFont(staryDarzySmall);
 }
 
 void GameOverState::cleanup()

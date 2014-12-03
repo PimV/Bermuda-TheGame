@@ -626,7 +626,7 @@ void Player::drawStats() {
 	this->drawHungerBar(this->getInventory()->getStartingX() + 7*((this->getInventory()->getWidth())/ 10), this->getInventory()->getStartingY() - 30);
 }
 
-Player::~Player(void) {
+Player::~Player() {
 	SDL_DestroyTexture(hungerBar);
 	SDL_DestroyTexture(hungerBarContainer);
 

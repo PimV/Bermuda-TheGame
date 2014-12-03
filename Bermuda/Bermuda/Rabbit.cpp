@@ -146,4 +146,7 @@ bool Rabbit::checkCollision(double newX, double newY)
 
 Rabbit::~Rabbit()
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }

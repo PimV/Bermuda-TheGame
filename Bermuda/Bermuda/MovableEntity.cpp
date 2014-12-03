@@ -11,10 +11,6 @@ MovableEntity::MovableEntity(int id, double x, double y) :
 	this->defaultAnimationActionSpeed = 40;
 }
 
-MovableEntity::~MovableEntity(void)
-{
-}
-
 MovementDirectionEnum MovableEntity::getMovementDirection()
 {
 	return this->movementDirection;
@@ -155,4 +151,8 @@ void MovableEntity::setPosition(double newX, double newY) {
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->ResetDrawableEntityAndSetChunk();
 	}
+}
+
+MovableEntity::~MovableEntity()
+{
 }
