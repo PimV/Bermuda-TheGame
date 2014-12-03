@@ -503,5 +503,6 @@ PlayState::~PlayState(void)
 	delete camera;
 	delete mec;
 	delete mapLoader;
+	delete nightLayer;
 	std::cout << "deleting playstate" << endl;
 }
