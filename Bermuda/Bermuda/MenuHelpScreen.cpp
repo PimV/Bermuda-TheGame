@@ -29,11 +29,11 @@ void MenuHelpScreen::init()
 
 	cutTreeScreen = new BaseHelpScreen(firstRect.w);
 	cutTreeScreen->setPicture("HelpScreens/cutTree.bmp");
-	cutTreeScreen->setText("Stand close to a tree, select the axe in your inventory and press spacebar to cut down the tree.");
+	cutTreeScreen->setText("Stand close to a tree, select the axe in your inventory and hold spacebar to cut down the tree.");
 
 	mineRockScreen = new BaseHelpScreen(firstRect.w);
 	mineRockScreen->setPicture("HelpScreens/mineRock.bmp");
-	mineRockScreen->setText("Stand close to a rock, select the pickaxe in your inventory and press spacebar to mine the rock.");
+	mineRockScreen->setText("Stand close to a rock, select the pickaxe in your inventory and hold spacebar to mine the rock.");
 
 	BaseButton* movementButton = new BaseButton;
 	movementButton->createButton("Movement", 24, 0);
@@ -54,10 +54,10 @@ void MenuHelpScreen::init()
 	returnButton->createButton("Back to menu", 24, 0);
 	returnButton->action = &BaseButton::menuMainScreenAction;
 	
-	movementButton->placeExactAt(10, 10);
+	movementButton->placeExactAt(15, 10);
 	cutTreeButton->placeLeftUnderButton(movementButton);
 	mineRockButton->placeLeftUnderButton(cutTreeButton);
-	returnButton->placeLeftUnder(10, 10);
+	returnButton->placeLeftUnder(15, 10);
 
 	buttons.push_back(movementButton);
 	buttons.push_back(cutTreeButton);
