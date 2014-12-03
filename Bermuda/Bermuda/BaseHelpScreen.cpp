@@ -32,7 +32,7 @@ void BaseHelpScreen::setPicture(std::string pictureLocation)
 
 void BaseHelpScreen::setText(std::string text)
 {
-	TTF_Font* font = TTF_OpenFont((RESOURCEPATH + "fonts\\andyb.ttf").c_str(), 20);
+	TTF_Font* font = TTF_OpenFont((RESOURCEPATH + "fonts\\andyb.ttf").c_str(), 30);
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, text.c_str(), white, textMaxWidth);
 	textTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), textSurface);

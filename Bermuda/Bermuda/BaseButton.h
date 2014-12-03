@@ -12,6 +12,7 @@ public:
 	SDL_Texture* buttonTexture;
 	SDL_Texture* buttonHoverTexture;
 	SDL_Rect buttonRect;
+	BaseScreen* parent;
 
 public:
 	

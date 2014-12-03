@@ -2,6 +2,7 @@
 #include "MenuState.h"
 #include "PlayState.h"
 #include "PauseState.h"
+#include "MenuHelpScreen.h"
 
 void setCreditsScreenAction();
 void exitAction();
@@ -11,3 +12,4 @@ void pauseSetAchievementScreenAction();
 void backToMenuAction();
 void resumeGameAction();
 void menuMainScreenAction();
+void helpMovementScreenAction();

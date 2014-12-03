@@ -39,3 +39,8 @@ void menuMainScreenAction()
 {
 	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuMainScreen());
 }
+
+void helpMovementScreenAction(MenuHelpScreen* helpScr)
+{
+	helpScr->setCurWindow(helpScr->getMovementScr());
+}

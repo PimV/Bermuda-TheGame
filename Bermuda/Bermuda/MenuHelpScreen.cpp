@@ -28,15 +28,28 @@ void MenuHelpScreen::init()
 	tempRect.x = 0;
 	tempRect.y = 0;
 
-	tempScreen = new BaseHelpScreen(tempRect.w);
-	tempScreen->setPicture("HelpScreens/Movement.bmp");
-	tempScreen->setText("Gebruik de pijltjes toetsen om rond te lopen");
-	setCurWindow(tempScreen);
+	movementScreen = new BaseHelpScreen(tempRect.w);
+	movementScreen->setPicture("HelpScreens/Movement.bmp");
+	movementScreen->setText("Gebruik de pijltjes toetsen om rond te lopen");
+
+	BaseButton* movementButton = new BaseButton;
+	movementButton->createButton("movement", 20, 1);
+	
+	movementButton->placeExactAt(10, 10);
+
+	buttons.push_back(movementButton);
+
+	setCurWindow(movementScreen);
 }
 
 void MenuHelpScreen::setCurWindow(BaseHelpScreen* curwindow)
 {
 	curWindow = curwindow;
+}
+
+BaseHelpScreen* MenuHelpScreen::getMovementScr()
+{
+	return movementScreen;
 }
 
 void MenuHelpScreen::setBackground()
@@ -77,13 +90,17 @@ void MenuHelpScreen::draw()
 {
 	SDL_Renderer* renderer = GameStateManager::Instance()->sdlInitializer->getRenderer();
 	SDL_RenderCopy(renderer, tempTexture, NULL, &tempRect);
+	for each (BaseButton* var in buttons)
+	{
+		var->draw();
+	}
 	curWindow->draw();
 }
 
 void MenuHelpScreen::cleanup()
 {
 	SDL_DestroyTexture(tempTexture);
-	delete tempScreen;
+	delete movementScreen;
 }
 
 MenuHelpScreen::~MenuHelpScreen()
