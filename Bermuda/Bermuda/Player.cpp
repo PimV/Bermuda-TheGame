@@ -73,6 +73,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+	this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
 
 	this->animationChopUp = 12, this->animationChopLeft = 13;
 	this->animationChopDown = 14, this->animationChopRight = 15;
@@ -98,7 +99,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->movementDirection = MovementDirectionEnum::Down;
 	this->currentAnimationRow = ( this->animationWalkUpRow + (int)this->movementDirection );
 
-	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+	this->animationIdleColumn = 0;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 27, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
@@ -155,6 +156,20 @@ void Player::update(double dt) {
 	}
 
 	this->updatePlayerStatuses(dt);
+
+	// fugly, might be an good idae to redo the animation selevtion
+	if (this->getInventory()->spearSelected())
+	{
+		this->animationWalkUpRow = this->animationSpearWalkUp;
+		this->animationWalkLeftRow = this->animationSpearWalkLeft;
+		this->animationWalkDownRow = this->animationSpearWalkDown;
+		this->animationWalkRightRow = this->animationSpearWalkRight;
+	}
+	else
+	{
+		this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
+		this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+	}
 
 	if (this->interaction) {
 		this->interact(dt);

@@ -379,10 +379,6 @@ void PlayState::updateMediumAreaEntities(double dt)
 			}
 		}
 	}
-
-	
-	//this->pEngine->updateParticles(dt);
-	//this->getMainEntityContainer()->getParticleContainer()->update(dt);
 }
 
 void PlayState::draw()
@@ -499,15 +495,6 @@ void PlayState::draw()
 
 	//Draw timer
 	GameTimer::Instance()->draw();
-
-	//TODO : WEG ALS PIMS BALKEN ER IN ZITTEN
-	this->gsm->sdlInitializer->drawText(std::string("Health: " + to_string(p->getHealth())), ScreenWidth - 120, ScreenHeight - 100, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Hunger: " + to_string(100-p->getHunger())), ScreenWidth - 120, ScreenHeight - 70, 100, 25);
- 	this->gsm->sdlInitializer->drawText(std::string("Thirst: " + to_string(100-p->getThirst())), ScreenWidth - 120, ScreenHeight - 40, 100, 25);
-
-	
-	//this->pEngine->drawParticles();
-	//this->getMainEntityContainer()->getParticleContainer()->draw();
 
 	/*
 	blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
