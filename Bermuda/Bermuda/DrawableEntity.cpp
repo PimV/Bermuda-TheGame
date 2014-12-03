@@ -11,6 +11,7 @@ DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) :
 		setHeight(drawImage->getHeight());
 	}
 	sizeRect = new SDL_Rect();
+
 }
 
 void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
