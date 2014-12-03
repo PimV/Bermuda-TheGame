@@ -8,8 +8,10 @@ class MenuHelpScreen :
 {
 private:
 	//variables
-	SDL_Texture* tempTexture;
-	SDL_Rect tempRect;
+	SDL_Texture* firstTexture;
+	SDL_Rect firstRect;
+	SDL_Rect secRect;
+	SDL_Texture* secTexture;
 	std::vector<BaseButton*> buttons;
 
 	BaseHelpScreen* curWindow;

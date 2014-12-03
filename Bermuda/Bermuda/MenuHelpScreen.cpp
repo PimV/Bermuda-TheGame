@@ -14,38 +14,44 @@ void tempFunction()
 
 void MenuHelpScreen::init()
 {
-	SDL_Surface* s;
-	s = SDL_CreateRGBSurface(0, ScreenWidth, ScreenWidth, 32, 0, 0, 0, 0);
-	SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 255, 251, 0));
-	tempTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), s);
-	SDL_FreeSurface(s);
+	firstRect.h = ScreenHeight +80;
+	firstRect.w = (ScreenWidth / 5) * 1;
+	firstRect.x = 0;
+	firstRect.y = 0-40;
+	secRect.h = ScreenHeight;
+	secRect.w = (ScreenWidth / 5) * 4;
+	secRect.x = firstRect.w;
+	secRect.y = 0;
 
-	tempRect.h = ScreenHeight;
-	tempRect.w = (ScreenWidth / 5) * 1;
-	tempRect.x = 0;
-	tempRect.y = 0;
-
-	movementScreen = new BaseHelpScreen(tempRect.w);
+	movementScreen = new BaseHelpScreen(firstRect.w);
 	movementScreen->setPicture("HelpScreens/movement.bmp");
-	movementScreen->setText("Use the arrow keys to walk around");
+	movementScreen->setText("Use the arrow keys to walk around.");
 
-	cutTreeScreen = new BaseHelpScreen(tempRect.w);
+	cutTreeScreen = new BaseHelpScreen(firstRect.w);
 	cutTreeScreen->setPicture("HelpScreens/cutTree.bmp");
-	cutTreeScreen->setText("Stand close to a tree, select the axe in your inventory and press spacebar to cut down the tree");
+	cutTreeScreen->setText("Stand close to a tree, select the axe in your inventory and press spacebar to cut down the tree.");
 
 	BaseButton* movementButton = new BaseButton;
-	movementButton->createButton("Movement", 30, 1);
+	movementButton->createButton("Movement", 30, 0);
 	movementButton->action = &BaseButton::helpMovementScreenAction;
+	movementButton->setHoverAction(true);
 
 	BaseButton* cutTreeButton = new BaseButton;
-	cutTreeButton->createButton("Cut down trees", 30, 1);
+	cutTreeButton->createButton("Cut down trees", 30, 0);
 	cutTreeButton->action = &BaseButton::helpCutTreeScreenAction;
+	cutTreeButton->setHoverAction(true);
+
+	BaseButton* returnButton = new BaseButton;
+	returnButton->createButton("Back to menu", 30, 0);
+	returnButton->action = &BaseButton::menuMainScreenAction;
 	
 	movementButton->placeExactAt(10, 10);
 	cutTreeButton->placeLeftUnderButton(movementButton);
+	returnButton->placeLeftUnder(10, 10);
 
 	buttons.push_back(movementButton);
 	buttons.push_back(cutTreeButton);
+	buttons.push_back(returnButton);
 
 	for each (BaseButton* var in buttons)
 	{
@@ -53,6 +59,7 @@ void MenuHelpScreen::init()
 	}
 
 	setCurWindow(movementScreen);
+	setBackground();
 }
 
 void MenuHelpScreen::setCurWindow(BaseHelpScreen* curwindow)
@@ -72,7 +79,8 @@ BaseHelpScreen* MenuHelpScreen::getCutTreeScr()
 
 void MenuHelpScreen::setBackground()
 {
-
+	firstTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "single-inv-item.png").c_str());
+	secTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures\\UltraJungle9.jpg").c_str());
 }
 
 void MenuHelpScreen::resetButtons()
@@ -117,7 +125,8 @@ void MenuHelpScreen::handleEvents(SDL_Event mainEvent)
 void MenuHelpScreen::draw()
 {
 	SDL_Renderer* renderer = GameStateManager::Instance()->sdlInitializer->getRenderer();
-	SDL_RenderCopy(renderer, tempTexture, NULL, &tempRect);
+	SDL_RenderCopy(renderer, firstTexture, NULL, &firstRect);
+	SDL_RenderCopy(renderer, secTexture, NULL, &secRect);
 	for each (BaseButton* var in buttons)
 	{
 		var->draw();
@@ -127,7 +136,8 @@ void MenuHelpScreen::draw()
 
 void MenuHelpScreen::cleanup()
 {
-	SDL_DestroyTexture(tempTexture);
+	SDL_DestroyTexture(firstTexture);
+	SDL_DestroyTexture(secTexture);
 	delete movementScreen;
 	delete cutTreeScreen;
 	for (size_t i = 0; i < buttons.size(); i++)

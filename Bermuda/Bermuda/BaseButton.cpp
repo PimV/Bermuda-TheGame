@@ -9,6 +9,7 @@
 BaseButton::BaseButton()
 {
 	reset();
+	hoverAction = false;
 }
 
 void BaseButton::reset()
@@ -116,9 +117,20 @@ void BaseButton::placeLeftMid()
 	buttonRect.y = ((int)ScreenHeight - buttonRect.h) / 2;
 }
 
+void BaseButton::placeLeftUnder(int xOffset, int yOffset)
+{
+	buttonRect.x = yOffset;
+	buttonRect.y = ScreenHeight - buttonRect.h - yOffset;
+}
+
 void BaseButton::setHelpScr(MenuHelpScreen* scr)
 {
 	helpScr = scr;
+}
+
+void BaseButton::setHoverAction(bool falseOrTrue)
+{
+	hoverAction = falseOrTrue;
 }
 
 void BaseButton::hover(int x, int y)
@@ -129,6 +141,10 @@ void BaseButton::hover(int x, int y)
 		if (active == false)
 		{
 			active = true;
+			if (hoverAction == true)
+			{
+				(this->*action) ();
+			}
 		}
 	}
 	else
@@ -177,7 +193,6 @@ BaseButton::~BaseButton()
 
 
 //button actions
-
 void BaseButton::setCreditsScreenAction()
 {
 	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuCreditsScreen());

@@ -10,6 +10,7 @@ class BaseButton
 public:
 	//variables
 	bool active;
+	bool hoverAction;
 	SDL_Texture* buttonTexture;
 	SDL_Texture* buttonHoverTexture;
 	SDL_Rect buttonRect;
@@ -21,6 +22,7 @@ public:
 	void reset();
 	void placeLeftAboveButton(BaseButton* button);
 	void placeLeftUnderButton(BaseButton* button);
+	void placeLeftUnder(int xOffset, int yOffset);
 	void placeMidScreenAbove(BaseButton* button);
 	void placeMidScreenUnder(BaseButton* button);
 	void placeMid();
@@ -32,6 +34,7 @@ public:
 	int getHeight();
 	int getWidth();
 	void setHelpScr(MenuHelpScreen*);
+	void setHoverAction(bool falseOrTrue);
 
 	//buttonActions
 	void setCreditsScreenAction();
