@@ -8,7 +8,7 @@ class Campfire :
 {
 private:
 	double creationTime;
-	double lifeTime;
+	double destroyTime;
 protected:
 	virtual void animationFinished();
 public:

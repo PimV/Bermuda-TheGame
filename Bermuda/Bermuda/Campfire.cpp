@@ -11,15 +11,15 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getAnimatingContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
-	this->lifeTime = GameTimer::Instance()->getNightLength() + 40000;
-	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() , 0);
+	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() + 10000, 0);
 }
 
 void Campfire::animate()
 {
 	AnimatingEntity::animate();
+
 	long currentTime = GameTimer::Instance()->getGameTime();
-	if (this->creationTime + lifeTime < currentTime)
+	if (this->destroyTime > 0 && this->destroyTime < currentTime)
 	{
 		PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 	}
@@ -27,6 +27,7 @@ void Campfire::animate()
 
 void Campfire::animationFinished()
 {
+	this->destroyTime = GameTimer::Instance()->getGameTime() + 20000;
 }
 
 Campfire::~Campfire()
