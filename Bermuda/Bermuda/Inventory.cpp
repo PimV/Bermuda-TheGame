@@ -5,6 +5,8 @@
 #include "Consumable.h"
 #include "Equipable.h"
 #include "Player.h"
+#include "ItemFactory.h"
+
 #include <iostream>
 #include <algorithm>
 
@@ -44,7 +46,7 @@ void Inventory::init() {
 	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
 	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
-	std::cout << "Creating inv img" << std::endl;
+	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 }
 
 void Inventory::cleanup() {
@@ -388,8 +390,18 @@ void Inventory::draw() {
 			}
 		}
 	}
+}
 
+int Inventory::getStartingX() {
+	return this->startX;
+}
 
+int Inventory::getStartingY() {
+	return this->startY;
+}
+
+int Inventory::getWidth() {
+	return this->slots * this->slotWidth;
 }
 
 

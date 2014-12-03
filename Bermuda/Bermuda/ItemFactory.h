@@ -12,6 +12,7 @@
 #include "ToolAxe.h"
 #include "ToolPickaxe.h"
 #include "ToolFlint.h"
+#include "WeaponSpear.h"
 #include "Items.h"
 #include <map>
 
