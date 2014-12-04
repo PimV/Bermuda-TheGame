@@ -12,7 +12,7 @@ private:
 
 	bool isDead;
 
-	Uint32 endTime;
+	long endTime;
 
 	
 	SDL_Texture* textPixel;
