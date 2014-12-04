@@ -50,7 +50,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		//Take current Time
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
-		long updateLength = (currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart;
+		long updateLength = static_cast<long>((currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart);
 		
 		//Previous time = current time
 		previousTime = currentTime;

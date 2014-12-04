@@ -29,10 +29,10 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 
 	//Update all animating entities
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
-	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
+	int beginChunkX = static_cast<int>(floor(camera->getX() / mec->getChunkSize()) - 1);
+	int endChunkX = static_cast<int>(floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1);
+	int beginChunkY = static_cast<int>(floor(camera->getY() / mec->getChunkSize()) - 1);
+	int endChunkY = static_cast<int>(floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1);
 
 	//Loop through all chunks
 	for (int i = beginChunkY; i <= endChunkY; i++)
@@ -48,7 +48,7 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 					if (e != nullptr && e->getShining() == true)
 					{
 						SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
-						SDL_Rect destRect = { (e->getX() - camera->getX()) - 120, (e->getY() - camera->getY()) - 120, lightSourceImage->w, lightSourceImage->h };
+						SDL_Rect destRect = { static_cast<int>((e->getX() - camera->getX()) - 120), static_cast<int>((e->getY() - camera->getY()) - 120), lightSourceImage->w, lightSourceImage->h };
 
 						drawLightSource(blackSurface, &screenRect, &sourceRect, &destRect);
 					}
