@@ -19,7 +19,6 @@ Game::Game(void)
 	//gameLoopThread.detach();
 }
 
-
 Game::~Game(void)
 {
 	//Delete Thread????
