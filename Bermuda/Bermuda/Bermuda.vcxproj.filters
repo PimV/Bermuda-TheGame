@@ -115,12 +115,6 @@
     <Filter Include="Header Files\Model\Entity\NPC%27s">
       <UniqueIdentifier>{7bd64597-9c5e-44ed-81f8-42b1e5754d12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\View\Buttons">
-      <UniqueIdentifier>{5b43c53c-206d-4ce0-a2dc-6ebb216fcbc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\View\Buttons">
-      <UniqueIdentifier>{0fd01313-c957-43cd-a8e9-cac5499436a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\View\Screens">
       <UniqueIdentifier>{e7234566-2a6c-4cfc-9839-3cc8a425edf2}</UniqueIdentifier>
     </Filter>
@@ -159,6 +153,12 @@
     </Filter>
     <Filter Include="Header Files\Model\Engine">
       <UniqueIdentifier>{cab1ee3d-7dd8-4f6d-a4a1-cbb6bead61b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\Screens\HelpScreens">
+      <UniqueIdentifier>{1fd427ce-914c-4fed-9885-30a0bacbaec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Screens\HelpScreens">
+      <UniqueIdentifier>{3bb98897-63c3-46cb-bd32-c3fc3e7b4f59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -264,12 +264,6 @@
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files\Model\GameState</Filter>
     </ClCompile>
-    <ClCompile Include="PauzeExitButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeMenuButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="EntityChunkContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
@@ -348,12 +342,6 @@
     <ClCompile Include="Pickaxe.cpp">
       <Filter>Source Files\Model\Entity\Items</Filter>
     </ClCompile>
-    <ClCompile Include="PauzeAchievementsButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="PauzeResumeButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="Wasp.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
@@ -420,15 +408,6 @@
     <ClCompile Include="InteractableCactus.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
-    <ClCompile Include="MenuExitButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuPlayButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuCreditsButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="BaseScreen.cpp">
       <Filter>Source Files\View\Screens</Filter>
     </ClCompile>
@@ -437,9 +416,6 @@
     </ClCompile>
     <ClCompile Include="MenuCreditsScreen.cpp">
       <Filter>Source Files\View\Screens\MenuScreens</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuMainButton.cpp">
-      <Filter>Source Files\View\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="BaseButton.cpp">
       <Filter>Source Files\Controller</Filter>
@@ -454,6 +430,12 @@
       <Filter>Source Files\Model\Timer</Filter>
     </ClCompile>
     <ClCompile Include="Crafting.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSpear.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
     <ClCompile Include="Campfire.cpp">
@@ -477,6 +459,18 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files\Model\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="Wolf.cpp">
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
+    <ClCompile Include="LightEntity.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="LightContainer.cpp">
+      <Filter>Source Files\Model\Container\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="NightLayer.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Source Files\Model\Engine</Filter>
     </ClCompile>
@@ -485,6 +479,12 @@
     </ClCompile>
     <ClCompile Include="SnowTree.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuHelpScreen.cpp">
+      <Filter>Source Files\View\Screens\MenuScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseHelpScreen.cpp">
+      <Filter>Source Files\View\Screens\HelpScreens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -590,12 +590,6 @@
     <ClInclude Include="GameOverState.h">
       <Filter>Header Files\Model\GameState</Filter>
     </ClInclude>
-    <ClInclude Include="PauzeExitButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeMenuButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
-    </ClInclude>
     <ClInclude Include="EntityChunkContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
     </ClInclude>
@@ -677,12 +671,6 @@
     <ClInclude Include="Pickaxe.h">
       <Filter>Header Files\Model\Entity\Items</Filter>
     </ClInclude>
-    <ClInclude Include="PauzeAchievementsButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="PauzeResumeButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
-    </ClInclude>
     <ClInclude Include="Wasp.h">
       <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
@@ -749,15 +737,6 @@
     <ClInclude Include="InteractableCactus.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
-    <ClInclude Include="MenuExitButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuPlayButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuCreditsButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
-    </ClInclude>
     <ClInclude Include="BaseScreen.h">
       <Filter>Header Files\View\Screens</Filter>
     </ClInclude>
@@ -766,9 +745,6 @@
     </ClInclude>
     <ClInclude Include="MenuCreditsScreen.h">
       <Filter>Header Files\View\Screens\MenuScreens</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuMainButton.h">
-      <Filter>Header Files\View\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="BaseButton.h">
       <Filter>Header Files\Controller</Filter>
@@ -786,6 +762,12 @@
       <Filter>Header Files\Model\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Crafting.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSpear.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
     <ClInclude Include="Campfire.h">
@@ -833,6 +815,9 @@
     <ClInclude Include="AnimationType.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="Wolf.h">
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
+    </ClInclude>
     <ClInclude Include="ParticleTypes.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
@@ -844,6 +829,21 @@
     </ClInclude>
     <ClInclude Include="SnowTree.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuHelpScreen.h">
+      <Filter>Header Files\View\Screens\MenuScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseHelpScreen.h">
+      <Filter>Header Files\View\Screens\HelpScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="LightEntity.h">
+      <Filter>Header Files\Model\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="LightContainer.h">
+      <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="NightLayer.h">
+      <Filter>Header Files\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
