@@ -17,7 +17,7 @@ void AnimatingEntity::animate(double dt)
 	if (this->getCurrentlyAnimating())
 	{
 		//wait for next frame
-		long currentTime = GameTimer::Instance()->getGameTime();
+		float currentTime = GameTimer::Instance()->getGameTime();
 		if (lastFrameTime + animateSpeed < currentTime)
 		{
 			int nextFrame = ++this->currentImageIndex;
