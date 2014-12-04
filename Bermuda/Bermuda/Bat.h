@@ -14,7 +14,7 @@ class Bat :
 {
 public:
 	Bat(int id, Spawnpoint *spawnPoint, int firstImgID);
-	~Bat();
+	virtual ~Bat();
 	void directionsAndMove(double dt);
 	void update(double dt);
 private:

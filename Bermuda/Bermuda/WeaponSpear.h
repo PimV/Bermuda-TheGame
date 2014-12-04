@@ -9,6 +9,6 @@ public:
 	WeaponSpear(Image* image);
 	void init();
 	//void use(Player* player);
-	virtual ~WeaponSpear(void);
+	virtual ~WeaponSpear();
 };
 

@@ -65,5 +65,5 @@ public:
 		return &m_PlayState;
 	};
 
-	~PlayState();
+	virtual ~PlayState();
 };

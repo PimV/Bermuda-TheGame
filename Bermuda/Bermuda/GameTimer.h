@@ -22,8 +22,8 @@ private:
 	int days;
 
 public:
-	GameTimer(void);
-	~GameTimer(void);
+	GameTimer();
+	virtual ~GameTimer();
 
 	static GameTimer* Instance() { return &s_GameTimer; };
 

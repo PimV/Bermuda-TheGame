@@ -10,7 +10,7 @@
 #include <SDL_ttf.h>
 
 GameStateManager GameStateManager::m_Gsm;
-GameStateManager::GameStateManager(void) {
+GameStateManager::GameStateManager() {
 	/*init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);*/
 }
 
@@ -226,7 +226,7 @@ SoundLoader* GameStateManager::getSoundLoader()
 	return soundLoader;
 }
 
-GameStateManager::~GameStateManager(void) {
+GameStateManager::~GameStateManager() {
 	delete imgLoader;
 	delete sdlInitializer;
 

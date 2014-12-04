@@ -6,7 +6,7 @@ class Consumable :
 	public  Item
 {
 public:
-	Consumable(void);
+	Consumable();
 
 	virtual void use(Player* p);
 	void setHungerRefill(int hunger);
@@ -16,7 +16,7 @@ public:
 	int getThirstRefill();
 	int getHealthRefill();
 
-	virtual ~Consumable(void);
+	virtual ~Consumable();
 
 private:
 	int hungerRefill;

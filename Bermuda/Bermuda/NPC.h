@@ -7,7 +7,7 @@ class NPC :
 {
 public:
 	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
-	virtual ~NPC(void);
+	virtual ~NPC();
 
 #pragma region Getters
 	int getHeathPoints();

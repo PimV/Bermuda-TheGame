@@ -12,7 +12,7 @@ class GameStateManager
 {
 public:
 	bool showFps;
-	GameStateManager(void);
+	GameStateManager();
 
 	void init(const char* title, int width, int height, int bpp, bool fullscreen);
 	void cleanup();
@@ -51,7 +51,7 @@ public:
 		return &m_Gsm;
 	};
 
-	~GameStateManager(void);
+	virtual ~GameStateManager();
 
 private: 
 	long updateLength;

@@ -1,12 +1,12 @@
 #include "SDLInitializer.h"
 #include <iostream>
 
-SDLInitializer::SDLInitializer(void)
+SDLInitializer::SDLInitializer()
 {
 }
 
 
-SDLInitializer::~SDLInitializer(void)
+SDLInitializer::~SDLInitializer()
 {
 }
 

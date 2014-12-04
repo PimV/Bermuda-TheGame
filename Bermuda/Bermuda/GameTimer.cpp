@@ -3,7 +3,7 @@
 
 GameTimer GameTimer::s_GameTimer;
 
-GameTimer::GameTimer(void)
+GameTimer::GameTimer()
 {
 }
 
@@ -139,6 +139,6 @@ void GameTimer::cleanUp()
 	SDL_DestroyTexture(textArrow);
 }
 
-GameTimer::~GameTimer(void)
+GameTimer::~GameTimer()
 {
 }

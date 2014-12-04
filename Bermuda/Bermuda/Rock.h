@@ -15,6 +15,6 @@ public:
 	void update(double dt);
 	void interact(Player* player);
 	virtual void setDestroyedState();
-	~Rock();
+	virtual ~Rock();
 };
 

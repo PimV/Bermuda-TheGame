@@ -19,7 +19,7 @@ class Player :
 {
 public:
 	Player(int id, double moveSpeed, double x, double y, Camera* camera);
-	~Player();
+	virtual ~Player();
 
 	void update(double dt);
 	void directionsAndMove(double dt);

@@ -7,7 +7,7 @@
 #include <thread>
 
 
-Game::Game(void)
+Game::Game()
 {
 	gsm = GameStateManager::Instance();
 	gsm->init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);
@@ -20,7 +20,7 @@ Game::Game(void)
 }
 
 
-Game::~Game(void)
+Game::~Game()
 {
 	//Delete Thread????
 }
