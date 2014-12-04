@@ -459,6 +459,9 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files\Model\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="Wolf.cpp">
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
     <ClCompile Include="LightEntity.cpp">
       <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
@@ -811,6 +814,9 @@
     </ClInclude>
     <ClInclude Include="AnimationType.h">
       <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolf.h">
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="ParticleTypes.h">
       <Filter>Header Files\Model\Enums</Filter>

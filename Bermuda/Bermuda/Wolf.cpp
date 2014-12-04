@@ -1,22 +1,23 @@
-#include "Rabbit.h"
+#include "Wolf.h"
 #include "PlayState.h"
 #include <time.h>
 #include <iostream>
 #include <random>
 
-Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, 5, 1, 50, spawnPoint),
-Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
-CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
+
+Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
+	NPC(id, 5, 1, 50, spawnPoint),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 13, 20, 23, 24),
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
-	this->setWidth(36);
-	this->setHeight(36);
+	this->setWidth(48);
+	this->setHeight(48);
 
 	this->dx = 0;
 	this->dy = 0;
-	this->maxSpeed = 2;
+	this->maxSpeed = 3;
 	this->moveSpeed = 2;
 	this->stopSpeed = 0.8;
 	this->movingLeft = false;
@@ -25,14 +26,18 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->movingUp = false;
 	//this->interaction = false;
 
+	//this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;
-	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;
-	this->animationWalkDownRow = 0, this->animationWalkRightRow = 2;
+	this->animationWalkUpRow = 3; 
+	this->animationWalkLeftRow = 1;
+	this->animationWalkDownRow = 0, 
+	this->animationWalkRightRow = 2;
 	this->currentAnimationRow = this->animationWalkDownRow;
-	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 7;
-
+	this->animationIdleColumn = 0; 
+	this->animationWalkStartColumn = 0;
+	this->animationWalkEndColumn = 3;
 	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
-	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
+	this->frameAmountX = 4, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;//, this->animationDelay = 1;
 
 	this->timeSinceLastAction = 0;
@@ -44,11 +49,11 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->StopAnimation();
 }
 
-void Rabbit::update(double dt) {
+void Wolf::update(double dt) {
 	this->directionsAndMove(dt);
 }
 
-void Rabbit::directionsAndMove(double dt)
+void Wolf::directionsAndMove(double dt)
 {
 	random_device dev;
 	default_random_engine dre(dev());
@@ -122,12 +127,12 @@ void Rabbit::directionsAndMove(double dt)
 	this->move(dt);
 }
 
-void Rabbit::setImage(Image* image)
+void Wolf::setImage(Image* image)
 {
 	this->setDrawImage(image);
 }
 
-void Rabbit::ResetDrawableEntityAndSetChunk()
+void Wolf::ResetDrawableEntityAndSetChunk()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
@@ -138,11 +143,11 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 }
 
-bool Rabbit::checkCollision(double newX, double newY)
+bool Wolf::checkCollision(double newX, double newY)
 {
 	return CollidableEntity::checkCollision(newX, newY);
 }
 
-Rabbit::~Rabbit()
+Wolf::~Wolf()
 {
 }
