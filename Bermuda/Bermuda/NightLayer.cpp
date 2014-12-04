@@ -137,7 +137,7 @@ void NightLayer::calculateAlpha(SDL_Texture* texture)
 	{
 		alphaLevel = (250 / 10) * (10 - p);
 	}
-	
+
 	//std::cout << "Day%: " << p << " - alphaLevel: " << alphaLevel << std::endl;
-	SDL_SetTextureAlphaMod(texture, alphaLevel);
+	SDL_SetTextureAlphaMod(texture, static_cast<Uint8>(alphaLevel));
 }
