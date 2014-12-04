@@ -7,7 +7,7 @@ ImageLoader::ImageLoader(SDL_Renderer* renderer)
 }
 
 //Returns the first ID of the new tileset images
-int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeight)
+int ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 {
 	int startID = images.size() + 1;
 	SDL_Texture* tileSet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
@@ -23,8 +23,8 @@ int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeigh
 	int fileWidth = 0;
 	int fileHeight = 0;
 	SDL_QueryTexture(tileSet, nullptr, nullptr, &fileWidth, &fileHeight);
-	double drawWidth = tileWidth;
-	double drawHeight = tileHeight;
+	int drawWidth = tileWidth;
+	int drawHeight = tileHeight;
 
 	while ( y < fileHeight )
 	{

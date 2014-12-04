@@ -5,10 +5,10 @@
 class Particle
 {
 private:
-	float x;
-	float y;
-	float dx;
-	float dy;
+	double x;
+	double y;
+	double dx;
+	double dy;
 
 	bool isDead;
 
@@ -19,7 +19,7 @@ private:
 	SDL_Rect rectPixel;
 
 public:
-	Particle(float x, float y, float dx, float dy, int life, SDL_Texture* textPixel, int width, int height);
+	Particle(double x, double y, double dx, double dy, int life, SDL_Texture* textPixel, int width, int height);
 	virtual ~Particle();
 
 	void move(double dt);
