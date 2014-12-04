@@ -34,6 +34,7 @@ void GameTimer::init()
 
 void GameTimer::updateGameTime(double frameTime)
 {
+
 	this->frameTime = frameTime;
 	this->gameTime += frameTime;
 	this->updateDay();
