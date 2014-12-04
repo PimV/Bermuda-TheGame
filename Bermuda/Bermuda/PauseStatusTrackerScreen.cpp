@@ -86,7 +86,7 @@ void PauseStatusTrackerScreen::init()
 void PauseStatusTrackerScreen::setBackground()
 {
 	backgroundRect.x = ScreenWidth;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		if (var.x <= backgroundRect.x)
 		{
@@ -97,7 +97,7 @@ void PauseStatusTrackerScreen::setBackground()
 	backgroundRect.x = backgroundRect.x - 35;
 
 	backgroundRect.y = ScreenHeight;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		if (var.y <= backgroundRect.y)
 		{
@@ -109,7 +109,7 @@ void PauseStatusTrackerScreen::setBackground()
 
 	backgroundRect.w = 0;
 	backgroundRect.h = 0;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		backgroundRect.h += var.h;
 	}
