@@ -164,11 +164,7 @@ void GameStateManager::handleEvents() {
 			}
 			break;
 		case SDL_KEYUP:
-			switch(mainEvent.key.keysym.sym) {
-			default:
-				states.back()->handleEvents(mainEvent);
-				break;
-			}
+			states.back()->handleEvents(mainEvent);
 			break;
 		default:
 			states.back()->handleEvents(mainEvent);
