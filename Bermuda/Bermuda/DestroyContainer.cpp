@@ -26,17 +26,20 @@ void DestroyContainer::remove(Entity* entity)
 
 void DestroyContainer::destroyAllEntities()
 {
-	if (container.size() > 0)
+	while (!this->container.empty())
 	{
-		std::vector<Entity*>::iterator it;
-		for (it = container.begin(); it != container.end();)
-		{
-			delete *it;
-			it = container.erase(it);
-		}
+		Entity* entity = this->container.back();
+		this->container.pop_back();
+		delete entity;
 	}
+}
+
+void DestroyContainer::cleanup()
+{
+	this->destroyAllEntities();
 }
 
 DestroyContainer::~DestroyContainer()
 {
+	this->cleanup();
 }

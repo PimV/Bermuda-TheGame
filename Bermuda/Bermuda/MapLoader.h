@@ -40,6 +40,6 @@ public:
 	int getStartPosY();
 	int getLoadPercentage();
 	string getLoadStatus();
-	~MapLoader();
+	virtual ~MapLoader();
 };
 

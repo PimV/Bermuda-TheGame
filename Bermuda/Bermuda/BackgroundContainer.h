@@ -14,8 +14,9 @@ public:
 	
 	void initChunks(int chunksY, int chunksX);
 	void remove(DrawableEntity* entity);
+	void cleanup();
 
-	~BackgroundContainer();
+	virtual ~BackgroundContainer();
 private:
 	//std::vector<DrawableEntity*> m_container;
 	std::vector<std::vector<std::vector<DrawableEntity*>>> container;

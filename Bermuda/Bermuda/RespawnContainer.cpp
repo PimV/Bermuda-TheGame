@@ -23,6 +23,17 @@ void RespawnContainer::remove(InteractableEntity* entity)
 	}
 }
 
-RespawnContainer::~RespawnContainer(void)
+void RespawnContainer::cleanup()
 {
+	while (!this->container.empty())
+	{
+		InteractableEntity* entity = this->container.back();
+		this->container.pop_back();
+		delete entity;
+	}
+}
+
+RespawnContainer::~RespawnContainer()
+{
+	this->cleanup();
 }

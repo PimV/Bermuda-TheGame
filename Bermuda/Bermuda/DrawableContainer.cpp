@@ -39,7 +39,22 @@ std::vector<DrawableEntity*>* DrawableContainer::getChunk(int y, int x)
 	return nullptr;
 }
 
+void DrawableContainer::cleanup()
+{
+	for (size_t y = 0; y < this->container.size(); y++) {
+		for (size_t x = 0; x < this->container[x].size(); x++) {
+			while (!this->container[y][x].empty())
+			{
+				DrawableEntity* entity = this->container[y][x].back();
+				this->container.pop_back();
+				delete entity;
+			}
+		}
+	}
+}
+
 
 DrawableContainer::~DrawableContainer()
 {
+	this->cleanup();
 }

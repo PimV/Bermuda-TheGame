@@ -1,6 +1,6 @@
 #include "MainEntityContainer.h"
 
-MainEntityContainer::MainEntityContainer(void) : 
+MainEntityContainer::MainEntityContainer() : 
 	chunkSize(300)
 {
 	m_container[ContainerType::Drawable] = new DrawableContainer();
@@ -76,6 +76,6 @@ void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
 	m_container[ContainerType::Light]->initChunks(chunksY, chunksX);
 }
 
-MainEntityContainer::~MainEntityContainer(void)
+MainEntityContainer::~MainEntityContainer()
 {
 }
