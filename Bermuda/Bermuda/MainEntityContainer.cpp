@@ -78,6 +78,17 @@ void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
 
 MainEntityContainer::~MainEntityContainer()
 {
+	this->m_container[ContainerType::Drawable]->cleanup();
+	this->m_container[ContainerType::Animating]->cleanup();
+	this->m_container[ContainerType::Collidable]->cleanup();
+	this->m_container[ContainerType::Background]->cleanup();
+	this->m_container[ContainerType::Interactable]->cleanup();
+	this->m_container[ContainerType::Respawnable]->cleanup();
+	this->m_container[ContainerType::Movable]->cleanup();
+	this->m_container[ContainerType::Spawnpoint]->cleanup();
+	this->m_container[ContainerType::Destroyed]->cleanup();
+	this->m_container[ContainerType::Light]->cleanup();
+
 	delete this->m_container[ContainerType::Drawable];
 	delete this->m_container[ContainerType::Animating];
 	delete this->m_container[ContainerType::Collidable];

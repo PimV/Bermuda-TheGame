@@ -506,5 +506,5 @@ Camera* PlayState::getCamera()
 //Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState()
 {
-	this->cleanup();
+	//this->cleanup();
 }

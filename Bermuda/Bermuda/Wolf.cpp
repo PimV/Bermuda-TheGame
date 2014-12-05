@@ -150,4 +150,7 @@ bool Wolf::checkCollision(double newX, double newY)
 
 Wolf::~Wolf()
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }
