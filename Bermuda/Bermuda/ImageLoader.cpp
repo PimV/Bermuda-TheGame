@@ -79,6 +79,7 @@ SDL_Texture* ImageLoader::getInteractTreeImage() {
 	}
 	return treeInteractTexture;
 }
+
 SDL_Texture* ImageLoader::getCantInteractTreeImage() {
 	if (treeCantInteractTexture == nullptr) {
 
@@ -101,7 +102,7 @@ SDL_Texture* ImageLoader::getCantInteractTreePineImage() {
 	return treePineCantInteractTexture;
 }
 
-SDL_Texture* ImageLoader::getCarrotInteractImage() {
+SDL_Texture* ImageLoader::getInteractCarrotImage() {
 	if (carrotInteractOverlay == nullptr) {
 		carrotInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\carrot_canInteract.png").c_str());
 	}
@@ -120,6 +121,20 @@ SDL_Texture* ImageLoader::getCantInteractRockImage() {
 		rockCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_cantInteract.png").c_str());
 	}
 	return rockCantInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getInteractSpikeImage() {
+	if (spikeInteractOverlay == nullptr) {
+		spikeInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_canInteract.png").c_str());
+	}
+	return spikeInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getCantInteractSpikeImage() {
+	if (spikeCantInteractOverlay == nullptr) {
+		spikeCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_cantInteract.png").c_str());
+	}
+	return spikeCantInteractOverlay;
 }
 
 SDL_Texture* ImageLoader::getInteractCactusBigImage() {

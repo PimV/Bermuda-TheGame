@@ -18,6 +18,9 @@ Ice::Ice(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	this->interactTime = 5000;
 
 	this->animationType = AnimationEnumType::Mine;
+
+	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractSpikeImage();
+	this->setHighlightTexture(canInteractTexture);
 }
 
 void Ice::update(double dt) {
@@ -44,6 +47,7 @@ void Ice::interact(Player* player)
 
 void Ice::setDestroyedState()
 {
+	this->setHighlighted(false);
 	this->destroyed = true;
 	this->setCollisionX(0);
 	this->setCollisionWidth(0);

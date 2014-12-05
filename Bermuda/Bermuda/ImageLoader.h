@@ -23,6 +23,9 @@ private:
 
 	SDL_Texture* rockInteractOverlay;
 	SDL_Texture* rockCantInteractOverlay;
+	
+	SDL_Texture* spikeInteractOverlay;
+	SDL_Texture* spikeCantInteractOverlay;
 
 	SDL_Texture* cactusBigInteractOverlay;
 	SDL_Texture* cactusBigCantInteractOverlay;
@@ -39,10 +42,13 @@ public:
 	SDL_Texture* getInteractTreePineImage();
 	SDL_Texture* getCantInteractTreePineImage();
 
-	SDL_Texture* getCarrotInteractImage();
+	SDL_Texture* getInteractCarrotImage();
 
 	SDL_Texture* getInteractRockImage();
 	SDL_Texture* getCantInteractRockImage();
+
+	SDL_Texture* getInteractSpikeImage();
+	SDL_Texture* getCantInteractSpikeImage();
 	
 	SDL_Texture* getInteractCactusBigImage();
 	SDL_Texture* getCantInteractCactusBigImage();
