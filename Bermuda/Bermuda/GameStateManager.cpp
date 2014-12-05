@@ -164,6 +164,12 @@ void GameStateManager::handleEvents() {
 			}
 			break;
 		case SDL_KEYUP:
+			//Switch pas nodig als er meerdere cases zijn... nu een switch gebruiken met alleen default is overbodig
+			/*switch(mainEvent.key.keysym.sym) {
+			default:
+				states.back()->handleEvents(mainEvent);
+				break;
+			}*/
 			states.back()->handleEvents(mainEvent);
 			break;
 		default:
