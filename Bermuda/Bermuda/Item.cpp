@@ -9,6 +9,7 @@ Item::Item()
 void Item::init() {
 	this->itemTypes = std::vector<ItemType>();
 	this->stackSize = 1;
+	this->stackable = true;
 }
 
 void Item::cleanup() {
