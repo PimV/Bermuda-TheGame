@@ -8,13 +8,15 @@ class InteractableCactus :
 private:
 	Image* cactusImage;
 	Image* stumpImage;
+	SDL_Texture* canInteractTexture;
+	SDL_Texture* cantInteractTexture;
 public:
 	InteractableCactus(int id, double x, double y, Image* image, Image* stumpImage);
-	void setCollidableValues();
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
-	virtual void setDestroyedState();
+	void setDestroyedState();
+	bool canInteract(Player* player);
 	virtual ~InteractableCactus();
 };
 

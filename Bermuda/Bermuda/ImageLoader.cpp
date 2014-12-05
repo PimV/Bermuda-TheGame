@@ -75,38 +75,51 @@ Image* ImageLoader::getMapImage(int tileID)
 
 SDL_Texture* ImageLoader::getInteractTreeImage() {
 	if (canInteractTreeTexture == nullptr) {
-		canInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_caninteractv3.png").c_str());
-		//canInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treetest.png").c_str());
+		canInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_canInteract.png").c_str());
 	}
 	return canInteractTreeTexture;
 }
 SDL_Texture* ImageLoader::getCantInteractTreeImage() {
 	if (cantInteractTreeTexture == nullptr) {
 
-		cantInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\treeoutline_cantinteractv3.png").c_str());
+		cantInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_cantInteract.png").c_str());
 	}
 	return cantInteractTreeTexture;
 }
 
 SDL_Texture* ImageLoader::getCarrotInteractImage() {
 	if (carrotInteractOverlay == nullptr) {
-		carrotInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\carrotoutline_caninteract.png").c_str());
+		carrotInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\carrot_canInteract.png").c_str());
 	}
 	return carrotInteractOverlay;
 }
 
 SDL_Texture* ImageLoader::getInteractRockImage() {
 	if (rockInteractOverlay == nullptr) {
-		rockInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\rockoutline_caninteract.png").c_str());
+		rockInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_canInteract.png").c_str());
 	}
 	return rockInteractOverlay;
 }
 
 SDL_Texture* ImageLoader::getCantInteractRockImage() {
 	if (rockCantInteractOverlay == nullptr) {
-		rockCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\rockoutline_cantinteract.png").c_str());
+		rockCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_cantInteract.png").c_str());
 	}
 	return rockCantInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getInteractCactusBigImage() {
+	if (cactusBigInteractOverlay == nullptr) {
+		cactusBigInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_canInteract.png").c_str());
+	}
+	return cactusBigInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getCantInteractCactusBigImage() {
+	if (cactusBigCantInteractOverlay == nullptr) {
+		cactusBigCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_cantInteract.png").c_str());
+	}
+	return cactusBigCantInteractOverlay;
 }
 
 ImageLoader::~ImageLoader()
