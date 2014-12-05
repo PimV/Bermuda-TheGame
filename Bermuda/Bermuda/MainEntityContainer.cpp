@@ -3,16 +3,16 @@
 MainEntityContainer::MainEntityContainer() : 
 	chunkSize(300)
 {
-	m_container[ContainerType::Drawable] = new DrawableContainer();
-	m_container[ContainerType::Animating] = new DrawableContainer();
-	m_container[ContainerType::Collidable] = new CollidableContainer();
-	m_container[ContainerType::Background] = new BackgroundContainer();
-	m_container[ContainerType::Interactable] = new InteractableContainer();
-	m_container[ContainerType::Respawnable] = new RespawnContainer();
-	m_container[ContainerType::Movable] = new MovableContainer();
-	m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
-	m_container[ContainerType::Destroyed] = new DestroyContainer();
-	m_container[ContainerType::Light] = new LightContainer();
+	this->m_container[ContainerType::Drawable] = new DrawableContainer();
+	this->m_container[ContainerType::Animating] = new DrawableContainer();
+	this->m_container[ContainerType::Collidable] = new CollidableContainer();
+	this->m_container[ContainerType::Background] = new BackgroundContainer();
+	this->m_container[ContainerType::Interactable] = new InteractableContainer();
+	this->m_container[ContainerType::Respawnable] = new RespawnContainer();
+	this->m_container[ContainerType::Movable] = new MovableContainer();
+	this->m_container[ContainerType::Spawnpoint] = new SpawnpointContainer();
+	this->m_container[ContainerType::Destroyed] = new DestroyContainer();
+	this->m_container[ContainerType::Light] = new LightContainer();
 }
 
 DrawableContainer* MainEntityContainer::getDrawableContainer() {
@@ -66,26 +66,26 @@ void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
 	int chunksX = floor(mapWidth / chunkSize) + 1;
 
 	//Init all containers with chunks
-	m_container[ContainerType::Collidable]->initChunks(chunksY, chunksX);
-	m_container[ContainerType::Drawable]->initChunks(chunksY, chunksX);
-	m_container[ContainerType::Animating]->initChunks(chunksY, chunksX);
-	m_container[ContainerType::Background]->initChunks(chunksY, chunksX);
-	m_container[ContainerType::Interactable]->initChunks(chunksY, chunksX);
-	m_container[ContainerType::Movable]->initChunks(chunksY, chunksX);
-	m_container[ContainerType::Spawnpoint]->initChunks(chunksY, chunksX);
-	m_container[ContainerType::Light]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Collidable]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Drawable]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Animating]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Background]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Interactable]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Movable]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Spawnpoint]->initChunks(chunksY, chunksX);
+	this->m_container[ContainerType::Light]->initChunks(chunksY, chunksX);
 }
 
 MainEntityContainer::~MainEntityContainer()
 {
-	delete m_container[ContainerType::Drawable];
-	delete m_container[ContainerType::Animating];
-	delete m_container[ContainerType::Collidable];
-	delete m_container[ContainerType::Background];
-	delete m_container[ContainerType::Interactable];
-	delete m_container[ContainerType::Respawnable];
-	delete m_container[ContainerType::Movable];
-	delete m_container[ContainerType::Spawnpoint];
-	delete m_container[ContainerType::Destroyed];
-	delete m_container[ContainerType::Light];
+	delete this->m_container[ContainerType::Drawable];
+	delete this->m_container[ContainerType::Animating];
+	delete this->m_container[ContainerType::Collidable];
+	delete this->m_container[ContainerType::Background];
+	delete this->m_container[ContainerType::Interactable];
+	delete this->m_container[ContainerType::Respawnable];
+	delete this->m_container[ContainerType::Movable];
+	delete this->m_container[ContainerType::Spawnpoint];
+	delete this->m_container[ContainerType::Destroyed];
+	delete this->m_container[ContainerType::Light];
 }

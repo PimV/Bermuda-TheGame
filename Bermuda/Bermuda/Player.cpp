@@ -636,6 +636,10 @@ Player::~Player() {
 	SDL_DestroyTexture(thirstBar);
 	SDL_DestroyTexture(thirstBarContainer);
 
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+
 	delete this->inventory;
 	delete this->crafting;
 	delete this->statusTracker;
