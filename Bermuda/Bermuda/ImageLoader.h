@@ -29,6 +29,9 @@ private:
 
 	SDL_Texture* cactusBigInteractOverlay;
 	SDL_Texture* cactusBigCantInteractOverlay;
+
+	SDL_Texture* cactusSmallInteractOverlay;
+	SDL_Texture* cactusSmallCantInteractOverlay;
 public:
 	ImageLoader(SDL_Renderer* renderer);
 	~ImageLoader();
@@ -52,6 +55,9 @@ public:
 	
 	SDL_Texture* getInteractCactusBigImage();
 	SDL_Texture* getCantInteractCactusBigImage();
+
+	SDL_Texture* getInteractCactusSmallImage();
+	SDL_Texture* getCantInteractCactusSmallImage();
 
 	//SDL_Texture* loadSpriteSheet(string filename);
 	Image* getMapImage(int tileID);

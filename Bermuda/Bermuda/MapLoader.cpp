@@ -17,6 +17,8 @@
 #include "EasterHead.h"
 #include "Cactus.h"
 #include "InteractableCactus.h"
+#include "InteractableCactusBig.h"
+#include "InteractableCactusSmall.h"
 #include "CollidableTile.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
@@ -260,15 +262,13 @@ void MapLoader::createObjects(Value& objects)
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
 		{			
-			//Tree* tree = new Tree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
-
 			if(objectID == 421)
 			{
-				TreeRound* tree = new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+				new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 			}
 			else if(objectID == 423)
 			{
-				TreePine* tree = new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+				new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 			}
 		}
 		else if(objectClasses[objectID] == "TreeStump")
@@ -314,12 +314,10 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if (objectClasses[objectID] == "Ice")
 		{
-			//new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 			new IceRock(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if (objectClasses[objectID] == "IceSpikes")
 		{
-			//new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
 			new IceSpikes(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
 		}
 		else if (objectClasses[objectID] == "IcePieces")
@@ -349,7 +347,14 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if (objectClasses[objectID] == "InteractableCactus")
 		{
-			new InteractableCactus(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			if(objectID == 452)
+			{
+				new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
+			else if(objectID == 454)
+			{
+				new InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{

@@ -151,6 +151,20 @@ SDL_Texture* ImageLoader::getCantInteractCactusBigImage() {
 	return cactusBigCantInteractOverlay;
 }
 
+SDL_Texture* ImageLoader::getInteractCactusSmallImage() {
+	if (cactusSmallInteractOverlay == nullptr) {
+		cactusSmallInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_canInteract.png").c_str());
+	}
+	return cactusSmallInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getCantInteractCactusSmallImage() {
+	if (cactusSmallCantInteractOverlay == nullptr) {
+		cactusSmallCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_cantInteract.png").c_str());
+	}
+	return cactusSmallCantInteractOverlay;
+}
+
 ImageLoader::~ImageLoader()
 {
 	// Destroy all images

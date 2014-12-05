@@ -8,8 +8,6 @@ class InteractableCactus :
 private:
 	Image* cactusImage;
 	Image* stumpImage;
-	SDL_Texture* canInteractTexture;
-	SDL_Texture* cantInteractTexture;
 public:
 	InteractableCactus(int id, double x, double y, Image* image, Image* stumpImage);
 	void update(double dt);
