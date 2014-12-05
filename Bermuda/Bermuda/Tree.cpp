@@ -21,19 +21,13 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 	this->respawnTime = 5000;
 	this->interactTime = 5000;
 	this->animationType = AnimationEnumType::Chop;
-
-	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractTreeImage();
-	cantInteractTexture = GameStateManager::Instance()->getImageLoader()->getCantInteractTreeImage();
-
-	this->setHighlightTexture(cantInteractTexture);
-
 }
 
 bool Tree::canInteract(Player* player) {
 	if (player->getInventory()->axeSelected()) {
-		this->setHighlightTexture(canInteractTexture);
+		this->setHighlightTexture(this->getCanInteractTexture());
 	} else {
-		this->setHighlightTexture(cantInteractTexture);
+		this->setHighlightTexture(this->getCantInteractTexture());
 	}
 	return player->getInventory()->axeSelected();
 }
@@ -78,6 +72,8 @@ void Tree::setDestroyedState()
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	currentInteractTime = 0;
 }
+
+
 
 Tree::~Tree()
 {

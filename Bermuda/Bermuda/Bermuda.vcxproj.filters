@@ -486,6 +486,12 @@
     <ClCompile Include="ParticleContainer.cpp">
       <Filter>Source Files\Model\Container\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="TreePine.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeRound.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -841,6 +847,12 @@
     </ClInclude>
     <ClInclude Include="ParticleContainer.h">
       <Filter>Header Files\Model\Container\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="TreePine.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeRound.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

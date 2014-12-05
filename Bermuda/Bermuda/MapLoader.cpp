@@ -1,6 +1,8 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "Tree.h"
+#include "TreePine.h"
+#include "TreeRound.h"
 #include "AppleTree.h"
 #include "Rock.h"
 #include "RockSpikes.h"
@@ -255,8 +257,17 @@ void MapLoader::createObjects(Value& objects)
 
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
-		{
-			Tree* tree = new Tree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		{			
+			//Tree* tree = new Tree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+
+			if(objectID == 421)
+			{
+				TreeRound* tree = new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
+			else if(objectID == 423)
+			{
+				TreePine* tree = new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
