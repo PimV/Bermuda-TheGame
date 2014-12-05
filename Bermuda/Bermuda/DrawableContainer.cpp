@@ -46,7 +46,7 @@ void DrawableContainer::cleanup()
 			while (!this->container[y][x].empty())
 			{
 				DrawableEntity* entity = this->container[y][x].back();
-				this->container.pop_back();
+				this->container[y][x].pop_back();
 				delete entity;
 			}
 		}
