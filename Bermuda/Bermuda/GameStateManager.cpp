@@ -78,19 +78,8 @@ int GameStateManager::getFps() {
 	return GameStateManager::Instance()->fps;
 }
 
-void GameStateManager::cleanup() {
-	//While there are states on the stack, clean them up
-	while (!states.empty()) {
-		//Peek at top state and clean that state
-		states.back()->cleanup();
-
-		//Remove top state
-		states.pop_back();
-	}
-}
-
 void GameStateManager::changeGameState(IGameState* gameState) {
-	if (!states.empty()) {
+	while (!states.empty()) {
 		states.back()->cleanup();
 		states.pop_back();
 	}
@@ -226,9 +215,22 @@ SoundLoader* GameStateManager::getSoundLoader()
 	return soundLoader;
 }
 
-GameStateManager::~GameStateManager() {
-	delete imgLoader;
-	delete sdlInitializer;
+void GameStateManager::cleanup() {
+	//While there are states on the stack, clean them up
+	while (!states.empty()) {
+		//Peek at top state and clean that state
+		states.back()->cleanup();
 
-	delete actionContainer;
+		//Remove top state
+		states.pop_back();
+	}
+
+	delete this->imgLoader;
+	delete this->soundLoader;
+	delete this->sdlInitializer;
+	delete this->actionContainer;
+}
+
+GameStateManager::~GameStateManager() {
+	this->cleanup();
 }

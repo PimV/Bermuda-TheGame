@@ -16,7 +16,7 @@ PlayState PlayState::m_PlayState;
 
 bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
-PlayState::PlayState(void)
+PlayState::PlayState()
 {
 }
 
@@ -57,7 +57,13 @@ MainEntityContainer* PlayState::getMainEntityContainer()
 }
 
 void PlayState::cleanup() {
+	std::cout << "deleting playstate" << endl;
 	GameTimer::Instance()->cleanUp();
+	delete nightLayer;
+	delete p;
+	delete camera;
+	delete mapLoader;
+	delete mec;
 }
 
 void PlayState::pause() {
@@ -498,11 +504,7 @@ Camera* PlayState::getCamera()
 
 //ERROR Deze methode word nooit aangeroepen volgens mij.
 //Betekend dus dat de playstate nooit verwijderd wordt
-PlayState::~PlayState(void)
+PlayState::~PlayState()
 {
-	delete camera;
-	delete mec;
-	delete mapLoader;
-	delete nightLayer;
-	std::cout << "deleting playstate" << endl;
+	this->cleanup();
 }

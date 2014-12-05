@@ -141,4 +141,5 @@ void GameTimer::cleanUp()
 
 GameTimer::~GameTimer()
 {
+	this->cleanUp();
 }
