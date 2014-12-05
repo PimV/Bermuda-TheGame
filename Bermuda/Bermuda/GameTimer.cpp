@@ -39,7 +39,7 @@ void GameTimer::updateGameTime(double frameTime)
 	this->updateDay();
 }
 
-long GameTimer::getGameTime()
+float GameTimer::getGameTime()
 {
 	return this->gameTime;
 }

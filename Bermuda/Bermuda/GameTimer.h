@@ -15,7 +15,7 @@ private:
 
 	DAYPART currentDayPart;
 
-	long gameTime;
+	float gameTime;
 	double frameTime;
 	double dayLength;
 	double startDay;
@@ -30,7 +30,7 @@ public:
 	void init();
 	void updateGameTime(double frameTime);
 	void updateDay();
-	long getGameTime();
+	float getGameTime();
 
 	double getFullDayLength();
 	double getDayLength();
