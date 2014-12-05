@@ -10,13 +10,15 @@ private:
 	Image* treeImage;
 	Image* treeEmptyImage;
 	Image* stumpImage;
+	SDL_Texture* canInteractTexture;
+	SDL_Texture* cantInteractTexture;
 public:
 	AppleTree(int id, double x, double y, Image* treeImage, Image* treeEmptyImage, Image* stumpImage);
-	void setCollidableValues();
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
 	void setDestroyedState();
+	bool canInteract(Player* player);
 	virtual ~AppleTree();
 };
 

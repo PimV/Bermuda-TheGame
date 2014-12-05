@@ -370,7 +370,6 @@ void Player::setAnimationType(AnimationEnumType type)
 			this->animationActionEndColumn = this->animationMineEndColumn;
 		break;
 	case AnimationEnumType::Pick:
-		std::cout << "No pick animation" << std::endl;
 			this->currentAnimationRow = this->animationPickUp + this->movementDirection;
  			this->animationActionStartColumn = this->animationPickStartColumn;
 			this->animationActionEndColumn = this->animationPickEndColumn;

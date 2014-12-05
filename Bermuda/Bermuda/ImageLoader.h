@@ -16,6 +16,9 @@ private:
 	SDL_Texture* treeInteractTexture;
 	SDL_Texture* treeCantInteractTexture;
 
+	SDL_Texture* treePineInteractTexture;
+	SDL_Texture* treePineCantInteractTexture;
+
 	SDL_Texture* carrotInteractOverlay;
 
 	SDL_Texture* rockInteractOverlay;
@@ -32,6 +35,9 @@ public:
 	//Interact Green/Red
 	SDL_Texture* getInteractTreeImage();
 	SDL_Texture* getCantInteractTreeImage();
+
+	SDL_Texture* getInteractTreePineImage();
+	SDL_Texture* getCantInteractTreePineImage();
 
 	SDL_Texture* getCarrotInteractImage();
 

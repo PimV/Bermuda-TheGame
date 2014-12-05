@@ -87,6 +87,20 @@ SDL_Texture* ImageLoader::getCantInteractTreeImage() {
 	return treeCantInteractTexture;
 }
 
+SDL_Texture* ImageLoader::getInteractTreePineImage() {
+	if (treePineInteractTexture == nullptr) {
+		treePineInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_canInteract.png").c_str());
+	}
+	return treePineInteractTexture;
+}
+SDL_Texture* ImageLoader::getCantInteractTreePineImage() {
+	if (treePineCantInteractTexture == nullptr) {
+
+		treePineCantInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_cantInteract.png").c_str());
+	}
+	return treePineCantInteractTexture;
+}
+
 SDL_Texture* ImageLoader::getCarrotInteractImage() {
 	if (carrotInteractOverlay == nullptr) {
 		carrotInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\carrot_canInteract.png").c_str());
