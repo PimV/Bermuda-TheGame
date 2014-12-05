@@ -16,16 +16,18 @@ Rock::Rock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage)
 
 	this->interactTime = 5000;
 	this->animationType = AnimationEnumType::Mine;
-
-	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractRockImage();
-	cantInteractTexture = GameStateManager::Instance()->getImageLoader()->getCantInteractRockImage();
+	
+	this->setCanInteractTexture(GameStateManager::Instance()->getImageLoader()->getInteractRockImage());
+	this->setCantInteractTexture(GameStateManager::Instance()->getImageLoader()->getCantInteractRockImage());
+	
+	this->setHighlightTexture(this->getCantInteractTexture());
 }
 
 bool Rock::canInteract(Player* player) {
 	if (player->getInventory()->pickAxeSelected()) {
-		this->setHighlightTexture(canInteractTexture);
+		this->setHighlightTexture(this->getCanInteractTexture());
 	} else {
-		this->setHighlightTexture(cantInteractTexture);
+		this->setHighlightTexture(this->getCantInteractTexture());
 	}
 	return player->getInventory()->pickAxeSelected();
 }
