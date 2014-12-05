@@ -8,6 +8,8 @@
 #include "RockSpikes.h"
 #include "GoldRock.h"
 #include "Ice.h"
+#include "IceSpikes.h"
+#include "IceRock.h"
 #include "Carrot.h"
 #include "Fish.h"
 #include "Pillar.h"
@@ -312,11 +314,13 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if (objectClasses[objectID] == "Ice")
 		{
-			new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			//new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new IceRock(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if (objectClasses[objectID] == "IceSpikes")
 		{
-			new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
+			//new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
+			new IceSpikes(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
 		}
 		else if (objectClasses[objectID] == "IcePieces")
 		{

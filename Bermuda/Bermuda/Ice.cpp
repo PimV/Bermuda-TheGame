@@ -18,9 +18,15 @@ Ice::Ice(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	this->interactTime = 5000;
 
 	this->animationType = AnimationEnumType::Mine;
+}
 
-	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractSpikeImage();
-	this->setHighlightTexture(canInteractTexture);
+bool Ice::canInteract(Player* player) {
+	if (player->getInventory()->pickAxeSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->pickAxeSelected();
 }
 
 void Ice::update(double dt) {

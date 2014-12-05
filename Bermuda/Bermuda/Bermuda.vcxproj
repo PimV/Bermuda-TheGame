@@ -120,6 +120,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
+    <ClInclude Include="IceRock.h" />
+    <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="MenuCreditsButton.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
     <ClInclude Include="MenuExitButton.h" />
@@ -243,6 +245,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="GoldRock.cpp" />
     <ClCompile Include="Ice.cpp" />
+    <ClCompile Include="IceRock.cpp" />
+    <ClCompile Include="IceSpikes.cpp" />
     <ClCompile Include="InteractableCactus.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
