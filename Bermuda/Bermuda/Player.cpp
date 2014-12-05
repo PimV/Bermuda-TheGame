@@ -88,8 +88,8 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationPickStartColumn = 1, this->animationPickEndColumn = 6;
 
 	//this->currentAnimationRow = this->animationWalkDownRow;
-	this->movementDirection = (int)MovementDirectionEnum::Down;
-	this->currentAnimationRow = ( this->animationWalkUpRow + this->movementDirection );
+	this->movementDirection = MovementDirectionEnum::Down;
+	this->currentAnimationRow = ( this->animationWalkUpRow + (int)this->movementDirection );
 
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
@@ -360,17 +360,17 @@ void Player::setAnimationType(AnimationEnumType type)
 		std::cout << "Animation type is None" << std::endl;
 		break;
 	case AnimationEnumType::Chop:
-			this->currentAnimationRow = this->animationChopUp + this->movementDirection;
+			this->currentAnimationRow = this->animationChopUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationChopStartColumn;
 			this->animationActionEndColumn = this->animationChopEndColumn;
 		break;
 	case AnimationEnumType::Mine:
-			this->currentAnimationRow = this->animationMineUp + this->movementDirection;
+			this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationMineStartColumn;
 			this->animationActionEndColumn = this->animationMineEndColumn;
 		break;
 	case AnimationEnumType::Pick:
-			this->currentAnimationRow = this->animationPickUp + this->movementDirection;
+			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationPickStartColumn;
 			this->animationActionEndColumn = this->animationPickEndColumn;
 		break;
@@ -389,7 +389,7 @@ void Player::setPosition(double newX, double newY) {
 	this->camera->setY((this->getY() + this->getHeight() / 2) - (this->camera->getHeight() / 2));
 }
 
-double Player::getDistence(int currentX, int currentY, int destX, int destY)
+double Player::getDistance(int currentX, int currentY, int destX, int destY)
 {
 	double DifferenceX = currentX - destX;
 	double DifferenceY = currentY - destY;

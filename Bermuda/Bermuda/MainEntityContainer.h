@@ -10,7 +10,7 @@
 #include "RespawnContainer.h"
 #include "SpawnpointContainer.h"
 #include "DestroyContainer.h"
-#include "ParticleContainer.h"
+#include "LightContainer.h"
 #include <map>
 
 class MainEntityContainer
@@ -26,7 +26,7 @@ public:
 	MovableContainer* getMovableContainer();
 	SpawnpointContainer* getSpawnpointContainer();
 	DestroyContainer* getDestroyContainer();
-	ParticleContainer* getParticleContainer();
+	LightContainer* getLightContainer();
 
 	virtual ~MainEntityContainer();
 

@@ -15,6 +15,11 @@ MovableEntity::~MovableEntity(void)
 {
 }
 
+MovementDirectionEnum MovableEntity::getMovementDirection()
+{
+	return this->movementDirection;
+}
+
 void MovableEntity::move(double dt)
 {
 	this->dx = 0;
@@ -83,22 +88,22 @@ void MovableEntity::move(double dt)
 	// set animation row
 	if (this->movingLeft)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Left;
+		this->movementDirection = MovementDirectionEnum::Left;
 		this->currentAnimationRow = this->animationWalkLeftRow;
 	}
 	else if (this->movingRight)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Right;
+		this->movementDirection = MovementDirectionEnum::Right;
 		this->currentAnimationRow = this->animationWalkRightRow;
 	}
 	else if (this->movingUp)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Up;
+		this->movementDirection = MovementDirectionEnum::Up;
 		this->currentAnimationRow = this->animationWalkUpRow;
 	}
 	else if (this->movingDown)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Down;
+		this->movementDirection = MovementDirectionEnum::Down;
 		this->currentAnimationRow = this->animationWalkDownRow;
 	}
 

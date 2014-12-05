@@ -1,9 +1,15 @@
 #include "BaseButton.h"
 
+//temp
+#include "MenuState.h"
+#include "PlayState.h"
+#include "PauseState.h"
+#include "MenuHelpScreen.h"
 
 BaseButton::BaseButton()
 {
 	reset();
+	hoverAction = false;
 }
 
 void BaseButton::reset()
@@ -40,6 +46,12 @@ void BaseButton::placeMidScreenUnder(BaseButton* button)
 void BaseButton::placeMidUnder(int x, int y)
 {
 	buttonRect.x = x - buttonRect.h / 2;
+	buttonRect.y = y;
+}
+
+void BaseButton::placeExactAt(int x, int y)
+{
+	buttonRect.x = x;
 	buttonRect.y = y;
 }
 
@@ -105,6 +117,22 @@ void BaseButton::placeLeftMid()
 	buttonRect.y = ((int)ScreenHeight - buttonRect.h) / 2;
 }
 
+void BaseButton::placeLeftUnder(int xOffset, int yOffset)
+{
+	buttonRect.x = yOffset;
+	buttonRect.y = ScreenHeight - buttonRect.h - yOffset;
+}
+
+void BaseButton::setHelpScr(MenuHelpScreen* scr)
+{
+	helpScr = scr;
+}
+
+void BaseButton::setHoverAction(bool falseOrTrue)
+{
+	hoverAction = falseOrTrue;
+}
+
 void BaseButton::hover(int x, int y)
 {
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
@@ -113,6 +141,10 @@ void BaseButton::hover(int x, int y)
 		if (active == false)
 		{
 			active = true;
+			if (hoverAction == true)
+			{
+				(this->*action) ();
+			}
 		}
 	}
 	else
@@ -129,7 +161,7 @@ bool BaseButton::clicked(int x, int y)
 	if (x >= buttonRect.x && x <= (buttonRect.x + buttonRect.w) &&
 		y >= buttonRect.y && y <= (buttonRect.y + buttonRect.h))
 	{
-		action();
+		(this->*action) ();
 		return true;
 	}
 	return false;
@@ -157,4 +189,61 @@ void BaseButton::cleanup()
 BaseButton::~BaseButton()
 {
 	cleanup();
+}
+
+
+//button actions
+void BaseButton::setCreditsScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuCreditsScreen());
+}
+
+void BaseButton::exitAction()
+{
+	exit(0);
+}
+
+void BaseButton::menuSetHelpScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuHelpScreen());
+}
+
+void BaseButton::playAction()
+{
+	GameStateManager::Instance()->changeGameState(PlayState::Instance());
+}
+
+void BaseButton::pauseSetAchievementScreenAction()
+{
+	PauseState::Instance()->setCurWindow(PauseState::Instance()->getMainAchievementsScreen());
+}
+
+void BaseButton::backToMenuAction()
+{
+	GameStateManager::Instance()->changeGameState(MenuState::Instance());
+}
+
+void BaseButton::resumeGameAction()
+{
+	GameStateManager::Instance()->popState();
+}
+
+void BaseButton::menuMainScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuMainScreen());
+}
+
+void BaseButton::helpMovementScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getMovementScr());
+}
+
+void BaseButton::helpCutTreeScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getCutTreeScr());
+}
+
+void BaseButton::helpMineTreeScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getMineRockScr());
 }

@@ -16,6 +16,7 @@
 #include "RuinStatue.h"
 #include "EasterHead.h"
 #include "Cactus.h"
+#include "SnowTree.h"
 #include "InteractableCactus.h"
 #include "InteractableCactusBig.h"
 #include "InteractableCactusSmall.h"
@@ -359,6 +360,10 @@ void MapLoader::createObjects(Value& objects)
 		else if(objectClasses[objectID] == "Fish")
 		{
 			new Fish(objectID, objectX, objectY, objectImg);
+		}
+		else if(objectClasses[objectID] == "SnowTree")
+		{
+			new SnowTree(objectID, objectX, objectY, objectImg);
 		}
 		processedObjects++;
 		tempPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);

@@ -14,7 +14,6 @@
 
 PlayState PlayState::m_PlayState;
 
-//Needed for vector sort
 bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
 PlayState::PlayState(void)
@@ -23,14 +22,15 @@ PlayState::PlayState(void)
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+
 	GameStateManager::Instance()->setSpeedMultiplier(1);
 	GameTimer::Instance()->init();
 	this->ready = false;
 	this->showCol = false;
 	this->showInter = false;
 	this->showSpawnArea = false;
+	this->showDayLight = true;
 	this->timesUpdate = 0;
-
 
 	mec = new MainEntityContainer();
 	mapLoader = new MapLoader(this->gsm, mec);
@@ -46,6 +46,9 @@ void PlayState::init(GameStateManager *gsm) {
 
 
 	SoundLoader::Instance()->playGameMusic();
+
+	nightLayer = new NightLayer();
+
 	this->ready = true;
 }
 
@@ -86,23 +89,26 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			if (p->getInventory()->clicked(x,y, "select", p)) {
-			} else {
+			if (p->getInventory()->clicked(x, y, "select", p)) {
+			}
+			else {
 				p->destX = x + this->camera->getX();
 				p->destY = y + this->camera->getY();
 				p->resetMovement();
 				p->moveClick = true;
 			}
-		} else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
+		}
+		else if (mainEvent.button.button == SDL_BUTTON_RIGHT) {
 			if (p->getInventory()->clicked(x, y, "use", p)) {
 
 			}
 		}
 		break;
-	case SDL_MOUSEWHEEL: 
+	case SDL_MOUSEWHEEL:
 		if (mainEvent.wheel.y > 0) {
 			p->getInventory()->decrementSelectedIndex();
-		} else if (mainEvent.wheel.y < 0){
+		}
+		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->incrementSelectedIndex();
 		}
 
@@ -187,6 +193,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			this->showSpawnArea = !this->showSpawnArea;
 		case SDLK_F9:
 			GameStateManager::Instance()->toggleHelpEnabled();
+			break;
+		case SDLK_F7:
+			this->showDayLight = !this->showDayLight;
 			break;
 		case SDLK_F8:
 			p->getCraftingSystem()->craftItem(Items::Campfire);
@@ -277,7 +286,7 @@ void PlayState::update(double dt) {
 
 	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
 	//Update gametimer
-	if(this->timesUpdate > 2)
+	if (this->timesUpdate > 2)
 	{
 		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
 	}
@@ -295,7 +304,7 @@ void PlayState::update(double dt) {
 	this->updateMediumAreaEntities(dt);
 }
 
-void PlayState::updateVisibleEntities(double dt) 
+void PlayState::updateVisibleEntities(double dt)
 {
 	//Update all animating entities
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
@@ -361,11 +370,12 @@ void PlayState::updateMediumAreaEntities(double dt)
 	}
 }
 
-void PlayState::draw() 
+void PlayState::draw()
 {
 	if (!ready) {
 		return;
 	}
+
 	//Calculate begin and end chunks for the interact check (+1 and -1 to make it a little bigger thent he current chunk)
 	int beginChunkX = p->getChunkX() - 1;
 	int endChunkX = p->getChunkX() + 1;
@@ -417,6 +427,8 @@ void PlayState::draw()
 		closestEntity->canInteract(p);
 		closestEntity->setHighlighted(true);
 	}
+
+
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
 	endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
@@ -439,11 +451,11 @@ void PlayState::draw()
 					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
 
 					//Draw collision area
-					if(this->showCol)
+					if (this->showCol)
 					{
 						//TEMP draw collision area
 						CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
-						if(ce != NULL)
+						if (ce != NULL)
 						{
 							ce->drawCollidableArea();
 						}
@@ -466,7 +478,7 @@ void PlayState::draw()
 	}
 
 	//Draw spawnpoint area
-	if(this->showSpawnArea)
+	if (this->showSpawnArea)
 	{
 		//Loop through all chunks
 		for (int i = beginChunkY; i <= endChunkY; i++)
@@ -474,7 +486,7 @@ void PlayState::draw()
 			for (int j = beginChunkX; j <= endChunkX; j++)
 			{
 				std::vector<Spawnpoint*>* vec = this->mec->getSpawnpointContainer()->getChunk(i, j);
-				if(vec != nullptr)
+				if (vec != nullptr)
 				{
 					for (Spawnpoint* sp : *vec)
 					{
@@ -496,49 +508,32 @@ void PlayState::draw()
 			dynamic_cast<InteractableEntity*>(e)->highlight();
 		}
 		//Draw interactable area
-		if(this->showInter)
+		if (this->showInter)
 		{
 			InteractableEntity* ie = dynamic_cast<InteractableEntity*>(e);
-			if(ie != NULL)
+			if (ie != NULL)
 			{
 				ie->drawInteractableArea();
-			}	
+			}
 		}
 
 		//Draw collision area
-		if(this->showCol)
+		if (this->showCol)
 		{
 			//TEMP draw collision area
 			CollidableEntity* ce = dynamic_cast<CollidableEntity*>(e);
-			if(ce != NULL)
+			if (ce != NULL)
 			{
 				ce->drawCollidableArea();
 			}
 		}
 	}
 
-	for (int i = beginChunkY; i <= endChunkY; i++)
+
+	if (showDayLight && GameTimer::Instance()->getPercentage() >= 65 || GameTimer::Instance()->getPercentage() <= 10)
 	{
-		for (int j = beginChunkX; j <= endChunkX; j++)
-		{
-			//Particles / Top layer
-			std::vector<DrawableEntity*>* vec = this->mec->getParticleContainer()->getChunk(i, j);
-			if (vec != nullptr)
-			{
-				for (DrawableEntity* e : *vec)
-				{
-					e->draw(camera, this->gsm->sdlInitializer->getRenderer());
-				}
-			}
-
-
-
-		}
+		nightLayer->draw(camera, mec);
 	}
-
-
-
-
 
 	if (this->p->getInventory()->isOpen()) {
 		this->p->getInventory()->draw();
@@ -566,5 +561,6 @@ PlayState::~PlayState(void)
 	delete camera;
 	delete mec;
 	delete mapLoader;
-	std::cout << "deleting playstate" << endl; 
+	delete nightLayer;
+	std::cout << "deleting playstate" << endl;
 }

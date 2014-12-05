@@ -3,7 +3,6 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "PlayState.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, 5, 1, 50, spawnPoint),

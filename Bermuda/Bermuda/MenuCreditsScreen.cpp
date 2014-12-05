@@ -2,8 +2,6 @@
 #include <SDL_image.h>
 #include <iostream>
 #include "MenuState.h"
-#include "MenuMainButton.h"
-
 
 MenuCreditsScreen::MenuCreditsScreen()
 {
@@ -16,7 +14,9 @@ void MenuCreditsScreen::init()
 	setNames();
 	createNameTextures();
 
-	MenuMainButton* returnButton = new MenuMainButton();
+	BaseButton* returnButton = new BaseButton();
+	returnButton->action = &BaseButton::menuMainScreenAction;
+	returnButton->createButton("Return to main menu", 40, 0);
 	buttons.push_back(returnButton);
 
 	align();

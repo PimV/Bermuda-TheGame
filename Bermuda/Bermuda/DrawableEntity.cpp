@@ -7,11 +7,11 @@ DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) :
 {
 	if(image != nullptr)
 	{
-		setWidth(drawImage->getWidth());
-		setHeight(drawImage->getHeight());
+		this->setWidth(drawImage->getWidth());
+		this->setHeight(drawImage->getHeight());
 	}
-	sizeRect = new SDL_Rect();
 
+	this->sizeRect = new SDL_Rect();
 }
 
 void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
@@ -35,12 +35,13 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 
 void DrawableEntity::setDrawImage(Image* image)
 {
-	drawImage = image;
-	if (this->getWidth() < 0 && this->getHeight() < 0)
+	if (this->drawImage == nullptr)
 	{
-		setWidth(drawImage->getWidth());
-		setHeight(drawImage->getHeight());
+		this->setWidth(image->getWidth());
+		this->setHeight(image->getHeight());
 	}
+
+	this->drawImage = image;
 }
 
 void DrawableEntity::setCanInteractTexture(SDL_Texture* can)
