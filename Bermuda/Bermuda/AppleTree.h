@@ -10,8 +10,6 @@ private:
 	Image* treeImage;
 	Image* treeEmptyImage;
 	Image* stumpImage;
-	SDL_Texture* canInteractTexture;
-	SDL_Texture* cantInteractTexture;
 public:
 	AppleTree(int id, double x, double y, Image* treeImage, Image* treeEmptyImage, Image* stumpImage);
 	void update(double dt);

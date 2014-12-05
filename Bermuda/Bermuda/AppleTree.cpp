@@ -21,17 +21,17 @@ AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEm
 
 	this->animationType = AnimationEnumType::Pick;
 
-	canInteractTexture = GameStateManager::Instance()->getImageLoader()->getInteractTreeImage();
-	cantInteractTexture = GameStateManager::Instance()->getImageLoader()->getCantInteractTreeImage();
+	this->setCanInteractTexture(GameStateManager::Instance()->getImageLoader()->getInteractTreeImage());
+	this->setCantInteractTexture(GameStateManager::Instance()->getImageLoader()->getCantInteractTreeImage());
 
-	this->setHighlightTexture(cantInteractTexture);
+	this->setHighlightTexture(this->getCantInteractTexture());
 }
 
 bool AppleTree::canInteract(Player* player) {
 	if (this->destroyed) {
-		this->setHighlightTexture(cantInteractTexture);
+		this->setHighlightTexture(this->getCantInteractTexture());
 	} else {
-		this->setHighlightTexture(canInteractTexture);
+		this->setHighlightTexture(this->getCanInteractTexture());
 	}
 	return !this->destroyed;
 }
