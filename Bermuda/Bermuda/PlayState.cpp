@@ -8,8 +8,9 @@
 #include "Windows.h"
 #include <thread>
 #include "Items.h"
-
+#include "NPCFactory.h"
 #include "ItemFactory.h"
+#include "ObjectFactory.h"
 
 
 PlayState PlayState::m_PlayState;
@@ -31,8 +32,13 @@ void PlayState::init(GameStateManager *gsm) {
 	this->showDayLight = true;
 	this->timesUpdate = 0;
 
+	imgLoader = new ImageLoader(GameStateManager::Instance()->sdlInitializer->getRenderer());
+	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
+	ItemFactory::Instance()->loadItemTileSets(imgLoader);
+	ObjectFactory::Instance()->loadObjectTileSets(imgLoader);
+
 	mec = new MainEntityContainer();
-	mapLoader = new MapLoader(this->gsm, mec);
+	mapLoader = new MapLoader();
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
@@ -64,6 +70,7 @@ void PlayState::cleanup() {
 	delete camera;
 	delete mapLoader;
 	delete mec;
+	delete imgLoader;
 }
 
 void PlayState::pause() {
@@ -500,6 +507,11 @@ Player* PlayState::getPlayer()
 Camera* PlayState::getCamera()
 {
 	return this->camera;
+}
+
+ImageLoader* PlayState::getImageLoader()
+{
+	return imgLoader;
 }
 
 //ERROR Deze methode word nooit aangeroepen volgens mij.

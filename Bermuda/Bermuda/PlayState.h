@@ -15,8 +15,10 @@ private:
 
 	GameStateManager* gsm;
 
+	ImageLoader* imgLoader;
 	MapLoader* mapLoader;
 	MainEntityContainer* mec;
+	NightLayer* nightLayer;
 
 	SDL_Surface* bg;
 	int alpha;
@@ -33,12 +35,11 @@ private:
 
 	bool showCol, showInter, showSpawnArea, showDayLight;
 
-	NightLayer* nightLayer;
-
 	static bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two);
 
 public:
 	PlayState();
+	ImageLoader* getImageLoader();
 	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
 

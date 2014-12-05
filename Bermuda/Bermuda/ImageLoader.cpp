@@ -45,16 +45,6 @@ int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeigh
 	return startID;
 }
 
-/*SDL_Texture* ImageLoader::loadSpriteSheet(string filename)
-{
-	SDL_Texture* spriteSheet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
-
-	if (spriteSheet == nullptr)
-		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
-
-	return spriteSheet;
-}*/
-
 int ImageLoader::getCurrentImageCount()
 {
 	return images.size();
@@ -72,17 +62,25 @@ Image* ImageLoader::getMapImage(int tileID)
 	}
 }
 
-ImageLoader::~ImageLoader()
+void ImageLoader::cleanup()
 {
 	// Destroy all images
 	for (int i = 0; i < images.size(); i++)
 	{
-		delete images.at(i);
+		delete images[i];
+		images[i] = nullptr;
 	}
+	std::vector<Image*>().swap(images); //Clear and shrink vector
 
 	// Destroy all tilesets
 	for (int i = 0; i < tileSets.size(); i++)
 	{
-		SDL_DestroyTexture(tileSets.at(i));
+		SDL_DestroyTexture(tileSets[i]);
 	}
+	std::vector<SDL_Texture*>().swap(tileSets); //Clear and shrink vector
+}
+
+ImageLoader::~ImageLoader()
+{
+	this->cleanup();
 }

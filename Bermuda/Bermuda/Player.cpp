@@ -70,7 +70,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->interaction = false;
 
 	//this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Empty_Handed_Pick_Chop_Mine.png", 64, 64);
+	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("Player_Empty_Handed_Pick_Chop_Mine.png", 64, 64);
 	
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;

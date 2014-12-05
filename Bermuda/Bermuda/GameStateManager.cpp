@@ -2,9 +2,6 @@
 #include "IGameState.h"
 #include "MenuState.h"
 #include "PlayState.h"
-#include "NPCFactory.h"
-#include "ItemFactory.h"
-#include "ObjectFactory.h"
 #include <iostream>
 #include <Windows.h>
 #include <SDL_ttf.h>
@@ -20,13 +17,8 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
-	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
 	soundLoader = new SoundLoader();
-	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
-	ItemFactory::Instance()->loadItemTileSets(imgLoader);
-	ObjectFactory::Instance()->loadObjectTileSets(imgLoader);
 	//states = new std::vector<IGameState*>();
-
 
 	GameStateManager::Instance()->changeGameState(MenuState::Instance());
 
@@ -205,11 +197,6 @@ void GameStateManager::quit() {
 	SDL_Quit();
 }
 
-ImageLoader* GameStateManager::getImageLoader()
-{
-	return imgLoader;
-}
-
 SoundLoader* GameStateManager::getSoundLoader()
 {
 	return soundLoader;
@@ -225,12 +212,11 @@ void GameStateManager::cleanup() {
 		states.pop_back();
 	}
 
-	delete this->imgLoader;
 	delete this->soundLoader;
 	delete this->sdlInitializer;
 	delete this->actionContainer;
 }
 
 GameStateManager::~GameStateManager() {
-	this->cleanup();
+	//this->cleanup();
 }

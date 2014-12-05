@@ -13,9 +13,9 @@ private:
 	vector<Image*> images;
 public:
 	ImageLoader(SDL_Renderer* renderer);
-	virtual ~ImageLoader();
 	int loadTileset(string filename, double tileWidth, double tileHeight);
 	int getCurrentImageCount();
-	//SDL_Texture* loadSpriteSheet(string filename);
 	Image* getMapImage(int tileID);
+	void cleanup();
+	virtual ~ImageLoader();
 };

@@ -130,14 +130,14 @@ void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double 
 			this->CurrentFrame++;
 		}
 
-		this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
+		this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
 		this->animationSpeed = this->maxSpeed * 3;
 	}
 }
 
 void MovableEntity::StopAnimation()
 {
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
+	this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }
 
 void MovableEntity::setPosition(double newX, double newY) {

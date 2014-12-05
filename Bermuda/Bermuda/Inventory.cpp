@@ -1,5 +1,6 @@
 #include "Inventory.h"
 #include "GameStateManager.h"
+#include "PlayState.h"
 #include "Item.h"
 #include "Items.h"
 #include "Image.h"
@@ -32,14 +33,14 @@ void Inventory::init() {
 	itemWidth = ScreenWidth / 50;
 	itemHeight = ScreenHeight / 30;
 
-	int id = GameStateManager::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
-	img = GameStateManager::Instance()->getImageLoader()->getMapImage(id);
+	int id = PlayState::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
+	img = PlayState::Instance()->getImageLoader()->getMapImage(id);
 
-	int singleId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item.png", 69,69);
-	singleImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleId);
+	int singleId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item.png", 69, 69);
+	singleImg = PlayState::Instance()->getImageLoader()->getMapImage(singleId);
 
-	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
-	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
+	int singleSelectedId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69, 69);
+	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
 	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 }

@@ -3,9 +3,7 @@
 #include <rapidjson/document.h>
 #include <map>
 #include <vector>
-#include "ImageLoader.h"
-#include "GameStateManager.h"
-#include "MainEntityContainer.h"
+#include "ImageLoader.h""
 
 using namespace std;
 using namespace rapidjson;
@@ -22,8 +20,6 @@ private:
 	map<int, string> objectClasses;
 	vector<int> collisionVector;
 	ImageLoader* imgLoader;
-	MainEntityContainer* mec;
-	GameStateManager* gsm;
 	int firstImgID;
 	int mapHeight;
 	int mapWidth;
@@ -32,7 +28,7 @@ private:
 	int loadPercentage;
 	string loadStatus;
 public:
-	MapLoader(GameStateManager* gsm, MainEntityContainer* mec);
+	MapLoader();
 	void loadMap();
 	int getMapHeight();
 	int getMapWidth();

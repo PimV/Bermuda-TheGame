@@ -40,7 +40,6 @@ public:
 	void toggleHelpEnabled();
 	void quit();
 	SDLInitializer* sdlInitializer;
-	ImageLoader* getImageLoader();
 	SoundLoader* getSoundLoader();
 
 	double getSpeedMultiplier();
@@ -60,7 +59,6 @@ private:
 	bool showHelp;
 	std::vector<IGameState*> states;
 	IGameState* currentState;
-	ImageLoader* imgLoader;
 	SoundLoader* soundLoader;
 	bool m_running;
 

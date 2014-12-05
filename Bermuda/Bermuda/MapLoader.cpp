@@ -26,9 +26,9 @@
 #include <Windows.h>
 #include <math.h>
 
-MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
-	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader())
+MapLoader::MapLoader()
 {
+	this->imgLoader = PlayState::Instance()->getImageLoader();
 }
 
 void MapLoader::setPercentage(int percentage)
@@ -122,7 +122,7 @@ void MapLoader::extractMapInfo(Document& d)
 	mapWidth = mapTileWidth * tileWidth;
 
 	//Initialize the containers
-	mec->initContainerSizes(mapHeight, mapWidth);
+	PlayState::Instance()->getMainEntityContainer()->initContainerSizes(mapHeight, mapWidth);
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
