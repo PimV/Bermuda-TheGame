@@ -13,8 +13,8 @@ private:
 	vector<Image*> images;
 
 	//Interact Green/Red
-	SDL_Texture* canInteractTreeTexture;
-	SDL_Texture* cantInteractTreeTexture;
+	SDL_Texture* treeInteractTexture;
+	SDL_Texture* treeCantInteractTexture;
 
 	SDL_Texture* carrotInteractOverlay;
 

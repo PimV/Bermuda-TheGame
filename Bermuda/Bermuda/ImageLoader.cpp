@@ -74,17 +74,17 @@ Image* ImageLoader::getMapImage(int tileID)
 }
 
 SDL_Texture* ImageLoader::getInteractTreeImage() {
-	if (canInteractTreeTexture == nullptr) {
-		canInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_canInteract.png").c_str());
+	if (treeInteractTexture == nullptr) {
+		treeInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_canInteract.png").c_str());
 	}
-	return canInteractTreeTexture;
+	return treeInteractTexture;
 }
 SDL_Texture* ImageLoader::getCantInteractTreeImage() {
-	if (cantInteractTreeTexture == nullptr) {
+	if (treeCantInteractTexture == nullptr) {
 
-		cantInteractTreeTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_cantInteract.png").c_str());
+		treeCantInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_cantInteract.png").c_str());
 	}
-	return cantInteractTreeTexture;
+	return treeCantInteractTexture;
 }
 
 SDL_Texture* ImageLoader::getCarrotInteractImage() {
