@@ -76,7 +76,7 @@ void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
 	this->m_container[ContainerType::Light]->initChunks(chunksY, chunksX);
 }
 
-MainEntityContainer::~MainEntityContainer()
+void MainEntityContainer::cleanup()
 {
 	this->m_container[ContainerType::Drawable]->cleanup();
 	this->m_container[ContainerType::Animating]->cleanup();
@@ -99,4 +99,20 @@ MainEntityContainer::~MainEntityContainer()
 	delete this->m_container[ContainerType::Spawnpoint];
 	delete this->m_container[ContainerType::Destroyed];
 	delete this->m_container[ContainerType::Light];
+
+	this->m_container[ContainerType::Drawable] = nullptr;
+	this->m_container[ContainerType::Animating] = nullptr;
+	this->m_container[ContainerType::Collidable] = nullptr;
+	this->m_container[ContainerType::Background] = nullptr;
+	this->m_container[ContainerType::Interactable] = nullptr;
+	this->m_container[ContainerType::Respawnable] = nullptr;
+	this->m_container[ContainerType::Movable] = nullptr;
+	this->m_container[ContainerType::Spawnpoint] = nullptr;
+	this->m_container[ContainerType::Destroyed] = nullptr;
+	this->m_container[ContainerType::Light] = nullptr;
+}
+
+MainEntityContainer::~MainEntityContainer()
+{
+	this->cleanup();
 }

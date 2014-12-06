@@ -55,6 +55,7 @@ void StatusTracker::cleanup()
 	for (int i = 0; i < achievements.size(); i++)
 	{
 		delete achievements[i];
+		achievements[i] = nullptr;
 	}
 	std::vector<Achievement*>().swap(this->achievements); //Clear and shrink vector
 }

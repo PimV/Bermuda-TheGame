@@ -114,6 +114,7 @@ bool Inventory::addItem(Item* item) {
 
 	if (item->getStackSize() <= 0) {
 		delete item;
+		item = nullptr;
 	}
 	return true;
 }
@@ -218,6 +219,7 @@ void Inventory::deleteItem(int itemID, int count)
 				selectedIndex--;
 			}
 			delete *it;
+			*it = nullptr;
 			this->itemVector.erase(it);
 		} else {
 			stack->setStackSize(stack->getStackSize() - count);
@@ -235,6 +237,7 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 			selectedIndex--;
 		}
 		delete *it;
+		*it = nullptr;
 		this->itemVector.erase(it);
 	}
 }
@@ -419,6 +422,7 @@ void Inventory::cleanup() {
 		Item* stack = this->itemVector.back();
 		this->itemVector.pop_back();
 		delete stack;
+		stack = nullptr;
 	}
 }
 

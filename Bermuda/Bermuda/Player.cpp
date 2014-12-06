@@ -644,4 +644,8 @@ Player::~Player() {
 	delete this->inventory;
 	delete this->crafting;
 	delete this->statusTracker;
+
+	this->inventory = nullptr;
+	this->crafting = nullptr;
+	this->statusTracker = nullptr;
 }

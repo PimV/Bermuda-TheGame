@@ -48,6 +48,7 @@ void CollidableContainer::cleanup()
 				CollidableEntity* entity = this->container[y][x].back();
 				this->container[y][x].pop_back();
 				delete entity;
+				entity = nullptr;
 			}
 		}
 	}

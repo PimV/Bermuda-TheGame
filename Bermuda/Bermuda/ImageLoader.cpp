@@ -76,6 +76,7 @@ void ImageLoader::cleanup()
 	for (int i = 0; i < tileSets.size(); i++)
 	{
 		SDL_DestroyTexture(tileSets[i]);
+		tileSets[i] = nullptr;
 	}
 	std::vector<SDL_Texture*>().swap(tileSets); //Clear and shrink vector
 }

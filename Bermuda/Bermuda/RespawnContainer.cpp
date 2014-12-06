@@ -30,6 +30,7 @@ void RespawnContainer::cleanup()
 		InteractableEntity* entity = this->container.back();
 		this->container.pop_back();
 		delete entity;
+		entity = nullptr;
 	}
 }
 

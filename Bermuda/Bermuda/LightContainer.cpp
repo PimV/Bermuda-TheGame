@@ -48,6 +48,7 @@ void LightContainer::cleanup()
 				LightEntity* entity = this->container[y][x].back();
 				this->container[y][x].pop_back();
 				delete entity;
+				entity = nullptr;
 			}
 		}
 	}

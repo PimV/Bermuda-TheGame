@@ -47,6 +47,7 @@ void EntityChunkContainer::cleanup()
 				Entity* entity = this->container[y][x].back();
 				this->container[y][x].pop_back();
 				delete entity;
+				entity = nullptr;
 			}
 		}
 	}

@@ -11,15 +11,6 @@ void ActionContainer::init() {
 	m_actionContainer = new std::vector<IAction*>();
 }
 
-void ActionContainer::cleanup() {
-	while (!this->m_actionContainer->empty())
-	{
-		IAction* action = this->m_actionContainer->back();
-		m_actionContainer->pop_back();
-		delete action;
-	}
-}
-
 void ActionContainer::addAction(IAction* action) {
 	m_actionContainer->push_back(action);
 }
@@ -44,6 +35,16 @@ void ActionContainer::executeAction(IAction* action) {
 
 std::vector<IAction*>* ActionContainer::getVector() {
 	return m_actionContainer;
+}
+
+void ActionContainer::cleanup() {
+	while (!this->m_actionContainer->empty())
+	{
+		IAction* action = this->m_actionContainer->back();
+		m_actionContainer->pop_back();
+		delete action;
+		action = nullptr;
+	}
 }
 
 ActionContainer::~ActionContainer()
