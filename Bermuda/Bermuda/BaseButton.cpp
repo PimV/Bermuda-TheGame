@@ -200,7 +200,7 @@ void BaseButton::setCreditsScreenAction()
 
 void BaseButton::exitAction()
 {
-	exit(0);
+	GameStateManager::Instance()->quitGame();
 }
 
 void BaseButton::menuSetHelpScreenAction()

@@ -35,6 +35,7 @@ public:
 
 	ActionContainer* getActionContainer();
 
+	void quitGame();
 	bool running();
 	bool helpEnabled();
 	void toggleHelpEnabled();

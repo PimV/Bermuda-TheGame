@@ -109,7 +109,6 @@ void GameStateManager::handleEvents() {
 		{
 		case SDL_QUIT:
 			this->m_running = false;
-			exit(0);
 			break;
 		case SDL_KEYDOWN:
 			switch(mainEvent.key.keysym.sym) 
@@ -188,6 +187,11 @@ ActionContainer* GameStateManager::getActionContainer() {
 	return actionContainer;
 }
 
+void GameStateManager::quitGame()
+{
+	this->m_running = false;
+}
+
 bool GameStateManager::running() {
 	return m_running;
 }
@@ -202,7 +206,8 @@ SoundLoader* GameStateManager::getSoundLoader()
 	return soundLoader;
 }
 
-void GameStateManager::cleanup() {
+void GameStateManager::cleanup() 
+{
 	//While there are states on the stack, clean them up
 	while (!states.empty()) {
 		//Peek at top state and clean that state
@@ -217,6 +222,6 @@ void GameStateManager::cleanup() {
 	delete this->actionContainer;
 }
 
-GameStateManager::~GameStateManager() {
-	//this->cleanup();
+GameStateManager::~GameStateManager() 
+{
 }

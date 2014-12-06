@@ -92,5 +92,5 @@ void GameOverState::draw(){
 
 GameOverState::~GameOverState()
 {
-	cleanup();
+	this->cleanup();
 }

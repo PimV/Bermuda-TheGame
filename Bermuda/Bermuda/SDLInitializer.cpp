@@ -5,11 +5,6 @@ SDLInitializer::SDLInitializer()
 {
 }
 
-
-SDLInitializer::~SDLInitializer()
-{
-}
-
 void SDLInitializer::init(const char* title, int width, int height, int bpp, bool fullscreen) {
 	window = SDL_CreateWindow(
 		title,
@@ -84,4 +79,10 @@ SDL_Renderer* SDLInitializer::getRenderer() {
 SDL_Window* SDLInitializer::getWindow()
 {
 	return window;
+}
+
+SDLInitializer::~SDLInitializer()
+{
+	SDL_DestroyRenderer(this->renderer);
+	SDL_DestroyWindow(this->window);
 }
