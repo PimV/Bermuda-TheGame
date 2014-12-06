@@ -56,10 +56,10 @@ void StatusTracker::cleanup()
 	{
 		delete achievements[i];
 	}
-	achievements.clear();
+	std::vector<Achievement*>().swap(this->achievements); //Clear and shrink vector
 }
 
 StatusTracker::~StatusTracker()
 {
-	cleanup();
+	this->cleanup();
 }

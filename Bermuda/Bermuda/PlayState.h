@@ -14,19 +14,11 @@ private:
 	static PlayState m_PlayState;
 
 	GameStateManager* gsm;
-
 	ImageLoader* imgLoader;
 	MapLoader* mapLoader;
 	MainEntityContainer* mec;
 	NightLayer* nightLayer;
-
-	SDL_Surface* bg;
-	int alpha;
-
-	int counter;
-	bool mapLoaded;
 	Camera* camera;
-
 	Player* p;
 	std::vector<DrawableEntity*> temp;
 
@@ -42,6 +34,7 @@ public:
 	ImageLoader* getImageLoader();
 	Player* getPlayer();
 	MainEntityContainer* getMainEntityContainer();
+	Camera* getCamera();
 
 	void init(GameStateManager *gsm);
 	void cleanup();
@@ -58,8 +51,6 @@ public:
 	void updateGameTimers(double dt);	
 
 	void draw();
-
-	Camera* getCamera();
 
 	static PlayState* Instance() {
 		return &m_PlayState;

@@ -95,7 +95,7 @@ void Crafting::draw()
 
 void Crafting::cleanup()
 {
-
+	//Nothing to clean for now.
 }
 
 Crafting::~Crafting()

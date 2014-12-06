@@ -42,11 +42,12 @@ void Inventory::init() {
 	int singleSelectedId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69, 69);
 	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
+	//TODO: Remove in final version.
 	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
-}
-
-void Inventory::cleanup() {
-
+	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 }
 
 void Inventory::incrementSelectedIndex() {
@@ -412,6 +413,16 @@ int Inventory::getWidth() {
 	return this->slots * this->slotWidth;
 }
 
+void Inventory::cleanup() {
+	while (!this->itemVector.empty())
+	{
+		Item* stack = this->itemVector.back();
+		this->itemVector.pop_back();
+		delete stack;
+	}
+}
+
 Inventory::~Inventory()
 {
+	this->cleanup();
 }

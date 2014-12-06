@@ -24,8 +24,6 @@ PlayState::PlayState()
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
-
-	GameStateManager::Instance()->setSpeedMultiplier(1);
 	this->gameOver = false;
 	this->showCol = false;
 	this->showInter = false;
@@ -33,6 +31,8 @@ void PlayState::init(GameStateManager *gsm) {
 	this->showDayLight = true;
 	this->timesUpdate = 0;
 
+	GameStateManager::Instance()->setSpeedMultiplier(1);
+	GameTimer::Instance()->init();
 	imgLoader = new ImageLoader(GameStateManager::Instance()->sdlInitializer->getRenderer());
 	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
 	ItemFactory::Instance()->loadItemTileSets(imgLoader);
@@ -44,13 +44,7 @@ void PlayState::init(GameStateManager *gsm) {
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
-
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 	
-	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
@@ -59,17 +53,6 @@ void PlayState::init(GameStateManager *gsm) {
 MainEntityContainer* PlayState::getMainEntityContainer()
 {
 	return this->mec;
-}
-
-void PlayState::cleanup() {
-	std::cout << "deleting playstate" << endl;
-	GameTimer::Instance()->cleanUp();
-	delete nightLayer;
-	delete p;
-	delete camera;
-	delete mapLoader;
-	delete mec;
-	delete imgLoader;
 }
 
 void PlayState::pause() {
@@ -508,7 +491,25 @@ ImageLoader* PlayState::getImageLoader()
 	return imgLoader;
 }
 
+void PlayState::cleanup() {
+	std::cout << "deleting playstate" << endl;
+	GameTimer::Instance()->cleanUp();
+	delete nightLayer;
+	delete p;
+	delete camera;
+	delete mapLoader;
+	delete mec;
+	delete imgLoader;
+
+	nightLayer = nullptr;
+	p = nullptr;
+	camera = nullptr;
+	mapLoader = nullptr;
+	mec = nullptr;
+	imgLoader = nullptr;
+}
+
 PlayState::~PlayState()
 {
-	//this->cleanup();
+	this->cleanup();
 }
