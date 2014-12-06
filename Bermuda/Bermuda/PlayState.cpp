@@ -11,6 +11,7 @@
 #include "NPCFactory.h"
 #include "ItemFactory.h"
 #include "ObjectFactory.h"
+#include "GameOverState.h"
 
 
 PlayState PlayState::m_PlayState;
@@ -25,7 +26,7 @@ void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 
 	GameStateManager::Instance()->setSpeedMultiplier(1);
-	this->ready = false;
+	this->gameOver = false;
 	this->showCol = false;
 	this->showInter = false;
 	this->showSpawnArea = false;
@@ -53,8 +54,6 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
-
-	this->ready = true;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -87,11 +86,6 @@ void PlayState::resume() {
 
 
 void PlayState::handleEvents(SDL_Event mainEvent) {
-	if (!ready) {
-		return;
-	}
-	//p->handleEvents();
-	//Process Input
 
 	//Retrieve input
 	int x, y;
@@ -289,11 +283,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
-	// check if player died
-	if (!ready) {
-		return;
-	}
-
 	mec->getDestroyContainer()->destroyAllEntities();
 
 	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
@@ -314,6 +303,11 @@ void PlayState::update(double dt) {
 
 	this->updateVisibleEntities(dt);
 	this->updateMediumAreaEntities(dt);
+
+	if (gameOver)
+	{
+		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
+	}
 }
 
 void PlayState::updateVisibleEntities(double dt)
@@ -384,11 +378,6 @@ void PlayState::updateMediumAreaEntities(double dt)
 
 void PlayState::draw()
 {
-	if (!ready) {
-		return;
-	}
-
-
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
@@ -499,6 +488,11 @@ void PlayState::draw()
 	GameTimer::Instance()->draw();
 }
 
+void PlayState::setGameOver(bool gameOver)
+{
+	this->gameOver = gameOver;
+}
+
 Player* PlayState::getPlayer()
 {
 	return this->p;
@@ -514,8 +508,6 @@ ImageLoader* PlayState::getImageLoader()
 	return imgLoader;
 }
 
-//ERROR Deze methode word nooit aangeroepen volgens mij.
-//Betekend dus dat de playstate nooit verwijderd wordt
 PlayState::~PlayState()
 {
 	//this->cleanup();

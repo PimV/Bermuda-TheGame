@@ -31,7 +31,7 @@ private:
 	std::vector<DrawableEntity*> temp;
 
 	int timesUpdate;
-	bool ready;
+	bool gameOver;
 
 	bool showCol, showInter, showSpawnArea, showDayLight;
 
@@ -48,14 +48,13 @@ public:
 
 	void pause();
 	void resume();
+	void setGameOver(bool gameOver);
 
 	void handleEvents(SDL_Event mainEvent);
 
 	void update(double dt);
-
 	void updateVisibleEntities(double dt);
 	void updateMediumAreaEntities(double dt);
-
 	void updateGameTimers(double dt);	
 
 	void draw();

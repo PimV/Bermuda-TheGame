@@ -143,7 +143,8 @@ void Player::update(double dt) {
 	// check if player died
 	if (this->getHealth() < 1)
 	{
-		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
+		PlayState::Instance()->setGameOver(true);
+		//GameStateManager::Instance()->changeGameState(GameOverState::Instance());
 		return;
 	}
 
