@@ -14,6 +14,20 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 	this->destroyed = false;
 	this->respawnTime = 10000;
 	this->interactTime = 9000;
+
+	this->setCanInteractTexture(GameStateManager::Instance()->getImageLoader()->getInteractFishImage());
+	this->setCantInteractTexture(GameStateManager::Instance()->getImageLoader()->getCantInteractFishImage());
+	
+	this->setHighlightTexture(this->getCantInteractTexture());
+}
+
+bool Fish::canInteract(Player* player) {
+	if (player->getInventory()->axeSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->axeSelected();
 }
 
 void Fish::interact(Player* player) 
@@ -50,6 +64,7 @@ void Fish::respawn()
 
 void Fish::setDestroyedState() 
 {
+	this->setHighlighted(false);
 	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);

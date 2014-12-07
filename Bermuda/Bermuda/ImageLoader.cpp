@@ -165,6 +165,20 @@ SDL_Texture* ImageLoader::getCantInteractCactusSmallImage() {
 	return cactusSmallCantInteractOverlay;
 }
 
+SDL_Texture* ImageLoader::getInteractFishImage() {
+	if (fishInteractOverlay == nullptr) {
+		fishInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_canInteract.png").c_str());
+	}
+	return fishInteractOverlay;
+}
+
+SDL_Texture* ImageLoader::getCantInteractFishImage() {
+	if (fishCantInteractOverlay == nullptr) {
+		fishCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_cantInteract.png").c_str());
+	}
+	return fishCantInteractOverlay;
+}
+
 ImageLoader::~ImageLoader()
 {
 	// Destroy all images
