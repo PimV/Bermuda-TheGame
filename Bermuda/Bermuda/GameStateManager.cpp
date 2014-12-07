@@ -8,7 +8,6 @@
 
 GameStateManager GameStateManager::m_Gsm;
 GameStateManager::GameStateManager() {
-	/*init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);*/
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
@@ -17,8 +16,6 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
-	soundLoader = new SoundLoader();
-	//states = new std::vector<IGameState*>();
 
 	GameStateManager::Instance()->changeGameState(MenuState::Instance());
 
@@ -201,11 +198,6 @@ void GameStateManager::quit() {
 	SDL_Quit();
 }
 
-SoundLoader* GameStateManager::getSoundLoader()
-{
-	return soundLoader;
-}
-
 void GameStateManager::cleanup() 
 {
 	//While there are states on the stack, clean them up
@@ -217,7 +209,6 @@ void GameStateManager::cleanup()
 		states.pop_back();
 	}
 
-	delete this->soundLoader;
 	delete this->sdlInitializer;
 	delete this->actionContainer;
 }

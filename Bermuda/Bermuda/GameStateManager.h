@@ -41,7 +41,6 @@ public:
 	void toggleHelpEnabled();
 	void quit();
 	SDLInitializer* sdlInitializer;
-	SoundLoader* getSoundLoader();
 
 	double getSpeedMultiplier();
 	void setSpeedMultiplier(double multiplier);
@@ -60,7 +59,6 @@ private:
 	bool showHelp;
 	std::vector<IGameState*> states;
 	IGameState* currentState;
-	SoundLoader* soundLoader;
 	bool m_running;
 
 	static GameStateManager m_Gsm;

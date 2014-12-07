@@ -45,6 +45,8 @@ void ActionContainer::cleanup() {
 		delete action;
 		action = nullptr;
 	}
+	delete this->m_actionContainer;
+	this->m_actionContainer = nullptr;
 }
 
 ActionContainer::~ActionContainer()
