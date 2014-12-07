@@ -46,4 +46,5 @@ void DrawableEntity::setDrawImage(Image* image)
 DrawableEntity::~DrawableEntity()
 {
 	delete sizeRect;
+	sizeRect = nullptr;
 }

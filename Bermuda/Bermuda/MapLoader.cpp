@@ -105,7 +105,7 @@ void MapLoader::loadMap()
 	d.Parse(json.c_str());
 
 	extractMapInfo(d);
-
+	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::extractMapInfo(Document& d)
@@ -145,7 +145,6 @@ void MapLoader::extractMapInfo(Document& d)
 		}
 		loadStatus = "Map loading finished.";
 	}
-	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::createTileSets(Value& tilesets)

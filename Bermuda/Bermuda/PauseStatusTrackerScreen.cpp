@@ -8,7 +8,7 @@
 
 PauseStatusTrackerScreen::PauseStatusTrackerScreen()
 {
-	init();
+	this->init();
 }
 
 void PauseStatusTrackerScreen::init()
@@ -170,20 +170,25 @@ void PauseStatusTrackerScreen::draw()
 
 void PauseStatusTrackerScreen::cleanup()
 {
-	SDL_DestroyTexture(backgroundTexture);
+	SDL_DestroyTexture(this->backgroundTexture);
+	this->backgroundTexture = nullptr;
+
 	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
-		SDL_DestroyTexture(nameTextures.at(i));
+		SDL_DestroyTexture(nameTextures[i]);
+		nameTextures[i] = nullptr;
 	}
-	nameTextures.clear();
+	std::vector<SDL_Texture*>().swap(nameTextures); //Clear and shrink vector
+
 	for (size_t i = 0; i < countTextures.size(); i++)
 	{
-		SDL_DestroyTexture(countTextures.at(i));
+		SDL_DestroyTexture(countTextures[i]);
+		countTextures[i] = nullptr;
 	}
-	countTextures.clear();
+	std::vector<SDL_Texture*>().swap(countTextures); //Clear and shrink vector
 }
 
 PauseStatusTrackerScreen::~PauseStatusTrackerScreen()
 {
-	cleanup();
+	this->cleanup();
 }

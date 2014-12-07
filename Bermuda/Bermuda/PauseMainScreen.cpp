@@ -5,7 +5,7 @@
 
 PauseMainScreen::PauseMainScreen()
 {
-	init();
+	this->init();
 }
 
 void PauseMainScreen::init()
@@ -147,14 +147,17 @@ void PauseMainScreen::draw()
 void PauseMainScreen::cleanup()
 {
 	SDL_DestroyTexture(backgroundTexture);
+	this->backgroundTexture = nullptr;
+
 	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];
+		buttons[i] = nullptr;
 	}
-	buttons.clear();
+	std::vector<BaseButton*>().swap(buttons); //Clear and shrink vector
 }
 
 PauseMainScreen::~PauseMainScreen()
 {
-	cleanup();
+	this->cleanup();
 }
