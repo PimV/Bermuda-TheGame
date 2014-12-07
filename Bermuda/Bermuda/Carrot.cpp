@@ -25,8 +25,7 @@ void Carrot::interact(Player* player)
 
 void Carrot::setDestroyedState()
 {
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }
 
 Carrot::~Carrot()
