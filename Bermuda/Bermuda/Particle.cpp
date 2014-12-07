@@ -2,7 +2,6 @@
 #include "GameStateManager.h"
 #include "GameTimer.h"
 
-
 Particle::Particle(float x, float y, float dx, float dy, int life, SDL_Texture* textPixel, int width, int height)
 {
 	this->x = x;
@@ -49,7 +48,7 @@ bool Particle::getIsDead()
 	return false;
 }
 
-
 Particle::~Particle()
 {
+
 }

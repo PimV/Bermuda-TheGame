@@ -15,11 +15,11 @@ public:
 	void resetRenderDrawColor();
 
 	SDL_Renderer* getRenderer();
+	SDL_Window* window;
 	SDL_Window* getWindow();
 	virtual ~SDLInitializer(void);
 private:
 	SDL_Surface* screen;
-	SDL_Window* window;
 	SDL_Renderer* renderer;
 	TTF_Font* font;
 };

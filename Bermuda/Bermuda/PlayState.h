@@ -12,6 +12,10 @@ class PlayState : public IGameState
 {
 private:
 	static PlayState m_PlayState;
+	
+	SDL_Surface* mScreen;
+	SDL_Surface* blackSurface;
+	//ParticleEngine* pEngine;
 
 	GameStateManager* gsm;
 

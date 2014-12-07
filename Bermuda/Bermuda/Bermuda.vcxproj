@@ -173,6 +173,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemWater.h" />
     <ClInclude Include="MenuHelpScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleContainer.h" />
+    <ClInclude Include="ParticleEngine.h" />
+    <ClInclude Include="PARTICLETYPES.h" />
     <ClInclude Include="NightLayer.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Objects.h" />

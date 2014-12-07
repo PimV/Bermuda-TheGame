@@ -56,7 +56,6 @@ void MenuState::draw()
 
 void MenuState::update(double dt)
 {
-	
 }
 
 void MenuState::pause()

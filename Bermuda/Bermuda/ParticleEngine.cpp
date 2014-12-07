@@ -52,7 +52,7 @@ ParticleEngine::ParticleEngine(int id, double x, double y, Image* image, PARTICL
 		break;
 	}
 
-	srand(time(NULL));
+	std::srand(time(NULL));
 
 	this->particles.resize(this->maxParticles);
 }

@@ -1,6 +1,7 @@
 #include "Campfire.h"
 #include "PlayState.h"
 #include "ParticleTypes.h"
+#include "ParticleEngine.h"
 
 
 Campfire::Campfire(int id, double x, double y, int firstImgID) :

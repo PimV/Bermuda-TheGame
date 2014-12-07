@@ -7,6 +7,7 @@
 #include "MenuCreditsScreen.h"
 #include "MenuHelpScreen.h"
 
+
 class MenuState :
 	public IGameState
 {
