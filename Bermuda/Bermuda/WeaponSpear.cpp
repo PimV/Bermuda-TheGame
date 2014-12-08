@@ -30,6 +30,6 @@ void WeaponSpear::use(Player* player) {
 }
 */
 
-WeaponSpear::~WeaponSpear(void)
+WeaponSpear::~WeaponSpear()
 {
 }

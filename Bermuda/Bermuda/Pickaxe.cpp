@@ -27,4 +27,6 @@ void Pickaxe::interact(Player* player)
 
 Pickaxe::~Pickaxe()
 {
+	PlayState::Instance()->getMainEntityContainer()->getBackgroundContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }

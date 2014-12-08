@@ -7,28 +7,25 @@
 #include <thread>
 
 
-Game::Game(void)
+Game::Game()
 {
 	gsm = GameStateManager::Instance();
 	gsm->init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);
 	//Non-threaded
 	this->gameLoop(gsm);
 
+	gsm->cleanup();
+	//delete gsm; //Gives heap corruption error on exit.
+
 	//Threaded
 	//gameLoopThread = std::thread(&Game::gameLoop, gsm);
 	//gameLoopThread.detach();
 }
 
-
-Game::~Game(void)
+Game::~Game()
 {
 	//Delete Thread????
 }
-
-/*
-*
-*
-*/
 
 void Game::gameLoop(GameStateManager* gsm) {
 	double TARGET_FPS = 60;
@@ -50,7 +47,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		//Take current Time
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
-		long updateLength = (currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart;
+		long updateLength = static_cast<long>((currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart);
 		
 		//Previous time = current time
 		previousTime = currentTime;
@@ -85,7 +82,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		QueryPerformanceCounter(&afterLoopTime);
 		//Sleep if needed (if time took longer than optimal)
 		if ((((previousTime.QuadPart - afterLoopTime.QuadPart) * 1000.0 / frequency.QuadPart) + OPTIMAL_TIME) > 0) {
-			Sleep((((previousTime.QuadPart - afterLoopTime.QuadPart) * 1000.0 / frequency.QuadPart) + OPTIMAL_TIME));
+			Sleep(static_cast<DWORD>((((previousTime.QuadPart - afterLoopTime.QuadPart) * 1000.0 / frequency.QuadPart) + OPTIMAL_TIME)));
 		}
 	}
 }

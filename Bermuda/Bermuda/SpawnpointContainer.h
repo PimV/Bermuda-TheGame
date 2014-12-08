@@ -12,6 +12,7 @@ public:
 	std::vector<Spawnpoint*>* getChunk(int y, int x);
 	void initChunks(int chunksY, int chunksX);
 	void remove(Spawnpoint* entity);
+	void cleanup();
 
 	~SpawnpointContainer();
 private:

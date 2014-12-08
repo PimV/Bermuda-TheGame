@@ -73,7 +73,7 @@ void MenuMainScreen::setBackground()
 
 void MenuMainScreen::resetButtons()
 {
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->reset();
 	}
@@ -127,7 +127,7 @@ void MenuMainScreen::cleanup()
 	{
 		delete buttons[i];
 	}
-	buttons.clear();
+	std::vector<BaseButton*>().swap(buttons); // clear and shrink vector.
 }
 
 MenuMainScreen::~MenuMainScreen()

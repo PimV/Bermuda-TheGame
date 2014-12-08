@@ -21,6 +21,6 @@ public:
 		gsm->changeGameState(state);
 	}
 
-	virtual ~IGameState(void);
+	virtual ~IGameState();
 };
 

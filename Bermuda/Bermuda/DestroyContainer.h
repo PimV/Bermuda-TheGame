@@ -10,6 +10,7 @@ public:
 	void add(Entity* entity);
 	void remove(Entity* entity);
 	void destroyAllEntities();
+	void cleanup();
 
 	std::vector<Entity*>* getContainer();
 	virtual ~DestroyContainer();

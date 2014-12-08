@@ -12,6 +12,7 @@ public:
 
 	void add(AnimatingEntity* entity);
 	void remove(AnimatingEntity* entity);
+	void cleanup();
 
 	virtual ~AnimatingContainer();
 private:

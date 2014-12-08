@@ -1,5 +1,5 @@
 #include "AnimatingEntity.h"
-#include "GameStateManager.h"
+#include "PlayState.h"
 #include "GameTimer.h"
 #include <iostream>
 
@@ -17,7 +17,7 @@ void AnimatingEntity::animate(double dt)
 	if (this->getCurrentlyAnimating())
 	{
 		//wait for next frame
-		long currentTime = GameTimer::Instance()->getGameTime();
+		float currentTime = GameTimer::Instance()->getGameTime();
 		if (lastFrameTime + animateSpeed < currentTime)
 		{
 			int nextFrame = ++this->currentImageIndex;
@@ -50,7 +50,7 @@ void AnimatingEntity::animate(double dt)
 				currentImageIndex = this->animationStartIndex;
 				nextFrame = this->animationStartIndex;
 			}
-			setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + nextFrame));
+			setDrawImage(PlayState::Instance()->getImageLoader()->getMapImage(this->firstImgID + nextFrame));
 			this->lastFrameTime = currentTime;
 		}
 	}
@@ -61,7 +61,7 @@ void AnimatingEntity::startAnimationLoopType(int startIndex, int endIndex, doubl
 	this->currentAnimationType = AnimationType::LOOP;
 
 	this->currentImageIndex = startIndex;
-	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
+	this->setDrawImage(PlayState::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
 	this->lastFrameTime = GameTimer::Instance()->getGameTime();
 	this->animationStartIndex = startIndex;
 	this->animationEndIndex = endIndex;
@@ -74,7 +74,7 @@ void AnimatingEntity::startAnimationTimerType(int startIndex, int endIndex, doub
 	this->animationEndTime = GameTimer::Instance()->getGameTime() + animateTime;
 
 	this->currentImageIndex = startIndex;
-	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
+	this->setDrawImage(PlayState::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
 	this->lastFrameTime = GameTimer::Instance()->getGameTime();
 	this->animationStartIndex = startIndex;
 	this->animationEndIndex = endIndex;
@@ -89,7 +89,7 @@ void AnimatingEntity::startAnimationCounterType(int startIndex, int endIndex, do
 	this->targetAnimationCount = animateCount;
 
 	this->currentImageIndex = startIndex;
-	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
+	this->setDrawImage(PlayState::Instance()->getImageLoader()->getMapImage(this->firstImgID + startIndex));
 	this->lastFrameTime = GameTimer::Instance()->getGameTime();
 	this->animationStartIndex = startIndex;
 	this->animationEndIndex = endIndex;
@@ -106,7 +106,7 @@ void AnimatingEntity::setStaticImage(int index)
 {
 	this->stopAnimating();
 	int currentImageIndex = firstImgID + index;
-	this->setDrawImage(GameStateManager::Instance()->getImageLoader()->getMapImage(currentImageIndex));
+	this->setDrawImage(PlayState::Instance()->getImageLoader()->getMapImage(currentImageIndex));
 }
 
 void AnimatingEntity::stopAnimating()

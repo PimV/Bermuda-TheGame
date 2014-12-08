@@ -58,7 +58,7 @@ public:
 
 	void printInventory();
 
-	~Inventory();
+	virtual ~Inventory();
 private:
 	//Draw
 	Image* img;

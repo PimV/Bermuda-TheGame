@@ -14,7 +14,7 @@ class Wasp :
 {
 public:
 	Wasp(int id, Spawnpoint *spawnPoint, int firstImgID);
-	~Wasp();
+	virtual ~Wasp();
 	void directionsAndMove(double dt);
 	void update(double dt);
 private:

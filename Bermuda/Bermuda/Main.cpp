@@ -14,7 +14,7 @@
 int main(int argc, char* args[])
 {
 	Game game;
+	SDL_Quit();
 
-	//std::cin.get();
 	return 0;
 }

@@ -13,6 +13,7 @@ public:
 	
 	void add(DrawableEntity* entity);
 	void remove(DrawableEntity* entity);
+	void cleanup();
 
 	virtual ~DrawableContainer();
 private: 

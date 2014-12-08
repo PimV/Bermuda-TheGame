@@ -58,11 +58,8 @@ bool Crafting::canCraft(Items item)
 			return true;
 		}
 	}
-	else
-	{
-		//No recipe for this item.
-		return false;
-	}
+
+	return false;
 }
 
 void Crafting::craftItem(Items item)
@@ -95,7 +92,7 @@ void Crafting::draw()
 
 void Crafting::cleanup()
 {
-
+	//Nothing to clean for now.
 }
 
 Crafting::~Crafting()
