@@ -32,9 +32,9 @@
 #include <Windows.h>
 #include <math.h>
 
-MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
-	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader())
+MapLoader::MapLoader()
 {
+	this->imgLoader = PlayState::Instance()->getImageLoader();
 }
 
 void MapLoader::setPercentage(int percentage)
@@ -111,7 +111,7 @@ void MapLoader::loadMap()
 	d.Parse(json.c_str());
 
 	extractMapInfo(d);
-
+	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::extractMapInfo(Document& d)
@@ -128,7 +128,7 @@ void MapLoader::extractMapInfo(Document& d)
 	mapWidth = mapTileWidth * tileWidth;
 
 	//Initialize the containers
-	mec->initContainerSizes(mapHeight, mapWidth);
+	PlayState::Instance()->getMainEntityContainer()->initContainerSizes(mapHeight, mapWidth);
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
@@ -151,7 +151,6 @@ void MapLoader::extractMapInfo(Document& d)
 		}
 		loadStatus = "Map loading finished.";
 	}
-	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::createTileSets(Value& tilesets)

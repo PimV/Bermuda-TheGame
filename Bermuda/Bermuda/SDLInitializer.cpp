@@ -1,12 +1,7 @@
 #include "SDLInitializer.h"
 #include <iostream>
 
-SDLInitializer::SDLInitializer(void)
-{
-}
-
-
-SDLInitializer::~SDLInitializer(void)
+SDLInitializer::SDLInitializer()
 {
 }
 
@@ -30,6 +25,7 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 }
 
 void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h, int r, int g, int b) {
+	//TODO: Deze methode is slecht om te gebruiken. Elke frame een nieuwe texture aanmaken kost veel tijd!
 	font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), h);
 
 	SDL_Surface* imgTxt;
@@ -84,4 +80,10 @@ SDL_Renderer* SDLInitializer::getRenderer() {
 SDL_Window* SDLInitializer::getWindow()
 {
 	return window;
+}
+
+SDLInitializer::~SDLInitializer()
+{
+	SDL_DestroyRenderer(this->renderer);
+	SDL_DestroyWindow(this->window);
 }

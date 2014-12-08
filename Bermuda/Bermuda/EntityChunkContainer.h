@@ -13,6 +13,7 @@ public:
 	void initChunks(int ChunksY, int chunksX);
 	void add(Entity* entity);
 	void remove(Entity* entity);
+	void cleanup();
 
 	std::vector<Entity*>* getChunk(int y, int x);
 

@@ -13,6 +13,7 @@ public:
 
 	void initChunks(int chunksY, int chunksX);
 	void remove(LightEntity* entity);
+	void cleanup();
 private:
 	std::vector<std::vector<std::vector<LightEntity*>>> container;
 };

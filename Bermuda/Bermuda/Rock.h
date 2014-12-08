@@ -16,6 +16,6 @@ public:
 
 	bool canInteract(Player* player);
 	virtual void setDestroyedState();
-	~Rock();
+	virtual ~Rock();
 };
 

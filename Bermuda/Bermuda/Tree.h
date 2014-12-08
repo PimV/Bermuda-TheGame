@@ -18,5 +18,5 @@ public:
 	void setDestroyedState();
 	bool canInteract(Player* player);
 	
-	~Tree();
+	virtual ~Tree();
 };

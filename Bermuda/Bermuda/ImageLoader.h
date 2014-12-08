@@ -12,7 +12,7 @@ private:
 	vector<SDL_Texture*> tileSets;
 	vector<Image*> images;
 
-	//Interact Green/Red
+
 	SDL_Texture* treeInteractTexture;
 	SDL_Texture* treeCantInteractTexture;
 
@@ -37,11 +37,10 @@ private:
 	SDL_Texture* fishCantInteractOverlay;
 public:
 	ImageLoader(SDL_Renderer* renderer);
-	~ImageLoader();
 	int loadTileset(string filename, int tileWidth, int tileHeight);
 	int getCurrentImageCount();
 
-	//Interact Green/Red
+
 	SDL_Texture* getInteractTreeImage();
 	SDL_Texture* getCantInteractTreeImage();
 
@@ -65,6 +64,7 @@ public:
 	SDL_Texture* getInteractFishImage();
 	SDL_Texture* getCantInteractFishImage();
 
-	//SDL_Texture* loadSpriteSheet(string filename);
 	Image* getMapImage(int tileID);
+	void cleanup();
+	virtual ~ImageLoader();
 };

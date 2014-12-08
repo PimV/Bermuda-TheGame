@@ -14,7 +14,7 @@ class Rabbit :
 {
 public:
 	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
-	~Rabbit();
+	virtual ~Rabbit();
 	void update(double dt);
 private:
 	void directionsAndMove(double dt);

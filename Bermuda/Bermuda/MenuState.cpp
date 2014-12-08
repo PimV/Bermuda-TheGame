@@ -7,7 +7,7 @@
 
 MenuState MenuState::m_MenuState;
 
-MenuState::MenuState(void)
+MenuState::MenuState()
 {
 }
 

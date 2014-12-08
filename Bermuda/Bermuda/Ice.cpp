@@ -69,14 +69,8 @@ void Ice::setDestroyedState()
 
 Ice::~Ice()
 {
-	if (this->destroyed)
-	{
-		PlayState::Instance()->getMainEntityContainer()->getBackgroundContainer()->remove(this);
-	}
-	else
-	{
-		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-		PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	}
+	PlayState::Instance()->getMainEntityContainer()->getBackgroundContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 }

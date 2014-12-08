@@ -18,8 +18,8 @@ GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiec
 
 	this->animationType = AnimationEnumType::Mine;
 
-	this->setCanInteractTexture(GameStateManager::Instance()->getImageLoader()->getInteractRockImage());
-	this->setCantInteractTexture(GameStateManager::Instance()->getImageLoader()->getCantInteractRockImage());
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getInteractRockImage());
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getCantInteractRockImage());
 	
 	this->setHighlightTexture(this->getCantInteractTexture());
 }
@@ -70,14 +70,8 @@ void GoldRock::setDestroyedState()
 
 GoldRock::~GoldRock()
 {
-	if (this->destroyed)
-	{
-		PlayState::Instance()->getMainEntityContainer()->getBackgroundContainer()->remove(this);
-	}
-	else
-	{
-		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-		PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-		PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	}
+	PlayState::Instance()->getMainEntityContainer()->getBackgroundContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 }

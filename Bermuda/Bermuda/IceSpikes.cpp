@@ -1,13 +1,13 @@
 #include "IceSpikes.h"
-#include "GameStateManager.h"
+#include "PlayState.h"
 
 
 IceSpikes::IceSpikes(int id, double x, double y, Image* rockImage, Image* rockPieces) :
 	Entity(id,x,y),
 	Ice(id, x, y, rockImage, rockPieces)
 {
-	this->setCanInteractTexture(GameStateManager::Instance()->getImageLoader()->getInteractSpikeImage());
-	this->setCantInteractTexture(GameStateManager::Instance()->getImageLoader()->getCantInteractSpikeImage());
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getInteractSpikeImage());
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getCantInteractSpikeImage());
 
 	this->setHighlightTexture(this->getCantInteractTexture());
 }

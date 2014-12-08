@@ -10,9 +10,9 @@ private:
 	GameStateManager* gsm;
 	std::thread gameLoopThread;
 public:
-	Game(void);
+	Game();
 	static void gameLoop(GameStateManager* gsm);
-	~Game(void);
+	virtual ~Game();
 
 };
 

@@ -1,5 +1,6 @@
 #include "Inventory.h"
 #include "GameStateManager.h"
+#include "PlayState.h"
 #include "Item.h"
 #include "Items.h"
 #include "Image.h"
@@ -32,20 +33,21 @@ void Inventory::init() {
 	itemWidth = ScreenWidth / 50;
 	itemHeight = ScreenHeight / 30;
 
-	int id = GameStateManager::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
-	img = GameStateManager::Instance()->getImageLoader()->getMapImage(id);
+	int id = PlayState::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
+	img = PlayState::Instance()->getImageLoader()->getMapImage(id);
 
-	int singleId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item.png", 69,69);
-	singleImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleId);
+	int singleId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item.png", 69, 69);
+	singleImg = PlayState::Instance()->getImageLoader()->getMapImage(singleId);
 
-	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
-	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
+	int singleSelectedId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69, 69);
+	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
+	//TODO: Remove in final version.
 	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
-}
-
-void Inventory::cleanup() {
-
+	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 }
 
 void Inventory::incrementSelectedIndex() {
@@ -112,6 +114,7 @@ bool Inventory::addItem(Item* item) {
 
 	if (item->getStackSize() <= 0) {
 		delete item;
+		item = nullptr;
 	}
 	return true;
 }
@@ -216,6 +219,7 @@ void Inventory::deleteItem(int itemID, int count)
 				selectedIndex--;
 			}
 			delete *it;
+			*it = nullptr;
 			this->itemVector.erase(it);
 		} else {
 			stack->setStackSize(stack->getStackSize() - count);
@@ -233,6 +237,7 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 			selectedIndex--;
 		}
 		delete *it;
+		*it = nullptr;
 		this->itemVector.erase(it);
 	}
 }
@@ -411,6 +416,17 @@ int Inventory::getWidth() {
 	return this->slots * this->slotWidth;
 }
 
+void Inventory::cleanup() {
+	while (!this->itemVector.empty())
+	{
+		Item* stack = this->itemVector.back();
+		this->itemVector.pop_back();
+		delete stack;
+		stack = nullptr;
+	}
+}
+
 Inventory::~Inventory()
 {
+	this->cleanup();
 }

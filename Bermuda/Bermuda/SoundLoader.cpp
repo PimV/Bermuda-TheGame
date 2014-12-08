@@ -31,13 +31,13 @@ SoundLoader::~SoundLoader()
 	for (size_t i = 0; i < menuMusic.size(); i++)
 	{
 		Mix_FreeMusic(menuMusic[i]);
-		menuMusic[i] = NULL;
+		menuMusic[i] = nullptr;
 	}
 
 	for (size_t i = 0; i < gameMusic.size(); i++)
 	{
 		Mix_FreeMusic(gameMusic[i]);
-		gameMusic[i] = NULL;
+		gameMusic[i] = nullptr;
 	}
 }
 

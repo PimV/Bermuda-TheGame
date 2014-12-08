@@ -1,5 +1,4 @@
 #include "AppleTree.h"
-#include "GameStateManager.h"
 #include "PlayState.h"
 #include "Player.h"
 #include "ItemFactory.h"
@@ -21,8 +20,8 @@ AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEm
 
 	this->animationType = AnimationEnumType::Pick;
 
-	this->setCanInteractTexture(GameStateManager::Instance()->getImageLoader()->getInteractTreeImage());
-	this->setCantInteractTexture(GameStateManager::Instance()->getImageLoader()->getCantInteractTreeImage());
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getInteractTreeImage());
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getCantInteractTreeImage());
 
 	this->setHighlightTexture(this->getCantInteractTexture());
 }
@@ -82,9 +81,6 @@ AppleTree::~AppleTree()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
-		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
-	}
 }

@@ -8,15 +8,17 @@
 #include "Windows.h"
 #include <thread>
 #include "Items.h"
-
+#include "NPCFactory.h"
 #include "ItemFactory.h"
+#include "ObjectFactory.h"
+#include "GameOverState.h"
 
 
 PlayState PlayState::m_PlayState;
 
 bool PlayState::drawableSortFunction(DrawableEntity* one, DrawableEntity* two) { return (one->getY() + one->getHeight() < two->getY() + two->getHeight()); }
 
-PlayState::PlayState(void)
+PlayState::PlayState()
 {
 }
 
@@ -25,40 +27,37 @@ void PlayState::init(GameStateManager *gsm) {
 
 	GameStateManager::Instance()->setSpeedMultiplier(1);
 	GameTimer::Instance()->init();
-	this->ready = false;
+	this->gameOver = false;
 	this->showCol = false;
 	this->showInter = false;
 	this->showSpawnArea = false;
 	this->showDayLight = true;
 	this->timesUpdate = 0;
 
+	GameStateManager::Instance()->setSpeedMultiplier(1);
+	GameTimer::Instance()->init();
+	imgLoader = new ImageLoader(GameStateManager::Instance()->sdlInitializer->getRenderer());
+	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
+	ItemFactory::Instance()->loadItemTileSets(imgLoader);
+	ObjectFactory::Instance()->loadObjectTileSets(imgLoader);
+
 	mec = new MainEntityContainer();
-	mapLoader = new MapLoader(this->gsm, mec);
+	mapLoader = new MapLoader();
 	mapLoader->loadMap();
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
 
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Axe));
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
-	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-
-	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
 
-	this->ready = true;
+	GameStateManager::Instance()->flushEvents();
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
 {
 	return this->mec;
-}
-
-void PlayState::cleanup() {
-	GameTimer::Instance()->cleanUp();
 }
 
 void PlayState::pause() {
@@ -75,11 +74,6 @@ void PlayState::resume() {
 
 
 void PlayState::handleEvents(SDL_Event mainEvent) {
-	if (!ready) {
-		return;
-	}
-	//p->handleEvents();
-	//Process Input
 
 	//Retrieve input
 	int x = 0;
@@ -277,11 +271,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
-	// check if player died
-	if (!ready) {
-		return;
-	}
-
 	mec->getDestroyContainer()->destroyAllEntities();
 
 	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
@@ -302,6 +291,11 @@ void PlayState::update(double dt) {
 
 	this->updateVisibleEntities(dt);
 	this->updateMediumAreaEntities(dt);
+
+	if (gameOver)
+	{
+		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
+	}
 }
 
 void PlayState::updateVisibleEntities(double dt)
@@ -372,10 +366,6 @@ void PlayState::updateMediumAreaEntities(double dt)
 
 void PlayState::draw()
 {
-	if (!ready) {
-		return;
-	}
-
 	//Calculate begin and end chunks for the interact check (+1 and -1 to make it a little bigger thent he current chunk)
 	int beginChunkX = p->getChunkX() - 1;
 	int endChunkX = p->getChunkX() + 1;
@@ -427,7 +417,6 @@ void PlayState::draw()
 		closestEntity->canInteract(p);
 		closestEntity->setHighlighted(true);
 	}
-
 
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
@@ -544,6 +533,11 @@ void PlayState::draw()
 	GameTimer::Instance()->draw();
 }
 
+void PlayState::setGameOver(bool gameOver)
+{
+	this->gameOver = gameOver;
+}
+
 Player* PlayState::getPlayer()
 {
 	return this->p;
@@ -554,13 +548,30 @@ Camera* PlayState::getCamera()
 	return this->camera;
 }
 
-//ERROR Deze methode word nooit aangeroepen volgens mij.
-//Betekend dus dat de playstate nooit verwijderd wordt
-PlayState::~PlayState(void)
+ImageLoader* PlayState::getImageLoader()
 {
-	delete camera;
-	delete mec;
-	delete mapLoader;
-	delete nightLayer;
+	return imgLoader;
+}
+
+void PlayState::cleanup() {
 	std::cout << "deleting playstate" << endl;
+	GameTimer::Instance()->cleanUp();
+	delete nightLayer;
+	delete p;
+	delete camera;
+	delete mapLoader;
+	delete mec;
+	delete imgLoader;
+
+	nightLayer = nullptr;
+	p = nullptr;
+	camera = nullptr;
+	mapLoader = nullptr;
+	mec = nullptr;
+	imgLoader = nullptr;
+}
+
+PlayState::~PlayState()
+{
+	this->cleanup();
 }

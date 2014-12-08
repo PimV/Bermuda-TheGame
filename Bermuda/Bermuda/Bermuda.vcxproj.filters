@@ -629,9 +629,6 @@
     <ClInclude Include="Item.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
-    <ClInclude Include="ItemType.h">
-      <Filter>Header Files\Model\Item</Filter>
-    </ClInclude>
     <ClInclude Include="ItemCarrot.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
@@ -779,9 +776,6 @@
     <ClInclude Include="GameTimer.h">
       <Filter>Header Files\Model\Timer</Filter>
     </ClInclude>
-    <ClInclude Include="DAYPART.h">
-      <Filter>Header Files\Model\Timer</Filter>
-    </ClInclude>
     <ClInclude Include="Crafting.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
@@ -886,6 +880,12 @@
     </ClInclude>
     <ClInclude Include="NightLayer.h">
       <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemType.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="DAYPART.h">
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

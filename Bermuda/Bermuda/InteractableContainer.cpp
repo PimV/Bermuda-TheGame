@@ -1,7 +1,7 @@
 #include "InteractableContainer.h"
 
 
-InteractableContainer::InteractableContainer(void)
+InteractableContainer::InteractableContainer()
 {
 }
 
@@ -42,6 +42,22 @@ std::vector<InteractableEntity*>* InteractableContainer::getChunk(int y, int x)
 	return nullptr;
 }
 
-InteractableContainer::~InteractableContainer(void)
+void InteractableContainer::cleanup()
 {
+	for (size_t y = 0; y < this->container.size(); y++) {
+		for (size_t x = 0; x < this->container[y].size(); x++) {
+			while (!this->container[y][x].empty())
+			{
+				InteractableEntity* entity = this->container[y][x].back();
+				this->container[y][x].pop_back();
+				delete entity;
+				entity = nullptr;
+			}
+		}
+	}
+}
+
+InteractableContainer::~InteractableContainer()
+{
+	this->cleanup();
 }

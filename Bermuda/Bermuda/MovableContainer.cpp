@@ -1,7 +1,7 @@
 #include "MovableContainer.h"
 
 
-MovableContainer::MovableContainer(void)
+MovableContainer::MovableContainer()
 {
 }
 
@@ -42,6 +42,22 @@ std::vector<MovableEntity*>* MovableContainer::getChunk(int y, int x)
 	return nullptr;
 }
 
-MovableContainer::~MovableContainer(void)
+void MovableContainer::cleanup()
 {
+	for (size_t y = 0; y < this->container.size(); y++) {
+		for (size_t x = 0; x < this->container[y].size(); x++) {
+			while (!this->container[y][x].empty())
+			{
+				MovableEntity* entity = this->container[y][x].back();
+				this->container[y][x].pop_back();
+				delete entity;
+				entity = nullptr;
+			}
+		}
+	}
+}
+
+MovableContainer::~MovableContainer()
+{
+	this->cleanup();
 }

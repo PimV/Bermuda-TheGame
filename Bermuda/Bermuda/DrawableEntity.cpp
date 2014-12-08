@@ -66,4 +66,5 @@ SDL_Texture* DrawableEntity::getCantInteractTexture()
 DrawableEntity::~DrawableEntity()
 {
 	delete sizeRect;
+	sizeRect = nullptr;
 }

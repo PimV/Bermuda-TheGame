@@ -7,27 +7,25 @@
 #include <thread>
 
 
-Game::Game(void)
+Game::Game()
 {
 	gsm = GameStateManager::Instance();
 	gsm->init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);
 	//Non-threaded
 	this->gameLoop(gsm);
 
+	gsm->cleanup();
+	//delete gsm; //Gives heap corruption error on exit.
+
 	//Threaded
 	//gameLoopThread = std::thread(&Game::gameLoop, gsm);
 	//gameLoopThread.detach();
 }
 
-Game::~Game(void)
+Game::~Game()
 {
 	//Delete Thread????
 }
-
-/*
-*
-*
-*/
 
 void Game::gameLoop(GameStateManager* gsm) {
 	double TARGET_FPS = 60;
