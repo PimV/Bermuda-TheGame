@@ -188,6 +188,39 @@ void ImageLoader::cleanup()
 		tileSets[i] = nullptr;
 	}
 	std::vector<SDL_Texture*>().swap(tileSets); //Clear and shrink vector
+
+	//Delete all overlay textures
+	SDL_DestroyTexture(treeInteractTexture);
+	SDL_DestroyTexture(treeCantInteractTexture);
+	SDL_DestroyTexture(treePineInteractTexture);
+	SDL_DestroyTexture(treePineCantInteractTexture);
+	SDL_DestroyTexture(carrotInteractOverlay);
+	SDL_DestroyTexture(rockInteractOverlay);
+	SDL_DestroyTexture(rockCantInteractOverlay);	
+	SDL_DestroyTexture(spikeInteractOverlay);
+	SDL_DestroyTexture(spikeCantInteractOverlay);
+	SDL_DestroyTexture(cactusBigInteractOverlay);
+	SDL_DestroyTexture(cactusBigCantInteractOverlay);
+	SDL_DestroyTexture(cactusSmallInteractOverlay);
+	SDL_DestroyTexture(cactusSmallCantInteractOverlay);	
+	SDL_DestroyTexture(fishInteractOverlay);
+	SDL_DestroyTexture(fishCantInteractOverlay);
+
+	treeInteractTexture = nullptr;
+	treeCantInteractTexture = nullptr;
+	treePineInteractTexture = nullptr;
+	treePineCantInteractTexture = nullptr;
+	carrotInteractOverlay = nullptr;
+	rockInteractOverlay = nullptr;
+	rockCantInteractOverlay = nullptr;	
+	spikeInteractOverlay = nullptr;
+	spikeCantInteractOverlay = nullptr;
+	cactusBigInteractOverlay = nullptr;
+	cactusBigCantInteractOverlay = nullptr;
+	cactusSmallInteractOverlay = nullptr;
+	cactusSmallCantInteractOverlay = nullptr;	
+	fishInteractOverlay = nullptr;
+	fishCantInteractOverlay = nullptr;
 }
 
 ImageLoader::~ImageLoader()
