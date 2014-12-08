@@ -69,8 +69,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->moveClick = false;
 	this->interaction = false;
 
-	//this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Dagger.png", 64, 64);
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("Player_Empty_Handed_Pick_Chop_Mine.png", 64, 64);
+	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("player_spear_animation.png", 64, 64);
 	
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
@@ -86,6 +85,14 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationPickUp = 0, this->animationPickLeft = 1;
 	this->animationPickDown = 2, this->animationPickRight = 3;
 	this->animationPickStartColumn = 1, this->animationPickEndColumn = 6;
+
+	this->animationSpearWalkUp = 4, this->animationSpearWalkLeft = 5;
+	this->animationSpearWalkDown = 6, this->animationSpearWalkRight = 7;
+	this->animationSpearWalkStartColumn = 1, this->animationSpearWalkEndColumn = 7;
+
+	this->animationSpearAttackUp = 23, this->animationSpearAttackLeft = 24;
+	this->animationSpearAttackDown = 25, this->animationSpearAttackRight = 26;
+	this->animationSpearAttackStartColumn = 1, this->animationSpearAttackEndColumn = 7;
 
 	//this->currentAnimationRow = this->animationWalkDownRow;
 	this->movementDirection = MovementDirectionEnum::Down;
@@ -148,6 +155,20 @@ void Player::update(double dt) {
 	}
 
 	this->updatePlayerStatuses(dt);
+
+	// fugly, might be an good idae to redo the animation selevtion
+	if (this->getInventory()->spearSelected())
+	{
+		this->animationWalkUpRow = this->animationSpearWalkUp;
+		this->animationWalkLeftRow = this->animationSpearWalkLeft;
+		this->animationWalkDownRow = this->animationSpearWalkDown;
+		this->animationWalkRightRow = this->animationSpearWalkRight;
+	}
+	else
+	{
+		this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
+		this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+	}
 
 	if (this->interaction) {
 		this->interact(dt);
@@ -366,13 +387,14 @@ void Player::setAnimationType(AnimationEnumType type)
 			this->animationActionEndColumn = this->animationMineEndColumn;
 		break;
 	case AnimationEnumType::Pick:
-		std::cout << "No pick animation" << std::endl;
 			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationPickStartColumn;
 			this->animationActionEndColumn = this->animationPickEndColumn;
 		break;
-	case AnimationEnumType::Attack:
-		std::cout << "No attack animation" << std::endl;
+	case AnimationEnumType::AttackSpear:
+			this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;
+			this->animationActionStartColumn = this->animationSpearAttackStartColumn;
+			this->animationActionEndColumn = this->animationSpearAttackEndColumn;
 		break;
 	default:
 		break;

@@ -274,6 +274,15 @@ bool Inventory::axeSelected() {
 	return false;
 }
 
+bool Inventory::spearSelected() {
+	if (this->getSelectedItem() != nullptr) {
+		if (this->getSelectedItem()->getId() == (int)Items::Spear) {
+		return true;
+		}
+	}
+	return false;
+}
+
 bool Inventory::hasAxe() {
 	return this->hasItemById((int)Items::Axe);
 }

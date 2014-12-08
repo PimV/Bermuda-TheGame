@@ -36,6 +36,7 @@ public:
 
 	bool axeSelected();
 	bool pickAxeSelected();
+	bool spearSelected();
 
 	void draw();
 	int getStartingX();

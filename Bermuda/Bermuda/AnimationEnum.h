@@ -5,5 +5,5 @@ enum class AnimationEnumType
 	Chop,
 	Mine,
 	Pick,
-	Attack
+	AttackSpear
 };
