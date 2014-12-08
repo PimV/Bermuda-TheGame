@@ -153,6 +153,20 @@ void GameStateManager::handleEvents() {
 	}
 }
 
+void GameStateManager::flushEvents()
+{
+	SDL_Event mainEvent;
+	while (SDL_PollEvent(&mainEvent))
+	{
+		SDL_FlushEvent(SDL_MOUSEBUTTONDOWN);
+		SDL_FlushEvent(SDL_MOUSEMOTION);
+		SDL_FlushEvent(SDL_MOUSEWHEEL);
+		SDL_FlushEvent(SDL_KEYDOWN);
+		SDL_FlushEvent(SDL_KEYUP);
+		SDL_FlushEvent(SDL_QUIT);
+	}
+}
+
 void GameStateManager::update(double deltaTime) {
 	states.back()->update(deltaTime * speedMultiplier);
 }

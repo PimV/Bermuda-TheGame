@@ -48,6 +48,8 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
+
+	GameStateManager::Instance()->flushEvents();
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
