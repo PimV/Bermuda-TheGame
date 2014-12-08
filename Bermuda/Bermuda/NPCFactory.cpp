@@ -3,6 +3,7 @@
 #include "Wasp.h"
 #include "Bat.h"
 #include "Wolf.h"
+#include "Scorpion.h"
 #include "PlayState.h"
 #include "GameStateManager.h"
 
@@ -43,7 +44,7 @@ void NPCFactory::createWolf(Spawnpoint* sp)
 
 void NPCFactory::createScorpion(Spawnpoint* sp)
 {
-	new Wolf(2001, sp, FirstImageIDs["scorpion"]);
+	new Scorpion(2001, sp, FirstImageIDs["scorpion"]);
 }
 
 NPCFactory::~NPCFactory()

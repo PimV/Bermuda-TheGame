@@ -4,18 +4,18 @@
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 
-class Wolf :
+class Scorpion :
 	public NPC,
 	public DrawableEntity,
 	public CollidableEntity,
 	public MovableEntity
 {
 public:
-	Wolf(int id, Spawnpoint *spawnPoint, int firstImgID);
+	Scorpion(int id, Spawnpoint *spawnPoint, int firstImgID);
 	
 	void update(double dt);
 
-	virtual ~Wolf();
+	virtual ~Scorpion();
 private:
 	void directionsAndMove(double dt);
 	void setImage(Image* image);
