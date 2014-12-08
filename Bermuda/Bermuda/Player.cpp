@@ -150,7 +150,8 @@ void Player::update(double dt) {
 	// check if player died
 	if (this->getHealth() < 1)
 	{
-		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
+		PlayState::Instance()->setGameOver(true);
+		//GameStateManager::Instance()->changeGameState(GameOverState::Instance());
 		return;
 	}
 
@@ -648,7 +649,7 @@ void Player::drawStats() {
 	this->drawHungerBar(this->getInventory()->getStartingX() + 7*((this->getInventory()->getWidth())/ 10), this->getInventory()->getStartingY() - 30);
 }
 
-Player::~Player(void) {
+Player::~Player() {
 	SDL_DestroyTexture(hungerBar);
 	SDL_DestroyTexture(hungerBarContainer);
 
@@ -658,7 +659,15 @@ Player::~Player(void) {
 	SDL_DestroyTexture(thirstBar);
 	SDL_DestroyTexture(thirstBarContainer);
 
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+
 	delete this->inventory;
 	delete this->crafting;
 	delete this->statusTracker;
+
+	this->inventory = nullptr;
+	this->crafting = nullptr;
+	this->statusTracker = nullptr;
 }
