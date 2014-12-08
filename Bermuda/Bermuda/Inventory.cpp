@@ -58,6 +58,7 @@ void Inventory::incrementSelectedIndex() {
 }
 
 void Inventory::decrementSelectedIndex() {
+
 	selectedIndex--;
 	if (selectedIndex < 0) {
 		selectedIndex = this->slots - 1;
