@@ -91,10 +91,10 @@ void ParticleEngine::draw(Camera* camera, SDL_Renderer* renderer)
 
 Particle* ParticleEngine::createParticle(PARTICLETYPES particleType)
 {
-	float pX = this->x + rand() % this->width;
-	float pY = this->y + rand() % this->height;
-	float pDx;
-	float pDy;
+	double pX = this->x + rand() % this->width;
+	double pY = this->y + rand() % this->height;
+	double pDx;
+	double pDy;
 	int lifeTime;
 	int width;
 	int height;

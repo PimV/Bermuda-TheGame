@@ -37,7 +37,7 @@ void MenuCreditsScreen::createNameTextures()
 	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\andyb.ttf").c_str(), 40);
 	SDL_Color white = { 255, 255, 255 };
 
-	for each (std::string var in names)
+	for(std::string var : names)
 	{
 		SDL_Surface* nameSurface = TTF_RenderText_Blended(staryDarzyLarge, var.c_str(), white);
 		SDL_Texture* nameTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameSurface);
@@ -57,12 +57,12 @@ void MenuCreditsScreen::createNameTextures()
 void MenuCreditsScreen::align()
 {
 	int total = 0;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		total += var.h;
 	}
 
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		total += var->getHeight();
 	}
@@ -76,7 +76,7 @@ void MenuCreditsScreen::align()
 		minSur += nameRectangles.at(i).h;
 	}
 
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->placeMidUnder(((ScreenWidth - var->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
 		minSur += var->getHeight();
@@ -116,7 +116,7 @@ void MenuCreditsScreen::setBackground()
 
 void MenuCreditsScreen::resetButtons()
 {
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->reset();
 	}
@@ -135,7 +135,7 @@ void MenuCreditsScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
-		for each (BaseButton* var in buttons)
+		for(BaseButton* var : buttons)
 		{
 			var->hover(x, y);
 		}
@@ -143,7 +143,7 @@ void MenuCreditsScreen::handleEvents(SDL_Event mainEvent)
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT)
 		{
-			for each (BaseButton* var in buttons)
+			for(BaseButton* var : buttons)
 			{
 				if (var->clicked(x, y))
 				{
@@ -165,7 +165,7 @@ void MenuCreditsScreen::draw()
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameTextures.at(i), NULL, &nameRectangles.at(i));
 	}
 
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->draw();
 	}
@@ -175,7 +175,7 @@ void MenuCreditsScreen::cleanup()
 {
 	SDL_DestroyTexture(backgroundTexture);
 	SDL_DestroyTexture(creditsTextTexture);
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		delete var;
 	}

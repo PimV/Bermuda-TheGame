@@ -52,7 +52,7 @@ void StatusTracker::applePicked()
 
 void StatusTracker::cleanup()
 {
-	for (int i = 0; i < achievements.size(); i++)
+	for (size_t i = 0; i < achievements.size(); i++)
 	{
 		delete achievements[i];
 	}
