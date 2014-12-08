@@ -6,7 +6,8 @@
 NightLayer::NightLayer()
 {
 	this->alphaLevel = 0;
-	this->lightSourceImage = IMG_Load((RESOURCEPATH + "hole.png").c_str());
+	//this->lightSourceImage = IMG_Load((RESOURCEPATH + "hole.png").c_str());
+	this->lightSourceImage = IMG_Load((RESOURCEPATH + "lightsource.png").c_str());
 	this->blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 	this->nightLayer = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurface);
 
@@ -48,7 +49,7 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 					if (e != nullptr && e->getShining() == true)
 					{
 						SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
-						SDL_Rect destRect = { (e->getX() - camera->getX()) - 120, (e->getY() - camera->getY()) - 120, lightSourceImage->w, lightSourceImage->h };
+						SDL_Rect destRect = { (e->getX() - camera->getX()) - 275, (e->getY() - camera->getY()) - 275, lightSourceImage->w, lightSourceImage->h };
 
 						drawLightSource(blackSurface, &screenRect, &sourceRect, &destRect);
 					}
