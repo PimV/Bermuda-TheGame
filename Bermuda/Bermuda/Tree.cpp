@@ -22,6 +22,7 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 }
 
 void Tree::interact(Player* player) {
+	std::cout << player->getInventory()->axeSelected() << std::endl;
 	if (player->getInventory()->axeSelected()) {
 		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);

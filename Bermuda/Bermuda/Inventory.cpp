@@ -48,6 +48,7 @@ void Inventory::init() {
 	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenAxe));
 }
 
 void Inventory::incrementSelectedIndex() {
@@ -264,7 +265,7 @@ void Inventory::dropCurrent() {
 
 bool Inventory::pickAxeSelected() {
 	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
+		if (this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe) {
 			return true;
 		}
 	}
@@ -273,7 +274,7 @@ bool Inventory::pickAxeSelected() {
 
 bool Inventory::axeSelected() {
 	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Axe) {
+		if (this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe) {
 			return true;
 		}
 	}
@@ -281,11 +282,11 @@ bool Inventory::axeSelected() {
 }
 
 bool Inventory::hasAxe() {
-	return this->hasItemById((int)Items::Axe) || this->hasItemById((int)Items::GoldenAxe);
+	return this->hasItemById((int)Items::Axe);
 }
 
 bool Inventory::hasPickaxe() {
-	return this->hasItemById((int)Items::Pickaxe) || this->hasItemById((int)Items::GoldenPickaxe);
+	return this->hasItemById((int)Items::Pickaxe);
 }
 
 std::vector<Item*> Inventory::getItems() {
