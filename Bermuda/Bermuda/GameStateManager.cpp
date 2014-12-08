@@ -113,9 +113,6 @@ void GameStateManager::handleEvents() {
 			case SDLK_TAB:
 				GameStateManager::Instance()->showFps = !GameStateManager::Instance()->showFps;
 				break;
-			case SDLK_r:
-				GameStateManager::Instance()->changeGameState(PlayState::Instance());
-				break;
 			case SDLK_PAGEUP:
 				if (this->getSpeedMultiplier() > 0.9) {
 					this->setSpeedMultiplier(this->getSpeedMultiplier() + 1);
