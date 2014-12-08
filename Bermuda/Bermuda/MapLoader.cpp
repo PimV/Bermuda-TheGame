@@ -126,7 +126,7 @@ void MapLoader::extractMapInfo(Document& d)
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
-	for(int i = 0; i < d["layers"].Capacity(); i++)
+	for(size_t i = 0; i < d["layers"].Size(); i++)
 	{
 		Value& layer = d["layers"][i];
 		string layerName = layer["name"].GetString();
@@ -151,12 +151,12 @@ void MapLoader::createTileSets(Value& tilesets)
 {
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
-	double totalTilesets = tilesets.Capacity();
+	double totalTilesets = tilesets.Size();
 	double processedTilesets = 0;
 	int tempPercentage = loadPercentage;
 	loadStatus = "Loading tilesets.";
 
-	for(int i = 0; i < tilesets.Capacity(); i++)
+	for(size_t i = 0; i < tilesets.Size(); i++)
 	{
 		Value& tileset = tilesets[i];
 		string imgName = tileset["image"].GetString();
@@ -239,12 +239,12 @@ void MapLoader::createObjects(Value& objects)
 
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
-	double totalObjects = objects.Capacity();
+	double totalObjects = objects.Size();
 	double processedObjects = 0;
 	int tempPercentage = loadPercentage;
 	loadStatus = "Creating objects.";
 
-	for(int j = 0; j < objects.Capacity(); j++)
+	for(size_t j = 0; j < objects.Size(); j++)
 	{
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
@@ -355,12 +355,12 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 {
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 10;
-	double totalSpawnpoints = spawnpoints.Capacity();
+	double totalSpawnpoints = spawnpoints.Size();
 	double processedSpawnpoints = 0;
 	int tempPercentage = loadPercentage;
 	loadStatus = "Creating spawnpoints.";
 
-	for(int j = 0; j < spawnpoints.Capacity(); j++)
+	for(size_t j = 0; j < spawnpoints.Size(); j++)
 	{
 		Value& object = spawnpoints[j];
 		Value& properties = object["properties"];

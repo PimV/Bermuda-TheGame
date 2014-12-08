@@ -9,7 +9,7 @@ void LightContainer::initChunks(int chunksY, int chunksX)
 {
 	container.resize(chunksY);
 
-	for (int i = 0; i < container.size(); i++)
+	for (size_t i = 0; i < container.size(); i++)
 	{
 		container[i].resize(chunksX);
 	}
@@ -32,7 +32,10 @@ void LightContainer::remove(LightEntity* entity)
 
 std::vector<LightEntity*>* LightContainer::getChunk(int y, int x)
 {
-	if (y >= 0 && x >= 0 && y < this->container.size() && x < this->container[y].size())
+	size_t sx = x;
+	size_t sy = y;
+
+	if (y >= 0 && x >= 0 && sy < this->container.size() && sx < this->container[y].size())
 	{
 		return &this->container[y][x];
 	}

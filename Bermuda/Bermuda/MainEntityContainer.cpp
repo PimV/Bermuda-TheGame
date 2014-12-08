@@ -62,8 +62,8 @@ int MainEntityContainer::getChunkSize()
 
 void MainEntityContainer::initContainerSizes(int mapHeight, int mapWidth)
 {
-	int chunksY = floor(mapHeight / chunkSize) + 1;
-	int chunksX = floor(mapWidth / chunkSize) + 1;
+	int chunksY = static_cast<int>(floor(mapHeight / chunkSize) + 1);
+	int chunksX = static_cast<int>( floor(mapWidth / chunkSize) + 1);
 
 	//Init all containers with chunks
 	this->m_container[ContainerType::Collidable]->initChunks(chunksY, chunksX);

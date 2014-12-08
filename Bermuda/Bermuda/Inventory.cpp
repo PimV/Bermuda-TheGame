@@ -300,7 +300,7 @@ int Inventory::getSlots() {
 }
 
 void Inventory::printInventory() {
-	for (size_t i = 0; i < 20; i++) {
+	for (int i = 0; i < 20; i++) {
 		if (i < this->getSize()) {
 			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
@@ -360,7 +360,7 @@ bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 }
 
 void Inventory::draw() {
-	for (size_t i = 0; i < this->slots; i++) {
+	for (int i = 0; i < this->slots; i++) {
 
 
 		int slotX =  posX + ScreenWidth / 32 +  i*(ScreenWidth / 32);

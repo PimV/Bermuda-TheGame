@@ -1,9 +1,9 @@
 #pragma once
 #include "header_loader.h"
+#include "ImageLoader.h"
 #include <rapidjson/document.h>
 #include <map>
 #include <vector>
-#include "ImageLoader.h""
 
 using namespace std;
 using namespace rapidjson;

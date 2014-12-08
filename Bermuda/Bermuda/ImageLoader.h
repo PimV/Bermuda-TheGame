@@ -13,7 +13,7 @@ private:
 	vector<Image*> images;
 public:
 	ImageLoader(SDL_Renderer* renderer);
-	int loadTileset(string filename, double tileWidth, double tileHeight);
+	int loadTileset(string filename, int tileWidth, int tileHeight);
 	int getCurrentImageCount();
 	Image* getMapImage(int tileID);
 	void cleanup();

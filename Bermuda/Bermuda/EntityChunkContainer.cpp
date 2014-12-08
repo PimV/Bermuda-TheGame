@@ -31,7 +31,10 @@ void EntityChunkContainer::remove(Entity* entity)
 
 std::vector<Entity*>* EntityChunkContainer::getChunk(int y, int x)
 {
-	if(y >= 0 && x >= 0 && y < this->container.size() &&  x < this->container[y].size())
+	size_t sx = x;
+	size_t sy = y;
+
+	if(y >= 0 && x >= 0 && sy < this->container.size() &&  sx < this->container[y].size())
 	{
 		return &this->container[y][x];
 	}

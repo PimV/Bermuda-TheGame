@@ -44,7 +44,7 @@ void PlayState::init(GameStateManager *gsm) {
 	camera = new Camera(0, 0, ScreenWidth, ScreenHeight, mapLoader->getMapWidth(), mapLoader->getMapHeight());
 
 	p = new Player(1, 3, mapLoader->getStartPosX(), mapLoader->getStartPosY(), camera);
-	
+
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
@@ -71,11 +71,11 @@ void PlayState::resume() {
 void PlayState::handleEvents(SDL_Event mainEvent) {
 
 	//Retrieve input
-	int x, y;
+	int x = 0;
+	int y = 0;
 	switch (mainEvent.type) {
 
 	case SDL_MOUSEBUTTONDOWN:
-		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			if (p->getInventory()->clicked(x, y, "select", p)) {

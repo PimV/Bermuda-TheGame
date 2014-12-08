@@ -64,7 +64,7 @@ void MenuHelpScreen::init()
 	buttons.push_back(mineRockButton);
 	buttons.push_back(returnButton);
 
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->setHelpScr(this);
 	}
@@ -101,7 +101,7 @@ void MenuHelpScreen::setBackground()
 
 void MenuHelpScreen::resetButtons()
 {
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->reset();
 	}
@@ -143,7 +143,7 @@ void MenuHelpScreen::draw()
 	SDL_Renderer* renderer = GameStateManager::Instance()->sdlInitializer->getRenderer();
 	SDL_RenderCopy(renderer, firstTexture, NULL, &firstRect);
 	SDL_RenderCopy(renderer, secTexture, NULL, &secRect);
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->draw();
 	}

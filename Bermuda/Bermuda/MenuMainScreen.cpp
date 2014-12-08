@@ -73,7 +73,7 @@ void MenuMainScreen::setBackground()
 
 void MenuMainScreen::resetButtons()
 {
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->reset();
 	}
