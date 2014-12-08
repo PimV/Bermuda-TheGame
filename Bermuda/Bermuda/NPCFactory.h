@@ -19,6 +19,7 @@ public:
 	void createWasp(Spawnpoint* sp);
 	void createBat(Spawnpoint* sp);
 	void createWolf(Spawnpoint* sp);
+	void createScorpion(Spawnpoint* sp);
 
 	~NPCFactory();
 	static NPCFactory* Instance() {

@@ -18,6 +18,7 @@ void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 	FirstImageIDs["wasp"] = imgLoader->loadTileset("NPC\\wasp.png", 32, 32);
 	FirstImageIDs["bat"] = imgLoader->loadTileset("NPC\\bat.png", 32, 32);
 	FirstImageIDs["wolf"] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
+	FirstImageIDs["scorpion"] = imgLoader->loadTileset("NPC\\scorpion.png", 32, 34);
 }
 
 void NPCFactory::createRabbit(Spawnpoint* sp)
@@ -38,6 +39,11 @@ void NPCFactory::createBat(Spawnpoint* sp)
 void NPCFactory::createWolf(Spawnpoint* sp)
 {
 	new Wolf(2001, sp, FirstImageIDs["wolf"]);
+}
+
+void NPCFactory::createScorpion(Spawnpoint* sp)
+{
+	new Wolf(2001, sp, FirstImageIDs["scorpion"]);
 }
 
 NPCFactory::~NPCFactory()
