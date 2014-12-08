@@ -12,7 +12,7 @@ class Wolf :
 {
 public:
 	Wolf(int id, Spawnpoint *spawnPoint, int firstImgID);
-	~Wolf();
+	virtual ~Wolf();
 	void update(double dt);
 private:
 	void directionsAndMove(double dt);

@@ -14,6 +14,7 @@ public:
 
 	void initChunks(int chunksY, int chunksX);
 	void remove(InteractableEntity* entity);
+	void cleanup();
 
 	virtual ~InteractableContainer();
 private:

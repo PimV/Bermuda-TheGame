@@ -57,9 +57,12 @@ void PauseState::cleanup()
 {
 	delete mainScr;
 	delete statScr;
+
+	mainScr = nullptr;
+	statScr = nullptr;
 }
 
 PauseState::~PauseState()
 {
-
+	this->cleanup();
 }

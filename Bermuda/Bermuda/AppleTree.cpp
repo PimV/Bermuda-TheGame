@@ -64,12 +64,6 @@ AppleTree::~AppleTree()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
-		PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
-	}
-	else 
-	{ 
-		PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	}
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }

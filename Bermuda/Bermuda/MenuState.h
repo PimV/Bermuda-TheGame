@@ -44,6 +44,6 @@ public:
 	MenuState();
 	void init(GameStateManager *gsm) ;
 	void cleanup();
-	~MenuState(void);
+	virtual ~MenuState();
 };
 

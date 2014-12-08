@@ -1,7 +1,7 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon(void)
+Weapon::Weapon()
 {
 	this->setAttackDamage(1);
 	this->setAttackRadius(1);
@@ -36,6 +36,6 @@ double Weapon::getAttackRadius() {
 }
 
 
-Weapon::~Weapon(void)
+Weapon::~Weapon()
 {
 }

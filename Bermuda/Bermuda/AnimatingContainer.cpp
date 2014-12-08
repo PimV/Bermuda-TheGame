@@ -32,13 +32,32 @@ void AnimatingContainer::remove(AnimatingEntity* entity)
 
 std::vector<AnimatingEntity*>* AnimatingContainer::getChunk(int y, int x)
 {
-	if (y >= 0 && x >= 0 && y < this->container.size() && x < this->container[y].size())
+	size_t sx = x;
+	size_t sy = y;
+
+	if (y >= 0 && x >= 0 && sy < this->container.size() && sx < this->container[y].size())
 	{
 		return &this->container[y][x];
 	}
 	return nullptr;
 }
 
+void AnimatingContainer::cleanup()
+{
+	for (size_t y = 0; y < this->container.size(); y++) {
+		for (size_t x = 0; x < this->container[y].size(); x++) {
+			while (!this->container[y][x].empty())
+			{
+				AnimatingEntity* entity = this->container[y][x].back();
+				this->container[y][x].pop_back();
+				delete entity;
+				entity = nullptr;
+			}
+		}
+	}
+}
+
 AnimatingContainer::~AnimatingContainer()
 {
+	this->cleanup();
 }

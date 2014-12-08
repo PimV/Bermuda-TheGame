@@ -52,14 +52,15 @@ void StatusTracker::applePicked()
 
 void StatusTracker::cleanup()
 {
-	for (int i = 0; i < achievements.size(); i++)
+	for (size_t i = 0; i < achievements.size(); i++)
 	{
 		delete achievements[i];
+		achievements[i] = nullptr;
 	}
-	achievements.clear();
+	std::vector<Achievement*>().swap(this->achievements); //Clear and shrink vector
 }
 
 StatusTracker::~StatusTracker()
 {
-	cleanup();
+	this->cleanup();
 }

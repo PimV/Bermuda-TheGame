@@ -6,7 +6,6 @@
 NightLayer::NightLayer()
 {
 	this->alphaLevel = 0;
-	//this->lightSourceImage = IMG_Load((RESOURCEPATH + "hole.png").c_str());
 	this->lightSourceImage = IMG_Load((RESOURCEPATH + "lightsource.png").c_str());
 	this->blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 	this->nightLayer = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurface);
@@ -30,10 +29,10 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 
 	//Update all animating entities
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it just a little bigger than the screen)
-	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
+	int beginChunkX = static_cast<int>(floor(camera->getX() / mec->getChunkSize()) - 1);
+	int endChunkX = static_cast<int>(floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1);
+	int beginChunkY = static_cast<int>(floor(camera->getY() / mec->getChunkSize()) - 1);
+	int endChunkY = static_cast<int>(floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1);
 
 	//Loop through all chunks
 	for (int i = beginChunkY; i <= endChunkY; i++)
@@ -49,7 +48,7 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 					if (e != nullptr && e->getShining() == true)
 					{
 						SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
-						SDL_Rect destRect = { (e->getX() - camera->getX()) - 275, (e->getY() - camera->getY()) - 275, lightSourceImage->w, lightSourceImage->h };
+						SDL_Rect destRect = { static_cast<int>((e->getX() - camera->getX()) - 275), static_cast<int>((e->getY() - camera->getY()) - 275), lightSourceImage->w, lightSourceImage->h };
 
 						drawLightSource(blackSurface, &screenRect, &sourceRect, &destRect);
 					}
@@ -138,7 +137,7 @@ void NightLayer::calculateAlpha(SDL_Texture* texture)
 	{
 		alphaLevel = (250 / 10) * (10 - p);
 	}
-	
+
 	//std::cout << "Day%: " << p << " - alphaLevel: " << alphaLevel << std::endl;
-	SDL_SetTextureAlphaMod(texture, alphaLevel);
+	SDL_SetTextureAlphaMod(texture, static_cast<Uint8>(alphaLevel));
 }

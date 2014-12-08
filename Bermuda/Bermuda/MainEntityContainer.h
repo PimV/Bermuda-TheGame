@@ -32,6 +32,7 @@ public:
 
 	void initContainerSizes(int mapHeight, int mapWidth);
 	int getChunkSize();
+	void cleanup();
 
 private: 
 	std::map<ContainerType, IEntityContainer*> m_container;
