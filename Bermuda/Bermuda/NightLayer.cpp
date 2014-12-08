@@ -48,8 +48,8 @@ void NightLayer::draw(Camera* camera, MainEntityContainer* mec)
 					if (e != nullptr && e->getShining() == true)
 					{
 						SDL_Rect sourceRect = { 0, 0, lightSourceImage->w, lightSourceImage->h };
-						SDL_Rect destRect = { static_cast<int>((e->getX() - camera->getX()) - 275), static_cast<int>((e->getY() - camera->getY()) - 275), lightSourceImage->w, lightSourceImage->h };
-						//SDL_Rect destRect = { static_cast<int>((e->getX() + e->getWidth() / 2 - lightSourceImage->w / 2 - camera->getX())), static_cast<int>((e->getY() + e->getHeight() / 2 - lightSourceImage->h / 2 - camera->getY())), lightSourceImage->w, lightSourceImage->h };
+						//SDL_Rect destRect = { static_cast<int>((e->getX() - camera->getX()) - 275), static_cast<int>((e->getY() - camera->getY()) - 275), lightSourceImage->w, lightSourceImage->h };
+						SDL_Rect destRect = { static_cast<int>((e->getX() + e->getWidth() / 2 - lightSourceImage->w / 2 - camera->getX())), static_cast<int>((e->getY() + e->getHeight() / 2 - lightSourceImage->h / 2 - camera->getY())), lightSourceImage->w, lightSourceImage->h };
 
 						drawLightSource(blackSurface, &screenRect, &sourceRect, &destRect);
 					}

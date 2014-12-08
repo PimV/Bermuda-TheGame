@@ -14,6 +14,7 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getLightContainer()->add(this);
 	this->creationTime = GameTimer::Instance()->getGameTime();
+	this->destroyTime = 0;
 	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() + 10000, 0);
 	this->particleEngine = new ParticleEngine(0,x + 10,y + 40,nullptr,PARTICLETYPES::SMOKE);
 	this->setShining(true);

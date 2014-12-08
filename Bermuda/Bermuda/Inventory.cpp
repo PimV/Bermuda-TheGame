@@ -48,13 +48,6 @@ void Inventory::init() {
 	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 }
 
 void Inventory::incrementSelectedIndex() {
