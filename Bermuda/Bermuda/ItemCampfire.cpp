@@ -23,7 +23,9 @@ void ItemCampfire::init()
 
 void ItemCampfire::use(Player* p)
 {
-	int x, y;
+	double x = 0;
+	double y = 0;
+
 	switch (p->getMovementDirection())
 	{
 	case MovementDirectionEnum::Left:

@@ -119,7 +119,7 @@ void SoundLoader::threadMusic()
 	{
 		if (Mix_PlayingMusic() == 0) {
 
-			srand(time(NULL));
+			srand(static_cast<unsigned int>(time(NULL)));
 			int trackNr;
 
 			switch (stateType)
