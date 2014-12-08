@@ -8,7 +8,7 @@ ImageLoader::ImageLoader(SDL_Renderer* renderer)
 }
 
 //Returns the first ID of the new tileset images
-int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeight)
+int ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 {
 	int startID = images.size() + 1;
 	SDL_Texture* tileSet = IMG_LoadTexture(renderer, (RESOURCEPATH + filename).c_str());
@@ -24,8 +24,8 @@ int ImageLoader::loadTileset(string filename, double tileWidth, double tileHeigh
 	int fileWidth = 0;
 	int fileHeight = 0;
 	SDL_QueryTexture(tileSet, nullptr, nullptr, &fileWidth, &fileHeight);
-	double drawWidth = tileWidth;
-	double drawHeight = tileHeight;
+	int drawWidth = tileWidth;
+	int drawHeight = tileHeight;
 
 	while ( y < fileHeight )
 	{
@@ -63,7 +63,9 @@ int ImageLoader::getCurrentImageCount()
 
 Image* ImageLoader::getMapImage(int tileID)
 {
-	if(tileID > 0 && tileID <= images.size())
+	size_t sTileId = tileID;
+
+	if(tileID > 0 && sTileId <= images.size())
 	{
 		return images.at(tileID-1);
 	}
@@ -182,13 +184,13 @@ SDL_Texture* ImageLoader::getCantInteractFishImage() {
 ImageLoader::~ImageLoader()
 {
 	// Destroy all images
-	for (int i = 0; i < images.size(); i++)
+	for (size_t i = 0; i < images.size(); i++)
 	{
 		delete images.at(i);
 	}
 
 	// Destroy all tilesets
-	for (int i = 0; i < tileSets.size(); i++)
+	for (size_t i = 0; i < tileSets.size(); i++)
 	{
 		SDL_DestroyTexture(tileSets.at(i));
 	}

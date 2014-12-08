@@ -3,7 +3,7 @@
 #include "GameTimer.h"
 
 
-Particle::Particle(float x, float y, float dx, float dy, int life, SDL_Texture* textPixel, int width, int height)
+Particle::Particle(double x, double y, double dx, double dy, int life, SDL_Texture* textPixel, int width, int height)
 {
 	this->x = x;
 	this->y = y;
@@ -33,8 +33,8 @@ void Particle::move(double dt)
 
 void Particle::draw(Camera* camera)
 {
-	rectPixel.x = this->x - camera->getX();
-	rectPixel.y = this->y - camera->getY();
+	rectPixel.x = static_cast<int>(this->x - camera->getX());
+	rectPixel.y = static_cast<int>(this->y - camera->getY());
 	GameStateManager::Instance()->sdlInitializer->drawTexture(textPixel, &rectPixel, NULL);
 
 }

@@ -21,7 +21,7 @@ void PauseStatusTrackerScreen::init()
 	SDL_Color white = { 255, 255, 255 };
 	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 24);
 
-	for each (Achievement* var in achievements)
+	for(Achievement* var : achievements)
 	{
 		//Make achievements names
 		std::string achievementName = var->getName();
@@ -61,7 +61,7 @@ void PauseStatusTrackerScreen::init()
 	}
 
 	int minSur =  ((int)ScreenHeight - total) / 2;
-	for (int i = 0; i < nameTextures.size(); i++)
+	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		nameRectangles.at(i).x = (ScreenWidth / 2) - nameRectangles.at(i).w - countRectangles.at(i).w ;
 		nameRectangles.at(i).y = minSur;
@@ -86,7 +86,7 @@ void PauseStatusTrackerScreen::init()
 void PauseStatusTrackerScreen::setBackground()
 {
 	backgroundRect.x = ScreenWidth;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		if (var.x <= backgroundRect.x)
 		{
@@ -97,7 +97,7 @@ void PauseStatusTrackerScreen::setBackground()
 	backgroundRect.x = backgroundRect.x - 35;
 
 	backgroundRect.y = ScreenHeight;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		if (var.y <= backgroundRect.y)
 		{
@@ -109,7 +109,7 @@ void PauseStatusTrackerScreen::setBackground()
 
 	backgroundRect.w = 0;
 	backgroundRect.h = 0;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		backgroundRect.h += var.h;
 	}

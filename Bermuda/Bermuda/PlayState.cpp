@@ -44,7 +44,7 @@ void PlayState::init(GameStateManager *gsm) {
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	p->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 
-
+	GameTimer::Instance()->init();
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
@@ -82,11 +82,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	//Process Input
 
 	//Retrieve input
-	int x, y;
+	int x = 0;
+	int y = 0;
 	switch (mainEvent.type) {
 
 	case SDL_MOUSEBUTTONDOWN:
-		int x, y;
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 			if (p->getInventory()->clicked(x, y, "select", p)) {

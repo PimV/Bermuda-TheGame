@@ -13,7 +13,7 @@ private:
 	int animationStartIndex;
 	int animationEndIndex;
 	int currentImageIndex;
-	long lastFrameTime;
+	float lastFrameTime;
 	int finishedIndex;
 
 	//animate timer

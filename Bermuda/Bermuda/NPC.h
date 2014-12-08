@@ -24,7 +24,7 @@ public:
 #pragma endregion
 
 private:
-	int healthPoints, attackPoints, walkRange, actionRange;
-	bool destroyed, respawnTime, interactTime, timeSinceDestroy, currentInteractTime;;
+	int healthPoints, attackPoints, walkRange, actionRange, respawnTime, interactTime;
+	bool destroyed, timeSinceDestroy, currentInteractTime;;
 	Spawnpoint *spawnPoint;
 };

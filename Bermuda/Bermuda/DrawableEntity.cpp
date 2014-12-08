@@ -23,11 +23,11 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 		getY() + getHeight() > (camera->getY() - DRAWBUFFER) &&
 		getY() < (camera->getY() + camera->getHeight() + DRAWBUFFER))
 	{
-		sizeRect->x = getX() - camera->getX();
-		sizeRect->y = getY() - camera->getY(); 
-		sizeRect->w = getWidth();
-		sizeRect->h = getHeight();
-		//std::cout << getWidth() << ":" << getHeight() << std::endl;
+		sizeRect->x = static_cast<int>(getX() - camera->getX());
+		sizeRect->y = static_cast<int>(getY() - camera->getY()); 
+		sizeRect->w = static_cast<int>(getWidth());
+		sizeRect->h = static_cast<int>(getHeight());
+
 		//Draw the entity
 		SDL_RenderCopy(renderer, drawImage->getTileSet(), drawImage->getCroppingRect(), sizeRect);
 	}
