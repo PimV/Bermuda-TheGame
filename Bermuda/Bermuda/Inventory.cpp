@@ -281,11 +281,11 @@ bool Inventory::axeSelected() {
 }
 
 bool Inventory::hasAxe() {
-	return this->hasItemById((int)Items::Axe);
+	return this->hasItemById((int)Items::Axe) || this->hasItemById((int)Items::GoldenAxe);
 }
 
 bool Inventory::hasPickaxe() {
-	return this->hasItemById((int)Items::Pickaxe);
+	return this->hasItemById((int)Items::Pickaxe) || this->hasItemById((int)Items::GoldenPickaxe);
 }
 
 std::vector<Item*> Inventory::getItems() {
