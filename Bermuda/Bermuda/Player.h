@@ -99,6 +99,10 @@ private:
 	int animationMineDown, animationMineRight;
 	int animationMineStartColumn, animationMineEndColumn;
 
+	int animationMineGoldUp, animationMineGoldLeft;
+	int animationMineGoldDown, animationMineGoldRight;
+	int animationMineGoldStartColumn, animationMineGoldEndColumn;
+
 	bool correctToolSelected;
 
 	double getDistance(int currentX, int currentY, int destX, int destY);

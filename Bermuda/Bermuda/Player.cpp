@@ -81,17 +81,20 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationChopStartColumn = 1, this->animationChopEndColumn = 9;
 
 	this->animationMineUp = 16, this->animationMineLeft = 17;
-	this->animationMineDown = 18, this->animationMineRight = 18;
+	this->animationMineDown = 18, this->animationMineRight = 19;
 	this->animationMineStartColumn = 1, this->animationMineEndColumn = 9;
 
 	this->animationPickUp = 0, this->animationPickLeft = 1;
 	this->animationPickDown = 2, this->animationPickRight = 3;
 	this->animationPickStartColumn = 1, this->animationPickEndColumn = 6;
-
 	
 	this->animationChopGoldUp = 20, this->animationChopGoldLeft = 21;
 	this->animationChopGoldDown = 22, this->animationChopGoldRight = 23;
 	this->animationChopGoldStartColumn = 1, this->animationChopGoldEndColumn = 9;
+	
+	this->animationMineGoldUp = 24, this->animationMineGoldLeft = 25;
+	this->animationMineGoldDown = 26, this->animationMineGoldRight = 27;
+	this->animationMineGoldStartColumn = 1, this->animationMineGoldEndColumn = 9;
 
 	//this->currentAnimationRow = this->animationWalkDownRow;
 	this->movementDirection = MovementDirectionEnum::Down;
@@ -378,9 +381,19 @@ void Player::setAnimationType(AnimationEnumType type)
 		}
 		break;
 	case AnimationEnumType::Mine:
+		switch(this->getInventory()->getSelectedItem()->getId())
+		{
+		case (int)Items::Pickaxe:
 			this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationMineStartColumn;
 			this->animationActionEndColumn = this->animationMineEndColumn;
+			break;			
+		case (int)Items::GoldenPickaxe:
+			this->currentAnimationRow = this->animationMineGoldUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationMineGoldStartColumn;
+			this->animationActionEndColumn = this->animationMineGoldEndColumn;
+			break;
+		}
 		break;
 	case AnimationEnumType::Pick:
 		std::cout << "No pick animation" << std::endl;
