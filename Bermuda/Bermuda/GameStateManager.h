@@ -28,6 +28,7 @@ public:
 
 	void update(double delta);
 	void handleEvents();
+	void flushEvents();
 	void draw();
 
 	void setUpdateLength(long updateLength);

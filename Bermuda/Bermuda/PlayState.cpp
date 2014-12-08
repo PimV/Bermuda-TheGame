@@ -49,6 +49,7 @@ void PlayState::init(GameStateManager *gsm) {
 	nightLayer = new NightLayer();
 
 	this->ready = true;
+	GameStateManager::Instance()->flushEvents();
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
