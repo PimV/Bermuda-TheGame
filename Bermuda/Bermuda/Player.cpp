@@ -2,6 +2,7 @@
 #include "GameOverState.h"
 #include "GameStateManager.h"
 #include "PlayState.h"
+#include "Item.h"
 #include <vector>
 
 Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
@@ -86,6 +87,11 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationPickUp = 0, this->animationPickLeft = 1;
 	this->animationPickDown = 2, this->animationPickRight = 3;
 	this->animationPickStartColumn = 1, this->animationPickEndColumn = 6;
+
+	
+	this->animationChopGoldUp = 20, this->animationChopGoldLeft = 21;
+	this->animationChopGoldDown = 22, this->animationChopGoldRight = 23;
+	this->animationChopGoldStartColumn = 1, this->animationChopGoldEndColumn = 9;
 
 	//this->currentAnimationRow = this->animationWalkDownRow;
 	this->movementDirection = MovementDirectionEnum::Down;
@@ -357,9 +363,19 @@ void Player::setAnimationType(AnimationEnumType type)
 		std::cout << "Animation type is None" << std::endl;
 		break;
 	case AnimationEnumType::Chop:
+		switch(this->getInventory()->getSelectedItem()->getId())
+		{
+		case (int)Items::Axe:
 			this->currentAnimationRow = this->animationChopUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationChopStartColumn;
 			this->animationActionEndColumn = this->animationChopEndColumn;
+			break;
+		case (int)Items::GoldenAxe:
+			this->currentAnimationRow = this->animationChopGoldUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationChopGoldStartColumn;
+			this->animationActionEndColumn = this->animationChopGoldEndColumn;
+			break;
+		}
 		break;
 	case AnimationEnumType::Mine:
 			this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;

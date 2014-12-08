@@ -91,6 +91,10 @@ private:
 	int animationChopDown, animationChopRight;
 	int animationChopStartColumn, animationChopEndColumn;
 
+	int animationChopGoldUp, animationChopGoldLeft;
+	int animationChopGoldDown, animationChopGoldRight;
+	int animationChopGoldStartColumn, animationChopGoldEndColumn;
+
 	int animationMineUp, animationMineLeft;
 	int animationMineDown, animationMineRight;
 	int animationMineStartColumn, animationMineEndColumn;
