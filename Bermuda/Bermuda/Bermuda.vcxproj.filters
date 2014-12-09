@@ -477,6 +477,24 @@
     <ClCompile Include="ParticleEngine.cpp">
       <Filter>Source Files\Model\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="TreePine.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeRound.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="IceSpikes.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="IceRock.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableCactusBig.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableCactusSmall.cpp">
+      <Filter>Source Files\Model\Entity\Interactive objects</Filter>
+    </ClCompile>
     <ClCompile Include="SnowTree.cpp">
       <Filter>Source Files\Model\Entity\Static objects</Filter>
     </ClCompile>
@@ -821,6 +839,24 @@
     <ClInclude Include="ParticleEngine.h">
       <Filter>Header Files\Model\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="TreePine.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeRound.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IceRock.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IceSpikes.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableCactusSmall.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableCactusBig.h">
+      <Filter>Header Files\Model\Entity\Interactive objects</Filter>
+    </ClInclude>
     <ClInclude Include="SnowTree.h">
       <Filter>Header Files\Model\Entity\Static objects</Filter>
     </ClInclude>
@@ -843,6 +879,12 @@
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="DAYPART.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuCreditsButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlays.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
   </ItemGroup>

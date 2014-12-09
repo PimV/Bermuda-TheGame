@@ -156,6 +156,10 @@ void Player::update(double dt) {
 	else {
 		this->directionsAndMove(dt);
 	}
+
+	
+
+
 }
 
 #pragma region PlayerStatusUpdates
@@ -367,7 +371,6 @@ void Player::setAnimationType(AnimationEnumType type)
 			this->animationActionEndColumn = this->animationMineEndColumn;
 		break;
 	case AnimationEnumType::Pick:
-		std::cout << "No pick animation" << std::endl;
 			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationPickStartColumn;
 			this->animationActionEndColumn = this->animationPickEndColumn;

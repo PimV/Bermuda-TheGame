@@ -1,5 +1,5 @@
 #include "DrawableEntity.h"
-
+#include <iostream>
 double DrawableEntity::DRAWBUFFER = 64;
 
 DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) : 
@@ -10,6 +10,7 @@ DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) :
 		this->setWidth(drawImage->getWidth());
 		this->setHeight(drawImage->getHeight());
 	}
+
 	this->sizeRect = new SDL_Rect();
 }
 

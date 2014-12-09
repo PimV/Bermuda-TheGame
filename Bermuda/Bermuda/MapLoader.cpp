@@ -1,11 +1,15 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "Tree.h"
+#include "TreePine.h"
+#include "TreeRound.h"
 #include "AppleTree.h"
 #include "Rock.h"
 #include "RockSpikes.h"
 #include "GoldRock.h"
 #include "Ice.h"
+#include "IceSpikes.h"
+#include "IceRock.h"
 #include "Carrot.h"
 #include "Fish.h"
 #include "Pillar.h"
@@ -14,6 +18,8 @@
 #include "Cactus.h"
 #include "SnowTree.h"
 #include "InteractableCactus.h"
+#include "InteractableCactusBig.h"
+#include "InteractableCactusSmall.h"
 #include "CollidableTile.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
@@ -246,6 +252,7 @@ void MapLoader::createObjects(Value& objects)
 
 	for(size_t j = 0; j < objects.Size(); j++)
 	{
+
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
 		Image* objectImg = imgLoader->getMapImage(firstImgID + objectID);
@@ -254,8 +261,15 @@ void MapLoader::createObjects(Value& objects)
 
 		//TODO: Any better way to do this?
 		if(objectClasses[objectID] == "Tree")
-		{
-			new Tree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		{			
+			if(objectID == 421)
+			{
+				new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
+			else if(objectID == 423)
+			{
+				new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
 		}
 		else if(objectClasses[objectID] == "TreeStump")
 		{
@@ -300,11 +314,11 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if (objectClasses[objectID] == "Ice")
 		{
-			new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new IceRock(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if (objectClasses[objectID] == "IceSpikes")
 		{
-			new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
+			new IceSpikes(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
 		}
 		else if (objectClasses[objectID] == "IcePieces")
 		{
@@ -333,7 +347,14 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if (objectClasses[objectID] == "InteractableCactus")
 		{
-			new InteractableCactus(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			if(objectID == 452)
+			{
+				new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
+			else if(objectID == 454)
+			{
+				new InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			}
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{
