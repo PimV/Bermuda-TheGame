@@ -21,6 +21,7 @@ void ToolFlint::init() {
 	this->setStackSize(itemCount);
 
 	this->setDurability(5);
+	this->setMaxDurability(5);
 }
 
 ToolFlint::~ToolFlint()

@@ -20,6 +20,7 @@ void ToolPickaxe::init() {
 	this->setStackSize(itemCount);
 
 	this->setDurability(20);
+	this->setMaxDurability(20);
 }
 
 ToolPickaxe::~ToolPickaxe()
