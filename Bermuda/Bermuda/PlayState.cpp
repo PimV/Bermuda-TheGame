@@ -25,8 +25,6 @@ PlayState::PlayState()
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
 
-	GameStateManager::Instance()->setSpeedMultiplier(1);
-	GameTimer::Instance()->init();
 	this->gameOver = false;
 	this->showCol = false;
 	this->showInter = false;
