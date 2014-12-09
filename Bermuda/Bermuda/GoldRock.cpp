@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include <ctime>
 
 GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	Entity(id, x, y),
@@ -32,6 +33,14 @@ void GoldRock::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Gold));
+			//Random flint chance
+			srand(time(NULL));
+			int flintChance = rand() % 10 + 1;	
+			if (flintChance > 8) {
+				Item* flint = ItemFactory::Instance()->createItem(Items::Flint);
+				flint->setStackSize(1);
+				player->getInventory()->addItem(flint);
+			}
 			//TODO: add to statustracker
 		}
 	} else {

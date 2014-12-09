@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include <ctime> 
 
 Rock::Rock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	Entity(id,x,y), 
@@ -31,6 +32,16 @@ void Rock::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Rock));
+			//Random flint chance
+			srand(time(NULL));
+			int flintChance = rand() % 10 + 1;	
+			if (flintChance > 9) {
+				Item* flint = ItemFactory::Instance()->createItem(Items::Flint);
+				flint->setStackSize(1);
+				player->getInventory()->addItem(flint);
+			}
+
+			//Set rock mined
 			player->getStatusTracker()->rockMined();
 		}
 	} else {
