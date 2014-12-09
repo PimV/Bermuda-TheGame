@@ -260,20 +260,22 @@ void MapLoader::createObjects(Value& objects)
 		double objectY = object["y"].GetDouble() - objectImg->getHeight(); // -getHeight() Because all 'tiled' objects use bottom left for image positioning;
 
 		//TODO: Any better way to do this?
-		if(objectClasses[objectID] == "Tree")
-		{			
-			if(objectID == 421)
-			{
-				new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
-			}
-			else if(objectID == 423)
-			{
-				new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
-			}
-		}
-		else if(objectClasses[objectID] == "TreeStump")
+		if(objectClasses[objectID] == "RoundTree")
 		{
-			Tree* tree = new Tree(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if(objectClasses[objectID] == "PineTree")
+		{
+			new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if(objectClasses[objectID] == "RoundTreeStump")
+		{
+			Tree* tree = new TreeRound(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			tree->setDestroyedState();
+		}
+		else if(objectClasses[objectID] == "PineTreeStump")
+		{
+			Tree* tree = new TreePine(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			tree->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "AppleTree")
@@ -345,16 +347,23 @@ void MapLoader::createObjects(Value& objects)
 		{
 			new Cactus(objectID, objectX, objectY, objectImg);
 		}
-		else if (objectClasses[objectID] == "InteractableCactus")
+		else if (objectClasses[objectID] == "BigInteractableCactus")
 		{
-			if(objectID == 452)
-			{
-				new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
-			}
-			else if(objectID == 454)
-			{
-				new InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
-			}
+			new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "SmallInteractableCactus")
+		{
+			new InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "BigCactusStump")
+		{
+			InteractableCactusBig* cactus = new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			cactus->setDestroyedState();
+		}
+		else if (objectClasses[objectID] == "SmallCactusStump")
+		{
+			InteractableCactusSmall* cactus = new  InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			cactus->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{
