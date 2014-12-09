@@ -19,7 +19,7 @@ class Player :
 {
 public:
 	Player(int id, double moveSpeed, double x, double y, Camera* camera);
-	~Player(void);
+	virtual ~Player();
 
 	void update(double dt);
 	void directionsAndMove(double dt);
@@ -97,7 +97,7 @@ private:
 
 	bool correctToolSelected;
 
-	double getDistence(int currentX, int currentY, int destX, int destY);
+	double getDistance(int currentX, int currentY, int destX, int destY);
 
 	Inventory* inventory;
 	Crafting* crafting;

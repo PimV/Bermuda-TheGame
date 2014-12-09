@@ -1,8 +1,5 @@
 #include "MenuMainScreen.h"
-#include "MenuExitButton.h"
-#include "MenuPlayButton.h"
-#include "MenuCreditsButton.h"
-
+#include "PlayState.h"
 
 MenuMainScreen::MenuMainScreen()
 {
@@ -14,20 +11,33 @@ void MenuMainScreen::init()
 	setBackground();
 
 	//Create Buttons
-	MenuPlayButton* playButton = new MenuPlayButton();
-	MenuExitButton* exitButton = new MenuExitButton();
-	MenuCreditsButton* creditsButton = new MenuCreditsButton();
+	BaseButton* playButton = new BaseButton();
+	playButton->action = &BaseButton::playAction;
+	playButton->createButton("Play", 60, 0);
+
+	BaseButton* exitButton = new BaseButton();
+	exitButton->action = &BaseButton::exitAction;
+	exitButton->createButton("Exit", 60, 0);
+
+	BaseButton* creditsButton = new BaseButton();
+	creditsButton->action = &BaseButton::setCreditsScreenAction;
+	creditsButton->createButton("Credits", 60, 0);
+
+	BaseButton* helpButton = new BaseButton();
+	helpButton->action = &BaseButton::menuSetHelpScreenAction;
+	helpButton->createButton("Help", 60, 0);
 	
 	//place buttons
-	exitButton->placeLeftMid();
-	creditsButton->placeLeftAboveButton(exitButton);
+	helpButton->placeLeftMid();
+	exitButton->placeLeftUnderButton(helpButton);
+	creditsButton->placeLeftAboveButton(helpButton);
 	playButton->placeLeftAboveButton(creditsButton);
 	
 	//place in button vector
 	buttons.push_back(playButton);
 	buttons.push_back(exitButton);
 	buttons.push_back(creditsButton);
-
+	buttons.push_back(helpButton);
 }
 
 void MenuMainScreen::setBackground()
@@ -63,7 +73,7 @@ void MenuMainScreen::setBackground()
 
 void MenuMainScreen::resetButtons()
 {
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->reset();
 	}
@@ -117,7 +127,7 @@ void MenuMainScreen::cleanup()
 	{
 		delete buttons[i];
 	}
-	buttons.clear();
+	std::vector<BaseButton*>().swap(buttons); // clear and shrink vector.
 }
 
 MenuMainScreen::~MenuMainScreen()

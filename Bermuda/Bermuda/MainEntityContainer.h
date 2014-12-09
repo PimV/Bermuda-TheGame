@@ -10,6 +10,7 @@
 #include "RespawnContainer.h"
 #include "SpawnpointContainer.h"
 #include "DestroyContainer.h"
+#include "LightContainer.h"
 #include <map>
 
 class MainEntityContainer
@@ -25,11 +26,13 @@ public:
 	MovableContainer* getMovableContainer();
 	SpawnpointContainer* getSpawnpointContainer();
 	DestroyContainer* getDestroyContainer();
+	LightContainer* getLightContainer();
 
 	virtual ~MainEntityContainer();
 
 	void initContainerSizes(int mapHeight, int mapWidth);
 	int getChunkSize();
+	void cleanup();
 
 private: 
 	std::map<ContainerType, IEntityContainer*> m_container;

@@ -1,5 +1,5 @@
 #include "IGameState.h"
 
-IGameState::~IGameState(void)
+IGameState::~IGameState()
 {
 }

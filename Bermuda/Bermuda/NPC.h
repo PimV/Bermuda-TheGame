@@ -7,7 +7,7 @@ class NPC :
 {
 public:
 	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
-	virtual ~NPC(void);
+	virtual ~NPC();
 
 #pragma region Getters
 	int getHeathPoints();
@@ -24,7 +24,7 @@ public:
 #pragma endregion
 
 private:
-	int healthPoints, attackPoints, walkRange, actionRange;
-	bool destroyed, respawnTime, interactTime, timeSinceDestroy, currentInteractTime;;
+	int healthPoints, attackPoints, walkRange, actionRange, respawnTime, interactTime;
+	bool destroyed, timeSinceDestroy, currentInteractTime;;
 	Spawnpoint *spawnPoint;
 };

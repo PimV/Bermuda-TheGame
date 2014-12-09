@@ -7,10 +7,10 @@ DrawableEntity::DrawableEntity(int id, double x, double y, Image* image) :
 {
 	if(image != nullptr)
 	{
-		setWidth(drawImage->getWidth());
-		setHeight(drawImage->getHeight());
+		this->setWidth(drawImage->getWidth());
+		this->setHeight(drawImage->getHeight());
 	}
-	sizeRect = new SDL_Rect();
+	this->sizeRect = new SDL_Rect();
 }
 
 void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
@@ -22,10 +22,10 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 		getY() + getHeight() > (camera->getY() - DRAWBUFFER) &&
 		getY() < (camera->getY() + camera->getHeight() + DRAWBUFFER))
 	{
-		sizeRect->x = getX() - camera->getX();
-		sizeRect->y = getY() - camera->getY(); 
-		sizeRect->w = getWidth();
-		sizeRect->h = getHeight();
+		sizeRect->x = static_cast<int>(getX() - camera->getX());
+		sizeRect->y = static_cast<int>(getY() - camera->getY()); 
+		sizeRect->w = static_cast<int>(getWidth());
+		sizeRect->h = static_cast<int>(getHeight());
 
 		//Draw the entity
 		SDL_RenderCopy(renderer, drawImage->getTileSet(), drawImage->getCroppingRect(), sizeRect);
@@ -34,15 +34,17 @@ void DrawableEntity::draw(Camera* camera, SDL_Renderer* renderer)
 
 void DrawableEntity::setDrawImage(Image* image)
 {
-	drawImage = image;
-	if (this->getWidth() < 0 && this->getHeight() < 0)
+	if (this->drawImage == nullptr)
 	{
-		setWidth(drawImage->getWidth());
-		setHeight(drawImage->getHeight());
+		this->setWidth(image->getWidth());
+		this->setHeight(image->getHeight());
 	}
+
+	this->drawImage = image;
 }
 
 DrawableEntity::~DrawableEntity()
 {
 	delete sizeRect;
+	sizeRect = nullptr;
 }

@@ -17,10 +17,6 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint
 	this->currentInteractTime = 0;
 }
 
-NPC::~NPC(void)
-{
-}
-
 #pragma region Getters
 int NPC::getHeathPoints()
 {
@@ -65,3 +61,6 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 }
 #pragma endregion
 
+NPC::~NPC()
+{
+}

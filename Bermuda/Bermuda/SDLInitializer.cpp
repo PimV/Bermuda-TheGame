@@ -1,12 +1,7 @@
 #include "SDLInitializer.h"
 #include <iostream>
 
-SDLInitializer::SDLInitializer(void)
-{
-}
-
-
-SDLInitializer::~SDLInitializer(void)
+SDLInitializer::SDLInitializer()
 {
 }
 
@@ -20,7 +15,7 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 		fullscreen
 		);
 	renderer = SDL_CreateRenderer(window, -1, 0);
-
+	
 	//Initialize SDL2_ttf
 	TTF_Init();
 
@@ -30,6 +25,7 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 }
 
 void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h, int r, int g, int b) {
+	//TODO: Deze methode is slecht om te gebruiken. Elke frame een nieuwe texture aanmaken kost veel tijd!
 	font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), h);
 
 	SDL_Surface* imgTxt;
@@ -64,14 +60,13 @@ void SDLInitializer::resetRenderDrawColor() {
 	SDL_SetRenderDrawColor(this->getRenderer(), 0,0,0,255);
 }
 
-
-
 void SDLInitializer::clearScreen() {
 	SDL_RenderClear(renderer);
 }
 
 void SDLInitializer::drawTexture(SDL_Texture* texture, const SDL_Rect* destRect, SDL_Rect* crop) {
 	SDL_RenderCopy(renderer, texture, crop,destRect);
+
 }
 
 void SDLInitializer::drawScreen() {
@@ -80,4 +75,15 @@ void SDLInitializer::drawScreen() {
 
 SDL_Renderer* SDLInitializer::getRenderer() {
 	return renderer;
+}
+
+SDL_Window* SDLInitializer::getWindow()
+{
+	return window;
+}
+
+SDLInitializer::~SDLInitializer()
+{
+	SDL_DestroyRenderer(this->renderer);
+	SDL_DestroyWindow(this->window);
 }

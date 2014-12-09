@@ -119,7 +119,7 @@ void LoadingState::draw()
 	GameStateManager::Instance()->sdlInitializer->drawScreen();
 }
 
-LoadingState::~LoadingState(void)
+LoadingState::~LoadingState()
 {
 	this->cleanup();
 

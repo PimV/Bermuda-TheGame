@@ -3,7 +3,6 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "PlayState.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, 5, 1, 50, spawnPoint),
@@ -146,4 +145,7 @@ bool Rabbit::checkCollision(double newX, double newY)
 
 Rabbit::~Rabbit()
 {
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }

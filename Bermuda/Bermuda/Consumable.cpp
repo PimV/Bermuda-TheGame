@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Consumable::Consumable(void)
+Consumable::Consumable()
 {
 }
 
@@ -45,6 +45,6 @@ int Consumable::getThirstRefill() {
 int Consumable::getHungerRefill() {
 	return this->hungerRefill;
 }
-Consumable::~Consumable(void)
+Consumable::~Consumable()
 {
 }

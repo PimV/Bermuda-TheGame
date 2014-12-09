@@ -9,15 +9,14 @@ public:
 	BackgroundContainer();
 
 	void add(DrawableEntity* entity);
-	//std::vector<DrawableEntity*> getContainer();
 	std::vector<DrawableEntity*>* getChunk(int y, int x);
 	
 	void initChunks(int chunksY, int chunksX);
 	void remove(DrawableEntity* entity);
+	void cleanup();
 
-	~BackgroundContainer();
+	virtual ~BackgroundContainer();
 private:
-	//std::vector<DrawableEntity*> m_container;
 	std::vector<std::vector<std::vector<DrawableEntity*>>> container;
 };
 

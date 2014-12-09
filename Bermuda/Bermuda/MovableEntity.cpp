@@ -11,8 +11,9 @@ MovableEntity::MovableEntity(int id, double x, double y) :
 	this->defaultAnimationActionSpeed = 40;
 }
 
-MovableEntity::~MovableEntity(void)
+MovementDirectionEnum MovableEntity::getMovementDirection()
 {
+	return this->movementDirection;
 }
 
 void MovableEntity::move(double dt)
@@ -83,22 +84,22 @@ void MovableEntity::move(double dt)
 	// set animation row
 	if (this->movingLeft)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Left;
+		this->movementDirection = MovementDirectionEnum::Left;
 		this->currentAnimationRow = this->animationWalkLeftRow;
 	}
 	else if (this->movingRight)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Right;
+		this->movementDirection = MovementDirectionEnum::Right;
 		this->currentAnimationRow = this->animationWalkRightRow;
 	}
 	else if (this->movingUp)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Up;
+		this->movementDirection = MovementDirectionEnum::Up;
 		this->currentAnimationRow = this->animationWalkUpRow;
 	}
 	else if (this->movingDown)
 	{
-		this->movementDirection = (int)MovementDirectionEnum::Down;
+		this->movementDirection = MovementDirectionEnum::Down;
 		this->currentAnimationRow = this->animationWalkDownRow;
 	}
 
@@ -129,14 +130,14 @@ void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double 
 			this->CurrentFrame++;
 		}
 
-		this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
+		this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
 		this->animationSpeed = this->maxSpeed * 3;
 	}
 }
 
 void MovableEntity::StopAnimation()
 {
-	this->setImage(GameStateManager::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
+	this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
 }
 
 void MovableEntity::setPosition(double newX, double newY) {
@@ -150,4 +151,8 @@ void MovableEntity::setPosition(double newX, double newY) {
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->ResetDrawableEntityAndSetChunk();
 	}
+}
+
+MovableEntity::~MovableEntity()
+{
 }
