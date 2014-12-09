@@ -393,6 +393,7 @@ void Player::changeAnimationOnInventorySelection()
 	// fugly, might be an good idae to redo the animation selection
 	if (this->getInventory()->spearSelected())
 	{
+		// only one check is necessary, for all the walkAnimation needs to be changed if Spear is selected
 		if (this->animationWalkUpRow != this->animationSpearWalkUp)
 		{
 			// set the movementAnimation to the movementSpearAnimation
