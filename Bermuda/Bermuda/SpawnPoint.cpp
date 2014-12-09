@@ -56,6 +56,10 @@ void Spawnpoint::spawnMob()
 		else if (spawnType == "wolf")
 		{
 			NPCFactory::Instance()->createWolf(this);
+		}		
+		else if (spawnType == "scorpion")
+		{
+			NPCFactory::Instance()->createScorpion(this);
 		}
 		this->curChildren++;
 		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
