@@ -20,24 +20,38 @@ void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 	FirstImageIDs["wolf"] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
 }
 
-void NPCFactory::createRabbit(Spawnpoint* sp)
+bool NPCFactory::createNPC(NPCType type, Spawnpoint* sp)
 {
-	new Rabbit(1001, sp, FirstImageIDs["rabbit"]);
-}
+	NPC* npc = nullptr;
 
-void NPCFactory::createWasp(Spawnpoint* sp)
-{
-	new Wasp(2001, sp, FirstImageIDs["wasp"]);
-}
+	switch((int)type)
+	{
+	case (int)NPCType::Rabbit:
+		npc = new Rabbit(1001, sp, FirstImageIDs["rabbit"]);
+		break;
+	case (int)NPCType::Wolf:
+		npc = new Wolf(2001, sp, FirstImageIDs["wolf"]);
+		break;
+	case (int)NPCType::Wasp:
+		npc = new Wasp(2001, sp, FirstImageIDs["wasp"]);
+		break;
+	case (int)NPCType::Bat:
+		npc = new Bat(2001, sp, FirstImageIDs["bat"]);
+		break;
+	case (int)NPCType::Scorpion:
+		//scorpion code
+		break;
+	}
 
-void NPCFactory::createBat(Spawnpoint* sp)
-{
-	new Bat(2001, sp, FirstImageIDs["bat"]);
-}
+	//If the new NPC detects collision -> delete it and return false
+	if(npc != nullptr && dynamic_cast<CollidableEntity*>(npc)->checkCollision())
+	{
+		std::cout << "NEW NPC COLLISION" << std::endl;
+		delete npc;
+		return false;
+	}
 
-void NPCFactory::createWolf(Spawnpoint* sp)
-{
-	new Wolf(2001, sp, FirstImageIDs["wolf"]);
+	return true;
 }
 
 NPCFactory::~NPCFactory()

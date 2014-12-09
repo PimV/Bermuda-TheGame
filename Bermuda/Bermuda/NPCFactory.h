@@ -2,6 +2,7 @@
 #include "SpawnPoint.h"
 #include "ImageLoader.h"
 #include "header_loader.h"
+#include "NPCType.h"
 #include <map>
 
 
@@ -15,10 +16,8 @@ private:
 public:
 	NPCFactory();
 	void loadNPCTileSets(ImageLoader* imgLoader);
-	void createRabbit(Spawnpoint* sp);
-	void createWasp(Spawnpoint* sp);
-	void createBat(Spawnpoint* sp);
-	void createWolf(Spawnpoint* sp);
+
+	bool createNPC(NPCType type, Spawnpoint* sp);
 
 	~NPCFactory();
 	static NPCFactory* Instance() {
