@@ -346,7 +346,19 @@ void PlayState::updateMediumAreaEntities(double dt)
 				}
 			}
 
-			////Moving entities
+			// Light entities
+			std::vector<LightEntity*>* lightEntities = this->mec->getLightContainer()->getChunk(i, j);
+			if (lightEntities != nullptr && lightEntities->size() > 0)
+			{
+				//Copy of container so moving entities can change chunks while we loop through them.
+				std::vector<LightEntity*> copyLightEntities = std::vector<LightEntity*>(*lightEntities);
+				for (LightEntity* e : copyLightEntities)
+				{
+					e->update(dt);
+				}
+			}
+
+			//Moving entities
 			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
 			if (movingEntities != nullptr && movingEntities->size() > 0)
 			{

@@ -1,5 +1,5 @@
 #include "LightEntity.h"
-
+#include <iostream>
 
 LightEntity::LightEntity(int id, double x, double y) : Entity(id, x, y)
 {
@@ -9,6 +9,30 @@ LightEntity::LightEntity(int id, double x, double y) : Entity(id, x, y)
 
 LightEntity::~LightEntity()
 {
+}
+
+
+void LightEntity::update(double dt)
+{
+	// psuedo code:
+	// if dayPercent >= 90 && dayPercent <= 99
+	// if within a lightsource. set player true
+
+	// in player:
+	// if true
+	// nothing
+	// if false
+	// decrement health
+
+
+	if (this->shining == true)
+	{
+		std::cout << "+";
+	}
+	else
+	{
+		std::cout << "-";
+	}
 }
 
 bool LightEntity::getShining()
