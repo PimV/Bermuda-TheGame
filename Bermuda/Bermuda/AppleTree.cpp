@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 
 AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
 	Entity(id,x,y), 
@@ -20,8 +21,8 @@ AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEm
 
 	this->animationType = AnimationEnumType::Pick;
 
-	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getInteractTreeImage());
-	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getCantInteractTreeImage());
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::treeRound));
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::treeRoundCant));
 
 	this->setHighlightTexture(this->getCantInteractTexture());
 }

@@ -34,6 +34,25 @@ void InteractableEntity::interact(Player* player)
 	}*/
 }
 
+void InteractableEntity::setCanInteractTexture(SDL_Texture* can)
+{
+	this->canInteractTexture = can;
+}
+
+void InteractableEntity::setCantInteractTexture(SDL_Texture* cant)
+{
+	this->cantInteractTexture = cant;
+}
+
+SDL_Texture* InteractableEntity::getCanInteractTexture()
+{
+	return this->canInteractTexture;
+}
+SDL_Texture* InteractableEntity::getCantInteractTexture()
+{
+	return this->cantInteractTexture;
+}
+
 bool InteractableEntity::canInteract(Player* player) {
 	return true;
 }

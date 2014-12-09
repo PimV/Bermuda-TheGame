@@ -477,9 +477,6 @@
     <ClCompile Include="ParticleEngine.cpp">
       <Filter>Source Files\Model\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleContainer.cpp">
-      <Filter>Source Files\Model\Container\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="TreePine.cpp">
       <Filter>Source Files\Model\Entity\Interactive objects</Filter>
     </ClCompile>
@@ -842,9 +839,6 @@
     <ClInclude Include="ParticleEngine.h">
       <Filter>Header Files\Model\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleContainer.h">
-      <Filter>Header Files\Model\Container\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="TreePine.h">
       <Filter>Header Files\Model\Entity\Interactive objects</Filter>
     </ClInclude>
@@ -885,6 +879,12 @@
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
     <ClInclude Include="DAYPART.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuCreditsButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlays.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
   </ItemGroup>

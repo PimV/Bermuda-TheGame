@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 
 GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	Entity(id, x, y),
@@ -18,8 +19,8 @@ GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiec
 
 	this->animationType = AnimationEnumType::Mine;
 
-	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getInteractRockImage());
-	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getCantInteractRockImage());
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::rock));
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::rockCant));
 	
 	this->setHighlightTexture(this->getCantInteractTexture());
 }

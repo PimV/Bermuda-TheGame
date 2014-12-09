@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 
 Fish::Fish(int id, double x, double y, Image* fishImage) :
 	Entity(id,x,y), 
@@ -15,8 +16,8 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 	this->respawnTime = 10000;
 	this->interactTime = 9000;
 
-	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getInteractFishImage());
-	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getCantInteractFishImage());
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::fish));
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::fishCant));
 	
 	this->setHighlightTexture(this->getCantInteractTexture());
 }

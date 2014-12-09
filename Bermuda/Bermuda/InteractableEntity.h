@@ -45,6 +45,11 @@ public:
 	void setHighlightImage(Image* img);
 	Image* getHighlightImage();
 
+	void setCanInteractTexture(SDL_Texture* can);
+	void setCantInteractTexture(SDL_Texture* cant);
+	SDL_Texture* getCanInteractTexture();
+	SDL_Texture* getCantInteractTexture();
+
 	virtual bool canInteract(Player* player);
 
 

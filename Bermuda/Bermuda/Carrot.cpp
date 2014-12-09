@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 
 Carrot::Carrot(int id, double x, double y, Image* carrotImage) : 
 	Entity(id,x,y), 
@@ -11,7 +12,7 @@ Carrot::Carrot(int id, double x, double y, Image* carrotImage) :
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
-	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getInteractCarrotImage());
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::carrot));
 	this->setHighlightTexture(this->getCanInteractTexture());
 }
 

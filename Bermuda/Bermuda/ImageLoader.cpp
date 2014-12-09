@@ -5,6 +5,31 @@
 ImageLoader::ImageLoader(SDL_Renderer* renderer)
 {
 	this->renderer = renderer;
+	this->initOverlays();
+}
+
+void ImageLoader::initOverlays()
+{
+	overlayImages[Overlays::cactusBig] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_canInteract.png").c_str());
+	overlayImages[Overlays::cactusBigCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_cantInteract.png").c_str());
+	overlayImages[Overlays::cactusSmall] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_canInteract.png").c_str());
+	overlayImages[Overlays::cactusSmallCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_cantInteract.png").c_str());
+	overlayImages[Overlays::carrot] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\carrot_canInteract.png").c_str());
+	overlayImages[Overlays::fish] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_canInteract.png").c_str());
+	overlayImages[Overlays::fishCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_cantInteract.png").c_str());
+	overlayImages[Overlays::rock] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_canInteract.png").c_str());
+	overlayImages[Overlays::rockCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_cantInteract.png").c_str());
+	overlayImages[Overlays::spike] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_canInteract.png").c_str());
+	overlayImages[Overlays::spikeCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_cantInteract.png").c_str());
+	overlayImages[Overlays::treePine] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_canInteract.png").c_str());
+	overlayImages[Overlays::treePineCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_cantInteract.png").c_str());
+	overlayImages[Overlays::treeRound] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_canInteract.png").c_str());
+	overlayImages[Overlays::treeRoundCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_cantInteract.png").c_str());
+}
+
+SDL_Texture* ImageLoader::getOverLayImage(Overlays overlay)
+{
+	return this->overlayImages[overlay];
 }
 
 //Returns the first ID of the new tileset images
@@ -65,112 +90,6 @@ Image* ImageLoader::getMapImage(int tileID)
 	}
 }
 
-SDL_Texture* ImageLoader::getInteractTreeImage() {
-	if (treeInteractTexture == nullptr) {
-		treeInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_canInteract.png").c_str());
-	}
-	return treeInteractTexture;
-}
-
-SDL_Texture* ImageLoader::getCantInteractTreeImage() {
-	if (treeCantInteractTexture == nullptr) {
-
-		treeCantInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_cantInteract.png").c_str());
-	}
-	return treeCantInteractTexture;
-}
-
-SDL_Texture* ImageLoader::getInteractTreePineImage() {
-	if (treePineInteractTexture == nullptr) {
-		treePineInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_canInteract.png").c_str());
-	}
-	return treePineInteractTexture;
-}
-SDL_Texture* ImageLoader::getCantInteractTreePineImage() {
-	if (treePineCantInteractTexture == nullptr) {
-
-		treePineCantInteractTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_cantInteract.png").c_str());
-	}
-	return treePineCantInteractTexture;
-}
-
-SDL_Texture* ImageLoader::getInteractCarrotImage() {
-	if (carrotInteractOverlay == nullptr) {
-		carrotInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\carrot_canInteract.png").c_str());
-	}
-	return carrotInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getInteractRockImage() {
-	if (rockInteractOverlay == nullptr) {
-		rockInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_canInteract.png").c_str());
-	}
-	return rockInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getCantInteractRockImage() {
-	if (rockCantInteractOverlay == nullptr) {
-		rockCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_cantInteract.png").c_str());
-	}
-	return rockCantInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getInteractSpikeImage() {
-	if (spikeInteractOverlay == nullptr) {
-		spikeInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_canInteract.png").c_str());
-	}
-	return spikeInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getCantInteractSpikeImage() {
-	if (spikeCantInteractOverlay == nullptr) {
-		spikeCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_cantInteract.png").c_str());
-	}
-	return spikeCantInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getInteractCactusBigImage() {
-	if (cactusBigInteractOverlay == nullptr) {
-		cactusBigInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_canInteract.png").c_str());
-	}
-	return cactusBigInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getCantInteractCactusBigImage() {
-	if (cactusBigCantInteractOverlay == nullptr) {
-		cactusBigCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_cantInteract.png").c_str());
-	}
-	return cactusBigCantInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getInteractCactusSmallImage() {
-	if (cactusSmallInteractOverlay == nullptr) {
-		cactusSmallInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_canInteract.png").c_str());
-	}
-	return cactusSmallInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getCantInteractCactusSmallImage() {
-	if (cactusSmallCantInteractOverlay == nullptr) {
-		cactusSmallCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_cantInteract.png").c_str());
-	}
-	return cactusSmallCantInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getInteractFishImage() {
-	if (fishInteractOverlay == nullptr) {
-		fishInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_canInteract.png").c_str());
-	}
-	return fishInteractOverlay;
-}
-
-SDL_Texture* ImageLoader::getCantInteractFishImage() {
-	if (fishCantInteractOverlay == nullptr) {
-		fishCantInteractOverlay = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_cantInteract.png").c_str());
-	}
-	return fishCantInteractOverlay;
-}
-
 void ImageLoader::cleanup()
 {
 	// Destroy all images
@@ -189,38 +108,12 @@ void ImageLoader::cleanup()
 	}
 	std::vector<SDL_Texture*>().swap(tileSets); //Clear and shrink vector
 
-	//Delete all overlay textures
-	SDL_DestroyTexture(treeInteractTexture);
-	SDL_DestroyTexture(treeCantInteractTexture);
-	SDL_DestroyTexture(treePineInteractTexture);
-	SDL_DestroyTexture(treePineCantInteractTexture);
-	SDL_DestroyTexture(carrotInteractOverlay);
-	SDL_DestroyTexture(rockInteractOverlay);
-	SDL_DestroyTexture(rockCantInteractOverlay);	
-	SDL_DestroyTexture(spikeInteractOverlay);
-	SDL_DestroyTexture(spikeCantInteractOverlay);
-	SDL_DestroyTexture(cactusBigInteractOverlay);
-	SDL_DestroyTexture(cactusBigCantInteractOverlay);
-	SDL_DestroyTexture(cactusSmallInteractOverlay);
-	SDL_DestroyTexture(cactusSmallCantInteractOverlay);	
-	SDL_DestroyTexture(fishInteractOverlay);
-	SDL_DestroyTexture(fishCantInteractOverlay);
-
-	treeInteractTexture = nullptr;
-	treeCantInteractTexture = nullptr;
-	treePineInteractTexture = nullptr;
-	treePineCantInteractTexture = nullptr;
-	carrotInteractOverlay = nullptr;
-	rockInteractOverlay = nullptr;
-	rockCantInteractOverlay = nullptr;	
-	spikeInteractOverlay = nullptr;
-	spikeCantInteractOverlay = nullptr;
-	cactusBigInteractOverlay = nullptr;
-	cactusBigCantInteractOverlay = nullptr;
-	cactusSmallInteractOverlay = nullptr;
-	cactusSmallCantInteractOverlay = nullptr;	
-	fishInteractOverlay = nullptr;
-	fishCantInteractOverlay = nullptr;
+	//Delete all overlay images
+	typedef std::map<Overlays, SDL_Texture*>::iterator it_type;
+	for(it_type iterator = this->overlayImages.begin(); iterator != this->overlayImages.end(); iterator++) {
+		SDL_DestroyTexture(iterator->second);
+		iterator->second = nullptr;
+	}
 }
 
 ImageLoader::~ImageLoader()

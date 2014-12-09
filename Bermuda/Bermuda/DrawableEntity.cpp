@@ -44,25 +44,6 @@ void DrawableEntity::setDrawImage(Image* image)
 	this->drawImage = image;
 }
 
-void DrawableEntity::setCanInteractTexture(SDL_Texture* can)
-{
-	this->canInteractTexture = can;
-}
-
-void DrawableEntity::setCantInteractTexture(SDL_Texture* cant)
-{
-	this->cantInteractTexture = cant;
-}
-
-SDL_Texture* DrawableEntity::getCanInteractTexture()
-{
-	return this->canInteractTexture;
-}
-SDL_Texture* DrawableEntity::getCantInteractTexture()
-{
-	return this->cantInteractTexture;
-}
-
 DrawableEntity::~DrawableEntity()
 {
 	delete sizeRect;
