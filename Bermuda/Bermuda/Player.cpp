@@ -73,6 +73,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+	this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
 
 	this->animationChopUp = 12, this->animationChopLeft = 13;
 	this->animationChopDown = 14, this->animationChopRight = 15;
@@ -88,23 +89,21 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 
 	this->animationSpearWalkUp = 4, this->animationSpearWalkLeft = 5;
 	this->animationSpearWalkDown = 6, this->animationSpearWalkRight = 7;
-	this->animationSpearWalkStartColumn = 1, this->animationSpearWalkEndColumn = 7;
+	this->animationSpearWalkStartColumn = 1, this->animationSpearWalkEndColumn = 8;
 
 	this->animationSpearAttackUp = 23, this->animationSpearAttackLeft = 24;
 	this->animationSpearAttackDown = 25, this->animationSpearAttackRight = 26;
-	this->animationSpearAttackStartColumn = 1, this->animationSpearAttackEndColumn = 7;
+	this->animationSpearAttackStartColumn = 1, this->animationSpearAttackEndColumn = 9;
 
 	this->movementDirection = MovementDirectionEnum::Down;
 	this->currentAnimationRow = ( this->animationWalkUpRow + (int)this->movementDirection );
 
-	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+	this->animationIdleColumn = 0;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
 	this->animationSpeed = 10;
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 50;
-
-	this->keepAnimationWhenIdle = true;
 
 	this->correctToolSelected = false;
 
@@ -143,7 +142,7 @@ void Player::resetMovement() {
 		this->movingDown = false;
 		this->movingUp = false;
 		this->moveClick = false;
-		StopAnimation();
+		this->StopAnimation();
 	}
 }
 
@@ -152,23 +151,24 @@ void Player::update(double dt) {
 	if (this->getHealth() < 1)
 	{
 		PlayState::Instance()->setGameOver(true);
-		//GameStateManager::Instance()->changeGameState(GameOverState::Instance());
 		return;
 	}
 
 	this->updatePlayerStatuses(dt);
 
-	// fugly, might be an good idae to redo the animation selevtion
+	// fugly, might be an good idae to redo the animation selection
 	if (this->getInventory()->spearSelected())
 	{
 		this->animationWalkUpRow = this->animationSpearWalkUp, this->animationWalkLeftRow = this->animationSpearWalkLeft;
 		this->animationWalkDownRow = this->animationSpearWalkDown, this->animationWalkRightRow = this->animationSpearWalkRight;
+		this->animationWalkStartColumn = this->animationSpearWalkStartColumn, this->animationWalkEndColumn = this->animationSpearWalkEndColumn;
 		this->currentAnimationRow = this->animationSpearWalkUp + (int)this->movementDirection;
 	}
 	else
 	{
 		this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 		this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+		this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
 		this->currentAnimationRow = this->animationWalkUpRow + (int)this->movementDirection;
 	}
 

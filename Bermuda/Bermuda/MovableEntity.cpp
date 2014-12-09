@@ -45,7 +45,7 @@ void MovableEntity::move(double dt)
 	if (dx == 0 && dy == 0) {
 		if(this->keepAnimationWhenIdle) 
 		{  
-			this->PlayAnimation(this->animationIdleColumn, this->animationIdleColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
+			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 		}
 		return;
 	}
@@ -130,14 +130,14 @@ void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double 
 			this->CurrentFrame++;
 		}
 
-		this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
+		this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(this->firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->CurrentFrame));
 		this->animationSpeed = this->maxSpeed * 3;
 	}
 }
 
 void MovableEntity::StopAnimation()
 {
-	this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(firstImgID + (currentAnimationRow * frameAmountX) + animationIdleColumn));
+	this->setImage(PlayState::Instance()->getImageLoader()->getMapImage(this->firstImgID + (this->currentAnimationRow * this->frameAmountX) + this->animationIdleColumn));
 }
 
 void MovableEntity::setPosition(double newX, double newY) {
