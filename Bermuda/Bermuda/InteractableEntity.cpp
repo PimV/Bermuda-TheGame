@@ -24,6 +24,7 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int interactS
 
 void InteractableEntity::interact(Player* player)
 {
+
 	//TODO : oplossen op manier zonder casten
 	/*if (this->getEnabled())
 	{
@@ -58,6 +59,10 @@ bool InteractableEntity::trackInteractTimes() {
 		return true;
 	}
 	return false;
+}
+
+long InteractableEntity::getCurrentInteractTime() {
+	return currentInteractTime;
 }
 
 int InteractableEntity::getInteractStartX()

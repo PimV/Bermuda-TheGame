@@ -41,6 +41,13 @@ void GoldRock::interact(Player* player)
 				flint->setStackSize(1);
 				player->getInventory()->addItem(flint);
 			}
+
+			Tool* tool = dynamic_cast<Tool*>(player->getInventory()->getSelectedItem());
+			tool->setDurability(tool->getDurability() - 1);
+			if (tool->getDurability() <= 0) {
+				std::cout << "Destroying axe, no durability!" << std::endl;
+				player->getInventory()->deleteItem(tool->getId(), 1);
+			}
 			//TODO: add to statustracker
 		}
 	} else {

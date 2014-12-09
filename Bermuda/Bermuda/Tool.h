@@ -8,6 +8,11 @@ class Tool :
 public:
 	Tool(void);
 
+	void setDurability(int durability);
+	int getDurability();
+
 	virtual ~Tool(void);
+private:
+	int durability;
 };
 

@@ -41,6 +41,14 @@ void Rock::interact(Player* player)
 				player->getInventory()->addItem(flint);
 			}
 
+			//Degradability
+			Tool* tool = dynamic_cast<Tool*>(player->getInventory()->getSelectedItem());
+			tool->setDurability(tool->getDurability() - 1);
+			if (tool->getDurability() <= 0) {
+				std::cout << "Destroying pickaxe, no durability!" << std::endl;
+				player->getInventory()->deleteItem(tool->getId(), 1);
+			}
+
 			//Set rock mined
 			player->getStatusTracker()->rockMined();
 		}

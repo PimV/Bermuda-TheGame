@@ -44,6 +44,12 @@ void InteractableCactus::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
+			Tool* tool = dynamic_cast<Tool*>(player->getInventory()->getSelectedItem());
+			tool->setDurability(tool->getDurability() - 1);
+			if (tool->getDurability() <= 0) {
+				std::cout << "Destroying axe, no durability!" << std::endl;
+				player->getInventory()->deleteItem(tool->getId(), 1);
+			}
 			//TODO: add to statustracker
 		}
 	} else {

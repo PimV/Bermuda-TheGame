@@ -33,6 +33,7 @@ public:
 	void drawInteractableArea();
 	
 	bool trackInteractTimes();
+	long getCurrentInteractTime();
 
 	int getInteractStartX();
 	int getInteractStartY();
