@@ -105,7 +105,7 @@ void MovableEntity::move(double dt)
 
 	if (!collision || this->keepAnimationWhenIdle)
 	{
-		this->PlayAnimation(this->currentAnimationRow, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
+		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 	}
 	else
 	{

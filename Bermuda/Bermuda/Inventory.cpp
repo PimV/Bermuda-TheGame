@@ -43,9 +43,9 @@ void Inventory::init() {
 	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
 	//TODO: Remove in final version.
-	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 }
