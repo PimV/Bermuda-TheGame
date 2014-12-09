@@ -45,7 +45,7 @@ void MovableEntity::move(double dt)
 	if (dx == 0 && dy == 0) {
 		if(this->keepAnimationWhenIdle) 
 		{  
-			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
+			this->PlayAnimation(this->animationIdleColumn, this->animationIdleColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 		}
 		return;
 	}
@@ -105,7 +105,7 @@ void MovableEntity::move(double dt)
 
 	if (!collision || this->keepAnimationWhenIdle)
 	{
-		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
+		this->PlayAnimation(this->currentAnimationRow, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 	}
 	else
 	{

@@ -69,8 +69,8 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = GameStateManager::Instance()->getImageLoader()->loadTileset("player_spear_animation.png", 64, 64);
-	
+	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("player_spear_animation.png", 64, 64);
+
 	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
 
@@ -94,16 +94,17 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationSpearAttackDown = 25, this->animationSpearAttackRight = 26;
 	this->animationSpearAttackStartColumn = 1, this->animationSpearAttackEndColumn = 7;
 
-	//this->currentAnimationRow = this->animationWalkDownRow;
 	this->movementDirection = MovementDirectionEnum::Down;
 	this->currentAnimationRow = ( this->animationWalkUpRow + (int)this->movementDirection );
 
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
 	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
-	this->animationSpeed = 10;//, this->animationDelay = 1;
+	this->animationSpeed = 10;
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 50;
+
+	this->keepAnimationWhenIdle = true;
 
 	this->correctToolSelected = false;
 
@@ -160,15 +161,15 @@ void Player::update(double dt) {
 	// fugly, might be an good idae to redo the animation selevtion
 	if (this->getInventory()->spearSelected())
 	{
-		this->animationWalkUpRow = this->animationSpearWalkUp;
-		this->animationWalkLeftRow = this->animationSpearWalkLeft;
-		this->animationWalkDownRow = this->animationSpearWalkDown;
-		this->animationWalkRightRow = this->animationSpearWalkRight;
+		this->animationWalkUpRow = this->animationSpearWalkUp, this->animationWalkLeftRow = this->animationSpearWalkLeft;
+		this->animationWalkDownRow = this->animationSpearWalkDown, this->animationWalkRightRow = this->animationSpearWalkRight;
+		this->currentAnimationRow = this->animationSpearWalkUp + (int)this->movementDirection;
 	}
 	else
 	{
 		this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
 		this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
+		this->currentAnimationRow = this->animationWalkUpRow + (int)this->movementDirection;
 	}
 
 	if (this->interaction) {
@@ -396,6 +397,11 @@ void Player::setAnimationType(AnimationEnumType type)
 			this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;
 			this->animationActionStartColumn = this->animationSpearAttackStartColumn;
 			this->animationActionEndColumn = this->animationSpearAttackEndColumn;
+		break;
+	case AnimationEnumType::Default:
+			this->currentAnimationRow = this->animationWalkUpRow + (int)this->movementDirection;
+			this->animationActionStartColumn = this->animationWalkStartColumn;
+			this->animationActionEndColumn = this->animationWalkEndColumn;
 		break;
 	default:
 		break;
