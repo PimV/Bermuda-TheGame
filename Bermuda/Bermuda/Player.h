@@ -40,7 +40,6 @@ public:
 	void drawHungerBar(int x, int y);
 	void drawThirstBar(int x, int y);
 
-	//void clickMove();
 	void clickMove();
 	void setPosition(double newX, double newY);
 	void interact(double dt);
@@ -59,6 +58,9 @@ public:
 
 	bool getCorrectToolSelected();
 	void setCorrectToolSelected(bool tool);
+
+	bool getWithinDarkness();
+	void setWithinDarkness(bool NewItem);
 
 private:
 	Camera* camera;
@@ -111,4 +113,6 @@ private:
 	bool checkCollision(double newX, double newY);
 
 	void setAnimationType(AnimationEnumType type);
+	
+	bool withinDarkness;
 };

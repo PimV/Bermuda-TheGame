@@ -1,4 +1,6 @@
 #include "LightEntity.h"
+#include "GameTimer.h"
+
 #include <iostream>
 
 LightEntity::LightEntity(int id, double x, double y) : Entity(id, x, y)
@@ -18,20 +20,18 @@ void LightEntity::update(double dt)
 	// if dayPercent >= 90 && dayPercent <= 99
 	// if within a lightsource. set player true
 
-	// in player:
-	// if true
-	// nothing
-	// if false
-	// decrement health
-
-
-	if (this->shining == true)
+	double p = GameTimer::Instance()->getPercentage();
+	if (p >= 90 && p <= 99)
 	{
-		std::cout << "+";
-	}
-	else
-	{
-		std::cout << "-";
+		if (this->shining == true)
+		{
+			std::cout << "+";
+			
+		}
+		else
+		{
+			std::cout << "-";
+		}
 	}
 }
 

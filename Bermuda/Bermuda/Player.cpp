@@ -53,6 +53,7 @@ MovableEntity(id, x, y)
 	this->health = 100;
 	this->hunger = 100;
 	this->thirst = 100;
+	this->withinDarkness = false;
 
 	this->dx = 0;
 	this->dy = 0;
@@ -190,6 +191,11 @@ void Player::updatePlayerStatuses(double dt)
 			this->setHealth(this->getHealth() + 1);
 		}
 		this->healthUpdate = currentTime;
+	}
+
+	if (this->withinDarkness == true) 
+	{
+		std::cout << "!";
 	}
 
 }
@@ -647,6 +653,16 @@ void Player::drawStats() {
 	this->drawThirstBar(this->getInventory()->getStartingX() + 35 * ((this->getInventory()->getWidth()) / 100), this->getInventory()->getStartingY() - 30);
 
 	this->drawHungerBar(this->getInventory()->getStartingX() + 7 * ((this->getInventory()->getWidth()) / 10), this->getInventory()->getStartingY() - 30);
+}
+
+bool Player::getWithinDarkness()
+{
+	return this->withinDarkness;
+}
+
+void Player::setWithinDarkness(bool NewItem)
+{
+	this->withinDarkness = NewItem;
 }
 
 Player::~Player() {
