@@ -4,13 +4,12 @@
 LightEntity::LightEntity(int id, double x, double y) : Entity(id, x, y)
 {
 	this->shining = true;
+	this->radius = 0;
 }
-
 
 LightEntity::~LightEntity()
 {
 }
-
 
 bool LightEntity::getShining()
 {
@@ -20,4 +19,13 @@ bool LightEntity::getShining()
 void LightEntity::setShining(bool NewItem)
 {
 	this->shining = NewItem;
+}
+
+double LightEntity::getRadius()
+{
+	return this->radius;
+}
+void LightEntity::setRadius(double NewItem)
+{
+	this->radius = NewItem;
 }

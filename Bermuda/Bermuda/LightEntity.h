@@ -9,7 +9,11 @@ public:
 
 	bool getShining();
 	void setShining(bool NewItem);
+
+	double getRadius();
+	void setRadius(double NewItem);
 private:
 	bool shining;
+	double radius;
 };
 
