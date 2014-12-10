@@ -504,6 +504,9 @@
     <ClCompile Include="BaseHelpScreen.cpp">
       <Filter>Source Files\View\Screens\HelpScreens</Filter>
     </ClCompile>
+    <ClCompile Include="SaveFile.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -886,6 +889,9 @@
     </ClInclude>
     <ClInclude Include="NPCType.h">
       <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveFile.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
