@@ -7,10 +7,6 @@ Weapon::Weapon()
 	this->setAttackRadius(1);
 }
 
-void Weapon::use(Player* player) {
-
-}
-
 void Weapon::setAttackDamage(double dmg) {
 	this->attackDamage = dmg;
 }

@@ -48,11 +48,8 @@ void Inventory::init() {
 	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenAxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenPickaxe));
 }
 
 void Inventory::incrementSelectedIndex() {
@@ -267,14 +264,14 @@ void Inventory::dropCurrent() {
 }
 
 bool Inventory::pickAxeSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe) {
 			return true;
 	}
 	return false;
 }
 
 bool Inventory::axeSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Axe) {
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe) {
 		return true;
 	}
 	return false;

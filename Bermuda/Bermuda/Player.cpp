@@ -2,6 +2,7 @@
 #include "GameOverState.h"
 #include "GameStateManager.h"
 #include "PlayState.h"
+#include "Item.h"
 #include <vector>
 
 Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
@@ -69,40 +70,56 @@ MovableEntity(id, x, y)
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("player_spear_animation.png", 64, 64);
+	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("Player_Animations.png", 64, 64);
 
-#pragma region animation
-	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
-	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
-	this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+	#pragma region animation
+	this->animationWalkUpRow = 4;
+	this->animationWalkLeftRow = 5;
+	this->animationWalkDownRow = 6;
+	this->animationWalkRightRow = 7;
+	this->animationWalkStartColumn = 1;
+	this->animationWalkEndColumn = 8;
 
-	this->animationChopUp = 12, this->animationChopLeft = 13;
-	this->animationChopDown = 14, this->animationChopRight = 15;
-	this->animationChopStartColumn = 1, this->animationChopEndColumn = 9;
+	this->animationSpearWalkUp = 8;
+	this->animationSpearWalkLeft = 9;
+	this->animationSpearWalkDown = 10;
+	this->animationSpearWalkRight = 11;
+	this->animationSpearWalkStartColumn = 1;
+	this->animationSpearWalkEndColumn = 8;
+	
+	this->animationPickUp = 0;
+	this->animationPickStartColumn = 1;
+	this->animationPickEndColumn = 6;
 
-	this->animationMineUp = 16, this->animationMineLeft = 17;
-	this->animationMineDown = 18, this->animationMineRight = 18;
-	this->animationMineStartColumn = 1, this->animationMineEndColumn = 9;
+	this->animationChopUp = 12;
+	this->animationChopStartColumn = 1;
+	this->animationChopEndColumn = 9;
 
-	this->animationPickUp = 0, this->animationPickLeft = 1;
-	this->animationPickDown = 2, this->animationPickRight = 3;
-	this->animationPickStartColumn = 1, this->animationPickEndColumn = 6;
+	this->animationChopGoldUp = 16;
+	this->animationChopGoldStartColumn = 1;
+	this->animationChopGoldEndColumn = 9;
 
-	this->animationSpearWalkUp = 4, this->animationSpearWalkLeft = 5;
-	this->animationSpearWalkDown = 6, this->animationSpearWalkRight = 7;
-	this->animationSpearWalkStartColumn = 1, this->animationSpearWalkEndColumn = 8;
+	this->animationMineUp = 20;
+	this->animationMineStartColumn = 1;
+	this->animationMineEndColumn = 9;
 
-	this->animationSpearAttackUp = 23, this->animationSpearAttackLeft = 24;
-	this->animationSpearAttackDown = 25, this->animationSpearAttackRight = 26;
-	this->animationSpearAttackStartColumn = 1, this->animationSpearAttackEndColumn = 9;
+	this->animationMineGoldUp = 24;
+	this->animationMineGoldStartColumn = 1;
+	this->animationMineGoldEndColumn = 9;
+
+	this->animationSpearAttackUp = 28;
+	this->animationSpearAttackStartColumn = 1;
+	this->animationSpearAttackEndColumn = 9;
 
 	this->movementDirection = MovementDirectionEnum::Down;
 	this->currentAnimationRow = (this->animationWalkUpRow + (int)this->movementDirection);
 
 	this->animationIdleColumn = 0;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
-	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
-	this->animationSpeed = 10;
+
+	this->frameAmountX = 13, this->frameAmountY = 27, this->CurrentFrame = 0;
+	this->animationSpeed = 10;//, this->animationDelay = 1;
+
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 50;
 #pragma endregion animation
@@ -164,9 +181,6 @@ void Player::update(double dt) {
 	else {
 		this->directionsAndMove(dt);
 	}
-
-
-
 
 }
 
@@ -388,14 +402,34 @@ void Player::setAnimationType(AnimationEnumType type)
 		std::cout << "Animation type is None" << std::endl;
 		break;
 	case AnimationEnumType::Chop:
-		this->currentAnimationRow = this->animationChopUp + (int)this->movementDirection;
-		this->animationActionStartColumn = this->animationChopStartColumn;
-		this->animationActionEndColumn = this->animationChopEndColumn;
+		switch(this->getInventory()->getSelectedItem()->getId())
+		{
+		case (int)Items::Axe:
+			this->currentAnimationRow = this->animationChopUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationChopStartColumn;
+			this->animationActionEndColumn = this->animationChopEndColumn;
+			break;
+		case (int)Items::GoldenAxe:
+			this->currentAnimationRow = this->animationChopGoldUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationChopGoldStartColumn;
+			this->animationActionEndColumn = this->animationChopGoldEndColumn;
+			break;
+		}
 		break;
 	case AnimationEnumType::Mine:
-		this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;
-		this->animationActionStartColumn = this->animationMineStartColumn;
-		this->animationActionEndColumn = this->animationMineEndColumn;
+		switch(this->getInventory()->getSelectedItem()->getId())
+		{
+		case (int)Items::Pickaxe:
+			this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationMineStartColumn;
+			this->animationActionEndColumn = this->animationMineEndColumn;
+			break;			
+		case (int)Items::GoldenPickaxe:
+			this->currentAnimationRow = this->animationMineGoldUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationMineGoldStartColumn;
+			this->animationActionEndColumn = this->animationMineGoldEndColumn;
+			break;
+		}
 		break;
 	case AnimationEnumType::Pick:
 		this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
@@ -421,21 +455,27 @@ void Player::changeAnimationOnInventorySelection()
 		if (this->animationWalkUpRow != this->animationSpearWalkUp)
 		{
 			// set the movementAnimation to the movementSpearAnimation
-			this->animationWalkUpRow = this->animationSpearWalkUp, this->animationWalkLeftRow = this->animationSpearWalkLeft;
-			this->animationWalkDownRow = this->animationSpearWalkDown, this->animationWalkRightRow = this->animationSpearWalkRight;
-			this->animationWalkStartColumn = this->animationSpearWalkStartColumn, this->animationWalkEndColumn = this->animationSpearWalkEndColumn;
+			this->animationWalkUpRow = this->animationSpearWalkUp;
+			this->animationWalkLeftRow = this->animationSpearWalkLeft;
+			this->animationWalkDownRow = this->animationSpearWalkDown;
+			this->animationWalkRightRow = this->animationSpearWalkRight;
+			this->animationWalkStartColumn = this->animationSpearWalkStartColumn;
+			this->animationWalkEndColumn = this->animationSpearWalkEndColumn;
 			this->currentAnimationRow = this->animationSpearWalkUp + (int)this->movementDirection;
 			this->StopAnimation();
 		}
 	}
 	else
 	{
-		if (this->animationWalkUpRow != 8)
+		if (this->animationWalkUpRow != 4)
 		{
 			// reset the movementAnimation to the correct values
-			this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
-			this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
-			this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+			this->animationWalkUpRow = 4;
+			this->animationWalkLeftRow = 5;
+			this->animationWalkDownRow = 6;
+			this->animationWalkRightRow = 7;
+			this->animationWalkStartColumn = 1;
+			this->animationWalkEndColumn = 8;
 			this->currentAnimationRow = this->animationWalkUpRow + (int)this->movementDirection;
 			this->StopAnimation();
 		}

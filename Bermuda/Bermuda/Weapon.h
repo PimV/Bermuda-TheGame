@@ -15,9 +15,7 @@ public:
 
 	void setAttackSpeed(double attackSpeed);
 	double getAttackSpeed();
-
-	virtual void use(Player* player);
-
+	
 	virtual ~Weapon();
 
 private:
