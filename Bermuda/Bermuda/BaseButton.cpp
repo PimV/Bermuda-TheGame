@@ -218,6 +218,11 @@ void BaseButton::pauseSetAchievementScreenAction()
 	PauseState::Instance()->setCurWindow(PauseState::Instance()->getMainAchievementsScreen());
 }
 
+void BaseButton::backToPauseMainScreenAction()
+{
+	PauseState::Instance()->setCurWindow(PauseState::Instance()->getMainPauseScreen());
+}
+
 void BaseButton::backToMenuAction()
 {
 	GameStateManager::Instance()->changeGameState(MenuState::Instance());

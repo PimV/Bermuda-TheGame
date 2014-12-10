@@ -104,6 +104,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->getInventory()->incrementSelectedIndex();
 		}
 
+		// check if player animationSet should be changed
+		p->changeAnimationOnInventorySelection();
+
 		break;
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym) {

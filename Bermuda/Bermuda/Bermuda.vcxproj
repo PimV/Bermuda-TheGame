@@ -178,6 +178,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MenuHelpScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
     <ClInclude Include="NightLayer.h" />
+    <ClInclude Include="NPCType.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Overlays.h" />

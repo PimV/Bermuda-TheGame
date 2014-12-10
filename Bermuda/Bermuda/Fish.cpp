@@ -16,6 +16,8 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 	this->respawnTime = 10000;
 	this->interactTime = 9000;
 
+	this->animationType = AnimationEnumType::AttackSpear;
+
 	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::fish));
 	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::fishCant));
 	
@@ -23,24 +25,26 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 }
 
 bool Fish::canInteract(Player* player) {
-	if (player->getInventory()->axeSelected()) {
+	if (player->getInventory()->spearSelected()) {
 		this->setHighlightTexture(this->getCanInteractTexture());
 	} else {
 		this->setHighlightTexture(this->getCantInteractTexture());
 	}
-	return player->getInventory()->axeSelected();
+	return player->getInventory()->spearSelected();
 }
 
 void Fish::interact(Player* player) 
 {
 	//TODO: check if player has fishingrod or fishing harpoon
-	InteractableEntity::interact(player);
-	player->setCorrectToolSelected(true);
-	if (this->trackInteractTimes()) {
-		player->setCorrectToolSelected(false);
-		this->setDestroyedState();		
-		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
-		//TODO: add fish caught in statustracker
+	if (player->getInventory()->spearSelected()) {
+		InteractableEntity::interact(player);
+		player->setCorrectToolSelected(true);
+		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
+			this->setDestroyedState();
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
+			//TODO: add fish caught in statustracker
+		}
 	} else {
 		player->setCorrectToolSelected(false);
 	}
