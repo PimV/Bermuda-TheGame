@@ -262,28 +262,22 @@ void Inventory::dropCurrent() {
 }
 
 bool Inventory::pickAxeSelected() {
-	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
 			return true;
-		}
 	}
 	return false;
 }
 
 bool Inventory::axeSelected() {
-	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Axe) {
-			return true;
-		}
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Axe) {
+		return true;
 	}
 	return false;
 }
 
 bool Inventory::spearSelected() {
-	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Spear) {
-			return true;
-		}
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Spear) {
+		return true;
 	}
 	return false;
 }
