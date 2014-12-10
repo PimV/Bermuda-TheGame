@@ -42,7 +42,7 @@ void Rock::interact(Player* player)
 			}
 
 			//Degradability
-			Tool* tool = dynamic_cast<Tool*>(player->getInventory()->getSelectedItem());
+			Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
 			tool->setDurability(tool->getDurability() - 1);
 			std::cout << tool->getPercentageDegraded() << std::endl;
 			if (tool->getDurability() <= 0) {

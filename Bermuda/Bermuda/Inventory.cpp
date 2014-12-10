@@ -42,6 +42,12 @@ void Inventory::init() {
 	int singleSelectedId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69, 69);
 	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
+	int singleSelectedIdYellow = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected-yellow.png", 69, 69);
+	singleSelectedYellow = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedIdYellow);
+
+	int singleSelectedIdRed = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected-red.png", 69, 69);
+	singleSelectedRed = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedIdRed);
+
 	//TODO: Remove in final version.
 	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
@@ -66,7 +72,7 @@ void Inventory::decrementSelectedIndex() {
 }
 
 Item* Inventory::getSelectedItem() {
-   	if (selectedIndex < this->getSize()) {
+	if (selectedIndex < this->getSize()) {
 		return this->itemVector[selectedIndex];
 	} else {
 		return nullptr;
@@ -382,7 +388,23 @@ void Inventory::draw() {
 		slotRect.h = slotHeight;
 
 		if (i == selectedIndex) {
-			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			if (this->getSelectedItem() != nullptr && this->getSelectedItem()->hasItemType(ItemType::WorkTool)) {
+				Equipable* tool = dynamic_cast<Equipable*>(this->getSelectedItem());
+				std::cout << tool->getPercentageDegraded() << std::endl;
+				if (tool->getPercentageDegraded() >= 80) {
+					//red
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedRed->getTileSet(), NULL, &slotRect);
+				} else if (tool->getPercentageDegraded() >= 40) {
+					//yellow
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedYellow->getTileSet(), NULL, &slotRect);
+				} else {
+					//green
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+				}
+				//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			} else {
+				SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			}
 		} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleImg->getTileSet(), NULL, &slotRect);
 		}

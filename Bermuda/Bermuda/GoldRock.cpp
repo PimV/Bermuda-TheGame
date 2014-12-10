@@ -42,7 +42,7 @@ void GoldRock::interact(Player* player)
 				player->getInventory()->addItem(flint);
 			}
 
-			Tool* tool = dynamic_cast<Tool*>(player->getInventory()->getSelectedItem());
+			Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
 			tool->setDurability(tool->getDurability() - 1);
 			if (tool->getDurability() <= 0) {
 				std::cout << "Destroying axe, no durability!" << std::endl;

@@ -20,8 +20,9 @@ void ToolAxe::init() {
 	int itemCount = 1;	
 	this->setStackSize(itemCount);
 
-	this->setDurability(3);
 	this->setMaxDurability(3);
+	this->setDurability(3);
+
 }
 
 ToolAxe::~ToolAxe()
