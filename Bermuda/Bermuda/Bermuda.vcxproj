@@ -139,7 +139,6 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="InteractableCactusBig.h" />
     <ClInclude Include="InteractableCactusSmall.h" />
-    <ClInclude Include="MenuCreditsButton.h" />
     <ClInclude Include="LightContainer.h" />
     <ClInclude Include="LightEntity.h" />
     <ClInclude Include="MenuCreditsScreen.h" />

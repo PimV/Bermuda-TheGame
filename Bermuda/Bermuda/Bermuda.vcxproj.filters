@@ -881,9 +881,6 @@
     <ClInclude Include="DAYPART.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="MenuCreditsButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Overlays.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
