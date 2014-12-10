@@ -14,31 +14,31 @@ NPCFactory::NPCFactory()
 
 void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 {
-	FirstImageIDs["rabbit"] = imgLoader->loadTileset("NPC\\rabbit.png", 36, 36);
-	FirstImageIDs["wasp"] = imgLoader->loadTileset("NPC\\wasp.png", 32, 32);
-	FirstImageIDs["bat"] = imgLoader->loadTileset("NPC\\bat.png", 32, 32);
-	FirstImageIDs["wolf"] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
+	FirstImageIDs[NPCType::Rabbit] = imgLoader->loadTileset("NPC\\rabbit.png", 36, 36);
+	FirstImageIDs[NPCType::Wasp] = imgLoader->loadTileset("NPC\\wasp.png", 32, 32);
+	FirstImageIDs[NPCType::Bat] = imgLoader->loadTileset("NPC\\bat.png", 32, 32);
+	FirstImageIDs[NPCType::Wolf] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
 }
 
 bool NPCFactory::createNPC(NPCType type, Spawnpoint* sp)
 {
 	NPC* npc = nullptr;
 
-	switch((int)type)
+	switch(type)
 	{
-	case (int)NPCType::Rabbit:
-		npc = new Rabbit(1001, sp, FirstImageIDs["rabbit"]);
+	case NPCType::Rabbit:
+		npc = new Rabbit(1001, sp, FirstImageIDs[type]);
 		break;
-	case (int)NPCType::Wolf:
-		npc = new Wolf(2001, sp, FirstImageIDs["wolf"]);
+	case NPCType::Wolf:
+		npc = new Wolf(2001, sp, FirstImageIDs[type]);
 		break;
-	case (int)NPCType::Wasp:
-		npc = new Wasp(2001, sp, FirstImageIDs["wasp"]);
+	case NPCType::Wasp:
+		npc = new Wasp(2001, sp, FirstImageIDs[type]);
 		break;
-	case (int)NPCType::Bat:
-		npc = new Bat(2001, sp, FirstImageIDs["bat"]);
+	case NPCType::Bat:
+		npc = new Bat(2001, sp, FirstImageIDs[type]);
 		break;
-	case (int)NPCType::Scorpion:
+	case NPCType::Scorpion:
 		//scorpion code
 		break;
 	}

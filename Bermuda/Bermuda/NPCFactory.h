@@ -11,7 +11,7 @@ class NPCFactory
 private:
 	static NPCFactory npcFactory;
 
-	std::map<std::string, int> FirstImageIDs;
+	std::map<NPCType, int> FirstImageIDs;
 
 public:
 	NPCFactory();
