@@ -52,7 +52,7 @@ void PlayState::init(GameStateManager *gsm) {
 
 	gameSaver = new GameSaver();
 	gameSaver->changeCurrentSaveFile("Game0.json");
-	//saveFile->loadGame();
+	//gameSaver->loadGame();
 
 	GameStateManager::Instance()->flushEvents();
 }

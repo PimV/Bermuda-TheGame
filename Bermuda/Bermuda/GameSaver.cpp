@@ -173,6 +173,7 @@ void GameSaver::saveGame(std::string fileName)
 		std::cout << "Could not save file. File " + this->currentSaveFile + " could not be found!" << std::endl;
 		return;
 	}
+	stream << s.GetString();
 	stream.close();
 }
 
