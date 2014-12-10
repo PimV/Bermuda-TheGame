@@ -40,7 +40,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 	QueryPerformanceCounter(&previousTime);
 
 	//Instantiate FPS variables and set to 0
-	long lastFpsTime = 0;
+	float lastFpsTime = 0;
 	int fps = 0;
 	int gameState = 0;
 	while (gsm->running()) {		
@@ -48,11 +48,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
 
-		//long updateLength = static_cast<long>((currentTime.QuadPart - previousTime.QuadPart) * 1000.0 / frequency.QuadPart);
-		float curMinPrev = (currentTime.QuadPart - previousTime.QuadPart);
-		float curMinPrevThousand = curMinPrev * 1000;
-		float freq = frequency.QuadPart;
-		float updateLength = static_cast<float>(curMinPrevThousand / freq);
+		float updateLength = static_cast<float>(((static_cast<float>(currentTime.QuadPart) - static_cast<float>(previousTime.QuadPart)) * 1000) / static_cast<float>(frequency.QuadPart));
 		
 		//Previous time = current time
 		previousTime = currentTime;
@@ -84,8 +80,8 @@ void Game::gameLoop(GameStateManager* gsm) {
 		//Get time after loop
 		QueryPerformanceCounter(&afterLoopTime);
 		//Sleep if needed (if time took longer than optimal)
-		/*if ((((previousTime.QuadPart - afterLoopTime.QuadPart) * 1000.0 / frequency.QuadPart) + OPTIMAL_TIME) > 0) {
+		if ((((previousTime.QuadPart - afterLoopTime.QuadPart) * 1000.0 / frequency.QuadPart) + OPTIMAL_TIME) > 0) {
 			Sleep(static_cast<DWORD>((((previousTime.QuadPart - afterLoopTime.QuadPart) * 1000.0 / frequency.QuadPart) + OPTIMAL_TIME)));
-		}*/
+		}
 	}
 }

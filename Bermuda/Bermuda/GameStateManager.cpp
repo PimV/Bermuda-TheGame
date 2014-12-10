@@ -42,8 +42,6 @@ void GameStateManager::toggleHelpEnabled() {
 }
 
 float GameStateManager::getUpdateLength() {
-	cout.precision(10);
-	std::cout << "UL: " << this->updateLength << "  SM: " << this->speedMultiplier << " TOTAL: " << this->updateLength * speedMultiplier << std::endl;
 	return this->updateLength * speedMultiplier;
 }
 
