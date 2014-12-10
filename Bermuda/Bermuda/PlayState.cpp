@@ -499,29 +499,17 @@ void PlayState::updatePlayerDarkness()
 					double dayP = GameTimer::Instance()->getPercentage();
 					if (dayP >= 90)
 					{
-						if (e->getX() >= camera->getX() && 
-							e->getX() <= camera->getX() + camera->getWidth() &&
-							e->getY() >= camera->getY() && 
-							e->getY() <= camera->getY() + camera->getHeight())
+						if (p->getX() >= (e->getX() - e->getRadius() / 2) && 
+							p->getX() <= (e->getX() + e->getRadius() / 2) &&
+							p->getY() >= (e->getY() - e->getRadius() / 2) && 
+							p->getY() <= (e->getY() + e->getRadius() / 2) )
 						{
-							if (e->getShining() == true)
-							{
-								p->setWithinDarkness(true);
-							}
-							else
-							{
-								p->setWithinDarkness(false);
-							}
+							if (e->getShining() == true) p->setWithinDarkness(true);
+							else p->setWithinDarkness(false);
 						}
-						else 
-						{
-							p->setWithinDarkness(false);
-						}
+						else p->setWithinDarkness(false);
 					}
-					else
-					{
-						p->setWithinDarkness(false);
-					}
+					else p->setWithinDarkness(false);
 
 				}
 			}
