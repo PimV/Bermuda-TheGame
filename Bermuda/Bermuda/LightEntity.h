@@ -7,8 +7,6 @@ public:
 	LightEntity(int id, double x, double y);
 	virtual ~LightEntity();
 
-	void update(double dt);
-
 	bool getShining();
 	void setShining(bool NewItem);
 	double getRadius();

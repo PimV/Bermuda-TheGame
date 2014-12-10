@@ -50,6 +50,8 @@ public:
 	void updateMediumAreaEntities(double dt);
 	void updateGameTimers(double dt);	
 
+	void checkPlayerDarkness();
+
 	void draw();
 
 	static PlayState* Instance() {
