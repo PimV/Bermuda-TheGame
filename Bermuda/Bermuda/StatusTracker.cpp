@@ -52,9 +52,9 @@ void StatusTracker::applePicked()
 
 void StatusTracker::setAllStats(std::vector<int> stats)
 {
-	if (stats.size() < this->achievements.size())
+	if (stats.size() <= this->achievements.size())
 	{
-		for (int i = 0; i <= stats.size(); i++)
+		for (int i = 0; i < stats.size(); i++)
 		{
 			this->achievements[i]->setAmount(stats[i]);
 		}
