@@ -1,11 +1,10 @@
 #include "Tree.h"
+#include "Tool.h"
 #include "PlayState.h"
 #include "ItemWood.h"
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
-
-
 
 Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y), 
@@ -41,6 +40,15 @@ void Tree::interact(Player* player) {
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Wood));
 			player->getStatusTracker()->treeCut();
+
+			//Degradability
+			Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
+			tool->setDurability(tool->getDurability() - 1);
+			std::cout << tool->getPercentageDegraded() << std::endl;
+			if (tool->getDurability() <= 0) {
+				std::cout << "Destroying axe, no durability!" << std::endl;
+				player->getInventory()->deleteItem(tool->getId(), 1);
+			}
 		}
 	} else {
 		player->setCorrectToolSelected(false);
@@ -52,7 +60,7 @@ void Tree::update(double dt) {
 		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
-	} 
+	}
 }
 
 void Tree::respawn() {

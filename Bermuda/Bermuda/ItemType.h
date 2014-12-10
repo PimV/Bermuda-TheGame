@@ -5,7 +5,7 @@ enum ItemType
 	Drink,
 	Material,
 	Weapon,
-	Tool,
+	WorkTool,
 	Armour,
 	Useless,
 	Buildable

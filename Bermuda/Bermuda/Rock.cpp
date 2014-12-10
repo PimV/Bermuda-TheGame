@@ -4,6 +4,7 @@
 #include "ItemFactory.h"
 #include "Items.h"
 #include "Overlays.h"
+#include <ctime> 
 
 Rock::Rock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	Entity(id,x,y), 
@@ -46,6 +47,25 @@ void Rock::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Rock));
+			//Random flint chance
+			srand(time(NULL));
+			int flintChance = rand() % 10 + 1;	
+			if (flintChance > 9) {
+				Item* flint = ItemFactory::Instance()->createItem(Items::Flint);
+				flint->setStackSize(1);
+				player->getInventory()->addItem(flint);
+			}
+
+			//Degradability
+			Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
+			tool->setDurability(tool->getDurability() - 1);
+			std::cout << tool->getPercentageDegraded() << std::endl;
+			if (tool->getDurability() <= 0) {
+				std::cout << "Destroying pickaxe, no durability!" << std::endl;
+				player->getInventory()->deleteItem(tool->getId(), 1);
+			}
+
+			//Set rock mined
 			player->getStatusTracker()->rockMined();
 		}
 	} else {
