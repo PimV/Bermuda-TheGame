@@ -31,8 +31,8 @@ public:
 	void flushEvents();
 	void draw();
 
-	void setUpdateLength(long updateLength);
-	long getUpdateLength();
+	void setUpdateLength(float updateLength);
+	float getUpdateLength();
 
 	ActionContainer* getActionContainer();
 
@@ -54,7 +54,7 @@ public:
 	virtual ~GameStateManager();
 
 private: 
-	long updateLength;
+	float updateLength;
 	double speedMultiplier;
 	int fps;
 	bool showHelp;

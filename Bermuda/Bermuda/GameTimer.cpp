@@ -34,7 +34,7 @@ void GameTimer::init()
 
 void GameTimer::updateGameTime(double frameTime)
 {
-
+	std::cout << "FT: " << frameTime << std::endl;
 	this->frameTime = frameTime;
 	this->gameTime += static_cast<float>(frameTime);
 	this->updateDay();

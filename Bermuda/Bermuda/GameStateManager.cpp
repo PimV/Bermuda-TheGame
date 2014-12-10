@@ -29,7 +29,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	this->updateLength = 0;
 }
 
-void GameStateManager::setUpdateLength(long updateLength) {
+void GameStateManager::setUpdateLength(float updateLength) {
 	this->updateLength = updateLength;
 }
 
@@ -41,7 +41,9 @@ void GameStateManager::toggleHelpEnabled() {
 	this->showHelp = !this->showHelp;
 }
 
-long GameStateManager::getUpdateLength() {
+float GameStateManager::getUpdateLength() {
+	cout.precision(10);
+	std::cout << "UL: " << this->updateLength << "  SM: " << this->speedMultiplier << " TOTAL: " << this->updateLength * speedMultiplier << std::endl;
 	return this->updateLength * speedMultiplier;
 }
 

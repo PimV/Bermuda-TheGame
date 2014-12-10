@@ -268,13 +268,16 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 }
 
 void PlayState::update(double dt) {
+	std::cout << "TOP OF UPDATE" << std::endl;
 	mec->getDestroyContainer()->destroyAllEntities();
 
 	//.... eerste 3 keer doen we dit niet. probleem met loadingstate..
 	//Update gametimer
 	if (this->timesUpdate > 2)
 	{
-		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
+		float ul = GameStateManager::Instance()->getUpdateLength();
+		std::cout << "ULP: " << ul << " DT: " << dt << " TOTAL: " << ul * dt << std::endl;
+		GameTimer::Instance()->updateGameTime(ul * dt);
 	}
 	else
 	{
