@@ -15,36 +15,44 @@ NPCFactory::NPCFactory()
 
 void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 {
-	FirstImageIDs["rabbit"] = imgLoader->loadTileset("NPC\\rabbit.png", 36, 36);
-	FirstImageIDs["wasp"] = imgLoader->loadTileset("NPC\\wasp.png", 32, 32);
-	FirstImageIDs["bat"] = imgLoader->loadTileset("NPC\\bat.png", 32, 32);
-	FirstImageIDs["wolf"] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
-	FirstImageIDs["scorpion"] = imgLoader->loadTileset("NPC\\scorpion.png", 32, 34);
+	FirstImageIDs[NPCType::Rabbit] = imgLoader->loadTileset("NPC\\rabbit.png", 36, 36);
+	FirstImageIDs[NPCType::Wasp] = imgLoader->loadTileset("NPC\\wasp.png", 32, 32);
+	FirstImageIDs[NPCType::Bat] = imgLoader->loadTileset("NPC\\bat.png", 32, 32);
+	FirstImageIDs[NPCType::Wolf] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
+	FirstImageIDs[NPCType::Scorpion] = imgLoader->loadTileset("NPC\\scorpion.png", 32, 34);
 }
 
-void NPCFactory::createRabbit(Spawnpoint* sp)
+bool NPCFactory::createNPC(NPCType type, Spawnpoint* sp)
 {
-	new Rabbit(1001, sp, FirstImageIDs["rabbit"]);
-}
+	NPC* npc = nullptr;
 
-void NPCFactory::createWasp(Spawnpoint* sp)
-{
-	new Wasp(2001, sp, FirstImageIDs["wasp"]);
-}
+	switch(type)
+	{
+	case NPCType::Rabbit:
+		npc = new Rabbit(1001, sp, FirstImageIDs[type]);
+		break;
+	case NPCType::Wolf:
+		npc = new Wolf(2001, sp, FirstImageIDs[type]);
+		break;
+	case NPCType::Wasp:
+		npc = new Wasp(2001, sp, FirstImageIDs[type]);
+		break;
+	case NPCType::Bat:
+		npc = new Bat(2001, sp, FirstImageIDs[type]);
+		break;
+	case NPCType::Scorpion:
+		npc = new Scorpion(2001, sp, FirstImageIDs[type]);
+		break;
+	}
 
-void NPCFactory::createBat(Spawnpoint* sp)
-{
-	new Bat(2001, sp, FirstImageIDs["bat"]);
-}
+	//If the new NPC detects collision -> delete it and return false
+	if(npc != nullptr && dynamic_cast<CollidableEntity*>(npc)->checkCollision())
+	{
+		delete npc;
+		return false;
+	}
 
-void NPCFactory::createWolf(Spawnpoint* sp)
-{
-	new Wolf(2001, sp, FirstImageIDs["wolf"]);
-}
-
-void NPCFactory::createScorpion(Spawnpoint* sp)
-{
-	new Scorpion(2001, sp, FirstImageIDs["scorpion"]);
+	return true;
 }
 
 NPCFactory::~NPCFactory()

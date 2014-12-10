@@ -1,9 +1,35 @@
 #include "ImageLoader.h"
 #include <iostream>
+#include "GameStateManager.h"
 
 ImageLoader::ImageLoader(SDL_Renderer* renderer)
 {
 	this->renderer = renderer;
+	this->initOverlays();
+}
+
+void ImageLoader::initOverlays()
+{
+	overlayImages[Overlays::cactusBig] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_canInteract.png").c_str());
+	overlayImages[Overlays::cactusBigCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusBig_cantInteract.png").c_str());
+	overlayImages[Overlays::cactusSmall] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_canInteract.png").c_str());
+	overlayImages[Overlays::cactusSmallCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\cactusSmall_cantInteract.png").c_str());
+	overlayImages[Overlays::carrot] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\carrot_canInteract.png").c_str());
+	overlayImages[Overlays::fish] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_canInteract.png").c_str());
+	overlayImages[Overlays::fishCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\fish_cantInteract.png").c_str());
+	overlayImages[Overlays::rock] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_canInteract.png").c_str());
+	overlayImages[Overlays::rockCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\rock_cantInteract.png").c_str());
+	overlayImages[Overlays::spike] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_canInteract.png").c_str());
+	overlayImages[Overlays::spikeCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\spikes_cantInteract.png").c_str());
+	overlayImages[Overlays::treePine] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_canInteract.png").c_str());
+	overlayImages[Overlays::treePineCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_cantInteract.png").c_str());
+	overlayImages[Overlays::treeRound] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_canInteract.png").c_str());
+	overlayImages[Overlays::treeRoundCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_cantInteract.png").c_str());
+}
+
+SDL_Texture* ImageLoader::getOverLayImage(Overlays overlay)
+{
+	return this->overlayImages[overlay];
 }
 
 //Returns the first ID of the new tileset images
@@ -17,7 +43,7 @@ int ImageLoader::loadTileset(string filename, int tileWidth, int tileHeight)
 	{
 		std::cout << "Couldn't load " << RESOURCEPATH + filename << endl;
 	}
-	
+
 	int x = 0;
 	int y = 0;
 	int fileWidth = 0;
@@ -81,6 +107,13 @@ void ImageLoader::cleanup()
 		tileSets[i] = nullptr;
 	}
 	std::vector<SDL_Texture*>().swap(tileSets); //Clear and shrink vector
+
+	//Delete all overlay images
+	typedef std::map<Overlays, SDL_Texture*>::iterator it_type;
+	for(it_type iterator = this->overlayImages.begin(); iterator != this->overlayImages.end(); iterator++) {
+		SDL_DestroyTexture(iterator->second);
+		iterator->second = nullptr;
+	}
 }
 
 ImageLoader::~ImageLoader()

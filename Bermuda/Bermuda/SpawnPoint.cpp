@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "NPCFactory.h"
 #include "GameTimer.h"
+#include "NPCType.h"
 
 Spawnpoint::Spawnpoint(int id, double x, double y, string spawnType, int maxChildren, int walkRange) 
 : Entity(id, x, y)
@@ -41,27 +42,32 @@ void Spawnpoint::spawnMob()
 {
 	if (curChildren < maxChildren)
 	{
+		bool npcSpawned = false;
 		if (spawnType == "rabbit")
 		{
-			NPCFactory::Instance()->createRabbit(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Rabbit, this);
 		}
 		else if (spawnType == "wasp")
 		{
-			NPCFactory::Instance()->createWasp(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
 		}
 		else if (spawnType == "bat")
 		{
-			NPCFactory::Instance()->createBat(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
 		}
 		else if (spawnType == "wolf")
 		{
-			NPCFactory::Instance()->createWolf(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
 		}		
 		else if (spawnType == "scorpion")
 		{
-			NPCFactory::Instance()->createScorpion(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
 		}
-		this->curChildren++;
+		if(npcSpawned)
+		{
+			this->curChildren++;
+		}
+
 		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
 	}
 }

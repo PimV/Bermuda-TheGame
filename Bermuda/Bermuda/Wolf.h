@@ -12,14 +12,13 @@ class Wolf :
 {
 public:
 	Wolf(int id, Spawnpoint *spawnPoint, int firstImgID);
-	
-	void update(double dt);
-
 	virtual ~Wolf();
+
+	void update(double dt);
+	bool checkCollision(double newX, double newY);
 private:
 	void directionsAndMove(double dt);
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkCollision(double newX, double newY);
 };
 
