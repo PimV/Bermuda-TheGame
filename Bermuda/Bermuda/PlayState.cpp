@@ -495,19 +495,24 @@ void PlayState::checkPlayerDarkness()
 				std::vector<LightEntity*> copyLightEntities = std::vector<LightEntity*>(*lightEntities);
 				for (LightEntity* e : copyLightEntities)
 				{
-					double p = GameTimer::Instance()->getPercentage();
-					if (p >= 90 && p <= 99)
+
+					double dayP = GameTimer::Instance()->getPercentage();
+					if (dayP >= 90 && dayP <= 99)
 					{
 						if (e->getShining() == true)
 						{
-							std::cout << "+";
-
+							p->setWithinDarkness(true);
 						}
 						else
 						{
-							std::cout << "-";
+							p->setWithinDarkness(false);
 						}
 					}
+					else
+					{
+						p->setWithinDarkness(false);
+					}
+
 				}
 			}
 		}

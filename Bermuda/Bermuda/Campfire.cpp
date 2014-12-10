@@ -35,8 +35,8 @@ void Campfire::animate(double dt)
 
 void Campfire::animationFinished()
 {
-	this->destroyTime = GameTimer::Instance()->getGameTime() + 20000;
 	this->setShining(false);
+	this->destroyTime = GameTimer::Instance()->getGameTime() + 20000;
 }
 
 Campfire::~Campfire()
