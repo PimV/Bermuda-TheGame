@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 
 Fish::Fish(int id, double x, double y, Image* fishImage) :
 	Entity(id,x,y), 
@@ -16,6 +17,20 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 	this->interactTime = 9000;
 
 	this->animationType = AnimationEnumType::AttackSpear;
+
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::fish));
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::fishCant));
+	
+	this->setHighlightTexture(this->getCantInteractTexture());
+}
+
+bool Fish::canInteract(Player* player) {
+	if (player->getInventory()->spearSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->spearSelected();
 }
 
 void Fish::interact(Player* player) 
@@ -54,6 +69,7 @@ void Fish::respawn()
 
 void Fish::setDestroyedState() 
 {
+	this->setHighlighted(false);
 	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);

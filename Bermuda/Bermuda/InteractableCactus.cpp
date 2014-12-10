@@ -20,6 +20,15 @@ InteractableCactus::InteractableCactus(int id, double x, double y, Image* cactus
 	this->animationType = AnimationEnumType::Chop;
 }
 
+bool InteractableCactus::canInteract(Player* player) {
+	if (player->getInventory()->axeSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->axeSelected();
+}
+
 void InteractableCactus::update(double dt) {
 	if (this->destroyed) {
 		if (this->timeDestroyed  + respawnTime < GameTimer::Instance()->getGameTime()) {
@@ -53,6 +62,7 @@ void InteractableCactus::interact(Player* player)
 
 void InteractableCactus::setDestroyedState()
 {
+	this->setHighlighted(false);
 	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);

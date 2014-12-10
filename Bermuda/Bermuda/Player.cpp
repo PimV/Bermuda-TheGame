@@ -163,6 +163,10 @@ void Player::update(double dt) {
 	else {
 		this->directionsAndMove(dt);
 	}
+
+	
+
+
 }
 
 #pragma region PlayerStatusUpdates

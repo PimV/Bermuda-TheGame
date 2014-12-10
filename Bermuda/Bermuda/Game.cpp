@@ -77,7 +77,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		gsm->draw();
 		
 		gsm->setUpdateLength(updateLength);
-
+	
 		//Get time after loop
 		QueryPerformanceCounter(&afterLoopTime);
 		//Sleep if needed (if time took longer than optimal)

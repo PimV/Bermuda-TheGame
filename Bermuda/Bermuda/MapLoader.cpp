@@ -1,11 +1,15 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "Tree.h"
+#include "TreePine.h"
+#include "TreeRound.h"
 #include "AppleTree.h"
 #include "Rock.h"
 #include "RockSpikes.h"
 #include "GoldRock.h"
 #include "Ice.h"
+#include "IceSpikes.h"
+#include "IceRock.h"
 #include "Carrot.h"
 #include "Fish.h"
 #include "Pillar.h"
@@ -14,6 +18,8 @@
 #include "Cactus.h"
 #include "SnowTree.h"
 #include "InteractableCactus.h"
+#include "InteractableCactusBig.h"
+#include "InteractableCactusSmall.h"
 #include "CollidableTile.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
@@ -246,6 +252,7 @@ void MapLoader::createObjects(Value& objects)
 
 	for(size_t j = 0; j < objects.Size(); j++)
 	{
+
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
 		Image* objectImg = imgLoader->getMapImage(firstImgID + objectID);
@@ -253,13 +260,22 @@ void MapLoader::createObjects(Value& objects)
 		double objectY = object["y"].GetDouble() - objectImg->getHeight(); // -getHeight() Because all 'tiled' objects use bottom left for image positioning;
 
 		//TODO: Any better way to do this?
-		if(objectClasses[objectID] == "Tree")
+		if(objectClasses[objectID] == "RoundTree")
 		{
-			new Tree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
-		else if(objectClasses[objectID] == "TreeStump")
+		else if(objectClasses[objectID] == "PineTree")
 		{
-			Tree* tree = new Tree(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if(objectClasses[objectID] == "RoundTreeStump")
+		{
+			Tree* tree = new TreeRound(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			tree->setDestroyedState();
+		}
+		else if(objectClasses[objectID] == "PineTreeStump")
+		{
+			Tree* tree = new TreePine(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			tree->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "AppleTree")
@@ -300,11 +316,11 @@ void MapLoader::createObjects(Value& objects)
 		}
 		else if (objectClasses[objectID] == "Ice")
 		{
-			new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new IceRock(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if (objectClasses[objectID] == "IceSpikes")
 		{
-			new Ice(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
+			new IceSpikes(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
 		}
 		else if (objectClasses[objectID] == "IcePieces")
 		{
@@ -331,9 +347,23 @@ void MapLoader::createObjects(Value& objects)
 		{
 			new Cactus(objectID, objectX, objectY, objectImg);
 		}
-		else if (objectClasses[objectID] == "InteractableCactus")
+		else if (objectClasses[objectID] == "BigInteractableCactus")
 		{
-			new InteractableCactus(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "SmallInteractableCactus")
+		{
+			new InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "BigCactusStump")
+		{
+			InteractableCactusBig* cactus = new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			cactus->setDestroyedState();
+		}
+		else if (objectClasses[objectID] == "SmallCactusStump")
+		{
+			InteractableCactusSmall* cactus = new  InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			cactus->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{

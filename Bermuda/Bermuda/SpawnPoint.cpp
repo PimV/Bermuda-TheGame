@@ -42,7 +42,7 @@ void Spawnpoint::spawnMob()
 {
 	if (curChildren < maxChildren)
 	{
-		bool npcSpawned;
+		bool npcSpawned = false;
 		if (spawnType == "rabbit")
 		{
 			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Rabbit, this);
