@@ -1,4 +1,4 @@
-JsonLines: 36119
+JsonLines: 36202
 { "height":500,
  "layers":[
         {
@@ -33601,6 +33601,66 @@ JsonLines: 36119
                  "width":0,
                  "x":6000.48,
                  "y":11733.7
+                }, 
+                {
+                 "gid":462,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4862.66666666667,
+                 "y":1619
+                }, 
+                {
+                 "gid":462,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4876,
+                 "y":1659
+                }, 
+                {
+                 "gid":462,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4425.33333333333,
+                 "y":1746
+                }, 
+                {
+                 "gid":462,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4504,
+                 "y":1609
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -36112,6 +36172,29 @@ JsonLines: 36119
          "spacing":0,
          "tileheight":64,
          "tilewidth":64,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "firstgid":462,
+         "image":"Objects\/Items 32x32.png",
+         "imageheight":32,
+         "imagewidth":32,
+         "margin":0,
+         "name":"Items",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":32,
+         "tileproperties":
+            {
+             "0":
+                {
+                 "Type":"Branch"
+                }
+            },
+         "tilewidth":32,
          "transparentcolor":"#ff00ff"
         }],
  "tilewidth":32,
