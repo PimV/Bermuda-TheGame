@@ -569,11 +569,8 @@ void PlayState::updatePlayerDarkness()
 						if (radius <= e->getDiameter() / 2)
 						{
 							if (e->getShining() == true) p->setWithinDarkness(false);
-							else p->setWithinDarkness(true);
 						}
-						else p->setWithinDarkness(true);
 					}
-					else p->setWithinDarkness(false);
 				}
 			}
 		}
