@@ -563,10 +563,13 @@ void PlayState::updatePlayerDarkness()
 				{
 					if (dayP >= 90)
 					{
-						if (p->getX() >= (e->getX() - e->getDiameter() / 2) && 
-							p->getX() <= (e->getX() + e->getDiameter() / 2) &&
-							p->getY() >= (e->getY() - e->getDiameter() / 2) && 
-							p->getY() <= (e->getY() + e->getDiameter() / 2) )
+						double diffX = abs(p->getX() - e->getX());
+						double diffY = abs(p->getY() - e->getY());
+
+						double radius = sqrt((diffX * diffX) + (diffY * diffY));
+						//std::cout << "radius: " << radius << std::endl;
+
+						if (radius <= e->getDiameter() / 2)
 						{
 							if (e->getShining() == true) p->setWithinDarkness(false);
 							else p->setWithinDarkness(true);
@@ -574,8 +577,6 @@ void PlayState::updatePlayerDarkness()
 						else p->setWithinDarkness(true);
 					}
 					else p->setWithinDarkness(false);
-
-					std::cout << p->getWithinDarkness() << std::endl;
 				}
 			}
 		}
