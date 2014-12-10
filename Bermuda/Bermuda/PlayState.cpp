@@ -289,7 +289,7 @@ void PlayState::update(double dt) {
 	this->updateVisibleEntities(dt);
 	this->updateMediumAreaEntities(dt);
 	
-	this->checkPlayerDarkness();
+	this->updatePlayerDarkness();
 
 	if (gameOver)
 	{
@@ -475,7 +475,7 @@ void PlayState::draw()
 	GameTimer::Instance()->draw();
 }
 
-void PlayState::checkPlayerDarkness()
+void PlayState::updatePlayerDarkness()
 {
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
@@ -497,13 +497,23 @@ void PlayState::checkPlayerDarkness()
 				{
 
 					double dayP = GameTimer::Instance()->getPercentage();
-					if (dayP >= 90 && dayP <= 99)
+					if (dayP >= 90)
 					{
-						if (e->getShining() == true)
+						if (e->getX() >= camera->getX() && 
+							e->getX() <= camera->getX() + camera->getWidth() &&
+							e->getY() >= camera->getY() && 
+							e->getY() <= camera->getY() + camera->getHeight())
 						{
-							p->setWithinDarkness(true);
+							if (e->getShining() == true)
+							{
+								p->setWithinDarkness(true);
+							}
+							else
+							{
+								p->setWithinDarkness(false);
+							}
 						}
-						else
+						else 
 						{
 							p->setWithinDarkness(false);
 						}

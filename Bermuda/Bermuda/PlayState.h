@@ -50,7 +50,7 @@ public:
 	void updateMediumAreaEntities(double dt);
 	void updateGameTimers(double dt);	
 
-	void checkPlayerDarkness();
+	void updatePlayerDarkness();
 
 	void draw();
 
