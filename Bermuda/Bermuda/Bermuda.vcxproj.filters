@@ -845,5 +845,8 @@
     <ClInclude Include="DAYPART.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="NPCType.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
