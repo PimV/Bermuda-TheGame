@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 #include <ctime> 
 
 Rock::Rock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
@@ -17,6 +18,20 @@ Rock::Rock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage)
 
 	this->interactTime = 5000;
 	this->animationType = AnimationEnumType::Mine;
+	
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::rock));
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::rockCant));
+	
+	this->setHighlightTexture(this->getCantInteractTexture());
+}
+
+bool Rock::canInteract(Player* player) {
+	if (player->getInventory()->pickAxeSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->pickAxeSelected();
 }
 
 void Rock::update(double dt) {
@@ -60,6 +75,7 @@ void Rock::interact(Player* player)
 
 void Rock::setDestroyedState()
 {
+	this->setHighlighted(false);
 	this->destroyed = true;
 	this->setCollisionX(0);
 	this->setCollisionWidth(0);

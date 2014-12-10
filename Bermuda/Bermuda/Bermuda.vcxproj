@@ -135,6 +135,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
+    <ClInclude Include="IceRock.h" />
+    <ClInclude Include="IceSpikes.h" />
+    <ClInclude Include="InteractableCactusBig.h" />
+    <ClInclude Include="InteractableCactusSmall.h" />
     <ClInclude Include="ItemMeat.h" />
     <ClInclude Include="LightContainer.h" />
     <ClInclude Include="LightEntity.h" />
@@ -175,8 +179,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MenuHelpScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
     <ClInclude Include="NightLayer.h" />
+    <ClInclude Include="NPCType.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Objects.h" />
+    <ClInclude Include="Overlays.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEngine.h" />
     <ClInclude Include="ParticleTypes.h" />
@@ -219,6 +225,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ToolFlint.h" />
     <ClInclude Include="ToolPickaxe.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="TreePine.h" />
+    <ClInclude Include="TreeRound.h" />
     <ClInclude Include="Wasp.h" />
     <ClInclude Include="Wolf.h" />
     <ClInclude Include="Weapon.h" />
@@ -257,7 +265,11 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="GoldRock.cpp" />
     <ClCompile Include="Ice.cpp" />
+    <ClCompile Include="IceRock.cpp" />
+    <ClCompile Include="IceSpikes.cpp" />
     <ClCompile Include="InteractableCactus.cpp" />
+    <ClCompile Include="InteractableCactusBig.cpp" />
+    <ClCompile Include="InteractableCactusSmall.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -302,6 +314,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ToolFlint.cpp" />
     <ClCompile Include="ToolPickaxe.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="TreePine.cpp" />
+    <ClCompile Include="TreeRound.cpp" />
     <ClCompile Include="Wasp.cpp" />
     <ClCompile Include="Wolf.cpp" />
     <ClCompile Include="Weapon.cpp" />

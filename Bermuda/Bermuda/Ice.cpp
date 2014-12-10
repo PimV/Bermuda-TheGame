@@ -20,6 +20,15 @@ Ice::Ice(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	this->animationType = AnimationEnumType::Mine;
 }
 
+bool Ice::canInteract(Player* player) {
+	if (player->getInventory()->pickAxeSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->pickAxeSelected();
+}
+
 void Ice::update(double dt) {
 
 }
@@ -50,6 +59,7 @@ void Ice::interact(Player* player)
 
 void Ice::setDestroyedState()
 {
+	this->setHighlighted(false);
 	this->destroyed = true;
 	this->setCollisionX(0);
 	this->setCollisionWidth(0);

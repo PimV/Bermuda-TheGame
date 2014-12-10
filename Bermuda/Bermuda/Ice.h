@@ -11,10 +11,10 @@ private:
 	Image* icePiecesImage;
 public:
 	Ice(int id, double x, double y, Image* rockImage, Image* rockPieces);
-	void setCollidableValues();
 	void update(double dt);
 	void interact(Player* player);
 	virtual void setDestroyedState();
+	bool canInteract(Player* player);
 	virtual ~Ice();
 };
 

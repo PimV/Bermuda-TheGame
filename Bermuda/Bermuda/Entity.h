@@ -23,6 +23,8 @@ public:
 	double getWidth();
 	double getHeight();
 	bool getEnabled();
+	bool getHighlighted();
+	void setHighlighted(bool highlighted);
 
 	//Destructor
 	virtual ~Entity(void);
@@ -42,6 +44,8 @@ private:
 	//Entity chunk
 	int chunkY;
 	int chunkX;
+
+	bool highlighted;
 
 	bool enabled;
 };

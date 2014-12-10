@@ -30,12 +30,10 @@ public:
 	void deleteItem(int itemID, int count);
 	void deleteItemFromStack(Item* stack, int count);
 	std::vector<Item*> getItems();
-
-	bool hasAxe();
-	bool hasPickaxe();
-
+	
 	bool axeSelected();
 	bool pickAxeSelected();
+	bool spearSelected();
 
 	void draw();
 	int getStartingX();

@@ -6,7 +6,6 @@
 #include "ItemFactory.h"
 #include "Items.h"
 
-
 Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y), 
 	DrawableEntity(id,x,y, treeImage), 
@@ -21,6 +20,15 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 	this->respawnTime = 5000;
 	this->interactTime = 5000;
 	this->animationType = AnimationEnumType::Chop;
+}
+
+bool Tree::canInteract(Player* player) {
+	if (player->getInventory()->axeSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->axeSelected();
 }
 
 void Tree::interact(Player* player) {
@@ -64,6 +72,7 @@ void Tree::respawn() {
 
 void Tree::setDestroyedState() 
 {
+	this->setHighlighted(false);
 	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->stumpImage);
@@ -71,6 +80,8 @@ void Tree::setDestroyedState()
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	currentInteractTime = 0;
 }
+
+
 
 Tree::~Tree()
 {

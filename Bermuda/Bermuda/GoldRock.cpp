@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 #include <ctime>
 
 GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
@@ -18,6 +19,20 @@ GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiec
 	this->interactTime = 5000;
 
 	this->animationType = AnimationEnumType::Mine;
+
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::rock));
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::rockCant));
+	
+	this->setHighlightTexture(this->getCantInteractTexture());
+}
+
+bool GoldRock::canInteract(Player* player) {
+	if (player->getInventory()->pickAxeSelected()) {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	}
+	return player->getInventory()->pickAxeSelected();
 }
 
 void GoldRock::update(double dt) {

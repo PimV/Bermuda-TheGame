@@ -16,6 +16,8 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int interactS
 	this->interactHeight = interactHeight;
 	this->currentInteractTime = 0;
 
+	this->highlightTexture = nullptr;
+
 	this->animationType = AnimationEnumType::None;
 
 	//TODO: pixel word voor elke interactable entity opnieuw ingeladen.
@@ -28,9 +30,61 @@ void InteractableEntity::interact(Player* player)
 	//TODO : oplossen op manier zonder casten
 	/*if (this->getEnabled())
 	{
-		int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
-		cout << percentage << endl;
+	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
+	cout << percentage << endl;
 	}*/
+}
+
+void InteractableEntity::setCanInteractTexture(SDL_Texture* can)
+{
+	this->canInteractTexture = can;
+}
+
+void InteractableEntity::setCantInteractTexture(SDL_Texture* cant)
+{
+	this->cantInteractTexture = cant;
+}
+
+SDL_Texture* InteractableEntity::getCanInteractTexture()
+{
+	return this->canInteractTexture;
+}
+SDL_Texture* InteractableEntity::getCantInteractTexture()
+{
+	return this->cantInteractTexture;
+}
+
+bool InteractableEntity::canInteract(Player* player) {
+	return true;
+}
+
+void InteractableEntity::setHighlightTexture(SDL_Texture* texture) {
+	this->highlightTexture = texture;
+}
+
+void InteractableEntity::setHighlightImage(Image* img) {
+	this->highlightImage = img;
+}
+
+Image* InteractableEntity::getHighlightImage() {
+	return this->highlightImage;
+}
+
+SDL_Texture* InteractableEntity::getHighlightTexture() {
+	return this->highlightTexture;
+}
+
+void InteractableEntity::highlight() {
+	if (this->highlightTexture != nullptr) {
+		Camera* c = PlayState::Instance()->getCamera();
+		SDL_Rect rect;
+		rect.x = this->getX() - c->getX();
+		rect.y = this->getY() - c->getY();
+		rect.w = this->getWidth();
+		rect.h = this->getHeight();
+		//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), highlightImage->getTileSet(), highlightImage->getCroppingRect(), &rect);
+		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->highlightTexture, NULL, &rect);
+	}
 }
 
 void InteractableEntity::drawInteractableArea()
