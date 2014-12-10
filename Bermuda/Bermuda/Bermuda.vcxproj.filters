@@ -504,7 +504,7 @@
     <ClCompile Include="BaseHelpScreen.cpp">
       <Filter>Source Files\View\Screens\HelpScreens</Filter>
     </ClCompile>
-    <ClCompile Include="SaveFile.cpp">
+    <ClCompile Include="GameSaver.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -890,7 +890,7 @@
     <ClInclude Include="NPCType.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="SaveFile.h">
+    <ClInclude Include="GameSaver.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>

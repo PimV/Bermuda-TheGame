@@ -17,7 +17,7 @@
 using namespace rapidjson;
 
 
-GameSaver::SaveFile()
+GameSaver::GameSaver()
 {
 	this->init();
 }
@@ -176,6 +176,6 @@ void GameSaver::saveGame(std::string fileName)
 	stream.close();
 }
 
-GameSaver::~SaveFile()
+GameSaver::~GameSaver()
 {
 }

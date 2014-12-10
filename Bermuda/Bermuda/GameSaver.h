@@ -6,13 +6,13 @@ class GameSaver
 private:
 	std::string currentSaveFile;
 public:
-	SaveFile();
+	GameSaver();
 	void init();
 	void changeCurrentSaveFile(std::string fileName);
 	void loadGame();
 	void loadGame(std::string fileName);
 	void saveGame();
 	void saveGame(std::string fileName);
-	virtual ~SaveFile();
+	virtual ~GameSaver();
 };
 
