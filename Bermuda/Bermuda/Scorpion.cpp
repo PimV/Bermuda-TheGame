@@ -9,7 +9,7 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	NPC(id, 5, 1, 50, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
-	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 13, 20, 23, 24),
+	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 2, 8, 28, 21),
 	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(48);
