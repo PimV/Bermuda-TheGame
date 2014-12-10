@@ -9,7 +9,8 @@ NPC(id, 5, 1, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
+InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
 {
 	this->setWidth(36);
 	this->setHeight(36);
@@ -37,15 +38,38 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 	this->timeSinceLastAction = 0;
 
+	this->destroyed = false;
+	this->respawnTime = 5000;
+	this->interactTime = 5000;
+	this->animationType = AnimationEnumType::AttackSpear;
+
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->StopAnimation();
 }
 
 void Rabbit::update(double dt) {
-	this->directionsAndMove(dt);
+	if (this->destroyed)
+	{
+		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime())
+		{
+			this->respawn();
+		}
+	}
+	else
+	{
+		if (this->getHeathPoints() < 1)
+		{
+			this->directionsAndMove(dt);
+		}
+		else
+		{
+			this->setDestroyedState();
+		}
+	}
 }
 
 void Rabbit::directionsAndMove(double dt)
@@ -141,6 +165,46 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 bool Rabbit::checkCollision(double newX, double newY)
 {
 	return CollidableEntity::checkCollision(newX, newY);
+}
+
+void Rabbit::interact(Player* player)
+{
+	if (player->getInventory()->spearSelected())
+	{
+		player->setCorrectToolSelected(true);
+		InteractableEntity::interact(player);
+		if (this->trackInteractTimes())
+		{
+			player->setCorrectToolSelected(false);
+			this->setDestroyedState();
+			// TODO: add rabbit killed to status tracker
+		}
+	}
+	else
+	{
+		player->setCorrectToolSelected(false);
+	}
+}
+
+void Rabbit::respawn()
+{
+	this->destroyed = false;
+	this->getSpawnPoint()->spawnMob();
+}
+
+void Rabbit::setDestroyedState() 
+{
+	this->setHighlighted(false);
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
+	this->destroyed = true;
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	currentInteractTime = 0;
+}
+
+void Rabbit::setHighlightTexture(bool thing)
+{
+
 }
 
 Rabbit::~Rabbit()

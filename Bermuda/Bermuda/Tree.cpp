@@ -5,8 +5,6 @@
 #include "ItemFactory.h"
 #include "Items.h"
 
-
-
 Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y), 
 	DrawableEntity(id,x,y, treeImage), 

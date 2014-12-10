@@ -10,11 +10,11 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint
 	this->actionRange = actionRange;
 	this->spawnPoint = spawnPoint;
 
-	this->destroyed = false;
-	this->respawnTime = 5000;
-	this->interactTime = 500;
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	//this->destroyed = false;
+	//this->respawnTime = 5000;
+	//this->interactTime = 500;
+	//this->timeSinceDestroy = 0;
+	//this->currentInteractTime = 0;
 }
 
 #pragma region Getters

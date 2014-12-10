@@ -4,13 +4,15 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "InteractableEntity.h"
 
 class Rabbit :
 	public NPC,
 	public Evasive,
 	public DrawableEntity,
 	public CollidableEntity,
-	public MovableEntity
+	public MovableEntity,
+	public InteractableEntity
 {
 public:
 	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
@@ -18,6 +20,12 @@ public:
 
 	void update(double dt);
 	bool checkCollision(double newX, double newY);
+
+	void interact(Player* player);
+	void respawn();
+	void setDestroyedState();
+
+	void setHighlightTexture(bool thing);
 private:
 	void directionsAndMove(double dt);
 	
