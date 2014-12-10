@@ -17,6 +17,7 @@ void GameTimer::init()
 	this->currentDayPart = DAYPART::Day;
 
 	//Draw part
+	
 	textCircle = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\circleTotal.png").c_str());
 	textArrow = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HUD\\arrow.png").c_str());
 

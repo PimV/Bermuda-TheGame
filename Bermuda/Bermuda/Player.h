@@ -23,6 +23,7 @@ public:
 
 	void update(double dt);
 	void directionsAndMove(double dt);
+	void changeAnimationOnInventorySelection();
 
 	void setHealth(int value);
 	void setHunger(int value);
@@ -85,6 +86,7 @@ private:
 	long thirstUpdate, thirstUpdateTime;
 	long healthUpdate, healthUpdateTime;
 
+	#pragma region animation
 	int animationPickUp, animationPickLeft;
 	int animationPickDown, animationPickRight;
 	int animationPickStartColumn, animationPickEndColumn;
@@ -96,6 +98,15 @@ private:
 	int animationMineUp, animationMineLeft;
 	int animationMineDown, animationMineRight;
 	int animationMineStartColumn, animationMineEndColumn;
+
+	int animationSpearAttackUp, animationSpearAttackLeft;
+	int animationSpearAttackDown, animationSpearAttackRight;
+	int animationSpearAttackStartColumn, animationSpearAttackEndColumn;
+
+	int animationSpearWalkUp, animationSpearWalkLeft;
+	int animationSpearWalkDown, animationSpearWalkRight;
+	int animationSpearWalkStartColumn, animationSpearWalkEndColumn;
+	#pragma endregion animation
 
 	bool correctToolSelected;
 

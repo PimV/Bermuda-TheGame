@@ -42,6 +42,7 @@ public:
 	void menuSetHelpScreenAction();
 	void playAction();
 	void pauseSetAchievementScreenAction();
+	void backToPauseMainScreenAction();
 	void backToMenuAction();
 	void resumeGameAction();
 	void menuMainScreenAction();

@@ -9,6 +9,7 @@ Entity::Entity(int id, double x, double y)
 	this->y = y;
 	this->setEnabled(true);
 	this->setChunks();
+	this->setHighlighted(false);
 }
 
 #pragma region Setters
@@ -42,6 +43,10 @@ void Entity::setChunks()
 void Entity::setEnabled(bool enabled)
 {
 	this->enabled = enabled;
+}
+
+void Entity::setHighlighted(bool highlighted) {
+	this->highlighted = highlighted;
 }
 #pragma endregion
 
@@ -83,6 +88,10 @@ int Entity::getChunkX()
 bool Entity::getEnabled()
 {
 	return this->enabled;
+}
+
+bool Entity::getHighlighted() {
+	return this->highlighted;
 }
 #pragma endregion
 

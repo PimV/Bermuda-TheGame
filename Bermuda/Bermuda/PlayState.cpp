@@ -24,6 +24,7 @@ PlayState::PlayState()
 
 void PlayState::init(GameStateManager *gsm) {
 	this->gsm = gsm;
+
 	this->gameOver = false;
 	this->showCol = false;
 	this->showInter = false;
@@ -102,6 +103,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->incrementSelectedIndex();
 		}
+
+		// check if player animationSet should be changed
+		p->changeAnimationOnInventorySelection();
 
 		break;
 	case SDL_KEYDOWN:
@@ -365,11 +369,63 @@ void PlayState::updateMediumAreaEntities(double dt)
 
 void PlayState::draw()
 {
+	//Calculate begin and end chunks for the interact check (+1 and -1 to make it a little bigger thent he current chunk)
+	int beginChunkX = p->getChunkX() - 1;
+	int endChunkX = p->getChunkX() + 1;
+	int beginChunkY = p->getChunkY() - 1;
+	int endChunkY = p->getChunkY() + 1;
+
+	int playerOffsetX = p->getX() + (p->getWidth() / 2);
+	//De -7 wordt gebruikt omdat het plaatje niet helemaal klopt. In de breedte staat de speler idd precies in het midden van het plaatje. In de hoogte niet...
+	int playerOffsetY = p->getY() + (p->getHeight() / 2) +7;
+
+	double diff = 1000;
+	InteractableEntity* closestEntity = nullptr;
+
+	//Loop through all chunks
+	for(int i = beginChunkY; i <= endChunkY; i++) {
+		for(int j = beginChunkX; j <= endChunkX; j++) {
+			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
+			if(vec != nullptr) {
+				for(InteractableEntity* e : *vec) {
+					e->setHighlighted(false);
+					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
+						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
+					{
+						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
+						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
+
+						double diffX = centerX - playerOffsetX;
+						double diffY = centerY - playerOffsetY;
+
+						if (diffX < 0) {
+							diffX = -diffX;
+						}
+
+						if (diffY < 0) {
+							diffY = -diffY;
+						}
+
+						if (diffX + diffY < diff) {
+							diff = diffX + diffY;
+							closestEntity = e;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (closestEntity != nullptr) {
+		closestEntity->canInteract(p);
+		closestEntity->setHighlighted(true);
+	}
+
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
-	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
-	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
-	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
-	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
+	beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
+	endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
+	beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
+	endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
 
 	std::vector<DrawableEntity*> drawableVector;
 
@@ -408,6 +464,8 @@ void PlayState::draw()
 				}
 			}
 
+
+
 		}
 	}
 
@@ -438,7 +496,9 @@ void PlayState::draw()
 	for (DrawableEntity* e : drawableVector)
 	{
 		e->draw(camera, this->gsm->sdlInitializer->getRenderer());
-
+		if (e->getHighlighted()) {
+			dynamic_cast<InteractableEntity*>(e)->highlight();
+		}
 		//Draw interactable area
 		if (this->showInter)
 		{
@@ -460,6 +520,7 @@ void PlayState::draw()
 			}
 		}
 	}
+
 
 	if (showDayLight && GameTimer::Instance()->getPercentage() >= 65 || GameTimer::Instance()->getPercentage() <= 10)
 	{
