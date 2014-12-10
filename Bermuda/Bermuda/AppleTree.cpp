@@ -62,8 +62,6 @@ void AppleTree::respawn() {
 	this->destroyed = false;
 	this->setDrawImage(this->treeImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
-	//PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
-
 }
 
 void AppleTree::setDestroyedState() 
@@ -73,7 +71,6 @@ void AppleTree::setDestroyedState()
 	this->destroyed = true;
 	this->setDrawImage(this->treeEmptyImage);
 	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
-	//PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	currentInteractTime = 0;
 }
 
