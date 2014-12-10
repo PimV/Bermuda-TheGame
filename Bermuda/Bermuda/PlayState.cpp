@@ -50,8 +50,8 @@ void PlayState::init(GameStateManager *gsm) {
 
 	nightLayer = new NightLayer();
 
-	saveFile = new GameSaver();
-	saveFile->changeCurrentSaveFile("Game0.json");
+	gameSaver = new GameSaver();
+	gameSaver->changeCurrentSaveFile("Game0.json");
 	//saveFile->loadGame();
 
 	GameStateManager::Instance()->flushEvents();

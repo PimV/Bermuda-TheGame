@@ -21,7 +21,7 @@ private:
 	NightLayer* nightLayer;
 	Camera* camera;
 	Player* p;
-	GameSaver* saveFile;
+	GameSaver* gameSaver;
 	std::vector<DrawableEntity*> temp;
 
 	int timesUpdate;
