@@ -857,5 +857,8 @@
     <ClInclude Include="ToolGoldenPickaxe.h">
       <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
+    <ClInclude Include="NPCType.h">
+      <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
