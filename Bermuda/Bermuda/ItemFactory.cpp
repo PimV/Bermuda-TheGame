@@ -7,6 +7,7 @@
 #include "ItemWood.h"
 #include "ItemGold.h"
 #include "ItemCampfire.h"
+#include "ItemBranch.h"
 #include "ToolAxe.h"
 #include "ToolPickaxe.h"
 #include "ToolFlint.h"
@@ -31,6 +32,7 @@ void ItemFactory::loadItemTileSets(ImageLoader* imgLoader)
 	itemImages[Items::Axe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolAxe.png", 22,27));
 	itemImages[Items::Flint] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolFlint.png", 38,22));
 	itemImages[Items::Spear] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\WeaponSpear.png", 40,39));
+	itemImages[Items::Branch] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemBranch.png", 27,28));
 }
 
 Item* ItemFactory::createItem(Items item)
@@ -72,6 +74,9 @@ Item* ItemFactory::createItem(Items item)
 		break;
 	case Items::Spear:
 		return new WeaponSpear(itemImages[item]);
+		break;
+	case Items::Branch:
+		return new ItemBranch(itemImages[item]);
 		break;
 	default:
 		return nullptr;

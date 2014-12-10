@@ -21,6 +21,7 @@
 #include "InteractableCactusBig.h"
 #include "InteractableCactusSmall.h"
 #include "CollidableTile.h"
+#include "Branch.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
 
@@ -267,6 +268,10 @@ void MapLoader::createObjects(Value& objects)
 		else if(objectClasses[objectID] == "PineTree")
 		{
 			new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if(objectClasses[objectID] == "Branch")
+		{
+			new Branch(objectID, objectX, objectY, objectImg);
 		}
 		else if(objectClasses[objectID] == "RoundTreeStump")
 		{

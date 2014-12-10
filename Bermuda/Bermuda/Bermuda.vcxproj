@@ -120,6 +120,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="BaseScreen.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BaseButton.h" />
+    <ClInclude Include="Branch.h" />
     <ClInclude Include="Cactus.h" />
     <ClInclude Include="Campfire.h" />
     <ClInclude Include="Carrot.h" />
@@ -139,6 +140,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="InteractableCactusBig.h" />
     <ClInclude Include="InteractableCactusSmall.h" />
+    <ClInclude Include="ItemBranch.h" />
     <ClInclude Include="LightContainer.h" />
     <ClInclude Include="LightEntity.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
@@ -243,6 +245,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="BaseScreen.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BaseButton.cpp" />
+    <ClCompile Include="Branch.cpp" />
     <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Campfire.cpp" />
     <ClCompile Include="Carrot.cpp" />
@@ -274,6 +277,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemApple.cpp" />
+    <ClCompile Include="ItemBranch.cpp" />
     <ClCompile Include="ItemCampfire.cpp" />
     <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="ItemFish.cpp" />

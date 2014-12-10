@@ -15,5 +15,6 @@ enum class Overlays
 	cactusSmall,
 	cactusSmallCant,
 	fish,
-	fishCant
+	fishCant,
+	branch
 };

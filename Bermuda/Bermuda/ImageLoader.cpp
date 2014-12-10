@@ -25,6 +25,7 @@ void ImageLoader::initOverlays()
 	overlayImages[Overlays::treePineCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treePine_cantInteract.png").c_str());
 	overlayImages[Overlays::treeRound] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_canInteract.png").c_str());
 	overlayImages[Overlays::treeRoundCant] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\treeRound_cantInteract.png").c_str());
+	overlayImages[Overlays::branch] = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Objects\\Overlay\\branch_canInteract.png").c_str());
 }
 
 SDL_Texture* ImageLoader::getOverLayImage(Overlays overlay)
