@@ -1,11 +1,10 @@
 #pragma once
 #include <string>
 
-class SaveFile
+class GameSaver
 {
 private:
 	std::string currentSaveFile;
-	bool saveLoadPossible;
 public:
 	SaveFile();
 	void init();

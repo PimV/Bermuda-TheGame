@@ -1,6 +1,11 @@
-#include "SaveFile.h"
+#include "GameSaver.h"
 #include "header_loader.h"
 #include "PlayState.h"
+#include "Item.h"
+#include "Items.h"
+#include "Achievement.h"
+#include "ItemFactory.h"
+#include <vector>
 #include <Windows.h>
 #include <fstream>
 #include <sstream>
@@ -12,22 +17,22 @@
 using namespace rapidjson;
 
 
-SaveFile::SaveFile()
+GameSaver::SaveFile()
 {
 	this->init();
 }
 
-void SaveFile::init()
+void GameSaver::init()
 {
 	this->currentSaveFile = "";
-	this->saveLoadPossible = true;
 
 	//Create save-game directory if it does not exist.
 	if (!CreateDirectory(SAVEPATH.c_str(), NULL) &&
 		ERROR_ALREADY_EXISTS != GetLastError())
 	{
 		// Failed to create directory.
-		this->saveLoadPossible = false;
+		std::cout << "Could not create save file directory. ("+SAVEPATH+")" << std::endl;
+		return;
 	}
 
 	//Set current save file name to the first new available name.
@@ -43,19 +48,18 @@ void SaveFile::init()
 	f.close();
 }
 
-void SaveFile::changeCurrentSaveFile(std::string fileName)
+void GameSaver::changeCurrentSaveFile(std::string fileName)
 {
 	this->currentSaveFile = fileName;
 }
 
-void SaveFile::loadGame()
+void GameSaver::loadGame()
 {
 	this->loadGame(this->currentSaveFile);
 }
 
-void SaveFile::loadGame(std::string fileName)
+void GameSaver::loadGame(std::string fileName)
 {
-	std::cout << "loading..." << std::endl;
 	this->currentSaveFile = fileName;
 
 	//Create file stream.
@@ -79,43 +83,50 @@ void SaveFile::loadGame(std::string fileName)
 	Document d;
 	d.Parse(json.c_str());
 
-	std::cout << json << std::endl;
-	//TODO: Change entities based on saved data.
-	//Value& tilesets = d["tilesets"];
-
+	//Gametime
 	GameTimer::Instance()->setGameTime(d["gametime"].GetDouble());
 
-	//Player position, health, thirst & hunger
+	//Player stats
 	PlayState::Instance()->getPlayer()->setPosition(d["player"]["x"].GetDouble(), d["player"]["y"].GetDouble());
 	PlayState::Instance()->getPlayer()->setHealth(d["player"]["health"].GetInt());
 	PlayState::Instance()->getPlayer()->setThirst(d["player"]["thirst"].GetInt());
 	PlayState::Instance()->getPlayer()->setHunger(d["player"]["hunger"].GetInt());
 
-	//Achievement stats
-	vector<int> stats;
-	for (int i = 0; i < d["stats"].Size(); i++)
+	//Inventory
+	PlayState::Instance()->getPlayer()->getInventory()->clearInventory();
+	for (size_t i = 0; i < d["inventory"].Size(); i++)
 	{
-		stats.push_back(d["stats"][i].GetInt());
+		Item* item = ItemFactory::Instance()->createItem(static_cast<Items>(d["inventory"][i]["id"].GetInt()));
+		item->setStackSize(d["inventory"][i]["amount"].GetInt());
+		PlayState::Instance()->getPlayer()->getInventory()->addItem(item);
+	}
+
+	//Achievements
+	vector<int> stats;
+	for (size_t i = 0; i < d["achievements"].Size(); i++)
+	{
+		stats.push_back(d["achievements"][i].GetInt());
 	}
 	PlayState::Instance()->getPlayer()->getStatusTracker()->setAllStats(stats);
-
-	std::cout << "done" << std::endl;
 }
 
-void SaveFile::saveGame()
+void GameSaver::saveGame()
 {
 	this->saveGame(this->currentSaveFile);
 }
 
-void SaveFile::saveGame(std::string fileName)
+void GameSaver::saveGame(std::string fileName)
 {
-	std::cout << "saving..." << std::endl;
-
 	StringBuffer s;
 	Writer<StringBuffer> writer(s);
 
 	writer.StartObject();
 
+	//Gametime
+	writer.String("gametime");
+	writer.Double(GameTimer::Instance()->getGameTime());
+
+	//Player stats
 	writer.String("player");
 	writer.StartObject();
 	writer.String("x");
@@ -130,7 +141,22 @@ void SaveFile::saveGame(std::string fileName)
 	writer.Int(PlayState::Instance()->getPlayer()->getHunger());
 	writer.EndObject();
 
-	writer.String("stats");
+	//Inventory
+	writer.String("inventory");
+	writer.StartArray();
+	for (Item* item : PlayState::Instance()->getPlayer()->getInventory()->getItems())
+	{
+		writer.StartObject();
+		writer.String("id");
+		writer.Int(item->getId());
+		writer.String("amount");
+		writer.Int(item->getStackSize());
+		writer.EndObject();
+	}
+	writer.EndArray();
+
+	//Achievements
+	writer.String("achievements");
 	writer.StartArray();
 	for (Achievement* achievement : PlayState::Instance()->getPlayer()->getStatusTracker()->getAllAchievements())
 	{
@@ -138,23 +164,18 @@ void SaveFile::saveGame(std::string fileName)
 	}
 	writer.EndArray();
 
-	writer.String("gametime");
-	writer.Double(GameTimer::Instance()->getGameTime());
-
 	writer.EndObject();
 
+	//Save file
 	std::ofstream stream(SAVEPATH + this->currentSaveFile);
 	if (!stream.is_open())
 	{
 		std::cout << "Could not save file. File " + this->currentSaveFile + " could not be found!" << std::endl;
 		return;
 	}
-	stream << s.GetString();
 	stream.close();
-
-	std::cout << s.GetString() << std::endl;
 }
 
-SaveFile::~SaveFile()
+GameSaver::~SaveFile()
 {
 }

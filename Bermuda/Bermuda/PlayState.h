@@ -7,7 +7,7 @@
 #include "MapLoader.h"
 #include "GameTimer.h"
 #include "NightLayer.h"
-#include "SaveFile.h"
+#include "GameSaver.h"
 
 class PlayState : public IGameState
 {
@@ -21,7 +21,7 @@ private:
 	NightLayer* nightLayer;
 	Camera* camera;
 	Player* p;
-	SaveFile* saveFile;
+	GameSaver* saveFile;
 	std::vector<DrawableEntity*> temp;
 
 	int timesUpdate;
