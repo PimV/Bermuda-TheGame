@@ -18,7 +18,7 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() + 10000, 0);
 	this->particleEngine = new ParticleEngine(0,x + 10,y + 20,nullptr,PARTICLETYPES::SMOKE);
 	this->setShining(true);
-	this->setRadius(500);
+	this->setDiameter(500);
 }
 
 void Campfire::animate(double dt)

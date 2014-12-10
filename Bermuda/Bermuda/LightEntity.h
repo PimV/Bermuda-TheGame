@@ -9,10 +9,10 @@ public:
 
 	bool getShining();
 	void setShining(bool NewItem);
-	double getRadius();
-	void setRadius(double NewItem);
+	double getDiameter();
+	void setDiameter(double NewItem);
 private:
 	bool shining;
-	double radius;
+	double diameter;
 };
 

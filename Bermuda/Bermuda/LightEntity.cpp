@@ -6,7 +6,7 @@
 LightEntity::LightEntity(int id, double x, double y) : Entity(id, x, y)
 {
 	this->shining = true;
-	this->radius = 0;
+	this->diameter = 0;
 }
 
 LightEntity::~LightEntity()
@@ -23,11 +23,11 @@ void LightEntity::setShining(bool NewItem)
 	this->shining = NewItem;
 }
 
-double LightEntity::getRadius()
+double LightEntity::getDiameter()
 {
-	return this->radius;
+	return this->diameter;
 }
-void LightEntity::setRadius(double NewItem)
+void LightEntity::setDiameter(double NewItem)
 {
-	this->radius = NewItem;
+	this->diameter = NewItem;
 }

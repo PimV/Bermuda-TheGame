@@ -563,10 +563,10 @@ void PlayState::updatePlayerDarkness()
 				{
 					if (dayP >= 90)
 					{
-						if (p->getX() >= (e->getX() - e->getRadius() / 2) && 
-							p->getX() <= (e->getX() + e->getRadius() / 2) &&
-							p->getY() >= (e->getY() - e->getRadius() / 2) && 
-							p->getY() <= (e->getY() + e->getRadius() / 2) )
+						if (p->getX() >= (e->getX() - e->getDiameter() / 2) && 
+							p->getX() <= (e->getX() + e->getDiameter() / 2) &&
+							p->getY() >= (e->getY() - e->getDiameter() / 2) && 
+							p->getY() <= (e->getY() + e->getDiameter() / 2) )
 						{
 							if (e->getShining() == true) p->setWithinDarkness(false);
 							else p->setWithinDarkness(true);
