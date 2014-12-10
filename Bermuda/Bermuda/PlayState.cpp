@@ -223,7 +223,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_ESCAPE:
 			//Go to pause state on 'Escape'
 			//TODO: methode voor deze escape klik aanmaken?
-			saveFile->saveGame();
+			gameSaver->saveGame();
 			this->gsm->pushGameState(PauseState::Instance());
 			break;
 		case SDLK_i:
