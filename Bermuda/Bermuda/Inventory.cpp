@@ -43,9 +43,9 @@ void Inventory::init() {
 	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
 	//TODO: Remove in final version.
-	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenAxe));
@@ -264,29 +264,24 @@ void Inventory::dropCurrent() {
 }
 
 bool Inventory::pickAxeSelected() {
-	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe) {
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe) {
 			return true;
-		}
 	}
 	return false;
 }
 
 bool Inventory::axeSelected() {
-	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe) {
-			return true;
-		}
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe) {
+		return true;
 	}
 	return false;
 }
 
-bool Inventory::hasAxe() {
-	return this->hasItemById((int)Items::Axe);
-}
-
-bool Inventory::hasPickaxe() {
-	return this->hasItemById((int)Items::Pickaxe);
+bool Inventory::spearSelected() {
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Spear) {
+		return true;
+	}
+	return false;
 }
 
 std::vector<Item*> Inventory::getItems() {

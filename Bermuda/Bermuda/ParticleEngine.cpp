@@ -30,11 +30,11 @@ ParticleEngine::ParticleEngine(int id, double x, double y, Image* image, PARTICL
 		this->height = 10;
 		break;		
 	case PARTICLETYPES::SMOKE:		
-		this->maxParticles = 150;
+		this->maxParticles = 100;
 		SDL_SetTextureColorMod(this->textPixel,155,155,155);
 		SDL_SetTextureAlphaMod(this->textPixel, 100);
 		this->width = 25;
-		this->height = 5;
+		this->height = 10;
 		break;		
 	case PARTICLETYPES::RAIN:		
 		this->maxParticles = 2000;
@@ -114,11 +114,11 @@ Particle* ParticleEngine::createParticle(PARTICLETYPES particleType)
 		pDy = -0.5;
 		if(pX < this->x + 5 || pX > this->x + 20)
 		{
-			lifeTime = (400 + rand() % 1000);
+			lifeTime = (400 + rand() % 800);
 		}
 		else
 		{
-			lifeTime = (400 + rand() % 1600);
+			lifeTime = (400 + rand() % 1400);
 		}
 
 		width = 3;

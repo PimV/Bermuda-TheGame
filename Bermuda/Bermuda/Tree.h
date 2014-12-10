@@ -16,5 +16,7 @@ public:
 	void respawn();
 	void interact(Player* player);
 	void setDestroyedState();
+	bool canInteract(Player* player);
+	
 	virtual ~Tree();
 };

@@ -3,6 +3,7 @@
 #include "Wasp.h"
 #include "Bat.h"
 #include "Wolf.h"
+#include "Scorpion.h"
 #include "PlayState.h"
 #include "GameStateManager.h"
 
@@ -18,6 +19,7 @@ void NPCFactory::loadNPCTileSets(ImageLoader* imgLoader)
 	FirstImageIDs[NPCType::Wasp] = imgLoader->loadTileset("NPC\\wasp.png", 32, 32);
 	FirstImageIDs[NPCType::Bat] = imgLoader->loadTileset("NPC\\bat.png", 32, 32);
 	FirstImageIDs[NPCType::Wolf] = imgLoader->loadTileset("NPC\\wolf.png", 48, 48);
+	FirstImageIDs[NPCType::Scorpion] = imgLoader->loadTileset("NPC\\scorpion.png", 32, 34);
 }
 
 bool NPCFactory::createNPC(NPCType type, Spawnpoint* sp)
@@ -39,7 +41,7 @@ bool NPCFactory::createNPC(NPCType type, Spawnpoint* sp)
 		npc = new Bat(2001, sp, FirstImageIDs[type]);
 		break;
 	case NPCType::Scorpion:
-		//scorpion code
+		npc = new Scorpion(2001, sp, FirstImageIDs[type]);
 		break;
 	}
 
