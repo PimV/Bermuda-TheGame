@@ -14,18 +14,22 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 	this->destroyed = false;
 	this->respawnTime = 10000;
 	this->interactTime = 9000;
+
+	this->animationType = AnimationEnumType::AttackSpear;
 }
 
 void Fish::interact(Player* player) 
 {
 	//TODO: check if player has fishingrod or fishing harpoon
-	InteractableEntity::interact(player);
-	player->setCorrectToolSelected(true);
-	if (this->trackInteractTimes()) {
-		player->setCorrectToolSelected(false);
-		this->setDestroyedState();		
-		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
-		//TODO: add fish caught in statustracker
+	if (player->getInventory()->spearSelected()) {
+		InteractableEntity::interact(player);
+		player->setCorrectToolSelected(true);
+		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
+			this->setDestroyedState();
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
+			//TODO: add fish caught in statustracker
+		}
 	} else {
 		player->setCorrectToolSelected(false);
 	}
