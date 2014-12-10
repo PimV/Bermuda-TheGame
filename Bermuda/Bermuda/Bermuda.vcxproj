@@ -193,6 +193,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="MovementDirectionEnum.h" />
     <ClInclude Include="RockSpikes.h" />
+    <ClInclude Include="Scorpion.h" />
     <ClInclude Include="SnowTree.h" />
     <ClInclude Include="SpawnpointContainer.h" />
     <ClInclude Include="StatusTracker.h" />
@@ -295,6 +296,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="NPCFactory.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="RockSpikes.cpp" />
+    <ClCompile Include="Scorpion.cpp" />
     <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="SpawnpointContainer.cpp" />
     <ClCompile Include="StatusTracker.cpp" />

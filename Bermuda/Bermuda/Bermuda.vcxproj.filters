@@ -504,6 +504,9 @@
     <ClCompile Include="BaseHelpScreen.cpp">
       <Filter>Source Files\View\Screens\HelpScreens</Filter>
     </ClCompile>
+    <ClCompile Include="Scorpion.cpp">
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -880,6 +883,9 @@
     </ClInclude>
     <ClInclude Include="DAYPART.h">
       <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Scorpion.h">
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="Overlays.h">
       <Filter>Header Files\Model\Enums</Filter>
