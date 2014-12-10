@@ -46,7 +46,6 @@ bool NPCFactory::createNPC(NPCType type, Spawnpoint* sp)
 	//If the new NPC detects collision -> delete it and return false
 	if(npc != nullptr && dynamic_cast<CollidableEntity*>(npc)->checkCollision())
 	{
-		std::cout << "NEW NPC COLLISION" << std::endl;
 		delete npc;
 		return false;
 	}
