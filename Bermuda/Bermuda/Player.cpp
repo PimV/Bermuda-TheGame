@@ -195,7 +195,7 @@ void Player::updatePlayerStatuses(double dt)
 
 	if (this->withinDarkness == true) 
 	{
-		std::cout << "!";
+		this->setHealth(this->getHealth() - 1);
 	}
 
 }

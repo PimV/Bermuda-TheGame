@@ -477,6 +477,11 @@ void PlayState::draw()
 
 void PlayState::updatePlayerDarkness()
 {
+	double dayP = GameTimer::Instance()->getPercentage();
+	
+	if (dayP >= 90)	p->setWithinDarkness(true);
+	else p->setWithinDarkness(false);
+
 	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
 	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
 	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
@@ -495,8 +500,6 @@ void PlayState::updatePlayerDarkness()
 				std::vector<LightEntity*> copyLightEntities = std::vector<LightEntity*>(*lightEntities);
 				for (LightEntity* e : copyLightEntities)
 				{
-
-					double dayP = GameTimer::Instance()->getPercentage();
 					if (dayP >= 90)
 					{
 						if (p->getX() >= (e->getX() - e->getRadius() / 2) && 
@@ -504,13 +507,14 @@ void PlayState::updatePlayerDarkness()
 							p->getY() >= (e->getY() - e->getRadius() / 2) && 
 							p->getY() <= (e->getY() + e->getRadius() / 2) )
 						{
-							if (e->getShining() == true) p->setWithinDarkness(true);
-							else p->setWithinDarkness(false);
+							if (e->getShining() == true) p->setWithinDarkness(false);
+							else p->setWithinDarkness(true);
 						}
-						else p->setWithinDarkness(false);
+						else p->setWithinDarkness(true);
 					}
 					else p->setWithinDarkness(false);
 
+					std::cout << p->getWithinDarkness() << std::endl;
 				}
 			}
 		}
