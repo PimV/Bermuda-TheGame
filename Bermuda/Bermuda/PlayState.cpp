@@ -50,6 +50,10 @@ void PlayState::init(GameStateManager *gsm) {
 
 	nightLayer = new NightLayer();
 
+	saveFile = new SaveFile();
+	saveFile->changeCurrentSaveFile("Game1.json");
+	saveFile->loadGame();
+
 	GameStateManager::Instance()->flushEvents();
 }
 
@@ -219,6 +223,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_ESCAPE:
 			//Go to pause state on 'Escape'
 			//TODO: methode voor deze escape klik aanmaken?
+			saveFile->saveGame();
 			this->gsm->pushGameState(PauseState::Instance());
 			break;
 		case SDLK_i:

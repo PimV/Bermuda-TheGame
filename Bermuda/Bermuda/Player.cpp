@@ -180,7 +180,7 @@ void Player::updatePlayerStatuses(double dt)
 		if (this->getHunger() <= 0) {
 			this->setHealth(this->getHealth() - 1);
 		}
-		this->hungerUpdate = currentTime;
+		//this->hungerUpdate = currentTime;
 	}
 
 	// check if thirst needs to be updated
@@ -189,7 +189,7 @@ void Player::updatePlayerStatuses(double dt)
 		if (this->getThirst() <= 0) {
 			this->setHealth(this->getHealth() - 1);
 		}
-		this->thirstUpdate = currentTime;
+		//this->thirstUpdate = currentTime;
 	}
 
 	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
@@ -199,7 +199,7 @@ void Player::updatePlayerStatuses(double dt)
 		} else if (this->getThirst() > 40 && this->getHunger() > 40) {
 			this->setHealth(this->getHealth() + 1);
 		}
-		this->healthUpdate = currentTime;
+		//this->healthUpdate = currentTime;
 	}
 }
 
@@ -247,6 +247,7 @@ void Player::setHealth(int value) {
 	} else {
 		this->health = value;
 	}
+	this->healthUpdate = GameTimer::Instance()->getGameTime();
 }
 
 void Player::setHunger(int value) {
@@ -257,6 +258,7 @@ void Player::setHunger(int value) {
 	} else {
 		this->hunger = value;
 	}
+	this->hungerUpdate = GameTimer::Instance()->getGameTime();
 }
 
 void Player::setThirst(int value) {
@@ -267,6 +269,7 @@ void Player::setThirst(int value) {
 	} else {
 		this->thirst = value;
 	}
+	this->thirstUpdate = GameTimer::Instance()->getGameTime();
 }
 
 int Player::getHealth() {

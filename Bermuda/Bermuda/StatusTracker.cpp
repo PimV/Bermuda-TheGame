@@ -50,6 +50,17 @@ void StatusTracker::applePicked()
 	achievements[APPLEPICKED]->addAmount();
 }
 
+void StatusTracker::setAllStats(std::vector<int> stats)
+{
+	if (stats.size() < this->achievements.size())
+	{
+		for (int i = 0; i <= stats.size(); i++)
+		{
+			this->achievements[i]->setAmount(stats[i]);
+		}
+	}
+}
+
 void StatusTracker::cleanup()
 {
 	for (size_t i = 0; i < achievements.size(); i++)
