@@ -48,7 +48,13 @@ public:
 	void menuMainScreenAction();
 	void helpMovementScreenAction();
 	void helpCutTreeScreenAction();
-	void helpMineTreeScreenAction();
+	void helpCutCactusScreenAction();
+	void helpFishScreenAction();
+	void helpPickAppleScreenAction();
+	void helpPickCarrotScreenAction();
+	void helpMineGoldScreenAction();
+	void helpMineIceScreenAction();
+	void helpMineRockScreenAction();
 
 	void draw();
 	void hover(int, int);

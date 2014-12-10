@@ -17,6 +17,12 @@ private:
 	BaseHelpScreen* curWindow;
 	BaseHelpScreen* movementScreen;
 	BaseHelpScreen* cutTreeScreen;
+	BaseHelpScreen* cutCactusScreen;
+	BaseHelpScreen* fishScreen;
+	BaseHelpScreen* pickAppleScreen;
+	BaseHelpScreen* pickCarrotScreen;
+	BaseHelpScreen* mineGoldScreen;
+	BaseHelpScreen* mineIceScreen;
 	BaseHelpScreen* mineRockScreen;
 
 	//methodes
@@ -34,6 +40,12 @@ public:
 	void setCurWindow(BaseHelpScreen* curwindow);
 	BaseHelpScreen* getMovementScr();
 	BaseHelpScreen* getCutTreeScr();
+	BaseHelpScreen* getCutCactusScr();
+	BaseHelpScreen* getFishScr();
+	BaseHelpScreen* getPickAppleScr();
+	BaseHelpScreen* getPickCarrotScr();
+	BaseHelpScreen* getMineGoldScr();
+	BaseHelpScreen* getMineIceScr();
 	BaseHelpScreen* getMineRockScr();
 
 	//constructors destructors
