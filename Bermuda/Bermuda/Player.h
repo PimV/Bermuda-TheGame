@@ -109,12 +109,12 @@ private:
 	int animationSpearAttackStartColumn;
 	int animationSpearAttackEndColumn;
 
-	//int animationSpearWalkUp;
-	//int animationSpearWalkLeft;
-	//int animationSpearWalkDown;
-	//int animationSpearWalkRight;
-	//int animationSpearWalkStartColumn;
-	//int animationSpearWalkEndColumn;
+	int animationSpearWalkUp;
+	int animationSpearWalkLeft;
+	int animationSpearWalkDown;
+	int animationSpearWalkRight;
+	int animationSpearWalkStartColumn;
+	int animationSpearWalkEndColumn;
 	#pragma endregion animation
 
 	bool correctToolSelected;

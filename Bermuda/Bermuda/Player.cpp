@@ -78,6 +78,13 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationWalkRightRow = 7;
 	this->animationWalkStartColumn = 1;
 	this->animationWalkEndColumn = 8;
+
+	this->animationSpearWalkUp = 8;
+	this->animationSpearWalkLeft = 9;
+	this->animationSpearWalkDown = 10;
+	this->animationSpearWalkRight = 11;
+	this->animationSpearWalkStartColumn = 1;
+	this->animationSpearWalkEndColumn = 8;
 	
 	this->animationPickUp = 0;
 	this->animationPickStartColumn = 1;
@@ -103,20 +110,15 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationSpearAttackStartColumn = 1;
 	this->animationSpearAttackEndColumn = 9;
 
-	//int animationSpearWalkUp = 8;
-	//int animationSpearWalkLeft = 9;
-	//int animationSpearWalkDown = 10;
-	//int animationSpearWalkRight = 11;
-	//int animationSpearWalkStartColumn = 1;
-	//int animationSpearWalkEndColumn = 8;
-
 	this->movementDirection = MovementDirectionEnum::Down;
 	this->currentAnimationRow = ( this->animationWalkUpRow + (int)this->movementDirection );
 
 	this->animationIdleColumn = 0;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
-	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
-	this->animationSpeed = 10;
+
+	this->frameAmountX = 13, this->frameAmountY = 27, this->CurrentFrame = 0;
+	this->animationSpeed = 10;//, this->animationDelay = 1;
+
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 50;
 	#pragma endregion animation
@@ -178,10 +180,6 @@ void Player::update(double dt) {
 	else {
 		this->directionsAndMove(dt);
 	}
-
-	
-
-
 }
 
 #pragma region PlayerStatusUpdates
@@ -427,41 +425,41 @@ void Player::setAnimationType(AnimationEnumType type)
 	}
 }
 
-//void Player::changeAnimationOnInventorySelection()
-//{
-//	// fugly, might be an good idae to redo the animation selection
-//	if (this->getInventory()->spearSelected())
-//	{
-//		// only one check is necessary, for all the walkAnimation needs to be changed if Spear is selected
-//		if (this->animationWalkUpRow != this->animationSpearWalkUp)
-//		{
-//			// set the movementAnimation to the movementSpearAnimation
-//			this->animationWalkUpRow = this->animationSpearWalkUp;
-//			this->animationWalkLeftRow = this->animationSpearWalkLeft;
-//			this->animationWalkDownRow = this->animationSpearWalkDown;
-//			this->animationWalkRightRow = this->animationSpearWalkRight;
-//			this->animationWalkStartColumn = this->animationSpearWalkStartColumn;
-//			this->animationWalkEndColumn = this->animationSpearWalkEndColumn;
-//			this->currentAnimationRow = this->animationSpearWalkUp + (int)this->movementDirection;
-//			this->StopAnimation();
-//		}
-//	}
-//	else
-//	{
-//		if (this->animationWalkUpRow != 4)
-//		{
-//			// reset the movementAnimation to the correct values
-//			this->animationWalkUpRow = 4;
-//			this->animationWalkLeftRow = 5;
-//			this->animationWalkDownRow = 6;
-//			this->animationWalkRightRow = 7;
-//			this->animationWalkStartColumn = 1;
-//			this->animationWalkEndColumn = 8;
-//			this->currentAnimationRow = this->animationWalkUpRow + (int)this->movementDirection;
-//			this->StopAnimation();
-//		}
-//	}
-//}
+void Player::changeAnimationOnInventorySelection()
+{
+	// fugly, might be an good idae to redo the animation selection
+	if (this->getInventory()->spearSelected())
+	{
+		// only one check is necessary, for all the walkAnimation needs to be changed if Spear is selected
+		if (this->animationWalkUpRow != this->animationSpearWalkUp)
+		{
+			// set the movementAnimation to the movementSpearAnimation
+			this->animationWalkUpRow = this->animationSpearWalkUp;
+			this->animationWalkLeftRow = this->animationSpearWalkLeft;
+			this->animationWalkDownRow = this->animationSpearWalkDown;
+			this->animationWalkRightRow = this->animationSpearWalkRight;
+			this->animationWalkStartColumn = this->animationSpearWalkStartColumn;
+			this->animationWalkEndColumn = this->animationSpearWalkEndColumn;
+			this->currentAnimationRow = this->animationSpearWalkUp + (int)this->movementDirection;
+			this->StopAnimation();
+		}
+	}
+	else
+	{
+		if (this->animationWalkUpRow != 4)
+		{
+			// reset the movementAnimation to the correct values
+			this->animationWalkUpRow = 4;
+			this->animationWalkLeftRow = 5;
+			this->animationWalkDownRow = 6;
+			this->animationWalkRightRow = 7;
+			this->animationWalkStartColumn = 1;
+			this->animationWalkEndColumn = 8;
+			this->currentAnimationRow = this->animationWalkUpRow + (int)this->movementDirection;
+			this->StopAnimation();
+		}
+	}
+}
 
 void Player::setPosition(double newX, double newY) {
 	MovableEntity::setPosition(newX, newY);
