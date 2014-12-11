@@ -1,13 +1,6 @@
 #include "StatusTracker.h"
 #include <iostream>
 
-enum{
-	TREECUT,
-	ROCKMINED,
-	CARROTPICKED,
-	APPLEPICKED
-};
-
 StatusTracker::StatusTracker()
 {
 	init();
@@ -15,10 +8,14 @@ StatusTracker::StatusTracker()
 
 void StatusTracker::init()
 {
-	achievements.push_back(new Achievement("Trees cut"));
-	achievements.push_back(new Achievement("Rocks mined"));
-	achievements.push_back(new Achievement("Carrots picked"));
 	achievements.push_back(new Achievement("Apples picked"));
+	achievements.push_back(new Achievement("Carrots picked"));
+	achievements.push_back(new Achievement("Fish fished"));		//new
+	achievements.push_back(new Achievement("Gold mined"));		//new
+	achievements.push_back(new Achievement("Ice mined"));
+	achievements.push_back(new Achievement("Cactusses chopped"));
+	achievements.push_back(new Achievement("Rocks mined"));
+	achievements.push_back(new Achievement("Trees cut"));
 }
 
 std::vector<Achievement*> StatusTracker::getAllAchievements()
@@ -26,28 +23,9 @@ std::vector<Achievement*> StatusTracker::getAllAchievements()
 	return this->achievements;
 }
 
-void StatusTracker::treeCut()
+void StatusTracker::addAchievementCount(AchievementsEnum enumIn)
 {
-	std::cout << "add treeCut amount" << std::endl;
-	achievements[TREECUT]->addAmount();
-}
-
-void StatusTracker::rockMined()
-{
-	std::cout << "add rockMined amount" << std::endl;
-	achievements[ROCKMINED]->addAmount();
-}
-
-void StatusTracker::carrotPicked()
-{
-	std::cout << "add carrotPicked amount" << std::endl;
-	achievements[CARROTPICKED]->addAmount();
-}
-
-void StatusTracker::applePicked()
-{
-	std::cout << "add applePicked amount" << std::endl;
-	achievements[APPLEPICKED]->addAmount();
+	achievements[(int)enumIn]->addAmount();
 }
 
 void StatusTracker::cleanup()
