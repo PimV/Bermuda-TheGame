@@ -16,14 +16,21 @@ public:
 
 	int getId();
 	void setId(int id);
+
 	int getStackSize();
 	void setStackSize(int size);
+
+	Item* getSelectedItem();
+
 	int getMaxStackSize();	
 	void setMaxStackSize(int size);
+
 	bool getStackable();
 	void setStackable(bool stackable);
+
 	Image* getImage();
 	void setImage(Image* image);
+
 	virtual void use(Player* p);
 
 	void addItemType(ItemType itemType);

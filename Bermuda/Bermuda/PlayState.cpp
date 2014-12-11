@@ -458,9 +458,6 @@ void PlayState::draw()
 					drawableVector.push_back(e);
 				}
 			}
-
-
-
 		}
 	}
 

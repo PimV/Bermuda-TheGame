@@ -5,6 +5,8 @@
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "InteractableEntity.h"
+//#include "ItemType.h"
+#include "Weapon.h"
 
 class Rabbit :
 	public NPC,
@@ -23,13 +25,14 @@ public:
 
 	void interact(Player* player);
 	void respawn();
-	//void setDestroyedState();
+	void setDestroyedState();
 
-	//void setHighlighted(bool thing);
 private:
 	void directionsAndMove(double dt);
 	
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
+
+	void removeFromContainers();
 };

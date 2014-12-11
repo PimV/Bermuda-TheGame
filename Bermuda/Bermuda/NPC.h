@@ -23,10 +23,16 @@ public:
 	void setSpawnPoint(Spawnpoint *spawnPoint);
 #pragma endregion
 
+protected:
+	int healthPoints, attackPoints, walkRange, actionRange;
+	Spawnpoint *spawnPoint;
+
 private:
 	//int healthPoints, attackPoints, walkRange, actionRange, respawnTime, interactTime;
 	//bool destroyed, timeSinceDestroy, currentInteractTime;
 
+	/*
 	int healthPoints, attackPoints, walkRange, actionRange;
 	Spawnpoint *spawnPoint;
+	*/
 };

@@ -24,7 +24,8 @@ InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
-	//this->interaction = false;
+
+	this->healthPoints = 50;
 
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;
@@ -32,15 +33,14 @@ InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
 	this->currentAnimationRow = this->animationWalkDownRow;
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 7;
 
-	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
-	this->animationSpeed = 10;//, this->animationDelay = 1;
+	this->animationSpeed = 10;
 
 	this->timeSinceLastAction = 0;
 
 	this->destroyed = false;
 	this->respawnTime = 5000;
-	this->interactTime = 5000;
+	this->interactTime = 500;
 	this->animationType = AnimationEnumType::AttackSpear;
 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
@@ -61,7 +61,7 @@ void Rabbit::update(double dt) {
 	}
 	else
 	{
-		if (this->getHeathPoints() < 1)
+		if (this->getHeathPoints() > 1)
 		{
 			this->directionsAndMove(dt);
 		}
@@ -169,15 +169,19 @@ bool Rabbit::checkCollision(double newX, double newY)
 
 void Rabbit::interact(Player* player)
 {
-	if (player->getInventory()->spearSelected())
+	if (player->getInventory()->getSelectedItem()->hasItemType(ItemType::Weapon))
 	{
 		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);
 		if (this->trackInteractTimes())
 		{
 			player->setCorrectToolSelected(false);
-			this->setDestroyedState();
-			PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+			this->currentInteractTime = 0;
+			class Weapon *selectedWeapon = dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem());
+			int dmg = selectedWeapon->getAttackDamage();
+			//int dmg = 10;
+			this->setHealthPoints( this->getHeathPoints() - selectedWeapon->getAttackDamage() );
+			//this->setDestroyedState();
 			// TODO: add rabbit killed to status tracker
 		}
 	}
@@ -193,26 +197,25 @@ void Rabbit::respawn()
 	this->getSpawnPoint()->spawnMob();
 }
 
-/*
 void Rabbit::setDestroyedState() 
 {
-	////this->setHighlighted(false);
-	//this->timeDestroyed = GameTimer::Instance()->getGameTime();
-	//this->destroyed = true;
-	////PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
-	//PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	//currentInteractTime = 0;
-}
-*/
-/*
-void Rabbit::setHighlighted(bool thing)
-{
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
+	this->destroyed = true;
+	this->currentInteractTime = 0;
 
+	this->removeFromContainers();
 }
-*/
-Rabbit::~Rabbit()
+
+void Rabbit::removeFromContainers()
 {
+	
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+}
+
+Rabbit::~Rabbit()
+{
+	this->removeFromContainers();
 }
