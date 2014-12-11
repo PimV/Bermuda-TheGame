@@ -272,7 +272,7 @@ void PlayState::update(double dt) {
 	//Update gametimer
 	if (this->timesUpdate > 2)
 	{
-		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
+		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
 	}
 	else
 	{
