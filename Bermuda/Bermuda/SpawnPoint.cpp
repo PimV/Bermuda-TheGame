@@ -58,6 +58,10 @@ void Spawnpoint::spawnMob()
 		else if (spawnType == "wolf")
 		{
 			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
+		}		
+		else if (spawnType == "scorpion")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
 		}
 		if(npcSpawned)
 		{

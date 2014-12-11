@@ -103,10 +103,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->incrementSelectedIndex();
 		}
-
-		// check if player animationSet should be changed
 		p->changeAnimationOnInventorySelection();
-
 		break;
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym) {
@@ -174,10 +171,6 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->getInventory()->setSelectedIndex(mainEvent.key.keysym.sym - 49);
 			break;
 
-		case SDLK_F1:
-			//Print player location
-			std::cout << "Current Location of player: " << p->getX() << ":" << p->getY() << std::endl;
-			break;
 		case SDLK_F2:
 			this->showCol = !this->showCol;
 			break;
@@ -186,6 +179,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_F4:
 			this->showSpawnArea = !this->showSpawnArea;
+			break;
 		case SDLK_F9:
 			GameStateManager::Instance()->toggleHelpEnabled();
 			break;
@@ -278,7 +272,7 @@ void PlayState::update(double dt) {
 	//Update gametimer
 	if (this->timesUpdate > 2)
 	{
-		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength() * dt);
+		GameTimer::Instance()->updateGameTime(GameStateManager::Instance()->getUpdateLength());
 	}
 	else
 	{

@@ -2,14 +2,14 @@
 #include "Tool.h"
 #include "Image.h"
 
-class ToolAxe :
+class ToolGoldenPickaxe :
 	public Tool
 {
 public:
-	ToolAxe(Image* image);
+	ToolGoldenPickaxe(Image* image);
 
 	void init();
 
-	virtual ~ToolAxe();
+	virtual ~ToolGoldenPickaxe();
 };
 

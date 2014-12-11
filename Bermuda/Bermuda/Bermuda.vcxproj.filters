@@ -504,6 +504,15 @@
     <ClCompile Include="BaseHelpScreen.cpp">
       <Filter>Source Files\View\Screens\HelpScreens</Filter>
     </ClCompile>
+    <ClCompile Include="ToolGoldenAxe.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolGoldenPickaxe.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+	</ClCompile>
+    <ClCompile Include="Scorpion.cpp">
+      <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
     <ClCompile Include="ItemMeat.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -883,6 +892,15 @@
     </ClInclude>
     <ClInclude Include="DAYPART.h">
       <Filter>Header Files\Model\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolGoldenAxe.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolGoldenPickaxe.h">
+      <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scorpion.h">
+      <Filter>Header Files\Model\Entity\NPC%27s</Filter>
     </ClInclude>
     <ClInclude Include="Overlays.h">
       <Filter>Header Files\Model\Enums</Filter>

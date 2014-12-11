@@ -54,6 +54,8 @@ void Inventory::init() {
 	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenAxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenPickaxe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Meat));
 }
 
@@ -72,7 +74,7 @@ void Inventory::decrementSelectedIndex() {
 }
 
 Item* Inventory::getSelectedItem() {
-	if (selectedIndex < this->getSize()) {
+   	if (selectedIndex < this->getSize()) {
 		return this->itemVector[selectedIndex];
 	} else {
 		return nullptr;
@@ -269,14 +271,14 @@ void Inventory::dropCurrent() {
 }
 
 bool Inventory::pickAxeSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe)) {
 			return true;
 	}
 	return false;
 }
 
 bool Inventory::axeSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Axe) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe)) {
 		return true;
 	}
 	return false;
@@ -398,7 +400,7 @@ void Inventory::draw() {
 				}
 				//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
 			} else {
-				SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
 			}
 		} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleImg->getTileSet(), NULL, &slotRect);
