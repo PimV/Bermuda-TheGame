@@ -2,15 +2,12 @@
 #include "IGameState.h"
 #include "MenuState.h"
 #include "PlayState.h"
-#include "NPCFactory.h"
-#include "ItemFactory.h"
 #include <iostream>
 #include <Windows.h>
 #include <SDL_ttf.h>
 
 GameStateManager GameStateManager::m_Gsm;
-GameStateManager::GameStateManager(void) {
-	/*init("Bermuda", ScreenWidth, ScreenHeight, 0, fullScreen);*/
+GameStateManager::GameStateManager() {
 }
 
 void GameStateManager::init(const char* title, int width, int height, int bpp, bool fullscreen) {
@@ -19,12 +16,6 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	sdlInitializer = new SDLInitializer();
 	sdlInitializer->init(title, width, height, bpp, fullscreen);
-	imgLoader = new ImageLoader(sdlInitializer->getRenderer());
-	soundLoader = new SoundLoader();
-	NPCFactory::Instance()->loadNPCTileSets(imgLoader);
-	ItemFactory::Instance()->loadItemTileSets(imgLoader);
-	//states = new std::vector<IGameState*>();
-
 
 	GameStateManager::Instance()->changeGameState(MenuState::Instance());
 
@@ -32,16 +23,25 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 
 	m_running = true;
 	showFps = false;
+	showHelp = false;
 
 	GameStateManager::Instance()->setFps(0);
 	this->updateLength = 0;
 }
 
-void GameStateManager::setUpdateLength(long updateLength) {
+void GameStateManager::setUpdateLength(float updateLength) {
 	this->updateLength = updateLength;
 }
 
-long GameStateManager::getUpdateLength() {
+bool GameStateManager::helpEnabled() {
+	return this->showHelp;
+}
+
+void GameStateManager::toggleHelpEnabled() {
+	this->showHelp = !this->showHelp;
+}
+
+float GameStateManager::getUpdateLength() {
 	return this->updateLength * speedMultiplier;
 }
 
@@ -67,19 +67,8 @@ int GameStateManager::getFps() {
 	return GameStateManager::Instance()->fps;
 }
 
-void GameStateManager::cleanup() {
-	//While there are states on the stack, clean them up
-	while (!states.empty()) {
-		//Peek at top state and clean that state
-		states.back()->cleanup();
-
-		//Remove top state
-		states.pop_back();
-	}
-}
-
 void GameStateManager::changeGameState(IGameState* gameState) {
-	if (!states.empty()) {
+	while (!states.empty()) {
 		states.back()->cleanup();
 		states.pop_back();
 	}
@@ -117,16 +106,12 @@ void GameStateManager::handleEvents() {
 		{
 		case SDL_QUIT:
 			this->m_running = false;
-			exit(0);
 			break;
 		case SDL_KEYDOWN:
 			switch(mainEvent.key.keysym.sym) 
 			{
 			case SDLK_TAB:
 				GameStateManager::Instance()->showFps = !GameStateManager::Instance()->showFps;
-				break;
-			case SDLK_r:
-				GameStateManager::Instance()->changeGameState(PlayState::Instance());
 				break;
 			case SDLK_PAGEUP:
 				if (this->getSpeedMultiplier() > 0.9) {
@@ -153,16 +138,32 @@ void GameStateManager::handleEvents() {
 			}
 			break;
 		case SDL_KEYUP:
-			switch(mainEvent.key.keysym.sym) {
+			//Switch pas nodig als er meerdere cases zijn... nu een switch gebruiken met alleen default is overbodig
+			/*switch(mainEvent.key.keysym.sym) {
 			default:
 				states.back()->handleEvents(mainEvent);
 				break;
-			}
+			}*/
+			states.back()->handleEvents(mainEvent);
 			break;
 		default:
 			states.back()->handleEvents(mainEvent);
 			break;
 		}
+	}
+}
+
+void GameStateManager::flushEvents()
+{
+	SDL_Event mainEvent;
+	while (SDL_PollEvent(&mainEvent))
+	{
+		SDL_FlushEvent(SDL_MOUSEBUTTONDOWN);
+		SDL_FlushEvent(SDL_MOUSEMOTION);
+		SDL_FlushEvent(SDL_MOUSEWHEEL);
+		SDL_FlushEvent(SDL_KEYDOWN);
+		SDL_FlushEvent(SDL_KEYUP);
+		SDL_FlushEvent(SDL_QUIT);
 	}
 }
 
@@ -196,6 +197,11 @@ ActionContainer* GameStateManager::getActionContainer() {
 	return actionContainer;
 }
 
+void GameStateManager::quitGame()
+{
+	this->m_running = false;
+}
+
 bool GameStateManager::running() {
 	return m_running;
 }
@@ -205,19 +211,21 @@ void GameStateManager::quit() {
 	SDL_Quit();
 }
 
-ImageLoader* GameStateManager::getImageLoader()
+void GameStateManager::cleanup() 
 {
-	return imgLoader;
+	//While there are states on the stack, clean them up
+	while (!states.empty()) {
+		//Peek at top state and clean that state
+		states.back()->cleanup();
+
+		//Remove top state
+		states.pop_back();
+	}
+
+	delete this->sdlInitializer;
+	delete this->actionContainer;
 }
 
-SoundLoader* GameStateManager::getSoundLoader()
+GameStateManager::~GameStateManager() 
 {
-	return soundLoader;
-}
-
-GameStateManager::~GameStateManager(void) {
-	delete imgLoader;
-	delete sdlInitializer;
-
-	delete actionContainer;
 }

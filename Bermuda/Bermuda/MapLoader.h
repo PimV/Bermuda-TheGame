@@ -1,11 +1,9 @@
 #pragma once
 #include "header_loader.h"
+#include "ImageLoader.h"
 #include <rapidjson/document.h>
 #include <map>
 #include <vector>
-#include "ImageLoader.h"
-#include "GameStateManager.h"
-#include "MainEntityContainer.h"
 
 using namespace std;
 using namespace rapidjson;
@@ -22,8 +20,6 @@ private:
 	map<int, string> objectClasses;
 	vector<int> collisionVector;
 	ImageLoader* imgLoader;
-	MainEntityContainer* mec;
-	GameStateManager* gsm;
 	int firstImgID;
 	int mapHeight;
 	int mapWidth;
@@ -31,17 +27,15 @@ private:
 	int startPosY;
 	int loadPercentage;
 	string loadStatus;
-	const int chunkSize;
 public:
-	MapLoader(GameStateManager* gsm, MainEntityContainer* mec);
+	MapLoader();
 	void loadMap();
 	int getMapHeight();
 	int getMapWidth();
 	int getStartPosX();
 	int getStartPosY();
-	int getChunkSize();
 	int getLoadPercentage();
 	string getLoadStatus();
-	~MapLoader();
+	virtual ~MapLoader();
 };
 

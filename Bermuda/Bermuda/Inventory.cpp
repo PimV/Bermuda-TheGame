@@ -1,26 +1,25 @@
 #include "Inventory.h"
-#include "Items.h"
+#include "GameStateManager.h"
+#include "PlayState.h"
 #include "Item.h"
+#include "Items.h"
 #include "Image.h"
-#include "Consumable.h"
-#include "Equipable.h"
 #include "Player.h"
+#include "ItemFactory.h"
+
 #include <iostream>
 #include <algorithm>
-
 
 //Needed for vector sort
 bool Inventory::stackSortFunction(Item* one, Item* two) { return (one->getStackSize() < two->getStackSize()); }
 
-Inventory::Inventory(void)
+Inventory::Inventory()
 {
 	this->init();
-
 }
 
 void Inventory::init() {
-	std::cout<< "Created inv"<<std::endl;
-	this->open = false;
+	this->open = true;
 	this->slots = 15;
 	this->itemVector = std::vector<Item*>();
 	selectedIndex = 0;
@@ -29,26 +28,35 @@ void Inventory::init() {
 	posX = ScreenWidth / 2 - sizeX / 2;
 	posY = ScreenHeight - sizeY - 10; //10 = margin from bottom
 
-
 	slotWidth = ScreenWidth / 32;
 	slotHeight = ScreenHeight / 18;
 	itemWidth = ScreenWidth / 50;
 	itemHeight = ScreenHeight / 30;
 
-	int id = GameStateManager::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
-	img = GameStateManager::Instance()->getImageLoader()->getMapImage(id);
+	int id = PlayState::Instance()->getImageLoader()->loadTileset("inv-background.png", 1095, 72);
+	img = PlayState::Instance()->getImageLoader()->getMapImage(id);
 
-	int singleId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item.png", 69,69);
-	singleImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleId);
+	int singleId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item.png", 69, 69);
+	singleImg = PlayState::Instance()->getImageLoader()->getMapImage(singleId);
 
-	int singleSelectedId = GameStateManager::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69,69);
-	singleSelectedImg = GameStateManager::Instance()->getImageLoader()->getMapImage(singleSelectedId);
+	int singleSelectedId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69, 69);
+	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
-	std::cout << "Creating inv img" << std::endl;
-}
+	int singleSelectedIdYellow = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected-yellow.png", 69, 69);
+	singleSelectedYellow = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedIdYellow);
 
-void Inventory::cleanup() {
+	int singleSelectedIdRed = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected-red.png", 69, 69);
+	singleSelectedRed = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedIdRed);
 
+	//TODO: Remove in final version.
+	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
+	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenAxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenPickaxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Meat));
 }
 
 void Inventory::incrementSelectedIndex() {
@@ -92,7 +100,6 @@ bool Inventory::addItem(Item* item) {
 		} else {
 			//Try to up stacksize of an existing inventory slot
 			while (item->getStackSize() > 0) {
-				//	std::cout << "Item to add stacksize: " << item->getStackSize() << std::endl;
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
 					inInvItem = this->getItemById(item->getId(), false);
 					if (inInvItem == nullptr && this->getSize() <= slots) {
@@ -116,6 +123,7 @@ bool Inventory::addItem(Item* item) {
 
 	if (item->getStackSize() <= 0) {
 		delete item;
+		item = nullptr;
 	}
 	return true;
 }
@@ -187,13 +195,10 @@ int Inventory::getSlotsFreedWhenDeleting(int itemID, int count)
 	}
 	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
 	for (size_t i = 0; i < stackVector.size(); i++) {
-		if (stackVector[i]->getStackSize() <= count)
-		{
+		if (stackVector[i]->getStackSize() <= count) {
 			count -= stackVector[i]->getStackSize();
 			slots++;
-		}
-		else
-		{
+		} else {
 			break;
 		}
 	}
@@ -213,17 +218,19 @@ void Inventory::deleteItem(int itemID, int count)
 	std::sort(stackVector.begin(), stackVector.end(), Inventory::stackSortFunction);
 	for (size_t i = 0; i < stackVector.size(); i++) {
 		Item* stack = stackVector[i];
-		if (stackVector[i]->getStackSize() <= count)
-		{
+		if (stackVector[i]->getStackSize() <= count) {
 			count -= stack->getStackSize();
 			stack->setStackSize(stack->getStackSize() - stack->getStackSize());
 
 			std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
+			if (selectedIndex > it - this->itemVector.begin())
+			{
+				selectedIndex--;
+			}
 			delete *it;
+			*it = nullptr;
 			this->itemVector.erase(it);
-		}
-		else
-		{
+		} else {
 			stack->setStackSize(stack->getStackSize() - count);
 			break;
 		}
@@ -234,23 +241,25 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 	stack->setStackSize(stack->getStackSize() - count);
 	if (stack->getStackSize() <= 0) {
 		std::vector<Item*>::iterator it = std::find(this->itemVector.begin(), this->itemVector.end(), stack);
+		if (selectedIndex > it - this->itemVector.begin())
+		{
+			selectedIndex--;
+		}
 		delete *it;
+		*it = nullptr;
 		this->itemVector.erase(it);
 	}
 }
 
 void Inventory::interactCurrent(Player* p) {
 	if (selectedIndex < this->getSize()) {
-		Item* item = this->itemVector[selectedIndex];
-		if (item != nullptr) {
-			if (item->isConsumable()) {
-				Consumable* c = (Consumable*)item;
-				c->consume(p);
-			} else if (item->isEquipable()) {
-				Equipable* e = (Equipable*)item;
-				e->equip(p);
-			}
-		}
+		this->itemVector[selectedIndex]->use(p);
+	}
+}
+
+void Inventory::interacSpecific(Player* p, int stackIndex) {
+	if (stackIndex < this->getSize()) {
+		this->itemVector[stackIndex]->use(p);
 	}
 }
 
@@ -262,29 +271,24 @@ void Inventory::dropCurrent() {
 }
 
 bool Inventory::pickAxeSelected() {
-	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Pickaxe) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe)) {
 			return true;
-		}
 	}
 	return false;
 }
 
 bool Inventory::axeSelected() {
-	if (this->getSelectedItem() != nullptr) {
-		if (this->getSelectedItem()->getId() == (int)Items::Axe) {
-			return true;
-		}
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe)) {
+		return true;
 	}
 	return false;
 }
 
-bool Inventory::hasAxe() {
-	return this->hasItemById((int)Items::Axe);
-}
-
-bool Inventory::hasPickaxe() {
-	return this->hasItemById((int)Items::Pickaxe);
+bool Inventory::spearSelected() {
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Spear) {
+		return true;
+	}
+	return false;
 }
 
 std::vector<Item*> Inventory::getItems() {
@@ -300,11 +304,7 @@ int Inventory::getSlots() {
 }
 
 void Inventory::printInventory() {
-	for (size_t i = 0; i < 20; i++) {
-		/*if (i % 4 == 0) {
-		std::cout <<  std::endl;
-		}*/
-
+	for (int i = 0; i < 20; i++) {
 		if (i < this->getSize()) {
 			std::cout << "[" << item_strings[this->itemVector[i]->getId()] << ": " <<  this->itemVector[i]->getStackSize() << "] ";
 		} else {
@@ -322,8 +322,22 @@ void Inventory::toggleInventory() {
 	this->open = !this->open;
 }
 
+void Inventory::setSelectedIndex(int index)
+{
+	if (index < this->getSlots()-1)
+	{
+		this->selectedIndex = index;
+	}
+}
+
+void Inventory::selectStack(Item* stack)
+{
+	int pos = std::find(itemVector.begin(), itemVector.end(), stack) - itemVector.begin();
+	this->setSelectedIndex(pos);
+}
+
 bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
-	if (x >= startX && x <= endX && y >= startY  && y <= startY + slotHeight) {
+	if (this->open && x >= this->startX && x <= this->endX && y >= this->startY  && y <= this->startY + this->slotHeight) {
 		int clickedIndex = -1;
 
 		for (int i = 0; i < this->slots; i++) {
@@ -331,12 +345,16 @@ bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 			int endSlotX = startSlotX + slotWidth;
 
 			if (x >= startSlotX && x <= endSlotX) {
-				selectedIndex = i;
+				clickedIndex = i;
 				break;
 			}
 		}
-		if (mode == "use") {
-			interactCurrent(player);
+
+		if (mode == "select") {
+			this->selectedIndex = clickedIndex;
+		}
+		else if (mode == "use") {
+			this->interacSpecific(player, clickedIndex);
 		}
 
 		return true;
@@ -346,7 +364,7 @@ bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 }
 
 void Inventory::draw() {
-	for (size_t i = 0; i < this->slots; i++) {
+	for (int i = 0; i < this->slots; i++) {
 
 
 		int slotX =  posX + ScreenWidth / 32 +  i*(ScreenWidth / 32);
@@ -367,7 +385,23 @@ void Inventory::draw() {
 		slotRect.h = slotHeight;
 
 		if (i == selectedIndex) {
+			if (this->getSelectedItem() != nullptr && this->getSelectedItem()->hasItemType(ItemType::WorkTool)) {
+				Equipable* tool = dynamic_cast<Equipable*>(this->getSelectedItem());
+				std::cout << tool->getPercentageDegraded() << std::endl;
+				if (tool->getPercentageDegraded() >= 80) {
+					//red
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedRed->getTileSet(), NULL, &slotRect);
+				} else if (tool->getPercentageDegraded() >= 40) {
+					//yellow
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedYellow->getTileSet(), NULL, &slotRect);
+				} else {
+					//green
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+				}
+				//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			}
 		} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleImg->getTileSet(), NULL, &slotRect);
 		}
@@ -388,11 +422,31 @@ void Inventory::draw() {
 			}
 		}
 	}
-
-
 }
 
+int Inventory::getStartingX() {
+	return this->startX;
+}
 
-Inventory::~Inventory(void)
+int Inventory::getStartingY() {
+	return this->startY;
+}
+
+int Inventory::getWidth() {
+	return this->slots * this->slotWidth;
+}
+
+void Inventory::cleanup() {
+	while (!this->itemVector.empty())
+	{
+		Item* stack = this->itemVector.back();
+		this->itemVector.pop_back();
+		delete stack;
+		stack = nullptr;
+	}
+}
+
+Inventory::~Inventory()
 {
+	this->cleanup();
 }

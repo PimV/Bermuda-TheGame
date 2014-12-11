@@ -1,6 +1,7 @@
 #pragma once
-#include "ientitycontainer.h"
+#include "IEntityContainer.h"
 #include "DrawableEntity.h"
+
 class DrawableContainer :
 	public IEntityContainer
 {
@@ -12,6 +13,7 @@ public:
 	
 	void add(DrawableEntity* entity);
 	void remove(DrawableEntity* entity);
+	void cleanup();
 
 	virtual ~DrawableContainer();
 private: 

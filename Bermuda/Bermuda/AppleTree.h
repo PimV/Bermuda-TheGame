@@ -2,7 +2,6 @@
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "InteractableEntity.h"
-#include "MainEntityContainer.h"
 
 class AppleTree :
 	public DrawableEntity, public CollidableEntity, public InteractableEntity
@@ -12,12 +11,12 @@ private:
 	Image* treeEmptyImage;
 	Image* stumpImage;
 public:
-	AppleTree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* treeEmptyImage, Image* stumpImage);
-	void setCollidableValues();
+	AppleTree(int id, double x, double y, Image* treeImage, Image* treeEmptyImage, Image* stumpImage);
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
 	void setDestroyedState();
+	bool canInteract(Player* player);
 	virtual ~AppleTree();
 };
 

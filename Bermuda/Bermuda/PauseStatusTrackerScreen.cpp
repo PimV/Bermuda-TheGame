@@ -8,7 +8,7 @@
 
 PauseStatusTrackerScreen::PauseStatusTrackerScreen()
 {
-	init();
+	this->init();
 }
 
 void PauseStatusTrackerScreen::init()
@@ -21,7 +21,8 @@ void PauseStatusTrackerScreen::init()
 	SDL_Color white = { 255, 255, 255 };
 	TTF_Font* staryDarzy = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 24);
 
-	for each (Achievement* var in achievements)
+	//creating
+	for(Achievement* var : achievements)
 	{
 		//Make achievements names
 		std::string achievementName = var->getName();
@@ -59,9 +60,14 @@ void PauseStatusTrackerScreen::init()
 		SDL_FreeSurface(achievementNameSurface);
 		SDL_FreeSurface(achievementCountSurface);
 	}
+	BaseButton* returnButton = new BaseButton();
+	returnButton->action = &BaseButton::backToPauseMainScreenAction;
+	returnButton->createButton("Return", 24, 1);
+	buttons.push_back(returnButton);
 
+	//aligning
 	int minSur =  ((int)ScreenHeight - total) / 2;
-	for (int i = 0; i < nameTextures.size(); i++)
+	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
 		nameRectangles.at(i).x = (ScreenWidth / 2) - nameRectangles.at(i).w - countRectangles.at(i).w ;
 		nameRectangles.at(i).y = minSur;
@@ -70,10 +76,15 @@ void PauseStatusTrackerScreen::init()
 		countRectangles.at(i).y = minSur;
 
 		//placing it somewhat in the middle
-		nameRectangles.at(i).x += 100;
-		countRectangles.at(i).x += 100;
+		nameRectangles.at(i).x += 120;
+		countRectangles.at(i).x += 120;
 
 		minSur += nameRectangles.at(i).h;
+	}
+	for (BaseButton* var : buttons)
+	{
+		var->placeMidUnder(ScreenWidth / 2, minSur);
+		minSur += var->getHeight();
 	}
 
 	TTF_CloseFont(staryDarzy);
@@ -86,7 +97,7 @@ void PauseStatusTrackerScreen::init()
 void PauseStatusTrackerScreen::setBackground()
 {
 	backgroundRect.x = ScreenWidth;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		if (var.x <= backgroundRect.x)
 		{
@@ -97,7 +108,7 @@ void PauseStatusTrackerScreen::setBackground()
 	backgroundRect.x = backgroundRect.x - 35;
 
 	backgroundRect.y = ScreenHeight;
-	for each (SDL_Rect var in nameRectangles)
+	for(SDL_Rect var : nameRectangles)
 	{
 		if (var.y <= backgroundRect.y)
 		{
@@ -109,13 +120,19 @@ void PauseStatusTrackerScreen::setBackground()
 
 	backgroundRect.w = 0;
 	backgroundRect.h = 0;
-	for each (SDL_Rect var in nameRectangles)
+	//Set background height
+	for(SDL_Rect var : nameRectangles)
 	{
 		backgroundRect.h += var.h;
 	}
-	//Make background higher
+	for (BaseButton* var : buttons)
+	{
+		backgroundRect.h += var->getHeight();
+	}
+	//Set additional background height
 	backgroundRect.h += 60;
 
+	//Set background width
 	for (size_t i = 0; i < nameRectangles.size(); i++)
 	{
 		if (nameRectangles.at(i).w + countRectangles.at(i).w >= backgroundRect.w)
@@ -123,13 +140,16 @@ void PauseStatusTrackerScreen::setBackground()
 			backgroundRect.w = nameRectangles.at(i).w + countRectangles.at(i).w;
 		}
 	}
-	//Make background wider
+	//Set additional background width
 	backgroundRect.w += 100;
 }
 
 void PauseStatusTrackerScreen::resetButtons()
 {
-
+	for (BaseButton* var : buttons)
+	{
+		var->reset();
+	}
 }
 
 void PauseStatusTrackerScreen::handleEvents(SDL_Event mainEvent)
@@ -148,8 +168,22 @@ void PauseStatusTrackerScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
+		for (BaseButton* var : buttons)
+		{
+			var->hover(x, y);
+		}
 		break;
 	case SDL_MOUSEBUTTONDOWN:
+		if (mainEvent.button.button == SDL_BUTTON_LEFT)
+		{
+			for (BaseButton* var : buttons)
+			{
+				if (var->clicked(x, y))
+				{
+					break;
+				}
+			}
+		}
 		break;
 	}
 }
@@ -166,24 +200,39 @@ void PauseStatusTrackerScreen::draw()
 	{
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), countTextures.at(i), NULL, &countRectangles.at(i));
 	}
+	for (BaseButton* var : buttons)
+	{
+		var->draw();
+	}
 }
 
 void PauseStatusTrackerScreen::cleanup()
 {
-	SDL_DestroyTexture(backgroundTexture);
+	SDL_DestroyTexture(this->backgroundTexture);
+	this->backgroundTexture = nullptr;
+
 	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
-		SDL_DestroyTexture(nameTextures.at(i));
+		SDL_DestroyTexture(nameTextures[i]);
+		nameTextures[i] = nullptr;
 	}
-	nameTextures.clear();
+	std::vector<SDL_Texture*>().swap(nameTextures); //Clear and shrink vector
+
 	for (size_t i = 0; i < countTextures.size(); i++)
 	{
-		SDL_DestroyTexture(countTextures.at(i));
+		SDL_DestroyTexture(countTextures[i]);
+		countTextures[i] = nullptr;
 	}
-	countTextures.clear();
+	std::vector<SDL_Texture*>().swap(countTextures); //Clear and shrink vector
+
+	for (BaseButton* var : buttons)
+	{
+		delete var;
+	}
+	std::vector<BaseButton*>().swap(buttons); //Clear and shrink vector
 }
 
 PauseStatusTrackerScreen::~PauseStatusTrackerScreen()
 {
-	cleanup();
+	this->cleanup();
 }

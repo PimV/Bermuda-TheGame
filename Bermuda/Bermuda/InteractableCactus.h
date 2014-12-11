@@ -9,12 +9,12 @@ private:
 	Image* cactusImage;
 	Image* stumpImage;
 public:
-	InteractableCactus(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* image, Image* stumpImage);
-	void setCollidableValues();
+	InteractableCactus(int id, double x, double y, Image* image, Image* stumpImage);
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
-	virtual void setDestroyedState();
+	void setDestroyedState();
+	bool canInteract(Player* player);
 	virtual ~InteractableCactus();
 };
 

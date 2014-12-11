@@ -13,15 +13,15 @@ class Rabbit :
 	public MovableEntity
 {
 public:
-	Rabbit(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
-	~Rabbit();
+	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
+	virtual ~Rabbit();
+
 	void update(double dt);
+	bool checkCollision(double newX, double newY);
 private:
 	void directionsAndMove(double dt);
-
-
+	
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkIntersects(CollidableEntity* collidableEntity);
 };

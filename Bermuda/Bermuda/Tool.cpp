@@ -2,12 +2,10 @@
 
 Tool::Tool(void)
 {
-}
-
-void Tool::equip(Player* player)
-{
 
 }
+
+
 
 
 Tool::~Tool(void)

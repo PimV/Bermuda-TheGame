@@ -12,7 +12,9 @@
 #include "ToolAxe.h"
 #include "ToolPickaxe.h"
 #include "ToolFlint.h"
+#include "WeaponSpear.h"
 #include "Items.h"
+#include "Item.h"
 #include <map>
 
 class ItemFactory
@@ -27,7 +29,7 @@ public:
 	Item* createItem(Items item);
 	Image* getItemImage(Items item);
 
-	~ItemFactory();
+	virtual ~ItemFactory();
 	static ItemFactory* Instance() {
 		return &itemFactory;
 	};

@@ -15,21 +15,29 @@ private:
 
 	DAYPART currentDayPart;
 
-	long gameTime;
+	float gameTime;
+	double frameTime;
 	double dayLength;
 	double startDay;
 	int days;
 
 public:
-	GameTimer(void);
-	~GameTimer(void);
+	GameTimer();
+	virtual ~GameTimer();
 
 	static GameTimer* Instance() { return &s_GameTimer; };
 
 	void init();
-	void updateGameTime(long gameTime);
+	void updateGameTime(double frameTime);
 	void updateDay();
-	long getGameTime();
+	float getGameTime();
+
+	double getFullDayLength();
+	double getDayLength();
+	double getEveningLength();
+	double getNightLength();
+
+	double getFrameTime();
 
 	int getDaysSurvived();
 	double getPercentage();

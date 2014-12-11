@@ -17,7 +17,7 @@ void ItemWood::init() {
 
 	this->setMaxStackSize(12);
 
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 	int itemCount = rand() % 3 + 1;	
 	this->setStackSize(itemCount);
 }

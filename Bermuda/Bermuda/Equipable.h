@@ -1,14 +1,27 @@
 #pragma once
 #include "item.h"
-class Player;
+#include "Player.h"
+
 class Equipable :
-	public  Item
+	public Item
 {
 public:
-	Equipable(void);
+	Equipable();
 
-	virtual void equip(Player* p);
+	virtual void use(Player* p);
 
-	virtual ~Equipable(void);
+	void setMaxDurability(int maxDurability);
+	int getMaxDurability();
+
+	void setDurability(int durability);
+	int getDurability();
+
+	int getPercentageDegraded();
+
+	virtual ~Equipable();
+private:
+	int durability;
+	int maxDurability;
+	double percentageDegraded;
 };
 

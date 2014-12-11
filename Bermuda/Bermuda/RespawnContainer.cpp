@@ -1,6 +1,5 @@
 #include "RespawnContainer.h"
 
-//TODO : remove methode zoals in drawablecontainer
 RespawnContainer::RespawnContainer()
 {
 }
@@ -24,6 +23,18 @@ void RespawnContainer::remove(InteractableEntity* entity)
 	}
 }
 
-RespawnContainer::~RespawnContainer(void)
+void RespawnContainer::cleanup()
 {
+	while (!this->container.empty())
+	{
+		InteractableEntity* entity = this->container.back();
+		this->container.pop_back();
+		delete entity;
+		entity = nullptr;
+	}
+}
+
+RespawnContainer::~RespawnContainer()
+{
+	this->cleanup();
 }

@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <vector>
 #include "BaseScreen.h"
+#include "BaseButton.h"
 
 class PauseStatusTrackerScreen : public BaseScreen
 {
@@ -12,6 +13,8 @@ private:
 
 	std::vector<SDL_Texture*> countTextures;
 	std::vector<SDL_Rect> countRectangles;
+
+	std::vector<BaseButton*> buttons;
 
 	//background
 	SDL_Texture* backgroundTexture;
