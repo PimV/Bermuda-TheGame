@@ -560,8 +560,8 @@ void PlayState::updatePlayerDarkness()
 				{
 					if (dayP >= 90)
 					{
-						double diffX = abs(p->getX() - e->getX());
-						double diffY = abs(p->getY() - e->getY());
+						double diffX = p->getX() - e->getX();
+						double diffY = p->getY() - e->getY();
 
 						double distanceFromLight = sqrt((diffX * diffX) + (diffY * diffY));
 						//std::cout << "distance: " << distanceFromLight << std::endl;
