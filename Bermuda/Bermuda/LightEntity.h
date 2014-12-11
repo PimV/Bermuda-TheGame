@@ -8,9 +8,9 @@ public:
 	virtual ~LightEntity();
 
 	bool getShining();
-	void setShining(bool NewItem);
+	void setShining(bool NewShining);
 	double getDiameter();
-	void setDiameter(double NewItem);
+	void setDiameter(double NewDiameter);
 private:
 	bool shining;
 	double diameter;

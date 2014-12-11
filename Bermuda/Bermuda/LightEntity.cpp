@@ -18,16 +18,16 @@ bool LightEntity::getShining()
 	return this->shining;
 }
 
-void LightEntity::setShining(bool NewItem)
+void LightEntity::setShining(bool NewShining)
 {
-	this->shining = NewItem;
+	this->shining = NewShining;
 }
 
 double LightEntity::getDiameter()
 {
 	return this->diameter;
 }
-void LightEntity::setDiameter(double NewItem)
+void LightEntity::setDiameter(double NewDiameter)
 {
-	this->diameter = NewItem;
+	this->diameter = NewDiameter;
 }
