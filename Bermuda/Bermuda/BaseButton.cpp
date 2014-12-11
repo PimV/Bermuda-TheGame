@@ -282,3 +282,9 @@ void BaseButton::helpMineRockScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getMineRockScr());
 }
+
+
+void BaseButton::helpFoodAndWaterScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getFoodAndWaterScr());
+}

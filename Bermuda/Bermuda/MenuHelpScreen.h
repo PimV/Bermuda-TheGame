@@ -24,6 +24,8 @@ private:
 	BaseHelpScreen* mineGoldScreen;
 	BaseHelpScreen* mineIceScreen;
 	BaseHelpScreen* mineRockScreen;
+	BaseHelpScreen* foodAndWaterScreen;
+
 
 	//methodes
 	void init();
@@ -47,6 +49,7 @@ public:
 	BaseHelpScreen* getMineGoldScr();
 	BaseHelpScreen* getMineIceScr();
 	BaseHelpScreen* getMineRockScr();
+	BaseHelpScreen* getFoodAndWaterScr();
 
 	//constructors destructors
 	MenuHelpScreen();

@@ -55,6 +55,7 @@ public:
 	void helpMineGoldScreenAction();
 	void helpMineIceScreenAction();
 	void helpMineRockScreenAction();
+	void helpFoodAndWaterScreenAction();
 
 	void draw();
 	void hover(int, int);

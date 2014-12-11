@@ -53,11 +53,15 @@ void MenuHelpScreen::init()
 
 	mineIceScreen = new BaseHelpScreen(firstRect.w);
 	mineIceScreen->setPicture("HelpScreens/mineIce.bmp");
-	mineIceScreen->setText("Stand close to some ice, select the pickaxe in your inventory and hold spacebar to obtain some water. You can drink water to refill your liquid meter");
+	mineIceScreen->setText("Stand close to some ice, select the pickaxe in your inventory and hold spacebar to obtain some water. You can drink water to refill your liquid meter.");
 
 	mineRockScreen = new BaseHelpScreen(firstRect.w);
 	mineRockScreen->setPicture("HelpScreens/mineRock.bmp");
-	mineRockScreen->setText("Stand close to a rock, select the pickaxe in your inventory and hold spacebar to mine the rock. Rocks can be used for various purposes in the game");
+	mineRockScreen->setText("Stand close to a rock, select the pickaxe in your inventory and hold spacebar to mine the rock. Rocks can be used for various purposes in the game.");
+
+	foodAndWaterScreen = new BaseHelpScreen(firstRect.w);
+	foodAndWaterScreen->setPicture("HelpScreens/hungerThirst.bmp");
+	foodAndWaterScreen->setText("The blue bar is your water bar, the brown bar is your food bar. If one or both bars are depleted your health (red bar) will slowly decrease. If your health bar depletes you will die.");
 
 	BaseButton* movementButton = new BaseButton;
 	movementButton->createButton("Movement", 24, 0);
@@ -104,6 +108,11 @@ void MenuHelpScreen::init()
 	mineRockButton->action = &BaseButton::helpMineRockScreenAction;
 	mineRockButton->setHoverAction(true);
 
+	BaseButton* hungerThirst = new BaseButton;
+	hungerThirst->createButton("Status bars", 24, 0);
+	hungerThirst->action = &BaseButton::helpFoodAndWaterScreenAction; //aanpassen
+	hungerThirst->setHoverAction(true);
+
 	BaseButton* returnButton = new BaseButton;
 	returnButton->createButton("Back to menu", 24, 0);
 	returnButton->action = &BaseButton::menuMainScreenAction;
@@ -117,6 +126,7 @@ void MenuHelpScreen::init()
 	mineGoldButton->placeLeftUnderButton(pickAppleButton);
 	mineIceButton->placeLeftUnderButton(mineGoldButton);
 	mineRockButton->placeLeftUnderButton(mineIceButton);
+	hungerThirst->placeLeftUnderButton(mineRockButton);
 	returnButton->placeLeftUnder(15, 10);
 
 	buttons.push_back(movementButton);
@@ -128,6 +138,7 @@ void MenuHelpScreen::init()
 	buttons.push_back(mineGoldButton);
 	buttons.push_back(mineIceButton);
 	buttons.push_back(mineRockButton);
+	buttons.push_back(hungerThirst);
 	buttons.push_back(returnButton);
 
 	for(BaseButton* var : buttons)
@@ -187,6 +198,11 @@ BaseHelpScreen* MenuHelpScreen::getMineIceScr()
 BaseHelpScreen* MenuHelpScreen::getMineRockScr()
 {
 	return mineRockScreen;
+}
+
+BaseHelpScreen* MenuHelpScreen::getFoodAndWaterScr()
+{
+	return foodAndWaterScreen;
 }
 
 void MenuHelpScreen::setBackground()
