@@ -25,7 +25,7 @@ public:
 	void respawn();
 	void setDestroyedState();
 
-	void setHighlightTexture(bool thing);
+	void setHighlighted(bool thing);
 private:
 	void directionsAndMove(double dt);
 	

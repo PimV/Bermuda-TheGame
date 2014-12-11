@@ -202,7 +202,7 @@ void Rabbit::setDestroyedState()
 	currentInteractTime = 0;
 }
 
-void Rabbit::setHighlightTexture(bool thing)
+void Rabbit::setHighlighted(bool thing)
 {
 
 }

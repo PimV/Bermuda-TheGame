@@ -24,7 +24,8 @@ public:
 	double getHeight();
 	bool getEnabled();
 	bool getHighlighted();
-	void setHighlighted(bool highlighted);
+	// remove virtual when rabbit works
+	virtual void setHighlighted(bool highlighted);
 
 	//Destructor
 	virtual ~Entity(void);
