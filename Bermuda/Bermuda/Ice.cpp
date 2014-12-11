@@ -42,7 +42,7 @@ void Ice::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
-			//TODO: add to statustracker
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::ICEMINED);
 		} 
 	}
 	else 

@@ -43,7 +43,7 @@ void Fish::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Fish));
-			//TODO: add fish caught in statustracker
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::FISHESFISHED);
 		}
 	} else {
 		player->setCorrectToolSelected(false);

@@ -47,7 +47,7 @@ void GoldRock::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Gold));
-			//TODO: add to statustracker
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::GOLDMINED);
 		}
 	} else {
 		player->setCorrectToolSelected(false);

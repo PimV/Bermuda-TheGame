@@ -40,7 +40,7 @@ void Tree::interact(Player* player) {
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Wood));
-			player->getStatusTracker()->treeCut();
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::TREECUT);
 		}
 	} else {
 		player->setCorrectToolSelected(false);

@@ -46,7 +46,7 @@ void Rock::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Rock));
-			player->getStatusTracker()->rockMined();
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::ROCKMINED);
 		}
 	} else {
 		player->setCorrectToolSelected(false);

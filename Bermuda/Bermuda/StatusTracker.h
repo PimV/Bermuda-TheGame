@@ -7,10 +7,6 @@ class StatusTracker
 {
 public:
 	//methodes
-	void treeCut();
-	void rockMined();
-	void carrotPicked();
-	void applePicked();
 	void addAchievementCount(AchievementsEnum enumIn);
 	std::vector<Achievement*> getAllAchievements();
 
