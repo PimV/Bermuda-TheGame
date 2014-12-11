@@ -4,13 +4,15 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "InteractableEntity.h"
 
 class Rabbit :
 	public NPC,
 	public Evasive,
 	public DrawableEntity,
 	public CollidableEntity,
-	public MovableEntity
+	public MovableEntity,
+	public InteractableEntity
 {
 public:
 	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);

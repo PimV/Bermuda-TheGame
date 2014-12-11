@@ -9,7 +9,8 @@ NPC(id, 5, 1, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
+InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), -20, -20, 75, 75)
 {
 	this->setWidth(36);
 	this->setHeight(36);
