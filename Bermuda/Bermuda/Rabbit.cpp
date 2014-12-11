@@ -3,6 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
+#include "Weapon.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, 5, 1, 50, spawnPoint),
@@ -10,7 +11,8 @@ Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
 MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
-InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), -20, -20, 75, 75)
+InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), -20, -20, 75, 75),
+HealthEntity(id,spawnPoint->getX(), spawnPoint->getY(), 50)
 {
 	this->setWidth(36);
 	this->setHeight(36);
@@ -41,11 +43,24 @@ InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), -20, -20, 75, 75)
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->StopAnimation();
+
+	greyText = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_grey.png").c_str());
+	redText = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_red.png").c_str());
+	
+	this->interactTime = 400;
+	this->animationType = AnimationEnumType::AttackSpear;
 }
 
 void Rabbit::update(double dt) {
+
+	if(this->getTimeStartShowBar() + 2000 < GameTimer::Instance()->getGameTime())
+	{
+		this->setShowBar(false);
+	}
+
 	this->directionsAndMove(dt);
 }
 
@@ -144,8 +159,61 @@ bool Rabbit::checkCollision(double newX, double newY)
 	return CollidableEntity::checkCollision(newX, newY);
 }
 
+void Rabbit::draw(Camera* camera, SDL_Renderer* renderer)
+{
+	DrawableEntity::draw(camera, renderer);
+		
+	if(this->getShowBar())
+	{
+		double barWidth = 50;
+		double maxPercentage = 100;
+		greyRect.x = this->getX() - PlayState::Instance()->getCamera()->getX() - ((barWidth - this->getWidth()) / 2);
+		greyRect.y = this->getY() - PlayState::Instance()->getCamera()->getY() - 20;
+		greyRect.w = barWidth;
+		greyRect.h = 6;
+
+		redRect.x = this->getX() - PlayState::Instance()->getCamera()->getX() - ((barWidth - this->getWidth()) / 2);
+		redRect.y = this->getY() - PlayState::Instance()->getCamera()->getY() - 20;
+		redRect.w = (barWidth / maxPercentage) * this->getPercentageOfCurrentHealth();
+		redRect.h = 6;
+
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->greyText,&this->greyRect,NULL);
+		GameStateManager::Instance()->sdlInitializer->drawTexture(this->redText,&this->redRect,NULL);
+	}
+}
+
+//Interact methods
+void Rabbit::interact(Player* player)
+{
+	//Currently only checken spear instead of any weapon
+	if(player->getInventory()->spearSelected())
+	{
+		this->setTimeStartShowBar(GameTimer::Instance()->getGameTime());
+		this->setShowBar(true);
+
+		player->setCorrectToolSelected(true);
+		if (this->trackInteractTimes()) 
+		{
+			this->decreaseHealth(10);
+			this->currentInteractTime = 0;
+
+			if(this->getHealth() == 0)
+			{
+				PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+				PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
+			}
+		}
+	}
+}
+
+void Rabbit::setDestroyedState()
+{
+
+}
+
 Rabbit::~Rabbit()
 {
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
