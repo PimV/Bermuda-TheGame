@@ -177,6 +177,7 @@ void Rabbit::interact(Player* player)
 		{
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
+			PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 			// TODO: add rabbit killed to status tracker
 		}
 	}
@@ -192,21 +193,23 @@ void Rabbit::respawn()
 	this->getSpawnPoint()->spawnMob();
 }
 
+/*
 void Rabbit::setDestroyedState() 
 {
-	this->setHighlighted(false);
-	this->timeDestroyed = GameTimer::Instance()->getGameTime();
-	this->destroyed = true;
-	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	currentInteractTime = 0;
+	////this->setHighlighted(false);
+	//this->timeDestroyed = GameTimer::Instance()->getGameTime();
+	//this->destroyed = true;
+	////PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
+	//PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	//currentInteractTime = 0;
 }
-
+*/
+/*
 void Rabbit::setHighlighted(bool thing)
 {
 
 }
-
+*/
 Rabbit::~Rabbit()
 {
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);

@@ -23,9 +23,9 @@ public:
 
 	void interact(Player* player);
 	void respawn();
-	void setDestroyedState();
+	//void setDestroyedState();
 
-	void setHighlighted(bool thing);
+	//void setHighlighted(bool thing);
 private:
 	void directionsAndMove(double dt);
 	
