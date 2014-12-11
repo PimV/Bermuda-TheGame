@@ -10,7 +10,7 @@ private:
 	int curChildren;
 	int maxChildren;
 	std::string spawnType;
-	int lastSpawnTime;
+	int lastSpawnTime, lastReSpawnTime;
 	int spawnInterval;
 	int walkRange;
 
@@ -19,6 +19,9 @@ private:
 
 	//methodes
 	void init(std::string spawnType, int maxChildren, int walkRange);
+
+	void increateSpawnTimer();
+	void increateReSpawnTimer();
 
 public:
 	Spawnpoint(int id, double x, double y, std::string spawnType, int maxChildren, int walkRange);

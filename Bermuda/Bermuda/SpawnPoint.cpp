@@ -21,8 +21,11 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->curChildren = 0;
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
-	this->spawnInterval = 90000; //1,5 minuten
+	//this->spawnInterval = 90000; //1,5 minuten
+	this->spawnInterval = 1000; //1,5 minuten
 	this->walkRange = walkRange;
+	this->lastSpawnTime = 0;
+	this->lastReSpawnTime = 0;
 	spawnMob();
 }
 
@@ -49,33 +52,35 @@ void Spawnpoint::spawnMob()
 		}
 		else if (spawnType == "wasp")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
 		}
 		else if (spawnType == "bat")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
 		}
 		else if (spawnType == "wolf")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
 		}		
 		else if (spawnType == "scorpion")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
 		}
 
 		if(npcSpawned)
 		{
-			this->curChildren++;
+			++this->curChildren;
 		}
 
-		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
 	}
 }
 
 void Spawnpoint::decreaseChildren()
 {
-	this->curChildren--;
+	if (this->curChildren > 0)
+	{
+		--this->curChildren;
+	}
 }
 
 int Spawnpoint::getWalkRange()
@@ -85,10 +90,30 @@ int Spawnpoint::getWalkRange()
 
 void Spawnpoint::update()
 {
-	if(GameTimer::Instance()->getGameTime() > lastSpawnTime + spawnInterval)
+	// cheack for a new spawn
+	if(GameTimer::Instance()->getGameTime() > this->lastSpawnTime + this->spawnInterval)
 	{
-		spawnMob();
+		this->spawnMob();
+		this->increateSpawnTimer();
 	}
+
+
+	// chack for a respawn
+	if(GameTimer::Instance()->getGameTime() > this->lastReSpawnTime + this->spawnInterval)
+	{
+		this->spawnMob();
+		this->increateReSpawnTimer();
+	}
+}
+
+void Spawnpoint::increateSpawnTimer()
+{
+	this->lastSpawnTime = GameTimer::Instance()->getGameTime();
+}
+
+void Spawnpoint::increateReSpawnTimer()
+{
+	this->lastReSpawnTime= GameTimer::Instance()->getGameTime();
 }
 
 Spawnpoint::~Spawnpoint()

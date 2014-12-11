@@ -5,7 +5,6 @@
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "InteractableEntity.h"
-//#include "ItemType.h"
 #include "Weapon.h"
 
 class Rabbit :
@@ -33,6 +32,4 @@ private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-
-	void removeFromContainers();
 };
