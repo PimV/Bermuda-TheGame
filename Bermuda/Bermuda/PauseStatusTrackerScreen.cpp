@@ -15,7 +15,10 @@ void PauseStatusTrackerScreen::init()
 {
 	std::vector<Achievement*> achievements = PlayState::Instance()->getPlayer()->getStatusTracker()->getAllAchievements();
 
-	int total = 0;
+	totalHeight = 0;
+	int offset = 10;
+	int maxCountWidth = 0;
+	maxWidth = 0;
 
 	SDL_Color black = { 0, 0, 0 };
 	SDL_Color white = { 255, 255, 255 };
@@ -29,7 +32,7 @@ void PauseStatusTrackerScreen::init()
 		SDL_Surface* achievementNameSurface = TTF_RenderText_Blended(staryDarzy, achievementName.c_str(), black);
 		SDL_Texture* achievementNameTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), achievementNameSurface);
 		
-		total += achievementNameSurface->h;
+		totalHeight += achievementNameSurface->h;
 		nameTextures.push_back(achievementNameTexture);
 
 		int achievementCountInt = var->getAmount();
@@ -53,31 +56,40 @@ void PauseStatusTrackerScreen::init()
 		rectangeCount.h = achievementCountSurface->h;
 		rectangeCount.w = achievementCountSurface->w;
 
+		//Free the surfaces because they are not needed anymore after this
+		SDL_FreeSurface(achievementNameSurface);
+		SDL_FreeSurface(achievementCountSurface);
+
+		//Setting max width for putting it in the middle of the screen
+		int thisWidth = rectangeName.w + rectangeCount.w + offset;
+		if (maxWidth < thisWidth)
+		{
+			maxWidth = thisWidth;
+		}
+		if (maxCountWidth < rectangeCount.w)
+		{
+			maxCountWidth = rectangeCount.w;
+		}
+
 		nameRectangles.push_back(rectangeName);
 		countRectangles.push_back(rectangeCount);
 
-		//Free the surfaces
-		SDL_FreeSurface(achievementNameSurface);
-		SDL_FreeSurface(achievementCountSurface);
 	}
 	BaseButton* returnButton = new BaseButton();
-	returnButton->action = &BaseButton::backToPauseMainScreenAction;
 	returnButton->createButton("Return", 24, 1);
+	returnButton->action = &BaseButton::backToPauseMainScreenAction;
+	totalHeight += returnButton->getHeight();
 	buttons.push_back(returnButton);
 
 	//aligning
-	int minSur =  ((int)ScreenHeight - total) / 2;
+	int minSur =  ((int)ScreenHeight - totalHeight) / 2;
 	for (size_t i = 0; i < nameTextures.size(); i++)
 	{
-		nameRectangles.at(i).x = (ScreenWidth / 2) - nameRectangles.at(i).w - countRectangles.at(i).w ;
+		nameRectangles.at(i).x = ((ScreenWidth - maxWidth) / 2 - nameRectangles.at(i).w + maxWidth - offset - maxCountWidth);
 		nameRectangles.at(i).y = minSur;
 
-		countRectangles.at(i).x = (ScreenWidth / 2) + 10;
+		countRectangles.at(i).x = (ScreenWidth - maxWidth ) / 2 + maxWidth - maxCountWidth;
 		countRectangles.at(i).y = minSur;
-
-		//placing it somewhat in the middle
-		nameRectangles.at(i).x += 120;
-		countRectangles.at(i).x += 120;
 
 		minSur += nameRectangles.at(i).h;
 	}
@@ -96,52 +108,23 @@ void PauseStatusTrackerScreen::init()
 
 void PauseStatusTrackerScreen::setBackground()
 {
-	backgroundRect.x = ScreenWidth;
-	for(SDL_Rect var : nameRectangles)
-	{
-		if (var.x <= backgroundRect.x)
-		{
-			backgroundRect.x = var.x;
-		}
-	}
-	//Move background left
-	backgroundRect.x = backgroundRect.x - 35;
+	//set x and width
+	backgroundRect.x = (ScreenWidth - maxWidth) / 2;
+	backgroundRect.w = maxWidth;
 
-	backgroundRect.y = ScreenHeight;
-	for(SDL_Rect var : nameRectangles)
-	{
-		if (var.y <= backgroundRect.y)
-		{
-			backgroundRect.y = var.y;
-		}
-	}
-	//Move background up
-	backgroundRect.y = backgroundRect.y - 30;
+	//padding left and right
+	int paddingLR = 35;
+	backgroundRect.x -= paddingLR;
+	backgroundRect.w += paddingLR * 2;
 
-	backgroundRect.w = 0;
-	backgroundRect.h = 0;
-	//Set background height
-	for(SDL_Rect var : nameRectangles)
-	{
-		backgroundRect.h += var.h;
-	}
-	for (BaseButton* var : buttons)
-	{
-		backgroundRect.h += var->getHeight();
-	}
-	//Set additional background height
-	backgroundRect.h += 60;
+	//set y and height
+	backgroundRect.y = (ScreenHeight - totalHeight) /2;
+	backgroundRect.h = totalHeight;
 
-	//Set background width
-	for (size_t i = 0; i < nameRectangles.size(); i++)
-	{
-		if (nameRectangles.at(i).w + countRectangles.at(i).w >= backgroundRect.w)
-		{
-			backgroundRect.w = nameRectangles.at(i).w + countRectangles.at(i).w;
-		}
-	}
-	//Set additional background width
-	backgroundRect.w += 100;
+	//padding up and down
+	int paddingUD = 35;
+	backgroundRect.y -= paddingUD;
+	backgroundRect.h += paddingUD * 2;
 }
 
 void PauseStatusTrackerScreen::resetButtons()
