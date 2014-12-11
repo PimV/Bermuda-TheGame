@@ -103,7 +103,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->incrementSelectedIndex();
 		}
-		p->changeAnimationOnInventorySelection();
+		//p->changeAnimationOnInventorySelection();
 		break;
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym) {

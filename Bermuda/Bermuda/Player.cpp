@@ -172,6 +172,8 @@ void Player::update(double dt) {
 		return;
 	}
 
+	this->changeAnimationOnInventorySelection();
+
 	this->updatePlayerStatuses(dt);
 
 	if (this->interaction) {
