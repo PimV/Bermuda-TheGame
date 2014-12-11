@@ -23,6 +23,7 @@ public:
 
 	void update(double dt);
 	void directionsAndMove(double dt);
+	void changeAnimationOnInventorySelection();
 
 	void setHealth(int value);
 	void setHunger(int value);
@@ -83,17 +84,38 @@ private:
 	long thirstUpdate, thirstUpdateTime;
 	long healthUpdate, healthUpdateTime;
 
-	int animationPickUp, animationPickLeft;
-	int animationPickDown, animationPickRight;
-	int animationPickStartColumn, animationPickEndColumn;
+	#pragma region animation
+	int animationPickUp;
+	int animationPickStartColumn;
+	int animationPickEndColumn;
 
-	int animationChopUp, animationChopLeft;
-	int animationChopDown, animationChopRight;
-	int animationChopStartColumn, animationChopEndColumn;
+	int animationChopUp;
+	int animationChopStartColumn;
+	int animationChopEndColumn;
 
-	int animationMineUp, animationMineLeft;
-	int animationMineDown, animationMineRight;
-	int animationMineStartColumn, animationMineEndColumn;
+	int animationChopGoldUp;
+	int animationChopGoldStartColumn;
+	int animationChopGoldEndColumn;
+
+	int animationMineUp;
+	int animationMineStartColumn;
+	int animationMineEndColumn;
+
+	int animationMineGoldUp;
+	int animationMineGoldStartColumn;
+	int animationMineGoldEndColumn;
+
+	int animationSpearAttackUp;
+	int animationSpearAttackStartColumn;
+	int animationSpearAttackEndColumn;
+
+	int animationSpearWalkUp;
+	int animationSpearWalkLeft;
+	int animationSpearWalkDown;
+	int animationSpearWalkRight;
+	int animationSpearWalkStartColumn;
+	int animationSpearWalkEndColumn;
+	#pragma endregion animation
 
 	bool correctToolSelected;
 

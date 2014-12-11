@@ -12,11 +12,11 @@ private:
 	Image* stumpImage;
 public:
 	AppleTree(int id, double x, double y, Image* treeImage, Image* treeEmptyImage, Image* stumpImage);
-	void setCollidableValues();
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
 	void setDestroyedState();
+	bool canInteract(Player* player);
 	virtual ~AppleTree();
 };
 

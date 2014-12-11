@@ -10,11 +10,11 @@ private:
 	Image* stumpImage;
 public:
 	InteractableCactus(int id, double x, double y, Image* image, Image* stumpImage);
-	void setCollidableValues();
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
-	virtual void setDestroyedState();
+	void setDestroyedState();
+	bool canInteract(Player* player);
 	virtual ~InteractableCactus();
 };
 

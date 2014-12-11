@@ -1,4 +1,4 @@
-JsonLines: 36104
+JsonLines: 36119
 { "height":500,
  "layers":[
         {
@@ -33626,8 +33626,8 @@ JsonLines: 36104
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4322.04545454545,
-                 "y":1993.86363636364
+                 "x":4322.05,
+                 "y":1993.86
                 }, 
                 {
                  "gid":461,
@@ -33641,8 +33641,8 @@ JsonLines: 36104
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4621.90909090909,
-                 "y":1682.9696969697
+                 "x":4621.91,
+                 "y":1682.97
                 }, 
                 {
                  "gid":460,
@@ -33656,8 +33656,8 @@ JsonLines: 36104
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5375.13636363636,
-                 "y":1611.40909090909
+                 "x":5375.14,
+                 "y":1611.41
                 }, 
                 {
                  "gid":460,
@@ -33671,8 +33671,8 @@ JsonLines: 36104
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":5369.63636363636,
-                 "y":2623.11363636364
+                 "x":5369.64,
+                 "y":2623.11
                 }, 
                 {
                  "gid":460,
@@ -33688,6 +33688,21 @@ JsonLines: 36104
                  "width":0,
                  "x":7047,
                  "y":9310
+                }, 
+                {
+                 "gid":460,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "SpawnType":"scorpion"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":16028,
+                 "y":8036
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -35804,19 +35819,19 @@ JsonLines: 36104
             {
              "0":
                 {
-                 "Type":"Tree"
+                 "Type":"RoundTree"
                 },
              "1":
                 {
-                 "Type":"TreeStump"
+                 "Type":"RoundTreeStump"
                 },
              "2":
                 {
-                 "Type":"Tree"
+                 "Type":"PineTree"
                 },
              "3":
                 {
-                 "Type":"TreeStump"
+                 "Type":"PineTreeStump"
                 },
              "4":
                 {
@@ -36057,19 +36072,19 @@ JsonLines: 36104
             {
              "0":
                 {
-                 "Type":"InteractableCactus"
+                 "Type":"BigInteractableCactus"
                 },
              "1":
                 {
-                 "Type":"Cactus"
+                 "Type":"BigCactusStump"
                 },
              "2":
                 {
-                 "Type":"InteractableCactus"
+                 "Type":"SmallInteractableCactus"
                 },
              "3":
                 {
-                 "Type":"Cactus"
+                 "Type":"SmallCactusStump"
                 },
              "4":
                 {
