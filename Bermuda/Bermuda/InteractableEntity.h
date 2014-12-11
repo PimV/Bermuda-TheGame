@@ -15,6 +15,8 @@ protected:
 	long timeDestroyed;
 	long respawnTime;
 
+	int percentageCompleted;
+
 	AnimationEnumType animationType;
 
 private:
@@ -54,6 +56,7 @@ public:
 
 
 	bool trackInteractTimes();
+	int getPercentageCompleted();
 
 	int getInteractStartX();
 	int getInteractStartY();
