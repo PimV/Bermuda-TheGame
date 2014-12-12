@@ -34,11 +34,4 @@ private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-
-	SDL_Texture* greyText;
-	SDL_Texture* redText;
-
-	SDL_Rect greyRect;
-	SDL_Rect redRect;
-
 };

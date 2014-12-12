@@ -1,4 +1,5 @@
 #pragma once
+#include "header_loader.h"
 #include "entity.h"
 
 class HealthEntity :
@@ -28,5 +29,11 @@ public:
 
 	void setTimeStartShowBar(float time);
 	float getTimeStartShowBar();
+		
+	SDL_Texture* greyText;
+	SDL_Texture* redText;
+
+	SDL_Rect greyRect;
+	SDL_Rect redRect;
 };
 

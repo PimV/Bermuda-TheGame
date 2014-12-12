@@ -47,18 +47,18 @@ HealthEntity(id,spawnPoint->getX(), spawnPoint->getY(), 50)
 
 	this->StopAnimation();
 
-	greyText = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_grey.png").c_str());
-	redText = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_red.png").c_str());
-	
-	this->interactTime = 400;
+	this->interactTime = 200;
 	this->animationType = AnimationEnumType::AttackSpear;
 }
 
 void Rabbit::update(double dt) {
 
-	if(this->getTimeStartShowBar() + 2000 < GameTimer::Instance()->getGameTime())
+	if(this->getShowBar() == true)
 	{
-		this->setShowBar(false);
+		if(this->getTimeStartShowBar() + 2000 < GameTimer::Instance()->getGameTime())
+		{
+			this->setShowBar(false);
+		}
 	}
 
 	this->directionsAndMove(dt);
@@ -167,15 +167,15 @@ void Rabbit::draw(Camera* camera, SDL_Renderer* renderer)
 	{
 		double barWidth = 50;
 		double maxPercentage = 100;
-		greyRect.x = this->getX() - PlayState::Instance()->getCamera()->getX() - ((barWidth - this->getWidth()) / 2);
-		greyRect.y = this->getY() - PlayState::Instance()->getCamera()->getY() - 20;
-		greyRect.w = barWidth;
-		greyRect.h = 6;
+		this->greyRect.x = this->getX() - PlayState::Instance()->getCamera()->getX() - ((barWidth - this->getWidth()) / 2);
+		this->greyRect.y = this->getY() - PlayState::Instance()->getCamera()->getY() - 20;
+		this->greyRect.w = barWidth;
+		this->greyRect.h = 6;
 
-		redRect.x = this->getX() - PlayState::Instance()->getCamera()->getX() - ((barWidth - this->getWidth()) / 2);
-		redRect.y = this->getY() - PlayState::Instance()->getCamera()->getY() - 20;
-		redRect.w = (barWidth / maxPercentage) * this->getPercentageOfCurrentHealth();
-		redRect.h = 6;
+		this->redRect.x = this->getX() - PlayState::Instance()->getCamera()->getX() - ((barWidth - this->getWidth()) / 2);
+		this->redRect.y = this->getY() - PlayState::Instance()->getCamera()->getY() - 20;
+		this->redRect.w = (barWidth / maxPercentage) * this->getPercentageOfCurrentHealth();
+		this->redRect.h = 6;
 
 		GameStateManager::Instance()->sdlInitializer->drawTexture(this->greyText,&this->greyRect,NULL);
 		GameStateManager::Instance()->sdlInitializer->drawTexture(this->redText,&this->redRect,NULL);
@@ -194,7 +194,7 @@ void Rabbit::interact(Player* player)
 		player->setCorrectToolSelected(true);
 		if (this->trackInteractTimes()) 
 		{
-			this->decreaseHealth(10);
+			this->decreaseHealth(5);
 			this->currentInteractTime = 0;
 
 			if(this->getHealth() == 0)

@@ -1,4 +1,5 @@
 #include "HealthEntity.h"
+#include "GameStateManager.h"
 
 
 HealthEntity::HealthEntity(int id, double x, double y, double maxHealth) :
@@ -8,6 +9,10 @@ HealthEntity::HealthEntity(int id, double x, double y, double maxHealth) :
 	this->health = this->maxHealth;
 	this->showBar = false;
 	timeStartShowBar = 0;
+
+	greyText = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_grey.png").c_str());
+	redText = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "health_bar_red.png").c_str());
+	
 }
 
 
@@ -69,4 +74,8 @@ float HealthEntity::getTimeStartShowBar()
 
 HealthEntity::~HealthEntity(void)
 {
+	SDL_DestroyTexture(redText);
+	SDL_DestroyTexture(greyText);
+	this->redText = nullptr;
+	this->greyText = nullptr;
 }
