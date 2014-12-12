@@ -47,9 +47,11 @@ MovableEntity(id, x, y)
 	this->hungerUpdate = GameTimer::Instance()->getGameTime();
 	this->thirstUpdate = GameTimer::Instance()->getGameTime();
 	this->healthUpdate = GameTimer::Instance()->getGameTime();
+	this->darknessUpdate = GameTimer::Instance()->getGameTime();
 	this->hungerUpdateTime = 3000;
 	this->thirstUpdateTime = 2000;
 	this->healthUpdateTime = 3000;
+	this->darknessUpdateTime = 2500;
 	this->health = 100;
 	this->hunger = 100;
 	this->thirst = 100;
@@ -220,7 +222,14 @@ void Player::updatePlayerStatuses(double dt)
 
 	if (this->withinDarkness == true)
 	{
-		this->setHealth(this->getHealth() - 1);
+		if (this->darknessUpdate + this->darknessUpdateTime < currentTime) 
+		{
+			std::cout << "Reduce health" << std::endl;
+		}
+	}
+	else
+	{
+		this->darknessUpdate = currentTime;
 	}
 
 }

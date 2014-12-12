@@ -85,6 +85,7 @@ private:
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
 	long healthUpdate, healthUpdateTime;
+	long darknessUpdate, darknessUpdateTime;
 
 	#pragma region animation
 	int animationPickUp;
