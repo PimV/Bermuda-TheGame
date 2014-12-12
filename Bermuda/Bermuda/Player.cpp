@@ -742,9 +742,9 @@ bool Player::getWithinDarkness()
 	return this->withinDarkness;
 }
 
-void Player::setWithinDarkness(bool NewDarkness)
+void Player::setWithinDarkness(bool newDarkness)
 {
-	this->withinDarkness = NewDarkness;
+	this->withinDarkness = newDarkness;
 }
 
 Player::~Player() {

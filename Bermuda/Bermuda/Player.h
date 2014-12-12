@@ -61,7 +61,7 @@ public:
 	void setCorrectToolSelected(bool tool);
 
 	bool getWithinDarkness();
-	void setWithinDarkness(bool NewDarkness);
+	void setWithinDarkness(bool newDarkness);
 
 private:
 	Camera* camera;
