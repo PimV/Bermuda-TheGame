@@ -3,18 +3,17 @@
 #include <iostream>
 
 NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
-	Entity(id,spawnPoint->getX(),spawnPoint->getY())
+	Entity(id,spawnPoint->getX(),spawnPoint->getY()),
+	InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), 0, 0, 0, 0)
 {
 	this->healthPoints = healthPoints;
 	this->attackPoints = attackPoints;
 	this->actionRange = actionRange;
 	this->spawnPoint = spawnPoint;
 
-	//this->destroyed = false;
-	//this->respawnTime = 5000;
-	//this->interactTime = 500;
-	//this->timeSinceDestroy = 0;
-	//this->currentInteractTime = 0;
+	this->destroyed = false;
+	this->interactTime = 0;
+	this->respawnTime = 0;
 }
 
 #pragma region Getters
@@ -60,6 +59,11 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 	this->spawnPoint = spawnPoint;
 }
 #pragma endregion
+
+void NPC::interact(Player* player)
+{
+
+}
 
 NPC::~NPC()
 {

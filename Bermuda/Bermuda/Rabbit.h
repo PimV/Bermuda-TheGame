@@ -4,7 +4,6 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
-#include "InteractableEntity.h"
 #include "Weapon.h"
 
 class Rabbit :
@@ -12,8 +11,7 @@ class Rabbit :
 	public Evasive,
 	public DrawableEntity,
 	public CollidableEntity,
-	public MovableEntity,
-	public InteractableEntity
+	public MovableEntity
 {
 public:
 	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
@@ -32,4 +30,6 @@ private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
+
+	void removeFromContainers();
 };

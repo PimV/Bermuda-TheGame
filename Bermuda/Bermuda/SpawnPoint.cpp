@@ -21,8 +21,10 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->curChildren = 0;
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
-	//this->spawnInterval = 90000; //1,5 minuten
-	this->spawnInterval = 1000; //1,5 minuten
+
+	//TODO: change value to 90000 before merge
+	this->spawnInterval = 1000;
+
 	this->walkRange = walkRange;
 	this->lastSpawnTime = 0;
 	this->lastReSpawnTime = 0;
@@ -96,7 +98,6 @@ void Spawnpoint::update()
 		this->spawnMob();
 		this->increateSpawnTimer();
 	}
-
 
 	// chack for a respawn
 	if(GameTimer::Instance()->getGameTime() > this->lastReSpawnTime + this->spawnInterval)

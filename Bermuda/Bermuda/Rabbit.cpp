@@ -9,12 +9,13 @@ NPC(id, 5, 1, 50, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
-MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
-InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
+	// InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
 	this->setWidth(36);
 	this->setHeight(36);
 
+	#pragma region Moving_stuff
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 2;
@@ -24,9 +25,11 @@ InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
+	#pragma endregion Moving_stuff
 
 	this->healthPoints = 20;
 
+	#pragma region Animation_stuff
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;
 	this->animationWalkDownRow = 0, this->animationWalkRightRow = 2;
@@ -35,13 +38,20 @@ InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
 
 	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;
+	#pragma endregion Animation_stuff
 
 	this->timeSinceLastAction = 0;
-
+	
+	#pragma region Interactable_stuff
 	this->destroyed = false;
-	this->respawnTime = 5000;
+	this->respawnTime = 0;
 	this->interactTime = 500;
+	this->setInteractStartX(-12);
+	this->setInteractStartY(-15);
+	this->setInteractWidth(68);
+	this->setInteractHeight(78);
 	this->animationType = AnimationEnumType::AttackSpear;
+	#pragma endregion Interactable_stuff
 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
@@ -51,16 +61,18 @@ InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
 	this->StopAnimation();
 }
 
-void Rabbit::update(double dt) {
-	//if (this->destroyed)
-	//{
-	//	if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime())
-	//	{
-	//		//this->respawn();
-	//	}
-	//}
-	//else
-	//{
+void Rabbit::update(double dt)
+{
+	if (this->destroyed)
+	{
+		if (this->timeDestroyed + this->respawnTime < GameTimer::Instance()->getGameTime())
+		{
+			this->respawn();
+		}
+	}
+	else
+	{
+		
 		if (this->getHeathPoints() > 1)
 		{
 			this->directionsAndMove(dt);
@@ -69,7 +81,7 @@ void Rabbit::update(double dt) {
 		{
 			this->setDestroyedState();
 		}
-	//}
+	}
 }
 
 void Rabbit::directionsAndMove(double dt)
@@ -178,9 +190,7 @@ void Rabbit::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->currentInteractTime = 0;
 			class Weapon *selectedWeapon = dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem());
-			int dmg = selectedWeapon->getAttackDamage();
 			this->setHealthPoints( this->getHeathPoints() - selectedWeapon->getAttackDamage() );
-			this->setDestroyedState();
 			// TODO: add rabbit killed to status tracker
 		}
 	}
@@ -190,22 +200,30 @@ void Rabbit::interact(Player* player)
 	}
 }
 
-void Rabbit::respawn()
-{
-	this->destroyed = false;
-	this->getSpawnPoint()->spawnMob();
-}
-
 void Rabbit::setDestroyedState() 
 {
-	this->spawnPoint->decreaseChildren();
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
+	this->destroyed = true;
+	this->currentInteractTime = 0;
+	this->removeFromContainers();
+	//this->spawnPoint->decreaseChildren();
+}
+
+void Rabbit::respawn()
+{
+	this->getSpawnPoint()->spawnMob();
 	this->~Rabbit();
+}
+
+void Rabbit::removeFromContainers()
+{	
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }
 
 Rabbit::~Rabbit()
 {
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	this->removeFromContainers();
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }

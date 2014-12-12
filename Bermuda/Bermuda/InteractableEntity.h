@@ -17,6 +17,11 @@ protected:
 
 	AnimationEnumType animationType;
 
+	void setInteractStartX(int value);
+	void setInteractStartY(int value);
+	void setInteractWidth(int value);
+	void setInteractHeight(int value);
+
 private:
 	int interactStartX;
 	int interactStartY;
@@ -52,13 +57,14 @@ public:
 
 	virtual bool canInteract(Player* player);
 
-
 	bool trackInteractTimes();
 
 	int getInteractStartX();
 	int getInteractStartY();
 	int getInteractWidth();
 	int getInteractHeight();
+
+	bool getDestroyed();
 
 	void highlight();
 
