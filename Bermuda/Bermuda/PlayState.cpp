@@ -566,7 +566,7 @@ void PlayState::updatePlayerDarkness()
 						double distanceFromLight = sqrt((diffX * diffX) + (diffY * diffY));
 						//std::cout << "distance: " << distanceFromLight << std::endl;
 
-						if (distanceFromLight <= e->getDiameter() / 2)
+						if (distanceFromLight <= (e->getDiameter() / 2))
 						{
 							if (e->getShining() == true) p->setWithinDarkness(false);
 						}
