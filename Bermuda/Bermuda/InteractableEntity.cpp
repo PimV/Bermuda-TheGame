@@ -42,7 +42,7 @@ void InteractableEntity::setInteractHeight(int value)
 {
 	this->interactHeight = value;
 }
-#pragma endregion setters_interact_area
+#pragma endregion create_interact_area
 
 void InteractableEntity::interact(Player* player)
 {
@@ -91,10 +91,6 @@ Image* InteractableEntity::getHighlightImage() {
 
 SDL_Texture* InteractableEntity::getHighlightTexture() {
 	return this->highlightTexture;
-}
-
-bool InteractableEntity::getDestroyed() {
-	return this->destroyed;
 }
 
 void InteractableEntity::highlight() {

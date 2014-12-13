@@ -22,8 +22,7 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
 
-	//TODO: change value to 90000 before merge
-	this->spawnInterval = 1000;
+	this->spawnInterval = 90000;
 
 	this->walkRange = walkRange;
 	this->lastSpawnTime = 0;

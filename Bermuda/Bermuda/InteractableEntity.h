@@ -64,8 +64,6 @@ public:
 	int getInteractWidth();
 	int getInteractHeight();
 
-	bool getDestroyed();
-
 	void highlight();
 
 	virtual void interact(Player* p);

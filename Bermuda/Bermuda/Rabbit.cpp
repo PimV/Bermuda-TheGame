@@ -44,7 +44,10 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	
 	#pragma region Interactable_stuff
 	this->destroyed = false;
-	this->respawnTime = 0;
+
+	// before merge up this number
+	this->respawnTime = 1000;
+
 	this->interactTime = 500;
 	this->setInteractStartX(-12);
 	this->setInteractStartY(-15);
@@ -72,7 +75,6 @@ void Rabbit::update(double dt)
 	}
 	else
 	{
-		
 		if (this->getHeathPoints() > 1)
 		{
 			this->directionsAndMove(dt);
@@ -206,11 +208,12 @@ void Rabbit::setDestroyedState()
 	this->destroyed = true;
 	this->currentInteractTime = 0;
 	this->removeFromContainers();
-	//this->spawnPoint->decreaseChildren();
+	//
 }
 
 void Rabbit::respawn()
 {
+	this->spawnPoint->decreaseChildren();
 	this->getSpawnPoint()->spawnMob();
 	this->~Rabbit();
 }
@@ -219,11 +222,11 @@ void Rabbit::removeFromContainers()
 {	
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }
 
 Rabbit::~Rabbit()
 {
 	this->removeFromContainers();
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }
