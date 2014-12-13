@@ -278,7 +278,7 @@ bool Inventory::axeSelected() {
 }
 
 bool Inventory::spearSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Spear) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Spear)) {
 		return true;
 	}
 	return false;
