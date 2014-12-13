@@ -244,6 +244,17 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 	}
 }
 
+void Inventory::clearInventory()
+{
+	while (!this->itemVector.empty())
+	{
+		Item* stack = this->itemVector.back();
+		this->itemVector.pop_back();
+		delete stack;
+		stack = nullptr;
+	}
+}
+
 void Inventory::interactCurrent(Player* p) {
 	if (selectedIndex < this->getSize()) {
 		this->itemVector[selectedIndex]->use(p);
@@ -414,13 +425,7 @@ int Inventory::getWidth() {
 }
 
 void Inventory::cleanup() {
-	while (!this->itemVector.empty())
-	{
-		Item* stack = this->itemVector.back();
-		this->itemVector.pop_back();
-		delete stack;
-		stack = nullptr;
-	}
+	this->clearInventory();
 }
 
 Inventory::~Inventory()

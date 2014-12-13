@@ -4,22 +4,27 @@
 Achievement::Achievement(std::string str)
 {
 	name = str;
-	amount = 0;
+	this->amount = 0;
 }
 
 int Achievement::getAmount()
 {
-	return amount;
+	return this->amount;
 }
 
 std::string Achievement::getName()
 {
-	return name;
+	return this->name;
 }
 
 void Achievement::addAmount()
 {
-	amount++;
+	this->amount++;
+}
+
+void Achievement::setAmount(int amount)
+{
+	this->amount = amount;
 }
 
 Achievement::~Achievement()
