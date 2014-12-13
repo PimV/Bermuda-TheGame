@@ -264,14 +264,14 @@ void Inventory::dropCurrent() {
 }
 
 bool Inventory::pickAxeSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe)) {
 			return true;
 	}
 	return false;
 }
 
 bool Inventory::axeSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Axe || this->getSelectedItem()->getId() == (int)Items::GoldenAxe)) {
 		return true;
 	}
 	return false;

@@ -29,7 +29,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	this->updateLength = 0;
 }
 
-void GameStateManager::setUpdateLength(long updateLength) {
+void GameStateManager::setUpdateLength(float updateLength) {
 	this->updateLength = updateLength;
 }
 
@@ -41,7 +41,7 @@ void GameStateManager::toggleHelpEnabled() {
 	this->showHelp = !this->showHelp;
 }
 
-long GameStateManager::getUpdateLength() {
+float GameStateManager::getUpdateLength() {
 	return this->updateLength * speedMultiplier;
 }
 
