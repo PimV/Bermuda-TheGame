@@ -15,6 +15,8 @@ protected:
 	long timeDestroyed;
 	long respawnTime;
 
+	int percentageCompleted;
+
 	AnimationEnumType animationType;
 
 	void setInteractStartX(int value);
@@ -58,6 +60,7 @@ public:
 	virtual bool canInteract(Player* player);
 
 	bool trackInteractTimes();
+	int getPercentageCompleted();
 
 	int getInteractStartX();
 	int getInteractStartY();
