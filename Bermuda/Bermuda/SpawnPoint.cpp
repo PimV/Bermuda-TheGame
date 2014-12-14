@@ -22,7 +22,8 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
 
-	this->spawnInterval = 90000;
+	//this->spawnInterval = 90000;
+	this->spawnInterval = 1000;
 
 	this->walkRange = walkRange;
 	this->lastSpawnTime = 0;
@@ -72,7 +73,7 @@ void Spawnpoint::spawnMob()
 		{
 			++this->curChildren;
 		}
-
+		this->increateSpawnTimer();
 	}
 }
 
@@ -81,6 +82,10 @@ void Spawnpoint::decreaseChildren()
 	if (this->curChildren > 0)
 	{
 		--this->curChildren;
+	}
+	else
+	{
+		this->curChildren = 0;
 	}
 }
 
@@ -95,14 +100,6 @@ void Spawnpoint::update()
 	if(GameTimer::Instance()->getGameTime() > this->lastSpawnTime + this->spawnInterval)
 	{
 		this->spawnMob();
-		this->increateSpawnTimer();
-	}
-
-	// chack for a respawn
-	if(GameTimer::Instance()->getGameTime() > this->lastReSpawnTime + this->spawnInterval)
-	{
-		this->spawnMob();
-		this->increateReSpawnTimer();
 	}
 }
 

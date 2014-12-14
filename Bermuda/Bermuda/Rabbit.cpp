@@ -45,7 +45,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	#pragma region Interactable_stuff
 	this->destroyed = false;
 
-	// before merge up this number
+	// before merge up this number to 90000 ~1.5 minute
 	this->respawnTime = 1000;
 
 	this->interactTime = 500;
@@ -66,23 +66,13 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 void Rabbit::update(double dt)
 {
-	if (this->destroyed)
+	if (this->getHeathPoints() > 1)
 	{
-		if (this->timeDestroyed + this->respawnTime < GameTimer::Instance()->getGameTime())
-		{
-			this->respawn();
-		}
+		this->directionsAndMove(dt);
 	}
 	else
 	{
-		if (this->getHeathPoints() > 1)
-		{
-			this->directionsAndMove(dt);
-		}
-		else
-		{
-			this->setDestroyedState();
-		}
+		this->setDestroyedState();
 	}
 }
 
@@ -170,10 +160,12 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 }
 
 bool Rabbit::checkCollision(double newX, double newY)
@@ -204,29 +196,14 @@ void Rabbit::interact(Player* player)
 
 void Rabbit::setDestroyedState() 
 {
-	this->timeDestroyed = GameTimer::Instance()->getGameTime();
-	this->destroyed = true;
-	this->currentInteractTime = 0;
-	this->removeFromContainers();
-	//
-}
-
-void Rabbit::respawn()
-{
 	this->spawnPoint->decreaseChildren();
-	this->getSpawnPoint()->spawnMob();
 	this->~Rabbit();
-}
-
-void Rabbit::removeFromContainers()
-{	
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }
 
 Rabbit::~Rabbit()
 {
-	this->removeFromContainers();
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 }

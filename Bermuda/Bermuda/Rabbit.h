@@ -21,7 +21,6 @@ public:
 	bool checkCollision(double newX, double newY);
 
 	void interact(Player* player);
-	void respawn();
 	void setDestroyedState();
 
 private:
@@ -31,5 +30,4 @@ private:
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 
-	void removeFromContainers();
 };

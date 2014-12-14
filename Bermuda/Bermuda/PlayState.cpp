@@ -381,30 +381,30 @@ void PlayState::draw()
 			if(vec != nullptr) {
 				for(InteractableEntity* e : *vec) {
 					
-						e->setHighlighted(false);
-						if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
-							(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
-						{
-							double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
-							double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
+					e->setHighlighted(false);
+					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
+						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
+					{
+						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
+						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
 
-							double diffX = centerX - playerOffsetX;
-							double diffY = centerY - playerOffsetY;
+						double diffX = centerX - playerOffsetX;
+						double diffY = centerY - playerOffsetY;
 
-							if (diffX < 0) {
-								diffX = -diffX;
-							}
+						if (diffX < 0) {
+							diffX = -diffX;
+						}
 
-							if (diffY < 0) {
-								diffY = -diffY;
-							}
+						if (diffY < 0) {
+							diffY = -diffY;
+						}
 
-							if (diffX + diffY < diff) {
-								diff = diffX + diffY;
-								closestEntity = e;
-							}
+						if (diffX + diffY < diff) {
+							diff = diffX + diffY;
+							closestEntity = e;
 						}
 					}
+				}
 				
 			}
 		}

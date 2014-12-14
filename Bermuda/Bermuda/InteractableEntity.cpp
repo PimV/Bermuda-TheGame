@@ -47,11 +47,11 @@ void InteractableEntity::setInteractHeight(int value)
 void InteractableEntity::interact(Player* player)
 {
 	//TODO : oplossen op manier zonder casten
-	if (this->getEnabled())
-	{
-	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
-	cout << percentage << endl;
-	}
+	//if (this->getEnabled())
+	//{
+	//	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
+	//	cout << percentage << endl;
+	//}
 }
 
 void InteractableEntity::setCanInteractTexture(SDL_Texture* can)
