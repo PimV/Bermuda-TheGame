@@ -5,13 +5,17 @@
 #include <random>
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, 5, 1, 50, spawnPoint),
+	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+	InteractableNPC(id, 0, 0, 0, spawnPoint)
+/*NPC(id, 20, 1, 50, spawnPoint), 
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
 MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
+*/
 {
 	// InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
+	// CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
 	this->setWidth(36);
 	this->setHeight(36);
 
@@ -28,6 +32,15 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	#pragma endregion Moving_stuff
 
 	this->healthPoints = 20;
+	this->attackPoints = 0;
+	this->actionRange = 1;
+
+	#pragma region set_Collidable_area
+	this->setCollisionX( 4 );
+	this->setCollisionY( 20 );
+	this->setCollisionWidth( 28 );
+	this->setCollisionHeight( 12 );
+	#pragma endregion set_Collidable_area
 
 	#pragma region Animation_stuff
 	this->firstImgID = firstImgID;
@@ -49,11 +62,14 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->respawnTime = 1000;
 
 	this->interactTime = 500;
+
+	// set intection area
 	this->setInteractStartX(-12);
 	this->setInteractStartY(-15);
 	this->setInteractWidth(68);
 	this->setInteractHeight(78);
-	this->animationType = AnimationEnumType::AttackSpear;
+
+	this->animationType = AnimationEnumType::Attackable;
 	#pragma endregion Interactable_stuff
 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
@@ -185,7 +201,6 @@ void Rabbit::interact(Player* player)
 			this->currentInteractTime = 0;
 			class Weapon *selectedWeapon = dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem());
 			this->setHealthPoints( this->getHeathPoints() - selectedWeapon->getAttackDamage() );
-			// TODO: add rabbit killed to status tracker
 		}
 	}
 	else
@@ -196,6 +211,7 @@ void Rabbit::interact(Player* player)
 
 void Rabbit::setDestroyedState() 
 {
+	// TODO: add rabbit killed to status tracker
 	this->spawnPoint->decreaseChildren();
 	this->~Rabbit();
 }

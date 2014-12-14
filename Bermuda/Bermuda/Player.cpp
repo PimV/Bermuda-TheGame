@@ -3,6 +3,7 @@
 #include "GameStateManager.h"
 #include "PlayState.h"
 #include "Item.h"
+#include "Weapon.h"
 #include <vector>
 
 Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
@@ -413,6 +414,10 @@ void Player::setAnimationType(AnimationEnumType type)
 			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationPickStartColumn;
 			this->animationActionEndColumn = this->animationPickEndColumn;
+		break;
+	case AnimationEnumType::Attackable:
+			//class Weapon *selectedWeapon = dynamic_cast<class Weapon*>(this->getInventory()->getSelectedItem());
+			//this->setAnimationType(selectedWeapon->getAnimationEnumType());
 		break;
 	case AnimationEnumType::AttackSpear:
 			this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;

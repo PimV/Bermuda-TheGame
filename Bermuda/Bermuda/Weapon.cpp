@@ -5,6 +5,8 @@ Weapon::Weapon()
 {
 	this->setAttackDamage(1);
 	this->setAttackRadius(1);
+
+	this->AnimationType = AnimationEnumType::None;
 }
 
 void Weapon::setAttackDamage(double dmg) {
@@ -29,6 +31,11 @@ void Weapon::setAttackRadius(double radius) {
 
 double Weapon::getAttackRadius() {
 	return this->attackRadius;
+}
+
+AnimationEnumType Weapon::getAnimationEnumType()
+{
+	return this->AnimationType;
 }
 
 

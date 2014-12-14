@@ -5,8 +5,8 @@
 class Player;
 
 class NPC :
-	public virtual Entity,
-	public InteractableEntity
+	public virtual Entity
+	//public InteractableEntity
 {
 public:
 	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);

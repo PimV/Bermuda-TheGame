@@ -512,9 +512,12 @@
     </ClCompile>
     <ClCompile Include="ToolGoldenPickaxe.cpp">
       <Filter>Source Files\Model\Item</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Scorpion.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableNPC.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -910,6 +913,9 @@
     </ClInclude>
     <ClInclude Include="GameSaver.h">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableNPC.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

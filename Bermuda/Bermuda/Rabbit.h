@@ -5,13 +5,15 @@
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "Weapon.h"
+#include "InteractableNPC.h"
 
 class Rabbit :
-	public NPC,
-	public Evasive,
-	public DrawableEntity,
-	public CollidableEntity,
-	public MovableEntity
+public InteractableNPC
+	//public NPC,
+	//public Evasive,
+	//public DrawableEntity,
+	//public CollidableEntity,
+	//public MovableEntity
 {
 public:
 	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
