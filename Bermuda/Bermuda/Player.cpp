@@ -52,8 +52,8 @@ MovableEntity(id, x, y)
 	this->hungerUpdateTime = 3000;
 	this->thirstUpdateTime = 2000;
 	this->healthUpdateTime = 3000;
-	this->darknessUpdateTime = 2500;
-	this->quickDeathUpdateTime = 10;
+	this->darknessUpdateTime = 3500; 
+	this->quickDeathUpdateTime = 50; // increase to die faster when not in the light
 	this->health = 100;
 	this->hunger = 100;
 	this->thirst = 100;
@@ -228,7 +228,6 @@ void Player::updatePlayerStatuses(double dt)
 		{
 			if (this->quickDeathUpdate + this->quickDeathUpdateTime < currentTime)
 			{
-				std::cout << "Reduce health" << std::endl;
 				this->setHealth(this->getHealth() - 1);
 				this->quickDeathUpdate = currentTime;
 			}
