@@ -139,6 +139,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="InteractableCactusBig.h" />
     <ClInclude Include="InteractableCactusSmall.h" />
+    <ClInclude Include="IState.h" />
     <ClInclude Include="LightContainer.h" />
     <ClInclude Include="LightEntity.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
@@ -229,6 +230,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Tree.h" />
     <ClInclude Include="TreePine.h" />
     <ClInclude Include="TreeRound.h" />
+    <ClInclude Include="WanderingState.h" />
     <ClInclude Include="Wasp.h" />
     <ClInclude Include="Wolf.h" />
     <ClInclude Include="Weapon.h" />
@@ -275,6 +277,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemApple.cpp" />
     <ClCompile Include="ItemCampfire.cpp" />
@@ -320,6 +323,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="TreePine.cpp" />
     <ClCompile Include="TreeRound.cpp" />
+    <ClCompile Include="WanderingState.cpp" />
     <ClCompile Include="Wasp.cpp" />
     <ClCompile Include="Wolf.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -352,6 +356,9 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="SoundLoader.cpp" />
     <ClCompile Include="Spawnpoint.cpp" />
     <ClCompile Include="Tile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

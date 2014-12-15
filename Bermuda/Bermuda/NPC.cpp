@@ -1,5 +1,7 @@
 #include "NPC.h"
 #include "Spawnpoint.h"
+#include "WanderingState.h"
+
 #include <iostream>
 
 NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
@@ -15,6 +17,8 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint
 	this->interactTime = 500;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
+
+	this->currentState = new WanderingState();
 }
 
 #pragma region Getters
@@ -36,6 +40,10 @@ int NPC::getActionRange()
 Spawnpoint* NPC::getSpawnPoint()
 {
 	return this->spawnPoint;
+}
+IState* NPC::getCurrentState()
+{
+	return this->currentState;
 }
 #pragma endregion
 

@@ -45,6 +45,8 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 }
 
 void Rabbit::update(double dt) {
+	this->getCurrentState()->update(dt);
+
 	this->directionsAndMove(dt);
 }
 
