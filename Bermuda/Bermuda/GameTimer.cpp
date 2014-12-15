@@ -108,7 +108,7 @@ DAYPART GameTimer::getCurrentDayPart()
 
 int GameTimer::getDaysSurvived()
 {
-	return floor(this->gameTime / this->dayLength);
+	return (int)floor(this->gameTime / this->dayLength);
 }
 
 void GameTimer::draw()

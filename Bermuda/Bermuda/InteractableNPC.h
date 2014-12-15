@@ -8,9 +8,6 @@
 
 class InteractableNPC :
 	public NPC,
-	public DrawableEntity,
-	public CollidableEntity,
-	public MovableEntity,
 	public InteractableEntity
 {
 public:
@@ -32,12 +29,11 @@ public:
 	#pragma endregion
 
 	void interact(Player* player);
-	void update(double dt);
 
 protected:
 	int healthPoints, attackPoints, walkRange, actionRange;
 	Spawnpoint *spawnPoint;
 
 private:
-	void directionsAndMove(double dt);
+	//
 };

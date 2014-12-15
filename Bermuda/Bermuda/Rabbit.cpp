@@ -5,19 +5,15 @@
 #include <random>
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-	InteractableNPC(id, 0, 0, 0, spawnPoint)
-/*NPC(id, 20, 1, 50, spawnPoint), 
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+InteractableNPC(id, 0, 0, 0, spawnPoint),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
 MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
-*/
 {
-	// InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), -12, -15, 68, 78)
-	// CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
 	this->setWidth(36);
 	this->setHeight(36);
+	this->setSpawnPoint( spawnPoint );
 
 	#pragma region Moving_stuff
 	this->dx = 0;
@@ -59,7 +55,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->destroyed = false;
 
 	// before merge up this number to 90000 ~1.5 minute
-	this->respawnTime = 1000;
+	this->respawnTime = 90000;
 
 	this->interactTime = 500;
 
@@ -80,11 +76,12 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->StopAnimation();
 }
 
+
 void Rabbit::update(double dt)
 {
 	if (this->getHeathPoints() > 1)
 	{
-		this->directionsAndMove(dt);
+		//this->directionsAndMove(dt);
 	}
 	else
 	{
@@ -199,8 +196,7 @@ void Rabbit::interact(Player* player)
 		{
 			player->setCorrectToolSelected(false);
 			this->currentInteractTime = 0;
-			class Weapon *selectedWeapon = dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem());
-			this->setHealthPoints( this->getHeathPoints() - selectedWeapon->getAttackDamage() );
+			this->setHealthPoints( this->getHeathPoints() - dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem())->getAttackDamage() );
 		}
 	}
 	else

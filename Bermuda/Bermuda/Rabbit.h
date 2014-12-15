@@ -8,12 +8,10 @@
 #include "InteractableNPC.h"
 
 class Rabbit :
-public InteractableNPC
-	//public NPC,
-	//public Evasive,
-	//public DrawableEntity,
-	//public CollidableEntity,
-	//public MovableEntity
+	public InteractableNPC,
+	public DrawableEntity,
+	public CollidableEntity,
+	public MovableEntity
 {
 public:
 	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);

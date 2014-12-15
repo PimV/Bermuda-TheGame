@@ -2,36 +2,13 @@
 #include "Spawnpoint.h"
 #include <iostream>
 
-NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
+NPC::NPC(int id, Spawnpoint *spawnPoint)  : 
 	Entity(id,spawnPoint->getX(),spawnPoint->getY())
-	//InteractableEntity(id,spawnPoint->getX(), spawnPoint->getY(), 0, 0, 0, 0)
 {
-	this->healthPoints = healthPoints;
-	this->attackPoints = attackPoints;
-	this->actionRange = actionRange;
 	this->spawnPoint = spawnPoint;
-
-	//this->destroyed = false;
-	//this->interactTime = 0;
-	//this->respawnTime = 0;
 }
 
 #pragma region Getters
-int NPC::getHeathPoints()
-{
-	return this->healthPoints;
-}
-
-int NPC::getAttackPoints()
-{
-	return this->attackPoints;
-}
-
-int NPC::getActionRange()
-{
-	return this->actionRange;
-}
-
 Spawnpoint* NPC::getSpawnPoint()
 {
 	return this->spawnPoint;
@@ -39,21 +16,6 @@ Spawnpoint* NPC::getSpawnPoint()
 #pragma endregion
 
 #pragma region Setters
-void NPC::setHealthPoints(int healthPoints)
-{
-	this->healthPoints = healthPoints;
-}
-
-void NPC::setAttackPoints(int attackPoints)
-{
-	this->attackPoints = attackPoints;
-}
-
-void NPC::setActionRange(int actionRange)
-{
-	this->actionRange = actionRange;
-}
-
 void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 {
 	this->spawnPoint = spawnPoint;

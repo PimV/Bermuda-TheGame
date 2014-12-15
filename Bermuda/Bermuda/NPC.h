@@ -9,27 +9,15 @@ class NPC :
 	//public InteractableEntity
 {
 public:
-	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
+	NPC(int id, Spawnpoint *spawnPoint);
 	virtual ~NPC();
 
-#pragma region Getters
-	int getHeathPoints();
-	int getAttackPoints();
-	int getActionRange();
 	Spawnpoint* getSpawnPoint();
-#pragma endregion
-
-#pragma region Setters
-	void setHealthPoints(int healthPoints);
-	void setAttackPoints(int attackPoints);
-	void setActionRange(int actionRange);
 	void setSpawnPoint(Spawnpoint *spawnPoint);
-#pragma endregion
 
 	void interact(Player* player);
 
 protected:
-	int healthPoints, attackPoints, walkRange, actionRange;
 	Spawnpoint *spawnPoint;
 
 private:

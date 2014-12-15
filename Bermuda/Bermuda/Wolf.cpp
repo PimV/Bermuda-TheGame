@@ -6,7 +6,7 @@
 
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 50, spawnPoint),
+	NPC(id, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 13, 20, 23, 24),
