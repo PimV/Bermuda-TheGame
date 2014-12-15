@@ -291,6 +291,8 @@ void PlayState::update(double dt) {
 
 	this->updateVisibleEntities(dt);
 	this->updateMediumAreaEntities(dt);
+	
+	this->updatePlayerDarkness();
 
 	if (gameOver)
 	{
@@ -349,7 +351,7 @@ void PlayState::updateMediumAreaEntities(double dt)
 				}
 			}
 
-			////Moving entities
+			//Moving entities
 			std::vector<MovableEntity*>* movingEntities = this->mec->getMovableContainer()->getChunk(i, j);
 			if (movingEntities != nullptr && movingEntities->size() > 0)
 			{
@@ -531,6 +533,50 @@ void PlayState::draw()
 
 	//Draw timer
 	GameTimer::Instance()->draw();
+}
+
+void PlayState::updatePlayerDarkness()
+{
+	double dayP = GameTimer::Instance()->getPercentage();
+	
+	if (dayP >= 90)	p->setWithinDarkness(true);
+	else p->setWithinDarkness(false);
+
+	//Calculate begin and end chunks for the camera (+1 and -1 to make it a little bigger then the screen)
+	int beginChunkX = floor(camera->getX() / mec->getChunkSize()) - 1;
+	int endChunkX = floor((camera->getX() + camera->getWidth()) / mec->getChunkSize()) + 1;
+	int beginChunkY = floor(camera->getY() / mec->getChunkSize()) - 1;
+	int endChunkY = floor((camera->getY() + camera->getHeight()) / mec->getChunkSize()) + 1;
+
+	for (int i = beginChunkY; i <= endChunkY; i++)
+	{
+		for (int j = beginChunkX; j <= endChunkX; j++)
+		{
+			// Light entities
+			std::vector<LightEntity*>* lightEntities = this->mec->getLightContainer()->getChunk(i, j);
+			if (lightEntities != nullptr && lightEntities->size() > 0)
+			{
+				//Copy of container so moving entities can change chunks while we loop through them.
+				std::vector<LightEntity*> copyLightEntities = std::vector<LightEntity*>(*lightEntities);
+				for (LightEntity* e : copyLightEntities)
+				{
+					if (dayP >= 90)
+					{
+						double diffX = p->getX() - e->getX();
+						double diffY = p->getY() - e->getY();
+
+						double distanceFromLight = sqrt((diffX * diffX) + (diffY * diffY));
+						//std::cout << "distance: " << distanceFromLight << std::endl;
+
+						if (distanceFromLight <= (e->getDiameter() / 2))
+						{
+							if (e->getShining() == true) p->setWithinDarkness(false);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void PlayState::setGameOver(bool gameOver)

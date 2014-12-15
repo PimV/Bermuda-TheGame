@@ -18,6 +18,7 @@ Campfire::Campfire(int id, double x, double y, int firstImgID) :
 	startAnimationTimerType(1, 3, 100, GameTimer::Instance()->getNightLength() + 10000, 0);
 	this->particleEngine = new ParticleEngine(0,x + 10,y + 20,nullptr,PARTICLETYPES::SMOKE);
 	this->setShining(true);
+	this->setDiameter(625);
 }
 
 void Campfire::animate(double dt)
@@ -35,8 +36,8 @@ void Campfire::animate(double dt)
 
 void Campfire::animationFinished()
 {
-	this->destroyTime = GameTimer::Instance()->getGameTime() + 20000;
 	this->setShining(false);
+	this->destroyTime = GameTimer::Instance()->getGameTime() + 20000;
 }
 
 Campfire::~Campfire()

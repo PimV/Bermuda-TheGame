@@ -41,7 +41,6 @@ public:
 	void drawHungerBar(int x, int y);
 	void drawThirstBar(int x, int y);
 
-	//void clickMove();
 	void clickMove();
 	void setPosition(double newX, double newY);
 	void interact(double dt);
@@ -60,6 +59,9 @@ public:
 
 	bool getCorrectToolSelected();
 	void setCorrectToolSelected(bool tool);
+
+	bool getWithinDarkness();
+	void setWithinDarkness(bool newDarkness);
 
 private:
 	Camera* camera;
@@ -83,6 +85,8 @@ private:
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
 	long healthUpdate, healthUpdateTime;
+	long darknessUpdate, darknessUpdateTime;
+	long quickDeathUpdate, quickDeathUpdateTime;
 
 	#pragma region animation
 	int animationPickUp;
@@ -133,4 +137,6 @@ private:
 	bool checkCollision(double newX, double newY);
 
 	void setAnimationType(AnimationEnumType type);
+	
+	bool withinDarkness;
 };
