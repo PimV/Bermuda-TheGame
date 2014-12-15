@@ -928,7 +928,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <ClInclude Include="GameSaver.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>

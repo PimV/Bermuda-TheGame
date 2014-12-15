@@ -51,6 +51,12 @@ void Rabbit::update(double dt) {
 	this->getCurrentState()->update(dt);
 }
 
+void Rabbit::directionsAndMove(double dt)
+{
+
+}
+
+
 void Rabbit::setImage(Image* image)
 {
 	this->setDrawImage(image);
