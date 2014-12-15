@@ -22,12 +22,18 @@ public:
 	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
 	bool movingLeft, movingRight, movingDown, movingUp;
 	bool sprinting;
+
+	virtual void move(double dt);
+	long getTimeSinceLastAction();
+	void setTimeSinceLastAction(long time);
+	void setDx(double dx);
+	void setDy(double dy);
 protected:
 	virtual void setImage(Image* image) = 0;
 	virtual void ResetDrawableEntityAndSetChunk() = 0;
 	virtual bool checkCollision(double newX, double newY) = 0;
 
-	virtual void move(double dt);
+
 	virtual void setPosition(double newX, double newY);
 
 	double dx, dy;

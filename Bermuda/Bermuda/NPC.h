@@ -23,6 +23,7 @@ public:
 	void setAttackPoints(int attackPoints);
 	void setActionRange(int actionRange);
 	void setSpawnPoint(Spawnpoint *spawnPoint);
+	void setCurrentState(IState* state);
 #pragma endregion
 
 private:

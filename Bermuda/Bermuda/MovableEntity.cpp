@@ -1,8 +1,8 @@
 #include "MovableEntity.h"
 #include "PlayState.h"
 
-MovableEntity::MovableEntity(int id, double x, double y) : 
-	Entity(id,x,y)
+MovableEntity::MovableEntity(int id, double x, double y) :
+Entity(id, x, y)
 {
 	this->keepAnimationWhenIdle = false;
 
@@ -39,12 +39,12 @@ void MovableEntity::move(double dt)
 	else if (movingDown) {
 		dy += moveSpeed *dt;
 		stepY = 10;
-	} 
+	}
 
 	//No movement
 	if (dx == 0 && dy == 0) {
-		if(this->keepAnimationWhenIdle) 
-		{  
+		if (this->keepAnimationWhenIdle)
+		{
 			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 		}
 		return;
@@ -59,14 +59,14 @@ void MovableEntity::move(double dt)
 	{
 		//x
 		double diffX = this->getX() - destX;
-		if(diffX > -10 && diffX < 10)
+		if (diffX > -10 && diffX < 10)
 		{
 			stepX = -diffX;
 		}
 
 		//y
 		double diffY = this->getY() - destY;
-		if(diffY > -10 && diffY < 10)
+		if (diffY > -10 && diffY < 10)
 		{
 			stepY = -diffY;
 		}
@@ -151,6 +151,25 @@ void MovableEntity::setPosition(double newX, double newY) {
 		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->ResetDrawableEntityAndSetChunk();
 	}
+}
+
+long MovableEntity::getTimeSinceLastAction()
+{
+	return this->timeSinceLastAction;
+}
+
+void MovableEntity::setTimeSinceLastAction(long time)
+{
+	this->timeSinceLastAction = time;
+}
+
+void MovableEntity::setDx(double dx)
+{
+	this->dx = dx;
+}
+void MovableEntity::setDy(double dy)
+{
+	this->dy = dy;
 }
 
 MovableEntity::~MovableEntity()
