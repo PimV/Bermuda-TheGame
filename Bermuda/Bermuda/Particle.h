@@ -10,8 +10,6 @@ private:
 	double dx;
 	double dy;
 
-	bool isDead;
-
 	float endTime;
 
 	
