@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-
+#include "WanderingState.h"
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	NPC(id, 5, 1, 50, spawnPoint),
@@ -47,84 +47,17 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->setCurrentState(new WanderingState(this));
 }
 
-void Wolf::update(double dt) {
-	this->directionsAndMove(dt);
+void Wolf::update(double dt) 
+{
+	this->getCurrentState()->update(dt);
 }
 
 void Wolf::directionsAndMove(double dt)
 {
-	random_device dev;
-	default_random_engine dre(dev());
-
-	uniform_int_distribution<int> dist1(500, 5000);
-	int timeWait = dist1(dre);
-
-	if (timeSinceLastAction < timeWait)
-	{
-		timeSinceLastAction += GameTimer::Instance()->getFrameTime();
-	}
-	else {
-		timeSinceLastAction = 0;
-
-		uniform_int_distribution<int> dist2(1, 8);
-		int randomNumberMoveDirection = dist2(dre);
-
-		this->StopAnimation();
-
-		switch (randomNumberMoveDirection)
-		{
-		case 1:
-			movingRight = true;
-			movingLeft = false;
-			break;
-		case 2:
-			movingRight = false;
-			movingLeft = true;
-			break;
-		case 3:
-			movingDown = true;
-			movingUp = false;
-			break;
-		case 4:
-			movingDown = false;
-			movingUp = true;
-			break;
-		default:
-			movingUp = false;
-			movingDown = false;
-			movingRight = false;
-			movingLeft = false;
-			dx = 0;
-			dy = 0;
-			break;
-		}
-
-		if ((getX() - getSpawnPoint()->getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = false;
-			movingLeft = true;
-		}
-		else if ((getSpawnPoint()->getX() - getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = true;
-			movingLeft = false;
-		}
-
-		if ((getY() - getSpawnPoint()->getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = false;
-			movingUp = true;
-		}
-		else if ((getSpawnPoint()->getY() - getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = true;
-			movingUp = false;
-		}
-
-	}
-	this->move(dt);
 }
 
 void Wolf::setImage(Image* image)
