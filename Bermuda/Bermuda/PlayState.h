@@ -51,6 +51,8 @@ public:
 	void updateVisibleEntities(double dt);
 	void updateMediumAreaEntities(double dt);
 
+	void updatePlayerDarkness();
+
 	void draw();
 
 	static PlayState* Instance() {

@@ -517,7 +517,7 @@
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
     <ClCompile Include="InteractableNPC.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -915,7 +915,7 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="InteractableNPC.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

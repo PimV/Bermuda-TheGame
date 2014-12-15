@@ -11,9 +11,7 @@ Particle::Particle(double x, double y, double dx, double dy, int life, SDL_Textu
 	this->dy = dy;
 	this->textPixel = textPixel;
 	this->endTime = GameTimer::Instance()->getGameTime() + life;
-
-	this->isDead = false;
-
+	
 	rectPixel.w = width;
 	rectPixel.h = height;
 }
@@ -21,14 +19,8 @@ Particle::Particle(double x, double y, double dx, double dy, int life, SDL_Textu
 
 void Particle::move(double dt)
 {
-	this->x += this->dx * dt * GameStateManager::Instance()->getSpeedMultiplier();
-	this->y += this->dy * dt * GameStateManager::Instance()->getSpeedMultiplier();
-
-	//Check if outside of screen
-	/*if(this->x < 0 || this->x >= ScreenWidth || this->y < 0 || this->y >= ScreenHeight)
-	{
-		this->isDead = true;
-	}*/
+	this->x += this->dx * dt;
+	this->y += this->dy * dt;
 }
 
 void Particle::draw(Camera* camera)
@@ -41,7 +33,7 @@ void Particle::draw(Camera* camera)
 
 bool Particle::getIsDead()
 {
-	if(this->isDead || endTime < GameTimer::Instance()->getGameTime())
+	if(this->endTime < GameTimer::Instance()->getGameTime())
 	{
 		return true;
 	}

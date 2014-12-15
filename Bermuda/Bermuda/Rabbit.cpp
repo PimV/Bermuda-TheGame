@@ -81,7 +81,7 @@ void Rabbit::update(double dt)
 {
 	if (this->getHeathPoints() > 1)
 	{
-		//this->directionsAndMove(dt);
+		this->directionsAndMove(dt);
 	}
 	else
 	{
