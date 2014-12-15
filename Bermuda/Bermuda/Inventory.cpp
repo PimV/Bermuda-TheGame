@@ -80,7 +80,7 @@ bool Inventory::addItem(Item* item) {
 		//Returns NULL if only full slots were found
 		Item* inInvItem = this->getItemById(item->getId(), false);
 
-		if (inInvItem == NULL) {
+		if (inInvItem == nullptr) {
 			if (this->getSize() < slots) {
 				//Can add item, inventory slots left
 				std::cout << "Adding item in a new slot (all current slots filled)" << std::endl;
