@@ -148,10 +148,12 @@ void Rabbit::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 }
 
 bool Rabbit::checkCollision(double newX, double newY)
@@ -199,7 +201,6 @@ void Rabbit::interact(Player* player)
 
 			if(this->getHealth() == 0)
 			{
-				PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 				PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 			}
 		}
@@ -213,8 +214,8 @@ void Rabbit::setDestroyedState()
 
 Rabbit::~Rabbit()
 {
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }
