@@ -97,8 +97,8 @@ bool Inventory::addItem(Item* item) {
 					inInvItem = this->getItemById(item->getId(), false);
 					if (inInvItem == nullptr && this->getSize() < slots) {
 						this->itemVector.push_back(item);
-						break;
 					}
+					break;
 				} else {
 					inInvItem->setStackSize(inInvItem->getStackSize() + 1);
 					item->setStackSize(item->getStackSize() - 1);
