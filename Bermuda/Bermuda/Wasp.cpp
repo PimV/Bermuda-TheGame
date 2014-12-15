@@ -52,10 +52,6 @@ void Wasp::update(double dt)
 	this->getCurrentState()->update(dt);
 }
 
-void Wasp::directionsAndMove(double dt)
-{
-}
-
 void Wasp::setImage(Image* image)
 {
 	this->setDrawImage(image);

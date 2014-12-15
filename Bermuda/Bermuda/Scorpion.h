@@ -17,7 +17,6 @@ public:
 
 	virtual ~Scorpion();
 private:
-	void directionsAndMove(double dt);
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 	bool checkCollision(double newX, double newY);

@@ -56,10 +56,6 @@ void Wolf::update(double dt)
 	this->getCurrentState()->update(dt);
 }
 
-void Wolf::directionsAndMove(double dt)
-{
-}
-
 void Wolf::setImage(Image* image)
 {
 	this->setDrawImage(image);

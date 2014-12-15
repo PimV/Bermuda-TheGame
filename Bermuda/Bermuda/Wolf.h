@@ -17,7 +17,6 @@ public:
 	void update(double dt);
 	bool checkCollision(double newX, double newY);
 private:
-	void directionsAndMove(double dt);
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 };

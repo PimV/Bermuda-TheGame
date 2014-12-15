@@ -51,10 +51,6 @@ void Bat::update(double dt)
 	this->getCurrentState()->update(dt);
 }
 
-void Bat::directionsAndMove(double dt)
-{
-}
-
 void Bat::setImage(Image* image)
 {
 	this->setDrawImage(image);

@@ -57,11 +57,6 @@ void Scorpion::update(double dt)
 	this->getCurrentState()->update(dt);
 }
 
-void Scorpion::directionsAndMove(double dt)
-{
-
-}
-
 void Scorpion::setImage(Image* image)
 {
 	this->setDrawImage(image);
