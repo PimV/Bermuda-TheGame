@@ -510,6 +510,9 @@
     <ClCompile Include="BaseHelpScreen.cpp">
       <Filter>Source Files\View\Screens\HelpScreens</Filter>
     </ClCompile>
+    <ClCompile Include="GameSaver.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
     <ClCompile Include="ToolGoldenAxe.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -926,5 +929,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <ClInclude Include="GameSaver.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

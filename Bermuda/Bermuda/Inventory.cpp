@@ -81,7 +81,7 @@ bool Inventory::addItem(Item* item) {
 		Item* inInvItem = this->getItemById(item->getId(), false);
 
 		if (inInvItem == NULL) {
-			if (this->getSize() <= slots) {
+			if (this->getSize() < slots) {
 				//Can add item, inventory slots left
 				std::cout << "Adding item in a new slot (all current slots filled)" << std::endl;
 				this->itemVector.push_back(item);
@@ -95,7 +95,7 @@ bool Inventory::addItem(Item* item) {
 			while (item->getStackSize() > 0) {
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
 					inInvItem = this->getItemById(item->getId(), false);
-					if (inInvItem == nullptr && this->getSize() <= slots) {
+					if (inInvItem == nullptr && this->getSize() < slots) {
 						this->itemVector.push_back(item);
 						break;
 					}
@@ -106,7 +106,7 @@ bool Inventory::addItem(Item* item) {
 			}
 		}
 	} else {
-		if (this->getSize() <= this->slots) {
+		if (this->getSize() < this->slots) {
 			this->itemVector.push_back(item);
 		} else {
 			//No inventory slots left;
@@ -244,6 +244,17 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 	}
 }
 
+void Inventory::clearInventory()
+{
+	while (!this->itemVector.empty())
+	{
+		Item* stack = this->itemVector.back();
+		this->itemVector.pop_back();
+		delete stack;
+		stack = nullptr;
+	}
+}
+
 void Inventory::interactCurrent(Player* p) {
 	if (selectedIndex < this->getSize()) {
 		this->itemVector[selectedIndex]->use(p);
@@ -278,7 +289,7 @@ bool Inventory::axeSelected() {
 }
 
 bool Inventory::spearSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Spear) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Spear)) {
 		return true;
 	}
 	return false;
@@ -414,13 +425,7 @@ int Inventory::getWidth() {
 }
 
 void Inventory::cleanup() {
-	while (!this->itemVector.empty())
-	{
-		Item* stack = this->itemVector.back();
-		this->itemVector.pop_back();
-		delete stack;
-		stack = nullptr;
-	}
+	this->clearInventory();
 }
 
 Inventory::~Inventory()

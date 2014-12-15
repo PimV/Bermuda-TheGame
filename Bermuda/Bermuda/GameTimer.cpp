@@ -35,7 +35,6 @@ void GameTimer::init()
 
 void GameTimer::updateGameTime(double frameTime)
 {
-
 	this->frameTime = frameTime;
 	this->gameTime += static_cast<float>(frameTime);
 	this->updateDay();
@@ -44,6 +43,11 @@ void GameTimer::updateGameTime(double frameTime)
 float GameTimer::getGameTime()
 {
 	return this->gameTime;
+}
+
+void GameTimer::setGameTime(double gameTime)
+{
+	this->gameTime = static_cast<float>(gameTime);
 }
 
 double GameTimer::getFullDayLength()
@@ -90,18 +94,11 @@ void GameTimer::updateDay()
 	{
 		this->currentDayPart = DAYPART::Day;
 	}
-
-	//Day passed
-	if((this->startDay + this->dayLength) < this->gameTime)
-	{
-		this->startDay = this->gameTime;
-		this->days++;
-	}
 }
 
 double GameTimer::getPercentage()
 {
-	return ((this->gameTime - this->startDay) / this->dayLength) * 100;
+	return fmod(this->gameTime, this->dayLength) / this->dayLength * 100;
 }
 
 DAYPART GameTimer::getCurrentDayPart()
@@ -111,7 +108,7 @@ DAYPART GameTimer::getCurrentDayPart()
 
 int GameTimer::getDaysSurvived()
 {
-	return this->days;
+	return static_cast<int>(floor(this->gameTime / this->dayLength));
 }
 
 void GameTimer::draw()
