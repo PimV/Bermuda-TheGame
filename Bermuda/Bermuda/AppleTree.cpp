@@ -17,7 +17,7 @@ AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEm
 
 	this->destroyed = false;
 	this->respawnTime = GameTimer::Instance()->getFullDayLength() * 6;
-	this->interactTime = 3000;
+	this->interactTime = 6000;
 
 	this->animationType = AnimationEnumType::Pick;
 

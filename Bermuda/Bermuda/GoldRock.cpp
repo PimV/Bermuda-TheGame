@@ -15,7 +15,7 @@ GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiec
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
-	this->interactTime = 5000;
+	this->interactTime = 8000;
 
 	this->animationType = AnimationEnumType::Mine;
 
