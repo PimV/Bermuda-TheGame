@@ -3,10 +3,13 @@
 #include <SDL_image.h>
 #include <iostream>
 
-
+#include <windows.h>
+#include <tchar.h>
+#include <stdio.h>
 MenuLoadScreen::MenuLoadScreen()
 {
 	init();
+	readSavedGames();
 }
 
 void MenuLoadScreen::init()
@@ -18,6 +21,42 @@ void MenuLoadScreen::init()
 	returnButton->createButton("Return to main menu", 40, 0);
 	returnButton->placeMidUnder(((ScreenWidth - returnButton->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
 	buttons.push_back(returnButton);
+}
+
+void MenuLoadScreen::readSavedGames()
+{
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	TCHAR patter[MAX_PATH];
+
+	memset(patter, 0x00, MAX_PATH);
+	_stprintf_s(patter, TEXT("%s\\*.json"), SAVEPATH.c_str());
+	hFind = FindFirstFile(patter, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		printf("FindFirstFile failed (%d)\n", GetLastError());
+	}
+	else
+	{
+		do
+		{
+			//ignore current and parent directories
+			if (_tcscmp(FindFileData.cFileName, TEXT(".")) == 0 || _tcscmp(FindFileData.cFileName, TEXT("..")) == 0)
+				continue;
+
+			if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			{
+				//ignore directories
+			}
+			else
+			{
+				//list the Files
+				this->savedGames.push_back(FindFileData.cFileName);
+			}
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
 }
 
 void MenuLoadScreen::cleanup()
