@@ -288,3 +288,8 @@ void BaseButton::helpFoodAndWaterScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getFoodAndWaterScr());
 }
+
+void BaseButton::helptimeScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getTimeScr());
+}

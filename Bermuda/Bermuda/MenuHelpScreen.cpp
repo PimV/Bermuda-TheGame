@@ -63,6 +63,10 @@ void MenuHelpScreen::init()
 	foodAndWaterScreen->setPicture("HelpScreens/hungerThirst.bmp");
 	foodAndWaterScreen->setText("The blue bar is your water bar, the brown bar is your food bar. If one or both bars are depleted your health (red bar) will slowly decrease. If your health bar depletes you will die.");
 
+	timeScreen = new BaseHelpScreen(firstRect.w);
+	timeScreen->setPicture("HelpScreens/time.bmp");
+	timeScreen->setText("The time indicator shows how late it is.");
+
 	BaseButton* movementButton = new BaseButton;
 	movementButton->createButton("Movement", 24, 0);
 	movementButton->action = &BaseButton::helpMovementScreenAction;
@@ -108,10 +112,15 @@ void MenuHelpScreen::init()
 	mineRockButton->action = &BaseButton::helpMineRockScreenAction;
 	mineRockButton->setHoverAction(true);
 
-	BaseButton* hungerThirst = new BaseButton;
-	hungerThirst->createButton("Status bars", 24, 0);
-	hungerThirst->action = &BaseButton::helpFoodAndWaterScreenAction; //aanpassen
-	hungerThirst->setHoverAction(true);
+	BaseButton* hungerThirstButton = new BaseButton;
+	hungerThirstButton->createButton("Status bars", 24, 0);
+	hungerThirstButton->action = &BaseButton::helpFoodAndWaterScreenAction;
+	hungerThirstButton->setHoverAction(true);
+
+	BaseButton* timeButton= new BaseButton;
+	timeButton->createButton("Time indicator", 24, 0);
+	timeButton->action = &BaseButton::helptimeScreenAction;
+	timeButton->setHoverAction(true);
 
 	BaseButton* returnButton = new BaseButton;
 	returnButton->createButton("Back to menu", 24, 0);
@@ -126,7 +135,8 @@ void MenuHelpScreen::init()
 	mineGoldButton->placeLeftUnderButton(pickAppleButton);
 	mineIceButton->placeLeftUnderButton(mineGoldButton);
 	mineRockButton->placeLeftUnderButton(mineIceButton);
-	hungerThirst->placeLeftUnderButton(mineRockButton);
+	hungerThirstButton->placeLeftUnderButton(mineRockButton);
+	timeButton->placeLeftUnderButton(hungerThirstButton);
 	returnButton->placeLeftUnder(15, 10);
 
 	buttons.push_back(movementButton);
@@ -138,7 +148,8 @@ void MenuHelpScreen::init()
 	buttons.push_back(mineGoldButton);
 	buttons.push_back(mineIceButton);
 	buttons.push_back(mineRockButton);
-	buttons.push_back(hungerThirst);
+	buttons.push_back(hungerThirstButton);
+	buttons.push_back(timeButton);
 	buttons.push_back(returnButton);
 
 	for(BaseButton* var : buttons)
