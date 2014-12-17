@@ -6,10 +6,10 @@
 #include <vector>
 
 Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
-Entity(id, x, y),
-DrawableEntity(id, x, y, nullptr),
-CollidableEntity(id, x, y, 20, 52, 24, 10),
-MovableEntity(id, x, y)
+	Entity(id, x, y),
+	DrawableEntity(id, x, y, nullptr),
+	CollidableEntity(id, x, y, 20, 52, 24, 10),
+	MovableEntity(id, x, y)
 {
 	healthBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBar.png").c_str());
 	healthBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBarContainerBas.png").c_str());
@@ -36,6 +36,8 @@ MovableEntity(id, x, y)
 	healthAlpha = 255;
 	hungerAlpha = 255;
 	thirstAlpha = 255;
+
+	godMode = false;
 
 	this->camera = camera;
 
@@ -76,7 +78,7 @@ MovableEntity(id, x, y)
 
 	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("Player_Animations.png", 64, 64);
 
-	#pragma region animation
+#pragma region animation
 	this->animationWalkUpRow = 4;
 	this->animationWalkLeftRow = 5;
 	this->animationWalkDownRow = 6;
@@ -90,7 +92,7 @@ MovableEntity(id, x, y)
 	this->animationSpearWalkRight = 11;
 	this->animationSpearWalkStartColumn = 1;
 	this->animationSpearWalkEndColumn = 8;
-	
+
 	this->animationPickUp = 0;
 	this->animationPickStartColumn = 1;
 	this->animationPickEndColumn = 6;
@@ -144,6 +146,10 @@ MovableEntity(id, x, y)
 	this->statusTracker = new StatusTracker();
 }
 
+void Player::toggleGodMode() {
+	this->godMode = !this->godMode;
+}
+
 Inventory* Player::getInventory() {
 	return this->inventory;
 }
@@ -177,7 +183,9 @@ void Player::update(double dt) {
 		return;
 	}
 
-	this->updatePlayerStatuses(dt);
+	if (!this->godMode) {
+		this->updatePlayerStatuses(dt);
+	}
 
 	if (this->interaction) {
 		this->interact(dt);
@@ -421,12 +429,12 @@ void Player::setAnimationType(AnimationEnumType type)
 		{
 		case (int)Items::Axe:
 			this->currentAnimationRow = this->animationChopUp + (int)this->movementDirection;
- 			this->animationActionStartColumn = this->animationChopStartColumn;
+			this->animationActionStartColumn = this->animationChopStartColumn;
 			this->animationActionEndColumn = this->animationChopEndColumn;
 			break;
 		case (int)Items::GoldenAxe:
 			this->currentAnimationRow = this->animationChopGoldUp + (int)this->movementDirection;
- 			this->animationActionStartColumn = this->animationChopGoldStartColumn;
+			this->animationActionStartColumn = this->animationChopGoldStartColumn;
 			this->animationActionEndColumn = this->animationChopGoldEndColumn;
 			break;
 		}
@@ -436,12 +444,12 @@ void Player::setAnimationType(AnimationEnumType type)
 		{
 		case (int)Items::Pickaxe:
 			this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;
- 			this->animationActionStartColumn = this->animationMineStartColumn;
+			this->animationActionStartColumn = this->animationMineStartColumn;
 			this->animationActionEndColumn = this->animationMineEndColumn;
 			break;			
 		case (int)Items::GoldenPickaxe:
 			this->currentAnimationRow = this->animationMineGoldUp + (int)this->movementDirection;
- 			this->animationActionStartColumn = this->animationMineGoldStartColumn;
+			this->animationActionStartColumn = this->animationMineGoldStartColumn;
 			this->animationActionEndColumn = this->animationMineGoldEndColumn;
 			break;
 		}
