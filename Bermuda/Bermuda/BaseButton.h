@@ -38,6 +38,7 @@ public:
 
 	//buttonActions
 	void setCreditsScreenAction();
+	void setLoadScreenAction();
 	void exitAction();
 	void menuSetHelpScreenAction();
 	void playAction();

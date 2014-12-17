@@ -176,6 +176,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemGold.h" />
     <ClInclude Include="ItemWater.h" />
     <ClInclude Include="MenuHelpScreen.h" />
+    <ClInclude Include="MenuLoadScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
     <ClInclude Include="NightLayer.h" />
     <ClInclude Include="NPCType.h" />
@@ -287,6 +288,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="LightEntity.cpp" />
     <ClCompile Include="MenuCreditsScreen.cpp" />
     <ClCompile Include="MenuHelpScreen.cpp" />
+    <ClCompile Include="MenuLoadScreen.cpp" />
     <ClCompile Include="MenuMainScreen.cpp" />
     <ClCompile Include="NightLayer.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />

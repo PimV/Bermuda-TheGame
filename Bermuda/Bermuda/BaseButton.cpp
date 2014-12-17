@@ -198,6 +198,11 @@ void BaseButton::setCreditsScreenAction()
 	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuCreditsScreen());
 }
 
+void BaseButton::setLoadScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuLoadScreen());
+}
+
 void BaseButton::exitAction()
 {
 	GameStateManager::Instance()->quitGame();

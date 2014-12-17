@@ -26,18 +26,24 @@ void MenuMainScreen::init()
 	BaseButton* helpButton = new BaseButton();
 	helpButton->action = &BaseButton::menuSetHelpScreenAction;
 	helpButton->createButton("Help", 60, 0);
+
+	BaseButton* loadButton = new BaseButton();
+	loadButton->action = &BaseButton::setLoadScreenAction;
+	loadButton->createButton("Load", 60, 0);
 	
 	//place buttons
 	helpButton->placeLeftMid();
-	exitButton->placeLeftUnderButton(helpButton);
-	creditsButton->placeLeftAboveButton(helpButton);
-	playButton->placeLeftAboveButton(creditsButton);
+	creditsButton->placeLeftUnderButton(helpButton);
+	exitButton->placeLeftUnderButton(creditsButton);
+	loadButton->placeLeftAboveButton(helpButton);
+	playButton->placeLeftAboveButton(loadButton);
 	
 	//place in button vector
 	buttons.push_back(playButton);
 	buttons.push_back(exitButton);
 	buttons.push_back(creditsButton);
 	buttons.push_back(helpButton);
+	buttons.push_back(loadButton);
 }
 
 void MenuMainScreen::setBackground()
