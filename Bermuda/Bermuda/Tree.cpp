@@ -42,13 +42,7 @@ void Tree::interact(Player* player) {
 			player->getStatusTracker()->treeCut();
 
 			//Degradability
-			Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
-			tool->setDurability(tool->getDurability() - 1);
-			std::cout << tool->getPercentageDegraded() << std::endl;
-			if (tool->getDurability() <= 0) {
-				std::cout << "Destroying axe, no durability!" << std::endl;
-				player->getInventory()->deleteItem(tool->getId(), 1);
-			}
+				this->degradeTool(player);
 		}
 	} else {
 		player->setCorrectToolSelected(false);

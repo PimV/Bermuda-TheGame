@@ -50,6 +50,8 @@ public:
 	SDL_Texture* getCanInteractTexture();
 	SDL_Texture* getCantInteractTexture();
 
+	void degradeTool(Player* player);
+
 	virtual bool canInteract(Player* player);
 
 

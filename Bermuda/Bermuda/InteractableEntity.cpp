@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include "PlayState.h"
 #include "Camera.h"
+#include "Equipable.h"
 
 #include <iostream>
 
@@ -84,6 +85,16 @@ void InteractableEntity::highlight() {
 		rect.h = this->getHeight();
 		//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), highlightImage->getTileSet(), highlightImage->getCroppingRect(), &rect);
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->highlightTexture, NULL, &rect);
+	}
+}
+
+void InteractableEntity::degradeTool(Player* player) {
+	Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
+	tool->setDurability(tool->getDurability() - 1);
+	std::cout << tool->getPercentageDegraded() << std::endl;
+	if (tool->getDurability() <= 0) {
+		std::cout << "Destroying pickaxe, no durability!" << std::endl;
+		player->getInventory()->deleteItem(tool->getId(), 1);
 	}
 }
 
