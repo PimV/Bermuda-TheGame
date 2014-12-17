@@ -1,12 +1,11 @@
 #include "Rabbit.h"
 #include "PlayState.h"
 #include <time.h>
-#include <iostream>
 #include <random>
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-InteractableNPC(id, 0, 0, 0, spawnPoint),
+InteractableNPC(id, 20, 0, 1, spawnPoint, -12, -15, 68, 78),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
 MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
@@ -31,13 +30,6 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->attackPoints = 0;
 	this->actionRange = 1;
 
-	#pragma region set_Collidable_area
-	this->setCollisionX( 4 );
-	this->setCollisionY( 20 );
-	this->setCollisionWidth( 28 );
-	this->setCollisionHeight( 12 );
-	#pragma endregion set_Collidable_area
-
 	#pragma region Animation_stuff
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;
@@ -59,12 +51,6 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 	this->interactTime = 500;
 
-	// set intection area
-	this->setInteractStartX(-12);
-	this->setInteractStartY(-15);
-	this->setInteractWidth(68);
-	this->setInteractHeight(78);
-
 	this->animationType = AnimationEnumType::Attackable;
 	#pragma endregion Interactable_stuff
 
@@ -79,7 +65,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 void Rabbit::update(double dt)
 {
-	if (this->getHeathPoints() > 1)
+	if (this->getHealthPoints() > 1)
 	{
 		this->directionsAndMove(dt);
 	}
@@ -196,7 +182,7 @@ void Rabbit::interact(Player* player)
 		{
 			player->setCorrectToolSelected(false);
 			this->currentInteractTime = 0;
-			this->setHealthPoints( this->getHeathPoints() - dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem())->getAttackDamage() );
+			this->setHealthPoints( this->getHealthPoints() - dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem())->getAttackDamage() );
 		}
 	}
 	else
@@ -208,7 +194,7 @@ void Rabbit::interact(Player* player)
 void Rabbit::setDestroyedState() 
 {
 	// TODO: add rabbit killed to status tracker
-	this->spawnPoint->decreaseChildren();
+	this->getSpawnPoint()->decreaseChildren();
 	this->~Rabbit();
 }
 

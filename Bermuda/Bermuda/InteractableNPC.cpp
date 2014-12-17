@@ -1,16 +1,16 @@
 #include "InteractableNPC.h"
 #include <iostream>
 
-InteractableNPC::InteractableNPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint):
+InteractableNPC::InteractableNPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint, int interactStartX, int interactStartY, int interactWitdh, int interactHeight):
 NPC(id, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 0, 0, 0, 0 )
+InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), interactStartX, interactStartY, interactWitdh, interactHeight )
 {
 	this->animationType = AnimationEnumType::Attackable;
 }
 
 #pragma region Getters
-int InteractableNPC::getHeathPoints()
+int InteractableNPC::getHealthPoints()
 {
 	return this->healthPoints;
 }
@@ -23,11 +23,6 @@ int InteractableNPC::getAttackPoints()
 int InteractableNPC::getActionRange()
 {
 	return this->actionRange;
-}
-
-Spawnpoint* InteractableNPC::getSpawnPoint()
-{
-	return this->spawnPoint;
 }
 #pragma endregion
 
@@ -45,11 +40,6 @@ void InteractableNPC::setAttackPoints(int attackPoints)
 void InteractableNPC::setActionRange(int actionRange)
 {
 	this->actionRange = actionRange;
-}
-
-void InteractableNPC::setSpawnPoint(Spawnpoint *spawnPoint)
-{
-	this->spawnPoint = spawnPoint;
 }
 #pragma endregion
 

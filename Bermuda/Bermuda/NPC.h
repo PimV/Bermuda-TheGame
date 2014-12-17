@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
 #include "Spawnpoint.h"
-#include "InteractableEntity.h"
 class Player;
 
 class NPC :
@@ -14,8 +13,6 @@ public:
 
 	Spawnpoint* getSpawnPoint();
 	void setSpawnPoint(Spawnpoint *spawnPoint);
-
-	void interact(Player* player);
 
 protected:
 	Spawnpoint *spawnPoint;
