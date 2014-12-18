@@ -69,7 +69,7 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 
 void NPC::setCurrentState(IState* state)
 {
-	// don't forget to delete state
+	delete this->currentState;
 	this->currentState = state;
 }
 #pragma endregion
