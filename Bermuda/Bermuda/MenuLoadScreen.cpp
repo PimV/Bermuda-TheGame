@@ -2,6 +2,8 @@
 #include "MenuState.h"
 #include <SDL_image.h>
 #include "GameTimer.h"
+#include "SavedGameButton.h"
+#include "LoadButton.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -19,6 +21,7 @@ using namespace rapidjson;
 
 MenuLoadScreen::MenuLoadScreen()
 {
+	this->currentFileToLoad = "";
 	readSavedGames();
 	init();
 }
@@ -32,6 +35,36 @@ void MenuLoadScreen::init()
 	returnButton->createButton("Return to main menu", 40, 0);
 	returnButton->placeMidUnder(((ScreenWidth - returnButton->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
 	buttons.push_back(returnButton);
+
+	int y = 50;
+	//Saved game buttons
+	for (std::pair<std::string, int> pair : this->savedGames)
+	{
+		SavedGameButton* button = new SavedGameButton(this, pair.first);
+		button->createButton(pair.first.substr(0, pair.first.find_last_of('.')) + "     Days survived: " + std::to_string(pair.second), 24, 0);
+		button->placeExactAt((ScreenWidth / 2) - (button->getWidth() / 2), y);
+		savedGameButtons.push_back(button);		
+
+		y += 30;
+
+		if (y + 250 >= ScreenHeight)
+		{
+			break;
+		}
+	}
+
+	y += 30;
+
+	loadButton = new LoadButton(this);
+	loadButton->createButton(" ", 40, 0);
+	loadButton->placeExactAt((ScreenWidth / 2) - (loadButton->getWidth() / 2), y);
+}
+
+void MenuLoadScreen::setCurrentFileToLoad(std::string fileName)
+{
+	this->currentFileToLoad = fileName;
+	this->loadButton->setNewButtonText("Load: " + fileName, 40, 0);
+	this->loadButton->placeExactAt((ScreenWidth / 2) - (this->loadButton->getWidth() / 2), this->loadButton->getY());
 }
 
 void MenuLoadScreen::readSavedGames()
@@ -152,6 +185,21 @@ void MenuLoadScreen::handleEvents(SDL_Event mainEvent)
 	case SDL_MOUSEBUTTONDOWN:
 		if (mainEvent.button.button == SDL_BUTTON_LEFT)
 		{
+			if (this->loadButton->clicked(x, y))
+			{
+				if (this->currentFileToLoad != "")
+				{
+					this->loadCurrentFile();
+					break;
+				}
+			}
+			for (SavedGameButton* var : savedGameButtons)
+			{
+				if (var->clicked(x, y))
+				{
+					break;
+				}
+			}
 			for(BaseButton* var : buttons)
 			{
 				if (var->clicked(x, y))
@@ -164,6 +212,12 @@ void MenuLoadScreen::handleEvents(SDL_Event mainEvent)
 	}
 }
 
+void MenuLoadScreen::loadCurrentFile()
+{
+	//TODO : zorg dat spel start en file geladen wordt
+	std::cout << "Nu wordt: " << this->currentFileToLoad << " ingeladen" << std::endl;
+}
+
 void MenuLoadScreen::draw()
 {	
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
@@ -172,6 +226,14 @@ void MenuLoadScreen::draw()
 	{
 		var->draw();
 	}
+
+
+	for (SavedGameButton* var : savedGameButtons)
+	{
+		var->draw();
+	}
+
+	this->loadButton->draw();
 }
 
 

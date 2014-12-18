@@ -519,6 +519,12 @@
     <ClCompile Include="MenuLoadScreen.cpp">
       <Filter>Source Files\View\Screens\MenuScreens</Filter>
     </ClCompile>
+    <ClCompile Include="SavedGameButton.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadButton.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -916,6 +922,12 @@
     </ClInclude>
     <ClInclude Include="MenuLoadScreen.h">
       <Filter>Header Files\View\Screens\MenuScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="SavedGameButton.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadButton.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

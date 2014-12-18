@@ -105,6 +105,11 @@ void BaseButton::createButton(std::string message, int fontSize, int initialColo
 	TTF_CloseFont(staryDarzy);
 }
 
+void BaseButton::setNewButtonText(std::string text, int fontSize, int initialColor)
+{
+	createButton(text, fontSize, initialColor);
+}
+
 void BaseButton::placeMid()
 {
 	buttonRect.x = ((int)ScreenWidth - buttonRect.w) / 2;
