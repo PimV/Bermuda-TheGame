@@ -59,8 +59,6 @@ void WanderingState::update(double dt)
 			movableEntity->movingDown = false;
 			movableEntity->movingRight = false;
 			movableEntity->movingLeft = false;
-			movableEntity->setDx(0);
-			movableEntity->setDy(0);
 			break;
 		}
 

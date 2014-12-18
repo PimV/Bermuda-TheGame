@@ -25,8 +25,6 @@ public:
 	virtual void move(double dt);
 	long getTimeSinceLastAction();
 	void setTimeSinceLastAction(long time);
-	void setDx(double dx);
-	void setDy(double dy);
 protected:
 	virtual void setImage(Image* image) = 0;
 	virtual void ResetDrawableEntityAndSetChunk() = 0;

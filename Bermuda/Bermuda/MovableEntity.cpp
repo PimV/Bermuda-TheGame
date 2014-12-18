@@ -163,15 +163,6 @@ void MovableEntity::setTimeSinceLastAction(long time)
 	this->timeSinceLastAction = time;
 }
 
-void MovableEntity::setDx(double dx)
-{
-	this->dx = dx;
-}
-void MovableEntity::setDy(double dy)
-{
-	this->dy = dy;
-}
-
 MovableEntity::~MovableEntity()
 {
 }
