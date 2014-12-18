@@ -1,15 +1,26 @@
 #include "MenuLoadScreen.h"
 #include "MenuState.h"
 #include <SDL_image.h>
-#include <iostream>
+#include "GameTimer.h"
 
 #include <windows.h>
 #include <tchar.h>
 #include <stdio.h>
+
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
+
+using namespace rapidjson;
+
+
 MenuLoadScreen::MenuLoadScreen()
 {
-	init();
 	readSavedGames();
+	init();
 }
 
 void MenuLoadScreen::init()
@@ -51,8 +62,35 @@ void MenuLoadScreen::readSavedGames()
 			}
 			else
 			{
-				//list the Files
-				this->savedGames.push_back(FindFileData.cFileName);
+				std::string fileName = FindFileData.cFileName;
+				//std::string fileNameSplit = fileName.substr(0, fileName.find_last_of('.'));
+
+				//Create file stream.
+				std::ifstream stream(SAVEPATH + fileName);
+				if (!stream.is_open())
+				{
+					std::cout << "Could not read save file. File " + fileName + " could not be found!" << std::endl;
+					return;
+				}
+
+				//Read entire file into a string.
+				std::string json;
+				std::string line;
+				while (getline(stream, line))
+				{
+					json += line;
+				}
+				stream.close();
+
+				//Parse JSON string into DOM.
+				Document d;
+				d.Parse(json.c_str());
+
+				//Get amount of days survived
+				int totalDays = d["days"].GetInt();
+
+				//list the saved file
+				this->savedGames[fileName] = totalDays;
 			}
 		} while (FindNextFile(hFind, &FindFileData));
 		FindClose(hFind);

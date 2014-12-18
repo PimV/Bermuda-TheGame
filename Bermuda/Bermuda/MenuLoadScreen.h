@@ -2,6 +2,7 @@
 #include "basescreen.h"
 #include "GameStateManager.h"
 #include "BaseButton.h"
+#include <map>
 
 class MenuLoadScreen :
 	public BaseScreen
@@ -10,7 +11,7 @@ private:
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;
 	std::vector<BaseButton*> buttons;
-	std::vector<std::string> savedGames;
+	std::map<std::string, int> savedGames;
 
 	void init();
 	void readSavedGames();
