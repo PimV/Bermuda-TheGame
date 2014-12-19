@@ -528,6 +528,9 @@
     <ClCompile Include="WanderingState.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
+    <ClCompile Include="ItemMeat.cpp">
+      <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -930,6 +933,9 @@
   <ItemGroup>
     <ClInclude Include="GameSaver.h">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemMeat.h">
+      <Filter>Header Files\Model\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

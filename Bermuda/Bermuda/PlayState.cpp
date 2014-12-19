@@ -107,7 +107,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		else if (mainEvent.wheel.y < 0){
 			p->getInventory()->incrementSelectedIndex();
 		}
-		p->changeAnimationOnInventorySelection();
+		//p->changeAnimationOnInventorySelection();
 		break;
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym) {
@@ -174,7 +174,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_9:
 			p->getInventory()->setSelectedIndex(mainEvent.key.keysym.sym - 49);
 			break;
-
+		case SDLK_F1:
+			p->toggleGodMode();
+			break;
 		case SDLK_F2:
 			this->showCol = !this->showCol;
 			break;

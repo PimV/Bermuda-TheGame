@@ -98,7 +98,7 @@ bool Item::isConsumable() {
 }
 
 bool Item::isEquipable() {
-	return this->hasItemType(ItemType::Armour) || this->hasItemType(ItemType::Tool) || this->hasItemType(ItemType::Weapon);
+	return this->hasItemType(ItemType::Armour) || this->hasItemType(ItemType::WorkTool) || this->hasItemType(ItemType::Weapon);
 }
 
 Item::~Item(void)
