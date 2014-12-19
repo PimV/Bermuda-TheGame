@@ -53,7 +53,7 @@ void Wolf::update(double dt)
 {
 }
 
-void Wolf::changeState(State* pNewState)
+void Wolf::changeState(State<Entity>* pNewState)
 {
 	assert(getCurrentState() && pNewState);
 	this->getCurrentState()->Exit(this);

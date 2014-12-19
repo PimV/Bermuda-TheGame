@@ -4,7 +4,7 @@
 #include "NPC.h"
 
 class WanderAround :
-	public State
+	public State<Entity>
 {
 private:
 	WanderAround(){};

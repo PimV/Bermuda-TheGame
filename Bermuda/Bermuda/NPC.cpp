@@ -42,7 +42,7 @@ Spawnpoint* NPC::getSpawnPoint()
 {
 	return this->spawnPoint;
 }
-State* NPC::getCurrentState()
+State<Entity>* NPC::getCurrentState()
 {
 	return this->currentState;
 }
@@ -69,7 +69,7 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 	this->spawnPoint = spawnPoint;
 }
 
-void NPC::setCurrentState(State* state)
+void NPC::setCurrentState(State<Entity>* state)
 {
 	delete this->currentState;
 	this->currentState = state;

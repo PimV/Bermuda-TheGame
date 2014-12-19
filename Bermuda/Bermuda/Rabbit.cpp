@@ -49,7 +49,7 @@ void Rabbit::update(double dt)
 {
 }
 
-void Rabbit::changeState(State* pNewState)
+void Rabbit::changeState(State<Entity>* pNewState)
 {
 	assert(getCurrentState() && pNewState);
 	this->getCurrentState()->Exit(this);

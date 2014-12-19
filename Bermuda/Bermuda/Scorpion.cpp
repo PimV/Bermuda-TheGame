@@ -53,7 +53,7 @@ void Scorpion::update(double dt)
 {
 }
 
-void Scorpion::changeState(State* pNewState)
+void Scorpion::changeState(State<Entity>* pNewState)
 {
 	assert(getCurrentState() && pNewState);
 	this->getCurrentState()->Exit(this);

@@ -15,7 +15,7 @@ public:
 	virtual ~Scorpion();
 
 	void update(double dt);
-	void changeState(State* pNewState);
+	void changeState(State<Entity>* pNewState);
 private:
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();

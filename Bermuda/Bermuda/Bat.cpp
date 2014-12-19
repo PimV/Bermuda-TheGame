@@ -48,7 +48,7 @@ void Bat::update(double dt)
 {
 }
 
-void Bat::changeState(State* pNewState)
+void Bat::changeState(State<Entity>* pNewState)
 {
 	assert(getCurrentState() && pNewState);
 	this->getCurrentState()->Exit(this);

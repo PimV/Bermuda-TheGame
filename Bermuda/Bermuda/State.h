@@ -1,14 +1,14 @@
 #pragma once
 #include "Entity.h"
 
+template <class entity_type>
 class State
 {
 public:
-	State();
-	virtual ~State();
+	virtual ~State(){};
 
-	virtual void Enter(Entity* entity) = 0;
-	virtual void Execute(Entity* entity, double dt) = 0;
-	virtual void Exit(Entity* entity) = 0;
+	virtual void Enter(entity_type*) = 0;
+	virtual void Execute(entity_type*, double dt) = 0;
+	virtual void Exit(entity_type*) = 0;
 };
 

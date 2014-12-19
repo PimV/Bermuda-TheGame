@@ -17,7 +17,7 @@ public:
 	virtual ~Bat();
 
 	void update(double dt);
-	void changeState(State* pNewState);
+	void changeState(State<Entity>* pNewState);
 private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);

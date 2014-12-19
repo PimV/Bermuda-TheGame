@@ -49,7 +49,7 @@ void Wasp::update(double dt)
 {
 }
 
-void Wasp::changeState(State* pNewState)
+void Wasp::changeState(State<Entity>* pNewState)
 {
 	assert(getCurrentState() && pNewState);
 	this->getCurrentState()->Exit(this);
