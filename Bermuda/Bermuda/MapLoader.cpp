@@ -234,15 +234,6 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 
 void MapLoader::createObjects(Value& objects)
 {
-	//Possibly use something like this to create objects from strings
-	/*map_type map;
-	map["DerivedA"] = &createInstance<DerivedA>;
-	map["DerivedB"] = &createInstance<DerivedB>;
-	//And then you can do
-	return map[some_string]();*/
-	//Parameters could be a problem with this though. 
-	//TODO: Create object factory?
-
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
 	double totalObjects = objects.Size();

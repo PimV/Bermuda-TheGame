@@ -51,9 +51,9 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->healthUpdate = GameTimer::Instance()->getGameTime();
 	this->darknessUpdate = GameTimer::Instance()->getGameTime();
 	this->quickDeathUpdate = GameTimer::Instance()->getGameTime();
-	this->hungerUpdateTime = 3000;
-	this->thirstUpdateTime = 2000;
-	this->healthUpdateTime = 3000;
+	this->hungerUpdateTime = 6000;
+	this->thirstUpdateTime = 5000;
+	this->healthUpdateTime = 1500;
 	this->darknessUpdateTime = 3500; 
 	this->quickDeathUpdateTime = 50; // increase to die faster when not in the light
 	this->health = 100; 
@@ -206,17 +206,11 @@ void Player::updatePlayerStatuses(double dt)
 	// check if hunger needs to be updated
 	if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
 		this->setHunger(this->getHunger() - 1);
-		if (this->getHunger() <= 0) {
-			this->setHealth(this->getHealth() - 1);
-		}
 	}
 
 	// check if thirst needs to be updated
 	if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
 		this->setThirst(this->getThirst() - 1);
-		if (this->getThirst() <= 0) {
-			this->setHealth(this->getHealth() - 1);
-		}
 	}
 
 	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
@@ -226,6 +220,14 @@ void Player::updatePlayerStatuses(double dt)
 		}
 		else if (this->getThirst() > 40 && this->getHunger() > 40) {
 			this->setHealth(this->getHealth() + 1);
+		}
+		else if (this->getThirst() <= 0 && this->getHunger() <= 0)
+		{
+			this->setHealth(this->getHealth() - 4);
+		}
+		else if (this->getThirst() <= 0 || this->getHunger() <= 0)
+		{
+			this->setHealth(this->getHealth() - 2);
 		}
 	}
 

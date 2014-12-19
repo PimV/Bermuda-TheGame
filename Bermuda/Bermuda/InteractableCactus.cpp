@@ -14,8 +14,8 @@ InteractableCactus::InteractableCactus(int id, double x, double y, Image* cactus
 	this->cactusImage = cactusImage;
 	this->stumpImage = stumpImage;
 	this->destroyed = false;
-	this->respawnTime = 5000;
-	this->interactTime = 4500;
+	this->respawnTime = GameTimer::Instance()->getFullDayLength() * 10;
+	this->interactTime = 6000;
 
 	this->animationType = AnimationEnumType::Chop;
 }

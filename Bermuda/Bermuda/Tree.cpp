@@ -17,8 +17,8 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 
 	this->destroyed = false;
-	this->respawnTime = 5000;
-	this->interactTime = 5000;
+	this->respawnTime = GameTimer::Instance()->getFullDayLength() * 10;
+	this->interactTime = 10000;
 	this->animationType = AnimationEnumType::Chop;
 }
 

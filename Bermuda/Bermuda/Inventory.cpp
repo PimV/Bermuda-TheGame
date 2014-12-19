@@ -87,14 +87,12 @@ bool Inventory::addItem(Item* item) {
 		//Returns NULL if only full slots were found
 		Item* inInvItem = this->getItemById(item->getId(), false);
 
-		if (inInvItem == NULL) {
+		if (inInvItem == nullptr) {
 			if (this->getSize() < slots) {
 				//Can add item, inventory slots left
-				std::cout << "Adding item in a new slot (all current slots filled)" << std::endl;
 				this->itemVector.push_back(item);
 			} else {
 				//Could not add, no inventory slots left!
-				std::cout << "Could not add into a new inventory slot, since the inventory was filled! (all slots filled)" << std::endl;
 				return false;
 			}
 		} else {
@@ -104,8 +102,8 @@ bool Inventory::addItem(Item* item) {
 					inInvItem = this->getItemById(item->getId(), false);
 					if (inInvItem == nullptr && this->getSize() < slots) {
 						this->itemVector.push_back(item);
-						break;
 					}
+					break;
 				} else {
 					inInvItem->setStackSize(inInvItem->getStackSize() + 1);
 					item->setStackSize(item->getStackSize() - 1);
