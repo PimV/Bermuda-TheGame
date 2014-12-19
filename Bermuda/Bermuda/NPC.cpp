@@ -1,6 +1,6 @@
 #include "NPC.h"
 #include "Spawnpoint.h"
-#include "WanderingState.h"
+#include "WanderAround.h"
 #include "MovableEntity.h"
 
 #include <iostream>

@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "WanderingState.h"
+#include "WanderAround.h"
 
 Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	NPC(id, 5, 1, 50, spawnPoint),
@@ -43,16 +43,10 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
-
-	this->setCurrentState(new WanderingState());
 }
 
 void Wasp::update(double dt) 
 {
-	if (getCurrentState())
-	{
-		this->getCurrentState()->execute(this, dt);
-	}
 }
 
 void Wasp::changeState(State* pNewState)

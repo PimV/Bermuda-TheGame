@@ -232,7 +232,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Tree.h" />
     <ClInclude Include="TreePine.h" />
     <ClInclude Include="TreeRound.h" />
-    <ClInclude Include="WanderingState.h" />
+    <ClInclude Include="WanderAround.h" />
     <ClInclude Include="Wasp.h" />
     <ClInclude Include="Wolf.h" />
     <ClInclude Include="Weapon.h" />
@@ -327,7 +327,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="TreePine.cpp" />
     <ClCompile Include="TreeRound.cpp" />
-    <ClCompile Include="WanderingState.cpp" />
+    <ClCompile Include="WanderAround.cpp" />
     <ClCompile Include="Wasp.cpp" />
     <ClCompile Include="Wolf.cpp" />
     <ClCompile Include="Weapon.cpp" />

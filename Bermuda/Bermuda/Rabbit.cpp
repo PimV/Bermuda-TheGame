@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "WanderingState.h"
+#include "WanderAround.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, 5, 1, 50, spawnPoint),
@@ -43,16 +43,10 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
-
-	this->setCurrentState(new WanderingState());
 }
 
 void Rabbit::update(double dt) 
 {
-	if (getCurrentState())
-	{
-		this->getCurrentState()->execute(this, dt);
-	}
 }
 
 void Rabbit::changeState(State* pNewState)

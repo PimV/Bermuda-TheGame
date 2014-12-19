@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "WanderingState.h"
+#include "WanderAround.h"
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	NPC(id, 5, 1, 50, spawnPoint),
@@ -47,16 +47,10 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
-
-	this->setCurrentState(new WanderingState());
 }
 
 void Wolf::update(double dt) 
 {
-	if (getCurrentState())
-	{
-		this->getCurrentState()->execute(this, dt);
-	}
 }
 
 void Wolf::changeState(State* pNewState)

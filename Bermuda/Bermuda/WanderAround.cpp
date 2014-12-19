@@ -1,37 +1,31 @@
-#include "WanderingState.h"
+#include "WanderAround.h"
 #include "GameTimer.h"
 #include <time.h>
 #include <iostream>
 #include <random>
 #include <assert.h>
 
-WanderingState::WanderingState()
+WanderAround::~WanderAround()
 {
 
 }
 
-
-WanderingState::~WanderingState()
+void WanderAround::Enter(Entity* entity)
 {
 
 }
 
-void WanderingState::enter(Entity* entity)
+void WanderAround::Exit(Entity* entity)
 {
 
 }
 
-void WanderingState::exit(Entity* entity)
-{
-
-}
-
-void WanderingState::execute(Entity* entity, double dt)
+void WanderAround::Execute(Entity* entity, double dt)
 {
 	assert(entity && dt);
 
-	this->movableEntity = dynamic_cast<MovableEntity*>(entity);
-	this->npc = dynamic_cast<NPC*>(entity);
+	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(entity);
+	NPC* npc = dynamic_cast<NPC*>(entity);
 
 	std::random_device dev;
 	std::default_random_engine dre(dev());

@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "WanderingState.h"
+#include "WanderAround.h"
 
 
 Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
@@ -47,16 +47,10 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
-
-	this->setCurrentState(new WanderingState());
 }
 
 void Scorpion::update(double dt) 
 {
-	if (getCurrentState())
-	{
-		this->getCurrentState()->execute(this, dt);
-	}
 }
 
 void Scorpion::changeState(State* pNewState)

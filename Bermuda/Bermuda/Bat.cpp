@@ -1,15 +1,15 @@
 #include "Bat.h"
 #include "PlayState.h"
 #include <random>
-#include "WanderingState.h"
+#include "WanderAround.h"
 
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 50, spawnPoint),
-	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
-	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
-	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
+NPC(id, 5, 1, 50, spawnPoint),
+Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
+CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(32);
 	this->setHeight(32);
@@ -42,16 +42,10 @@ Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
-
-	this->setCurrentState(new WanderingState());
 }
 
-void Bat::update(double dt) 
+void Bat::update(double dt)
 {
-	if (getCurrentState()) 
-	{
-		this->getCurrentState()->execute(this, dt);
-	}
 }
 
 void Bat::changeState(State* pNewState)
@@ -72,7 +66,7 @@ void Bat::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
-	this->setChunks(); 
+	this->setChunks();
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);

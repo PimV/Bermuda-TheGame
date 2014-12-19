@@ -522,13 +522,13 @@
     <ClCompile Include="Scorpion.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
-    <ClCompile Include="WanderingState.cpp">
-      <Filter>Source Files\Model\Entity\State</Filter>
-    </ClCompile>
     <ClCompile Include="ItemMeat.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
+      <Filter>Source Files\Model\Entity\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderAround.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
   </ItemGroup>
@@ -923,10 +923,10 @@
     <ClInclude Include="NPCType.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="WanderingState.h">
+    <ClInclude Include="State.h">
       <Filter>Header Files\Model\State</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
+    <ClInclude Include="WanderAround.h">
       <Filter>Header Files\Model\State</Filter>
     </ClInclude>
   </ItemGroup>
