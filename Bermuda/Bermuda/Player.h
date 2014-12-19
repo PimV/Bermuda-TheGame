@@ -41,11 +41,12 @@ public:
 	void drawHungerBar(int x, int y);
 	void drawThirstBar(int x, int y);
 
-	//void clickMove();
 	void clickMove();
 	void setPosition(double newX, double newY);
 	void interact(double dt);
 	void resetMovement();
+
+	void toggleGodMode();
 
 	void drawStats();
 
@@ -60,6 +61,9 @@ public:
 
 	bool getCorrectToolSelected();
 	void setCorrectToolSelected(bool tool);
+
+	bool getWithinDarkness();
+	void setWithinDarkness(bool newDarkness);
 
 private:
 	Camera* camera;
@@ -83,6 +87,8 @@ private:
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
 	long healthUpdate, healthUpdateTime;
+	long darknessUpdate, darknessUpdateTime;
+	long quickDeathUpdate, quickDeathUpdateTime;
 
 	#pragma region animation
 	int animationPickUp;
@@ -117,6 +123,8 @@ private:
 	int animationSpearWalkEndColumn;
 	#pragma endregion animation
 
+	bool godMode;
+
 	bool correctToolSelected;
 
 	double getDistance(int currentX, int currentY, int destX, int destY);
@@ -133,4 +141,6 @@ private:
 	bool checkCollision(double newX, double newY);
 
 	void setAnimationType(AnimationEnumType type);
+	
+	bool withinDarkness;
 };

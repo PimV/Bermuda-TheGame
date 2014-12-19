@@ -29,6 +29,7 @@ public:
 	int getSlotsFreedWhenDeleting(int itemID, int count);
 	void deleteItem(int itemID, int count);
 	void deleteItemFromStack(Item* stack, int count);
+	void clearInventory();
 	std::vector<Item*> getItems();
 	
 	bool axeSelected();
