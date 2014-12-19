@@ -1,8 +1,5 @@
 #pragma once
 #include "NPC.h"
-#include "MovableEntity.h"
-#include "DrawableEntity.h"
-#include "CollidableEntity.h"
 #include "InteractableEntity.h"
 #include "Weapon.h"
 

@@ -40,17 +40,9 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;
 	#pragma endregion Animation_stuff
-
-	this->timeSinceLastAction = 0;
 	
 	#pragma region Interactable_stuff
-	this->destroyed = false;
-
-	// before merge up this number to 90000 ~1.5 minute
-	this->respawnTime = 90000;
-
 	this->interactTime = 500;
-
 	this->animationType = AnimationEnumType::Attackable;
 	#pragma endregion Interactable_stuff
 
