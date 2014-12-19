@@ -13,10 +13,11 @@ WanderingState::WanderingState(Entity* entity)
 
 WanderingState::~WanderingState()
 {
+
 }
 
 
-void WanderingState::update(double dt)
+void WanderingState::execute(double dt)
 {
 	std::random_device dev;
 	std::default_random_engine dre(dev());

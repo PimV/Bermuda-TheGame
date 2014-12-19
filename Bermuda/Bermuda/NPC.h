@@ -1,7 +1,8 @@
 #pragma once
 #include "Entity.h"
 #include "Spawnpoint.h"
-#include "IState.h"
+#include "State.h"
+
 
 class NPC :
 	public virtual Entity
@@ -10,12 +11,14 @@ public:
 	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
 	virtual ~NPC();
 
+	void changeState(State* pNewState);
+
 #pragma region Getters
 	int getHeathPoints();
 	int getAttackPoints();
 	int getActionRange();
 	Spawnpoint* getSpawnPoint();
-	IState* getCurrentState();
+	State* getCurrentState();
 #pragma endregion
 
 #pragma region Setters
@@ -23,12 +26,12 @@ public:
 	void setAttackPoints(int attackPoints);
 	void setActionRange(int actionRange);
 	void setSpawnPoint(Spawnpoint *spawnPoint);
-	void setCurrentState(IState* state);
+	void setCurrentState(State* state);
 #pragma endregion
 
 private:
 	int healthPoints, attackPoints, walkRange, actionRange, respawnTime, interactTime;
 	bool destroyed, timeSinceDestroy, currentInteractTime;;
 	Spawnpoint *spawnPoint;
-	IState *currentState;
+	State *currentState;
 };

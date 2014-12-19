@@ -49,7 +49,10 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 void Wasp::update(double dt) 
 {
-	this->getCurrentState()->update(dt);
+	if (getCurrentState())
+	{
+		this->getCurrentState()->execute(dt);
+	}
 }
 
 void Wasp::setImage(Image* image)

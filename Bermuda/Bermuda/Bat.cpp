@@ -48,7 +48,10 @@ Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 void Bat::update(double dt) 
 {
-	this->getCurrentState()->update(dt);
+	if (getCurrentState()) 
+	{
+		this->getCurrentState()->execute(dt);
+	}
 }
 
 void Bat::setImage(Image* image)

@@ -1,16 +1,16 @@
 #pragma once
-#include "IState.h"
+#include "State.h"
 #include "MovableEntity.h"
 #include "NPC.h"
 
 class WanderingState :
-	public IState
+	public State
 {
 public:
 	WanderingState(Entity* entity);
 	virtual ~WanderingState();
 
-	void update(double dt);
+	void execute(double dt);
 private:
 	MovableEntity* movableEntity;
 	NPC* npc;

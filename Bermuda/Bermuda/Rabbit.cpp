@@ -47,8 +47,12 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->setCurrentState(new WanderingState(this));
 }
 
-void Rabbit::update(double dt) {
-	this->getCurrentState()->update(dt);
+void Rabbit::update(double dt) 
+{
+	if (getCurrentState())
+	{
+		this->getCurrentState()->execute(dt);
+	}
 }
 
 void Rabbit::setImage(Image* image)

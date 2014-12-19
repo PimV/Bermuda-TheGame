@@ -5,6 +5,7 @@
 
 #include <iostream>
 
+
 NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
 	Entity(id,spawnPoint->getX(),spawnPoint->getY())
 {
@@ -18,6 +19,12 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint
 	this->interactTime = 500;
 	this->timeSinceDestroy = 0;
 	this->currentInteractTime = 0;
+}
+
+void NPC::changeState(State* pNewState)
+{
+	delete this->currentState;
+	this->currentState = pNewState;
 }
 
 #pragma region Getters
@@ -40,7 +47,7 @@ Spawnpoint* NPC::getSpawnPoint()
 {
 	return this->spawnPoint;
 }
-IState* NPC::getCurrentState()
+State* NPC::getCurrentState()
 {
 	return this->currentState;
 }
@@ -67,7 +74,7 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 	this->spawnPoint = spawnPoint;
 }
 
-void NPC::setCurrentState(IState* state)
+void NPC::setCurrentState(State* state)
 {
 	delete this->currentState;
 	this->currentState = state;

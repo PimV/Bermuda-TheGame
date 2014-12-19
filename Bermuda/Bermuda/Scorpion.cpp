@@ -54,7 +54,10 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 void Scorpion::update(double dt) 
 {
-	this->getCurrentState()->update(dt);
+	if (getCurrentState())
+	{
+		this->getCurrentState()->execute(dt);
+	}
 }
 
 void Scorpion::setImage(Image* image)

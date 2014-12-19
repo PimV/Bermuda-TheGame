@@ -53,7 +53,10 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 void Wolf::update(double dt) 
 {
-	this->getCurrentState()->update(dt);
+	if (getCurrentState())
+	{
+		this->getCurrentState()->execute(dt);
+	}
 }
 
 void Wolf::setImage(Image* image)
