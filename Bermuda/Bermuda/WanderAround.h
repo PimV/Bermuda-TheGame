@@ -7,12 +7,12 @@ class WanderAround :
 	public State
 {
 private:
-	WanderAround(){}
+	WanderAround(){};
+	virtual ~WanderAround(){};
 
 	WanderAround(const WanderAround &);
 	WanderAround& operator=(const WanderAround &);
 public:
-	virtual ~WanderAround();
 	static WanderAround* Instance();
 
 	void Enter(Entity* entity);

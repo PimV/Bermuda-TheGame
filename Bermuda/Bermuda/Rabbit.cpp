@@ -52,9 +52,9 @@ void Rabbit::update(double dt)
 void Rabbit::changeState(State* pNewState)
 {
 	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->exit(this);
+	this->getCurrentState()->Exit(this);
 	this->setCurrentState(pNewState);
-	this->getCurrentState()->enter(this);
+	this->getCurrentState()->Enter(this);
 }
 
 void Rabbit::setImage(Image* image)

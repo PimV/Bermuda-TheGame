@@ -52,9 +52,9 @@ void Wasp::update(double dt)
 void Wasp::changeState(State* pNewState)
 {
 	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->exit(this);
+	this->getCurrentState()->Exit(this);
 	this->setCurrentState(pNewState);
-	this->getCurrentState()->enter(this);
+	this->getCurrentState()->Enter(this);
 }
 
 void Wasp::setImage(Image* image)

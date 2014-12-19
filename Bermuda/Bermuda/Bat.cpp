@@ -51,9 +51,9 @@ void Bat::update(double dt)
 void Bat::changeState(State* pNewState)
 {
 	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->exit(this);
+	this->getCurrentState()->Exit(this);
 	this->setCurrentState(pNewState);
-	this->getCurrentState()->enter(this);
+	this->getCurrentState()->Enter(this);
 }
 
 void Bat::setImage(Image* image)

@@ -56,9 +56,9 @@ void Scorpion::update(double dt)
 void Scorpion::changeState(State* pNewState)
 {
 	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->exit(this);
+	this->getCurrentState()->Exit(this);
 	this->setCurrentState(pNewState);
-	this->getCurrentState()->enter(this);
+	this->getCurrentState()->Enter(this);
 }
 
 void Scorpion::setImage(Image* image)

@@ -5,10 +5,12 @@
 #include <random>
 #include <assert.h>
 
-WanderAround::~WanderAround()
+WanderAround* WanderAround::Instance()
 {
-
+	static WanderAround instance;
+	return &instance;
 }
+
 
 void WanderAround::Enter(Entity* entity)
 {

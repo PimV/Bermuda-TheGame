@@ -56,9 +56,9 @@ void Wolf::update(double dt)
 void Wolf::changeState(State* pNewState)
 {
 	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->exit(this);
+	this->getCurrentState()->Exit(this);
 	this->setCurrentState(pNewState);
-	this->getCurrentState()->enter(this);
+	this->getCurrentState()->Enter(this);
 }
 
 void Wolf::setImage(Image* image)
