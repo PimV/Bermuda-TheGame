@@ -17,10 +17,11 @@ public:
 	virtual ~Bat();
 
 	void update(double dt);
-	bool checkCollision(double newX, double newY);
+	void changeState(State* pNewState);
 private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
+	bool checkCollision(double newX, double newY);
 };
 

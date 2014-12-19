@@ -44,15 +44,23 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->StopAnimation();
 
-	this->setCurrentState(new WanderingState(this));
+	this->setCurrentState(new WanderingState());
 }
 
 void Wasp::update(double dt) 
 {
 	if (getCurrentState())
 	{
-		this->getCurrentState()->execute(dt);
+		this->getCurrentState()->execute(this, dt);
 	}
+}
+
+void Wasp::changeState(State* pNewState)
+{
+	assert(getCurrentState() && pNewState);
+	this->getCurrentState()->exit(this);
+	this->setCurrentState(pNewState);
+	this->getCurrentState()->enter(this);
 }
 
 void Wasp::setImage(Image* image)

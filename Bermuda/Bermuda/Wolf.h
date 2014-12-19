@@ -15,9 +15,10 @@ public:
 	virtual ~Wolf();
 
 	void update(double dt);
-	bool checkCollision(double newX, double newY);
+	void changeState(State* pNewState);
 private:
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
+	bool checkCollision(double newX, double newY);
 };
 

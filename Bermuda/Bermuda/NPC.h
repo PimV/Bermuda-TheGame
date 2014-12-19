@@ -11,7 +11,7 @@ public:
 	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
 	virtual ~NPC();
 
-	void changeState(State* pNewState);
+	virtual void changeState(State* pNewState) = 0;
 
 #pragma region Getters
 	int getHeathPoints();

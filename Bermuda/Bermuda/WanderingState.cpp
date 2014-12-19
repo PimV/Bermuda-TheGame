@@ -3,11 +3,11 @@
 #include <time.h>
 #include <iostream>
 #include <random>
+#include <assert.h>
 
-WanderingState::WanderingState(Entity* entity)
+WanderingState::WanderingState()
 {
-	this->movableEntity = dynamic_cast<MovableEntity*>(entity);
-	this->npc = dynamic_cast<NPC*>(entity);;
+
 }
 
 
@@ -16,9 +16,23 @@ WanderingState::~WanderingState()
 
 }
 
-
-void WanderingState::execute(double dt)
+void WanderingState::enter(Entity* entity)
 {
+
+}
+
+void WanderingState::exit(Entity* entity)
+{
+
+}
+
+void WanderingState::execute(Entity* entity, double dt)
+{
+	assert(entity && dt);
+
+	this->movableEntity = dynamic_cast<MovableEntity*>(entity);
+	this->npc = dynamic_cast<NPC*>(entity);
+
 	std::random_device dev;
 	std::default_random_engine dre(dev());
 

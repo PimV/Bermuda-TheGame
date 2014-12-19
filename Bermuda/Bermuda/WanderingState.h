@@ -7,10 +7,12 @@ class WanderingState :
 	public State
 {
 public:
-	WanderingState(Entity* entity);
+	WanderingState();
 	virtual ~WanderingState();
-
-	void execute(double dt);
+	
+	void enter(Entity* entity);
+	void execute(Entity* entity, double dt);
+	void exit(Entity* entity);
 private:
 	MovableEntity* movableEntity;
 	NPC* npc;

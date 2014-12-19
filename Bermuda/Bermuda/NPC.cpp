@@ -21,11 +21,6 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint
 	this->currentInteractTime = 0;
 }
 
-void NPC::changeState(State* pNewState)
-{
-	delete this->currentState;
-	this->currentState = pNewState;
-}
 
 #pragma region Getters
 int NPC::getHeathPoints()

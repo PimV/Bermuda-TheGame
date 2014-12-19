@@ -43,15 +43,23 @@ Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->StopAnimation();
 
-	this->setCurrentState(new WanderingState(this));
+	this->setCurrentState(new WanderingState());
 }
 
 void Bat::update(double dt) 
 {
 	if (getCurrentState()) 
 	{
-		this->getCurrentState()->execute(dt);
+		this->getCurrentState()->execute(this, dt);
 	}
+}
+
+void Bat::changeState(State* pNewState)
+{
+	assert(getCurrentState() && pNewState);
+	this->getCurrentState()->exit(this);
+	this->setCurrentState(pNewState);
+	this->getCurrentState()->enter(this);
 }
 
 void Bat::setImage(Image* image)

@@ -12,10 +12,10 @@ class Scorpion :
 {
 public:
 	Scorpion(int id, Spawnpoint *spawnPoint, int firstImgID);
-	
-	void update(double dt);
-
 	virtual ~Scorpion();
+
+	void update(double dt);
+	void changeState(State* pNewState);
 private:
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();

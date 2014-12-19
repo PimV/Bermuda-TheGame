@@ -15,7 +15,6 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 {
 	this->setWidth(48);
 	this->setHeight(48);
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 2;
@@ -49,15 +48,23 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->StopAnimation();
 
-	this->setCurrentState(new WanderingState(this));
+	this->setCurrentState(new WanderingState());
 }
 
 void Scorpion::update(double dt) 
 {
 	if (getCurrentState())
 	{
-		this->getCurrentState()->execute(dt);
+		this->getCurrentState()->execute(this, dt);
 	}
+}
+
+void Scorpion::changeState(State* pNewState)
+{
+	assert(getCurrentState() && pNewState);
+	this->getCurrentState()->exit(this);
+	this->setCurrentState(pNewState);
+	this->getCurrentState()->enter(this);
 }
 
 void Scorpion::setImage(Image* image)
