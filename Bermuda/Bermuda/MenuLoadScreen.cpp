@@ -177,6 +177,11 @@ void MenuLoadScreen::handleEvents(SDL_Event mainEvent)
 		}
 		break;
 	case SDL_MOUSEMOTION:
+		this->loadButton->hover(x, y);
+		for (SavedGameButton* var : savedGameButtons)
+		{
+			var->hover(x, y);
+		}
 		for(BaseButton* var : buttons)
 		{
 			var->hover(x, y);
