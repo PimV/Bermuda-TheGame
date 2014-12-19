@@ -5,7 +5,7 @@
 #include "Item.h"
 #include <vector>
 
-Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
+Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
 	Entity(id, x, y),
 	DrawableEntity(id, x, y, nullptr),
 	CollidableEntity(id, x, y, 20, 52, 24, 10),
@@ -46,7 +46,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->setHeight(64);
 
 	//this->playerTimer = new PlayerUpdateTimer();
-	this->hungerUpdate = GameTimer::Instance()->getGameTime();
+	this->hungerUpdate = GameTimer::Instance()->getGameTime(); 
 	this->thirstUpdate = GameTimer::Instance()->getGameTime();
 	this->healthUpdate = GameTimer::Instance()->getGameTime();
 	this->darknessUpdate = GameTimer::Instance()->getGameTime();
@@ -56,8 +56,8 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->healthUpdateTime = 3000;
 	this->darknessUpdateTime = 3500; 
 	this->quickDeathUpdateTime = 50; // increase to die faster when not in the light
-	this->health = 100;
-	this->hunger = 100;
+	this->health = 100; 
+	this->hunger = 100; 
 	this->thirst = 100;
 	this->withinDarkness = false;
 
@@ -78,7 +78,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 
 	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("Player_Animations.png", 64, 64);
 
-#pragma region animation
+	#pragma region animation
 	this->animationWalkUpRow = 4;
 	this->animationWalkLeftRow = 5;
 	this->animationWalkDownRow = 6;
@@ -92,7 +92,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->animationSpearWalkRight = 11;
 	this->animationSpearWalkStartColumn = 1;
 	this->animationSpearWalkEndColumn = 8;
-
+	
 	this->animationPickUp = 0;
 	this->animationPickStartColumn = 1;
 	this->animationPickEndColumn = 6;
@@ -128,7 +128,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 50;
-#pragma endregion animation
+	#pragma endregion animation
 
 	this->correctToolSelected = false;
 
@@ -184,7 +184,9 @@ void Player::update(double dt) {
 	}
 
 	if (!this->godMode) {
-		this->updatePlayerStatuses(dt);
+	this->changeAnimationOnInventorySelection();
+
+	this->updatePlayerStatuses(dt);
 	}
 
 	if (this->interaction) {
@@ -235,7 +237,7 @@ void Player::updatePlayerStatuses(double dt)
 			{
 				this->setHealth(this->getHealth() - 1);
 				this->quickDeathUpdate = currentTime;
-			}
+}
 		}
 	}
 	else
@@ -429,12 +431,12 @@ void Player::setAnimationType(AnimationEnumType type)
 		{
 		case (int)Items::Axe:
 			this->currentAnimationRow = this->animationChopUp + (int)this->movementDirection;
-			this->animationActionStartColumn = this->animationChopStartColumn;
+ 			this->animationActionStartColumn = this->animationChopStartColumn;
 			this->animationActionEndColumn = this->animationChopEndColumn;
 			break;
 		case (int)Items::GoldenAxe:
 			this->currentAnimationRow = this->animationChopGoldUp + (int)this->movementDirection;
-			this->animationActionStartColumn = this->animationChopGoldStartColumn;
+ 			this->animationActionStartColumn = this->animationChopGoldStartColumn;
 			this->animationActionEndColumn = this->animationChopGoldEndColumn;
 			break;
 		}
@@ -444,25 +446,25 @@ void Player::setAnimationType(AnimationEnumType type)
 		{
 		case (int)Items::Pickaxe:
 			this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;
-			this->animationActionStartColumn = this->animationMineStartColumn;
+ 			this->animationActionStartColumn = this->animationMineStartColumn;
 			this->animationActionEndColumn = this->animationMineEndColumn;
 			break;			
 		case (int)Items::GoldenPickaxe:
 			this->currentAnimationRow = this->animationMineGoldUp + (int)this->movementDirection;
-			this->animationActionStartColumn = this->animationMineGoldStartColumn;
+ 			this->animationActionStartColumn = this->animationMineGoldStartColumn;
 			this->animationActionEndColumn = this->animationMineGoldEndColumn;
 			break;
 		}
 		break;
 	case AnimationEnumType::Pick:
-		this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
-		this->animationActionStartColumn = this->animationPickStartColumn;
-		this->animationActionEndColumn = this->animationPickEndColumn;
+			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationPickStartColumn;
+			this->animationActionEndColumn = this->animationPickEndColumn;
 		break;
 	case AnimationEnumType::AttackSpear:
-		this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;
-		this->animationActionStartColumn = this->animationSpearAttackStartColumn;
-		this->animationActionEndColumn = this->animationSpearAttackEndColumn;
+			this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;
+			this->animationActionStartColumn = this->animationSpearAttackStartColumn;
+			this->animationActionEndColumn = this->animationSpearAttackEndColumn;
 		break;
 	default:
 		break;
@@ -566,7 +568,7 @@ void Player::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
-	this->setChunks();
+	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);

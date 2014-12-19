@@ -22,6 +22,9 @@ void WeaponSpear::init() {
 
 	this->setAttackDamage(10);
 	this->setAttackRadius(10);
+
+	this->setMaxDurability(100);
+	this->setDurability(100);
 }
 
 /*

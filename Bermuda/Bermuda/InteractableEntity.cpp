@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include "PlayState.h"
 #include "Camera.h"
+#include "Equipable.h"
 
 #include <iostream>
 
@@ -27,6 +28,7 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int interactS
 
 void InteractableEntity::interact(Player* player)
 {
+
 	//TODO : oplossen op manier zonder casten
 	/*if (this->getEnabled())
 	{
@@ -94,10 +96,20 @@ void InteractableEntity::highlight() {
 		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->highlightTexture, &croppingRect, &rect );
 
 	}
-}
+	}
 
 int InteractableEntity::getPercentageCompleted() {
 	return (static_cast<double>(currentInteractTime) / static_cast<double>(interactTime)) * 100;
+}
+
+void InteractableEntity::degradeTool(Player* player) {
+	Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
+	tool->setDurability(tool->getDurability() - 1);
+	std::cout << tool->getPercentageDegraded() << std::endl;
+	if (tool->getDurability() <= 0) {
+		std::cout << "Destroying pickaxe, no durability!" << std::endl;
+		player->getInventory()->deleteItem(tool->getId(), 1);
+	}
 }
 
 void InteractableEntity::drawInteractableArea()
@@ -126,6 +138,10 @@ bool InteractableEntity::trackInteractTimes() {
 		return true;
 	}
 	return false;
+}
+
+long InteractableEntity::getCurrentInteractTime() {
+	return currentInteractTime;
 }
 
 int InteractableEntity::getInteractStartX()

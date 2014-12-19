@@ -53,6 +53,7 @@ void InteractableCactus::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
+			this->degradeTool(player);
 			//TODO: add to statustracker
 		}
 	} else {

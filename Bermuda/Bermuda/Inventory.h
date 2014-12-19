@@ -62,6 +62,8 @@ private:
 	Image* img;
 	Image* singleImg;
 	Image* singleSelectedImg;
+	Image* singleSelectedYellow;
+	Image* singleSelectedRed;
 	int posX;
 	int posY;
 	int sizeX;

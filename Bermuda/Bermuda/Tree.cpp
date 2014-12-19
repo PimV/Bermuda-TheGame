@@ -1,11 +1,10 @@
 #include "Tree.h"
+#include "Tool.h"
 #include "PlayState.h"
 #include "ItemWood.h"
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
-
-
 
 Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y), 
@@ -41,6 +40,9 @@ void Tree::interact(Player* player) {
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Wood));
 			player->getStatusTracker()->treeCut();
+
+			//Degradability
+				this->degradeTool(player);
 		}
 	} else {
 		player->setCorrectToolSelected(false);
@@ -52,7 +54,7 @@ void Tree::update(double dt) {
 		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
-	} 
+	}
 }
 
 void Tree::respawn() {
