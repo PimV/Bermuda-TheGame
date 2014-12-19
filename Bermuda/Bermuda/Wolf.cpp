@@ -47,18 +47,15 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->SetCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine->SetGlobalState(WanderAround::Instance());
 }
 
-void Wolf::update(double dt) 
+void Wolf::update(double dt)
 {
-}
-
-void Wolf::changeState(State<Entity>* pNewState)
-{
-	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->Exit(this);
-	this->setCurrentState(pNewState);
-	this->getCurrentState()->Enter(this);
+	this->m_pStateMachine->Update(dt);
 }
 
 void Wolf::setImage(Image* image)

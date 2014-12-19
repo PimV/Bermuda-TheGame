@@ -43,19 +43,17 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->SetCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine->SetGlobalState(WanderAround::Instance());
 }
 
-void Wasp::update(double dt) 
+void Wasp::update(double dt)
 {
+	this->m_pStateMachine->Update(dt);
 }
 
-void Wasp::changeState(State<Entity>* pNewState)
-{
-	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->Exit(this);
-	this->setCurrentState(pNewState);
-	this->getCurrentState()->Enter(this);
-}
 
 void Wasp::setImage(Image* image)
 {

@@ -42,19 +42,17 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->SetCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine->SetGlobalState(WanderAround::Instance());
 }
 
 void Bat::update(double dt)
 {
+	this->m_pStateMachine->Update(dt);
 }
 
-void Bat::changeState(State<Entity>* pNewState)
-{
-	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->Exit(this);
-	this->setCurrentState(pNewState);
-	this->getCurrentState()->Enter(this);
-}
 
 void Bat::setImage(Image* image)
 {
@@ -82,4 +80,6 @@ Bat::~Bat()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+
+	delete this->m_pStateMachine;
 }

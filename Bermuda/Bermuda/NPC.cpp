@@ -2,7 +2,6 @@
 #include "Spawnpoint.h"
 #include "WanderAround.h"
 #include "MovableEntity.h"
-
 #include <iostream>
 
 
@@ -21,6 +20,9 @@ NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint
 	this->currentInteractTime = 0;
 }
 
+NPC::~NPC()
+{
+}
 
 #pragma region Getters
 int NPC::getHeathPoints()
@@ -41,10 +43,6 @@ int NPC::getActionRange()
 Spawnpoint* NPC::getSpawnPoint()
 {
 	return this->spawnPoint;
-}
-State<Entity>* NPC::getCurrentState()
-{
-	return this->currentState;
 }
 #pragma endregion
 
@@ -68,15 +66,4 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 {
 	this->spawnPoint = spawnPoint;
 }
-
-void NPC::setCurrentState(State<Entity>* state)
-{
-	delete this->currentState;
-	this->currentState = state;
-}
 #pragma endregion
-
-NPC::~NPC()
-{
-	delete this->currentState;
-}

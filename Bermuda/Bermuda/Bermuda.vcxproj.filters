@@ -525,9 +525,6 @@
     <ClCompile Include="ItemMeat.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>Source Files\Model\Entity\State</Filter>
-    </ClCompile>
     <ClCompile Include="WanderAround.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
@@ -927,6 +924,9 @@
       <Filter>Header Files\Model\State</Filter>
     </ClInclude>
     <ClInclude Include="WanderAround.h">
+      <Filter>Header Files\Model\State</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
       <Filter>Header Files\Model\State</Filter>
     </ClInclude>
   </ItemGroup>

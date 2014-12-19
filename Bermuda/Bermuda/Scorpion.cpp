@@ -47,18 +47,15 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->SetCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine->SetGlobalState(WanderAround::Instance());
 }
 
-void Scorpion::update(double dt) 
+void Scorpion::update(double dt)
 {
-}
-
-void Scorpion::changeState(State<Entity>* pNewState)
-{
-	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->Exit(this);
-	this->setCurrentState(pNewState);
-	this->getCurrentState()->Enter(this);
+	this->m_pStateMachine->Update(dt);
 }
 
 void Scorpion::setImage(Image* image)

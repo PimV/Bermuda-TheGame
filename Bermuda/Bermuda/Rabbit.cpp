@@ -43,19 +43,17 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->SetCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine->SetGlobalState(WanderAround::Instance());
 }
 
-void Rabbit::update(double dt) 
+void Rabbit::update(double dt)
 {
+	this->m_pStateMachine->Update(dt);
 }
 
-void Rabbit::changeState(State<Entity>* pNewState)
-{
-	assert(getCurrentState() && pNewState);
-	this->getCurrentState()->Exit(this);
-	this->setCurrentState(pNewState);
-	this->getCurrentState()->Enter(this);
-}
 
 void Rabbit::setImage(Image* image)
 {
