@@ -11,18 +11,17 @@ WanderAround* WanderAround::Instance()
 	return &instance;
 }
 
-
-void WanderAround::Enter(Entity* entity)
+void WanderAround::enter(Entity* entity)
 {
 
 }
 
-void WanderAround::Exit(Entity* entity)
+void WanderAround::exit(Entity* entity)
 {
 
 }
 
-void WanderAround::Execute(Entity* entity, double dt)
+void WanderAround::execute(Entity* entity, double dt)
 {
 	assert(entity && dt);
 

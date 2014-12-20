@@ -15,8 +15,8 @@ private:
 public:
 	static WanderAround* Instance();
 
-	void Enter(Entity* entity);
-	void Execute(Entity* entity, double dt);
-	void Exit(Entity* entity);
+	void enter(Entity* entity);
+	void execute(Entity* entity, double dt);
+	void exit(Entity* entity);
 };
 

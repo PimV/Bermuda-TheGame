@@ -17,17 +17,17 @@ public:
 		m_pGlobalState(nullptr){}
 	virtual ~StateMachine(){};
 
-	void SetCurrentState(State<entity_type>* s){ m_pCurrentState = s; }
-	void SetGlobalState(State<entity_type>* s) { m_pGlobalState = s; }
-	void SetPreviousState(State<entity_type>* s){ m_pPreviousState = s; }
+	void setCurrentState(State<entity_type>* s){ m_pCurrentState = s; }
+	void setGlobalState(State<entity_type>* s) { m_pGlobalState = s; }
+	void setPreviousState(State<entity_type>* s){ m_pPreviousState = s; }
 	
-	void Update(double dt)const
+	void update(double dt)const
 	{
-		if (m_pGlobalState) m_pGlobalState->Execute(m_pOwner, dt);
-		if (m_pCurrentState) m_pCurrentState->Execute(m_pOwner, dt);
+		if (m_pGlobalState) m_pGlobalState->execute(m_pOwner, dt);
+		if (m_pCurrentState) m_pCurrentState->execute(m_pOwner, dt);
 	}
 	
-	void ChangeState(State<entity_type>* pNewState)
+	void changeState(State<entity_type>* pNewState)
 	{
 		assert(pNewState && "<StateMachine::ChangeState>: trying to change to a null state");
 		m_pPreviousState = m_pCurrentState;
@@ -36,14 +36,14 @@ public:
 		m_pCurrentState->Enter(m_pOwner);
 	}
 
-	void RevertToPreviousState()
+	void revertToPreviousState()
 	{
-		ChangeState(m_pPreviousState);
+		changeState(m_pPreviousState);
 	}
 
-	State<entity_type>* CurrentState() const{ return m_pCurrentState; }
-	State<entity_type>* GlobalState() const{ return m_pGlobalState; }
-	State<entity_type>* PreviousState() const{ return m_pPreviousState; }
+	State<entity_type>* getCurrentState() const{ return m_pCurrentState; }
+	State<entity_type>* getGlobalState() const{ return m_pGlobalState; }
+	State<entity_type>* getPreviousState() const{ return m_pPreviousState; }
 	
 	bool isInState(const State<entity_type>& st)const;
 };
