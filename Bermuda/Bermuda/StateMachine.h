@@ -45,6 +45,6 @@ public:
 	State<entity_type>* getGlobalState() const{ return m_pGlobalState; }
 	State<entity_type>* getPreviousState() const{ return m_pPreviousState; }
 	
-	bool isInState(const State<entity_type>& st)const;
+	//bool isInState(const State<entity_type>& st)const;
 };
 
