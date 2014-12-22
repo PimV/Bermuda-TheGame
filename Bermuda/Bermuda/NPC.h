@@ -16,7 +16,7 @@ public:
 	virtual ~NPC();
 
 #pragma region Getters
-	int getHeathPoints();
+	int getHealthPoints();
 	int getAttackPoints();
 	int getActionRange();
 	Spawnpoint* getSpawnPoint();

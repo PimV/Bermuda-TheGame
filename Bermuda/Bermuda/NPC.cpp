@@ -25,7 +25,7 @@ NPC::~NPC()
 }
 
 #pragma region Getters
-int NPC::getHeathPoints()
+int NPC::getHealthPoints()
 {
 	return this->healthPoints;
 }
