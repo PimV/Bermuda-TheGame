@@ -160,6 +160,12 @@
     <Filter Include="Header Files\View\Screens\HelpScreens">
       <UniqueIdentifier>{3bb98897-63c3-46cb-bd32-c3fc3e7b4f59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Entity\State">
+      <UniqueIdentifier>{9695dea4-1587-48c2-9a80-fac36483921b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Entity\State">
+      <UniqueIdentifier>{f5537442-f4e0-4aba-a448-2a2aaba7e893}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -512,12 +518,15 @@
     </ClCompile>
     <ClCompile Include="ToolGoldenPickaxe.cpp">
       <Filter>Source Files\Model\Item</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Scorpion.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
     <ClCompile Include="ItemMeat.cpp">
       <Filter>Source Files\Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderAround.cpp">
+      <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -911,6 +920,17 @@
     <ClInclude Include="NPCType.h">
       <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\Model\Entity\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderAround.h">
+      <Filter>Header Files\Model\Entity\State</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Header Files\Model\Entity\State</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="GameSaver.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
