@@ -1,7 +1,5 @@
 #pragma once
 #include "State.h"
-#include "MovableEntity.h"
-#include "NPC.h"
 
 class WanderAround :
 	public State<Entity>

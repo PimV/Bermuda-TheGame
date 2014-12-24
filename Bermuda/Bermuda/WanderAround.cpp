@@ -1,4 +1,6 @@
 #include "WanderAround.h"
+#include "MovableEntity.h"
+#include "NPC.h"
 #include "GameTimer.h"
 #include <time.h>
 #include <iostream>
