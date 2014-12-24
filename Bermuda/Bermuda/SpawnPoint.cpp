@@ -22,12 +22,10 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
 
-	//this->spawnInterval = 90000;
-	this->spawnInterval = 1000;
+	this->spawnInterval = 90000; // ~ 1,5 min
 
 	this->walkRange = walkRange;
 	this->lastSpawnTime = 0;
-	this->lastReSpawnTime = 0;
 	this->spawnMob();
 }
 
@@ -54,26 +52,27 @@ void Spawnpoint::spawnMob()
 		}
 		else if (spawnType == "wasp")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
 		}
 		else if (spawnType == "bat")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
 		}
 		else if (spawnType == "wolf")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
 		}		
 		else if (spawnType == "scorpion")
 		{
-			//npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
 		}
 
 		if(npcSpawned)
 		{
 			++this->curChildren;
 		}
-		this->increateSpawnTimer();
+
+		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
 	}
 }
 
@@ -101,16 +100,6 @@ void Spawnpoint::update()
 	{
 		this->spawnMob();
 	}
-}
-
-void Spawnpoint::increateSpawnTimer()
-{
-	this->lastSpawnTime = GameTimer::Instance()->getGameTime();
-}
-
-void Spawnpoint::increateReSpawnTimer()
-{
-	this->lastReSpawnTime= GameTimer::Instance()->getGameTime();
 }
 
 Spawnpoint::~Spawnpoint()

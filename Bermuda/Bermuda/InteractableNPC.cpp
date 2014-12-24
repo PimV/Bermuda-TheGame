@@ -29,17 +29,38 @@ int InteractableNPC::getActionRange()
 #pragma region Setters
 void InteractableNPC::setHealthPoints(int healthPoints)
 {
-	this->healthPoints = healthPoints;
+	if (healthPoints < 0)
+	{
+		this->healthPoints = 0;
+	}
+	else
+	{
+		this->healthPoints = healthPoints;
+	}
 }
 
 void InteractableNPC::setAttackPoints(int attackPoints)
 {
-	this->attackPoints = attackPoints;
+	if (attackPoints < 0)
+	{
+		this->attackPoints = 0;
+	}
+	else
+	{
+		this->attackPoints = attackPoints;
+	}
 }
 
 void InteractableNPC::setActionRange(int actionRange)
 {
-	this->actionRange = actionRange;
+	if (actionRange < 0)
+	{
+		this->actionRange = 0;
+	}
+	else
+	{
+		this->actionRange = actionRange;
+	}
 }
 #pragma endregion
 
