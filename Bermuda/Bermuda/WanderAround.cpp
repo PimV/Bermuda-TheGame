@@ -34,11 +34,12 @@ void WanderAround::execute(Entity* entity, double dt)
 	std::default_random_engine dre(dev());
 
 	std::uniform_int_distribution<int> dist1(500, 5000);
+	std::uniform_int_distribution<int> dist2(0, 1);
 	int timeWait = dist1(dre);
 
 	if (movableEntity->getTimeSinceLastAction() < timeWait)
 	{
-		movableEntity->setTimeSinceLastAction(movableEntity->getTimeSinceLastAction() + GameTimer::Instance()->getFrameTime());
+		movableEntity->setTimeSinceLastAction(static_cast<long>(movableEntity->getTimeSinceLastAction() + GameTimer::Instance()->getFrameTime()));
 	}
 	else {
 		movableEntity->setTimeSinceLastAction(0);
@@ -97,5 +98,80 @@ void WanderAround::execute(Entity* entity, double dt)
 		}
 
 	}
-	movableEntity->move(dt);
+
+	if (!movableEntity->move(dt))
+	{
+		if (movableEntity->movingUp && movableEntity->movingRight)
+		{
+			movableEntity->movingUp = false;
+			if (!movableEntity->move(dt)){
+				movableEntity->movingUp = true;
+				movableEntity->movingRight = false;
+				movableEntity->move(dt);
+			}
+		}
+		else if (movableEntity->movingRight && movableEntity->movingDown)
+		{
+			movableEntity->movingRight = false;
+			if (!movableEntity->move(dt)){
+				movableEntity->movingRight = true;
+				movableEntity->movingDown = false;
+				movableEntity->move(dt);
+			}
+		}
+		else if (movableEntity->movingDown && movableEntity->movingLeft)
+		{
+			movableEntity->movingDown = false;
+			if (!movableEntity->move(dt)){
+				movableEntity->movingDown = true;
+				movableEntity->movingLeft = false;
+				movableEntity->move(dt);
+			}
+		}
+		else if (movableEntity->movingLeft && movableEntity->movingUp)
+		{
+			movableEntity->movingLeft = false;
+			if (!movableEntity->move(dt)){
+				movableEntity->movingLeft = true;
+				movableEntity->movingUp = false;
+				movableEntity->move(dt);
+			}
+		}
+		else if (movableEntity->movingUp || movableEntity->movingDown)
+		{
+			int random = dist2(dre);
+
+			if (random == 1)
+			{
+				movableEntity->movingUp = false;
+				movableEntity->movingDown = false;
+				movableEntity->movingRight = true;
+			}
+			else
+			{
+				movableEntity->movingUp = false;
+				movableEntity->movingDown = false;
+				movableEntity->movingLeft = true;
+			}
+			movableEntity->move(dt);
+		}
+		else if (movableEntity->movingLeft || movableEntity->movingRight)
+		{
+			int random = dist2(dre);
+
+			if (random == 1)
+			{
+				movableEntity->movingLeft = false;
+				movableEntity->movingRight = false;
+				movableEntity->movingDown = true;
+			}
+			else
+			{
+				movableEntity->movingLeft = false;
+				movableEntity->movingRight = false;
+				movableEntity->movingUp = true;
+			}
+			movableEntity->move(dt);
+		}
+	}
 }
