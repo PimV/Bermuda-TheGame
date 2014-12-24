@@ -16,7 +16,8 @@ MovementDirectionEnum MovableEntity::getMovementDirection()
 	return this->movementDirection;
 }
 
-void MovableEntity::move(double dt)
+//Returns false if move failed because of collision.
+bool MovableEntity::move(double dt)
 {
 	this->dx = 0;
 	this->dy = 0;
@@ -47,7 +48,7 @@ void MovableEntity::move(double dt)
 		{
 			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 		}
-		return;
+		return true;
 	}
 
 	double destX = getX() + dx;
@@ -106,10 +107,12 @@ void MovableEntity::move(double dt)
 	if (!collision || this->keepAnimationWhenIdle)
 	{
 		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
+		return true;
 	}
 	else
 	{
 		this->StopAnimation();
+		return false;
 	}
 }
 

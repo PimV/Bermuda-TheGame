@@ -22,7 +22,7 @@ public:
 	bool movingLeft, movingRight, movingDown, movingUp;
 	bool sprinting;
 
-	virtual void move(double dt);
+	virtual bool move(double dt);
 	long getTimeSinceLastAction();
 	void setTimeSinceLastAction(long time);
 protected:
