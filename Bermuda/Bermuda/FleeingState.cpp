@@ -64,6 +64,7 @@ void FleeingState::execute(Entity* entity, double dt)
 		movableEntity->movingDown = true;
 	}
 
+	//Move and avoid collision
 	if (!movableEntity->move(dt))
 	{
 		if (movableEntity->movingUp && movableEntity->movingRight)

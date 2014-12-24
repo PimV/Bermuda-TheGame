@@ -151,7 +151,6 @@ void MovableEntity::setPosition(double newX, double newY) {
 	int chunkSize = PlayState::Instance()->getMainEntityContainer()->getChunkSize();
 	if (floor(this->getY() / chunkSize) != this->getChunkY() || floor(this->getX() / chunkSize) != this->getChunkX())
 	{
-		//TODO : Put the player in another chunk in ALLL CONTAINERSSSS
 		this->ResetDrawableEntityAndSetChunk();
 	}
 }

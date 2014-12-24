@@ -99,6 +99,7 @@ void WanderAround::execute(Entity* entity, double dt)
 
 	}
 
+	//Move and avoid collision
 	if (!movableEntity->move(dt))
 	{
 		if (movableEntity->movingUp && movableEntity->movingRight)
