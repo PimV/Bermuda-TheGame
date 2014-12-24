@@ -16,43 +16,94 @@ MovementDirectionEnum MovableEntity::getMovementDirection()
 	return this->movementDirection;
 }
 
-//Returns false if move failed because of collision.
-bool MovableEntity::move(double dt)
+//Returns true if its possible to move (partially) in the current movement direction.
+bool MovableEntity::canMove(double dt)
+{
+	double dirX = 0;
+	double dirY = 0;
+	double stepX = 0;
+	double stepY = 0;
+
+	if (this->movingLeft) {
+		dirX -= this->moveSpeed *dt;
+		stepX = -10;
+	}
+	else if (this->movingRight) {
+		dirX += this->moveSpeed *dt;
+		stepX = 10;
+	}
+
+	if (this->movingUp) {
+		dirY -= this->moveSpeed *dt;
+		stepY = -10;
+	}
+	else if (this->movingDown) {
+		dirY += this->moveSpeed *dt;
+		stepY = 10;
+	}
+
+	//No movement is always possible.
+	if (this->dx == 0 && this->dy == 0)
+	{
+		return true;
+	}
+
+	double destX = this->getX() + dirX;
+	double destY = this->getY() + dirY;
+
+	//x
+	double diffX = this->getX() - destX;
+	if (diffX > -10 && diffX < 10)
+	{
+		stepX = -diffX;
+	}
+
+	//y
+	double diffY = this->getY() - destY;
+	if (diffY > -10 && diffY < 10)
+	{
+		stepY = -diffY;
+	}
+
+	return !this->checkCollision(this->getX() + stepX, this->getY() + stepY);
+}
+
+void MovableEntity::move(double dt)
 {
 	this->dx = 0;
 	this->dy = 0;
 	double stepX = 0;
 	double stepY = 0;
 
-	if (movingLeft) {
-		dx -= moveSpeed *dt;
+	if (this->movingLeft) {
+		this->dx -= this->moveSpeed *dt;
 		stepX = -10;
 	}
-	else if (movingRight) {
-		dx += moveSpeed *dt;
+	else if (this->movingRight) {
+		this->dx += this->moveSpeed *dt;
 		stepX = 10;
 	}
 
-	if (movingUp) {
-		dy -= moveSpeed *dt;
+	if (this->movingUp) {
+		this->dy -= this->moveSpeed *dt;
 		stepY = -10;
 	}
-	else if (movingDown) {
-		dy += moveSpeed *dt;
+	else if (this->movingDown) {
+		this->dy += this->moveSpeed *dt;
 		stepY = 10;
 	}
 
 	//No movement
-	if (dx == 0 && dy == 0) {
+	if (this->dx == 0 && this->dy == 0) {
 		if (this->keepAnimationWhenIdle)
 		{
 			this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
 		}
-		return true;
+		return;
 	}
 
-	double destX = getX() + dx;
-	double destY = getY() + dy;
+	double destX = getX() + this->dx;
+	double destY = getY() + this->dy;
 
 	bool collision = false;
 
@@ -107,12 +158,10 @@ bool MovableEntity::move(double dt)
 	if (!collision || this->keepAnimationWhenIdle)
 	{
 		this->PlayAnimation(this->animationWalkStartColumn, this->animationWalkEndColumn, this->currentAnimationRow, dt, this->defaultAnimationSpeed);
-		return true;
 	}
 	else
 	{
 		this->StopAnimation();
-		return false;
 	}
 }
 

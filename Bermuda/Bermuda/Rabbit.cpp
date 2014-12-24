@@ -56,7 +56,7 @@ void Rabbit::update(double dt)
 	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getCenterY();
 	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
 
-	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 200)
+	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
 	{
 		this->m_pStateMachine->changeState(FleeingState::Instance());
 	}

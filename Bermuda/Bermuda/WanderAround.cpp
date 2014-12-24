@@ -100,12 +100,21 @@ void WanderAround::execute(Entity* entity, double dt)
 	}
 
 	//Move and avoid collision
-	if (!movableEntity->move(dt))
+	if (movableEntity->canMove(dt))
+	{
+		movableEntity->move(dt);
+	}
+	else
 	{
 		if (movableEntity->movingUp && movableEntity->movingRight)
 		{
 			movableEntity->movingUp = false;
-			if (!movableEntity->move(dt)){
+			if (movableEntity->canMove(dt))
+			{
+				movableEntity->move(dt);
+			}
+			else
+			{
 				movableEntity->movingUp = true;
 				movableEntity->movingRight = false;
 				movableEntity->move(dt);
@@ -114,7 +123,12 @@ void WanderAround::execute(Entity* entity, double dt)
 		else if (movableEntity->movingRight && movableEntity->movingDown)
 		{
 			movableEntity->movingRight = false;
-			if (!movableEntity->move(dt)){
+			if (movableEntity->canMove(dt))
+			{
+				movableEntity->move(dt);
+			}
+			else
+			{
 				movableEntity->movingRight = true;
 				movableEntity->movingDown = false;
 				movableEntity->move(dt);
@@ -123,7 +137,12 @@ void WanderAround::execute(Entity* entity, double dt)
 		else if (movableEntity->movingDown && movableEntity->movingLeft)
 		{
 			movableEntity->movingDown = false;
-			if (!movableEntity->move(dt)){
+			if (movableEntity->canMove(dt))
+			{
+				movableEntity->move(dt);
+			}
+			else
+			{
 				movableEntity->movingDown = true;
 				movableEntity->movingLeft = false;
 				movableEntity->move(dt);
@@ -132,7 +151,12 @@ void WanderAround::execute(Entity* entity, double dt)
 		else if (movableEntity->movingLeft && movableEntity->movingUp)
 		{
 			movableEntity->movingLeft = false;
-			if (!movableEntity->move(dt)){
+			if (movableEntity->canMove(dt))
+			{
+				movableEntity->move(dt);
+			}
+			else
+			{
 				movableEntity->movingLeft = true;
 				movableEntity->movingUp = false;
 				movableEntity->move(dt);
