@@ -1,16 +1,16 @@
-#include "ItemCarrot.h"
+#include "ItemMeat.h"
 #include "Items.h"
 #include <ctime>
 #include <iostream>
 
-ItemCarrot::ItemCarrot(Image* image) 
+ItemMeat::ItemMeat(Image* image) 
 {
 	this->setImage(image);
 	init();
 }
 
-void ItemCarrot::init() {
-	this->setId((int)Items::Carrot);
+void ItemMeat::init() {
+	this->setId((int)Items::Meat);
 
 	this->itemTypes = std::vector<ItemType>();
 	this->itemTypes.push_back(ItemType::Drink);
@@ -18,14 +18,15 @@ void ItemCarrot::init() {
 
 	this->setMaxStackSize(16);
 
-	int itemCount = 1;
+	srand(static_cast<unsigned int>(time(NULL)));
+	int itemCount = rand() % 2 + 1;	
 	this->setStackSize(itemCount);
 
-	this->setHungerRefill(5);
+	this->setHungerRefill(15);
 	this->setThirstRefill(0);
 	this->setHealthRefill(0);
 }
 
-ItemCarrot::~ItemCarrot()
+ItemMeat::~ItemMeat()
 {
 }

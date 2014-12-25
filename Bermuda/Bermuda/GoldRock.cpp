@@ -4,6 +4,7 @@
 #include "ItemFactory.h"
 #include "Items.h"
 #include "Overlays.h"
+#include <ctime>
 
 GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiecesImage) :
 	Entity(id, x, y),
@@ -15,7 +16,7 @@ GoldRock::GoldRock(int id, double x, double y, Image* rockImage, Image* rockPiec
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
-	this->interactTime = 5000;
+	this->interactTime = 8000;
 
 	this->animationType = AnimationEnumType::Mine;
 
@@ -47,6 +48,16 @@ void GoldRock::interact(Player* player)
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Gold));
+			//Random flint chance
+			srand(time(NULL));
+			int flintChance = rand() % 10 + 1;	
+			if (flintChance > 8) {
+				Item* flint = ItemFactory::Instance()->createItem(Items::Flint);
+				flint->setStackSize(1);
+				player->getInventory()->addItem(flint);
+			}
+
+				this->degradeTool(player);
 			//TODO: add to statustracker
 		}
 	} else {

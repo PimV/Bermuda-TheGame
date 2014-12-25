@@ -1,12 +1,17 @@
 #pragma once
 #include "Entity.h"
 #include "Spawnpoint.h"
+#include "StateMachine.h"
+
 class Player;
 
 class NPC :
 	public virtual Entity
-	//public InteractableEntity
 {
+private:
+	int healthPoints, attackPoints, walkRange, actionRange;
+	bool destroyed, timeSinceDestroy;
+
 public:
 	NPC(int id, Spawnpoint *spawnPoint);
 	virtual ~NPC();
@@ -20,3 +25,4 @@ protected:
 private:
 
 };
+

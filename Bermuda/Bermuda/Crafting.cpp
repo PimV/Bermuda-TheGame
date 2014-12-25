@@ -21,10 +21,18 @@ void Crafting::createRecipes()
 {
 	this->recipes[Items::Axe][Items::Wood] = 2;
 	this->recipes[Items::Axe][Items::Rock] = 2;
+	this->recipes[Items::GoldenAxe][Items::Wood] = 2;
+	this->recipes[Items::GoldenAxe][Items::Gold] = 4;
 	this->recipes[Items::Pickaxe][Items::Wood] = 2;
 	this->recipes[Items::Pickaxe][Items::Rock] = 2;
+	this->recipes[Items::GoldenPickaxe][Items::Wood] = 2;
+	this->recipes[Items::GoldenPickaxe][Items::Gold] = 4;
 	this->recipes[Items::Campfire][Items::Wood] = 3;
 	this->recipes[Items::Campfire][Items::Rock] = 3;
+	this->recipes[Items::Spear][Items::Wood] = 6;
+	this->recipes[Items::Spear][Items::Rock] = 4;
+	this->recipes[Items::Spear][Items::Flint] = 1;
+
 }
 
 bool Crafting::canCraft(Items item)

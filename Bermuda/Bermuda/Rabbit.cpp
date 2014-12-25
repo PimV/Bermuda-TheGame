@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include <time.h>
 #include <random>
+#include "WanderAround.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
@@ -43,6 +44,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	
 	#pragma region Interactable_stuff
 	this->interactTime = 500;
+	this->currentInteractTime = 0;
 	this->animationType = AnimationEnumType::Attackable;
 	#pragma endregion Interactable_stuff
 
@@ -52,14 +54,16 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->StopAnimation();
-}
 
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
+}
 
 void Rabbit::update(double dt)
 {
-	if (this->getHealthPoints() > 1)
+	if (this->getHealthPoints() > 0)
 	{
-		this->directionsAndMove(dt);
+		this->m_pStateMachine->update(dt);
 	}
 	else
 	{
@@ -67,79 +71,6 @@ void Rabbit::update(double dt)
 	}
 }
 
-void Rabbit::directionsAndMove(double dt)
-{
-	random_device dev;
-	default_random_engine dre(dev());
-
-	uniform_int_distribution<int> dist1(500, 5000);
-	int timeWait = dist1(dre);
-
-	if (timeSinceLastAction < timeWait)
-	{
-		timeSinceLastAction += GameTimer::Instance()->getFrameTime();
-	}
-	else {
-		timeSinceLastAction = 0;
-
-		uniform_int_distribution<int> dist2(1, 8);
-		int randomNumberMoveDirection = dist2(dre);
-
-		this->StopAnimation();
-
-		switch (randomNumberMoveDirection)
-		{
-		case 1:
-			movingRight = true;
-			movingLeft = false;
-			break;
-		case 2:
-			movingRight = false;
-			movingLeft = true;
-			break;
-		case 3:
-			movingDown = true;
-			movingUp = false;
-			break;
-		case 4:
-			movingDown = false;
-			movingUp = true;
-			break;
-		default:
-			movingUp = false;
-			movingDown = false;
-			movingRight = false;
-			movingLeft = false;
-			dx = 0;
-			dy = 0;
-			break;
-		}
-
-		if ((getX() - getSpawnPoint()->getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = false;
-			movingLeft = true;
-		}
-		else if ((getSpawnPoint()->getX() - getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = true;
-			movingLeft = false;
-		}
-
-		if ((getY() - getSpawnPoint()->getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = false;
-			movingUp = true;
-		}
-		else if ((getSpawnPoint()->getY() - getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = true;
-			movingUp = false;
-		}
-
-	}
-	this->move(dt);
-}
 
 void Rabbit::setImage(Image* image)
 {
@@ -170,6 +101,7 @@ void Rabbit::interact(Player* player)
 	{
 		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);
+
 		if (this->trackInteractTimes())
 		{
 			player->setCorrectToolSelected(false);

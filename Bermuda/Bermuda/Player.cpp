@@ -6,11 +6,11 @@
 #include "Weapon.h"
 #include <vector>
 
-Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
-Entity(id, x, y),
-DrawableEntity(id, x, y, nullptr),
-CollidableEntity(id, x, y, 20, 52, 24, 10),
-MovableEntity(id, x, y)
+Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
+	Entity(id, x, y),
+	DrawableEntity(id, x, y, nullptr),
+	CollidableEntity(id, x, y, 20, 52, 24, 10),
+	MovableEntity(id, x, y)
 {
 	healthBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBar.png").c_str());
 	healthBarContainer = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBarContainerBas.png").c_str());
@@ -38,6 +38,8 @@ MovableEntity(id, x, y)
 	hungerAlpha = 255;
 	thirstAlpha = 255;
 
+	godMode = false;
+
 	this->camera = camera;
 
 	//Entity -> dimension values
@@ -45,18 +47,18 @@ MovableEntity(id, x, y)
 	this->setHeight(64);
 
 	//this->playerTimer = new PlayerUpdateTimer();
-	this->hungerUpdate = GameTimer::Instance()->getGameTime();
+	this->hungerUpdate = GameTimer::Instance()->getGameTime(); 
 	this->thirstUpdate = GameTimer::Instance()->getGameTime();
 	this->healthUpdate = GameTimer::Instance()->getGameTime();
 	this->darknessUpdate = GameTimer::Instance()->getGameTime();
 	this->quickDeathUpdate = GameTimer::Instance()->getGameTime();
-	this->hungerUpdateTime = 3000;
-	this->thirstUpdateTime = 2000;
-	this->healthUpdateTime = 3000;
+	this->hungerUpdateTime = 6000;
+	this->thirstUpdateTime = 5000;
+	this->healthUpdateTime = 1500;
 	this->darknessUpdateTime = 3500; 
 	this->quickDeathUpdateTime = 50; // increase to die faster when not in the light
-	this->health = 100;
-	this->hunger = 100;
+	this->health = 100; 
+	this->hunger = 100; 
 	this->thirst = 100;
 	this->withinDarkness = false;
 
@@ -127,7 +129,7 @@ MovableEntity(id, x, y)
 
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 50;
-#pragma endregion animation
+	#pragma endregion animation
 
 	this->correctToolSelected = false;
 
@@ -143,6 +145,10 @@ MovableEntity(id, x, y)
 	this->inventory = new Inventory();
 	this->crafting = new Crafting(this->inventory);
 	this->statusTracker = new StatusTracker();
+}
+
+void Player::toggleGodMode() {
+	this->godMode = !this->godMode;
 }
 
 Inventory* Player::getInventory() {
@@ -178,7 +184,11 @@ void Player::update(double dt) {
 		return;
 	}
 
+	if (!this->godMode) {
+	this->changeAnimationOnInventorySelection();
+
 	this->updatePlayerStatuses(dt);
+	}
 
 	if (this->interaction) {
 		this->interact(dt);
@@ -197,17 +207,11 @@ void Player::updatePlayerStatuses(double dt)
 	// check if hunger needs to be updated
 	if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
 		this->setHunger(this->getHunger() - 1);
-		if (this->getHunger() <= 0) {
-			this->setHealth(this->getHealth() - 1);
-		}
 	}
 
 	// check if thirst needs to be updated
 	if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
 		this->setThirst(this->getThirst() - 1);
-		if (this->getThirst() <= 0) {
-			this->setHealth(this->getHealth() - 1);
-		}
 	}
 
 	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
@@ -217,6 +221,14 @@ void Player::updatePlayerStatuses(double dt)
 		}
 		else if (this->getThirst() > 40 && this->getHunger() > 40) {
 			this->setHealth(this->getHealth() + 1);
+		}
+		else if (this->getThirst() <= 0 && this->getHunger() <= 0)
+		{
+			this->setHealth(this->getHealth() - 4);
+		}
+		else if (this->getThirst() <= 0 || this->getHunger() <= 0)
+		{
+			this->setHealth(this->getHealth() - 2);
 		}
 	}
 
@@ -228,7 +240,7 @@ void Player::updatePlayerStatuses(double dt)
 			{
 				this->setHealth(this->getHealth() - 1);
 				this->quickDeathUpdate = currentTime;
-			}
+}
 		}
 	}
 	else
@@ -447,17 +459,17 @@ void Player::setAnimationType(AnimationEnumType type)
 		}
 		break;
 	case AnimationEnumType::Pick:
-		this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
-		this->animationActionStartColumn = this->animationPickStartColumn;
-		this->animationActionEndColumn = this->animationPickEndColumn;
+			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationPickStartColumn;
+			this->animationActionEndColumn = this->animationPickEndColumn;
 		break;
 	case AnimationEnumType::Attackable:
 			this->setAnimationType(dynamic_cast<class Weapon*>(this->getInventory()->getSelectedItem())->getAnimationEnumType());
 		break;
 	case AnimationEnumType::AttackSpear:
-		this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;
-		this->animationActionStartColumn = this->animationSpearAttackStartColumn;
-		this->animationActionEndColumn = this->animationSpearAttackEndColumn;
+			this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;
+			this->animationActionStartColumn = this->animationSpearAttackStartColumn;
+			this->animationActionEndColumn = this->animationSpearAttackEndColumn;
 		break;
 	default:
 		break;
@@ -561,7 +573,7 @@ void Player::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
-	this->setChunks();
+	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);

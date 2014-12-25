@@ -24,10 +24,12 @@ public:
 	void setDestroyedState();
 
 private:
-	void directionsAndMove(double dt);
-	
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 
+	//bool checkCollision(double newX, double newY);
+
+	StateMachine<Entity>* m_pStateMachine;
+	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
 };
