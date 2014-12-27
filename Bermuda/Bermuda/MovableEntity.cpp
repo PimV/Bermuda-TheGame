@@ -113,6 +113,58 @@ void MovableEntity::move(double dt)
 	}
 }
 
+//Returns true if its possible to move (partially) in the current movement direction.
+bool MovableEntity::canMove(double dt)
+{
+	double dirX = 0;
+	double dirY = 0;
+	double stepX = 0;
+	double stepY = 0;
+
+	if (this->movingLeft) {
+		dirX -= this->moveSpeed *dt;
+		stepX = -10;
+	}
+	else if (this->movingRight) {
+		dirX += this->moveSpeed *dt;
+		stepX = 10;
+	}
+
+	if (this->movingUp) {
+		dirY -= this->moveSpeed *dt;
+		stepY = -10;
+	}
+	else if (this->movingDown) {
+		dirY += this->moveSpeed *dt;
+		stepY = 10;
+	}
+
+	//No movement is always possible.
+	if (this->dx == 0 && this->dy == 0)
+	{
+		return true;
+	}
+
+	double destX = this->getX() + dirX;
+	double destY = this->getY() + dirY;
+
+	//x
+	double diffX = this->getX() - destX;
+	if (diffX > -10 && diffX < 10)
+	{
+		stepX = -diffX;
+	}
+
+	//y
+	double diffY = this->getY() - destY;
+	if (diffY > -10 && diffY < 10)
+	{
+		stepY = -diffY;
+	}
+
+	return !this->checkCollision(this->getX() + stepX, this->getY() + stepY);
+}
+
 void MovableEntity::PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt, int animationSpeed)
 {
 	double animationDelay = (maxSpeed / 100) * animationSpeed * dt;

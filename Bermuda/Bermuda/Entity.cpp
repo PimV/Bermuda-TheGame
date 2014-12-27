@@ -75,6 +75,16 @@ double Entity::getHeight() {
 	return this->height;
 }
 
+double Entity::getCenterX()
+{
+	return this->x + this->width / 2;
+}
+
+double Entity::getCenterY()
+{
+	return this->y + this->height / 2;
+}
+
 int Entity::getChunkY()
 {
 	return this->chunkY;

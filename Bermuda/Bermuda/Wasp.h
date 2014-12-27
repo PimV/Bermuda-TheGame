@@ -25,5 +25,8 @@ private:
 
 	StateMachine<Entity>* m_pStateMachine;
 	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
+
+	// TODO: remove for merge
+	bool attaking;
 };
 

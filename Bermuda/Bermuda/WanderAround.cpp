@@ -36,6 +36,7 @@ void WanderAround::execute(Entity* entity, double dt)
 
 	if (movableEntity->getTimeSinceLastAction() < timeWait)
 	{
+		// TODO: fix double to long warning
 		movableEntity->setTimeSinceLastAction(movableEntity->getTimeSinceLastAction() + GameTimer::Instance()->getFrameTime());
 	}
 	else {

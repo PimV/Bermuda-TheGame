@@ -4,6 +4,7 @@
 #include <iostream>
 #include <random>
 #include "WanderAround.h"
+#include "AggressiveState.h"
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	NPC(id, 5, 1, 50, spawnPoint),
@@ -50,12 +51,32 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->m_pStateMachine = new StateMachine<Entity>(this);
 	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
-	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
 }
 
 void Wolf::update(double dt)
 {
-	this->m_pStateMachine->update(dt);
+	double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->getCenterX();
+	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getCenterY();
+	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
+
+	// TODO: look for a good way to stop the movement
+	if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 5)
+	{
+		std::cout << "wolf is now attacking \n";
+	}
+	else
+	{
+		if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
+		{
+			this->m_pStateMachine->changeState(AggressiveState::Instance());
+		}
+		else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= 300)
+		{
+			this->m_pStateMachine->changeState(WanderAround::Instance());
+		}
+
+		this->m_pStateMachine->update(dt);
+	}
 }
 
 void Wolf::setImage(Image* image)

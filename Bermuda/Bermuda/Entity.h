@@ -22,6 +22,8 @@ public:
 	double getZ();
 	double getWidth();
 	double getHeight();
+	double getCenterX();
+	double getCenterY();
 	bool getEnabled();
 	bool getHighlighted();
 	void setHighlighted(bool highlighted);

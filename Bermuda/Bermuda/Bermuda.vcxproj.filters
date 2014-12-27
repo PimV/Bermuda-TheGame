@@ -528,6 +528,9 @@
     <ClCompile Include="WanderAround.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
+    <ClCompile Include="AggressiveState.cpp">
+      <Filter>Source Files\Model\Entity\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -927,6 +930,9 @@
       <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
+      <Filter>Header Files\Model\Entity\State</Filter>
+    </ClInclude>
+    <ClInclude Include="AggressiveState.h">
       <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
   </ItemGroup>

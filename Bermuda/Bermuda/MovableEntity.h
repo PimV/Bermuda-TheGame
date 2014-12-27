@@ -23,6 +23,7 @@ public:
 	bool sprinting;
 
 	virtual void move(double dt);
+	bool canMove(double dt);
 	long getTimeSinceLastAction();
 	void setTimeSinceLastAction(long time);
 protected:

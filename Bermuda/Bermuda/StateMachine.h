@@ -31,9 +31,9 @@ public:
 	{
 		assert(pNewState && "<StateMachine::ChangeState>: trying to change to a null state");
 		m_pPreviousState = m_pCurrentState;
-		m_pCurrentState->Exit(m_pOwner);
+		m_pCurrentState->exit(m_pOwner);
 		m_pCurrentState = pNewState;
-		m_pCurrentState->Enter(m_pOwner);
+		m_pCurrentState->enter(m_pOwner);
 	}
 
 	void revertToPreviousState()
