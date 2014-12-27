@@ -4,6 +4,7 @@
 #include "GameTimer.h"
 #include "SavedGameButton.h"
 #include "LoadButton.h"
+#include "PlayState.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -219,8 +220,10 @@ void MenuLoadScreen::handleEvents(SDL_Event mainEvent)
 
 void MenuLoadScreen::loadCurrentFile()
 {
-	//TODO : zorg dat spel start en file geladen wordt
-	std::cout << "Nu wordt: " << this->currentFileToLoad << " ingeladen" << std::endl;
+	std::cout << currentFileToLoad << std::endl;
+	PlayState::Instance()->setFileToLoad(this->currentFileToLoad);
+	GameStateManager::Instance()->changeGameState(PlayState::Instance());
+	PlayState::Instance()->loadGame();
 }
 
 void MenuLoadScreen::draw()
