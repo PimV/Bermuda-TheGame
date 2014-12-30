@@ -37,7 +37,7 @@ void MenuLoadScreen::init()
 	returnButton->placeMidUnder(((ScreenWidth - returnButton->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
 	buttons.push_back(returnButton);
 
-	int y = 50;
+	int y = 150;
 	//Saved game buttons
 	for (std::pair<std::string, int> pair : this->savedGames)
 	{
@@ -230,6 +230,8 @@ void MenuLoadScreen::draw()
 {	
 	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
 	
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Saved games"), ScreenWidth / 2 - 100, 50, 300, 50);
+
 	for(BaseButton* var : buttons)
 	{
 		var->draw();
