@@ -39,7 +39,8 @@ void WanderAround::execute(Entity* entity, double dt)
 		// TODO: fix double to long warning
 		movableEntity->setTimeSinceLastAction(movableEntity->getTimeSinceLastAction() + GameTimer::Instance()->getFrameTime());
 	}
-	else {
+	else 
+	{
 		movableEntity->setTimeSinceLastAction(0);
 
 		std::uniform_int_distribution<int> dist2(1, 8);

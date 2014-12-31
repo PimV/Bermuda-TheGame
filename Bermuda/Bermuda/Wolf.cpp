@@ -62,17 +62,19 @@ void Wolf::update(double dt)
 	// TODO: look for a good way to stop the movement
 	if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 5)
 	{
-		std::cout << "wolf is now attacking \n";
+		std::cout << "wolf is now attacking player \n";
 	}
 	else
 	{
 		if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
 		{
 			this->m_pStateMachine->changeState(AggressiveState::Instance());
+			std::cout << "wolf is now AggressiveState \n";
 		}
 		else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= 300)
 		{
 			this->m_pStateMachine->changeState(WanderAround::Instance());
+			std::cout << "wolf is now WanderState \n";
 		}
 
 		this->m_pStateMachine->update(dt);

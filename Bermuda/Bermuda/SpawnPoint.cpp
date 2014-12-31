@@ -43,29 +43,27 @@ void Spawnpoint::spawnMob()
 	if (curChildren < maxChildren)
 	{
 		bool npcSpawned = false;
-		npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
+		if (spawnType == "rabbit")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Rabbit, this);
+		}
+		else if (spawnType == "wasp")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
+		}
+		else if (spawnType == "bat")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
+		}
+		else if (spawnType == "wolf")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
+		}		
+		else if (spawnType == "scorpion")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
+		}
 
-		//bool npcSpawned = false;
-		//if (spawnType == "rabbit")
-		//{
-		//	npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Rabbit, this);
-		//}
-		//else if (spawnType == "wasp")
-		//{
-		//	npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
-		//}
-		//else if (spawnType == "bat")
-		//{
-		//	npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
-		//}
-		//else if (spawnType == "wolf")
-		//{
-		//	npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
-		//}		
-		//else if (spawnType == "scorpion")
-		//{
-		//	npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
-		//}
 		if(npcSpawned)
 		{
 			this->curChildren++;

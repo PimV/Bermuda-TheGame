@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include <random>
 #include "WanderAround.h"
+#include "AggressiveState.h"
 
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
@@ -50,7 +51,30 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 void Bat::update(double dt)
 {
-	this->m_pStateMachine->update(dt);
+	double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->getSpawnPoint()->getCenterX();
+	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getSpawnPoint()->getCenterY();
+	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
+
+	// TODO: look for a good way to stop the movement
+	if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 50)
+	{
+		std::cout << "bat is attacking player \n";
+	}
+	else
+	{
+		if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
+		{
+			this->m_pStateMachine->changeState(AggressiveState::Instance());
+			std::cout << "bat is defending spawnpoint \n";
+		}
+		else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= 300)
+		{
+			this->m_pStateMachine->changeState(WanderAround::Instance());
+			std::cout << "bat has stoped defending spawnpoint \n";
+		}
+
+		this->m_pStateMachine->update(dt);
+	}
 }
 
 
