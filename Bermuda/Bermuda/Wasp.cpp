@@ -47,35 +47,11 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	//this->m_pStateMachine = new StateMachine<Entity>(this);
 	//this->m_pStateMachine->setCurrentState(WanderAround::Instance());
 	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
-
-	this->attaking = false;
 }
 
 void Wasp::update(double dt)
 {
-		double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->getCenterX();
-	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getCenterY();
-	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
 
-	// TODO: look for a good way to stop the movement
-	// TODO: add check for health
-	if ( distanceFromPlayer < 20 )
-	{
-		if (!this->attaking)
-		{
-			this->attaking = true;
-			std::cout << "wasp is now attacking \n";
-		}
-	}
-	else
-	{
-		if (this->attaking)
-		{
-			this->attaking = false;
-			std::cout << "wasp stoped attacking \n";
-		}
-		//this->m_pStateMachine->update(dt);
-	}
 }
 
 

@@ -5,7 +5,6 @@ class DefensiveBehaviour :
 {
 	private:
 		void executeAction();
-		void update(double dt);
 
 	protected:
 		//

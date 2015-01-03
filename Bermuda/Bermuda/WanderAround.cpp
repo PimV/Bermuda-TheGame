@@ -25,8 +25,8 @@ void WanderAround::execute(Entity* entity, double dt)
 {
 	assert(entity && dt);
 
-	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(this->entity);
-	NPC* npc = dynamic_cast<NPC*>(this->entity);
+	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(entity);
+	NPC* npc = dynamic_cast<NPC*>(entity);
 
 	std::random_device dev;
 	std::default_random_engine dre(dev());

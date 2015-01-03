@@ -1,13 +1,11 @@
 #pragma once
 #include "NPC.h"
-#include "Evasive.h"
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 
 class Rabbit :
 	public NPC,
-	public Evasive,
 	public DrawableEntity,
 	public CollidableEntity,
 	public MovableEntity
