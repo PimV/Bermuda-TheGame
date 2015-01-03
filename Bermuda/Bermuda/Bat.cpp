@@ -44,8 +44,8 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 	this->StopAnimation();
 
-	this->m_pStateMachine = new StateMachine<Entity>(this);
-	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine = new StateMachine<Entity>(this);
+	//this->m_pStateMachine->setCurrentState(WanderAround::Instance());
 	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
 }
 
@@ -56,25 +56,25 @@ void Bat::update(double dt)
 	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
 
 	// TODO: look for a good way to stop the movement
-	if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 50)
-	{
-		std::cout << "bat is attacking player \n";
-	}
-	else
-	{
-		if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
-		{
-			this->m_pStateMachine->changeState(AggressiveState::Instance());
-			std::cout << "bat is defending spawnpoint \n";
-		}
-		else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= 300)
-		{
-			this->m_pStateMachine->changeState(WanderAround::Instance());
-			std::cout << "bat has stoped defending spawnpoint \n";
-		}
+	//if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 50)
+	//{
+	//	std::cout << "bat is attacking player \n";
+	//}
+	//else
+	//{
+	//	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
+	//	{
+	//		this->m_pStateMachine->changeState(AggressiveState::Instance());
+	//		std::cout << "bat is defending spawnpoint \n";
+	//	}
+	//	else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= 300)
+	//	{
+	//		this->m_pStateMachine->changeState(WanderAround::Instance());
+	//		std::cout << "bat has stoped defending spawnpoint \n";
+	//	}
 
-		this->m_pStateMachine->update(dt);
-	}
+	//	this->m_pStateMachine->update(dt);
+	//}
 }
 
 
@@ -105,5 +105,5 @@ Bat::~Bat()
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
 
-	delete this->m_pStateMachine;
+	//delete this->m_pStateMachine;
 }

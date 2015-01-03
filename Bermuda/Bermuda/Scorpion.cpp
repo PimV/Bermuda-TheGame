@@ -49,8 +49,8 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->StopAnimation();
 
-	this->m_pStateMachine = new StateMachine<Entity>(this);
-	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine = new StateMachine<Entity>(this);
+	//this->m_pStateMachine->setCurrentState(WanderAround::Instance());
 	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
 }
 
@@ -61,23 +61,23 @@ void Scorpion::update(double dt)
 	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
 
 	// TODO: look for a good way to stop the movement
-	if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 5)
-	{
-		std::cout << "Scorpion is now attacking \n";
-	}
-	else
-	{
-		if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
-		{
-			this->m_pStateMachine->changeState(AggressiveState::Instance());
-		}
-		else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= 300)
-		{
-			this->m_pStateMachine->changeState(WanderAround::Instance());
-		}
+	//if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 5)
+	//{
+	//	std::cout << "Scorpion is now attacking \n";
+	//}
+	//else
+	//{
+	//	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
+	//	{
+	//		this->m_pStateMachine->changeState(AggressiveState::Instance());
+	//	}
+	//	else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= 300)
+	//	{
+	//		this->m_pStateMachine->changeState(WanderAround::Instance());
+	//	}
 
-		this->m_pStateMachine->update(dt);
-	}
+	//	this->m_pStateMachine->update(dt);
+	//}
 }
 
 void Scorpion::setImage(Image* image)

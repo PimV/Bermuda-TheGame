@@ -44,14 +44,14 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 	this->StopAnimation();
 
-	this->m_pStateMachine = new StateMachine<Entity>(this);
-	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine = new StateMachine<Entity>(this);
+	//this->m_pStateMachine->setCurrentState(WanderAround::Instance());
 	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
 }
 
 void Rabbit::update(double dt)
 {
-	this->m_pStateMachine->update(dt);
+	//this->m_pStateMachine->update(dt);
 }
 
 

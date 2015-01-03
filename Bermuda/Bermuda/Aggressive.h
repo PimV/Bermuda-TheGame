@@ -1,9 +1,20 @@
 #pragma once
-#include "ibehaviour.h"
+#include "BaseBehaviour.h"
+#include "AggressiveState.h"
+
 class Aggressive :
-	public IBehaviour
+	public BaseBehaviour
 {
-public:
-	virtual ~Aggressive(void);
-	void behave();
+	private:
+		void executeAction();
+
+	protected:
+		//
+
+	public:
+		Aggressive(StateMachine<Entity>* m_pStateMachine);
+	
+		void update(double dt);
+
+		virtual ~Aggressive(void);	
 };

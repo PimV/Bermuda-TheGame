@@ -23,8 +23,8 @@ private:
 	void ResetDrawableEntityAndSetChunk();
 	bool checkCollision(double newX, double newY);
 
-	StateMachine<Entity>* m_pStateMachine;
-	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
+	//StateMachine<Entity>* m_pStateMachine;
+	//StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
 
 	// TODO: remove for merge
 	bool attaking;

@@ -17,20 +17,24 @@ AggressiveState* AggressiveState::Instance()
 
 void AggressiveState::enter(Entity* entity)
 {
-	
+	this->entity = entity;
+	this->attackRange = dynamic_cast<NPC*>(entity)->getActionRange();
+	this->actionRange = dynamic_cast<NPC*>(entity)->getAttackRange();
 }
 
 void AggressiveState::exit(Entity* entity)
 {
-	
+	this->actionRange = 0;
+	this->attackRange = 0;
+	this->entity = nullptr;
 }
 
 void AggressiveState::execute(Entity* entity, double dt)
 {
 	assert(entity && dt && " execute AgrassiveState");
 
-	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(entity);
-	NPC* npc = dynamic_cast<NPC*>(entity);
+	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(this->entity);
+	NPC* npc = dynamic_cast<NPC*>(this->entity);
 
 	movableEntity->movingLeft = false;
 	movableEntity->movingRight = false;
@@ -164,4 +168,5 @@ void AggressiveState::execute(Entity* entity, double dt)
 
 AggressiveState::~AggressiveState(void)
 {
+
 }

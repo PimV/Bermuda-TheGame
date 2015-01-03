@@ -4,6 +4,13 @@
 class AggressiveState :
 	public State < Entity >
 {
+	private:
+		AggressiveState(const AggressiveState &);
+		AggressiveState& operator=(const AggressiveState &);
+
+	protected:
+		//
+
 	public:
 		AggressiveState();
 
@@ -14,10 +21,4 @@ class AggressiveState :
 		void exit(Entity* entity);
 
 		virtual ~AggressiveState(void);
-
-	private:
-		AggressiveState(const AggressiveState &);
-		AggressiveState& operator=(const AggressiveState &);
-
 };
-
