@@ -348,7 +348,7 @@ void Inventory::selectStack(Item* stack)
 bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 	if (this->open && x >= this->startX && x <= this->endX && y >= this->startY  && y <= this->startY + this->slotHeight) {
 		int clickedIndex = -1;
-
+	
 		for (int i = 0; i < this->slots; i++) {
 			int startSlotX = startX + i*slotWidth;
 			int endSlotX = startSlotX + slotWidth;
@@ -369,7 +369,6 @@ bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 		return true;
 	}
 	return false;
-
 }
 
 void Inventory::draw() {
@@ -396,7 +395,7 @@ void Inventory::draw() {
 		if (i == selectedIndex) {
 			if (this->getSelectedItem() != nullptr && this->getSelectedItem()->hasItemType(ItemType::WorkTool)) {
 				Equipable* tool = dynamic_cast<Equipable*>(this->getSelectedItem());
-				std::cout << tool->getPercentageDegraded() << std::endl;
+				//std::cout << tool->getPercentageDegraded() << std::endl;
 				if (tool->getPercentageDegraded() >= 80) {
 					//red
 					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedRed->getTileSet(), NULL, &slotRect);

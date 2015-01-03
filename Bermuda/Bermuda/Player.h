@@ -11,6 +11,7 @@
 #include "AnimationEnum.h"
 
 class Inventory;
+class CraftingMenu;
 
 class Player :
 	public MovableEntity,

@@ -85,6 +85,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
+			
+			if (p->getCraftingSystem()->isOpen()) {
+				std::cout << "Clicked at: " << x << ":" << y << std::endl;
+				p->getCraftingSystem()->clicked(x,y,"yolo", p);
+				return;
+			}
 			if (p->getInventory()->clicked(x, y, "select", p)) {
 			}
 			else {
@@ -160,6 +166,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_c:
 			p->getInventory()->incrementSelectedIndex();
 			break;
+		case SDLK_t:
+			p->getCraftingSystem()->toggleCraftMenu();
+			break;
 		case SDLK_0:
 			p->getInventory()->setSelectedIndex(9);
 			break;
@@ -217,6 +226,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 
 		case SDLK_ESCAPE:
+			if (p->getCraftingSystem()->isOpen()) {
+				p->getCraftingSystem()->toggleCraftMenu();
+				break;
+			}
 			//Go to pause state on 'Escape'
 			//TODO: methode voor deze escape klik aanmaken?
 			gameSaver->saveGame();
@@ -300,6 +313,7 @@ void PlayState::update(double dt) {
 	{
 		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
 	}
+
 }
 
 void PlayState::updateVisibleEntities(double dt)
@@ -535,6 +549,8 @@ void PlayState::draw()
 
 	//Draw timer
 	GameTimer::Instance()->draw();
+
+	p->getCraftingSystem()->draw();
 }
 
 void PlayState::updatePlayerDarkness()

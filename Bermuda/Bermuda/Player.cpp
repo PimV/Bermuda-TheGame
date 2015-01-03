@@ -159,6 +159,7 @@ Crafting* Player::getCraftingSystem()
 	return this->crafting;
 }
 
+
 StatusTracker* Player::getStatusTracker()
 {
 	return this->statusTracker;
