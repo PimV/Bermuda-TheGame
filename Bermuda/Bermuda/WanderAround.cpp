@@ -13,20 +13,20 @@ WanderAround* WanderAround::Instance()
 
 void WanderAround::enter(Entity* entity)
 {
-
+	this->entity = entity;
 }
 
 void WanderAround::exit(Entity* entity)
 {
-
+	this->entity = nullptr;
 }
 
 void WanderAround::execute(Entity* entity, double dt)
 {
 	assert(entity && dt);
 
-	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(entity);
-	NPC* npc = dynamic_cast<NPC*>(entity);
+	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(this->entity);
+	NPC* npc = dynamic_cast<NPC*>(this->entity);
 
 	std::random_device dev;
 	std::default_random_engine dre(dev());

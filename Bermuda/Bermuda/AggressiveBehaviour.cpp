@@ -1,8 +1,8 @@
-#include "Aggressive.h"
+#include "AggressiveBehaviour.h"
 #include "PlayState.h"
 #include <iostream>
 
-Aggressive::Aggressive(StateMachine<Entity>* m_pStateMachine) :
+AggressiveBehaviour::AggressiveBehaviour(StateMachine<Entity>* m_pStateMachine) :
 	BaseBehaviour(m_pStateMachine)
 {
 	this->m_pStateMachine = m_pStateMachine;
@@ -10,12 +10,12 @@ Aggressive::Aggressive(StateMachine<Entity>* m_pStateMachine) :
 	this->setFsmToDefaultState();
 }
 
-void Aggressive::executeAction()
+void AggressiveBehaviour::executeAction()
 {
 	std::cout << "NPC is now attacking player \n";
 }
 
-void Aggressive::update(double dt)
+void AggressiveBehaviour::update(double dt)
 {
 	double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->npc->getCenterX();
 	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->npc->getCenterY();
@@ -42,7 +42,7 @@ void Aggressive::update(double dt)
 	}
 }
 
-Aggressive::~Aggressive()
+AggressiveBehaviour::~AggressiveBehaviour()
 {
 	this->npc = nullptr;
 }

@@ -2,7 +2,7 @@
 #include "BaseBehaviour.h"
 #include "AggressiveState.h"
 
-class Aggressive :
+class AggressiveBehaviour :
 	public BaseBehaviour
 {
 	private:
@@ -12,9 +12,9 @@ class Aggressive :
 		//
 
 	public:
-		Aggressive(StateMachine<Entity>* m_pStateMachine);
+		AggressiveBehaviour(StateMachine<Entity>* m_pStateMachine);
 	
 		void update(double dt);
 
-		virtual ~Aggressive(void);	
+		virtual ~AggressiveBehaviour(void);	
 };
