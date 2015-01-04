@@ -33,12 +33,8 @@ public:
 	{
 		assert(pNewState && "<StateMachine::ChangeState>: trying to change to a null state");
 
-		if (m_pCurrentState != nullptr)
-		{
-			m_pPreviousState = m_pCurrentState;
-			m_pCurrentState->exit(m_pOwner);
-		}
-
+		m_pPreviousState = m_pCurrentState;
+		m_pCurrentState->exit(m_pOwner);
 		m_pCurrentState = pNewState;
 		m_pCurrentState->enter(m_pOwner);
 	}

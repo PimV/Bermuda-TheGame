@@ -534,6 +534,9 @@
     <ClCompile Include="EvasiveBehaviour.cpp">
       <Filter>Source Files\Model\Entity\Behaviour</Filter>
     </ClCompile>
+    <ClCompile Include="AttackingNPC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -940,6 +943,9 @@
     </ClInclude>
     <ClInclude Include="EvasiveBehaviour.h">
       <Filter>Header Files\Model\Entity\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackingNPC.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

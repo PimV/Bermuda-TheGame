@@ -3,10 +3,10 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "WanderAround.h"
+#include "EvasiveBehaviour.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, 5, 1, 50, spawnPoint),
+NPC(id, 5, 1, 50, 5, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
@@ -44,14 +44,12 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 	this->StopAnimation();
 
-	//this->m_pStateMachine = new StateMachine<Entity>(this);
-	//this->m_pStateMachine->setCurrentState(WanderAround::Instance());
-	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
+	this->behaviour = new EvasiveBehaviour( new StateMachine<Entity>(this) );
 }
 
 void Rabbit::update(double dt)
 {
-	//this->m_pStateMachine->update(dt);
+	this->behaviour->update(dt);
 }
 
 

@@ -33,8 +33,8 @@ void AggressiveState::execute(Entity* entity, double dt)
 {
 	assert(entity && dt && " execute AgrassiveState");
 
-	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(this->entity);
-	NPC* npc = dynamic_cast<NPC*>(this->entity);
+	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(entity);
+	NPC* npc = dynamic_cast<NPC*>(entity);
 
 	movableEntity->movingLeft = false;
 	movableEntity->movingRight = false;

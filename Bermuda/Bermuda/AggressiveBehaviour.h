@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseBehaviour.h"
 #include "AggressiveState.h"
+#include "AttackingNPC.h"
 
 class AggressiveBehaviour :
 	public BaseBehaviour

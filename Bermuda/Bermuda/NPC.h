@@ -19,7 +19,7 @@ protected:
 	BaseBehaviour* behaviour;
 
 public:
-	NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint);
+	NPC(int id, int healthPoints, int attackPoints, int actionRange, int attackRange, Spawnpoint *spawnPoint);
 	virtual ~NPC();
 
 #pragma region Getters

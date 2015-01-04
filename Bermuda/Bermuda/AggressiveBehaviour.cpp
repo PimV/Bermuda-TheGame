@@ -1,18 +1,16 @@
 #include "AggressiveBehaviour.h"
 #include "PlayState.h"
-#include <iostream>
 
 AggressiveBehaviour::AggressiveBehaviour(StateMachine<Entity>* m_pStateMachine) :
 	BaseBehaviour(m_pStateMachine)
 {
-	this->m_pStateMachine = m_pStateMachine;
-	this->npc = dynamic_cast<NPC*>( m_pStateMachine->getOwner() );
-	this->setFsmToDefaultState();
+
 }
 
 void AggressiveBehaviour::executeAction()
 {
-	std::cout << "NPC is now attacking player \n";
+	
+	dynamic_cast<AttackingNPC*>( this->npc )->attack();
 }
 
 void AggressiveBehaviour::update(double dt)
@@ -22,8 +20,7 @@ void AggressiveBehaviour::update(double dt)
 	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
 
 	// TODO: look for a good way to stop the movement
-	//if ( this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < this->npc->getAttackRange() )
-	if ( this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < 5 )
+	if ( this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer < this->npc->getAttackRange() )
 	{
 		this->executeAction();
 	}
@@ -44,5 +41,5 @@ void AggressiveBehaviour::update(double dt)
 
 AggressiveBehaviour::~AggressiveBehaviour()
 {
-	this->npc = nullptr;
+
 }

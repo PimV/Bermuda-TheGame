@@ -9,14 +9,15 @@ EvasiveBehaviour::EvasiveBehaviour(StateMachine<Entity>* m_pStateMachine) :
 
 void EvasiveBehaviour::executeAction()
 {
-	std::cout << "NPC is now Evading Player \n";
+	// might not ne needed here
 }
 
 void EvasiveBehaviour::update(double dt)
 {
+	this->m_pStateMachine->update(dt);
 }
 
 EvasiveBehaviour::~EvasiveBehaviour(void)
 {
-
+	delete m_pStateMachine;
 }

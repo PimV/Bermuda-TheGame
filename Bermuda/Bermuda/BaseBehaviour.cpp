@@ -4,13 +4,14 @@
 
 BaseBehaviour::BaseBehaviour(StateMachine<Entity>* m_pStateMachine)
 {
-	this->m_pStateMachine = m_pStateMachine;
 	this->npc = dynamic_cast<NPC*>( m_pStateMachine->getOwner() );
+	this->m_pStateMachine = m_pStateMachine;
+	this->m_pStateMachine->setCurrentState( WanderAround::Instance() );
 }
 
 void BaseBehaviour::update(double dt)
 {
-		this->m_pStateMachine->update(dt);
+	this->m_pStateMachine->update(dt);
 }
 
 void BaseBehaviour::setFsmToDefaultState()
@@ -25,7 +26,6 @@ void BaseBehaviour::setFsmToActionState()
 
 void BaseBehaviour::setFsmToAggresdsiveState()
 {
-	std::cout << "NPC is now Aggressive \n";
 	this->m_pStateMachine->changeState(AggressiveState::Instance());
 }
 
@@ -41,10 +41,11 @@ void BaseBehaviour::setFsmToFleeingState()
 
 void BaseBehaviour::setFsmToWanderState()
 {
-	std::cout << "NPC is now Wandering \n";
 	this->m_pStateMachine->changeState(WanderAround::Instance());
 }
 
 BaseBehaviour::~BaseBehaviour(void)
 {
+	delete this->m_pStateMachine;
+	delete this->npc;
 }

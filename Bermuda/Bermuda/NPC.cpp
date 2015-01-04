@@ -4,12 +4,13 @@
 
 #include <iostream>
 
-NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, Spawnpoint *spawnPoint)  : 
+NPC::NPC(int id, int healthPoints, int attackPoints, int actionRange, int attackRange, Spawnpoint *spawnPoint)  : 
 	Entity(id,spawnPoint->getX(),spawnPoint->getY())
 {
 	this->healthPoints = healthPoints;
 	this->attackPoints = attackPoints;
 	this->actionRange = actionRange;
+	this->attackRange = attackRange;
 	this->spawnPoint = spawnPoint;
 
 	this->destroyed = false;
