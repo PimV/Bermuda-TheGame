@@ -19,11 +19,6 @@ protected:
 
 	AnimationEnumType animationType;
 
-	void setInteractStartX(int value);
-	void setInteractStartY(int value);
-	void setInteractWidth(int value);
-	void setInteractHeight(int value);
-
 private:
 	int interactStartX;
 	int interactStartY;

@@ -26,26 +26,6 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int interactS
 	this->interactTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelOrange.png").c_str());
 }
 
-#pragma region setters_interact_area
-void InteractableEntity::setInteractStartX(int value)
-{
-	this->interactStartX = value;
-}
-void InteractableEntity::setInteractStartY(int value)
-{
-	this->interactStartY = value;
-}
-void InteractableEntity::setInteractWidth(int value)
-{
-	this->interactWidth = value;
-}
-
-void InteractableEntity::setInteractHeight(int value)
-{
-	this->interactHeight = value;
-}
-#pragma endregion create_interact_area
-
 void InteractableEntity::interact(Player* player)
 {
 
