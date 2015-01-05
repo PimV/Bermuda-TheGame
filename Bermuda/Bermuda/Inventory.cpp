@@ -48,6 +48,16 @@ void Inventory::init() {
 	int singleSelectedIdRed = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected-red.png", 69, 69);
 	singleSelectedRed = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedIdRed);
 
+	int craftingIconId = PlayState::Instance()->getImageLoader()->loadTileset("textures\\CraftingIcon.png", 59, 59);
+	craftingIcon = PlayState::Instance()->getImageLoader()->getMapImage(craftingIconId);
+
+	craftingIconRect.x = ScreenWidth - 40 - 30;
+	craftingIconRect.y = ScreenHeight - 40 - 30;
+	craftingIconRect.h = 40;
+	craftingIconRect.w = 40;
+
+
+
 	//TODO: Remove in final version.
 	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
@@ -74,7 +84,7 @@ void Inventory::decrementSelectedIndex() {
 }
 
 Item* Inventory::getSelectedItem() {
-   	if (selectedIndex < this->getSize()) {
+	if (selectedIndex < this->getSize()) {
 		return this->itemVector[selectedIndex];
 	} else {
 		return nullptr;
@@ -281,7 +291,7 @@ void Inventory::dropCurrent() {
 
 bool Inventory::pickAxeSelected() {
 	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe)) {
-			return true;
+		return true;
 	}
 	return false;
 }
@@ -348,7 +358,7 @@ void Inventory::selectStack(Item* stack)
 bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 	if (this->open && x >= this->startX && x <= this->endX && y >= this->startY  && y <= this->startY + this->slotHeight) {
 		int clickedIndex = -1;
-	
+
 		for (int i = 0; i < this->slots; i++) {
 			int startSlotX = startX + i*slotWidth;
 			int endSlotX = startSlotX + slotWidth;
@@ -367,7 +377,12 @@ bool Inventory::clicked(int x, int y, std::string mode, Player* player) {
 		}
 
 		return true;
+	} else if (x >= craftingIconRect.x && x <= craftingIconRect.x + craftingIconRect.w && y >= craftingIconRect.y && y <= craftingIconRect.y + craftingIconRect.h) {
+		player->getCraftingSystem()->toggleCraftMenu();
+		return true;
 	}
+
+
 	return false;
 }
 
@@ -408,7 +423,7 @@ void Inventory::draw() {
 				}
 				//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
 			} else {
-			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+				SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
 			}
 		} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleImg->getTileSet(), NULL, &slotRect);
@@ -430,6 +445,9 @@ void Inventory::draw() {
 			}
 		}
 	}
+
+	//CraftingIcon rect
+	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), craftingIcon->getTileSet(), craftingIcon->getCroppingRect(), &craftingIconRect);
 }
 
 int Inventory::getStartingX() {

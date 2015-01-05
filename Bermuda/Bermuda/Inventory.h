@@ -64,6 +64,10 @@ private:
 	Image* singleSelectedImg;
 	Image* singleSelectedYellow;
 	Image* singleSelectedRed;
+	Image* craftingIcon;
+
+	SDL_Rect craftingIconRect;
+
 	int posX;
 	int posY;
 	int sizeX;
