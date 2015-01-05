@@ -3,14 +3,15 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "WanderAround.h"
+#include "AggressiveBehaviour.h"
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 50, spawnPoint),
+	NPC(id, 5, 3, 150, 5, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 13, 20, 23, 24),
-	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
+	AttackingNPC(500)
 {
 	this->setWidth(48);
 	this->setHeight(48);
@@ -24,9 +25,7 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
-	//this->interaction = false;
 
-	//this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 3; 
 	this->animationWalkLeftRow = 1;
@@ -36,9 +35,8 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->animationIdleColumn = 0; 
 	this->animationWalkStartColumn = 0;
 	this->animationWalkEndColumn = 3;
-	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 4, this->frameAmountY = 4, this->CurrentFrame = 0;
-	this->animationSpeed = 10;//, this->animationDelay = 1;
+	this->animationSpeed = 10;
 
 	this->timeSinceLastAction = 0;
 
@@ -48,14 +46,20 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->StopAnimation();
 
-	this->m_pStateMachine = new StateMachine<Entity>(this);
-	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
-	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
+	this->behaviour = new AggressiveBehaviour( new StateMachine<Entity>(this) );
 }
 
 void Wolf::update(double dt)
 {
-	this->m_pStateMachine->update(dt);
+	this->behaviour->update(dt);
+}
+
+void Wolf::attack()
+{
+	if( this->checkAttackTimes())
+	{
+		PlayState::Instance()->getPlayer()->setHealth( ( PlayState::Instance()->getPlayer()->getHealth() - this->getAttackPoints() ) );
+	}
 }
 
 void Wolf::setImage(Image* image)

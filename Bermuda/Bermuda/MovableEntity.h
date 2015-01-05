@@ -24,6 +24,7 @@ public:
 
 	bool canMove(double dt);
 	void move(double dt);
+
 	long getTimeSinceLastAction();
 	void setTimeSinceLastAction(long time);
 protected:

@@ -10,6 +10,7 @@ private:
 
 	WanderAround(const WanderAround &);
 	WanderAround& operator=(const WanderAround &);
+
 public:
 	static WanderAround* Instance();
 
@@ -17,4 +18,3 @@ public:
 	void execute(Entity* entity, double dt);
 	void exit(Entity* entity);
 };
-

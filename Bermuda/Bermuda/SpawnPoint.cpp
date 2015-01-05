@@ -63,6 +63,7 @@ void Spawnpoint::spawnMob()
 		{
 			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
 		}
+
 		if(npcSpawned)
 		{
 			this->curChildren++;

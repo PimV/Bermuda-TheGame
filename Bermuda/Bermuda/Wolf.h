@@ -3,24 +3,27 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "AttackingNPC.h"
 
 class Wolf :
 	public NPC,
 	public DrawableEntity,
 	public CollidableEntity,
-	public MovableEntity
+	public MovableEntity,
+	public AttackingNPC
 {
-public:
-	Wolf(int id, Spawnpoint *spawnPoint, int firstImgID);
-	virtual ~Wolf();
+	private:
+		void setImage(Image* image);
+		void ResetDrawableEntityAndSetChunk();
+		bool checkCollision(double newX, double newY);
 
-	void update(double dt);
-private:
-	void setImage(Image* image);
-	void ResetDrawableEntityAndSetChunk();
-	bool checkCollision(double newX, double newY);
+	protected:
+		//
 
-	StateMachine<Entity>* m_pStateMachine;
-	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
+	public:
+		Wolf(int id, Spawnpoint *spawnPoint, int firstImgID);
+		virtual ~Wolf();
+
+		void update(double dt);
+		void attack();
 };
-

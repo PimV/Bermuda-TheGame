@@ -3,11 +3,10 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "WanderAround.h"
-#include "FleeingState.h"
+#include "EvasiveBehaviour.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, 5, 1, 50, spawnPoint),
+NPC(id, 5, 1, 50, 5, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
@@ -45,29 +44,13 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 	this->StopAnimation();
 
-	this->m_pStateMachine = new StateMachine<Entity>(this);
-	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
-	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
+	this->behaviour = new EvasiveBehaviour( new StateMachine<Entity>(this) );
 }
 
 void Rabbit::update(double dt)
 {
-	double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->getCenterX();
-	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getCenterY();
-	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
-
-	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
-	{
-		this->m_pStateMachine->changeState(FleeingState::Instance());
-	}
-	else if (this->m_pStateMachine->getCurrentState() == FleeingState::Instance() && distanceFromPlayer >= 300)
-	{
-		this->m_pStateMachine->changeState(WanderAround::Instance());
-	}
-
-	this->m_pStateMachine->update(dt);
+	this->behaviour->update(dt);
 }
-
 
 void Rabbit::setImage(Image* image)
 {
