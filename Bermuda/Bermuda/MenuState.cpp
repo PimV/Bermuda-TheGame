@@ -17,6 +17,7 @@ void MenuState::init(GameStateManager* gsm)
 	mainScr = new MenuMainScreen;
 	creditsScr = new MenuCreditsScreen;
 	helpScr = new MenuHelpScreen;
+	loadScr = new MenuLoadScreen;
 	graveyardScr = new MenuGraveyardScreen;
 	setCurWindow(getMenuMainScreen());
 
@@ -38,6 +39,11 @@ BaseScreen* MenuState::getMenuMainScreen()
 BaseScreen* MenuState::getMenuCreditsScreen()
 {
 	return creditsScr;
+}
+
+BaseScreen* MenuState::getMenuLoadScreen()
+{
+	return loadScr;
 }
 
 BaseScreen* MenuState::getMenuHelpScreen()
@@ -80,6 +86,7 @@ void MenuState::cleanup()
 	delete mainScr;
 	delete creditsScr;
 	delete helpScr;
+	delete loadScr;
 }
 
 MenuState::~MenuState()

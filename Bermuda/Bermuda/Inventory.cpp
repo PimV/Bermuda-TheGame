@@ -42,6 +42,12 @@ void Inventory::init() {
 	int singleSelectedId = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected.png", 69, 69);
 	singleSelectedImg = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedId);
 
+	int singleSelectedIdYellow = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected-yellow.png", 69, 69);
+	singleSelectedYellow = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedIdYellow);
+
+	int singleSelectedIdRed = PlayState::Instance()->getImageLoader()->loadTileset("single-inv-item-selected-red.png", 69, 69);
+	singleSelectedRed = PlayState::Instance()->getImageLoader()->getMapImage(singleSelectedIdRed);
+
 	//TODO: Remove in final version.
 	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
@@ -50,6 +56,7 @@ void Inventory::init() {
 	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
 	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenAxe));
 	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenPickaxe));
+	this->addItem(ItemFactory::Instance()->createItem(Items::Meat));
 }
 
 void Inventory::incrementSelectedIndex() {
@@ -80,14 +87,12 @@ bool Inventory::addItem(Item* item) {
 		//Returns NULL if only full slots were found
 		Item* inInvItem = this->getItemById(item->getId(), false);
 
-		if (inInvItem == NULL) {
-			if (this->getSize() <= slots) {
+		if (inInvItem == nullptr) {
+			if (this->getSize() < slots) {
 				//Can add item, inventory slots left
-				std::cout << "Adding item in a new slot (all current slots filled)" << std::endl;
 				this->itemVector.push_back(item);
 			} else {
 				//Could not add, no inventory slots left!
-				std::cout << "Could not add into a new inventory slot, since the inventory was filled! (all slots filled)" << std::endl;
 				return false;
 			}
 		} else {
@@ -95,10 +100,10 @@ bool Inventory::addItem(Item* item) {
 			while (item->getStackSize() > 0) {
 				if (inInvItem->getStackSize() >= inInvItem->getMaxStackSize()) {
 					inInvItem = this->getItemById(item->getId(), false);
-					if (inInvItem == nullptr && this->getSize() <= slots) {
+					if (inInvItem == nullptr && this->getSize() < slots) {
 						this->itemVector.push_back(item);
-						break;
 					}
+					break;
 				} else {
 					inInvItem->setStackSize(inInvItem->getStackSize() + 1);
 					item->setStackSize(item->getStackSize() - 1);
@@ -106,7 +111,7 @@ bool Inventory::addItem(Item* item) {
 			}
 		}
 	} else {
-		if (this->getSize() <= this->slots) {
+		if (this->getSize() < this->slots) {
 			this->itemVector.push_back(item);
 		} else {
 			//No inventory slots left;
@@ -244,6 +249,17 @@ void Inventory::deleteItemFromStack(Item* stack, int count) {
 	}
 }
 
+void Inventory::clearInventory()
+{
+	while (!this->itemVector.empty())
+	{
+		Item* stack = this->itemVector.back();
+		this->itemVector.pop_back();
+		delete stack;
+		stack = nullptr;
+	}
+}
+
 void Inventory::interactCurrent(Player* p) {
 	if (selectedIndex < this->getSize()) {
 		this->itemVector[selectedIndex]->use(p);
@@ -278,7 +294,7 @@ bool Inventory::axeSelected() {
 }
 
 bool Inventory::spearSelected() {
-	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->getId() == (int)Items::Spear) {
+	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Spear)) {
 		return true;
 	}
 	return false;
@@ -378,7 +394,22 @@ void Inventory::draw() {
 		slotRect.h = slotHeight;
 
 		if (i == selectedIndex) {
+			if (this->getSelectedItem() != nullptr && this->getSelectedItem()->hasItemType(ItemType::WorkTool)) {
+				Equipable* tool = dynamic_cast<Equipable*>(this->getSelectedItem());
+				if (tool->getPercentageDegraded() >= 80) {
+					//red
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedRed->getTileSet(), NULL, &slotRect);
+				} else if (tool->getPercentageDegraded() >= 40) {
+					//yellow
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedYellow->getTileSet(), NULL, &slotRect);
+				} else {
+					//green
+					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+				}
+				//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			}
 		} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleImg->getTileSet(), NULL, &slotRect);
 		}
@@ -414,13 +445,7 @@ int Inventory::getWidth() {
 }
 
 void Inventory::cleanup() {
-	while (!this->itemVector.empty())
-	{
-		Item* stack = this->itemVector.back();
-		this->itemVector.pop_back();
-		delete stack;
-		stack = nullptr;
-	}
+	this->clearInventory();
 }
 
 Inventory::~Inventory()

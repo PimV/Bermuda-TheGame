@@ -1,14 +1,16 @@
 #include "Bat.h"
 #include "PlayState.h"
 #include <random>
+#include "WanderAround.h"
+#include "FleeingState.h"
 
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 50, spawnPoint),
-	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
-	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
-	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
+NPC(id, 5, 1, 50, spawnPoint),
+Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
+CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
+MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(32);
 	this->setHeight(32);
@@ -41,83 +43,30 @@ Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
 }
 
-void Bat::update(double dt) {
-	this->directionsAndMove(dt);
-}
-
-void Bat::directionsAndMove(double dt)
+void Bat::update(double dt)
 {
-	random_device dev;
-	default_random_engine dre(dev());
+	double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->getCenterX();
+	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getCenterY();
+	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
 
-	uniform_int_distribution<int> dist1(500, 5000);
-	int timeWait = dist1(dre);
-
-	if (timeSinceLastAction < timeWait)
+	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
 	{
-		timeSinceLastAction += GameTimer::Instance()->getFrameTime();
+		this->m_pStateMachine->changeState(FleeingState::Instance());
 	}
-	else {
-		timeSinceLastAction = 0;
-
-		uniform_int_distribution<int> dist2(1, 8);
-		int randomNumberMoveDirection = dist2(dre);
-
-		switch (randomNumberMoveDirection)
-		{
-		case 1:
-			movingRight = true;
-			movingLeft = false;
-			break;
-		case 2:
-			movingRight = false;
-			movingLeft = true;
-			break;
-		case 3:
-			movingDown = true;
-			movingUp = false;
-			break;
-		case 4:
-			movingDown = false;
-			movingUp = true;
-			break;
-		default:
-			movingUp = false;
-			movingDown = false;
-			movingRight = false;
-			movingLeft = false;
-			dx = 0;
-			dy = 0;
-			break;
-		}
-
-		if ((getX() - getSpawnPoint()->getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = false;
-			movingLeft = true;
-		}
-		else if ((getSpawnPoint()->getX() - getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = true;
-			movingLeft = false;
-		}
-
-		if ((getY() - getSpawnPoint()->getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = false;
-			movingUp = true;
-		}
-		else if ((getSpawnPoint()->getY() - getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = true;
-			movingUp = false;
-		}
-
+	else if (this->m_pStateMachine->getCurrentState() == FleeingState::Instance() && distanceFromPlayer >= 300)
+	{
+		this->m_pStateMachine->changeState(WanderAround::Instance());
 	}
-	this->move(dt);
+
+	this->m_pStateMachine->update(dt);
 }
+
 
 void Bat::setImage(Image* image)
 {
@@ -129,7 +78,7 @@ void Bat::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
-	this->setChunks(); 
+	this->setChunks();
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
@@ -145,4 +94,6 @@ Bat::~Bat()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+
+	delete this->m_pStateMachine;
 }

@@ -23,6 +23,9 @@ void ItemCampfire::init()
 
 void ItemCampfire::use(Player* p)
 {
+	if (!p->getInventory()->hasItemById((int)Items::Flint)) {
+		return;
+	}
 	double x = 0;
 	double y = 0;
 

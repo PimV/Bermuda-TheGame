@@ -5,6 +5,7 @@
 #include "GameStateManager.h"
 
 class MenuHelpScreen;
+
 class BaseButton
 {
 public:
@@ -19,6 +20,7 @@ public:
 public:
 	//methodes
 	void createButton(std::string buttonText, int fontSize, int initialColor);
+	void setNewButtonText(std::string text, int fontSize, int initialColor);
 	void reset();
 	void placeLeftAboveButton(BaseButton* button);
 	void placeLeftUnderButton(BaseButton* button);
@@ -41,6 +43,7 @@ public:
 	void menuSetHelpScreenAction();
 	void menuSetGraveyardScreenAction();
 	void setCreditsScreenAction();
+	void setLoadScreenAction();
 	void backToMenuAction();
 	void playAction();
 	void exitAction();
@@ -53,7 +56,7 @@ public:
 
 	void draw();
 	void hover(int, int);
-	bool clicked(int, int);
+	virtual bool clicked(int, int);
 	void (BaseButton::*action) ();
 
 	BaseButton();

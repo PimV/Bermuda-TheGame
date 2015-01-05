@@ -3,6 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <random>
+#include "WanderAround.h"
 
 
 Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
@@ -14,7 +15,6 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 {
 	this->setWidth(48);
 	this->setHeight(48);
-
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 2;
@@ -47,84 +47,15 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 
 	this->StopAnimation();
+
+	this->m_pStateMachine = new StateMachine<Entity>(this);
+	this->m_pStateMachine->setCurrentState(WanderAround::Instance());
+	//this->m_pStateMachine->setGlobalState(WanderAround::Instance());
 }
 
-void Scorpion::update(double dt) {
-	this->directionsAndMove(dt);
-}
-
-void Scorpion::directionsAndMove(double dt)
+void Scorpion::update(double dt)
 {
-	random_device dev;
-	default_random_engine dre(dev());
-
-	uniform_int_distribution<int> dist1(500, 5000);
-	int timeWait = dist1(dre);
-
-	if (timeSinceLastAction < timeWait)
-	{
-		timeSinceLastAction += GameTimer::Instance()->getFrameTime();
-	}
-	else {
-		timeSinceLastAction = 0;
-
-		uniform_int_distribution<int> dist2(1, 8);
-		int randomNumberMoveDirection = dist2(dre);
-
-		this->StopAnimation();
-
-		switch (randomNumberMoveDirection)
-		{
-		case 1:
-			movingRight = true;
-			movingLeft = false;
-			break;
-		case 2:
-			movingRight = false;
-			movingLeft = true;
-			break;
-		case 3:
-			movingDown = true;
-			movingUp = false;
-			break;
-		case 4:
-			movingDown = false;
-			movingUp = true;
-			break;
-		default:
-			movingUp = false;
-			movingDown = false;
-			movingRight = false;
-			movingLeft = false;
-			dx = 0;
-			dy = 0;
-			break;
-		}
-
-		if ((getX() - getSpawnPoint()->getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = false;
-			movingLeft = true;
-		}
-		else if ((getSpawnPoint()->getX() - getX()) > getSpawnPoint()->getWalkRange())
-		{
-			movingRight = true;
-			movingLeft = false;
-		}
-
-		if ((getY() - getSpawnPoint()->getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = false;
-			movingUp = true;
-		}
-		else if ((getSpawnPoint()->getY() - getY()) > getSpawnPoint()->getWalkRange())
-		{
-			movingDown = true;
-			movingUp = false;
-		}
-
-	}
-	this->move(dt);
+	this->m_pStateMachine->update(dt);
 }
 
 void Scorpion::setImage(Image* image)

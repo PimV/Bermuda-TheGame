@@ -31,6 +31,7 @@ public:
 	void updateGameTime(double frameTime);
 	void updateDay();
 	float getGameTime();
+	void setGameTime(double gameTime);
 
 	double getFullDayLength();
 	double getDayLength();

@@ -15,6 +15,8 @@ protected:
 	long timeDestroyed;
 	long respawnTime;
 
+	int percentageCompleted;
+
 	AnimationEnumType animationType;
 
 private:
@@ -50,10 +52,14 @@ public:
 	SDL_Texture* getCanInteractTexture();
 	SDL_Texture* getCantInteractTexture();
 
+	void degradeTool(Player* player);
+
 	virtual bool canInteract(Player* player);
 
 
 	bool trackInteractTimes();
+	int getPercentageCompleted();
+	long getCurrentInteractTime();
 
 	int getInteractStartX();
 	int getInteractStartY();

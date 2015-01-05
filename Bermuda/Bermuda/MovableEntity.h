@@ -12,7 +12,6 @@ public:
 	MovableEntity(int id, double x, double y);
 	virtual ~MovableEntity(void);
 
-	virtual void directionsAndMove(double dt) = 0;
 	virtual void update(double dt) = 0;
 
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, double dt, int animationSpeed);
@@ -22,12 +21,17 @@ public:
 	double stopSpeed, minSpeed, moveSpeed, maxSpeed, sprintSpeed;
 	bool movingLeft, movingRight, movingDown, movingUp;
 	bool sprinting;
+
+	bool canMove(double dt);
+	void move(double dt);
+	long getTimeSinceLastAction();
+	void setTimeSinceLastAction(long time);
 protected:
 	virtual void setImage(Image* image) = 0;
 	virtual void ResetDrawableEntityAndSetChunk() = 0;
 	virtual bool checkCollision(double newX, double newY) = 0;
 
-	virtual void move(double dt);
+
 	virtual void setPosition(double newX, double newY);
 
 	double dx, dy;

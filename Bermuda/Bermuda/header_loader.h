@@ -7,6 +7,7 @@
 
 static const std::string BASEPATH = SDL_GetBasePath();
 static const std::string RESOURCEPATH = BASEPATH + "Resources\\";
+static const std::string SAVEPATH = BASEPATH + "Saves\\";
 //static const double OPTIMALRESOLUTIONW = 1600;
 //static const double OPTIMALRESOLUTIONH = 900;
 

@@ -78,7 +78,7 @@ void MenuCreditsScreen::align()
 
 	for(BaseButton* var : buttons)
 	{
-		var->placeMidUnder(((ScreenWidth - var->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
+		var->placeMidUnder((ScreenWidth  / 2), ScreenHeight - ScreenHeight/ 10);
 		minSur += var->getHeight();
 	}
 }

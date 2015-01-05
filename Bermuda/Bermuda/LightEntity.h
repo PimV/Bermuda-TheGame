@@ -8,8 +8,11 @@ public:
 	virtual ~LightEntity();
 
 	bool getShining();
-	void setShining(bool NewItem);
+	void setShining(bool newShining);
+	double getDiameter();
+	void setDiameter(double newDiameter);
 private:
 	bool shining;
+	double diameter;
 };
 
