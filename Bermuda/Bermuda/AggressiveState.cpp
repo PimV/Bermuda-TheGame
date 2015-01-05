@@ -1,6 +1,6 @@
 #include "AggressiveState.h"
 #include "MovableEntity.h"
-#include "NPC.h"
+#include "InteractableNPC.h"
 #include "PlayState.h"
 #include <random>
 #include <assert.h>
@@ -18,8 +18,8 @@ AggressiveState* AggressiveState::Instance()
 void AggressiveState::enter(Entity* entity)
 {
 	this->entity = entity;
-	this->attackRange = dynamic_cast<NPC*>(entity)->getActionRange();
-	this->actionRange = dynamic_cast<NPC*>(entity)->getAttackRange();
+	this->attackRange = dynamic_cast<InteractableNPC*>(entity)->getActionRange();
+	this->actionRange = dynamic_cast<InteractableNPC*>(entity)->getAttackRange();
 }
 
 void AggressiveState::exit(Entity* entity)

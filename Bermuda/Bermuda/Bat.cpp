@@ -4,8 +4,8 @@
 #include "EvasiveBehaviour.h"
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
-NPC(id, 5, 1, 50, 15, spawnPoint),
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+InteractableNPC(id, 5, 1, 150, 25, spawnPoint, -18, -20, 68, 78),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
 MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
@@ -23,7 +23,6 @@ AttackingNPC(500)
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
-	//this->interaction = false;
 
 	this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;

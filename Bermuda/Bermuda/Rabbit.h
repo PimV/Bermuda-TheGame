@@ -1,11 +1,12 @@
 #pragma once
-#include "NPC.h"
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "Weapon.h"
+#include "InteractableNPC.h"
 
 class Rabbit :
-	public NPC,
+	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
 	public MovableEntity
@@ -15,9 +16,14 @@ public:
 	virtual ~Rabbit();
 
 	void update(double dt);
+	bool checkCollision(double newX, double newY);
+
+	void interact(Player* player);
+	void setDestroyedState();
+
 private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkCollision(double newX, double newY);
+	//bool checkCollision(double newX, double newY);
 };

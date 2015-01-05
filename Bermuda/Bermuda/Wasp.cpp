@@ -6,8 +6,8 @@
 #include "DefensiveBehaviour.h"
 
 Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 50, 25, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+	InteractableNPC(id, 5, 1, 150, 25, spawnPoint, -18, -20, 68, 78),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
 	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
@@ -32,7 +32,7 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->animationWalkDownRow = 2, this->animationWalkRightRow = 3;
 	this->currentAnimationRow = this->animationWalkDownRow;
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 0, this->animationWalkEndColumn = 3;
-	
+
 	this->frameAmountX = 4, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;
 

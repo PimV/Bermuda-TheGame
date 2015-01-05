@@ -3,7 +3,7 @@
 #include "WanderAround.h"
 #include "AggressiveState.h"
 #include "FleeingState.h"
-#include "NPC.h"
+#include "InteractableNPC.h"
 
 class BaseBehaviour
 {
@@ -12,7 +12,7 @@ class BaseBehaviour
 
 	protected:
 		StateMachine<Entity>* m_pStateMachine;
-		NPC* npc;
+		InteractableNPC* npc;
 
 		virtual void executeAction() = 0;
 

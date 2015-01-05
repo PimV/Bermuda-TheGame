@@ -1,12 +1,12 @@
 #pragma once
-#include "NPC.h"
+#include "InteractableNPC.h"
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "AttackingNPC.h"
 
 class Scorpion :
-	public NPC,
+	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
 	public MovableEntity,

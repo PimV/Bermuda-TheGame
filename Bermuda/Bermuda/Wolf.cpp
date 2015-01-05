@@ -6,8 +6,8 @@
 #include "AggressiveBehaviour.h"
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 3, 150, 5, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
+	InteractableNPC(id, 5, 3, 150, 5, spawnPoint, -12, -15, 68, 78),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 13, 20, 23, 24),
 	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),

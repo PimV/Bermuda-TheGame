@@ -5,9 +5,8 @@
 #include <random>
 #include "AggressiveBehaviour.h"
 
-
 Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 150, 5, spawnPoint),
+	InteractableNPC(id, 5, 1, 150, 5, spawnPoint, -18, -15, 68, 78),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 2, 8, 28, 21),

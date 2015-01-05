@@ -522,6 +522,9 @@
     <ClCompile Include="LoadButton.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="InteractableNPC.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="ItemMeat.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -975,6 +978,9 @@
     </ClInclude>
     <ClInclude Include="LoadButton.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableNPC.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="ItemMeat.h">
       <Filter>Header Files\Model\Item</Filter>

@@ -21,9 +21,12 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->curChildren = 0;
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
-	this->spawnInterval = 90000; //1,5 minuten
+
+	this->spawnInterval = 90000; // ~ 1,5 min
+
 	this->walkRange = walkRange;
-	spawnMob();
+	this->lastSpawnTime = 0;
+	this->spawnMob();
 }
 
 void Spawnpoint::drawSpawnpointArea()
@@ -66,7 +69,7 @@ void Spawnpoint::spawnMob()
 
 		if(npcSpawned)
 		{
-			this->curChildren++;
+			++this->curChildren;
 		}
 
 		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
@@ -75,7 +78,14 @@ void Spawnpoint::spawnMob()
 
 void Spawnpoint::decreaseChildren()
 {
-	this->curChildren--;
+	if (this->curChildren > 0)
+	{
+		--this->curChildren;
+	}
+	else
+	{
+		this->curChildren = 0;
+	}
 }
 
 int Spawnpoint::getWalkRange()
@@ -85,13 +95,14 @@ int Spawnpoint::getWalkRange()
 
 void Spawnpoint::update()
 {
-	if(GameTimer::Instance()->getGameTime() > lastSpawnTime + spawnInterval)
+	// cheack for a new spawn
+	if(GameTimer::Instance()->getGameTime() > this->lastSpawnTime + this->spawnInterval)
 	{
-		spawnMob();
+		this->spawnMob();
 	}
 }
 
 Spawnpoint::~Spawnpoint()
 {
-	SDL_DestroyTexture(spawnpointTexture);
+	SDL_DestroyTexture(this->spawnpointTexture);
 }

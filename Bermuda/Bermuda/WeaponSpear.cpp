@@ -23,15 +23,10 @@ void WeaponSpear::init() {
 	this->setAttackDamage(10);
 	this->setAttackRadius(10);
 
+	this->AnimationType = AnimationEnumType::AttackSpear;
 	this->setMaxDurability(100);
 	this->setDurability(100);
 }
-
-/*
-void WeaponSpear::use(Player* player) {
-	Equipable::use(player);
-}
-*/
 
 WeaponSpear::~WeaponSpear()
 {
