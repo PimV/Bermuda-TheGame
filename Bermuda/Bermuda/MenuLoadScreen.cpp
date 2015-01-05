@@ -102,7 +102,6 @@ void MenuLoadScreen::readSavedGames()
 				std::ifstream stream(SAVEPATH + fileName);
 				if (!stream.is_open())
 				{
-					std::cout << "Could not read save file. File " + fileName + " could not be found!" << std::endl;
 					return;
 				}
 
@@ -145,8 +144,7 @@ void MenuLoadScreen::setBackground()
 	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
 	if (backgroundTexture == NULL)
 	{
-		std::cout << "Error loading startmenu background" << std::endl << "Error 2" << std::endl;
-		system("pause");
+		return;
 	}
 
 	backgroundRect.x = 0;
@@ -219,7 +217,6 @@ void MenuLoadScreen::handleEvents(SDL_Event mainEvent)
 
 void MenuLoadScreen::loadCurrentFile()
 {
-	std::cout << currentFileToLoad << std::endl;
 	PlayState::Instance()->setFileToLoad(this->currentFileToLoad);
 	GameStateManager::Instance()->changeGameState(PlayState::Instance());
 	PlayState::Instance()->loadGame();
@@ -248,4 +245,5 @@ void MenuLoadScreen::draw()
 
 MenuLoadScreen::~MenuLoadScreen()
 {
+	this->cleanup();
 }
