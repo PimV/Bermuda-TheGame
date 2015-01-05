@@ -518,7 +518,7 @@
     </ClCompile>
     <ClCompile Include="ToolGoldenPickaxe.cpp">
       <Filter>Source Files\Model\Item</Filter>
-    </ClCompile>
+	</ClCompile>
     <ClCompile Include="Scorpion.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
@@ -960,6 +960,9 @@
     </ClInclude>
     <ClInclude Include="ItemMeat.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="AchievementsEnum.h">
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

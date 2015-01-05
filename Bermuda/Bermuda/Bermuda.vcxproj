@@ -108,6 +108,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Achievement.h" />
+    <ClInclude Include="AchievementsEnum.h" />
     <ClInclude Include="ActionContainer.h" />
     <ClInclude Include="AnimatingContainer.h" />
     <ClInclude Include="AnimatingEntity.h" />

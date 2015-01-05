@@ -39,7 +39,7 @@ void Tree::interact(Player* player) {
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Wood));
-			player->getStatusTracker()->treeCut();
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::TREECUT);
 
 			//Degradability
 				this->degradeTool(player);
@@ -54,7 +54,7 @@ void Tree::update(double dt) {
 		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
-	}
+	} 
 }
 
 void Tree::respawn() {
