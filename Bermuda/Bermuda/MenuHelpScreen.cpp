@@ -23,6 +23,9 @@ void MenuHelpScreen::init()
 	secRect.x = firstRect.w;
 	secRect.y = 0;
 
+	//nieuwe scherm toevoegen is button maken, inclusief commando. toevoegen aan buttons vector, scherm maken, get helpscherm maken(aanroepen in button)
+	//ja, het kan en zou anders moeten
+
 	movementScreen = new BaseHelpScreen(firstRect.w);
 	movementScreen->setPicture("HelpScreens/movement.bmp");
 	movementScreen->setText("Use the arrow keys to walk around or click anywhere on the screen to move the clicked point.");
@@ -45,7 +48,7 @@ void MenuHelpScreen::init()
 
 	pickCarrotScreen = new BaseHelpScreen(firstRect.w);
 	pickCarrotScreen->setPicture("HelpScreens/pickCarrot.bmp");
-	pickCarrotScreen->setText("Stand near a carrot, press spacebar to pick a carrot. Carrots can be consumed to refill your food bar. But look out, carrots do not respawn like other objects");
+	pickCarrotScreen->setText("Stand near a carrot, press spacebar to pick a carrot. Carrots can be consumed to refill your food bar. But look out, carrots do not respawn like other objects.");
 
 	mineGoldScreen = new BaseHelpScreen(firstRect.w);
 	mineGoldScreen->setPicture("HelpScreens/mineGold.bmp");
@@ -65,7 +68,7 @@ void MenuHelpScreen::init()
 
 	timeScreen = new BaseHelpScreen(firstRect.w);
 	timeScreen->setPicture("HelpScreens/time.bmp");
-	timeScreen->setText("The time indicator shows how late it is.");
+	timeScreen->setText("The time indicator shows how late it is. When standing in complete darkness your health will slowly decrease.");
 
 	BaseButton* movementButton = new BaseButton;
 	movementButton->createButton("Movement", 24, 0);
@@ -214,6 +217,11 @@ BaseHelpScreen* MenuHelpScreen::getMineRockScr()
 BaseHelpScreen* MenuHelpScreen::getFoodAndWaterScr()
 {
 	return foodAndWaterScreen;
+}
+
+BaseHelpScreen* MenuHelpScreen::getTimeScr()
+{
+	return timeScreen;
 }
 
 void MenuHelpScreen::setBackground()
