@@ -45,6 +45,6 @@ public:
 		return &m_LoadingState;
 	};
 
-	LoadingState(void);
-	~LoadingState(void);
+	LoadingState();
+	virtual ~LoadingState();
 };

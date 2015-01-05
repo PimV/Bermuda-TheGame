@@ -4,44 +4,61 @@
 #include <string>
 #include "GameStateManager.h"
 
+class MenuHelpScreen;
+
 class BaseButton
 {
 public:
 	//variables
 	bool active;
-
-protected:
-	//variables
+	bool hoverAction;
 	SDL_Texture* buttonTexture;
 	SDL_Texture* buttonHoverTexture;
 	SDL_Rect buttonRect;
-
-	//virtual methodes
-	virtual void action() = 0;
+	MenuHelpScreen* helpScr;
 
 public:
-	
 	//methodes
 	void createButton(std::string buttonText, int fontSize, int initialColor);
+	void setNewButtonText(std::string text, int fontSize, int initialColor);
 	void reset();
 	void placeLeftAboveButton(BaseButton* button);
 	void placeLeftUnderButton(BaseButton* button);
+	void placeLeftUnder(int xOffset, int yOffset);
 	void placeMidScreenAbove(BaseButton* button);
 	void placeMidScreenUnder(BaseButton* button);
 	void placeMid();
 	void placeLeftMid();
 	void placeMidUnder(int x, int y);
+	void placeExactAt(int x, int y);
 	int getX();
 	int getY();
 	int getHeight();
 	int getWidth();
+	void setHelpScr(MenuHelpScreen*);
+	void setHoverAction(bool falseOrTrue);
+
+	//buttonActions
+	void setCreditsScreenAction();
+	void setLoadScreenAction();
+	void exitAction();
+	void menuSetHelpScreenAction();
+	void playAction();
+	void pauseSetAchievementScreenAction();
+	void backToPauseMainScreenAction();
+	void backToMenuAction();
+	void resumeGameAction();
+	void menuMainScreenAction();
+	void helpMovementScreenAction();
+	void helpCutTreeScreenAction();
+	void helpMineTreeScreenAction();
 
 	void draw();
 	void hover(int, int);
-	bool clicked(int, int);
+	virtual bool clicked(int, int);
+	void (BaseButton::*action) ();
 
 	BaseButton();
-	virtual void init() = 0;
 	void cleanup();
 	virtual ~BaseButton();
 };

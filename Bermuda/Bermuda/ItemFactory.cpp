@@ -1,8 +1,21 @@
 #include "ItemFactory.h"
+#include "ItemCarrot.h"
+#include "ItemApple.h"
+#include "ItemWater.h"
+#include "ItemFish.h"
+#include "ItemRock.h"
+#include "ItemWood.h"
+#include "ItemGold.h"
+#include "ItemCampfire.h"
+#include "ToolAxe.h"
+#include "ToolPickaxe.h"
+#include "ToolFlint.h"
+#include "ToolGoldenAxe.h"
+#include "ToolGoldenPickaxe.h"
 
 ItemFactory ItemFactory::itemFactory;
 
-ItemFactory::ItemFactory(void)
+ItemFactory::ItemFactory()
 {
 }
 
@@ -15,9 +28,13 @@ void ItemFactory::loadItemTileSets(ImageLoader* imgLoader)
 	itemImages[Items::Wood] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemLogs.png", 32,25));
 	itemImages[Items::Gold] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemGold.png", 34,22));
 	itemImages[Items::Water] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemWater.png", 22,34));
+	itemImages[Items::Campfire] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemCampfire.png", 38, 22));
 	itemImages[Items::Pickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolPickaxe.png", 32,32));
 	itemImages[Items::Axe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolAxe.png", 22,27));
+	itemImages[Items::GoldenPickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolGoldenPickaxe.png", 32,32));
+	itemImages[Items::GoldenAxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolGoldenAxe.png", 22,27));
 	itemImages[Items::Flint] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolFlint.png", 38,22));
+	itemImages[Items::Spear] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\WeaponSpear.png", 40,39));
 }
 
 Item* ItemFactory::createItem(Items item)
@@ -25,34 +42,46 @@ Item* ItemFactory::createItem(Items item)
 	switch (item)
 	{
 	case Items::Carrot:
-		return new ItemCarrot(itemImages[Items::Carrot]);
+		return new ItemCarrot(itemImages[item]);
 		break;
 	case Items::Apple:
-		return new ItemApple(itemImages[Items::Apple]);
+		return new ItemApple(itemImages[item]);
 		break;
 	case Items::Water:
-		return new ItemWater(itemImages[Items::Water]);
+		return new ItemWater(itemImages[item]);
 		break;
 	case Items::Fish:
-		return new ItemFish(itemImages[Items::Fish]);
+		return new ItemFish(itemImages[item]);
 		break;
 	case Items::Rock:
-		return new ItemRock(itemImages[Items::Rock]);
+		return new ItemRock(itemImages[item]);
 		break;
 	case Items::Gold:
-		return new ItemGold(itemImages[Items::Gold]);
+		return new ItemGold(itemImages[item]);
 		break;
 	case Items::Wood:
-		return new ItemWood(itemImages[Items::Wood]);
+		return new ItemWood(itemImages[item]);
+		break;
+	case Items::Campfire:
+		return new ItemCampfire(itemImages[item]);
 		break;
 	case Items::Axe:
-		return new ToolAxe(itemImages[Items::Axe]);
+		return new ToolAxe(itemImages[item]);
 		break;
 	case Items::Pickaxe:
-		return new ToolPickaxe(itemImages[Items::Pickaxe]);
+		return new ToolPickaxe(itemImages[item]);
 		break;
 	case Items::Flint:
-		return new ToolFlint(itemImages[Items::Flint]);
+		return new ToolFlint(itemImages[item]);
+		break;
+	case Items::Spear:
+		return new WeaponSpear(itemImages[item]);
+		break;
+	case Items::GoldenAxe:
+		return new ToolGoldenAxe(itemImages[item]);
+		break;
+	case Items::GoldenPickaxe:
+		return new ToolGoldenPickaxe(itemImages[item]);
 		break;
 	default:
 		return nullptr;
@@ -65,6 +94,6 @@ Image* ItemFactory::getItemImage(Items item)
 	return itemImages[item];
 }
 
-ItemFactory::~ItemFactory(void)
+ItemFactory::~ItemFactory()
 {
 }

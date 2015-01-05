@@ -7,7 +7,7 @@
 
 MenuState MenuState::m_MenuState;
 
-MenuState::MenuState(void)
+MenuState::MenuState()
 {
 }
 
@@ -16,11 +16,12 @@ void MenuState::init(GameStateManager* gsm)
 {
 	mainScr = new MenuMainScreen;
 	creditsScr = new MenuCreditsScreen;
+	helpScr = new MenuHelpScreen;
+	loadScr = new MenuLoadScreen;
 	setCurWindow(getMenuMainScreen());
 
 	//soundloader
 	SoundLoader::Instance()->playMenuMusic();
-
 }
 
 void MenuState::setCurWindow(BaseScreen* curwindow)
@@ -37,6 +38,16 @@ BaseScreen* MenuState::getMenuMainScreen()
 BaseScreen* MenuState::getMenuCreditsScreen()
 {
 	return creditsScr;
+}
+
+BaseScreen* MenuState::getMenuLoadScreen()
+{
+	return loadScr;
+}
+
+BaseScreen* MenuState::getMenuHelpScreen()
+{
+	return helpScr;
 }
 
 void MenuState::handleEvents(SDL_Event mainEvent)
@@ -68,6 +79,8 @@ void MenuState::cleanup()
 {
 	delete mainScr;
 	delete creditsScr;
+	delete helpScr;
+	delete loadScr;
 }
 
 MenuState::~MenuState()

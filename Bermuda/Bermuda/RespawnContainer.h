@@ -11,6 +11,7 @@ public:
 
 	void add(InteractableEntity* entity);
 	void remove(InteractableEntity* entity);
+	void cleanup();
 
 	std::vector<InteractableEntity*>* getContainer();
 

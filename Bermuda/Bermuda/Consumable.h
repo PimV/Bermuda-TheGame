@@ -1,13 +1,14 @@
 #pragma once
 #include "item.h"
-class Player;
+#include "Player.h"
+
 class Consumable :
 	public  Item
 {
 public:
-	Consumable(void);
+	Consumable();
 
-	virtual void consume(Player* p);
+	virtual void use(Player* p);
 	void setHungerRefill(int hunger);
 	void setThirstRefill(int thirst);
 	void setHealthRefill(int health);
@@ -15,7 +16,7 @@ public:
 	int getThirstRefill();
 	int getHealthRefill();
 
-	virtual ~Consumable(void);
+	virtual ~Consumable();
 
 private:
 	int hungerRefill;

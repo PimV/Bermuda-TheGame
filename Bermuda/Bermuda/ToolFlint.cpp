@@ -1,6 +1,5 @@
 #include "ToolFlint.h"
 #include "Items.h"
-#include "Player.h"
 #include <iostream>
 
 
@@ -20,10 +19,6 @@ void ToolFlint::init() {
 
 	int itemCount = 1;	
 	this->setStackSize(itemCount);
-}
-
-void ToolFlint::equip(Player* player) {
-	Equipable::equip(player);
 }
 
 ToolFlint::~ToolFlint()

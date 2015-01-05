@@ -13,14 +13,16 @@ class Wasp :
 	public MovableEntity
 {
 public:
-	Wasp(int id, int chunkSize, Spawnpoint *spawnPoint, int firstImgID);
-	~Wasp();
-	void directionsAndMove(double dt);
+	Wasp(int id, Spawnpoint *spawnPoint, int firstImgID);
+	virtual ~Wasp();
+
 	void update(double dt);
+	bool checkCollision(double newX, double newY);
 private:
+	void directionsAndMove(double dt);
+
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkIntersects(CollidableEntity* collidableEntity);
 };
 

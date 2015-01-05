@@ -2,17 +2,13 @@
 #include "ClickAction.h"
 #include <iostream>
 
-ActionContainer::ActionContainer(void)
+ActionContainer::ActionContainer()
 {
 	this->init();
 }
 
 void ActionContainer::init() {
 	m_actionContainer = new std::vector<IAction*>();
-}
-
-void ActionContainer::cleanup() {
-
 }
 
 void ActionContainer::addAction(IAction* action) {
@@ -41,6 +37,19 @@ std::vector<IAction*>* ActionContainer::getVector() {
 	return m_actionContainer;
 }
 
-ActionContainer::~ActionContainer(void)
+void ActionContainer::cleanup() {
+	while (!this->m_actionContainer->empty())
+	{
+		IAction* action = this->m_actionContainer->back();
+		m_actionContainer->pop_back();
+		delete action;
+		action = nullptr;
+	}
+	delete this->m_actionContainer;
+	this->m_actionContainer = nullptr;
+}
+
+ActionContainer::~ActionContainer()
 {
+	this->cleanup();
 }
