@@ -25,7 +25,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
-	#pragma endregion Moving_stuff
+	#pragma endregion
 
 	this->healthPoints = 20;
 	this->attackPoints = 0;
@@ -40,13 +40,13 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 	this->frameAmountX = 8, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;
-	#pragma endregion Animation_stuff
+	#pragma endregion
 	
 	#pragma region Interactable_stuff
 	this->interactTime = 500;
 	this->currentInteractTime = 0;
-	this->animationType = AnimationEnumType::Attackable;
-	#pragma endregion Interactable_stuff
+	this->animationType = AnimationEnumType::Attack;
+	#pragma endregion
 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);

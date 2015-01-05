@@ -463,7 +463,7 @@ void Player::setAnimationType(AnimationEnumType type)
  			this->animationActionStartColumn = this->animationPickStartColumn;
 			this->animationActionEndColumn = this->animationPickEndColumn;
 		break;
-	case AnimationEnumType::Attackable:
+	case AnimationEnumType::Attack:
 			this->setAnimationType(dynamic_cast<class Weapon*>(this->getInventory()->getSelectedItem())->getAnimationEnumType());
 		break;
 	case AnimationEnumType::AttackSpear:

@@ -5,9 +5,9 @@ InteractableNPC::InteractableNPC(int id, int healthPoints, int attackPoints, int
 	Entity( id, spawnPoint->getX(), spawnPoint->getY() ),
 	InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), interactStartX, interactStartY, interactWitdh, interactHeight )
 {
-	//this->interactTime = 0;
-	//sthis->currentInteractTime = 0;
-	this->animationType = AnimationEnumType::Attackable;
+	this->interactTime = 0;
+	this->currentInteractTime = 0;
+	this->animationType = AnimationEnumType::Attack;
 }
 
 #pragma region Getters

@@ -19,6 +19,7 @@ private:
 
 	//methodes
 	void init(std::string spawnType, int maxChildren, int walkRange);
+	void spawnMob();
 
 public:
 	Spawnpoint(int id, double x, double y, std::string spawnType, int maxChildren, int walkRange);
@@ -27,7 +28,6 @@ public:
 	int getWalkRange();
 	void update();
 	void drawSpawnpointArea();
-	void spawnMob();
 
 	virtual ~Spawnpoint();
 };

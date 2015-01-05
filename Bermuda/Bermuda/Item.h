@@ -20,8 +20,6 @@ public:
 	int getStackSize();
 	void setStackSize(int size);
 
-	Item* getSelectedItem();
-
 	int getMaxStackSize();	
 	void setMaxStackSize(int size);
 

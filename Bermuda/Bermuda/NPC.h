@@ -10,7 +10,8 @@ class NPC :
 {
 private:
 	int healthPoints, attackPoints, walkRange, actionRange;
-	bool destroyed, timeSinceDestroy;
+	bool destroyed;
+	long timeSinceDestroy;
 
 public:
 	NPC(int id, Spawnpoint *spawnPoint);
