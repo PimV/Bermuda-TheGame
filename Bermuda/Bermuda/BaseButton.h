@@ -60,6 +60,8 @@ public:
 	void helpMineRockScreenAction();
 	void helpFoodAndWaterScreenAction();
 	void helptimeScreenAction();
+	void helpCraftingScreenAction();
+	void helpFightingScreenAction();
 
 	void draw();
 	void hover(int, int);

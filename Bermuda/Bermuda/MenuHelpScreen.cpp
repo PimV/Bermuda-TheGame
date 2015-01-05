@@ -70,6 +70,14 @@ void MenuHelpScreen::init()
 	timeScreen->setPicture("HelpScreens/time.bmp");
 	timeScreen->setText("The time indicator shows how late it is. When standing in complete darkness your health will slowly decrease.");
 
+	craftingScreen = new BaseHelpScreen(firstRect.w);
+	craftingScreen->setPicture("HelpScreens/crafting.png");
+	craftingScreen->setText("Press 'T' or the icon on the bottom right to open the crafting screen. Click on an item and press 'craft' to craft the item. If you don't have enough resources, the button will be grey and the missing resources are displayed with a red color.");
+
+	fightingScreen = new BaseHelpScreen(firstRect.w);
+	fightingScreen->setPicture("HelpScreens/fighting.png");
+	fightingScreen->setText("Select the spear in your inventory and stand close to an animal. Hold spacebar to attack. Most animals will give you food. But be carefull. Certain animals can fight back.");
+
 	BaseButton* movementButton = new BaseButton;
 	movementButton->createButton("Movement", 24, 0);
 	movementButton->action = &BaseButton::helpMovementScreenAction;
@@ -125,6 +133,16 @@ void MenuHelpScreen::init()
 	timeButton->action = &BaseButton::helptimeScreenAction;
 	timeButton->setHoverAction(true);
 
+	BaseButton* craftingButton = new BaseButton;
+	craftingButton->createButton("Crafting", 24, 0);
+	craftingButton->action = &BaseButton::helpCraftingScreenAction;
+	craftingButton->setHoverAction(true);
+
+	BaseButton* fightingButton = new BaseButton;
+	fightingButton->createButton("Fighting", 24, 0);
+	fightingButton->action = &BaseButton::helpFightingScreenAction;
+	fightingButton->setHoverAction(true);
+
 	BaseButton* returnButton = new BaseButton;
 	returnButton->createButton("Back to menu", 24, 0);
 	returnButton->action = &BaseButton::menuMainScreenAction;
@@ -140,6 +158,8 @@ void MenuHelpScreen::init()
 	mineRockButton->placeLeftUnderButton(mineIceButton);
 	hungerThirstButton->placeLeftUnderButton(mineRockButton);
 	timeButton->placeLeftUnderButton(hungerThirstButton);
+	craftingButton->placeLeftUnderButton(timeButton);
+	fightingButton->placeLeftUnderButton(craftingButton);
 	returnButton->placeLeftUnder(15, 10);
 
 	buttons.push_back(movementButton);
@@ -153,6 +173,8 @@ void MenuHelpScreen::init()
 	buttons.push_back(mineRockButton);
 	buttons.push_back(hungerThirstButton);
 	buttons.push_back(timeButton);
+	buttons.push_back(craftingButton);
+	buttons.push_back(fightingButton);
 	buttons.push_back(returnButton);
 
 	for(BaseButton* var : buttons)
@@ -227,6 +249,11 @@ BaseHelpScreen* MenuHelpScreen::getTimeScr()
 BaseHelpScreen* MenuHelpScreen::getCraftingScr()
 {
 	return craftingScreen;
+}
+
+BaseHelpScreen* MenuHelpScreen::getFightingScr()
+{
+	return fightingScreen;
 }
 
 void MenuHelpScreen::setBackground()

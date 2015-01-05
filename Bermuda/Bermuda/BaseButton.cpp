@@ -303,3 +303,13 @@ void BaseButton::helptimeScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getTimeScr());
 }
+
+void BaseButton::helpCraftingScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getCraftingScr());
+}
+
+void BaseButton::helpFightingScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getFightingScr());
+}
