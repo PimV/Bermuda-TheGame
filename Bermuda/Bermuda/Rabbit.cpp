@@ -119,7 +119,7 @@ void Rabbit::setDestroyedState()
 {
 	// TODO: add rabbit killed to status tracker
 	this->getSpawnPoint()->decreaseChildren();
-	this->~Rabbit();
+	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }
 
 Rabbit::~Rabbit()
