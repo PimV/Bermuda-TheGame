@@ -6,15 +6,16 @@
 #include "AggressiveBehaviour.h"
 
 Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	InteractableNPC(id, 5, 1, 150, 5, spawnPoint, -18, -15, 68, 78),
+	InteractableNPC(id, 50, 1, 150, 10, spawnPoint, -18, -15, 68, 78, 500),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 2, 8, 28, 21),
-	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY()),
-	AttackingNPC(500)
+	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 {
 	this->setWidth(48);
 	this->setHeight(48);
+
+	#pragma region Moving_stuff
 	this->dx = 0;
 	this->dy = 0;
 	this->maxSpeed = 2;
@@ -24,7 +25,9 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
+	#pragma endregion
 
+	#pragma region Animation_stuff
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1; 
 	this->animationWalkLeftRow = 2;
@@ -36,12 +39,18 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->animationWalkEndColumn = 3;
 	this->frameAmountX = 6, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;
+	#pragma endregion
 
-	this->timeSinceLastAction = 0;
+	#pragma region Interactable_stuff
+	this->interactTime = 500;
+	this->currentInteractTime = 0;
+	this->animationType = AnimationEnumType::Attack;
+	#pragma endregion
 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 
 	this->StopAnimation();
 
@@ -50,15 +59,41 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 void Scorpion::update(double dt)
 {
-	this->behaviour->update(dt);
+	if (this->getHealthPoints() > 0)
+	{
+		this->behaviour->update(dt);
+	}
+	else
+	{
+		this->setDestroyedState();
+	}
 }
 
-void Scorpion::attack()
+void Scorpion::interact(Player* player)
 {
-	if( this->checkAttackTimes())
+	if (player->getInventory()->getSelectedItem()->hasItemType(ItemType::Weapon))
 	{
-		PlayState::Instance()->getPlayer()->setHealth( ( PlayState::Instance()->getPlayer()->getHealth() - this->getAttackPoints() ) );
+		player->setCorrectToolSelected(true);
+		InteractableEntity::interact(player);
+
+		if (this->trackInteractTimes())
+		{
+			player->setCorrectToolSelected(false);
+			this->currentInteractTime = 0;
+			this->setHealthPoints( this->getHealthPoints() - dynamic_cast<class Weapon*>(player->getInventory()->getSelectedItem())->getAttackDamage() );
+		}
 	}
+	else
+	{
+		player->setCorrectToolSelected(false);
+	}
+}
+
+void Scorpion::setDestroyedState() 
+{
+	// TODO: add Scorpions killed to status tracker
+	this->getSpawnPoint()->decreaseChildren();
+	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }
 
 void Scorpion::setImage(Image* image)
@@ -71,10 +106,12 @@ void Scorpion::ResetDrawableEntityAndSetChunk()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 	this->setChunks(); 
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
 }
 
 bool Scorpion::checkCollision(double newX, double newY)
@@ -87,4 +124,5 @@ Scorpion::~Scorpion()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }

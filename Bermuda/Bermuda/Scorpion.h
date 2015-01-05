@@ -9,8 +9,7 @@ class Scorpion :
 	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
-	public MovableEntity,
-	public AttackingNPC
+	public MovableEntity
 {
 	private:
 		void setImage(Image* image);
@@ -22,5 +21,7 @@ class Scorpion :
 		virtual ~Scorpion();
 
 		void update(double dt);
-		void attack();
+
+		void interact(Player* player);
+		void setDestroyedState();
 };

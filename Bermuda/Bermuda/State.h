@@ -7,8 +7,7 @@ class State
 {
 
 protected:
-	int actionRange, attackRange;
-	Entity *entity;
+	//
 
 public:
 	virtual ~State(){};

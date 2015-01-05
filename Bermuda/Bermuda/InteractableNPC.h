@@ -1,29 +1,32 @@
 #pragma once
-#include "NPC.h"
+#include "PlayState.h"
 #include "InteractableEntity.h"
+#include "NPC.h"
+#include "AttackingNPC.h"
 #include "Weapon.h"
 
 class InteractableNPC :
 	public NPC,
-	public InteractableEntity
+	public InteractableEntity,
+	public AttackingNPC
 {
 	private:
 		//
 	protected:
-		int healthPoints, attackPoints, respawnTime, interactTime;
-		int  walkRange, actionRange, attackRange;
+		int healthPoints, attackPoints;
+
+		void addToContainers();
+		void removeFromConainers();
 
 	public:
-		InteractableNPC(int id, int healthPoints, int attackPoints, int actionRange, int attackRange, Spawnpoint *spawnPoint, int interactStartX, int interactStartY, int interactWitdh, int interactHeight);
+		InteractableNPC(int id, int healthPoints, int attackPoints, int actionRange, int attackRange, Spawnpoint *spawnPoint, int interactStartX, int interactStartY, int interactWitdh, int interactHeight, long attackTime);
 		virtual ~InteractableNPC(void);
 
 		int getHealthPoints();
 		int getAttackPoints();
-		int getActionRange();
-		int getAttackRange();
 
 		void setHealthPoints(int healthPoints);
 		void setAttackPoints(int attackPoints);
-		void setActionRange(int actionRange);
-		void setAttackRange(int attackRange);
+
+		virtual void attack();
 };

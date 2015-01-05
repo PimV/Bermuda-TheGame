@@ -1,11 +1,10 @@
 #include "BaseBehaviour.h"
-#include <iostream>
-
 
 BaseBehaviour::BaseBehaviour(StateMachine<Entity>* m_pStateMachine)
 {
 	this->npc = dynamic_cast<InteractableNPC*>( m_pStateMachine->getOwner() );
 	this->m_pStateMachine = m_pStateMachine;
+
 	this->m_pStateMachine->setCurrentState( WanderAround::Instance() );
 }
 

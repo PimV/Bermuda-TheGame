@@ -3,14 +3,13 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
-#include "AttackingNPC.h"
+#include "Weapon.h"
 
 class Bat :
 	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
-	public MovableEntity,
-	public AttackingNPC
+	public MovableEntity
 {
 	private:
 		// Replace methods to DrawableEntity & CollidableEntity
@@ -25,7 +24,9 @@ class Bat :
 		Bat(int id, Spawnpoint *spawnPoint, int firstImgID);
 
 		void update(double dt);
-		void attack();
+
+		void interact(Player* player);
+		void setDestroyedState();
 
 		virtual ~Bat();
 };

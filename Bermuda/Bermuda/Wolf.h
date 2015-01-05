@@ -3,14 +3,12 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
-#include "AttackingNPC.h"
 
 class Wolf :
 	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
-	public MovableEntity,
-	public AttackingNPC
+	public MovableEntity
 {
 	private:
 		void setImage(Image* image);
@@ -25,5 +23,7 @@ class Wolf :
 		virtual ~Wolf();
 
 		void update(double dt);
-		void attack();
+
+		void interact(Player* player);
+		void setDestroyedState();
 };

@@ -6,7 +6,7 @@
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-	InteractableNPC(id, 20, 0, 150, 0, spawnPoint, -15, -18, 68, 78),
+	InteractableNPC(id, 20, 0, 150, 0, spawnPoint, -15, -18, 68, 78, 500),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 4, 20, 28, 12),
 	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
@@ -28,7 +28,8 @@ Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->healthPoints = 20;
 	this->attackPoints = 0;
-	this->actionRange = 1;	
+	this->actionRange = 150;
+	this->attackRange = 0;
 
 	#pragma region Animation_stuff
 	this->firstImgID = firstImgID;
@@ -69,29 +70,6 @@ void Rabbit::update(double dt)
 	}
 }
 
-void Rabbit::setImage(Image* image)
-{
-	this->setDrawImage(image);
-}
-
-void Rabbit::ResetDrawableEntityAndSetChunk()
-{
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
-	this->setChunks(); 
-	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
-	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
-	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
-	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
-}
-
-bool Rabbit::checkCollision(double newX, double newY)
-{
-	return CollidableEntity::checkCollision(newX, newY);
-}
-
 void Rabbit::interact(Player* player)
 {
 	if (player->getInventory()->getSelectedItem()->hasItemType(ItemType::Weapon))
@@ -117,6 +95,29 @@ void Rabbit::setDestroyedState()
 	// TODO: add rabbit killed to status tracker
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
+}
+
+void Rabbit::setImage(Image* image)
+{
+	this->setDrawImage(image);
+}
+
+void Rabbit::ResetDrawableEntityAndSetChunk()
+{
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	this->setChunks(); 
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
+}
+
+bool Rabbit::checkCollision(double newX, double newY)
+{
+	return CollidableEntity::checkCollision(newX, newY);
 }
 
 Rabbit::~Rabbit()

@@ -15,12 +15,12 @@ WanderAround* WanderAround::Instance()
 
 void WanderAround::enter(Entity* entity)
 {
-	this->entity = entity;
+
 }
 
 void WanderAround::exit(Entity* entity)
 {
-	this->entity = nullptr;
+	
 }
 
 void WanderAround::execute(Entity* entity, double dt)

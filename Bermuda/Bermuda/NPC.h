@@ -12,13 +12,17 @@ class NPC :
 
 	protected:
 		BaseBehaviour* behaviour;
+		int actionRange, attackRange;
 
 	public:
-		NPC(int id, Spawnpoint *spawnPoint);
+		NPC(int id, int actionRange, int attackRange, Spawnpoint *spawnPoint);
 		virtual ~NPC();
 
 		Spawnpoint* getSpawnPoint();
 		BaseBehaviour* getBehaviour();
+
+		int getActionRange();
+		int getAttackRange();
 
 		void setSpawnPoint(Spawnpoint *spawnPoint);
 };
