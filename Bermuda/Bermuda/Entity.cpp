@@ -33,6 +33,16 @@ void Entity::setHeight(double height) {
 	this->height = height;
 }
 
+double Entity::getCenterX()
+{
+	return this->x + this->width / 2;
+}
+
+double Entity::getCenterY()
+{
+	return this->y + this->height / 2;
+}
+
 void Entity::setChunks()
 {
 	int chunkSize = PlayState::Instance()->getMainEntityContainer()->getChunkSize();

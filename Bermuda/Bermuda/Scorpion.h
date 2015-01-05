@@ -12,14 +12,15 @@ class Scorpion :
 {
 public:
 	Scorpion(int id, Spawnpoint *spawnPoint, int firstImgID);
-	
-	void update(double dt);
-
 	virtual ~Scorpion();
+
+	void update(double dt);
 private:
-	void directionsAndMove(double dt);
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
 	bool checkCollision(double newX, double newY);
+
+	StateMachine<Entity>* m_pStateMachine;
+	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
 };
 

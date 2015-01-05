@@ -28,26 +28,33 @@ std::vector<Achievement*> StatusTracker::getAllAchievements()
 
 void StatusTracker::treeCut()
 {
-	std::cout << "add treeCut amount" << std::endl;
 	achievements[TREECUT]->addAmount();
 }
 
 void StatusTracker::rockMined()
 {
-	std::cout << "add rockMined amount" << std::endl;
 	achievements[ROCKMINED]->addAmount();
 }
 
 void StatusTracker::carrotPicked()
 {
-	std::cout << "add carrotPicked amount" << std::endl;
 	achievements[CARROTPICKED]->addAmount();
 }
 
 void StatusTracker::applePicked()
 {
-	std::cout << "add applePicked amount" << std::endl;
 	achievements[APPLEPICKED]->addAmount();
+}
+
+void StatusTracker::setAllStats(std::vector<int> stats)
+{
+	if (stats.size() <= this->achievements.size())
+	{
+		for (size_t i = 0; i < stats.size(); i++)
+		{
+			this->achievements[i]->setAmount(stats[i]);
+		}
+	}
 }
 
 void StatusTracker::cleanup()

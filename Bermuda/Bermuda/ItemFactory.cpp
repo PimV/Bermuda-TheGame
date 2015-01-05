@@ -7,9 +7,12 @@
 #include "ItemWood.h"
 #include "ItemGold.h"
 #include "ItemCampfire.h"
+#include "ItemMeat.h"
 #include "ToolAxe.h"
 #include "ToolPickaxe.h"
 #include "ToolFlint.h"
+#include "ToolGoldenAxe.h"
+#include "ToolGoldenPickaxe.h"
 
 ItemFactory ItemFactory::itemFactory;
 
@@ -29,8 +32,11 @@ void ItemFactory::loadItemTileSets(ImageLoader* imgLoader)
 	itemImages[Items::Campfire] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemCampfire.png", 38, 22));
 	itemImages[Items::Pickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolPickaxe.png", 32,32));
 	itemImages[Items::Axe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolAxe.png", 22,27));
+	itemImages[Items::GoldenPickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolGoldenPickaxe.png", 32,32));
+	itemImages[Items::GoldenAxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolGoldenAxe.png", 22,27));
 	itemImages[Items::Flint] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolFlint.png", 38,22));
 	itemImages[Items::Spear] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\WeaponSpear.png", 40,39));
+	itemImages[Items::Meat] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemMeat.png", 29,31));
 }
 
 Item* ItemFactory::createItem(Items item)
@@ -59,7 +65,7 @@ Item* ItemFactory::createItem(Items item)
 		return new ItemWood(itemImages[item]);
 		break;
 	case Items::Campfire:
-		return new ItemCampfire(itemImages[Items::Campfire]);
+		return new ItemCampfire(itemImages[item]);
 		break;
 	case Items::Axe:
 		return new ToolAxe(itemImages[item]);
@@ -72,6 +78,15 @@ Item* ItemFactory::createItem(Items item)
 		break;
 	case Items::Spear:
 		return new WeaponSpear(itemImages[item]);
+		break;
+	case Items::GoldenAxe:
+		return new ToolGoldenAxe(itemImages[item]);
+		break;
+	case Items::GoldenPickaxe:
+		return new ToolGoldenPickaxe(itemImages[item]);
+		break;
+	case Items::Meat:
+		return new ItemMeat(itemImages[item]);
 		break;
 	default:
 		return nullptr;

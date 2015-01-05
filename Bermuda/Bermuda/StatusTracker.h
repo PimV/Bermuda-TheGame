@@ -11,6 +11,7 @@ public:
 	void carrotPicked();
 	void applePicked();
 	std::vector<Achievement*> getAllAchievements();
+	void setAllStats(std::vector<int> stats);
 
 	//constructor destructor
 	StatusTracker();

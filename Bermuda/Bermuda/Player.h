@@ -41,11 +41,12 @@ public:
 	void drawHungerBar(int x, int y);
 	void drawThirstBar(int x, int y);
 
-	//void clickMove();
 	void clickMove();
 	void setPosition(double newX, double newY);
 	void interact(double dt);
 	void resetMovement();
+
+	void toggleGodMode();
 
 	void drawStats();
 
@@ -60,6 +61,9 @@ public:
 
 	bool getCorrectToolSelected();
 	void setCorrectToolSelected(bool tool);
+
+	bool getWithinDarkness();
+	void setWithinDarkness(bool newDarkness);
 
 private:
 	Camera* camera;
@@ -83,28 +87,43 @@ private:
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
 	long healthUpdate, healthUpdateTime;
+	long darknessUpdate, darknessUpdateTime;
+	long quickDeathUpdate, quickDeathUpdateTime;
 
 	#pragma region animation
-	int animationPickUp, animationPickLeft;
-	int animationPickDown, animationPickRight;
-	int animationPickStartColumn, animationPickEndColumn;
+	int animationPickUp;
+	int animationPickStartColumn;
+	int animationPickEndColumn;
 
-	int animationChopUp, animationChopLeft;
-	int animationChopDown, animationChopRight;
-	int animationChopStartColumn, animationChopEndColumn;
+	int animationChopUp;
+	int animationChopStartColumn;
+	int animationChopEndColumn;
 
-	int animationMineUp, animationMineLeft;
-	int animationMineDown, animationMineRight;
-	int animationMineStartColumn, animationMineEndColumn;
+	int animationChopGoldUp;
+	int animationChopGoldStartColumn;
+	int animationChopGoldEndColumn;
 
-	int animationSpearAttackUp, animationSpearAttackLeft;
-	int animationSpearAttackDown, animationSpearAttackRight;
-	int animationSpearAttackStartColumn, animationSpearAttackEndColumn;
+	int animationMineUp;
+	int animationMineStartColumn;
+	int animationMineEndColumn;
 
-	int animationSpearWalkUp, animationSpearWalkLeft;
-	int animationSpearWalkDown, animationSpearWalkRight;
-	int animationSpearWalkStartColumn, animationSpearWalkEndColumn;
+	int animationMineGoldUp;
+	int animationMineGoldStartColumn;
+	int animationMineGoldEndColumn;
+
+	int animationSpearAttackUp;
+	int animationSpearAttackStartColumn;
+	int animationSpearAttackEndColumn;
+
+	int animationSpearWalkUp;
+	int animationSpearWalkLeft;
+	int animationSpearWalkDown;
+	int animationSpearWalkRight;
+	int animationSpearWalkStartColumn;
+	int animationSpearWalkEndColumn;
 	#pragma endregion animation
+
+	bool godMode;
 
 	bool correctToolSelected;
 
@@ -122,4 +141,6 @@ private:
 	bool checkCollision(double newX, double newY);
 
 	void setAnimationType(AnimationEnumType type);
+	
+	bool withinDarkness;
 };

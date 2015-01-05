@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include "PlayState.h"
 #include "Camera.h"
+#include "Equipable.h"
 
 #include <iostream>
 
@@ -15,6 +16,7 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int interactS
 	this->interactWidth = interactWidth;
 	this->interactHeight = interactHeight;
 	this->currentInteractTime = 0;
+	this->percentageCompleted = 0;
 
 	this->highlightTexture = nullptr;
 
@@ -26,6 +28,7 @@ InteractableEntity::InteractableEntity(int id, double x, double y, int interactS
 
 void InteractableEntity::interact(Player* player)
 {
+
 	//TODO : oplossen op manier zonder casten
 	/*if (this->getEnabled())
 	{
@@ -76,13 +79,36 @@ SDL_Texture* InteractableEntity::getHighlightTexture() {
 void InteractableEntity::highlight() {
 	if (this->highlightTexture != nullptr) {
 		Camera* c = PlayState::Instance()->getCamera();
+		int perc = ((getPercentageCompleted()) * this->getHeight())/  100;
+
 		SDL_Rect rect;
 		rect.x = this->getX() - c->getX();
-		rect.y = this->getY() - c->getY();
+		rect.y = this->getY() - c->getY() + perc;
 		rect.w = this->getWidth();
-		rect.h = this->getHeight();
-		//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), highlightImage->getTileSet(), highlightImage->getCroppingRect(), &rect);
-		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->highlightTexture, NULL, &rect);
+		rect.h = this->getHeight() - perc;
+
+		//Cropping rect
+		SDL_Rect croppingRect = rect;
+		croppingRect.x = 0;
+		croppingRect.y = perc;
+		croppingRect.h = this->getHeight() + perc;
+
+		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), this->highlightTexture, &croppingRect, &rect );
+
+	}
+	}
+
+int InteractableEntity::getPercentageCompleted() {
+	return (static_cast<double>(currentInteractTime) / static_cast<double>(interactTime)) * 100;
+}
+
+void InteractableEntity::degradeTool(Player* player) {
+	Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
+	tool->setDurability(tool->getDurability() - 1);
+	std::cout << tool->getPercentageDegraded() << std::endl;
+	if (tool->getDurability() <= 0) {
+		std::cout << "Destroying pickaxe, no durability!" << std::endl;
+		player->getInventory()->deleteItem(tool->getId(), 1);
 	}
 }
 
@@ -112,6 +138,10 @@ bool InteractableEntity::trackInteractTimes() {
 		return true;
 	}
 	return false;
+}
+
+long InteractableEntity::getCurrentInteractTime() {
+	return currentInteractTime;
 }
 
 int InteractableEntity::getInteractStartX()

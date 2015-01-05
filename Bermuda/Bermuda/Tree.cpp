@@ -1,11 +1,10 @@
 #include "Tree.h"
+#include "Tool.h"
 #include "PlayState.h"
 #include "ItemWood.h"
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
-
-
 
 Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) : 
 	Entity(id,x,y), 
@@ -18,8 +17,8 @@ Tree::Tree(int id, double x, double y, Image* treeImage, Image* stumpImage) :
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 
 	this->destroyed = false;
-	this->respawnTime = 5000;
-	this->interactTime = 5000;
+	this->respawnTime = GameTimer::Instance()->getFullDayLength() * 10;
+	this->interactTime = 10000;
 	this->animationType = AnimationEnumType::Chop;
 }
 
@@ -41,6 +40,9 @@ void Tree::interact(Player* player) {
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Wood));
 			player->getStatusTracker()->treeCut();
+
+			//Degradability
+				this->degradeTool(player);
 		}
 	} else {
 		player->setCorrectToolSelected(false);
@@ -52,7 +54,7 @@ void Tree::update(double dt) {
 		if (this->timeDestroyed + respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
-	} 
+	}
 }
 
 void Tree::respawn() {

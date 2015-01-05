@@ -29,7 +29,7 @@ void GameStateManager::init(const char* title, int width, int height, int bpp, b
 	this->updateLength = 0;
 }
 
-void GameStateManager::setUpdateLength(long updateLength) {
+void GameStateManager::setUpdateLength(float updateLength) {
 	this->updateLength = updateLength;
 }
 
@@ -41,13 +41,13 @@ void GameStateManager::toggleHelpEnabled() {
 	this->showHelp = !this->showHelp;
 }
 
-long GameStateManager::getUpdateLength() {
+float GameStateManager::getUpdateLength() {
 	return this->updateLength * speedMultiplier;
 }
 
 void GameStateManager::setSpeedMultiplier(double multiplier) {
-	if (multiplier > 10) {
-		this->speedMultiplier = 10;
+	if (multiplier > 64) {
+		this->speedMultiplier = 64;
 	} else if (multiplier < 0.1) {
 		this->speedMultiplier = 0.1;
 	} else {
@@ -115,7 +115,7 @@ void GameStateManager::handleEvents() {
 				break;
 			case SDLK_PAGEUP:
 				if (this->getSpeedMultiplier() > 0.9) {
-					this->setSpeedMultiplier(this->getSpeedMultiplier() + 1);
+					this->setSpeedMultiplier(this->getSpeedMultiplier() * 2);
 				} else {
 					this->setSpeedMultiplier(this->getSpeedMultiplier() + 0.1);
 				}
@@ -125,7 +125,7 @@ void GameStateManager::handleEvents() {
 				if (this->getSpeedMultiplier() <= 1) {
 					this->setSpeedMultiplier(this->getSpeedMultiplier() - 0.1);
 				} else {
-					this->setSpeedMultiplier(this->getSpeedMultiplier() - 1);
+					this->setSpeedMultiplier(this->getSpeedMultiplier() / 2);
 				}
 				std::cout << "SPEED DOWN: " << speedMultiplier << std::endl;
 				break;

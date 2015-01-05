@@ -2,12 +2,13 @@
 #include "GameOverState.h"
 #include "GameStateManager.h"
 #include "PlayState.h"
+#include "Item.h"
 #include <vector>
 
 Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
-	Entity(id,x,y), 
-	DrawableEntity(id,x,y, nullptr), 
-	CollidableEntity(id,x,y, 20, 52, 24, 10), 
+	Entity(id, x, y),
+	DrawableEntity(id, x, y, nullptr),
+	CollidableEntity(id, x, y, 20, 52, 24, 10),
 	MovableEntity(id, x, y)
 {
 	healthBar = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "HealthBar.png").c_str());
@@ -36,6 +37,8 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	hungerAlpha = 255;
 	thirstAlpha = 255;
 
+	godMode = false;
+
 	this->camera = camera;
 
 	//Entity -> dimension values
@@ -46,12 +49,17 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->hungerUpdate = GameTimer::Instance()->getGameTime(); 
 	this->thirstUpdate = GameTimer::Instance()->getGameTime();
 	this->healthUpdate = GameTimer::Instance()->getGameTime();
-	this->hungerUpdateTime = 3000;
-	this->thirstUpdateTime = 2000;
-	this->healthUpdateTime = 3000;
+	this->darknessUpdate = GameTimer::Instance()->getGameTime();
+	this->quickDeathUpdate = GameTimer::Instance()->getGameTime();
+	this->hungerUpdateTime = 6000;
+	this->thirstUpdateTime = 5000;
+	this->healthUpdateTime = 1500;
+	this->darknessUpdateTime = 3500; 
+	this->quickDeathUpdateTime = 50; // increase to die faster when not in the light
 	this->health = 100; 
 	this->hunger = 100; 
 	this->thirst = 100;
+	this->withinDarkness = false;
 
 	this->dx = 0;
 	this->dy = 0;
@@ -68,40 +76,56 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("player_spear_animation.png", 64, 64);
+	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("Player_Animations.png", 64, 64);
 
 	#pragma region animation
-	this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
-	this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
-	this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+	this->animationWalkUpRow = 4;
+	this->animationWalkLeftRow = 5;
+	this->animationWalkDownRow = 6;
+	this->animationWalkRightRow = 7;
+	this->animationWalkStartColumn = 1;
+	this->animationWalkEndColumn = 8;
 
-	this->animationChopUp = 12, this->animationChopLeft = 13;
-	this->animationChopDown = 14, this->animationChopRight = 15;
-	this->animationChopStartColumn = 1, this->animationChopEndColumn = 9;
+	this->animationSpearWalkUp = 8;
+	this->animationSpearWalkLeft = 9;
+	this->animationSpearWalkDown = 10;
+	this->animationSpearWalkRight = 11;
+	this->animationSpearWalkStartColumn = 1;
+	this->animationSpearWalkEndColumn = 8;
+	
+	this->animationPickUp = 0;
+	this->animationPickStartColumn = 1;
+	this->animationPickEndColumn = 6;
 
-	this->animationMineUp = 16, this->animationMineLeft = 17;
-	this->animationMineDown = 18, this->animationMineRight = 18;
-	this->animationMineStartColumn = 1, this->animationMineEndColumn = 9;
+	this->animationChopUp = 12;
+	this->animationChopStartColumn = 1;
+	this->animationChopEndColumn = 9;
 
-	this->animationPickUp = 0, this->animationPickLeft = 1;
-	this->animationPickDown = 2, this->animationPickRight = 3;
-	this->animationPickStartColumn = 1, this->animationPickEndColumn = 6;
+	this->animationChopGoldUp = 16;
+	this->animationChopGoldStartColumn = 1;
+	this->animationChopGoldEndColumn = 9;
 
-	this->animationSpearWalkUp = 4, this->animationSpearWalkLeft = 5;
-	this->animationSpearWalkDown = 6, this->animationSpearWalkRight = 7;
-	this->animationSpearWalkStartColumn = 1, this->animationSpearWalkEndColumn = 8;
+	this->animationMineUp = 20;
+	this->animationMineStartColumn = 1;
+	this->animationMineEndColumn = 9;
 
-	this->animationSpearAttackUp = 23, this->animationSpearAttackLeft = 24;
-	this->animationSpearAttackDown = 25, this->animationSpearAttackRight = 26;
-	this->animationSpearAttackStartColumn = 1, this->animationSpearAttackEndColumn = 9;
+	this->animationMineGoldUp = 24;
+	this->animationMineGoldStartColumn = 1;
+	this->animationMineGoldEndColumn = 9;
+
+	this->animationSpearAttackUp = 28;
+	this->animationSpearAttackStartColumn = 1;
+	this->animationSpearAttackEndColumn = 9;
 
 	this->movementDirection = MovementDirectionEnum::Down;
-	this->currentAnimationRow = ( this->animationWalkUpRow + (int)this->movementDirection );
+	this->currentAnimationRow = (this->animationWalkUpRow + (int)this->movementDirection);
 
 	this->animationIdleColumn = 0;
 	this->animationActionStartColumn = 1; this->animationActionEndColumn = 5;
-	this->frameAmountX = 13, this->frameAmountY = 21, this->CurrentFrame = 0;
-	this->animationSpeed = 10;
+
+	this->frameAmountX = 13, this->frameAmountY = 27, this->CurrentFrame = 0;
+	this->animationSpeed = 10;//, this->animationDelay = 1;
+
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 50;
 	#pragma endregion animation
@@ -120,6 +144,10 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->inventory = new Inventory();
 	this->crafting = new Crafting(this->inventory);
 	this->statusTracker = new StatusTracker();
+}
+
+void Player::toggleGodMode() {
+	this->godMode = !this->godMode;
 }
 
 Inventory* Player::getInventory() {
@@ -155,7 +183,11 @@ void Player::update(double dt) {
 		return;
 	}
 
+	if (!this->godMode) {
+	this->changeAnimationOnInventorySelection();
+
 	this->updatePlayerStatuses(dt);
+	}
 
 	if (this->interaction) {
 		this->interact(dt);
@@ -163,9 +195,6 @@ void Player::update(double dt) {
 	else {
 		this->directionsAndMove(dt);
 	}
-
-	
-
 
 }
 
@@ -177,63 +206,86 @@ void Player::updatePlayerStatuses(double dt)
 	// check if hunger needs to be updated
 	if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
 		this->setHunger(this->getHunger() - 1);
-		if (this->getHunger() <= 0) {
-			this->setHealth(this->getHealth() - 1);
-		}
-		this->hungerUpdate = currentTime;
 	}
 
 	// check if thirst needs to be updated
 	if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
 		this->setThirst(this->getThirst() - 1);
-		if (this->getThirst() <= 0) {
-			this->setHealth(this->getHealth() - 1);
-		}
-		this->thirstUpdate = currentTime;
 	}
 
 	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
 	if (this->healthUpdate + this->healthUpdateTime < currentTime) {
 		if (this->getThirst() > 80 && this->getHunger() > 80) {
 			this->setHealth(this->getHealth() + 2);
-		} else if (this->getThirst() > 40 && this->getHunger() > 40) {
+		}
+		else if (this->getThirst() > 40 && this->getHunger() > 40) {
 			this->setHealth(this->getHealth() + 1);
 		}
-		this->healthUpdate = currentTime;
+		else if (this->getThirst() <= 0 && this->getHunger() <= 0)
+		{
+			this->setHealth(this->getHealth() - 4);
+		}
+		else if (this->getThirst() <= 0 || this->getHunger() <= 0)
+		{
+			this->setHealth(this->getHealth() - 2);
+		}
 	}
+
+	if (this->withinDarkness == true)
+	{
+		if (this->darknessUpdate + this->darknessUpdateTime < currentTime) 
+		{
+			if (this->quickDeathUpdate + this->quickDeathUpdateTime < currentTime)
+			{
+				this->setHealth(this->getHealth() - 1);
+				this->quickDeathUpdate = currentTime;
+}
+		}
+	}
+	else
+	{
+		this->darknessUpdate = currentTime;
+	}
+
 }
 
 void Player::incrementHealth(int value)
 {
 	if (this->getHealth() + value > 100) {
 		this->setHealth(100);
-	} else if (this->getHealth() + value < 0) {
+	}
+	else if (this->getHealth() + value < 0) {
 		this->setHealth(0);
-	} else {
+	}
+	else {
 		this->setHealth(this->getHealth() + value);
 	}
 }
 
 void Player::incrementHunger(int value)
 {
-	if (this->getHunger()+value > 100) {
+	if (this->getHunger() + value > 100) {
 		this->setHunger(100);
-	} else if (this->getHunger() + value < 0) {
+	}
+	else if (this->getHunger() + value < 0) {
 		this->setHunger(0);
 		this->setHealth(this->getHealth() + value);
-	} else {
+	}
+	else {
 		this->setHunger(this->getHunger() + value);
 	}
 }
 
 void Player::incrementThirst(int value)
 {
-	if (this->getThirst()+value > 100) {
+	if (this->getThirst() + value > 100) {
 		this->setThirst(100);
-	} else if (this->getThirst() < 0) {
+	}
+	else if (this->getThirst() < 0) {
 		this->setThirst(0);
 		this->setHealth(this->getHealth() + value);
-	} else {
+	}
+	else {
 		this->setThirst(this->getThirst() + value);
 	}
 }
@@ -242,31 +294,40 @@ void Player::setHealth(int value) {
 
 	if (value > 100) {
 		this->health = 100;
-	} else if (value < 0 ) {
+	}
+	else if (value < 0) {
 		this->health = 0;
-	} else {
+	}
+	else {
 		this->health = value;
 	}
+	this->healthUpdate = GameTimer::Instance()->getGameTime();
 }
 
 void Player::setHunger(int value) {
 	if (value > 100) {
 		this->hunger = 100;
-	} else if (value < 0 ) {
+	}
+	else if (value < 0) {
 		this->hunger = 0;
-	} else {
+	}
+	else {
 		this->hunger = value;
 	}
+	this->hungerUpdate = GameTimer::Instance()->getGameTime();
 }
 
 void Player::setThirst(int value) {
 	if (value > 100) {
 		this->thirst = 100;
-	} else if (value < 0 ) {
+	}
+	else if (value < 0) {
 		this->thirst = 0;
-	} else {
+	}
+	else {
 		this->thirst = value;
 	}
+	this->thirstUpdate = GameTimer::Instance()->getGameTime();
 }
 
 int Player::getHealth() {
@@ -308,22 +369,22 @@ void::Player::interact(double dt)
 
 	int playerOffsetX = this->getX() + (this->getWidth() / 2);
 	//De -7 wordt gebruikt omdat het plaatje niet helemaal klopt. In de breedte staat de speler idd precies in het midden van het plaatje. In de hoogte niet...
-	int playerOffsetY = this->getY() + (this->getHeight() / 2) +7;
+	int playerOffsetY = this->getY() + (this->getHeight() / 2) + 7;
 
 	double diff = 1000;
 	InteractableEntity* closestEntity = nullptr;
 
 	//Loop through all chunks
-	for(int i = beginChunkY; i <= endChunkY; i++) {
-		for(int j = beginChunkX; j <= endChunkX; j++) {
+	for (int i = beginChunkY; i <= endChunkY; i++) {
+		for (int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
-			if(vec != nullptr) {
+			if (vec != nullptr) {
 
-				for(InteractableEntity* e : *vec) {
-					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
+				for (InteractableEntity* e : *vec) {
+					if ((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) &&
 						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
 					{
-						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) /2;
+						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) / 2;
 						double centerY = ((e->getY() + e->getInteractStartY()) + (e->getY() + e->getInteractStartY() + e->getInteractHeight())) / 2;
 
 						double diffX = centerX - playerOffsetX;
@@ -368,14 +429,34 @@ void Player::setAnimationType(AnimationEnumType type)
 		std::cout << "Animation type is None" << std::endl;
 		break;
 	case AnimationEnumType::Chop:
+		switch(this->getInventory()->getSelectedItem()->getId())
+		{
+		case (int)Items::Axe:
 			this->currentAnimationRow = this->animationChopUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationChopStartColumn;
 			this->animationActionEndColumn = this->animationChopEndColumn;
+			break;
+		case (int)Items::GoldenAxe:
+			this->currentAnimationRow = this->animationChopGoldUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationChopGoldStartColumn;
+			this->animationActionEndColumn = this->animationChopGoldEndColumn;
+			break;
+		}
 		break;
 	case AnimationEnumType::Mine:
+		switch(this->getInventory()->getSelectedItem()->getId())
+		{
+		case (int)Items::Pickaxe:
 			this->currentAnimationRow = this->animationMineUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationMineStartColumn;
 			this->animationActionEndColumn = this->animationMineEndColumn;
+			break;			
+		case (int)Items::GoldenPickaxe:
+			this->currentAnimationRow = this->animationMineGoldUp + (int)this->movementDirection;
+ 			this->animationActionStartColumn = this->animationMineGoldStartColumn;
+			this->animationActionEndColumn = this->animationMineGoldEndColumn;
+			break;
+		}
 		break;
 	case AnimationEnumType::Pick:
 			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
@@ -401,21 +482,27 @@ void Player::changeAnimationOnInventorySelection()
 		if (this->animationWalkUpRow != this->animationSpearWalkUp)
 		{
 			// set the movementAnimation to the movementSpearAnimation
-			this->animationWalkUpRow = this->animationSpearWalkUp, this->animationWalkLeftRow = this->animationSpearWalkLeft;
-			this->animationWalkDownRow = this->animationSpearWalkDown, this->animationWalkRightRow = this->animationSpearWalkRight;
-			this->animationWalkStartColumn = this->animationSpearWalkStartColumn, this->animationWalkEndColumn = this->animationSpearWalkEndColumn;
+			this->animationWalkUpRow = this->animationSpearWalkUp;
+			this->animationWalkLeftRow = this->animationSpearWalkLeft;
+			this->animationWalkDownRow = this->animationSpearWalkDown;
+			this->animationWalkRightRow = this->animationSpearWalkRight;
+			this->animationWalkStartColumn = this->animationSpearWalkStartColumn;
+			this->animationWalkEndColumn = this->animationSpearWalkEndColumn;
 			this->currentAnimationRow = this->animationSpearWalkUp + (int)this->movementDirection;
 			this->StopAnimation();
 		}
 	}
 	else
 	{
-		if (this->animationWalkUpRow != 8)
+		if (this->animationWalkUpRow != 4)
 		{
 			// reset the movementAnimation to the correct values
-			this->animationWalkUpRow = 8, this->animationWalkLeftRow = 9;
-			this->animationWalkDownRow = 10, this->animationWalkRightRow = 11;
-			this->animationWalkStartColumn = 1, this->animationWalkEndColumn = 8;
+			this->animationWalkUpRow = 4;
+			this->animationWalkLeftRow = 5;
+			this->animationWalkDownRow = 6;
+			this->animationWalkRightRow = 7;
+			this->animationWalkStartColumn = 1;
+			this->animationWalkEndColumn = 8;
 			this->currentAnimationRow = this->animationWalkUpRow + (int)this->movementDirection;
 			this->StopAnimation();
 		}
@@ -438,15 +525,16 @@ double Player::getDistance(int currentX, int currentY, int destX, int destY)
 
 void Player::clickMove() {
 
-	if (this->getX() + this->getWidth() / 2 > this->destX - 5 && this->getX() + this->getWidth() / 2  < this->destX + 5) {
+	if (this->getX() + this->getWidth() / 2 > this->destX - 5 && this->getX() + this->getWidth() / 2 < this->destX + 5) {
 		movingRight = false;
 		movingLeft = false;
-	} else if(this->destX > this->getX() + this->getWidth() / 2)
+	}
+	else if (this->destX > this->getX() + this->getWidth() / 2)
 	{
 		movingRight = true;
 		movingLeft = false;
 	}
-	else if(this->destX < this->getX() + this->getWidth() / 2)
+	else if (this->destX < this->getX() + this->getWidth() / 2)
 	{
 		movingLeft = true;
 		movingRight = false;
@@ -455,12 +543,13 @@ void Player::clickMove() {
 	if (this->getY() + this->getHeight() > this->destY - 5 && this->getY() + this->getHeight() < this->destY + 5) {
 		movingDown = false;
 		movingUp = false;
-	} else if(this->destY > this->getY() + this->getHeight())
+	}
+	else if (this->destY > this->getY() + this->getHeight())
 	{
 		movingDown = true;
 		movingUp = false;
 	}
-	else if(this->destY < this->getY() + this->getHeight())
+	else if (this->destY < this->getY() + this->getHeight())
 	{
 		movingUp = true;
 		movingDown = false;
@@ -509,13 +598,14 @@ void Player::drawHealthBar(int x, int y) {
 		}
 
 		if (healthAlphaFade == true) {
-			healthAlpha = healthAlpha -  (40-this->getHealth());
+			healthAlpha = healthAlpha - (40 - this->getHealth());
 			if (healthAlpha < 0) {
 				healthAlphaFade = false;
 				healthAlpha = 0;
 			}
-		} else {
-			healthAlpha = healthAlpha +  (40-this->getHealth());
+		}
+		else {
+			healthAlpha = healthAlpha + (40 - this->getHealth());
 			if (healthAlpha > 255) {
 				healthAlphaFade = true;
 				healthAlpha = 255;
@@ -525,7 +615,8 @@ void Player::drawHealthBar(int x, int y) {
 		SDL_SetTextureAlphaMod(healthBar, healthAlpha);
 		SDL_SetTextureAlphaMod(healthBarContainer, healthAlpha);
 
-	} else {
+	}
+	else {
 		if (healthAlpha != 255) {
 
 			healthAlpha = 255;
@@ -537,21 +628,21 @@ void Player::drawHealthBar(int x, int y) {
 
 	SDL_Rect healthContainerRect;
 	healthContainerRect.h = 20;
-	healthContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
+	healthContainerRect.w = 3 * (this->getInventory()->getWidth() / 10);
 	healthContainerRect.x = x;
 	healthContainerRect.y = y;
-	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBarContainer,&healthContainerRect,NULL);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBarContainer, &healthContainerRect, NULL);
 
 
 	SDL_Rect healthRect;
 	healthRect.h = 18;
-	healthRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getHealth() / 100;
+	healthRect.w = 3 * (this->getInventory()->getWidth() / 10) * this->getHealth() / 100;
 	healthRect.x = x + 1;
 	healthRect.y = y + 1;
-	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBar,&healthRect,NULL);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHealth()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(healthBar, &healthRect, NULL);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHealth()), x + 3 * (this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
 	if (GameStateManager::Instance()->helpEnabled()) {
-		GameStateManager::Instance()->sdlInitializer->drawText(std::string("HEALTH:"), x , y - 24, 30, 24);
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("HEALTH:"), x, y - 24, 30, 24);
 	}
 }
 
@@ -562,13 +653,14 @@ void Player::drawHungerBar(int x, int y) {
 		}
 
 		if (hungerAlphaFade == true) {
-			hungerAlpha = hungerAlpha -  (40-this->getHunger());
+			hungerAlpha = hungerAlpha - (40 - this->getHunger());
 			if (hungerAlpha < 0) {
 				hungerAlphaFade = false;
 				hungerAlpha = 0;
 			}
-		} else {
-			hungerAlpha = hungerAlpha +  (40-this->getHunger());
+		}
+		else {
+			hungerAlpha = hungerAlpha + (40 - this->getHunger());
 			if (hungerAlpha > 255) {
 				hungerAlphaFade = true;
 				hungerAlpha = 255;
@@ -577,7 +669,8 @@ void Player::drawHungerBar(int x, int y) {
 		}
 		SDL_SetTextureAlphaMod(hungerBar, hungerAlpha);
 		SDL_SetTextureAlphaMod(hungerBarContainer, hungerAlpha);
-	} else {
+	}
+	else {
 		if (hungerAlpha != 255) {
 
 			hungerAlpha = 255;
@@ -589,20 +682,20 @@ void Player::drawHungerBar(int x, int y) {
 
 	SDL_Rect hungerContainerRect;
 	hungerContainerRect.h = 20;
-	hungerContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
+	hungerContainerRect.w = 3 * (this->getInventory()->getWidth() / 10);
 	hungerContainerRect.x = x;
 	hungerContainerRect.y = y;
-	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBarContainer,&hungerContainerRect,NULL);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBarContainer, &hungerContainerRect, NULL);
 
 	SDL_Rect hungerRect;
 	hungerRect.h = 18;
-	hungerRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getHunger() / 100;
+	hungerRect.w = 3 * (this->getInventory()->getWidth() / 10) * this->getHunger() / 100;
 	hungerRect.x = x + 1;
 	hungerRect.y = y + 1;
-	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBar,&hungerRect,NULL);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHunger()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 15, 18);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(hungerBar, &hungerRect, NULL);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getHunger()), x + 3 * (this->getInventory()->getWidth() / 10) / 2 - 10, y, 15, 18);
 	if (GameStateManager::Instance()->helpEnabled()) {
-		GameStateManager::Instance()->sdlInitializer->drawText(std::string("FOOD:"), x , y - 24, 30, 24);
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("FOOD:"), x, y - 24, 30, 24);
 	}
 
 }
@@ -614,13 +707,14 @@ void Player::drawThirstBar(int x, int y) {
 		}
 
 		if (thirstAlphaFade == true) {
-			thirstAlpha = thirstAlpha - (40-this->getThirst());
+			thirstAlpha = thirstAlpha - (40 - this->getThirst());
 			if (thirstAlpha < 0) {
 				thirstAlphaFade = false;
 				thirstAlpha = 0;
 			}
-		} else {
-			thirstAlpha = thirstAlpha + (40-this->getThirst());
+		}
+		else {
+			thirstAlpha = thirstAlpha + (40 - this->getThirst());
 			if (thirstAlpha > 255) {
 				thirstAlphaFade = true;
 				thirstAlpha = 255;
@@ -630,7 +724,8 @@ void Player::drawThirstBar(int x, int y) {
 		SDL_SetTextureAlphaMod(thirstBar, thirstAlpha);
 		SDL_SetTextureAlphaMod(thirstBarContainer, thirstAlpha);
 
-	} else {
+	}
+	else {
 		if (thirstAlpha != 255) {
 
 			thirstAlpha = 255;
@@ -643,20 +738,20 @@ void Player::drawThirstBar(int x, int y) {
 
 	SDL_Rect thirstContainerRect;
 	thirstContainerRect.h = 20;
-	thirstContainerRect.w = 3*(this->getInventory()->getWidth() / 10);
+	thirstContainerRect.w = 3 * (this->getInventory()->getWidth() / 10);
 	thirstContainerRect.x = x;
 	thirstContainerRect.y = y;
-	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBarContainer,&thirstContainerRect,NULL);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBarContainer, &thirstContainerRect, NULL);
 
 	SDL_Rect thirstRect;
 	thirstRect.h = 18;
-	thirstRect.w = 3*(this->getInventory()->getWidth() / 10) * this->getThirst() / 100;
+	thirstRect.w = 3 * (this->getInventory()->getWidth() / 10) * this->getThirst() / 100;
 	thirstRect.x = x + 1;
 	thirstRect.y = y + 1;
-	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBar,&thirstRect,NULL);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getThirst()), x + 3*(this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
+	GameStateManager::Instance()->sdlInitializer->drawTexture(thirstBar, &thirstRect, NULL);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::to_string(this->getThirst()), x + 3 * (this->getInventory()->getWidth() / 10) / 2 - 10, y, 20, 18);
 	if (GameStateManager::Instance()->helpEnabled()) {
-		GameStateManager::Instance()->sdlInitializer->drawText(std::string("WATER:"), x , y - 24, 30, 24);
+		GameStateManager::Instance()->sdlInitializer->drawText(std::string("WATER:"), x, y - 24, 30, 24);
 	}
 }
 
@@ -664,9 +759,19 @@ void Player::drawThirstBar(int x, int y) {
 void Player::drawStats() {
 	this->drawHealthBar(this->getInventory()->getStartingX(), this->getInventory()->getStartingY() - 30);
 
-	this->drawThirstBar(this->getInventory()->getStartingX() + 35*((this->getInventory()->getWidth()) / 100), this->getInventory()->getStartingY() - 30);
+	this->drawThirstBar(this->getInventory()->getStartingX() + 35 * ((this->getInventory()->getWidth()) / 100), this->getInventory()->getStartingY() - 30);
 
-	this->drawHungerBar(this->getInventory()->getStartingX() + 7*((this->getInventory()->getWidth())/ 10), this->getInventory()->getStartingY() - 30);
+	this->drawHungerBar(this->getInventory()->getStartingX() + 7 * ((this->getInventory()->getWidth()) / 10), this->getInventory()->getStartingY() - 30);
+}
+
+bool Player::getWithinDarkness()
+{
+	return this->withinDarkness;
+}
+
+void Player::setWithinDarkness(bool newDarkness)
+{
+	this->withinDarkness = newDarkness;
 }
 
 Player::~Player() {
