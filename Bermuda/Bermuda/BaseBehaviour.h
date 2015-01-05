@@ -2,7 +2,8 @@
 #include "StateMachine.h"
 #include "WanderAround.h"
 #include "AggressiveState.h"
-class NPC;
+#include "FleeingState.h"
+#include "NPC.h"
 
 class BaseBehaviour
 {

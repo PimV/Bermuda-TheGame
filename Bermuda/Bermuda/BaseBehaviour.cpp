@@ -16,17 +16,17 @@ void BaseBehaviour::update(double dt)
 
 void BaseBehaviour::setFsmToDefaultState()
 {
-	this->m_pStateMachine->changeState(WanderAround::Instance());
+	this->m_pStateMachine->changeState( WanderAround::Instance() );
 }
 
 void BaseBehaviour::setFsmToActionState()
 {
-	this->m_pStateMachine->changeState(WanderAround::Instance());
+	this->m_pStateMachine->changeState( WanderAround::Instance() );
 }
 
 void BaseBehaviour::setFsmToAggressiveState()
 {
-	this->m_pStateMachine->changeState(AggressiveState::Instance());
+	this->m_pStateMachine->changeState( AggressiveState::Instance() );
 }
 
 void BaseBehaviour::setFsmToDefenciveState()
@@ -36,12 +36,12 @@ void BaseBehaviour::setFsmToDefenciveState()
 
 void BaseBehaviour::setFsmToFleeingState()
 {
-	// TODO: set to fleeingState
+	this->m_pStateMachine->changeState( FleeingState::Instance() );
 }
 
 void BaseBehaviour::setFsmToWanderState()
 {
-	this->m_pStateMachine->changeState(WanderAround::Instance());
+	this->m_pStateMachine->changeState( WanderAround::Instance() );
 }
 
 BaseBehaviour::~BaseBehaviour(void)

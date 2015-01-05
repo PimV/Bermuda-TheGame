@@ -537,6 +537,9 @@
     <ClCompile Include="AttackingNPC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FleeingState.cpp">
+      <Filter>Source Files\Model\Entity\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_loader.h">
@@ -946,6 +949,9 @@
     </ClInclude>
     <ClInclude Include="AttackingNPC.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeingState.h">
+      <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

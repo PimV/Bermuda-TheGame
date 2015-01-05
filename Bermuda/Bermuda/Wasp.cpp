@@ -3,10 +3,10 @@
 #include <time.h>
 #include <iostream>
 #include <random>
-#include "EvasiveBehaviour.h"
+#include "DefensiveBehaviour.h"
 
 Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 50, 15, spawnPoint),
+	NPC(id, 5, 1, 50, 25, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
@@ -44,7 +44,7 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 
 	this->StopAnimation();
 
-	this->behaviour = new EvasiveBehaviour( new StateMachine<Entity>(this) );
+	this->behaviour = new DefensiveBehaviour( new StateMachine<Entity>(this) );
 }
 
 void Wasp::update(double dt)

@@ -1,7 +1,7 @@
 #include "Bat.h"
 #include "PlayState.h"
 #include <random>
-#include "DefensiveBehaviour.h"
+#include "EvasiveBehaviour.h"
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, 5, 1, 50, 15, spawnPoint),
@@ -42,7 +42,7 @@ AttackingNPC(500)
 
 	this->StopAnimation();
 
-	this->behaviour = new DefensiveBehaviour( new StateMachine<Entity>(this) );
+	this->behaviour = new EvasiveBehaviour( new StateMachine<Entity>(this) );
 }
 
 void Bat::update(double dt)
@@ -84,6 +84,4 @@ Bat::~Bat()
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
-
-	//delete this->m_pStateMachine;
 }

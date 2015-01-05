@@ -1,37 +1,33 @@
-#include "AggressiveState.h"
+#include "FleeingState.h"
 #include "MovableEntity.h"
 #include "NPC.h"
 #include "PlayState.h"
 #include <random>
 #include <assert.h>
 
-AggressiveState::AggressiveState(void)
+FleeingState::FleeingState()
 {
 }
 
-AggressiveState* AggressiveState::Instance()
+FleeingState* FleeingState::Instance()
 {
-	static AggressiveState instance;
+	static FleeingState instance;
 	return &instance;
 }
 
-void AggressiveState::enter(Entity* entity)
+void FleeingState::enter(Entity* entity)
 {
-	this->entity = entity;
-	this->attackRange = dynamic_cast<NPC*>(entity)->getActionRange();
-	this->actionRange = dynamic_cast<NPC*>(entity)->getAttackRange();
+
 }
 
-void AggressiveState::exit(Entity* entity)
+void FleeingState::exit(Entity* entity)
 {
-	this->actionRange = 0;
-	this->attackRange = 0;
-	this->entity = nullptr;
+
 }
 
-void AggressiveState::execute(Entity* entity, double dt)
+void FleeingState::execute(Entity* entity, double dt)
 {
-	assert(entity && dt && " execute AgrassiveState");
+	assert(entity && dt);
 
 	MovableEntity* movableEntity = dynamic_cast<MovableEntity*>(entity);
 	NPC* npc = dynamic_cast<NPC*>(entity);
@@ -48,8 +44,8 @@ void AggressiveState::execute(Entity* entity, double dt)
 	double offsetY = playerCenterY - movableEntity->getCenterY();
 	double offsetTotal = fabs(offsetX) + fabs(offsetY);
 
-	double xDir = (offsetX / offsetTotal);
-	double yDir = (offsetY / offsetTotal);
+	double xDir = (offsetX / offsetTotal) * -1;
+	double yDir = (offsetY / offsetTotal) * -1;
 
 	if (xDir >= -1 && xDir <= -0.33)
 	{
@@ -68,6 +64,7 @@ void AggressiveState::execute(Entity* entity, double dt)
 		movableEntity->movingDown = true;
 	}
 
+	//Move and avoid collision
 	if (!movableEntity->canMove(dt))
 	{
 		if (movableEntity->movingUp && movableEntity->movingRight)
@@ -140,7 +137,6 @@ void AggressiveState::execute(Entity* entity, double dt)
 	movableEntity->move(dt);
 }
 
-AggressiveState::~AggressiveState(void)
+FleeingState::~FleeingState()
 {
-
 }

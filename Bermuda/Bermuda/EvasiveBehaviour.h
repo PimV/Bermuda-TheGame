@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseBehaviour.h"
+#include "PlayState.h"
+
 class EvasiveBehaviour :
 	public BaseBehaviour
 {

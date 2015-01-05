@@ -52,7 +52,6 @@ void Rabbit::update(double dt)
 	this->behaviour->update(dt);
 }
 
-
 void Rabbit::setImage(Image* image)
 {
 	this->setDrawImage(image);
