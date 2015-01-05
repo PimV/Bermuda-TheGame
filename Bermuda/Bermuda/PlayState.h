@@ -24,6 +24,8 @@ private:
 	GameSaver* gameSaver;
 	std::vector<DrawableEntity*> temp;
 
+	std::string fileToLoad;
+
 	int timesUpdate;
 	bool gameOver;
 
@@ -52,6 +54,9 @@ public:
 	void updateMediumAreaEntities(double dt);
 
 	void updatePlayerDarkness();
+
+	void loadGame();
+	void setFileToLoad(std::string fileName);
 
 	void draw();
 

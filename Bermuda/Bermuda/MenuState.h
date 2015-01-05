@@ -6,6 +6,7 @@
 #include "MenuMainScreen.h"
 #include "MenuCreditsScreen.h"
 #include "MenuHelpScreen.h"
+#include "MenuLoadScreen.h"
 
 class MenuState :
 	public IGameState
@@ -16,6 +17,7 @@ private:
 	MenuMainScreen* mainScr;
 	MenuCreditsScreen* creditsScr;
 	MenuHelpScreen* helpScr;
+	MenuLoadScreen* loadScr;
 
 	//self
 	static MenuState m_MenuState;
@@ -32,6 +34,7 @@ public:
 	void setCurWindow(BaseScreen* curwindow);
 	BaseScreen* getMenuMainScreen();
 	BaseScreen* getMenuCreditsScreen();
+	BaseScreen* getMenuLoadScreen();
 	BaseScreen* getMenuHelpScreen();
 	MenuHelpScreen* getHelpScreen();
 

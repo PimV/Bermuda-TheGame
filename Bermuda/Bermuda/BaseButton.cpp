@@ -45,7 +45,7 @@ void BaseButton::placeMidScreenUnder(BaseButton* button)
 
 void BaseButton::placeMidUnder(int x, int y)
 {
-	buttonRect.x = x - buttonRect.h / 2;
+	buttonRect.x = x - buttonRect.w / 2;
 	buttonRect.y = y;
 }
 
@@ -103,6 +103,11 @@ void BaseButton::createButton(std::string message, int fontSize, int initialColo
 	SDL_FreeSurface(MessageSurface);
 	SDL_FreeSurface(HoverMessageSurface);
 	TTF_CloseFont(staryDarzy);
+}
+
+void BaseButton::setNewButtonText(std::string text, int fontSize, int initialColor)
+{
+	createButton(text, fontSize, initialColor);
 }
 
 void BaseButton::placeMid()
@@ -196,6 +201,11 @@ BaseButton::~BaseButton()
 void BaseButton::setCreditsScreenAction()
 {
 	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuCreditsScreen());
+}
+
+void BaseButton::setLoadScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuLoadScreen());
 }
 
 void BaseButton::exitAction()
