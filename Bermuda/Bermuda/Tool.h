@@ -8,6 +8,10 @@ class Tool :
 public:
 	Tool(void);
 
+
+
 	virtual ~Tool(void);
+private:
+
 };
 

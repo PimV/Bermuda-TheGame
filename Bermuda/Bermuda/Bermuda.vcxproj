@@ -139,6 +139,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="InteractableCactusBig.h" />
     <ClInclude Include="InteractableCactusSmall.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="ItemMeat.h" />
     <ClInclude Include="LightContainer.h" />
     <ClInclude Include="LightEntity.h" />
     <ClInclude Include="LoadButton.h" />
@@ -200,6 +202,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Scorpion.h" />
     <ClInclude Include="SnowTree.h" />
     <ClInclude Include="SpawnpointContainer.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="StatusTracker.h" />
     <ClInclude Include="ToolAxe.h" />
     <ClInclude Include="ItemCarrot.h" />
@@ -233,6 +236,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Tree.h" />
     <ClInclude Include="TreePine.h" />
     <ClInclude Include="TreeRound.h" />
+    <ClInclude Include="WanderAround.h" />
     <ClInclude Include="Wasp.h" />
     <ClInclude Include="Wolf.h" />
     <ClInclude Include="Weapon.h" />
@@ -285,6 +289,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="ItemFish.cpp" />
     <ClCompile Include="ItemGold.cpp" />
+    <ClCompile Include="ItemMeat.cpp" />
     <ClCompile Include="ItemWater.cpp" />
     <ClCompile Include="LightContainer.cpp" />
     <ClCompile Include="LightEntity.cpp" />
@@ -328,6 +333,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="TreePine.cpp" />
     <ClCompile Include="TreeRound.cpp" />
+    <ClCompile Include="WanderAround.cpp" />
     <ClCompile Include="Wasp.cpp" />
     <ClCompile Include="Wolf.cpp" />
     <ClCompile Include="Weapon.cpp" />

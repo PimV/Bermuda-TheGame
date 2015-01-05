@@ -46,6 +46,8 @@ public:
 	void interact(double dt);
 	void resetMovement();
 
+	void toggleGodMode();
+
 	void drawStats();
 
 	bool moveClick;
@@ -120,6 +122,8 @@ private:
 	int animationSpearWalkStartColumn;
 	int animationSpearWalkEndColumn;
 	#pragma endregion animation
+
+	bool godMode;
 
 	bool correctToolSelected;
 

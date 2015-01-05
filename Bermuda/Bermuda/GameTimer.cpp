@@ -9,7 +9,7 @@ GameTimer::GameTimer()
 
 void GameTimer::init()
 {
-	this->dayLength = 60000;
+	this->dayLength = 300000;
 	this->gameTime = 0;
 	this->frameTime = 0;
 	this->startDay = 0;
