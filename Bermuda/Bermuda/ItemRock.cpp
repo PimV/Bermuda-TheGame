@@ -18,7 +18,7 @@ void ItemRock::init() {
 	this->setMaxStackSize(8);
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	int itemCount = rand() % 5 + 1;	
+	int itemCount = rand() % 4 + 2;	
 	this->setStackSize(itemCount);
 }
 

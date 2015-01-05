@@ -16,8 +16,8 @@ AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEm
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 
 	this->destroyed = false;
-	this->respawnTime = 5000;
-	this->interactTime = 3000;
+	this->respawnTime = GameTimer::Instance()->getFullDayLength() * 6;
+	this->interactTime = 6000;
 
 	this->animationType = AnimationEnumType::Pick;
 

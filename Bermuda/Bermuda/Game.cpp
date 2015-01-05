@@ -48,7 +48,7 @@ void Game::gameLoop(GameStateManager* gsm) {
 		QueryPerformanceCounter(&currentTime);
 		//Calculate difference (previousTime - currentTime)
 
-		float updateLength = static_cast<float>(((static_cast<float>(currentTime.QuadPart) - static_cast<float>(previousTime.QuadPart)) * 1000) / static_cast<float>(frequency.QuadPart));
+		float updateLength = static_cast<float>((currentTime.QuadPart - previousTime.QuadPart) * 1000) / static_cast<float>(frequency.QuadPart);
 		
 		//Previous time = current time
 		previousTime = currentTime;
@@ -59,7 +59,6 @@ void Game::gameLoop(GameStateManager* gsm) {
 		//Increase FPS since one frame has passed
 		fps++;
 
-		//gsm->updateGameTime(updateLength);
 
 		//If lastFpsTime > 1000 ms, set FPS to 0 and start re-calculating
 		if (lastFpsTime >= 1000) {

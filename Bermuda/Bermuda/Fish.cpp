@@ -13,7 +13,7 @@ Fish::Fish(int id, double x, double y, Image* fishImage) :
 	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
 
 	this->destroyed = false;
-	this->respawnTime = 10000;
+	this->respawnTime = GameTimer::Instance()->getFullDayLength() * 10;
 	this->interactTime = 9000;
 
 	this->animationType = AnimationEnumType::AttackSpear;
