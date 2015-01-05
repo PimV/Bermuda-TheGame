@@ -389,6 +389,7 @@ void PlayState::draw()
 			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
 			if(vec != nullptr) {
 				for(InteractableEntity* e : *vec) {
+					
 					e->setHighlighted(false);
 					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
 						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
@@ -413,6 +414,7 @@ void PlayState::draw()
 						}
 					}
 				}
+				
 			}
 		}
 	}
@@ -464,9 +466,6 @@ void PlayState::draw()
 					drawableVector.push_back(e);
 				}
 			}
-
-
-
 		}
 	}
 

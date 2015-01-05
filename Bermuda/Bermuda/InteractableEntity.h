@@ -56,7 +56,6 @@ public:
 
 	virtual bool canInteract(Player* player);
 
-
 	bool trackInteractTimes();
 	int getPercentageCompleted();
 	long getCurrentInteractTime();

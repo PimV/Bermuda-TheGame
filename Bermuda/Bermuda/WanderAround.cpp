@@ -36,7 +36,7 @@ void WanderAround::execute(Entity* entity, double dt)
 
 	if (movableEntity->getTimeSinceLastAction() < timeWait)
 	{
-		movableEntity->setTimeSinceLastAction(movableEntity->getTimeSinceLastAction() + GameTimer::Instance()->getFrameTime());
+		movableEntity->setTimeSinceLastAction(movableEntity->getTimeSinceLastAction() + static_cast<long>( GameTimer::Instance()->getFrameTime() ));
 	}
 	else {
 		movableEntity->setTimeSinceLastAction(0);

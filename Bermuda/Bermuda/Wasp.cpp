@@ -6,7 +6,7 @@
 #include "WanderAround.h"
 
 Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	NPC(id, 5, 1, 50, spawnPoint),
+	NPC(id, spawnPoint),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
@@ -24,7 +24,6 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->movingRight = false;
 	this->movingDown = false;
 	this->movingUp = false;
-	//this->interaction = false;
 
 	this->keepAnimationWhenIdle = true;
 	this->firstImgID = firstImgID;
@@ -32,9 +31,8 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->animationWalkDownRow = 2, this->animationWalkRightRow = 3;
 	this->currentAnimationRow = this->animationWalkDownRow;
 	this->animationIdleColumn = 0; this->animationWalkStartColumn = 0, this->animationWalkEndColumn = 3;
-	//this->playerAnimationActionStartColumn = 1; this->playerAnimationActionEndColumn = 5;
 	this->frameAmountX = 4, this->frameAmountY = 4, this->CurrentFrame = 0;
-	this->animationSpeed = 10;//, this->animationDelay = 1;
+	this->animationSpeed = 10;
 
 	this->timeSinceLastAction = 0;
 

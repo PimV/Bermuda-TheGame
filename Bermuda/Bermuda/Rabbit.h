@@ -4,10 +4,11 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "Weapon.h"
+#include "InteractableNPC.h"
 
 class Rabbit :
-	public NPC,
-	public Evasive,
+	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
 	public MovableEntity
@@ -17,11 +18,17 @@ public:
 	virtual ~Rabbit();
 
 	void update(double dt);
+	bool checkCollision(double newX, double newY);
+
+	void interact(Player* player);
+	void setDestroyedState();
+
 private:
 	// Replace methods to DrawableEntity & CollidableEntity
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkCollision(double newX, double newY);
+
+	//bool checkCollision(double newX, double newY);
 
 	StateMachine<Entity>* m_pStateMachine;
 	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }

@@ -30,11 +30,11 @@ void InteractableEntity::interact(Player* player)
 {
 
 	//TODO : oplossen op manier zonder casten
-	/*if (this->getEnabled())
+	if (this->getEnabled())
 	{
-	int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
-	cout << percentage << endl;
-	}*/
+		int percentage = (int)(((double)currentInteractTime / (double)interactTime) * 100);
+		cout << percentage << endl;
+	}
 }
 
 void InteractableEntity::setCanInteractTexture(SDL_Texture* can)
@@ -105,7 +105,6 @@ int InteractableEntity::getPercentageCompleted() {
 void InteractableEntity::degradeTool(Player* player) {
 	Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
 	tool->setDurability(tool->getDurability() - 1);
-	std::cout << tool->getPercentageDegraded() << std::endl;
 	if (tool->getDurability() <= 0) {
 		std::cout << "Destroying pickaxe, no durability!" << std::endl;
 		player->getInventory()->deleteItem(tool->getId(), 1);
@@ -132,9 +131,9 @@ bool InteractableEntity::trackInteractTimes() {
 		return false;
 	}
 
-	currentInteractTime += GameTimer::Instance()->getFrameTime();
-	if (currentInteractTime > interactTime) {
-		currentInteractTime = 0;
+	this->currentInteractTime += GameTimer::Instance()->getFrameTime();
+	if (this->currentInteractTime > this->interactTime) {
+		this->currentInteractTime = 0;
 		return true;
 	}
 	return false;

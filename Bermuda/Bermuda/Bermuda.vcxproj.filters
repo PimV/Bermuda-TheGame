@@ -522,6 +522,9 @@
     <ClCompile Include="Scorpion.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
+    <ClCompile Include="InteractableNPC.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
+    </ClCompile>
     <ClCompile Include="ItemMeat.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
@@ -933,6 +936,9 @@
   <ItemGroup>
     <ClInclude Include="GameSaver.h">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableNPC.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
     <ClInclude Include="ItemMeat.h">
       <Filter>Header Files\Model\Item</Filter>
