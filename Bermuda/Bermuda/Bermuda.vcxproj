@@ -147,6 +147,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemMeat.h" />
     <ClInclude Include="LightContainer.h" />
     <ClInclude Include="LightEntity.h" />
+    <ClInclude Include="LoadButton.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="GameOverState.h" />
@@ -182,6 +183,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemGold.h" />
     <ClInclude Include="ItemWater.h" />
     <ClInclude Include="MenuHelpScreen.h" />
+    <ClInclude Include="MenuLoadScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
     <ClInclude Include="NightLayer.h" />
     <ClInclude Include="NPCType.h" />
@@ -200,6 +202,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MovementDirectionEnum.h" />
     <ClInclude Include="RockSpikes.h" />
     <ClInclude Include="GameSaver.h" />
+    <ClInclude Include="SavedGameButton.h" />
     <ClInclude Include="Scorpion.h" />
     <ClInclude Include="SnowTree.h" />
     <ClInclude Include="SpawnpointContainer.h" />
@@ -298,8 +301,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemWater.cpp" />
     <ClCompile Include="LightContainer.cpp" />
     <ClCompile Include="LightEntity.cpp" />
+    <ClCompile Include="LoadButton.cpp" />
     <ClCompile Include="MenuCreditsScreen.cpp" />
     <ClCompile Include="MenuHelpScreen.cpp" />
+    <ClCompile Include="MenuLoadScreen.cpp" />
     <ClCompile Include="MenuMainScreen.cpp" />
     <ClCompile Include="NightLayer.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
@@ -313,6 +318,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="RockSpikes.cpp" />
     <ClCompile Include="GameSaver.cpp" />
+    <ClCompile Include="SavedGameButton.cpp" />
     <ClCompile Include="Scorpion.cpp" />
     <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="SpawnpointContainer.cpp" />

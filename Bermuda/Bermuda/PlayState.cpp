@@ -49,12 +49,20 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
-
 	gameSaver = new GameSaver();
-	gameSaver->changeCurrentSaveFile("Game0.json");
-	//gameSaver->loadGame();
 
 	GameStateManager::Instance()->flushEvents();
+}
+
+
+void PlayState::loadGame()
+{
+	gameSaver->loadGame(this->fileToLoad);
+}
+
+void PlayState::setFileToLoad(std::string fileName)
+{
+	this->fileToLoad = fileName;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
