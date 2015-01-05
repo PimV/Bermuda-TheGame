@@ -4,6 +4,7 @@
 #include <iostream>
 #include <random>
 #include "WanderAround.h"
+#include "FleeingState.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 NPC(id, 5, 1, 50, spawnPoint),
@@ -51,6 +52,19 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 void Rabbit::update(double dt)
 {
+	double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->getCenterX();
+	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getCenterY();
+	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
+
+	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
+	{
+		this->m_pStateMachine->changeState(FleeingState::Instance());
+	}
+	else if (this->m_pStateMachine->getCurrentState() == FleeingState::Instance() && distanceFromPlayer >= 300)
+	{
+		this->m_pStateMachine->changeState(WanderAround::Instance());
+	}
+
 	this->m_pStateMachine->update(dt);
 }
 

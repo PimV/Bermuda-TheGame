@@ -396,7 +396,6 @@ void Inventory::draw() {
 		if (i == selectedIndex) {
 			if (this->getSelectedItem() != nullptr && this->getSelectedItem()->hasItemType(ItemType::WorkTool)) {
 				Equipable* tool = dynamic_cast<Equipable*>(this->getSelectedItem());
-				std::cout << tool->getPercentageDegraded() << std::endl;
 				if (tool->getPercentageDegraded() >= 80) {
 					//red
 					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedRed->getTileSet(), NULL, &slotRect);

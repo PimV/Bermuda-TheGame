@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include <random>
 #include "WanderAround.h"
+#include "FleeingState.h"
 
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
@@ -50,6 +51,19 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 
 void Bat::update(double dt)
 {
+	double diffX = PlayState::Instance()->getPlayer()->getCenterX() - this->getCenterX();
+	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->getCenterY();
+	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
+
+	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= 150)
+	{
+		this->m_pStateMachine->changeState(FleeingState::Instance());
+	}
+	else if (this->m_pStateMachine->getCurrentState() == FleeingState::Instance() && distanceFromPlayer >= 300)
+	{
+		this->m_pStateMachine->changeState(WanderAround::Instance());
+	}
+
 	this->m_pStateMachine->update(dt);
 }
 
