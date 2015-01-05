@@ -24,7 +24,7 @@ void BaseBehaviour::setFsmToActionState()
 	this->m_pStateMachine->changeState(WanderAround::Instance());
 }
 
-void BaseBehaviour::setFsmToAggresdsiveState()
+void BaseBehaviour::setFsmToAggressiveState()
 {
 	this->m_pStateMachine->changeState(AggressiveState::Instance());
 }

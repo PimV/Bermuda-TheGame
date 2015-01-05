@@ -22,11 +22,10 @@ class BaseBehaviour
 		virtual void setFsmToDefaultState();
 		virtual void setFsmToActionState();
 
-		virtual void setFsmToAggresdsiveState();
+		virtual void setFsmToAggressiveState();
 		virtual void setFsmToDefenciveState();
 		virtual void setFsmToFleeingState();
 		virtual void setFsmToWanderState();
 
 		virtual ~BaseBehaviour(void);
 };
-

@@ -28,7 +28,7 @@ void AggressiveBehaviour::update(double dt)
 	{
 		if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= this->npc->getActionRange() )
 		{
-			this->setFsmToAggresdsiveState();
+			this->setFsmToAggressiveState();
 		}
 		else if (this->m_pStateMachine->getCurrentState() == AggressiveState::Instance() && distanceFromPlayer >= ( this->npc->getActionRange() * 2) )
 		{
