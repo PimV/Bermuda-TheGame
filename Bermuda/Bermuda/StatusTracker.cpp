@@ -10,10 +10,10 @@ void StatusTracker::init()
 {
 	achievements.push_back(new Achievement("Apples picked"));
 	achievements.push_back(new Achievement("Carrots picked"));
-	achievements.push_back(new Achievement("Fish fished"));		//new
-	achievements.push_back(new Achievement("Gold mined"));		//new
+	achievements.push_back(new Achievement("Fishes caught"));
+	achievements.push_back(new Achievement("Gold mined"));
 	achievements.push_back(new Achievement("Ice mined"));
-	achievements.push_back(new Achievement("Cactusses chopped"));
+	achievements.push_back(new Achievement("Cacti chopped"));
 	achievements.push_back(new Achievement("Rocks mined"));
 	achievements.push_back(new Achievement("Trees cut"));
 }
