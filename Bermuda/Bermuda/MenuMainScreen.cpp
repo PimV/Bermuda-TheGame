@@ -26,10 +26,15 @@ void MenuMainScreen::init()
 	BaseButton* helpButton = new BaseButton();
 	helpButton->action = &BaseButton::menuSetHelpScreenAction;
 	helpButton->createButton("Help", 60, 0);
-	
+
+	BaseButton* graveyardButton = new BaseButton();
+	graveyardButton->action = &BaseButton::menuSetGraveyardScreenAction;
+	graveyardButton->createButton("Graveyard", 60, 0);
+
 	//place buttons
 	helpButton->placeLeftMid();
-	exitButton->placeLeftUnderButton(helpButton);
+	graveyardButton->placeLeftUnderButton(helpButton);
+	exitButton->placeLeftUnderButton(graveyardButton);
 	creditsButton->placeLeftAboveButton(helpButton);
 	playButton->placeLeftAboveButton(creditsButton);
 	
@@ -38,6 +43,7 @@ void MenuMainScreen::init()
 	buttons.push_back(exitButton);
 	buttons.push_back(creditsButton);
 	buttons.push_back(helpButton);
+	buttons.push_back(graveyardButton);
 }
 
 void MenuMainScreen::setBackground()

@@ -6,6 +6,7 @@
 #include "MenuMainScreen.h"
 #include "MenuCreditsScreen.h"
 #include "MenuHelpScreen.h"
+#include "MenuGraveyardScreen.h"
 
 class MenuState :
 	public IGameState
@@ -16,6 +17,7 @@ private:
 	MenuMainScreen* mainScr;
 	MenuCreditsScreen* creditsScr;
 	MenuHelpScreen* helpScr;
+	MenuGraveyardScreen* graveyardScr;
 
 	//self
 	static MenuState m_MenuState;
@@ -33,6 +35,7 @@ public:
 	BaseScreen* getMenuMainScreen();
 	BaseScreen* getMenuCreditsScreen();
 	BaseScreen* getMenuHelpScreen();
+	BaseScreen* getMenuGraveyardScreen();
 	MenuHelpScreen* getHelpScreen();
 
 	//Get instance self

@@ -252,3 +252,8 @@ void BaseButton::helpMineTreeScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getMineRockScr());
 }
+
+void BaseButton::menuSetGraveyardScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuGraveyardScreen());
+}
