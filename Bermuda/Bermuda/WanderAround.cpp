@@ -100,66 +100,42 @@ void WanderAround::execute(Entity* entity, double dt)
 	}
 
 	//Move and avoid collision
-	if (movableEntity->canMove(dt))
-	{
-		movableEntity->move(dt);
-	}
-	else
+	if (!movableEntity->canMove(dt))
 	{
 		if (movableEntity->movingUp && movableEntity->movingRight)
 		{
 			movableEntity->movingUp = false;
-			if (movableEntity->canMove(dt))
-			{
-				movableEntity->move(dt);
-			}
-			else
+			if (!movableEntity->canMove(dt))
 			{
 				movableEntity->movingUp = true;
 				movableEntity->movingRight = false;
-				movableEntity->move(dt);
 			}
 		}
 		else if (movableEntity->movingRight && movableEntity->movingDown)
 		{
 			movableEntity->movingRight = false;
-			if (movableEntity->canMove(dt))
-			{
-				movableEntity->move(dt);
-			}
-			else
+			if (!movableEntity->canMove(dt))
 			{
 				movableEntity->movingRight = true;
 				movableEntity->movingDown = false;
-				movableEntity->move(dt);
 			}
 		}
 		else if (movableEntity->movingDown && movableEntity->movingLeft)
 		{
 			movableEntity->movingDown = false;
-			if (movableEntity->canMove(dt))
-			{
-				movableEntity->move(dt);
-			}
-			else
+			if (!movableEntity->canMove(dt))
 			{
 				movableEntity->movingDown = true;
 				movableEntity->movingLeft = false;
-				movableEntity->move(dt);
 			}
 		}
 		else if (movableEntity->movingLeft && movableEntity->movingUp)
 		{
 			movableEntity->movingLeft = false;
-			if (movableEntity->canMove(dt))
-			{
-				movableEntity->move(dt);
-			}
-			else
+			if (!movableEntity->canMove(dt))
 			{
 				movableEntity->movingLeft = true;
 				movableEntity->movingUp = false;
-				movableEntity->move(dt);
 			}
 		}
 		else if (movableEntity->movingUp || movableEntity->movingDown)
@@ -178,7 +154,6 @@ void WanderAround::execute(Entity* entity, double dt)
 				movableEntity->movingDown = false;
 				movableEntity->movingLeft = true;
 			}
-			movableEntity->move(dt);
 		}
 		else if (movableEntity->movingLeft || movableEntity->movingRight)
 		{
@@ -196,7 +171,7 @@ void WanderAround::execute(Entity* entity, double dt)
 				movableEntity->movingRight = false;
 				movableEntity->movingUp = true;
 			}
-			movableEntity->move(dt);
 		}
 	}
+	movableEntity->move(dt);
 }
