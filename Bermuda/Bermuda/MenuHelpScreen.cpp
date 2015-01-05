@@ -224,6 +224,11 @@ BaseHelpScreen* MenuHelpScreen::getTimeScr()
 	return timeScreen;
 }
 
+BaseHelpScreen* MenuHelpScreen::getCraftingScr()
+{
+	return craftingScreen;
+}
+
 void MenuHelpScreen::setBackground()
 {
 	firstTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "single-inv-item.png").c_str());

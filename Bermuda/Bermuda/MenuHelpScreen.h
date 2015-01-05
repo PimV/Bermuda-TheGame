@@ -26,6 +26,7 @@ private:
 	BaseHelpScreen* mineRockScreen;
 	BaseHelpScreen* foodAndWaterScreen;
 	BaseHelpScreen* timeScreen;
+	BaseHelpScreen* craftingScreen;
 
 
 	//methodes
@@ -52,6 +53,7 @@ public:
 	BaseHelpScreen* getMineRockScr();
 	BaseHelpScreen* getFoodAndWaterScr();
 	BaseHelpScreen* getTimeScr();
+	BaseHelpScreen* getCraftingScr();
 
 	//constructors destructors
 	MenuHelpScreen();
