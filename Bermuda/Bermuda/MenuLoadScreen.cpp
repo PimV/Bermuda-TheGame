@@ -34,7 +34,7 @@ void MenuLoadScreen::init()
 	BaseButton* returnButton = new BaseButton();
 	returnButton->action = &BaseButton::menuMainScreenAction;
 	returnButton->createButton("Return to main menu", 40, 0);
-	returnButton->placeMidUnder(((ScreenWidth - returnButton->getWidth()) / 2), ScreenHeight - ScreenHeight/ 10);
+	returnButton->placeMidUnder((ScreenWidth / 2), ScreenHeight - ScreenHeight/ 10);
 	buttons.push_back(returnButton);
 
 	int y = 150;
@@ -97,7 +97,6 @@ void MenuLoadScreen::readSavedGames()
 			else
 			{
 				std::string fileName = FindFileData.cFileName;
-				//std::string fileNameSplit = fileName.substr(0, fileName.find_last_of('.'));
 
 				//Create file stream.
 				std::ifstream stream(SAVEPATH + fileName);

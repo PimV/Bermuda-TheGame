@@ -45,7 +45,7 @@ void BaseButton::placeMidScreenUnder(BaseButton* button)
 
 void BaseButton::placeMidUnder(int x, int y)
 {
-	buttonRect.x = x - buttonRect.h / 2;
+	buttonRect.x = x - buttonRect.w / 2;
 	buttonRect.y = y;
 }
 
