@@ -107,7 +107,6 @@ void InteractableEntity::degradeTool(Player* player) {
 	tool->setDurability(tool->getDurability() - 1);
 	//std::cout << tool->getPercentageDegraded() << std::endl;
 	if (tool->getDurability() <= 0) {
-		std::cout << "Destroying pickaxe, no durability!" << std::endl;
 		player->getInventory()->deleteItem(tool->getId(), 1);
 	}
 }
