@@ -23,7 +23,7 @@ BaseHelpScreen::BaseHelpScreen(int x)
 	textRect.x = pictureRect.x;
 
 	textMaxWidth = pictureRect.w;
-	textMaxHeight = ScreenHeight / 12 * 2;
+	textMaxHeight = ScreenHeight / 10 * 2;
 
 	textPortraitRect.x = textRect.x - 2;
 	textPortraitRect.w = textMaxWidth + 4;
