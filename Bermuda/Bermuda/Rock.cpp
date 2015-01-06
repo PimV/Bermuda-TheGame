@@ -60,7 +60,7 @@ void Rock::interact(Player* player)
 			this->degradeTool(player);
 
 			//Set rock mined
-			player->getStatusTracker()->rockMined();
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::ROCKMINED);
 		}
 	} else {
 		player->setCorrectToolSelected(false);

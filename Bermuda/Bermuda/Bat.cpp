@@ -86,7 +86,7 @@ void Bat::interact(Player* player)
 
 void Bat::setDestroyedState() 
 {
-	PlayState::Instance()->getPlayer()->getStatusTracker()->BatsKilled();
+	PlayState::Instance()->getPlayer()->getStatusTracker()->addAchievementCount(AchievementsEnum::BATSKILLED);
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

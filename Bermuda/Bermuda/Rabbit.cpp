@@ -88,7 +88,7 @@ void Rabbit::interact(Player* player)
 
 void Rabbit::setDestroyedState() 
 {
-	PlayState::Instance()->getPlayer()->getStatusTracker()->RabbitsKilled();
+	PlayState::Instance()->getPlayer()->getStatusTracker()->addAchievementCount(AchievementsEnum::RABBITSKILLED);
 	PlayState::Instance()->getPlayer()->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Meat));
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);

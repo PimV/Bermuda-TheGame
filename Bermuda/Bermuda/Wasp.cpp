@@ -89,7 +89,7 @@ void Wasp::interact(Player* player)
 
 void Wasp::setDestroyedState() 
 {
-	PlayState::Instance()->getPlayer()->getStatusTracker()->WaspsKilled();
+	PlayState::Instance()->getPlayer()->getStatusTracker()->addAchievementCount(AchievementsEnum::WASPSKILLED);
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

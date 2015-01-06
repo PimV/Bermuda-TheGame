@@ -543,14 +543,14 @@
     <ClCompile Include="EvasiveBehaviour.cpp">
       <Filter>Source Files\Model\Entity\Behaviour</Filter>
     </ClCompile>
-    <ClCompile Include="AttackingNPC.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FleeingState.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
     <ClCompile Include="WanderState.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackingNPC.cpp">
+      <Filter>Source Files\Model\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -956,14 +956,14 @@
     <ClInclude Include="EvasiveBehaviour.h">
       <Filter>Header Files\Model\Entity\Behaviour</Filter>
     </ClInclude>
-    <ClInclude Include="AttackingNPC.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FleeingState.h">
       <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
     <ClInclude Include="WanderState.h">
       <Filter>Header Files\Model\Entity\State</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackingNPC.h">
+      <Filter>Header Files\Model\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -984,6 +984,9 @@
     </ClInclude>
     <ClInclude Include="ItemMeat.h">
       <Filter>Header Files\Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="AchievementsEnum.h">
+      <Filter>Header Files\Model\Enums</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

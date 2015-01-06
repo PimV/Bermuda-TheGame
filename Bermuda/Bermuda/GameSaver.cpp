@@ -179,6 +179,11 @@ void GameSaver::saveGame(std::string fileName)
 	stream.close();
 }
 
+std::string GameSaver::getCurrentSaveFile()
+{
+	return this->currentSaveFile;
+}
+
 GameSaver::~GameSaver()
 {
 }

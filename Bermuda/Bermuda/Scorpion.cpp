@@ -91,7 +91,7 @@ void Scorpion::interact(Player* player)
 
 void Scorpion::setDestroyedState() 
 {
-	PlayState::Instance()->getPlayer()->getStatusTracker()->ScorpionsKilled();
+	PlayState::Instance()->getPlayer()->getStatusTracker()->addAchievementCount(AchievementsEnum::SCORPIONSKILLED);
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

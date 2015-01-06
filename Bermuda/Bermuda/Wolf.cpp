@@ -91,7 +91,7 @@ void Wolf::interact(Player* player)
 
 void Wolf::setDestroyedState() 
 {
-	PlayState::Instance()->getPlayer()->getStatusTracker()->WolfsKilled();
+	PlayState::Instance()->getPlayer()->getStatusTracker()->addAchievementCount(AchievementsEnum::WOLFSKILLED);
 	int output = 1 + (rand() % (int)(2 - 1 + 1));
 
 	for (int i = 0; i < output; i++)

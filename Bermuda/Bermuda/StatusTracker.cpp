@@ -1,18 +1,5 @@
 #include "StatusTracker.h"
 
-enum{
-	TREECUT,
-	ROCKMINED,
-	CARROTPICKED,
-	APPLEPICKED,
-
-	BATSKILLED,
-	RABBITSKILLED,
-	SCORPIONSKILLED,
-	WASPSKILLED,
-	WOLFSKILLED
-};
-
 StatusTracker::StatusTracker()
 {
 	init();
@@ -20,10 +7,14 @@ StatusTracker::StatusTracker()
 
 void StatusTracker::init()
 {
-	achievements.push_back(new Achievement("Trees logged"));
-	achievements.push_back(new Achievement("Rocks mined"));
-	achievements.push_back(new Achievement("Carrots picked"));
 	achievements.push_back(new Achievement("Apples picked"));
+	achievements.push_back(new Achievement("Carrots picked"));
+	achievements.push_back(new Achievement("Fishes caught"));
+	achievements.push_back(new Achievement("Gold mined"));
+	achievements.push_back(new Achievement("Ice mined"));
+	achievements.push_back(new Achievement("Cacti chopped"));
+	achievements.push_back(new Achievement("Rocks mined"));
+	achievements.push_back(new Achievement("Trees logged"));
 
 	achievements.push_back(new Achievement("Bats killed"));
 	achievements.push_back(new Achievement("Rabbits killed"));
@@ -37,55 +28,10 @@ std::vector<Achievement*> StatusTracker::getAllAchievements()
 	return this->achievements;
 }
 
-#pragma region Interactable_objects
-void StatusTracker::treeCut()
+void StatusTracker::addAchievementCount(AchievementsEnum enumIn)
 {
-	achievements[TREECUT]->addAmount();
+	achievements[(int)enumIn]->addAmount();
 }
-
-void StatusTracker::rockMined()
-{
-	achievements[ROCKMINED]->addAmount();
-}
-
-void StatusTracker::carrotPicked()
-{
-	achievements[CARROTPICKED]->addAmount();
-}
-
-void StatusTracker::applePicked()
-{
-	achievements[APPLEPICKED]->addAmount();
-}
-#pragma endregion
-
-#pragma region Interactable_NPC
-
-void StatusTracker::BatsKilled()
-{
-	achievements[BATSKILLED]->addAmount();
-}
-
-void StatusTracker::RabbitsKilled()
-{
-	achievements[RABBITSKILLED]->addAmount();
-}
-
-void StatusTracker::ScorpionsKilled()
-{
-	achievements[SCORPIONSKILLED]->addAmount();
-}
-
-void StatusTracker::WaspsKilled()
-{
-	achievements[WASPSKILLED]->addAmount();
-}
-
-void StatusTracker::WolfsKilled()
-{
-	achievements[WOLFSKILLED]->addAmount();
-}
-#pragma endregion
 
 void StatusTracker::setAllStats(std::vector<int> stats)
 {
