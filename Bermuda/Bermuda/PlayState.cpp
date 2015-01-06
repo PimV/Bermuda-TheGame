@@ -85,15 +85,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			
-			if (p->getCraftingSystem()->isOpen()) {
+
+			if (p->getInventory()->clicked(x, y, "select", p) || p->getCraftingSystem()->isOpen()) {
 				std::cout << "Clicked at: " << x << ":" << y << std::endl;
 				p->getCraftingSystem()->clicked(x,y,"yolo", p);
-				return;
-			}
-			if (p->getInventory()->clicked(x, y, "select", p)) {
-			}
-			else {
+			} else {
 				p->destX = x + this->camera->getX();
 				p->destY = y + this->camera->getY();
 				p->resetMovement();
@@ -306,7 +302,7 @@ void PlayState::update(double dt) {
 
 	this->updateVisibleEntities(dt);
 	this->updateMediumAreaEntities(dt);
-	
+
 	this->updatePlayerDarkness();
 
 	if (gameOver)
@@ -551,12 +547,14 @@ void PlayState::draw()
 	GameTimer::Instance()->draw();
 
 	p->getCraftingSystem()->draw();
+
+
 }
 
 void PlayState::updatePlayerDarkness()
 {
 	double dayP = GameTimer::Instance()->getPercentage();
-	
+
 	if (dayP >= 90)	p->setWithinDarkness(true);
 	else p->setWithinDarkness(false);
 

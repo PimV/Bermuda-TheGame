@@ -21,7 +21,7 @@ void Crafting::init(Inventory* inv)
 	this->createRecipes();
 
 	selectedCraftItemIndex = 0;
-	itemsPerRow = 15;
+	itemsPerRow = 2;
 
 	slotWidth = ScreenWidth / 32;
 	slotHeight = ScreenHeight / 18;
@@ -155,9 +155,6 @@ void Crafting::toggleCraftMenu()
 }
 
 void Crafting::clicked(int x, int y, std::string mode, Player* player) {
-	std::cout << "Start[" << this->startX << ":" << this->startY << "]" << std::endl;
-	std::cout << "End[" << this->endX << ":" << this->endY << "]" << std::endl;
-
 	if (this->open) {
 		//Check if clicked on slots
 		if (x >= this->startX && x <= this->endX && y >= this->startY  && y <= this->endY) {
@@ -189,7 +186,7 @@ void Crafting::clicked(int x, int y, std::string mode, Player* player) {
 			&& y >= acceptRect.y && y <= acceptRect.y + acceptRect.h) {
 				if (canCraft(this->selectedCraftItem)) {
 					craftItem(this->selectedCraftItem);
-				} 
+				}
 		}
 		//Check if clicked on cancel
 		if (x >= cancelRect.x && x <= cancelRect.x + cancelRect.w
@@ -280,7 +277,13 @@ void Crafting::draw()
 			std::string recipeLine = item_strings[(int)it->first];
 			recipeLine.append(" x" + std::to_string(it->second));
 
-			GameStateManager::Instance()->sdlInitializer->drawText(recipeLine, infoRect.x + 15, infoRect.y + 50 + recipeElements*20, 100, 26, 26);
+			if (this->inventory->getItemCount((int)it->first) >= it->second) {
+				GameStateManager::Instance()->sdlInitializer->drawText(recipeLine, infoRect.x + 15, infoRect.y + 50 + recipeElements*20, 100, 26, 26);
+			} else {
+				GameStateManager::Instance()->sdlInitializer->drawText(recipeLine, infoRect.x + 15, infoRect.y + 50 + recipeElements*20, 100, 26, 26, 255, 0, 0);
+			}
+
+			
 			recipeElements++;
 		}
 
