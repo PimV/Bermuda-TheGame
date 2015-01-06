@@ -62,7 +62,8 @@ void Crafting::buildMenu() {
 	bgRect.h = 2*(ScreenHeight / 3);
 
 	infoRect.x = ScreenWidth / 6 + 50;
-	infoRect.y = ScreenHeight / 6 + ScreenHeight / 3;
+	//infoRect.y = ScreenHeight / 6 + ScreenHeight / 3;
+	infoRect.y = ScreenHeight / 6 + 2*(ScreenHeight / 3) - 60 - 20 - 150;
 	infoRect.w =  2 * (ScreenWidth / 3) - 100;
 	infoRect.h = 150;
 
