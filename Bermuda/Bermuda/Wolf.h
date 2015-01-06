@@ -3,6 +3,7 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "ItemFactory.h"
 
 class Wolf :
 	public InteractableNPC,

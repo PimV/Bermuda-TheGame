@@ -528,9 +528,6 @@
     <ClCompile Include="ItemMeat.cpp">
       <Filter>Source Files\Model\Item</Filter>
     </ClCompile>
-    <ClCompile Include="WanderAround.cpp">
-      <Filter>Source Files\Model\Entity\State</Filter>
-    </ClCompile>
     <ClCompile Include="AggressiveState.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
@@ -550,6 +547,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FleeingState.cpp">
+      <Filter>Source Files\Model\Entity\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderState.cpp">
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
   </ItemGroup>
@@ -938,9 +938,6 @@
     <ClInclude Include="State.h">
       <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
-    <ClInclude Include="WanderAround.h">
-      <Filter>Header Files\Model\Entity\State</Filter>
-    </ClInclude>
     <ClInclude Include="StateMachine.h">
       <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
@@ -963,6 +960,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FleeingState.h">
+      <Filter>Header Files\Model\Entity\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderState.h">
       <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
   </ItemGroup>

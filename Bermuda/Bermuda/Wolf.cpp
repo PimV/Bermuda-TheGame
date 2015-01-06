@@ -7,7 +7,7 @@
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-	InteractableNPC(id, 40, 3, 150, 10, spawnPoint, -12, -15, 68, 78, 500),
+	InteractableNPC(id, 55, 3, 150, 30, spawnPoint, -12, -15, 68, 78, 500),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 13, 20, 23, 24),
 	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
@@ -42,7 +42,7 @@ Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	#pragma endregion
 
 	#pragma region Interactable_stuff
-	this->interactTime = 500;
+	this->interactTime = 700;
 	this->currentInteractTime = 0;
 	this->animationType = AnimationEnumType::Attack;
 	#pragma endregion
@@ -91,7 +91,12 @@ void Wolf::interact(Player* player)
 
 void Wolf::setDestroyedState() 
 {
-	// TODO: add Wolf killed to status tracker
+	PlayState::Instance()->getPlayer()->getStatusTracker()->WolfsKilled();
+	int output = 1 + (rand() % (int)(2 - 1 + 1));
+
+	for (int i = 0; i < output; i++)
+		PlayState::Instance()->getPlayer()->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Meat));
+	
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

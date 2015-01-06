@@ -1,29 +1,22 @@
-#include "WanderAround.h"
-#include "MovableEntity.h"
-#include "NPC.h"
-#include "GameTimer.h"
-#include <time.h>
-#include <iostream>
-#include <random>
-#include <assert.h>
+#include "WanderState.h"
 
-WanderAround* WanderAround::Instance()
+WanderState* WanderState::Instance()
 {
-	static WanderAround instance;
+	static WanderState instance;
 	return &instance;
 }
 
-void WanderAround::enter(Entity* entity)
+void WanderState::enter(Entity* entity)
 {
 
 }
 
-void WanderAround::exit(Entity* entity)
+void WanderState::exit(Entity* entity)
 {
 	
 }
 
-void WanderAround::execute(Entity* entity, double dt)
+void WanderState::execute(Entity* entity, double dt)
 {
 	assert(entity && dt);
 

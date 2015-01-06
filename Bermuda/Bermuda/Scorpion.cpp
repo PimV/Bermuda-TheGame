@@ -39,10 +39,12 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->animationWalkEndColumn = 3;
 	this->frameAmountX = 6, this->frameAmountY = 4, this->CurrentFrame = 0;
 	this->animationSpeed = 10;
+
+	this->StopAnimation();
 	#pragma endregion
 
 	#pragma region Interactable_stuff
-	this->interactTime = 500;
+	this->interactTime = 900;
 	this->currentInteractTime = 0;
 	this->animationType = AnimationEnumType::Attack;
 	#pragma endregion
@@ -51,8 +53,6 @@ Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
 	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
-
-	this->StopAnimation();
 
 	this->behaviour = new AggressiveBehaviour( new StateMachine<Entity>(this) );
 }
@@ -91,7 +91,7 @@ void Scorpion::interact(Player* player)
 
 void Scorpion::setDestroyedState() 
 {
-	// TODO: add Scorpions killed to status tracker
+	PlayState::Instance()->getPlayer()->getStatusTracker()->ScorpionsKilled();
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

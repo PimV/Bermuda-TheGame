@@ -5,7 +5,7 @@
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-InteractableNPC(id, 5, 1, 150, 30, spawnPoint, -18, -20, 68, 78, 500),
+InteractableNPC(id, 25, 1, 150, 30, spawnPoint, -18, -20, 68, 78, 500),
 DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 8, 20, 16, 12),
 MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
@@ -37,7 +37,7 @@ MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
 	#pragma endregion
 
 	#pragma region Interactable_stuff
-	this->interactTime = 500;
+	this->interactTime = 600;
 	this->currentInteractTime = 0;
 	this->animationType = AnimationEnumType::Attack;
 	#pragma endregion
@@ -86,7 +86,7 @@ void Bat::interact(Player* player)
 
 void Bat::setDestroyedState() 
 {
-	// TODO: add bat killed to status tracker
+	PlayState::Instance()->getPlayer()->getStatusTracker()->BatsKilled();
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

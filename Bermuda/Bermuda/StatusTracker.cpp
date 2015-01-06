@@ -1,11 +1,16 @@
 #include "StatusTracker.h"
-#include <iostream>
 
 enum{
 	TREECUT,
 	ROCKMINED,
 	CARROTPICKED,
-	APPLEPICKED
+	APPLEPICKED,
+
+	BATSKILLED,
+	RABBITSKILLED,
+	SCORPIONSKILLED,
+	WASPSKILLED,
+	WOLFSKILLED
 };
 
 StatusTracker::StatusTracker()
@@ -15,10 +20,16 @@ StatusTracker::StatusTracker()
 
 void StatusTracker::init()
 {
-	achievements.push_back(new Achievement("Trees cut"));
+	achievements.push_back(new Achievement("Trees logged"));
 	achievements.push_back(new Achievement("Rocks mined"));
 	achievements.push_back(new Achievement("Carrots picked"));
 	achievements.push_back(new Achievement("Apples picked"));
+
+	achievements.push_back(new Achievement("Bats killed"));
+	achievements.push_back(new Achievement("Rabbits killed"));
+	achievements.push_back(new Achievement("Scorpions killed"));
+	achievements.push_back(new Achievement("Wasps killed"));
+	achievements.push_back(new Achievement("Wolfs killed"));
 }
 
 std::vector<Achievement*> StatusTracker::getAllAchievements()
@@ -26,6 +37,7 @@ std::vector<Achievement*> StatusTracker::getAllAchievements()
 	return this->achievements;
 }
 
+#pragma region Interactable_objects
 void StatusTracker::treeCut()
 {
 	achievements[TREECUT]->addAmount();
@@ -45,6 +57,35 @@ void StatusTracker::applePicked()
 {
 	achievements[APPLEPICKED]->addAmount();
 }
+#pragma endregion
+
+#pragma region Interactable_NPC
+
+void StatusTracker::BatsKilled()
+{
+	achievements[BATSKILLED]->addAmount();
+}
+
+void StatusTracker::RabbitsKilled()
+{
+	achievements[RABBITSKILLED]->addAmount();
+}
+
+void StatusTracker::ScorpionsKilled()
+{
+	achievements[SCORPIONSKILLED]->addAmount();
+}
+
+void StatusTracker::WaspsKilled()
+{
+	achievements[WASPSKILLED]->addAmount();
+}
+
+void StatusTracker::WolfsKilled()
+{
+	achievements[WOLFSKILLED]->addAmount();
+}
+#pragma endregion
 
 void StatusTracker::setAllStats(std::vector<int> stats)
 {

@@ -4,6 +4,11 @@
 #include "CollidableEntity.h"
 #include "InteractableNPC.h"
 #include "Weapon.h"
+#include "PlayState.h"
+#include <time.h>
+#include <random>
+#include "EvasiveBehaviour.h"
+#include "ItemFactory.h"
 
 class Rabbit :
 	public InteractableNPC,

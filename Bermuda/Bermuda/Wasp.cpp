@@ -40,7 +40,7 @@ Wasp::Wasp(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	#pragma endregion
 
 	#pragma region Interactable_stuff
-	this->interactTime = 500;
+	this->interactTime = 600;
 	this->currentInteractTime = 0;
 	this->animationType = AnimationEnumType::Attack;
 	#pragma endregion
@@ -89,7 +89,7 @@ void Wasp::interact(Player* player)
 
 void Wasp::setDestroyedState() 
 {
-	// TODO: add wasp killed to status tracker
+	PlayState::Instance()->getPlayer()->getStatusTracker()->WaspsKilled();
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

@@ -18,13 +18,13 @@ void EvasiveBehaviour::update(double dt)
 	double diffY = PlayState::Instance()->getPlayer()->getCenterY() - this->npc->getCenterY();
 	double distanceFromPlayer = sqrt((diffX * diffX) + (diffY * diffY));
 
-	if (this->m_pStateMachine->getCurrentState() == WanderAround::Instance() && distanceFromPlayer <= this->npc->getActionRange())
+	if (this->m_pStateMachine->getCurrentState() == WanderState::Instance() && distanceFromPlayer <= this->npc->getActionRange())
 	{
 		this->m_pStateMachine->changeState(FleeingState::Instance());
 	}
 	else if (this->m_pStateMachine->getCurrentState() == FleeingState::Instance() && distanceFromPlayer >= this->npc->getActionRange() * 2)
 	{
-		this->m_pStateMachine->changeState(WanderAround::Instance());
+		this->m_pStateMachine->changeState(WanderState::Instance());
 	}
 	this->m_pStateMachine->update(dt);
 }

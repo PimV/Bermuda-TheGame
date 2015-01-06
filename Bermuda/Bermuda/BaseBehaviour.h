@@ -1,6 +1,6 @@
 #pragma once
 #include "StateMachine.h"
-#include "WanderAround.h"
+#include "WanderState.h"
 #include "AggressiveState.h"
 #include "FleeingState.h"
 #include "InteractableNPC.h"

@@ -1,8 +1,4 @@
 #include "Rabbit.h"
-#include "PlayState.h"
-#include <time.h>
-#include <random>
-#include "EvasiveBehaviour.h"
 
 Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
@@ -92,7 +88,8 @@ void Rabbit::interact(Player* player)
 
 void Rabbit::setDestroyedState() 
 {
-	// TODO: add rabbit killed to status tracker
+	PlayState::Instance()->getPlayer()->getStatusTracker()->RabbitsKilled();
+	PlayState::Instance()->getPlayer()->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Meat));
 	this->getSpawnPoint()->decreaseChildren();
 	PlayState::Instance()->getMainEntityContainer()->getDestroyContainer()->add(this);
 }

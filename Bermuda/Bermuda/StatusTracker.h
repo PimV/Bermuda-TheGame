@@ -10,6 +10,13 @@ public:
 	void rockMined();
 	void carrotPicked();
 	void applePicked();
+
+	void BatsKilled();
+	void RabbitsKilled();
+	void ScorpionsKilled();
+	void WaspsKilled();
+	void WolfsKilled();
+
 	std::vector<Achievement*> getAllAchievements();
 	void setAllStats(std::vector<int> stats);
 
