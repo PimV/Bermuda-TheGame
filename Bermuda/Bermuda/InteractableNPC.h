@@ -13,10 +13,7 @@ class InteractableNPC :
 	private:
 		//
 	protected:
-		int healthPoints, attackPoints;
-
-		void addToContainers();
-		void removeFromConainers();
+		int healthPoints, currentHealthPoints, attackPoints;
 
 	public:
 		InteractableNPC(int id, int healthPoints, int attackPoints, int actionRange, int attackRange, Spawnpoint *spawnPoint, int interactStartX, int interactStartY, int interactWitdh, int interactHeight, long attackTime);
@@ -27,6 +24,8 @@ class InteractableNPC :
 
 		void setHealthPoints(int healthPoints);
 		void setAttackPoints(int attackPoints);
+
+		bool isNpcMaxHealth();
 
 		virtual void attack();
 };

@@ -4,6 +4,7 @@
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
 #include "AttackingNPC.h"
+#include "ItemFactory.h"
 
 class Scorpion :
 	public InteractableNPC,

@@ -26,7 +26,7 @@ void DefensiveBehaviour::update(double dt)
 	}
 	else
 	{
-		if (this->m_pStateMachine->getCurrentState() == WanderState::Instance() && distanceFromPlayer <= this->npc->getActionRange() )
+		if (this->m_pStateMachine->getCurrentState() == WanderState::Instance() && distanceFromPlayer <= this->npc->getActionRange() && !this->npc->isNpcMaxHealth() )
 		{
 			this->setFsmToAggressiveState();
 		}

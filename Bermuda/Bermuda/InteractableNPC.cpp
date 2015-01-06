@@ -11,13 +11,14 @@ InteractableNPC::InteractableNPC(int id, int healthPoints, int attackPoints, int
 	this->animationType = AnimationEnumType::Attack;
 
 	this->healthPoints = healthPoints;
+	this->currentHealthPoints = healthPoints;
 	this->attackPoints = attackPoints;
 }
 
 #pragma region Getters
 int InteractableNPC::getHealthPoints()
 {
-	return this->healthPoints;
+	return this->currentHealthPoints;
 }
 
 int InteractableNPC::getAttackPoints()
@@ -31,11 +32,15 @@ void InteractableNPC::setHealthPoints(int healthPoints)
 {
 	if (healthPoints < 0)
 	{
-		this->healthPoints = 0;
+		this->currentHealthPoints = 0;
+	}
+	else if (healthPoints > this->healthPoints)
+	{
+		this->currentHealthPoints = this->healthPoints;
 	}
 	else
 	{
-		this->healthPoints = healthPoints;
+		this->currentHealthPoints = healthPoints;
 	}
 }
 
@@ -52,28 +57,20 @@ void InteractableNPC::setAttackPoints(int attackPoints)
 }
 #pragma endregion
 
+bool InteractableNPC::isNpcMaxHealth()
+{
+	if (this->currentHealthPoints < this->healthPoints)
+		return false;
+
+	return true;
+}
+
 void InteractableNPC::attack()
 {
 	if( this->checkAttackTimes())
 	{
 		PlayState::Instance()->getPlayer()->setHealth( ( PlayState::Instance()->getPlayer()->getHealth() - this->getAttackPoints() ) );
 	}
-}
-
-void InteractableNPC::addToContainers()
-{
-	//PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
-	//PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
-	//PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->add(this);
-	//PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
-}
-
-void InteractableNPC::removeFromConainers()
-{
-	//PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	//PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	//PlayState::Instance()->getMainEntityContainer()->getMovableContainer()->remove(this);
-	//PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }
 
 InteractableNPC::~InteractableNPC(void)
