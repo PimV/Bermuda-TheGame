@@ -24,9 +24,13 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 	//SDL_RenderSetLogicalSize(renderer, 1600, 900);
 }
 
-void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h, int r, int g, int b) {
+void SDLInitializer::drawText(std::string msg, int x, int y, int w, int h, int fontSize, int r, int g, int b) {
 	//TODO: Deze methode is slecht om te gebruiken. Elke frame een nieuwe texture aanmaken kost veel tijd!
-	font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), h);
+	if (fontSize == -1) {
+		fontSize = h;
+	}
+
+	font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), fontSize);
 
 	SDL_Surface* imgTxt;
 	SDL_Rect txtRect;
