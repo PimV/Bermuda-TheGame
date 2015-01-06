@@ -108,6 +108,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Achievement.h" />
+    <ClInclude Include="AchievementsEnum.h" />
     <ClInclude Include="ActionContainer.h" />
     <ClInclude Include="AnimatingContainer.h" />
     <ClInclude Include="AnimatingEntity.h" />
@@ -135,6 +136,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EasterHead.h" />
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
+    <ClInclude Include="FleeingState.h" />
     <ClInclude Include="IceRock.h" />
     <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="InteractableCactusBig.h" />
@@ -143,6 +145,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemMeat.h" />
     <ClInclude Include="LightContainer.h" />
     <ClInclude Include="LightEntity.h" />
+    <ClInclude Include="LoadButton.h" />
     <ClInclude Include="MenuCreditsScreen.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="GameOverState.h" />
@@ -178,6 +181,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemGold.h" />
     <ClInclude Include="ItemWater.h" />
     <ClInclude Include="MenuHelpScreen.h" />
+    <ClInclude Include="MenuLoadScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
     <ClInclude Include="NightLayer.h" />
     <ClInclude Include="NPCType.h" />
@@ -196,6 +200,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="MovementDirectionEnum.h" />
     <ClInclude Include="RockSpikes.h" />
     <ClInclude Include="GameSaver.h" />
+    <ClInclude Include="SavedGameButton.h" />
     <ClInclude Include="Scorpion.h" />
     <ClInclude Include="SnowTree.h" />
     <ClInclude Include="SpawnpointContainer.h" />
@@ -268,6 +273,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Defensive.cpp" />
     <ClCompile Include="Fish.cpp" />
+    <ClCompile Include="FleeingState.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="GoldRock.cpp" />
@@ -290,8 +296,10 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="ItemWater.cpp" />
     <ClCompile Include="LightContainer.cpp" />
     <ClCompile Include="LightEntity.cpp" />
+    <ClCompile Include="LoadButton.cpp" />
     <ClCompile Include="MenuCreditsScreen.cpp" />
     <ClCompile Include="MenuHelpScreen.cpp" />
+    <ClCompile Include="MenuLoadScreen.cpp" />
     <ClCompile Include="MenuMainScreen.cpp" />
     <ClCompile Include="NightLayer.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
@@ -305,6 +313,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="RockSpikes.cpp" />
     <ClCompile Include="GameSaver.cpp" />
+    <ClCompile Include="SavedGameButton.cpp" />
     <ClCompile Include="Scorpion.cpp" />
     <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="SpawnpointContainer.cpp" />

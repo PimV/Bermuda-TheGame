@@ -84,7 +84,7 @@ void Inventory::decrementSelectedIndex() {
 }
 
 Item* Inventory::getSelectedItem() {
-	if (selectedIndex < this->getSize()) {
+   	if (selectedIndex < this->getSize()) {
 		return this->itemVector[selectedIndex];
 	} else {
 		return nullptr;
@@ -291,7 +291,7 @@ void Inventory::dropCurrent() {
 
 bool Inventory::pickAxeSelected() {
 	if (this->getSelectedItem() != nullptr && (this->getSelectedItem()->getId() == (int)Items::Pickaxe || this->getSelectedItem()->getId() == (int)Items::GoldenPickaxe)) {
-		return true;
+			return true;
 	}
 	return false;
 }
@@ -410,7 +410,6 @@ void Inventory::draw() {
 		if (i == selectedIndex) {
 			if (this->getSelectedItem() != nullptr && this->getSelectedItem()->hasItemType(ItemType::WorkTool)) {
 				Equipable* tool = dynamic_cast<Equipable*>(this->getSelectedItem());
-				//std::cout << tool->getPercentageDegraded() << std::endl;
 				if (tool->getPercentageDegraded() >= 80) {
 					//red
 					SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedRed->getTileSet(), NULL, &slotRect);
@@ -423,7 +422,7 @@ void Inventory::draw() {
 				}
 				//SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
 			} else {
-				SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
+			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleSelectedImg->getTileSet(), NULL, &slotRect);
 			}
 		} else {
 			SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), singleImg->getTileSet(), NULL, &slotRect);

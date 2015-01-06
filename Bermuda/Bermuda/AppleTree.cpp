@@ -45,7 +45,7 @@ void AppleTree::interact(Player* player) {
 			player->setCorrectToolSelected(false);
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Apple));
-			player->getStatusTracker()->applePicked();
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::APPLEPICKED);
 		}
 	}
 }

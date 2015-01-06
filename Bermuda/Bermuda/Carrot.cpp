@@ -23,7 +23,7 @@ void Carrot::update(double dt) {
 void Carrot::interact(Player* player)
 {
 	player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Carrot));
-	player->getStatusTracker()->carrotPicked();
+	player->getStatusTracker()->addAchievementCount(AchievementsEnum::CARROTPICKED);
 	this->setDestroyedState();
 }
 

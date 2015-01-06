@@ -125,6 +125,8 @@ void GameSaver::saveGame(std::string fileName)
 	//Gametime
 	writer.String("gametime");
 	writer.Double(GameTimer::Instance()->getGameTime());
+	writer.String("days");
+	writer.Int(GameTimer::Instance()->getDaysSurvived());
 
 	//Player stats
 	writer.String("player");
@@ -175,6 +177,11 @@ void GameSaver::saveGame(std::string fileName)
 	}
 	stream << s.GetString();
 	stream.close();
+}
+
+std::string GameSaver::getCurrentSaveFile()
+{
+	return this->currentSaveFile;
 }
 
 GameSaver::~GameSaver()

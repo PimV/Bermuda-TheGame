@@ -45,7 +45,7 @@ void BaseButton::placeMidScreenUnder(BaseButton* button)
 
 void BaseButton::placeMidUnder(int x, int y)
 {
-	buttonRect.x = x - buttonRect.h / 2;
+	buttonRect.x = x - buttonRect.w / 2;
 	buttonRect.y = y;
 }
 
@@ -103,6 +103,11 @@ void BaseButton::createButton(std::string message, int fontSize, int initialColo
 	SDL_FreeSurface(MessageSurface);
 	SDL_FreeSurface(HoverMessageSurface);
 	TTF_CloseFont(staryDarzy);
+}
+
+void BaseButton::setNewButtonText(std::string text, int fontSize, int initialColor)
+{
+	createButton(text, fontSize, initialColor);
 }
 
 void BaseButton::placeMid()
@@ -198,6 +203,11 @@ void BaseButton::setCreditsScreenAction()
 	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuCreditsScreen());
 }
 
+void BaseButton::setLoadScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuLoadScreen());
+}
+
 void BaseButton::exitAction()
 {
 	GameStateManager::Instance()->quitGame();
@@ -248,7 +258,48 @@ void BaseButton::helpCutTreeScreenAction()
 	helpScr->setCurWindow(helpScr->getCutTreeScr());
 }
 
-void BaseButton::helpMineTreeScreenAction()
+void BaseButton::helpCutCactusScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getCutCactusScr());
+}
+
+void BaseButton::helpFishScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getFishScr());
+}
+
+void BaseButton::helpPickAppleScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getPickAppleScr());
+}
+
+void BaseButton::helpPickCarrotScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getPickCarrotScr());
+}
+
+void BaseButton::helpMineGoldScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getMineGoldScr());
+}
+
+void BaseButton::helpMineIceScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getMineIceScr());
+}
+
+void BaseButton::helpMineRockScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getMineRockScr());
+}
+
+
+void BaseButton::helpFoodAndWaterScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getFoodAndWaterScr());
+}
+
+void BaseButton::helptimeScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getTimeScr());
 }

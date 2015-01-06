@@ -12,6 +12,7 @@
 #include "ItemFactory.h"
 #include "ObjectFactory.h"
 #include "GameOverState.h"
+#include <stdio.h>
 
 
 PlayState PlayState::m_PlayState;
@@ -49,12 +50,20 @@ void PlayState::init(GameStateManager *gsm) {
 	SoundLoader::Instance()->playGameMusic();
 
 	nightLayer = new NightLayer();
-
 	gameSaver = new GameSaver();
-	gameSaver->changeCurrentSaveFile("Game0.json");
-	//gameSaver->loadGame();
 
 	GameStateManager::Instance()->flushEvents();
+}
+
+
+void PlayState::loadGame()
+{
+	gameSaver->loadGame(this->fileToLoad);
+}
+
+void PlayState::setFileToLoad(std::string fileName)
+{
+	this->fileToLoad = fileName;
 }
 
 MainEntityContainer* PlayState::getMainEntityContainer()
@@ -307,6 +316,12 @@ void PlayState::update(double dt) {
 
 	if (gameOver)
 	{
+		//Delete saved game
+		remove((SAVEPATH + this->gameSaver->getCurrentSaveFile()).c_str());
+
+		//Save stuff for graveyard
+
+		//Switch to game over state
 		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
 	}
 
