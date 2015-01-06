@@ -10,8 +10,6 @@ class InteractableNPC :
 	public InteractableEntity,
 	public AttackingNPC
 {
-	private:
-		//
 	protected:
 		int healthPoints, currentHealthPoints, attackPoints;
 

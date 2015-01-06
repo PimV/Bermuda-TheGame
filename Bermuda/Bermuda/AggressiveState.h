@@ -8,9 +8,6 @@ class AggressiveState :
 		AggressiveState(const AggressiveState &);
 		AggressiveState& operator=(const AggressiveState &);
 
-	protected:
-		//
-
 	public:
 		AggressiveState();
 

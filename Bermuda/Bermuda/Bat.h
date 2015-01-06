@@ -17,9 +17,6 @@ class Bat :
 		void ResetDrawableEntityAndSetChunk();
 		bool checkCollision(double newX, double newY);
 
-	protected:
-		//
-
 	public:
 		Bat(int id, Spawnpoint *spawnPoint, int firstImgID);
 

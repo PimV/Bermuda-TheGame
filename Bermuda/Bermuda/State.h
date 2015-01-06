@@ -6,9 +6,6 @@ template <class entity_type>
 class State
 {
 
-protected:
-	//
-
 public:
 	virtual ~State(){};
 

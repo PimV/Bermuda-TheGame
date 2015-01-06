@@ -9,9 +9,6 @@ class AggressiveBehaviour :
 	private:
 		void executeAction();
 
-	protected:
-		//
-
 	public:
 		AggressiveBehaviour(StateMachine<Entity>* m_pStateMachine);
 	

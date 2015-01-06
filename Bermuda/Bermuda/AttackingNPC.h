@@ -3,8 +3,6 @@
 
 class AttackingNPC
 {
-	private:
-		//
 	protected:
 		long currentAttackTime;
 		long attackTime;

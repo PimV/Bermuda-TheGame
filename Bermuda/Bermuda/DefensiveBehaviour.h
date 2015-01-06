@@ -8,9 +8,6 @@ class DefensiveBehaviour :
 	private:
 		void executeAction();
 
-	protected:
-		//
-
 	public:
 		DefensiveBehaviour(StateMachine<Entity>* m_pStateMachine);
 

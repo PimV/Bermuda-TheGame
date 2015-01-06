@@ -7,9 +7,6 @@
 
 class BaseBehaviour
 {
-	private:
-		//
-
 	protected:
 		StateMachine<Entity>* m_pStateMachine;
 		InteractableNPC* npc;

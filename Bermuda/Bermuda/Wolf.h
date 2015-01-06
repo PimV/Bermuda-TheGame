@@ -16,9 +16,6 @@ class Wolf :
 		void ResetDrawableEntityAndSetChunk();
 		bool checkCollision(double newX, double newY);
 
-	protected:
-		//
-
 	public:
 		Wolf(int id, Spawnpoint *spawnPoint, int firstImgID);
 		virtual ~Wolf();

@@ -8,9 +8,6 @@ class EvasiveBehaviour :
 	private:
 		void executeAction();
 
-	protected:
-		//
-
 	public:
 		EvasiveBehaviour(StateMachine<Entity>* m_pStateMachine);
 
@@ -18,4 +15,3 @@ class EvasiveBehaviour :
 
 		virtual ~EvasiveBehaviour(void);
 };
-

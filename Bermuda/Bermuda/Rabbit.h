@@ -21,9 +21,6 @@ class Rabbit :
 		void setImage(Image* image);
 		void ResetDrawableEntityAndSetChunk();
 
-	protected:
-		//
-
 	public:
 		Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
 		virtual ~Rabbit();
