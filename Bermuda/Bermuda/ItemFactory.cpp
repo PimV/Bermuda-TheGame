@@ -29,7 +29,8 @@ void ItemFactory::loadItemTileSets(ImageLoader* imgLoader)
 	itemImages[Items::Wood] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemLogs.png", 32,25));
 	itemImages[Items::Gold] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemGold.png", 34,22));
 	itemImages[Items::Water] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemWater.png", 22,34));
-	itemImages[Items::Campfire] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemCampfire.png", 38, 22));
+	itemImages[Items::Campfire] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemCampfire.png",  50, 50));
+	//itemImages[Items::Campfire] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ItemCampfire.png", 38, 22));
 	itemImages[Items::Pickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolPickaxe.png", 32,32));
 	itemImages[Items::Axe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolAxe.png", 22,27));
 	itemImages[Items::GoldenPickaxe] = imgLoader->getMapImage(imgLoader->loadTileset("Items\\ToolGoldenPickaxe.png", 32,32));

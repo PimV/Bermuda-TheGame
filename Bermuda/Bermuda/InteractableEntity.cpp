@@ -105,7 +105,6 @@ void InteractableEntity::degradeTool(Player* player) {
 	Equipable* tool = dynamic_cast<Equipable*>(player->getInventory()->getSelectedItem());
 	tool->setDurability(tool->getDurability() - 1);
 	if (tool->getDurability() <= 0) {
-		std::cout << "Destroying pickaxe, no durability!" << std::endl;
 		player->getInventory()->deleteItem(tool->getId(), 1);
 	}
 }

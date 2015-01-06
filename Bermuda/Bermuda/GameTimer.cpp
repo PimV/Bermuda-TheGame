@@ -128,7 +128,7 @@ void GameTimer::draw()
 
 	//Draw amount of days
 	GameStateManager::Instance()->sdlInitializer->setRenderDrawColor(255,255,255);
-	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 5, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4, 0, 0, 0);
+	GameStateManager::Instance()->sdlInitializer->drawText(std::string("Day " + to_string(GameTimer::Instance()->getDaysSurvived())), rectCircle.x + rectCircle.w / 5, rectCircle.y + rectCircle.h / 3, rectCircle.w / 3, rectCircle.h / 4, -1, 0,0,0);
 	GameStateManager::Instance()->sdlInitializer->resetRenderDrawColor();
 }
 void GameTimer::cleanUp()
