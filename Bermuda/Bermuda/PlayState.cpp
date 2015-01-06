@@ -96,7 +96,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
 
 			if (p->getInventory()->clicked(x, y, "select", p) || p->getCraftingSystem()->isOpen()) {
-				std::cout << "Clicked at: " << x << ":" << y << std::endl;
+				//std::cout << "Clicked at: " << x << ":" << y << std::endl;
 				p->getCraftingSystem()->clicked(x,y,"yolo", p);
 			} else {
 				p->destX = x + this->camera->getX();
