@@ -12,6 +12,7 @@
 #include "ItemFactory.h"
 #include "ObjectFactory.h"
 #include "GameOverState.h"
+#include <stdio.h>
 
 
 PlayState PlayState::m_PlayState;
@@ -306,6 +307,12 @@ void PlayState::update(double dt) {
 
 	if (gameOver)
 	{
+		//Delete saved game
+		remove((SAVEPATH + this->gameSaver->getCurrentSaveFile()).c_str());
+
+		//Save stuff for graveyard
+
+		//Switch to game over state
 		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
 	}
 }

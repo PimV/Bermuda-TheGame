@@ -80,7 +80,7 @@ void MenuLoadScreen::readSavedGames()
 	hFind = FindFirstFile(patter, &FindFileData);
 	if (hFind == INVALID_HANDLE_VALUE)
 	{
-		printf("FindFirstFile failed (%d)\n", GetLastError());
+		//No saved games found
 	}
 	else
 	{

@@ -7,12 +7,15 @@ private:
 	std::string currentSaveFile;
 public:
 	GameSaver();
+
 	void init();
 	void changeCurrentSaveFile(std::string fileName);
 	void loadGame();
 	void loadGame(std::string fileName);
 	void saveGame();
 	void saveGame(std::string fileName);
+	std::string getCurrentSaveFile();
+
 	virtual ~GameSaver();
 };
 
