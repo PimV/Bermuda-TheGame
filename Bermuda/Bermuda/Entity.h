@@ -29,7 +29,7 @@ public:
 	void setHighlighted(bool highlighted);
 
 	//Destructor
-	virtual ~Entity(void);
+	virtual ~Entity();
 
 private:
 	//Entity ID

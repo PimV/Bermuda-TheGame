@@ -25,5 +25,5 @@ class BaseBehaviour
 		virtual void setFsmToFleeingState();
 		virtual void setFsmToWanderState();
 
-		virtual ~BaseBehaviour(void);
+		virtual ~BaseBehaviour();
 };

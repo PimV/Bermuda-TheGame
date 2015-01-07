@@ -41,5 +41,4 @@ void AggressiveBehaviour::update(double dt)
 
 AggressiveBehaviour::~AggressiveBehaviour()
 {
-
 }

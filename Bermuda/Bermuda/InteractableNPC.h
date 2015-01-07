@@ -16,7 +16,7 @@ class InteractableNPC :
 
 	public:
 		InteractableNPC(int id, int healthPoints, int attackPoints, int actionRange, int attackRange, Spawnpoint *spawnPoint, int interactStartX, int interactStartY, int interactWitdh, int interactHeight, long attackTime);
-		virtual ~InteractableNPC(void);
+		virtual ~InteractableNPC();
 
 		int getHealthPoints();
 		void setHealthPoints(int healthPoints);

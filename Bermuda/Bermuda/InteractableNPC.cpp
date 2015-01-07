@@ -53,6 +53,6 @@ bool InteractableNPC::isNpcMaxHealth()
 	return true;
 }
 
-InteractableNPC::~InteractableNPC(void)
+InteractableNPC::~InteractableNPC()
 {
 }
