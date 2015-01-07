@@ -319,7 +319,17 @@ void MenuHelpScreen::cleanup()
 	SDL_DestroyTexture(secTexture);
 	delete movementScreen;
 	delete cutTreeScreen;
+	delete cutCactusScreen;
+	delete fishScreen;
+	delete pickAppleScreen;
+	delete pickCarrotScreen;
+	delete mineGoldScreen;
+	delete mineIceScreen;
 	delete mineRockScreen;
+	delete foodAndWaterScreen;
+	delete timeScreen;
+	delete craftingScreen;
+	delete fightingScreen;
 	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];

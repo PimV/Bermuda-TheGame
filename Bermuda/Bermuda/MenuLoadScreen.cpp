@@ -59,6 +59,7 @@ void MenuLoadScreen::init()
 	loadButton = new LoadButton(this);
 	loadButton->createButton(" ", 40, 0);
 	loadButton->placeExactAt((ScreenWidth / 2) - (loadButton->getWidth() / 2), y);
+	buttons.push_back(loadButton);
 }
 
 void MenuLoadScreen::setCurrentFileToLoad(std::string fileName)
@@ -136,7 +137,12 @@ void MenuLoadScreen::cleanup()
 	{
 		delete var;
 	}
+	for (SavedGameButton* var : savedGameButtons)
+	{
+		delete var;
+	}
 	buttons.clear();
+	savedGameButtons.clear();
 }
 
 void MenuLoadScreen::setBackground()
