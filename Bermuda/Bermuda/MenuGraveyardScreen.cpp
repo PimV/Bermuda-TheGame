@@ -12,54 +12,39 @@ void MenuGraveyardScreen::init()
 	setBackground();
 	graveyard = new Graveyard;
 	createTable();
+	createButton();
 }
 
 void MenuGraveyardScreen::createTable()
 {
 	TTF_Font* font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), 24);
 	SDL_Color white = { 255, 255, 255 };
-	std::string nameText = "Character name";
 	std::string daysSurvivedText = "Days survived";
-	std::string dayDiedText = "Date of dead";
+	std::string dayDiedText = "Date of death";
 
-	SDL_Surface* nameTextSurface = TTF_RenderText_Blended(font, nameText.c_str(), white);
 	SDL_Surface* daysSurvivedTextSurface = TTF_RenderText_Blended(font, daysSurvivedText.c_str(), white);
 	SDL_Surface* dayDiedTextSurface = TTF_RenderText_Blended(font, dayDiedText.c_str(), white);
 
-	SDL_Texture* nameTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameTextSurface);
 	SDL_Texture* daysSurvivedTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), daysSurvivedTextSurface);
 	SDL_Texture* dateDiedTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), dayDiedTextSurface);
-	SDL_Rect nameRect;
 	SDL_Rect daysSurvivedRect;
 	SDL_Rect dateDiedRect;
 
-	nameRect.h = nameTextSurface->h;
-	nameRect.w = nameTextSurface->w;
 	daysSurvivedRect.h = daysSurvivedTextSurface->h;
 	daysSurvivedRect.w = daysSurvivedTextSurface->w;
 	dateDiedRect.h = dayDiedTextSurface->h;
 	dateDiedRect.w = dayDiedTextSurface->w;
 
-	int offset = 60;
-	daysSurvivedRect.x = (ScreenWidth - nameRect.w) / 2;
+	int offset = 15;
+	daysSurvivedRect.x = ScreenWidth / 2 - daysSurvivedRect.w - offset;
 	daysSurvivedRect.y = startTable;
-	nameRect.x = daysSurvivedRect.x - nameRect.w - offset;
-	nameRect.y = startTable;
-	dateDiedRect.x = daysSurvivedRect.x + dateDiedRect.w + offset;
+	dateDiedRect.x = ScreenWidth / 2 + offset;
 	dateDiedRect.y = startTable;
 
 	vector<GraveyardEntry*> allEntries = graveyard->getAllEntries();
 	int locationNextEntry = daysSurvivedRect.y + daysSurvivedRect.h;
 	for (GraveyardEntry* var : allEntries)
 	{
-		SDL_Surface* nameEntryTextSurface = TTF_RenderText_Blended(font, var->character.c_str(), white);
-		SDL_Texture* nameEntryTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameEntryTextSurface);
-		SDL_Rect nameEntryRect;
-		nameEntryRect.h = nameEntryTextSurface->h;
-		nameEntryRect.w = nameEntryTextSurface->w;
-		nameEntryRect.x = nameRect.x;
-		nameEntryRect.y = locationNextEntry + 20;
-
 		std::string s = std::to_string(var->daysSurvived);
 		SDL_Surface* daysSurvivedEntryTextSurface = TTF_RenderText_Blended(font, s.c_str(), white);
 		SDL_Texture* daysSurvivedEntryTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), daysSurvivedEntryTextSurface);
@@ -81,29 +66,32 @@ void MenuGraveyardScreen::createTable()
 		dayDeadEntryRect.x = dateDiedRect.x;
 		dayDeadEntryRect.y = locationNextEntry + 20;
 
-		textures.push_back(nameEntryTexture);
-		rectangles.push_back(nameEntryRect);
 		textures.push_back(daysSurvivedEntryTexture);
 		rectangles.push_back(daysSurvivedEntryRect);
 		textures.push_back(dayDeadEntryTexture);
 		rectangles.push_back(dayDeadEntryRect);
-		SDL_FreeSurface(nameEntryTextSurface);
 		SDL_FreeSurface(daysSurvivedEntryTextSurface);
 		SDL_FreeSurface(dayDeadEntryTextSurface);
 		locationNextEntry = locationNextEntry + 20;
 	}
 
-	textures.push_back(nameTexture);
 	textures.push_back(daysSurvivedTexture);
 	textures.push_back(dateDiedTexture);
-	rectangles.push_back(nameRect);
 	rectangles.push_back(daysSurvivedRect);
 	rectangles.push_back(dateDiedRect);
 
-	SDL_FreeSurface(nameTextSurface);
 	SDL_FreeSurface(daysSurvivedTextSurface);
 	SDL_FreeSurface(dayDiedTextSurface);
 	TTF_CloseFont(font);
+}
+
+void MenuGraveyardScreen::createButton()
+{
+	BaseButton* returnButton = new BaseButton();
+	returnButton->action = &BaseButton::menuMainScreenAction;
+	returnButton->createButton("Return to main menu", 40, 0);
+	returnButton->placeMidUnder((ScreenWidth / 2), ScreenHeight - ScreenHeight / 10);
+	buttons.push_back(returnButton);
 }
 
 void MenuGraveyardScreen::setBackground()

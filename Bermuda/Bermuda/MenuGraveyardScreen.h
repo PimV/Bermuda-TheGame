@@ -22,6 +22,7 @@ private:
 	void cleanup();
 	void setBackground();
 	void createTable();
+	void createButton();
 
 
 public:

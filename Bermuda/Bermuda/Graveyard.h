@@ -3,7 +3,6 @@
 
 struct GraveyardEntry
 {
-	std::string character;
 	int daysSurvived;
 	int dayDied;
 	int monthDied;

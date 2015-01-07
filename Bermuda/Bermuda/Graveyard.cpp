@@ -47,7 +47,6 @@ void Graveyard::loadGraveyard()
 	for (size_t i = 0; i < d["entry"].Size(); i++)
 	{
 		GraveyardEntry* entry = new GraveyardEntry;
-		entry->character = d["entry"][i]["name"].GetString();
 		entry->daysSurvived = d["entry"][i]["daysSurvived"].GetInt();
 		entry->dayDied = d["entry"][i]["dayDied"].GetInt();
 		entry->monthDied = d["entry"][i]["monthDied"].GetInt();
@@ -67,8 +66,6 @@ void Graveyard::saveGraveyard()
 	for (GraveyardEntry* entry : graveyard)
 	{
 		writer.StartObject();
-		writer.String("name");
-		writer.String(entry->character.c_str());
 		writer.String("daysSurvived");
 		writer.Int(entry->daysSurvived);
 		writer.String("dayDied");

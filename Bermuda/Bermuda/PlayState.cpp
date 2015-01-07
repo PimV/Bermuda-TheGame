@@ -322,7 +322,6 @@ void PlayState::update(double dt) {
 		//Save stuff for graveyard
 		Graveyard graveyard;
 		GraveyardEntry* entry = new GraveyardEntry;
-		entry->character = "John Do";
 		entry->daysSurvived = GameTimer::Instance()->getDaysSurvived();	//get days player survived
 
 		time_t time_create = time(NULL);
