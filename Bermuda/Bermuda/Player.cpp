@@ -186,9 +186,9 @@ void Player::update(double dt) {
 	}
 
 	if (!this->godMode) {
-	this->changeAnimationOnInventorySelection();
+		this->changeAnimationOnInventorySelection();
 
-	this->updatePlayerStatuses(dt);
+		this->updatePlayerStatuses(dt);
 	}
 
 	if (this->interaction) {
@@ -206,13 +206,24 @@ void Player::updatePlayerStatuses(double dt)
 	long currentTime = GameTimer::Instance()->getGameTime();
 
 	// check if hunger needs to be updated
-	if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
-		this->setHunger(this->getHunger() - 1);
+	//if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
+	//	this->setHunger(this->getHunger() - 1);
+	//}
+	if (this->hungerUpdate + this->hungerUpdateTime < currentTime)
+	{
+		int times = currentTime / ( this->hungerUpdate + this->hungerUpdateTime );
+		this->setHunger( this->getHunger() - (1*times) );
 	}
 
 	// check if thirst needs to be updated
-	if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
-		this->setThirst(this->getThirst() - 1);
+	//if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
+	//	this->setThirst(this->getThirst() - 1);
+	//}
+
+	if (this->thirstUpdate + this->thirstUpdateTime < currentTime)
+	{
+		int times = currentTime / ( this->thirstUpdate + this->thirstUpdateTime );
+		this->setThirst(this->getThirst() - (1*times) );
 	}
 
 	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
