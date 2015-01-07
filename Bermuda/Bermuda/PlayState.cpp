@@ -633,6 +633,7 @@ void PlayState::cleanup() {
 	std::cout << "deleting playstate" << endl;
 	GameTimer::Instance()->cleanUp();
 	delete nightLayer;
+	delete gameSaver;
 	delete p;
 	delete camera;
 	delete mapLoader;
@@ -640,6 +641,7 @@ void PlayState::cleanup() {
 	delete imgLoader;
 
 	nightLayer = nullptr;
+	gameSaver = nullptr;
 	p = nullptr;
 	camera = nullptr;
 	mapLoader = nullptr;
