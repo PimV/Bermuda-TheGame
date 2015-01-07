@@ -2,6 +2,7 @@
 #include "PlayState.h"
 #include <random>
 #include "EvasiveBehaviour.h"
+#include "Weapon.h"
 
 Bat::Bat(int id, Spawnpoint* spawnPoint, int firstImgID) :
 Entity(id, spawnPoint->getX(), spawnPoint->getY()),

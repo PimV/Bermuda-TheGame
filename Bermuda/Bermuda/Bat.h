@@ -3,7 +3,6 @@
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
-#include "Weapon.h"
 
 class Bat :
 	public InteractableNPC,
