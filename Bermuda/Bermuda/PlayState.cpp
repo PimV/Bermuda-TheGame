@@ -12,6 +12,7 @@
 #include "ItemFactory.h"
 #include "ObjectFactory.h"
 #include "GameOverState.h"
+#include <stdio.h>
 
 
 PlayState PlayState::m_PlayState;
@@ -93,9 +94,11 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&x, &y);
 		if (mainEvent.button.button == SDL_BUTTON_LEFT) {
-			if (p->getInventory()->clicked(x, y, "select", p)) {
-			}
-			else {
+
+			if (p->getInventory()->clicked(x, y, "select", p) || p->getCraftingSystem()->isOpen()) {
+				//std::cout << "Clicked at: " << x << ":" << y << std::endl;
+				p->getCraftingSystem()->clicked(x,y,"yolo", p);
+			} else {
 				p->destX = x + this->camera->getX();
 				p->destY = y + this->camera->getY();
 				p->resetMovement();
@@ -168,6 +171,9 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_c:
 			p->getInventory()->incrementSelectedIndex();
 			break;
+		case SDLK_t:
+			p->getCraftingSystem()->toggleCraftMenu();
+			break;
 		case SDLK_0:
 			p->getInventory()->setSelectedIndex(9);
 			break;
@@ -225,6 +231,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 
 		case SDLK_ESCAPE:
+			if (p->getCraftingSystem()->isOpen()) {
+				p->getCraftingSystem()->toggleCraftMenu();
+				break;
+			}
 			//Go to pause state on 'Escape'
 			//TODO: methode voor deze escape klik aanmaken?
 			gameSaver->saveGame();
@@ -301,13 +311,34 @@ void PlayState::update(double dt) {
 
 	this->updateVisibleEntities(dt);
 	this->updateMediumAreaEntities(dt);
-	
+
 	this->updatePlayerDarkness();
 
 	if (gameOver)
 	{
+		//Delete saved game
+		remove((SAVEPATH + this->gameSaver->getCurrentSaveFile()).c_str());
+
+		//Save stuff for graveyard
+		Graveyard graveyard;
+		GraveyardEntry* entry = new GraveyardEntry;
+		entry->character = "John Do";
+		entry->daysSurvived = GameTimer::Instance()->getDaysSurvived();	//get days player survived
+
+		time_t time_create = time(NULL);
+		struct tm time_info;
+		localtime_s(&time_info, &time_create);
+
+		entry->dayDied = time_info.tm_mday;
+		entry->monthDied = (time_info.tm_mon + 1);
+		entry->yearDied = (time_info.tm_year + 1900);
+
+		graveyard.addToGraveyard(entry);
+
+		//Switch to game over state
 		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
 	}
+
 }
 
 void PlayState::updateVisibleEntities(double dt)
@@ -397,6 +428,7 @@ void PlayState::draw()
 			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
 			if(vec != nullptr) {
 				for(InteractableEntity* e : *vec) {
+					
 					e->setHighlighted(false);
 					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
 						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
@@ -421,6 +453,7 @@ void PlayState::draw()
 						}
 					}
 				}
+				
 			}
 		}
 	}
@@ -472,9 +505,6 @@ void PlayState::draw()
 					drawableVector.push_back(e);
 				}
 			}
-
-
-
 		}
 	}
 
@@ -543,12 +573,16 @@ void PlayState::draw()
 
 	//Draw timer
 	GameTimer::Instance()->draw();
+
+	p->getCraftingSystem()->draw();
+
+
 }
 
 void PlayState::updatePlayerDarkness()
 {
 	double dayP = GameTimer::Instance()->getPercentage();
-	
+
 	if (dayP >= 90)	p->setWithinDarkness(true);
 	else p->setWithinDarkness(false);
 

@@ -44,8 +44,8 @@ void FleeingState::execute(Entity* entity, double dt)
 	double offsetY = playerCenterY - movableEntity->getCenterY();
 	double offsetTotal = fabs(offsetX) + fabs(offsetY);
 
-	double xDir = -(offsetX / offsetTotal);
-	double yDir = -(offsetY / offsetTotal);
+	double xDir = (offsetX / offsetTotal) * -1;
+	double yDir = (offsetY / offsetTotal) * -1;
 
 	if (xDir >= -1 && xDir <= -0.33)
 	{

@@ -17,7 +17,18 @@ private:
 	BaseHelpScreen* curWindow;
 	BaseHelpScreen* movementScreen;
 	BaseHelpScreen* cutTreeScreen;
+	BaseHelpScreen* cutCactusScreen;
+	BaseHelpScreen* fishScreen;
+	BaseHelpScreen* pickAppleScreen;
+	BaseHelpScreen* pickCarrotScreen;
+	BaseHelpScreen* mineGoldScreen;
+	BaseHelpScreen* mineIceScreen;
 	BaseHelpScreen* mineRockScreen;
+	BaseHelpScreen* foodAndWaterScreen;
+	BaseHelpScreen* timeScreen;
+	BaseHelpScreen* craftingScreen;
+	BaseHelpScreen* fightingScreen;
+
 
 	//methodes
 	void init();
@@ -34,7 +45,17 @@ public:
 	void setCurWindow(BaseHelpScreen* curwindow);
 	BaseHelpScreen* getMovementScr();
 	BaseHelpScreen* getCutTreeScr();
+	BaseHelpScreen* getCutCactusScr();
+	BaseHelpScreen* getFishScr();
+	BaseHelpScreen* getPickAppleScr();
+	BaseHelpScreen* getPickCarrotScr();
+	BaseHelpScreen* getMineGoldScr();
+	BaseHelpScreen* getMineIceScr();
 	BaseHelpScreen* getMineRockScr();
+	BaseHelpScreen* getFoodAndWaterScr();
+	BaseHelpScreen* getTimeScr();
+	BaseHelpScreen* getCraftingScr();
+	BaseHelpScreen* getFightingScr();
 
 	//constructors destructors
 	MenuHelpScreen();

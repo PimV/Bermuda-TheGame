@@ -258,9 +258,60 @@ void BaseButton::helpCutTreeScreenAction()
 	helpScr->setCurWindow(helpScr->getCutTreeScr());
 }
 
-void BaseButton::helpMineTreeScreenAction()
+void BaseButton::helpCutCactusScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getCutCactusScr());
+}
+
+void BaseButton::helpFishScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getFishScr());
+}
+
+void BaseButton::helpPickAppleScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getPickAppleScr());
+}
+
+void BaseButton::helpPickCarrotScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getPickCarrotScr());
+}
+
+void BaseButton::helpMineGoldScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getMineGoldScr());
+}
+
+void BaseButton::helpMineIceScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getMineIceScr());
+}
+
+void BaseButton::helpMineRockScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getMineRockScr());
+}
+
+
+void BaseButton::helpFoodAndWaterScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getFoodAndWaterScr());
+}
+
+void BaseButton::helptimeScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getTimeScr());
+}
+
+void BaseButton::helpCraftingScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getCraftingScr());
+}
+
+void BaseButton::helpFightingScreenAction()
+{
+	helpScr->setCurWindow(helpScr->getFightingScr());
 }
 
 void BaseButton::menuSetGraveyardScreenAction()

@@ -87,6 +87,7 @@ void MenuState::cleanup()
 	delete creditsScr;
 	delete helpScr;
 	delete loadScr;
+	delete graveyardScr;
 }
 
 MenuState::~MenuState()

@@ -26,11 +26,11 @@ static const char* item_strings[] = {
 	"Wood",
 	"Gold",
 	"Axe",
-	"GoldenAxe",
-	"GoldenPickaxe",
+	"Golden Axe",
+	"Golden Pickaxe",
 	"Flint",
 	"Pickaxe",
-	"Spear"
+	"Spear",
 	"Campfire",
 	"Meat"
 };

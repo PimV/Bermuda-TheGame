@@ -16,6 +16,9 @@ private:
 
 	std::vector<BaseButton*> buttons;
 
+	int maxWidth;
+	int totalHeight;
+
 	//background
 	SDL_Texture* backgroundTexture;
 	SDL_Rect backgroundRect;

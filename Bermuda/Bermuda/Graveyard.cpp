@@ -103,15 +103,19 @@ void Graveyard::addToGraveyard(GraveyardEntry* newEntry)
 		graveyard.push_back(newEntry);
 		return;
 	}
-	if (graveyard.back()->daysSurvived < newEntry->daysSurvived)
+	if (graveyard.size() > 10)
+	{
+		if (graveyard.back()->daysSurvived < newEntry->daysSurvived)
+		{
+			graveyard.push_back(newEntry);
+			sort(graveyard.begin(), graveyard.end(), CompareEntries);
+			graveyard.pop_back();
+		}
+	}
+	else
 	{
 		graveyard.push_back(newEntry);
 		sort(graveyard.begin(), graveyard.end(), CompareEntries);
-	}
-
-	while (graveyard.size() > 10)
-	{
-		graveyard.pop_back();
 	}
 }
 
