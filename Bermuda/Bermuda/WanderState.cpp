@@ -1,29 +1,22 @@
-#include "WanderAround.h"
-#include "MovableEntity.h"
-#include "NPC.h"
-#include "GameTimer.h"
-#include <time.h>
-#include <iostream>
-#include <random>
-#include <assert.h>
+#include "WanderState.h"
 
-WanderAround* WanderAround::Instance()
+WanderState* WanderState::Instance()
 {
-	static WanderAround instance;
+	static WanderState instance;
 	return &instance;
 }
 
-void WanderAround::enter(Entity* entity)
+void WanderState::enter(Entity* entity)
 {
 
 }
 
-void WanderAround::exit(Entity* entity)
+void WanderState::exit(Entity* entity)
 {
-
+	
 }
 
-void WanderAround::execute(Entity* entity, double dt)
+void WanderState::execute(Entity* entity, double dt)
 {
 	assert(entity && dt);
 
@@ -39,9 +32,10 @@ void WanderAround::execute(Entity* entity, double dt)
 
 	if (movableEntity->getTimeSinceLastAction() < timeWait)
 	{
-		movableEntity->setTimeSinceLastAction(static_cast<long>(movableEntity->getTimeSinceLastAction() + GameTimer::Instance()->getFrameTime()));
+		movableEntity->setTimeSinceLastAction(movableEntity->getTimeSinceLastAction() + static_cast<long>( GameTimer::Instance()->getFrameTime() ));
 	}
-	else {
+	else 
+	{
 		movableEntity->setTimeSinceLastAction(0);
 
 		std::uniform_int_distribution<int> dist2(1, 8);
@@ -96,7 +90,6 @@ void WanderAround::execute(Entity* entity, double dt)
 			movableEntity->movingDown = true;
 			movableEntity->movingUp = false;
 		}
-
 	}
 
 	//Move and avoid collision

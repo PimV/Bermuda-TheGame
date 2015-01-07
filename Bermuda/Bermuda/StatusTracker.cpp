@@ -1,5 +1,4 @@
 #include "StatusTracker.h"
-#include <iostream>
 
 StatusTracker::StatusTracker()
 {
@@ -15,7 +14,13 @@ void StatusTracker::init()
 	achievements.push_back(new Achievement("Ice mined"));
 	achievements.push_back(new Achievement("Cacti chopped"));
 	achievements.push_back(new Achievement("Rocks mined"));
-	achievements.push_back(new Achievement("Trees cut"));
+	achievements.push_back(new Achievement("Trees chopped"));
+
+	achievements.push_back(new Achievement("Bats killed"));
+	achievements.push_back(new Achievement("Rabbits killed"));
+	achievements.push_back(new Achievement("Scorpions killed"));
+	achievements.push_back(new Achievement("Wasps killed"));
+	achievements.push_back(new Achievement("Wolfs killed"));
 }
 
 std::vector<Achievement*> StatusTracker::getAllAchievements()

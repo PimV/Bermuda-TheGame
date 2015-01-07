@@ -1,28 +1,33 @@
 #pragma once
-#include "NPC.h"
-#include "Evasive.h"
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "InteractableNPC.h"
+#include "Weapon.h"
+#include "PlayState.h"
+#include <time.h>
+#include <random>
+#include "EvasiveBehaviour.h"
+#include "ItemFactory.h"
 
 class Rabbit :
-	public NPC,
-	public Evasive,
+	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
 	public MovableEntity
 {
-public:
-	Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
-	virtual ~Rabbit();
+	private:
+		// Replace methods to DrawableEntity & CollidableEntity
+		void setImage(Image* image);
+		void ResetDrawableEntityAndSetChunk();
 
-	void update(double dt);
-private:
-	// Replace methods to DrawableEntity & CollidableEntity
-	void setImage(Image* image);
-	void ResetDrawableEntityAndSetChunk();
-	bool checkCollision(double newX, double newY);
+	public:
+		Rabbit(int id, Spawnpoint *spawnPoint, int firstImgID);
+		virtual ~Rabbit();
 
-	StateMachine<Entity>* m_pStateMachine;
-	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
+		void update(double dt);
+		bool checkCollision(double newX, double newY);
+
+		void interact(Player* player);
+		void setDestroyedState();
 };

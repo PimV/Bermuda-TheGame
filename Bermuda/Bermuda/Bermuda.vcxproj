@@ -110,13 +110,16 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Achievement.h" />
     <ClInclude Include="AchievementsEnum.h" />
     <ClInclude Include="ActionContainer.h" />
+    <ClInclude Include="AggressiveState.h" />
     <ClInclude Include="AnimatingContainer.h" />
     <ClInclude Include="AnimatingEntity.h" />
     <ClInclude Include="AnimationEnum.h" />
     <ClInclude Include="AnimationType.h" />
     <ClInclude Include="AppleTree.h" />
+    <ClInclude Include="AttackingNPC.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="BackgroundContainer.h" />
+    <ClInclude Include="BaseBehaviour.h" />
     <ClInclude Include="BaseHelpScreen.h" />
     <ClInclude Include="BaseScreen.h" />
     <ClInclude Include="Bat.h" />
@@ -141,6 +144,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="InteractableCactusBig.h" />
     <ClInclude Include="InteractableCactusSmall.h" />
+    <ClInclude Include="InteractableNPC.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="ItemMeat.h" />
     <ClInclude Include="LightContainer.h" />
@@ -161,12 +165,12 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="CollidableEntity.h" />
     <ClInclude Include="Ice.h" />
     <ClInclude Include="IEntityContainer.h" />
-    <ClInclude Include="Defensive.h" />
-    <ClInclude Include="Evasive.h" />
+    <ClInclude Include="DefensiveBehaviour.h" />
+    <ClInclude Include="EvasiveBehaviour.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="header_loader.h" />
-    <ClInclude Include="Aggressive.h" />
+    <ClInclude Include="AggressiveBehaviour.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InteractableCactus.h" />
@@ -238,7 +242,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="Tree.h" />
     <ClInclude Include="TreePine.h" />
     <ClInclude Include="TreeRound.h" />
-    <ClInclude Include="WanderAround.h" />
+    <ClInclude Include="WanderState.h" />
     <ClInclude Include="Wasp.h" />
     <ClInclude Include="Wolf.h" />
     <ClInclude Include="Weapon.h" />
@@ -247,11 +251,14 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   <ItemGroup>
     <ClCompile Include="Achievement.cpp" />
     <ClCompile Include="ActionContainer.cpp" />
+    <ClCompile Include="AggressiveState.cpp" />
     <ClCompile Include="AnimatingContainer.cpp" />
     <ClCompile Include="AnimatingEntity.cpp" />
     <ClCompile Include="AppleTree.cpp" />
+    <ClCompile Include="AttackingNPC.cpp" />
     <ClCompile Include="Axe.cpp" />
     <ClCompile Include="BackgroundContainer.cpp" />
+    <ClCompile Include="BaseBehaviour.cpp" />
     <ClCompile Include="BaseHelpScreen.cpp" />
     <ClCompile Include="BaseScreen.cpp" />
     <ClCompile Include="Bat.cpp" />
@@ -270,8 +277,8 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityChunkContainer.cpp" />
     <ClCompile Include="EnumDirection.cpp" />
-    <ClCompile Include="Aggressive.cpp" />
-    <ClCompile Include="Defensive.cpp" />
+    <ClCompile Include="AggressiveBehaviour.cpp" />
+    <ClCompile Include="DefensiveBehaviour.cpp" />
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="FleeingState.cpp" />
     <ClCompile Include="GameTimer.cpp" />
@@ -285,6 +292,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="InteractableCactusSmall.cpp" />
     <ClCompile Include="InteractableContainer.cpp" />
     <ClCompile Include="InteractableEntity.cpp" />
+    <ClCompile Include="InteractableNPC.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemApple.cpp" />
@@ -336,7 +344,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="TreePine.cpp" />
     <ClCompile Include="TreeRound.cpp" />
-    <ClCompile Include="WanderAround.cpp" />
+    <ClCompile Include="WanderState.cpp" />
     <ClCompile Include="Wasp.cpp" />
     <ClCompile Include="Wolf.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -346,7 +354,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawableEntity.cpp" />
-    <ClCompile Include="Evasive.cpp" />
+    <ClCompile Include="EvasiveBehaviour.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IAction.cpp" />
     <ClCompile Include="CollidableEntity.cpp" />

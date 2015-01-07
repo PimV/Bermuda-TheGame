@@ -1,26 +1,28 @@
 #pragma once
-#include "NPC.h"
+#include "InteractableNPC.h"
 #include "MovableEntity.h"
 #include "DrawableEntity.h"
 #include "CollidableEntity.h"
+#include "AttackingNPC.h"
+#include "ItemFactory.h"
 
 class Scorpion :
-	public NPC,
+	public InteractableNPC,
 	public DrawableEntity,
 	public CollidableEntity,
 	public MovableEntity
 {
-public:
-	Scorpion(int id, Spawnpoint *spawnPoint, int firstImgID);
-	virtual ~Scorpion();
+	private:
+		void setImage(Image* image);
+		void ResetDrawableEntityAndSetChunk();
+		bool checkCollision(double newX, double newY);
 
-	void update(double dt);
-private:
-	void setImage(Image* image);
-	void ResetDrawableEntityAndSetChunk();
-	bool checkCollision(double newX, double newY);
+	public:
+		Scorpion(int id, Spawnpoint *spawnPoint, int firstImgID);
+		virtual ~Scorpion();
 
-	StateMachine<Entity>* m_pStateMachine;
-	StateMachine<Entity>* GetFSM()const{ return m_pStateMachine; }
+		void update(double dt);
+
+		void interact(Player* player);
+		void setDestroyedState();
 };
-

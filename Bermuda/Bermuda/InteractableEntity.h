@@ -5,6 +5,7 @@
 #include "Image.h"
 class Player;
 class GameStateManager;
+
 class InteractableEntity :
 	virtual public Entity
 {
@@ -55,7 +56,6 @@ public:
 	void degradeTool(Player* player);
 
 	virtual bool canInteract(Player* player);
-
 
 	bool trackInteractTimes();
 	int getPercentageCompleted();

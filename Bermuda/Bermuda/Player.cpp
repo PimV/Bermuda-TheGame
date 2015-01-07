@@ -3,6 +3,7 @@
 #include "GameStateManager.h"
 #include "PlayState.h"
 #include "Item.h"
+#include "Weapon.h"
 #include <vector>
 
 Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) : 
@@ -379,10 +380,9 @@ void::Player::interact(double dt)
 	for (int i = beginChunkY; i <= endChunkY; i++) {
 		for (int j = beginChunkX; j <= endChunkX; j++) {
 			std::vector<InteractableEntity*>* vec = PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->getChunk(i, j);
-			if (vec != nullptr) {
-
-				for (InteractableEntity* e : *vec) {
-					if ((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) &&
+			if(vec != nullptr) {
+				for(InteractableEntity* e : *vec) {			
+					if((playerOffsetX >= (e->getX() + e->getInteractStartX()) && (playerOffsetX <= (e->getX() + e->getInteractStartX() + e->getInteractWidth()))) && 
 						(playerOffsetY >= (e->getY() + e->getInteractStartY()) && playerOffsetY <= (e->getY() + e->getInteractStartY() + e->getInteractHeight())))
 					{
 						double centerX = ((e->getX() + e->getInteractStartX()) + (e->getX() + e->getInteractStartX() + e->getInteractWidth())) / 2;
@@ -463,6 +463,9 @@ void Player::setAnimationType(AnimationEnumType type)
 			this->currentAnimationRow = this->animationPickUp + (int)this->movementDirection;
  			this->animationActionStartColumn = this->animationPickStartColumn;
 			this->animationActionEndColumn = this->animationPickEndColumn;
+		break;
+	case AnimationEnumType::Attack:
+			this->setAnimationType(dynamic_cast<class Weapon*>(this->getInventory()->getSelectedItem())->getAnimationEnumType());
 		break;
 	case AnimationEnumType::AttackSpear:
 			this->currentAnimationRow = this->animationSpearAttackUp + (int)this->movementDirection;

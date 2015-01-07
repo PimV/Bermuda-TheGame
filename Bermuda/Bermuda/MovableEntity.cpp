@@ -9,6 +9,8 @@ Entity(id, x, y)
 	// set the value just to be sure
 	this->defaultAnimationSpeed = 40;
 	this->defaultAnimationActionSpeed = 40;
+
+	this->timeSinceLastAction = 0;
 }
 
 MovementDirectionEnum MovableEntity::getMovementDirection()

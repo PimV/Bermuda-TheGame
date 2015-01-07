@@ -20,6 +20,8 @@ public:
 	void setCurrentState(State<entity_type>* s){ m_pCurrentState = s; }
 	void setGlobalState(State<entity_type>* s) { m_pGlobalState = s; }
 	void setPreviousState(State<entity_type>* s){ m_pPreviousState = s; }
+
+	entity_type* getOwner(){ return m_pOwner; }
 	
 	void update(double dt)const
 	{
@@ -30,6 +32,7 @@ public:
 	void changeState(State<entity_type>* pNewState)
 	{
 		assert(pNewState && "<StateMachine::ChangeState>: trying to change to a null state");
+
 		m_pPreviousState = m_pCurrentState;
 		m_pCurrentState->exit(m_pOwner);
 		m_pCurrentState = pNewState;
@@ -47,4 +50,3 @@ public:
 	
 	//bool isInState(const State<entity_type>& st)const;
 };
-

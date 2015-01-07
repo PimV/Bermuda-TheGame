@@ -8,6 +8,7 @@ class StatusTracker
 public:
 	//methodes
 	void addAchievementCount(AchievementsEnum enumIn);
+
 	std::vector<Achievement*> getAllAchievements();
 	void setAllStats(std::vector<int> stats);
 
