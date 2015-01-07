@@ -77,7 +77,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->moveClick = false;
 	this->interaction = false;
 
-	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("Player_Animations.png", 64, 64);
+	this->firstImgID = PlayState::Instance()->getImageLoader()->loadTileset("Player_Animations_Gold.png", 64, 64);
 
 	#pragma region animation
 	this->animationWalkUpRow = 4;
