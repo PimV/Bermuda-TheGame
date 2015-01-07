@@ -1,23 +1,28 @@
 #pragma once
 #include "BaseScreen.h"
 #include <vector>
+#include <list>
 #include "BaseButton.h"
+#include "Graveyard.h"
 
 class MenuGraveyardScreen :
 	public BaseScreen
 {
 private:
 	//variables
-	SDL_Texture* backgroundTexture;
-	SDL_Rect backgroundRect;
-	SDL_Texture* graveyardTextTexture;
-	SDL_Rect graveyardTextRect;
+	std::vector<SDL_Texture*> textures;
+	std::vector<SDL_Rect> rectangles;
+	int startTable;
+
 	std::vector<BaseButton*> buttons;
+	Graveyard* graveyard;
 
 	//methodes
 	void init();
 	void cleanup();
 	void setBackground();
+	void createTable();
+
 
 public:
 	//methodes
@@ -29,4 +34,3 @@ public:
 	MenuGraveyardScreen();
 	virtual ~MenuGraveyardScreen();
 };
-

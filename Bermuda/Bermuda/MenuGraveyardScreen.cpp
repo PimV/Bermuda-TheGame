@@ -1,5 +1,6 @@
 #include "MenuGraveyardScreen.h"
 #include "MenuState.h"
+#include <ctime> // moet verplaatst worden naar player gameover
 
 MenuGraveyardScreen::MenuGraveyardScreen()
 {
@@ -9,38 +10,153 @@ MenuGraveyardScreen::MenuGraveyardScreen()
 void MenuGraveyardScreen::init()
 {
 	setBackground();
+	graveyard = new Graveyard;
+	createTable();
+
+
+	GraveyardEntry* entry = new GraveyardEntry;
+	entry->character = "Sagar";
+	entry->daysSurvived = 12;
+
+	time_t time_create = time(NULL);
+	struct tm time_info;
+	localtime_s(&time_info, &time_create);
+	
+	entry->dayDied = time_info.tm_mday;
+	entry->monthDied = (time_info.tm_mon + 1);
+	entry->yearDied = (time_info.tm_year + 1900);
+
+	graveyard->addToGraveyard(entry);
+}
+
+void MenuGraveyardScreen::createTable()
+{
+	TTF_Font* font = TTF_OpenFont((RESOURCEPATH + "fonts\\segoeuib.ttf").c_str(), 24);
+	SDL_Color white = { 255, 255, 255 };
+	std::string nameText = "Character name";
+	std::string daysSurvivedText = "Days survived";
+	std::string dayDiedText = "Date of dead";
+
+	SDL_Surface* nameTextSurface = TTF_RenderText_Blended(font, nameText.c_str(), white);
+	SDL_Surface* daysSurvivedTextSurface = TTF_RenderText_Blended(font, daysSurvivedText.c_str(), white);
+	SDL_Surface* dayDiedTextSurface = TTF_RenderText_Blended(font, dayDiedText.c_str(), white);
+
+	SDL_Texture* nameTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameTextSurface);
+	SDL_Texture* daysSurvivedTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), daysSurvivedTextSurface);
+	SDL_Texture* dateDiedTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), dayDiedTextSurface);
+	SDL_Rect nameRect;
+	SDL_Rect daysSurvivedRect;
+	SDL_Rect dateDiedRect;
+
+	nameRect.h = nameTextSurface->h;
+	nameRect.w = nameTextSurface->w;
+	daysSurvivedRect.h = daysSurvivedTextSurface->h;
+	daysSurvivedRect.w = daysSurvivedTextSurface->w;
+	dateDiedRect.h = dayDiedTextSurface->h;
+	dateDiedRect.w = dayDiedTextSurface->w;
+
+	int offset = 60;
+	daysSurvivedRect.x = (ScreenWidth - nameRect.w) / 2;
+	daysSurvivedRect.y = startTable;
+	nameRect.x = daysSurvivedRect.x - nameRect.w - offset;
+	nameRect.y = startTable;
+	dateDiedRect.x = daysSurvivedRect.x + dateDiedRect.w + offset;
+	dateDiedRect.y = startTable;
+
+	vector<GraveyardEntry*> allEntries = graveyard->getAllEntries();
+	int locationNextEntry = daysSurvivedRect.y + daysSurvivedRect.h;
+	for (GraveyardEntry* var : allEntries)
+	{
+		SDL_Surface* nameEntryTextSurface = TTF_RenderText_Blended(font, var->character.c_str(), white);
+		SDL_Texture* nameEntryTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), nameEntryTextSurface);
+		SDL_Rect nameEntryRect;
+		nameEntryRect.h = nameEntryTextSurface->h;
+		nameEntryRect.w = nameEntryTextSurface->w;
+		nameEntryRect.x = nameRect.x;
+		nameEntryRect.y = locationNextEntry + 20;
+
+		std::string s = std::to_string(var->daysSurvived);
+		SDL_Surface* daysSurvivedEntryTextSurface = TTF_RenderText_Blended(font, s.c_str(), white);
+		SDL_Texture* daysSurvivedEntryTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), daysSurvivedEntryTextSurface);
+		SDL_Rect daysSurvivedEntryRect;
+		daysSurvivedEntryRect.h = daysSurvivedEntryTextSurface->h;
+		daysSurvivedEntryRect.w = daysSurvivedEntryTextSurface->w;
+		daysSurvivedEntryRect.x = daysSurvivedRect.x;
+		daysSurvivedEntryRect.y = locationNextEntry + 20;
+
+		std::string d = std::to_string(var->dayDied);
+		std::string m = std::to_string(var->monthDied);
+		std::string j = std::to_string(var->yearDied);
+		std::string t = d + " - " + m + " - " + j;
+		SDL_Surface* dayDeadEntryTextSurface = TTF_RenderText_Blended(font, t.c_str(), white);
+		SDL_Texture* dayDeadEntryTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), dayDeadEntryTextSurface);
+		SDL_Rect dayDeadEntryRect;
+		dayDeadEntryRect.h = dayDeadEntryTextSurface->h;
+		dayDeadEntryRect.w = dayDeadEntryTextSurface->w;
+		dayDeadEntryRect.x = dateDiedRect.x;
+		dayDeadEntryRect.y = locationNextEntry + 20;
+
+		textures.push_back(nameEntryTexture);
+		rectangles.push_back(nameEntryRect);
+		textures.push_back(daysSurvivedEntryTexture);
+		rectangles.push_back(daysSurvivedEntryRect);
+		textures.push_back(dayDeadEntryTexture);
+		rectangles.push_back(dayDeadEntryRect);
+		SDL_FreeSurface(nameEntryTextSurface);
+		SDL_FreeSurface(daysSurvivedEntryTextSurface);
+		SDL_FreeSurface(dayDeadEntryTextSurface);
+		locationNextEntry = locationNextEntry + 20;
+	}
+
+	textures.push_back(nameTexture);
+	textures.push_back(daysSurvivedTexture);
+	textures.push_back(dateDiedTexture);
+	rectangles.push_back(nameRect);
+	rectangles.push_back(daysSurvivedRect);
+	rectangles.push_back(dateDiedRect);
+
+	SDL_FreeSurface(nameTextSurface);
+	SDL_FreeSurface(daysSurvivedTextSurface);
+	SDL_FreeSurface(dayDiedTextSurface);
+	TTF_CloseFont(font);
 }
 
 void MenuGraveyardScreen::setBackground()
 {
-	//Bermuda text
-	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 60);
-	SDL_Color white = { 255, 255, 255 };
-	std::string graveyardMessage = "Graveyard";
-	SDL_Surface* graveyardMessageSurface = TTF_RenderText_Blended(staryDarzyLarge, graveyardMessage.c_str(), white);
-	graveyardTextTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), graveyardMessageSurface);
-
-	graveyardTextRect.x = ((int)ScreenWidth - graveyardMessageSurface->w) / 2;
-	graveyardTextRect.y = 50;
-	graveyardTextRect.h = graveyardMessageSurface->h;
-	graveyardTextRect.w = graveyardMessageSurface->w;
-
-	//clearing surfaces
-	SDL_FreeSurface(graveyardMessageSurface);
-	TTF_CloseFont(staryDarzyLarge);
-
-	backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
+	SDL_Texture* backgroundTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/campfire.jpg").c_str());
 	if (backgroundTexture == NULL)
 	{
 		std::cout << "Error loading startmenu background" << std::endl << "Error 2" << std::endl;
 		system("pause");
 	}
-
+	SDL_Rect backgroundRect;
 	backgroundRect.x = 0;
 	backgroundRect.y = 0;
 	backgroundRect.w = ScreenWidth;
 	backgroundRect.h = ScreenHeight;
 
+	//Bermuda text
+	TTF_Font* staryDarzyLarge = TTF_OpenFont((RESOURCEPATH + "fonts\\Starzy_Darzy.ttf").c_str(), 60);
+	SDL_Color white = { 255, 255, 255 };
+	std::string graveyardMessage = "Graveyard";
+	SDL_Surface* graveyardMessageSurface = TTF_RenderText_Blended(staryDarzyLarge, graveyardMessage.c_str(), white);
+	SDL_Texture* graveyardTextTexture = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), graveyardMessageSurface);
+
+	SDL_Rect graveyardTextRect;
+	graveyardTextRect.x = ((int)ScreenWidth - graveyardMessageSurface->w) / 2;
+	graveyardTextRect.y = 50;
+	graveyardTextRect.h = graveyardMessageSurface->h;
+	graveyardTextRect.w = graveyardMessageSurface->w;
+
+	startTable = graveyardTextRect.h + graveyardTextRect.y + 40;
+	textures.push_back(backgroundTexture);
+	rectangles.push_back(backgroundRect);
+	textures.push_back(graveyardTextTexture);
+	rectangles.push_back(graveyardTextRect);
+
+	//clearing surfaces
+	SDL_FreeSurface(graveyardMessageSurface);
+	TTF_CloseFont(staryDarzyLarge);
 }
 
 void MenuGraveyardScreen::resetButtons()
@@ -86,9 +202,10 @@ void MenuGraveyardScreen::handleEvents(SDL_Event mainEvent)
 
 void MenuGraveyardScreen::draw()
 {
-	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), backgroundTexture, NULL, &backgroundRect);
-	SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), graveyardTextTexture, NULL, &graveyardTextRect);
-
+	for (size_t i = 0; i < textures.size(); i++)
+	{
+		SDL_RenderCopy(GameStateManager::Instance()->sdlInitializer->getRenderer(), textures[i], NULL, &rectangles[i]);
+	}
 	for (BaseButton* var : buttons)
 	{
 		var->draw();
@@ -97,12 +214,16 @@ void MenuGraveyardScreen::draw()
 
 void MenuGraveyardScreen::cleanup()
 {
-	SDL_DestroyTexture(backgroundTexture);
+	for (SDL_Texture* var : textures)
+	{
+		SDL_DestroyTexture(var);
+	}
 	for (BaseButton* var : buttons)
 	{
 		delete var;
 	}
 	buttons.clear();
+	delete graveyard;
 }
 
 MenuGraveyardScreen::~MenuGraveyardScreen()

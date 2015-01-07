@@ -518,7 +518,7 @@
     </ClCompile>
     <ClCompile Include="ToolGoldenPickaxe.cpp">
       <Filter>Source Files\Model\Item</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Scorpion.cpp">
       <Filter>Source Files\Model\Entity\NPC%27s</Filter>
     </ClCompile>
@@ -541,6 +541,9 @@
       <Filter>Source Files\Model\Entity\State</Filter>
     </ClCompile>
     <ClCompile Include="MenuGraveyardScreen.cpp">
+      <Filter>Source Files\View\Screens\MenuScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="Graveyard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -947,6 +950,12 @@
     <ClInclude Include="FleeingState.h">
       <Filter>Header Files\Model\Entity\State</Filter>
     </ClInclude>
+    <ClInclude Include="MenuGraveyardScreen.h">
+      <Filter>Header Files\View\Screens\MenuScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="Graveyard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSaver.h">
@@ -963,9 +972,6 @@
     </ClInclude>
     <ClInclude Include="ItemMeat.h">
       <Filter>Header Files\Model\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuGraveyardScreen.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
