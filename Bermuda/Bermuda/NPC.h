@@ -1,8 +1,8 @@
 #pragma once
 #include "Entity.h"
 #include "Spawnpoint.h"
+
 class BaseBehaviour;
-class Player;
 
 class NPC :
 	public virtual Entity
