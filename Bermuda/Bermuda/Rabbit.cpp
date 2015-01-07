@@ -22,11 +22,6 @@ Rabbit::Rabbit(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	this->movingUp = false;
 	#pragma endregion
 
-	this->healthPoints = 20;
-	this->attackPoints = 0;
-	this->actionRange = 150;
-	this->attackRange = 0;
-
 	#pragma region Animation_stuff
 	this->firstImgID = firstImgID;
 	this->animationWalkUpRow = 1, this->animationWalkLeftRow = 3;

@@ -4,7 +4,7 @@ InteractableNPC::InteractableNPC(int id, int healthPoints, int attackPoints, int
 	NPC( id, actionRange, attackRange, spawnPoint ),
 	Entity( id, spawnPoint->getX(), spawnPoint->getY() ),
 	InteractableEntity(id, spawnPoint->getX(), spawnPoint->getY(), interactStartX, interactStartY, interactWitdh, interactHeight ),
-	AttackingNPC(attackTime)
+	AttackingNPC(attackPoints, attackRange, attackTime)
 {
 	this->interactTime = 0;
 	this->currentInteractTime = 0;
@@ -12,7 +12,7 @@ InteractableNPC::InteractableNPC(int id, int healthPoints, int attackPoints, int
 
 	this->healthPoints = healthPoints;
 	this->currentHealthPoints = healthPoints;
-	this->attackPoints = attackPoints;
+	this->actionRange = actionRange;
 }
 
 #pragma region Getters
@@ -21,9 +21,9 @@ int InteractableNPC::getHealthPoints()
 	return this->currentHealthPoints;
 }
 
-int InteractableNPC::getAttackPoints()
+int InteractableNPC::getActionRange()
 {
-	return this->attackPoints;
+	return this->actionRange;
 }
 #pragma endregion
 
@@ -43,34 +43,11 @@ void InteractableNPC::setHealthPoints(int healthPoints)
 		this->currentHealthPoints = healthPoints;
 	}
 }
-
-void InteractableNPC::setAttackPoints(int attackPoints)
-{
-	if (attackPoints < 0)
-	{
-		this->attackPoints = 0;
-	}
-	else
-	{
-		this->attackPoints = attackPoints;
-	}
-}
 #pragma endregion
 
 bool InteractableNPC::isNpcMaxHealth()
 {
-	if (this->currentHealthPoints < this->healthPoints)
-		return false;
-
-	return true;
-}
-
-void InteractableNPC::attack()
-{
-	if( this->checkAttackTimes())
-	{
-		PlayState::Instance()->getPlayer()->setHealth( ( PlayState::Instance()->getPlayer()->getHealth() - this->getAttackPoints() ) );
-	}
+	return (this->currentHealthPoints < this->healthPoints);
 }
 
 InteractableNPC::~InteractableNPC(void)

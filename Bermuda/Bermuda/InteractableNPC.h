@@ -11,19 +11,17 @@ class InteractableNPC :
 	public AttackingNPC
 {
 	protected:
-		int healthPoints, currentHealthPoints, attackPoints;
+		int healthPoints, currentHealthPoints;
+		int actionRange;
 
 	public:
 		InteractableNPC(int id, int healthPoints, int attackPoints, int actionRange, int attackRange, Spawnpoint *spawnPoint, int interactStartX, int interactStartY, int interactWitdh, int interactHeight, long attackTime);
 		virtual ~InteractableNPC(void);
 
 		int getHealthPoints();
-		int getAttackPoints();
-
 		void setHealthPoints(int healthPoints);
-		void setAttackPoints(int attackPoints);
+
+		int getActionRange();
 
 		bool isNpcMaxHealth();
-
-		virtual void attack();
 };

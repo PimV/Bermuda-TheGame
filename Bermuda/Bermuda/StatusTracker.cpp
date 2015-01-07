@@ -14,7 +14,7 @@ void StatusTracker::init()
 	achievements.push_back(new Achievement("Ice mined"));
 	achievements.push_back(new Achievement("Cacti chopped"));
 	achievements.push_back(new Achievement("Rocks mined"));
-	achievements.push_back(new Achievement("Trees logged"));
+	achievements.push_back(new Achievement("Trees chopped"));
 
 	achievements.push_back(new Achievement("Bats killed"));
 	achievements.push_back(new Achievement("Rabbits killed"));

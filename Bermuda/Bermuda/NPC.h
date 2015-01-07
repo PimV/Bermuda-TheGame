@@ -12,7 +12,6 @@ class NPC :
 
 	protected:
 		BaseBehaviour* behaviour;
-		int actionRange, attackRange;
 
 	public:
 		NPC(int id, int actionRange, int attackRange, Spawnpoint *spawnPoint);
@@ -20,9 +19,6 @@ class NPC :
 
 		Spawnpoint* getSpawnPoint();
 		BaseBehaviour* getBehaviour();
-
-		int getActionRange();
-		int getAttackRange();
 
 		void setSpawnPoint(Spawnpoint *spawnPoint);
 };
