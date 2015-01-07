@@ -26,4 +26,5 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 
 NPC::~NPC()
 {
+	delete this->behaviour;
 }
