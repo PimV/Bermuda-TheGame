@@ -47,7 +47,10 @@ void InteractableNPC::setHealthPoints(int healthPoints)
 
 bool InteractableNPC::isNpcMaxHealth()
 {
-	return (this->currentHealthPoints < this->healthPoints);
+	if(this->currentHealthPoints < this->healthPoints)
+		return false;
+
+	return true;
 }
 
 InteractableNPC::~InteractableNPC(void)
