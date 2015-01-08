@@ -175,6 +175,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->getCraftingSystem()->toggleCraftMenu();
 			break;
 		case SDLK_0:
+		case SDLK_KP_0:
 			p->getInventory()->setSelectedIndex(9);
 			break;
 		case SDLK_1:
