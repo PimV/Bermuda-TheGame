@@ -8,8 +8,6 @@ Consumable::Consumable()
 
 void Consumable::use(Player* player) {
 	if (player->getInventory()->hasItemById(this->getId())) {
-		std::cout << "Consuming item with id: " << this->getId() << std::endl;
-
 		player->setHunger(player->getHunger() + this->getHungerRefill());
 		player->setThirst(player->getThirst() + this->getThirstRefill());
 		player->setHealth(player->getHealth() + this->getHealthRefill());

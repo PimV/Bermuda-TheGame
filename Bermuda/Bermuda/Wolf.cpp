@@ -71,7 +71,7 @@ void Wolf::update(double dt)
 
 void Wolf::interact(Player* player)
 {
-	if (player->getInventory()->getSelectedItem()->hasItemType(ItemType::Weapon))
+	if (player->getInventory()->getWeaponSelected())
 	{
 		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);
