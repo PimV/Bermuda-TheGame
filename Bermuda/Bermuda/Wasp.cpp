@@ -69,7 +69,7 @@ void Wasp::update(double dt)
 
 void Wasp::interact(Player* player)
 {
-	if (player->getInventory()->getSelectedItem()->hasItemType(ItemType::Weapon))
+	if (player->getInventory()->getWeaponSelected())
 	{
 		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);

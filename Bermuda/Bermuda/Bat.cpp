@@ -67,7 +67,7 @@ void Bat::update(double dt)
 
 void Bat::interact(Player* player)
 {
-	if (player->getInventory()->getSelectedItem()->hasItemType(ItemType::Weapon))
+	if (player->getInventory()->getWeaponSelected())
 	{
 		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);

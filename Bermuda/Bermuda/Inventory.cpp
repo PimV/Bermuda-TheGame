@@ -91,6 +91,13 @@ Item* Inventory::getSelectedItem() {
 	}
 }
 
+bool Inventory::getWeaponSelected() {
+	if (this->getSelectedItem() != nullptr && this->getSelectedItem()->hasItemType(ItemType::Weapon)) {
+		return true;
+	}
+	return false;
+}
+
 bool Inventory::addItem(Item* item) {
 	if (hasItem(item)) {
 		//Tries to get an inventory slot with the existing item

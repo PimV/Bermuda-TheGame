@@ -7,7 +7,7 @@
 
 Wolf::Wolf(int id, Spawnpoint* spawnPoint, int firstImgID) :
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
-	InteractableNPC(id, 55, 3, 150, 30, spawnPoint, -12, -15, 68, 78, 500),
+	InteractableNPC(id, 55, 3, 150, 40, spawnPoint, -12, -15, 68, 78, 500),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 13, 20, 23, 24),
 	MovableEntity(id, spawnPoint->getX(), spawnPoint->getY())
@@ -71,7 +71,7 @@ void Wolf::update(double dt)
 
 void Wolf::interact(Player* player)
 {
-	if (player->getInventory()->getSelectedItem()->hasItemType(ItemType::Weapon))
+	if (player->getInventory()->getWeaponSelected())
 	{
 		player->setCorrectToolSelected(true);
 		InteractableEntity::interact(player);

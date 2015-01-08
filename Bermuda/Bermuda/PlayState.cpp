@@ -175,6 +175,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->getCraftingSystem()->toggleCraftMenu();
 			break;
 		case SDLK_0:
+		case SDLK_KP_0:
 			p->getInventory()->setSelectedIndex(9);
 			break;
 		case SDLK_1:
@@ -187,6 +188,17 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_8:
 		case SDLK_9:
 			p->getInventory()->setSelectedIndex(mainEvent.key.keysym.sym - 49);
+			break;
+		case SDLK_KP_1:
+		case SDLK_KP_2:
+		case SDLK_KP_3:
+		case SDLK_KP_4:
+		case SDLK_KP_5:
+		case SDLK_KP_6:
+		case SDLK_KP_7:
+		case SDLK_KP_8:
+		case SDLK_KP_9:
+			p->getInventory()->setSelectedIndex(mainEvent.key.keysym.sym - 1073741913);
 			break;
 		case SDLK_F1:
 			p->toggleGodMode();
