@@ -13,6 +13,6 @@ class DefensiveBehaviour :
 
 		void update(double dt);
 
-		virtual ~DefensiveBehaviour(void);
+		virtual ~DefensiveBehaviour();
 };
 

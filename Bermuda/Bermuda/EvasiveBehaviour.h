@@ -13,5 +13,5 @@ class EvasiveBehaviour :
 
 		void update(double dt);
 
-		virtual ~EvasiveBehaviour(void);
+		virtual ~EvasiveBehaviour();
 };

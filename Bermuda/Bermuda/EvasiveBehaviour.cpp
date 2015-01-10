@@ -29,7 +29,6 @@ void EvasiveBehaviour::update(double dt)
 	this->m_pStateMachine->update(dt);
 }
 
-EvasiveBehaviour::~EvasiveBehaviour(void)
+EvasiveBehaviour::~EvasiveBehaviour()
 {
-	delete m_pStateMachine;
 }

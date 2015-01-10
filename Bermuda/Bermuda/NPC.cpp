@@ -1,6 +1,7 @@
 #include "NPC.h"
 #include "Spawnpoint.h"
 #include "MovableEntity.h"
+#include "BaseBehaviour.h"
 
 NPC::NPC(int id, int actionRange, int attackRange, Spawnpoint *spawnPoint)  : 
 	Entity(id,spawnPoint->getX(),spawnPoint->getY())
@@ -26,4 +27,5 @@ void NPC::setSpawnPoint(Spawnpoint *spawnPoint)
 
 NPC::~NPC()
 {
+	delete this->behaviour;
 }

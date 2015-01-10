@@ -1,9 +1,10 @@
 #pragma once
-
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
 
+//Uncomment the following line to turn on Visual Leak Detector. (Needs to be installed!)
+//#include <vld.h>
 
 static const std::string BASEPATH = SDL_GetBasePath();
 static const std::string RESOURCEPATH = BASEPATH + "Resources\\";

@@ -43,8 +43,7 @@ void BaseBehaviour::setFsmToWanderState()
 	this->m_pStateMachine->changeState( WanderState::Instance() );
 }
 
-BaseBehaviour::~BaseBehaviour(void)
+BaseBehaviour::~BaseBehaviour()
 {
 	delete this->m_pStateMachine;
-	delete this->npc;
 }

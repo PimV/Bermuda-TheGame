@@ -39,7 +39,6 @@ void DefensiveBehaviour::update(double dt)
 	}
 }
 
-DefensiveBehaviour::~DefensiveBehaviour(void)
+DefensiveBehaviour::~DefensiveBehaviour()
 {
-
 }

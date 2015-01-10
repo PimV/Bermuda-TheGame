@@ -14,5 +14,5 @@ class AggressiveBehaviour :
 	
 		void update(double dt);
 
-		virtual ~AggressiveBehaviour(void);	
+		virtual ~AggressiveBehaviour();	
 };
