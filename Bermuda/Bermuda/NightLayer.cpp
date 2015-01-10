@@ -6,7 +6,7 @@
 NightLayer::NightLayer()
 {
 	this->alphaLevel = 0;
-	this->lightSourceImage = IMG_Load((RESOURCEPATH + "lightsource.png").c_str());
+	this->lightSourceImage = IMG_Load((RESOURCEPATH + "lightsource2.png").c_str());
 	this->blackSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, ScreenWidth, ScreenHeight, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 	this->nightLayer = SDL_CreateTextureFromSurface(GameStateManager::Instance()->sdlInitializer->getRenderer(), blackSurface);
 
