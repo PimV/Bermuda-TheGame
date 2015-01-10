@@ -140,6 +140,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="EntityChunkContainer.h" />
     <ClInclude Include="Equipable.h" />
     <ClInclude Include="FleeingState.h" />
+    <ClInclude Include="Graveyard.h" />
     <ClInclude Include="IceRock.h" />
     <ClInclude Include="IceSpikes.h" />
     <ClInclude Include="InteractableCactusBig.h" />
@@ -184,6 +185,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClInclude Include="ItemFish.h" />
     <ClInclude Include="ItemGold.h" />
     <ClInclude Include="ItemWater.h" />
+    <ClInclude Include="MenuGraveyardScreen.h" />
     <ClInclude Include="MenuHelpScreen.h" />
     <ClInclude Include="MenuLoadScreen.h" />
     <ClInclude Include="MenuMainScreen.h" />
@@ -284,6 +286,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="GoldRock.cpp" />
+    <ClCompile Include="Graveyard.cpp" />
     <ClCompile Include="Ice.cpp" />
     <ClCompile Include="IceRock.cpp" />
     <ClCompile Include="IceSpikes.cpp" />
@@ -306,6 +309,7 @@ xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources" /e /y /i /r</Command>
     <ClCompile Include="LightEntity.cpp" />
     <ClCompile Include="LoadButton.cpp" />
     <ClCompile Include="MenuCreditsScreen.cpp" />
+    <ClCompile Include="MenuGraveyardScreen.cpp" />
     <ClCompile Include="MenuHelpScreen.cpp" />
     <ClCompile Include="MenuLoadScreen.cpp" />
     <ClCompile Include="MenuMainScreen.cpp" />

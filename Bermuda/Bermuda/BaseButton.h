@@ -39,16 +39,17 @@ public:
 	void setHoverAction(bool falseOrTrue);
 
 	//buttonActions
+	void menuMainScreenAction();
+	void menuSetHelpScreenAction();
+	void menuSetGraveyardScreenAction();
 	void setCreditsScreenAction();
 	void setLoadScreenAction();
-	void exitAction();
-	void menuSetHelpScreenAction();
+	void backToMenuAction();
 	void playAction();
+	void exitAction();
 	void pauseSetAchievementScreenAction();
 	void backToPauseMainScreenAction();
-	void backToMenuAction();
 	void resumeGameAction();
-	void menuMainScreenAction();
 	void helpMovementScreenAction();
 	void helpCutTreeScreenAction();
 	void helpCutCactusScreenAction();

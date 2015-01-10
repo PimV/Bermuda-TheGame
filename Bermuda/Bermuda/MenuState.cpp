@@ -18,6 +18,7 @@ void MenuState::init(GameStateManager* gsm)
 	creditsScr = new MenuCreditsScreen;
 	helpScr = new MenuHelpScreen;
 	loadScr = new MenuLoadScreen;
+	graveyardScr = new MenuGraveyardScreen;
 	setCurWindow(getMenuMainScreen());
 
 	//soundloader
@@ -48,6 +49,11 @@ BaseScreen* MenuState::getMenuLoadScreen()
 BaseScreen* MenuState::getMenuHelpScreen()
 {
 	return helpScr;
+}
+
+BaseScreen* MenuState::getMenuGraveyardScreen()
+{
+	return graveyardScr;
 }
 
 void MenuState::handleEvents(SDL_Event mainEvent)
@@ -81,6 +87,7 @@ void MenuState::cleanup()
 	delete creditsScr;
 	delete helpScr;
 	delete loadScr;
+	delete graveyardScr;
 }
 
 MenuState::~MenuState()

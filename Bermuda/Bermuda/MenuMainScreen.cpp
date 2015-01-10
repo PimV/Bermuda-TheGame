@@ -26,16 +26,21 @@ void MenuMainScreen::init()
 	BaseButton* helpButton = new BaseButton();
 	helpButton->action = &BaseButton::menuSetHelpScreenAction;
 	helpButton->createButton("Help", 60, 0);
-
+	
 	BaseButton* loadButton = new BaseButton();
 	loadButton->action = &BaseButton::setLoadScreenAction;
 	loadButton->createButton("Load", 60, 0);
 	
+	BaseButton* graveyardButton = new BaseButton();
+	graveyardButton->action = &BaseButton::menuSetGraveyardScreenAction;
+	graveyardButton->createButton("Graveyard", 60, 0);
+
 	//place buttons
-	helpButton->placeLeftMid();
-	creditsButton->placeLeftUnderButton(helpButton);
-	exitButton->placeLeftUnderButton(creditsButton);
-	loadButton->placeLeftAboveButton(helpButton);
+	graveyardButton->placeLeftMid();
+	creditsButton->placeLeftUnderButton(graveyardButton);
+	helpButton->placeLeftUnderButton(creditsButton);
+	exitButton->placeLeftUnderButton(helpButton);
+	loadButton->placeLeftAboveButton(graveyardButton);
 	playButton->placeLeftAboveButton(loadButton);
 	
 	//place in button vector
@@ -43,6 +48,7 @@ void MenuMainScreen::init()
 	buttons.push_back(exitButton);
 	buttons.push_back(creditsButton);
 	buttons.push_back(helpButton);
+	buttons.push_back(graveyardButton);
 	buttons.push_back(loadButton);
 }
 

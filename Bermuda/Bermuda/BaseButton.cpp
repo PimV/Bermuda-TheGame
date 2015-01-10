@@ -313,3 +313,8 @@ void BaseButton::helpFightingScreenAction()
 {
 	helpScr->setCurWindow(helpScr->getFightingScr());
 }
+
+void BaseButton::menuSetGraveyardScreenAction()
+{
+	MenuState::Instance()->setCurWindow(MenuState::Instance()->getMenuGraveyardScreen());
+}

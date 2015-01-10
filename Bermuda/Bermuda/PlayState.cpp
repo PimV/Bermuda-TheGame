@@ -332,6 +332,19 @@ void PlayState::update(double dt) {
 		remove((SAVEPATH + this->gameSaver->getCurrentSaveFile()).c_str());
 
 		//Save stuff for graveyard
+		Graveyard graveyard;
+		GraveyardEntry* entry = new GraveyardEntry;
+		entry->daysSurvived = GameTimer::Instance()->getDaysSurvived();	//get days player survived
+
+		time_t time_create = time(NULL);
+		struct tm time_info;
+		localtime_s(&time_info, &time_create);
+
+		entry->dayDied = time_info.tm_mday;
+		entry->monthDied = (time_info.tm_mon + 1);
+		entry->yearDied = (time_info.tm_year + 1900);
+
+		graveyard.addToGraveyard(entry);
 
 		//Switch to game over state
 		GameStateManager::Instance()->changeGameState(GameOverState::Instance());
