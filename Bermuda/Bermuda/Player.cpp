@@ -56,7 +56,7 @@ Player::Player(int id, double moveSpeed, double x, double y, Camera* camera) :
 	this->thirstUpdateTime = 5000;
 	this->healthUpdateTime = 1500;
 	this->darknessUpdateTime = 3500; 
-	this->quickDeathUpdateTime = 50; // increase to die faster when not in the light
+	this->quickDeathUpdateTime = 50; // increase to die slower when not in the light
 	this->health = 100; 
 	this->hunger = 100; 
 	this->thirst = 100;
@@ -207,29 +207,53 @@ void Player::updatePlayerStatuses(double dt)
 
 	// check if hunger needs to be updated
 	if (this->hungerUpdate + this->hungerUpdateTime < currentTime) {
-		this->setHunger(this->getHunger() - 1);
+		int times = (currentTime - hungerUpdate) / this->hungerUpdateTime;
+		for (int i = 0; i < times; i++)
+		{
+			if (this->getHunger() >= 1) {
+				this->hunger -= 1;
+			}
+			this->hungerUpdate += this->hungerUpdateTime;
+		}
 	}
 
 	// check if thirst needs to be updated
 	if (this->thirstUpdate + this->thirstUpdateTime < currentTime) {
-		this->setThirst(this->getThirst() - 1);
+		int times = (currentTime - thirstUpdate) / this->thirstUpdateTime;
+		for (int i = 0; i < times; i++)
+		{
+			if (this->getThirst() >= 1) {
+				this->thirst -= 1;
+			}
+			this->thirstUpdate += this->thirstUpdateTime;
+		}
 	}
 
 	//this->healthUpdate += GameStateManager::Instance()->getUpdateLength() * dt;
 	if (this->healthUpdate + this->healthUpdateTime < currentTime) {
+		int healthIncrement = 0;
 		if (this->getThirst() > 80 && this->getHunger() > 80) {
-			this->setHealth(this->getHealth() + 2);
+			healthIncrement = 2;
 		}
 		else if (this->getThirst() > 40 && this->getHunger() > 40) {
-			this->setHealth(this->getHealth() + 1);
+			healthIncrement = 1;
 		}
 		else if (this->getThirst() <= 0 && this->getHunger() <= 0)
 		{
-			this->setHealth(this->getHealth() - 4);
+			healthIncrement = -4;
 		}
 		else if (this->getThirst() <= 0 || this->getHunger() <= 0)
 		{
-			this->setHealth(this->getHealth() - 2);
+			healthIncrement = -2;
+		}
+
+		int times = (currentTime - healthUpdate) / this->healthUpdateTime;
+		for (int i = 0; i < times; i++)
+		{
+			if (this->getHealth() + healthIncrement <= 100 && this->getHealth() + healthIncrement >= 0) {
+				this->health += healthIncrement;
+			}
+			this->healthUpdate += this->healthUpdateTime;
 		}
 	}
 
@@ -239,9 +263,19 @@ void Player::updatePlayerStatuses(double dt)
 		{
 			if (this->quickDeathUpdate + this->quickDeathUpdateTime < currentTime)
 			{
-				this->setHealth(this->getHealth() - 1);
-				this->quickDeathUpdate = currentTime;
-}
+				int times = (currentTime - quickDeathUpdate) / this->quickDeathUpdateTime;
+				for (int i = 0; i < times; i++)
+				{
+					if (this->getHealth() >= 1) {
+						this->health -= 1;
+					}
+					this->quickDeathUpdate += this->quickDeathUpdateTime;
+				}
+			}
+		}
+		else
+		{
+			quickDeathUpdate = currentTime;
 		}
 	}
 	else
