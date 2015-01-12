@@ -155,10 +155,10 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->movingUp = false;
 			p->movingDown = true;
 			break;
-		case SDLK_LSHIFT:
+		/*case SDLK_LSHIFT:
 			//Sprint
 			p->sprinting = true;
-			break;
+			break;*/
 		case SDLK_e:
 			p->getInventory()->interactCurrent(p);
 			break;
@@ -200,7 +200,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 		case SDLK_KP_9:
 			p->getInventory()->setSelectedIndex(mainEvent.key.keysym.sym - 1073741913);
 			break;
-		case SDLK_F1:
+		/*case SDLK_F1:
 			p->toggleGodMode();
 			break;
 		case SDLK_F2:
@@ -211,15 +211,12 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			break;
 		case SDLK_F4:
 			this->showSpawnArea = !this->showSpawnArea;
-			break;
+			break;*/
 		case SDLK_F9:
 			GameStateManager::Instance()->toggleHelpEnabled();
 			break;
-		case SDLK_F7:
+		/*case SDLK_F7:
 			this->showDayLight = !this->showDayLight;
-			break;
-		case SDLK_F8:
-			p->getCraftingSystem()->craftItem(Items::Campfire);
 			break;
 		case SDLK_F11:
 			//Enable collision
@@ -234,7 +231,7 @@ void PlayState::handleEvents(SDL_Event mainEvent) {
 			p->setCollisionWidth(0);
 			p->setCollisionX(-10000);
 			p->setCollisionY(-10000);
-			break;
+			break;*/
 		case SDLK_SPACE:
 			p->interaction = true;
 			//p->interact();
