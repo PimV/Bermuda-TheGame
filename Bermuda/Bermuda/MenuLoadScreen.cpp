@@ -65,7 +65,7 @@ void MenuLoadScreen::init()
 void MenuLoadScreen::setCurrentFileToLoad(std::string fileName)
 {
 	this->currentFileToLoad = fileName;
-	this->loadButton->setNewButtonText("Load: " + fileName, 40, 0);
+	this->loadButton->setNewButtonText("Load: " + fileName.substr(0, fileName.find_last_of('.')), 40, 0);
 	this->loadButton->placeExactAt((ScreenWidth / 2) - (this->loadButton->getWidth() / 2), this->loadButton->getY());
 }
 
