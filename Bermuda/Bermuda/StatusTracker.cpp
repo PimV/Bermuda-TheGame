@@ -9,7 +9,7 @@ void StatusTracker::init()
 {
 	achievements.push_back(new Achievement("Apples picked"));
 	achievements.push_back(new Achievement("Carrots picked"));
-	achievements.push_back(new Achievement("Fishes caught"));
+	achievements.push_back(new Achievement("Fish caught"));
 	achievements.push_back(new Achievement("Gold mined"));
 	achievements.push_back(new Achievement("Ice mined"));
 	achievements.push_back(new Achievement("Cacti chopped"));
@@ -20,7 +20,7 @@ void StatusTracker::init()
 	achievements.push_back(new Achievement("Rabbits killed"));
 	achievements.push_back(new Achievement("Scorpions killed"));
 	achievements.push_back(new Achievement("Wasps killed"));
-	achievements.push_back(new Achievement("Wolfs killed"));
+	achievements.push_back(new Achievement("Wolves killed"));
 }
 
 std::vector<Achievement*> StatusTracker::getAllAchievements()
