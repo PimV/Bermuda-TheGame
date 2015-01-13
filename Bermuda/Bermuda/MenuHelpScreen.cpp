@@ -28,55 +28,55 @@ void MenuHelpScreen::init()
 
 	movementScreen = new BaseHelpScreen(firstRect.w);
 	movementScreen->setPicture("HelpScreens/movement.bmp");
-	movementScreen->setText("Use the arrow keys to walk around or click anywhere on the screen to move the clicked point.");
+	movementScreen->setText("Use the arrow keys to walk around or click anywhere on the screen to move to that area.");
 
 	cutTreeScreen = new BaseHelpScreen(firstRect.w);
 	cutTreeScreen->setPicture("HelpScreens/cutTree.bmp");
-	cutTreeScreen->setText("Stand close to a tree, select the axe in your inventory and hold spacebar to cut down the tree and obtain wood. Wood can be used for various purposes in the game.");
+	cutTreeScreen->setText("Stand near a tree, select the axe in your inventory and hold down space bar to cut down the tree to obtain wood. Wood can be used to craft various items.");
 
 	cutCactusScreen = new BaseHelpScreen(firstRect.w);
 	cutCactusScreen->setPicture("HelpScreens/cutCactus.bmp");
-	cutCactusScreen->setText("Stand close to a cactus, select the axe in your inventory and hold spacebar to obtain some water. You can drink water to refill your liquid meter.");
+	cutCactusScreen->setText("Stand near a cactus, select the axe in your inventory and hold down space bar to obtain some water. You can drink water to quench your thirst.");
 
 	fishScreen = new BaseHelpScreen(firstRect.w);
 	fishScreen->setPicture("HelpScreens/fish.bmp");
-	fishScreen->setText("Stand close to a spot with fishes, select your spear in your inventory and hold spacebar to fish. Fish can be used to refill your food bar.");
+	fishScreen->setText("Stand near a school of fish, select your spear in your inventory and hold down space bar to catch the fish. Fish can be consumed to satisfy your hunger.");
 
 	pickAppleScreen = new BaseHelpScreen(firstRect.w);
 	pickAppleScreen->setPicture("HelpScreens/pickAppel.bmp");
-	pickAppleScreen->setText("Stand close to a tree, and hold spacebar to pick some apples. Apples can be consumed to refill your food and liquid bar.");
+	pickAppleScreen->setText("Stand near a tree with apples, and hold down space bar to obtain the apples. Apples can be consumed to quench your thirst and satisfy your hunger.");
 
 	pickCarrotScreen = new BaseHelpScreen(firstRect.w);
 	pickCarrotScreen->setPicture("HelpScreens/pickCarrot.bmp");
-	pickCarrotScreen->setText("Stand near a carrot, press spacebar to pick a carrot. Carrots can be consumed to refill your food bar. But look out, carrots do not respawn like other objects.");
+	pickCarrotScreen->setText("Stand near a carrot, and hold down space bar to pull the carrot out of the ground. Carrots can be consumed to satisfy your hunger. But look out, carrots will not grow back.");
 
 	mineGoldScreen = new BaseHelpScreen(firstRect.w);
 	mineGoldScreen->setPicture("HelpScreens/mineGold.bmp");
-	mineGoldScreen->setText("Stand near a gold rock, select the pickaxe in your inventory and hold spacebar to mine the gold rock. Gold can be used to make golden tools that last longer than stone tools.");
+	mineGoldScreen->setText("Stand near a gold rock, select the pickaxe in your inventory and hold down space bar to mine the gold rock. Gold can be used to craft golden tools that are more durable than stone tools.");
 
 	mineIceScreen = new BaseHelpScreen(firstRect.w);
 	mineIceScreen->setPicture("HelpScreens/mineIce.bmp");
-	mineIceScreen->setText("Stand close to some ice, select the pickaxe in your inventory and hold spacebar to obtain some water. You can drink water to refill your liquid meter.");
+	mineIceScreen->setText("Stand near some ice, select the pickaxe in your inventory and hold down space bar to obtain some water. You can drink water to quench your thirst.");
 
 	mineRockScreen = new BaseHelpScreen(firstRect.w);
 	mineRockScreen->setPicture("HelpScreens/mineRock.bmp");
-	mineRockScreen->setText("Stand close to a rock, select the pickaxe in your inventory and hold spacebar to mine the rock. Rocks can be used for various purposes in the game.");
+	mineRockScreen->setText("Stand near a rock, select the pickaxe in your inventory and hold down space bar to mine the rock. Rocks can be used to craft various items.");
 
 	foodAndWaterScreen = new BaseHelpScreen(firstRect.w);
 	foodAndWaterScreen->setPicture("HelpScreens/hungerThirst.bmp");
-	foodAndWaterScreen->setText("The blue bar is your water bar, the brown bar is your food bar. If one or both bars are depleted your health (red bar) will slowly decrease. If your health bar depletes you will die.");
+	foodAndWaterScreen->setText("The blue bar is your water bar and the brown bar is your food bar. The red bar is your health bar which will slowly decrease when one of the other bars is empty. You will die when your healthbar is empty.");
 
 	timeScreen = new BaseHelpScreen(firstRect.w);
 	timeScreen->setPicture("HelpScreens/time.bmp");
-	timeScreen->setText("The time indicator shows how late it is. When standing in complete darkness your health will slowly decrease.");
+	timeScreen->setText("The time indicator shows when the sun rises and sets. Your health will quickly decrease when you are standing in complete darkness. Use a campfire to prevent this from happening.");
 
 	craftingScreen = new BaseHelpScreen(firstRect.w);
 	craftingScreen->setPicture("HelpScreens/crafting.png");
-	craftingScreen->setText("Press 'T' or the icon on the bottom right to open the crafting screen. Click on an item and press 'craft' to craft the item. If you don't have enough resources, the button will be grey and the missing resources are displayed with a red color.");
+	craftingScreen->setText("Press 'T' or the icon on the bottom right to open the crafting screen. Click on an item and press 'craft' to craft the item. If you don't have enough resources, the button will be grey and the missing resources are shown in red.");
 
 	fightingScreen = new BaseHelpScreen(firstRect.w);
 	fightingScreen->setPicture("HelpScreens/fighting.png");
-	fightingScreen->setText("Select the spear in your inventory and stand close to an animal. Hold spacebar to attack. Most animals will give you food. But be carefull. Certain animals can fight back.");
+	fightingScreen->setText("Select the spear in your inventory and stand near an animal. Hold down space bar to attack. Most animals will give you food. But be carefull: certain animals can fight back.");
 
 	BaseButton* movementButton = new BaseButton;
 	movementButton->createButton("Movement", 24, 0);
@@ -84,12 +84,12 @@ void MenuHelpScreen::init()
 	movementButton->setHoverAction(true);
 
 	BaseButton* cutTreeButton = new BaseButton;
-	cutTreeButton->createButton("Cut down trees", 24, 0);
+	cutTreeButton->createButton("Woodcutting", 24, 0);
 	cutTreeButton->action = &BaseButton::helpCutTreeScreenAction;
 	cutTreeButton->setHoverAction(true);
 
 	BaseButton* cutCactusButton = new BaseButton;
-	cutCactusButton->createButton("Harvest cactuses", 24, 0);
+	cutCactusButton->createButton("Harvesting cacti", 24, 0);
 	cutCactusButton->action = &BaseButton::helpCutCactusScreenAction;
 	cutCactusButton->setHoverAction(true);
 
@@ -104,22 +104,22 @@ void MenuHelpScreen::init()
 	pickAppleButton->setHoverAction(true);
 
 	BaseButton* pickCarrotButton = new BaseButton;
-	pickCarrotButton->createButton("Picking carrot", 24, 0);
+	pickCarrotButton->createButton("Picking carrots", 24, 0);
 	pickCarrotButton->action = &BaseButton::helpPickCarrotScreenAction;
 	pickCarrotButton->setHoverAction(true);
 
 	BaseButton* mineGoldButton = new BaseButton;
-	mineGoldButton->createButton("Mine gold", 24, 0);
+	mineGoldButton->createButton("Mining gold", 24, 0);
 	mineGoldButton->action = &BaseButton::helpMineGoldScreenAction;
 	mineGoldButton->setHoverAction(true);
 
 	BaseButton* mineIceButton = new BaseButton;
-	mineIceButton->createButton("Mine ice", 24, 0);
+	mineIceButton->createButton("Mining ice", 24, 0);
 	mineIceButton->action = &BaseButton::helpMineIceScreenAction;
 	mineIceButton->setHoverAction(true);
 
 	BaseButton* mineRockButton = new BaseButton;
-	mineRockButton->createButton("Mine Rock", 24, 0);
+	mineRockButton->createButton("Mining rock", 24, 0);
 	mineRockButton->action = &BaseButton::helpMineRockScreenAction;
 	mineRockButton->setHoverAction(true);
 
@@ -139,7 +139,7 @@ void MenuHelpScreen::init()
 	craftingButton->setHoverAction(true);
 
 	BaseButton* fightingButton = new BaseButton;
-	fightingButton->createButton("Fighting", 24, 0);
+	fightingButton->createButton("Combat", 24, 0);
 	fightingButton->action = &BaseButton::helpFightingScreenAction;
 	fightingButton->setHoverAction(true);
 
