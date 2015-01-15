@@ -13,12 +13,17 @@ void SDLInitializer::init(const char* title, int width, int height, int bpp, boo
 		width,
 		height,
 		fullscreen
-		);
+	);
+
+	// Set icon
+	SDL_Surface *surfice = IMG_Load( (RESOURCEPATH + "WindowIco.png").c_str() );
+	SDL_SetWindowIcon(window, surfice);
+	SDL_FreeSurface(surfice);
+
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	
 	//Initialize SDL2_ttf
 	TTF_Init();
-
 
 	//TODO: Willen we dit wel gebruiken? Beetje buggy. Veel last van screen tearing en seems.
 	//SDL_RenderSetLogicalSize(renderer, 1600, 900);
