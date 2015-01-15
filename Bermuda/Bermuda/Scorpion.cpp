@@ -6,7 +6,7 @@
 #include "AggressiveBehaviour.h"
 
 Scorpion::Scorpion(int id, Spawnpoint* spawnPoint, int firstImgID) :
-	InteractableNPC(id, 50, 2, 150, 35, spawnPoint, -18, -15, 68, 78, 500),
+	InteractableNPC(id, 50, 2, 150, 45, spawnPoint, -18, -15, 68, 78, 500),
 	Entity(id, spawnPoint->getX(), spawnPoint->getY()),
 	DrawableEntity(id, spawnPoint->getX(), spawnPoint->getY(), nullptr),
 	CollidableEntity(id, spawnPoint->getX(), spawnPoint->getY(), 2, 8, 28, 21),

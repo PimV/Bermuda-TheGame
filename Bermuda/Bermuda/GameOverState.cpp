@@ -74,6 +74,7 @@ void GameOverState::handleEvents(SDL_Event mainEvent){
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym){
 		case SDLK_RETURN:
+		case SDLK_KP_ENTER:
 			this->gsm->changeGameState(MenuState::Instance());
 			break;
 		}
