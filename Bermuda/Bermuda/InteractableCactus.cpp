@@ -54,7 +54,6 @@ void InteractableCactus::interact(Player* player)
 			this->setDestroyedState();
 			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Water));
 			this->degradeTool(player);
-			//TODO: add to statustracker
 			player->getStatusTracker()->addAchievementCount(AchievementsEnum::CACTUSSESEXTRACTED);
 		}
 	} else {

@@ -18,4 +18,4 @@ static int ScreenHeight = 720;
 //static double ScreenWidth = 1920;
 //static double ScreenHeight = 1080;
 
-static bool fullScreen = false;
+static bool fullScreen = true;

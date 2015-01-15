@@ -35,7 +35,6 @@ bool Fish::canInteract(Player* player) {
 
 void Fish::interact(Player* player) 
 {
-	//TODO: check if player has fishingrod or fishing harpoon
 	if (player->getInventory()->spearSelected()) {
 		InteractableEntity::interact(player);
 		player->setCorrectToolSelected(true);

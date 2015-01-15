@@ -56,17 +56,16 @@ void Inventory::init() {
 	craftingIconRect.h = 40;
 	craftingIconRect.w = 40;
 
+	//Start with 4 wood, 4 stone and flint
+	Item* item = ItemFactory::Instance()->createItem(Items::Wood);
+	item->setStackSize(4);
+	this->addItem(item);
 
+	item = ItemFactory::Instance()->createItem(Items::Rock);
+	item->setStackSize(4);
+	this->addItem(item);
 
-	//TODO: Remove in final version.
-	this->addItem(ItemFactory::Instance()->createItem(Items::Axe));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Pickaxe));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Spear));
 	this->addItem(ItemFactory::Instance()->createItem(Items::Flint));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Campfire));
-	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenAxe));
-	this->addItem(ItemFactory::Instance()->createItem(Items::GoldenPickaxe));
-	this->addItem(ItemFactory::Instance()->createItem(Items::Meat));
 }
 
 void Inventory::incrementSelectedIndex() {

@@ -58,7 +58,6 @@ void GoldRock::interact(Player* player)
 			}
 
 				this->degradeTool(player);
-			//TODO: add to statustracker
 			player->getStatusTracker()->addAchievementCount(AchievementsEnum::GOLDMINED);
 		}
 	} else {
