@@ -21,7 +21,7 @@ void Crafting::init(Inventory* inv)
 	this->createRecipes();
 
 	selectedCraftItemIndex = 0;
-	itemsPerRow = 2;
+	itemsPerRow = 15;
 
 	slotWidth = ScreenWidth / 32;
 	slotHeight = ScreenHeight / 18;
