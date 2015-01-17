@@ -12,7 +12,7 @@ class GameStateManager
 {
 public:
 	bool showFps;
-	GameStateManager(void);
+	GameStateManager();
 
 	void init(const char* title, int width, int height, int bpp, bool fullscreen);
 	void cleanup();
@@ -23,23 +23,23 @@ public:
 	void changeGameState(IGameState* gameState);
 	void pushGameState(IGameState* gameState);
 	void popState();
-
-	void updateGameTime(long time);
-
+	
 	void update(double delta);
 	void handleEvents();
+	void flushEvents();
 	void draw();
 
-	void setUpdateLength(long updateLength);
-	long getUpdateLength();
+	void setUpdateLength(float updateLength);
+	float getUpdateLength();
 
 	ActionContainer* getActionContainer();
 
+	void quitGame();
 	bool running();
+	bool helpEnabled();
+	void toggleHelpEnabled();
 	void quit();
 	SDLInitializer* sdlInitializer;
-	ImageLoader* getImageLoader();
-	SoundLoader* getSoundLoader();
 
 	double getSpeedMultiplier();
 	void setSpeedMultiplier(double multiplier);
@@ -49,16 +49,15 @@ public:
 		return &m_Gsm;
 	};
 
-	~GameStateManager(void);
+	virtual ~GameStateManager();
 
 private: 
-	long updateLength;
+	float updateLength;
 	double speedMultiplier;
 	int fps;
+	bool showHelp;
 	std::vector<IGameState*> states;
 	IGameState* currentState;
-	ImageLoader* imgLoader;
-	SoundLoader* soundLoader;
 	bool m_running;
 
 	static GameStateManager m_Gsm;

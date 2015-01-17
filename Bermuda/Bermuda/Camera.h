@@ -9,7 +9,6 @@ private:
 	double mapWidth;
 	double mapHeight;
 public:
-	//TODO: camera movement methodes. (Moet in dezelfde richting en met dezelfde snelheid als de speler bewegen)
 	Camera(double x, double y, double width, double height, double mapWidth, double mapHeight);
 	double getX();
 	double getY();

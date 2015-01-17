@@ -24,12 +24,6 @@ void ItemWater::init() {
 	this->setHealthRefill(0);
 }
 
-void ItemWater::consume(Player* player) {
-	Consumable::consume(player);
-}
-
-
-
 ItemWater::~ItemWater()
 {
 }

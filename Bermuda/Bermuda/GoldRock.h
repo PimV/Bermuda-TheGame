@@ -1,7 +1,6 @@
 #pragma once
 #include "drawableentity.h"
 #include "CollidableEntity.h"
-#include "MainEntityContainer.h"
 #include "InteractableEntity.h"
 
 class GoldRock :
@@ -11,10 +10,10 @@ private:
 	Image* rockImage;
 	Image* rockPiecesImage;
 public:
-	GoldRock(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* rockImage, Image* rockPieces);
-	void setCollidableValues();
+	GoldRock(int id, double x, double y, Image* rockImage, Image* rockPieces);
 	void update(double dt);
 	void interact(Player* player);
+	bool canInteract(Player* player);
 	virtual void setDestroyedState();
 	virtual ~GoldRock();
 };

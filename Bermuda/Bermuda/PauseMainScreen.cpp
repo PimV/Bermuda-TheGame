@@ -1,23 +1,31 @@
 #include "PauseMainScreen.h"
-#include "PauzeMenuButton.h"
-#include "PauzeResumeButton.h"
-#include "PauzeExitButton.h"
-#include "PauzeAchievementsButton.h"
+#include "PauseState.h"
+#include "MenuState.h"
 #include <iostream>
-
 
 PauseMainScreen::PauseMainScreen()
 {
-	init();
+	this->init();
 }
 
 void PauseMainScreen::init()
 {
 	//Buttons
-	PauzeResumeButton* resumeButton = new PauzeResumeButton();
-	PauzeMenuButton* menuButton = new PauzeMenuButton();
-	PauzeExitButton* exitButton = new PauzeExitButton();
-	PauzeAchievementsButton* achievementsButton = new PauzeAchievementsButton();
+	BaseButton* resumeButton = new BaseButton();
+	resumeButton->action = &BaseButton::resumeGameAction;
+	resumeButton->createButton("Resume", 24, 1);
+
+	BaseButton* menuButton = new BaseButton();
+	menuButton->action = &BaseButton::backToMenuAction;
+	menuButton->createButton("Save and back to menu", 24, 1);
+
+	BaseButton* exitButton = new BaseButton();
+	exitButton->action = &BaseButton::exitAction;
+	exitButton->createButton("Save and exit", 24, 1);
+
+	BaseButton* achievementsButton = new BaseButton();
+	achievementsButton->action = &BaseButton::pauseSetAchievementScreenAction;
+	achievementsButton->createButton("Achievements", 24, 1);
 
 	//place buttons
 	menuButton->placeMid();
@@ -38,7 +46,7 @@ void PauseMainScreen::init()
 void PauseMainScreen::setBackground()
 {
 	backgroundRect.x = ScreenWidth;
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		if (var->getX() <= backgroundRect.x)
 		{
@@ -49,7 +57,7 @@ void PauseMainScreen::setBackground()
 	backgroundRect.x = backgroundRect.x - 30;
 
 	backgroundRect.y = ScreenHeight;
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		if (var->getY() <= backgroundRect.y)
 		{
@@ -62,7 +70,7 @@ void PauseMainScreen::setBackground()
 	backgroundRect.w = 0;
 	backgroundRect.h = 0;
 
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		if (var->getWidth() >= backgroundRect.w)
 		{
@@ -72,7 +80,7 @@ void PauseMainScreen::setBackground()
 	//Make background wider
 	backgroundRect.w += 60;
 
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		backgroundRect.h += var->getHeight() * 2;
 	}
@@ -82,7 +90,7 @@ void PauseMainScreen::setBackground()
 
 void PauseMainScreen::resetButtons()
 {
-	for each (BaseButton* var in buttons)
+	for(BaseButton* var : buttons)
 	{
 		var->reset();
 	}
@@ -139,14 +147,17 @@ void PauseMainScreen::draw()
 void PauseMainScreen::cleanup()
 {
 	SDL_DestroyTexture(backgroundTexture);
+	this->backgroundTexture = nullptr;
+
 	for (size_t i = 0; i < buttons.size(); i++)
 	{
 		delete buttons[i];
+		buttons[i] = nullptr;
 	}
-	buttons.clear();
+	std::vector<BaseButton*>().swap(buttons); //Clear and shrink vector
 }
 
 PauseMainScreen::~PauseMainScreen()
 {
-	cleanup();
+	this->cleanup();
 }

@@ -13,6 +13,7 @@ public:
 
 	void initChunks(int chunksY, int chunksX);
 	void remove(CollidableEntity* entity);
+	void cleanup();
 
 	virtual ~CollidableContainer();
 private:

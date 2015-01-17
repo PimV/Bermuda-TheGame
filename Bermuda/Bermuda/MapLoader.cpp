@@ -1,18 +1,25 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "Tree.h"
+#include "TreePine.h"
+#include "TreeRound.h"
 #include "AppleTree.h"
 #include "Rock.h"
 #include "RockSpikes.h"
 #include "GoldRock.h"
 #include "Ice.h"
+#include "IceSpikes.h"
+#include "IceRock.h"
 #include "Carrot.h"
 #include "Fish.h"
 #include "Pillar.h"
 #include "RuinStatue.h"
 #include "EasterHead.h"
 #include "Cactus.h"
+#include "SnowTree.h"
 #include "InteractableCactus.h"
+#include "InteractableCactusBig.h"
+#include "InteractableCactusSmall.h"
 #include "CollidableTile.h"
 #include "SpawnPoint.h"
 #include "LoadingState.h"
@@ -25,9 +32,9 @@
 #include <Windows.h>
 #include <math.h>
 
-MapLoader::MapLoader(GameStateManager* gsm, MainEntityContainer* mec)
-	: gsm(gsm), mec(mec), imgLoader(gsm->getImageLoader()), chunkSize(300)
+MapLoader::MapLoader()
 {
+	this->imgLoader = PlayState::Instance()->getImageLoader();
 }
 
 void MapLoader::setPercentage(int percentage)
@@ -104,7 +111,7 @@ void MapLoader::loadMap()
 	d.Parse(json.c_str());
 
 	extractMapInfo(d);
-
+	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::extractMapInfo(Document& d)
@@ -120,12 +127,12 @@ void MapLoader::extractMapInfo(Document& d)
 	mapHeight = mapTileHeight * tileHeight;
 	mapWidth = mapTileWidth * tileWidth;
 
-	//Set the containers
-	mec->initContainerSizes(floor(mapHeight/chunkSize) +1, floor(mapWidth/chunkSize) +1);
+	//Initialize the containers
+	PlayState::Instance()->getMainEntityContainer()->initContainerSizes(mapHeight, mapWidth);
 	Value& tilesets = d["tilesets"];
 	createTileSets(tilesets);
 
-	for(int i = 0; i < d["layers"].Capacity(); i++)
+	for(size_t i = 0; i < d["layers"].Size(); i++)
 	{
 		Value& layer = d["layers"][i];
 		string layerName = layer["name"].GetString();
@@ -144,19 +151,18 @@ void MapLoader::extractMapInfo(Document& d)
 		}
 		loadStatus = "Map loading finished.";
 	}
-	LoadingState::Instance()->cleanup();
 }
 
 void MapLoader::createTileSets(Value& tilesets)
 {
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
-	double totalTilesets = tilesets.Capacity();
+	double totalTilesets = tilesets.Size();
 	double processedTilesets = 0;
 	int tempPercentage = loadPercentage;
 	loadStatus = "Loading tilesets.";
 
-	for(int i = 0; i < tilesets.Capacity(); i++)
+	for(size_t i = 0; i < tilesets.Size(); i++)
 	{
 		Value& tileset = tilesets[i];
 		string imgName = tileset["image"].GetString();
@@ -210,12 +216,12 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 			if(find(collisionVector.begin(), collisionVector.end(), tileID) != collisionVector.end())
 			{
 				//Tile is in collision vector. Create collisionTile.
-				CollidableTile* tile = new CollidableTile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(firstImgID + tileID));
+				CollidableTile* tile = new CollidableTile(tileID, x*tileWidth, y*tileHeight, imgLoader->getMapImage(firstImgID + tileID));
 			}
 			else
 			{
 				//Tile is not in collision vector. Creating normal tile.
-				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, chunkSize, mec, imgLoader->getMapImage(firstImgID + tileID));				
+				Tile* tile = new Tile(tileID, x*tileWidth, y*tileHeight, imgLoader->getMapImage(firstImgID + tileID));				
 			}
 			processedTiles++;
 			tempPercentage = startLoadPercentage + ((processedTiles / totalTiles) * loadWeight);
@@ -228,24 +234,16 @@ void MapLoader::createTiles(Value& tiles, int mapTileHeight, int mapTileWidth, i
 
 void MapLoader::createObjects(Value& objects)
 {
-	//Possibly use something like this to create objects from strings
-	/*map_type map;
-	map["DerivedA"] = &createInstance<DerivedA>;
-	map["DerivedB"] = &createInstance<DerivedB>;
-	//And then you can do
-	return map[some_string]();*/
-	//Parameters could be a problem with this though. 
-	//TODO: Create object factory?
-
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 20;
-	double totalObjects = objects.Capacity();
+	double totalObjects = objects.Size();
 	double processedObjects = 0;
 	int tempPercentage = loadPercentage;
 	loadStatus = "Creating objects.";
 
-	for(int j = 0; j < objects.Capacity(); j++)
+	for(size_t j = 0; j < objects.Size(); j++)
 	{
+
 		Value& object = objects[j];
 		int objectID = object["gid"].GetInt();
 		Image* objectImg = imgLoader->getMapImage(firstImgID + objectID);
@@ -253,91 +251,118 @@ void MapLoader::createObjects(Value& objects)
 		double objectY = object["y"].GetDouble() - objectImg->getHeight(); // -getHeight() Because all 'tiled' objects use bottom left for image positioning;
 
 		//TODO: Any better way to do this?
-		if(objectClasses[objectID] == "Tree")
+		if(objectClasses[objectID] == "RoundTree")
 		{
-			new Tree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new TreeRound(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
-		else if(objectClasses[objectID] == "TreeStump")
+		else if(objectClasses[objectID] == "PineTree")
 		{
-			Tree* tree = new Tree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			new TreePine(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if(objectClasses[objectID] == "RoundTreeStump")
+		{
+			Tree* tree = new TreeRound(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			tree->setDestroyedState();
+		}
+		else if(objectClasses[objectID] == "PineTreeStump")
+		{
+			Tree* tree = new TreePine(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			tree->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "AppleTree")
 		{
-			new AppleTree(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1), imgLoader->getMapImage(firstImgID + objectID + 2));
+			new AppleTree(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1), imgLoader->getMapImage(firstImgID + objectID + 2));
 		}
 		else if(objectClasses[objectID] == "AppleTreeEmpty")
 		{
-			AppleTree* tree = new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			AppleTree* tree = new AppleTree(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 			tree->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "AppleTreeStump")
 		{
 			//TODO: Currently, AppleTrees use only the full and empty state. Stump is not used. For now, the stump creates a full AppleTree
-			new AppleTree(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 2), imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			new AppleTree(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 2), imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 		}
 		else if(objectClasses[objectID] == "Rock")
 		{
-			new Rock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID+1));
+			new Rock(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID+1));
 		}
 		else if(objectClasses[objectID] == "RockPieces")
 		{
-			Rock* rock = new Rock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			Rock* rock = new Rock(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			rock->setDestroyedState();
 		}
 		else if (objectClasses[objectID] == "RockSpikes")
 		{
-			new RockSpikes(objectID, objectX, objectY, chunkSize, mec, objectImg);
+			new RockSpikes(objectID, objectX, objectY, objectImg);
 		}
 		else if (objectClasses[objectID] == "GoldRock")
 		{
-			new GoldRock(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new GoldRock(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if (objectClasses[objectID] == "GoldRockPieces")
 		{
-			GoldRock* goldRock = new GoldRock(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			GoldRock* goldRock = new GoldRock(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			goldRock->setDestroyedState();
 		}
 		else if (objectClasses[objectID] == "Ice")
 		{
-			new Ice(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new IceRock(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
 		}
 		else if (objectClasses[objectID] == "IceSpikes")
 		{
-			new Ice(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
+			new IceSpikes(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID - 1));
 		}
 		else if (objectClasses[objectID] == "IcePieces")
 		{
-			Ice* ice = new Ice(objectID, objectX, objectY, chunkSize, mec, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
+			Ice* ice = new Ice(objectID, objectX, objectY, imgLoader->getMapImage(firstImgID + objectID - 1), objectImg);
 			ice->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "Carrot")
 		{
-			new Carrot(objectID, objectX, objectY, chunkSize, mec, objectImg);
+			new Carrot(objectID, objectX, objectY, objectImg);
 		}
 		else if(objectClasses[objectID] == "Pillar")
 		{
-			new Pillar(objectID, objectX, objectY, chunkSize, mec, objectImg);
+			new Pillar(objectID, objectX, objectY, objectImg);
 		}
 		else if(objectClasses[objectID] == "RuinStatue")
 		{
-			new RuinStatue(objectID, objectX, objectY, chunkSize, mec, objectImg);
+			new RuinStatue(objectID, objectX, objectY, objectImg);
 		}
 		else if (objectClasses[objectID] == "EasterHead" || objectClasses[objectID] == "EasterHeadDestroyed")
 		{
-			new EasterHead(objectID, objectX, objectY, chunkSize, mec, objectImg);
+			new EasterHead(objectID, objectX, objectY, objectImg);
 		}
 		else if (objectClasses[objectID] == "Cactus")
 		{
-			new Cactus(objectID, objectX, objectY, chunkSize, mec, objectImg);
+			new Cactus(objectID, objectX, objectY, objectImg);
 		}
-		else if (objectClasses[objectID] == "InteractableCactus")
+		else if (objectClasses[objectID] == "BigInteractableCactus")
 		{
-			new InteractableCactus(objectID, objectX, objectY, chunkSize, mec, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "SmallInteractableCactus")
+		{
+			new InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+		}
+		else if (objectClasses[objectID] == "BigCactusStump")
+		{
+			InteractableCactusBig* cactus = new InteractableCactusBig(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			cactus->setDestroyedState();
+		}
+		else if (objectClasses[objectID] == "SmallCactusStump")
+		{
+			InteractableCactusSmall* cactus = new  InteractableCactusSmall(objectID, objectX, objectY, objectImg, imgLoader->getMapImage(firstImgID + objectID + 1));
+			cactus->setDestroyedState();
 		}
 		else if(objectClasses[objectID] == "Fish")
 		{
-			new Fish(objectID, objectX, objectY, chunkSize, objectImg);
+			new Fish(objectID, objectX, objectY, objectImg);
+		}
+		else if(objectClasses[objectID] == "SnowTree")
+		{
+			new SnowTree(objectID, objectX, objectY, objectImg);
 		}
 		processedObjects++;
 		tempPercentage = startLoadPercentage + ((processedObjects / totalObjects) * loadWeight);
@@ -351,12 +376,12 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 {
 	double startLoadPercentage = loadPercentage;
 	double loadWeight = 10;
-	double totalSpawnpoints = spawnpoints.Capacity();
+	double totalSpawnpoints = spawnpoints.Size();
 	double processedSpawnpoints = 0;
 	int tempPercentage = loadPercentage;
 	loadStatus = "Creating spawnpoints.";
 
-	for(int j = 0; j < spawnpoints.Capacity(); j++)
+	for(size_t j = 0; j < spawnpoints.Size(); j++)
 	{
 		Value& object = spawnpoints[j];
 		Value& properties = object["properties"];
@@ -369,7 +394,7 @@ void MapLoader::createSpawnPoints(Value& spawnpoints)
 		}
 		else
 		{
-			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), chunkSize, spawnType, 3, 400);
+			new Spawnpoint(0, object["x"].GetDouble(), object["y"].GetDouble(), spawnType, 3, 400);
 		}
 		processedSpawnpoints++;
 		tempPercentage = startLoadPercentage + ((processedSpawnpoints / totalSpawnpoints) * loadWeight);
@@ -400,11 +425,6 @@ int MapLoader::getStartPosX()
 int MapLoader::getStartPosY()
 {
 	return startPosY;
-}
-
-int MapLoader::getChunkSize()
-{
-	return chunkSize;
 }
 
 int MapLoader::getLoadPercentage()

@@ -9,12 +9,13 @@ class Fish :
 private:
 	Image* fishImage;
 public:
-	Fish(int id, double x, double y, int chunkSize, Image* fishImage);
+	Fish(int id, double x, double y, Image* fishImage);
 
 	void update(double dt);
 	void respawn();
 	void interact(Player* player);
 	void setDestroyedState();
+	bool canInteract(Player* player);
 
 	virtual ~Fish();
 };

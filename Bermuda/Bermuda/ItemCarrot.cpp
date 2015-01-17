@@ -18,19 +18,13 @@ void ItemCarrot::init() {
 
 	this->setMaxStackSize(16);
 
-	srand(time(NULL));
-	int itemCount = rand() % 2 + 1;	
+	int itemCount = 1;
 	this->setStackSize(itemCount);
 
 	this->setHungerRefill(5);
 	this->setThirstRefill(0);
 	this->setHealthRefill(0);
 }
-
-void ItemCarrot::consume(Player* player) {
-	Consumable::consume(player);
-}
-
 
 ItemCarrot::~ItemCarrot()
 {

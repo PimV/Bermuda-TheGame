@@ -18,19 +18,14 @@ void ItemApple::init() {
 
 	this->setMaxStackSize(16);
 
-	srand(time(NULL));
-	int itemCount = rand() % 2 + 1;	
+	srand(static_cast<unsigned int>(time(NULL)));
+	int itemCount = rand() % 3 + 1;	
 	this->setStackSize(itemCount);
 
 	this->setHungerRefill(5);
 	this->setThirstRefill(5);
 	this->setHealthRefill(0);
 }
-
-void ItemApple::consume(Player* player) {
-	Consumable::consume(player);
-}
-
 
 ItemApple::~ItemApple()
 {

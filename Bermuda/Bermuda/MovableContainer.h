@@ -13,6 +13,7 @@ public:
 
 	void initChunks(int chunksY, int chunksX);
 	void remove(MovableEntity* entity);
+	void cleanup();
 
 	virtual ~MovableContainer();
 private:

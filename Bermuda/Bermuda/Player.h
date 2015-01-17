@@ -1,19 +1,17 @@
 #pragma once
-#include "entity.h"
 #include "MovableEntity.h"
-#include "header_loader.h"
-#include "Camera.h"
-#include "DrawableEntity.h"
 #include "CollidableEntity.h"
-#include "GameStateManager.h"
-#include "SDLInitializer.h"
-#include "MainEntityContainer.h"
+#include "DrawableEntity.h"
+#include "Camera.h"
 #include "StatusTracker.h"
 #include "GameTimer.h"
+#include "MovementDirectionEnum.h"
 #include "Inventory.h"
 #include "Crafting.h"
+#include "AnimationEnum.h"
 
 class Inventory;
+class CraftingMenu;
 
 class Player :
 	public MovableEntity,
@@ -21,11 +19,12 @@ class Player :
 	public CollidableEntity
 {
 public:
-	Player(int id, double moveSpeed, double x, double y, int chunkSize, Camera* camera);
-	~Player(void);
+	Player(int id, double moveSpeed, double x, double y, Camera* camera);
+	virtual ~Player();
 
 	void update(double dt);
 	void directionsAndMove(double dt);
+	void changeAnimationOnInventorySelection();
 
 	void setHealth(int value);
 	void setHunger(int value);
@@ -39,11 +38,18 @@ public:
 	int getHunger();
 	int getThirst();
 
-	//void clickMove();
+	void drawHealthBar(int x, int y);
+	void drawHungerBar(int x, int y);
+	void drawThirstBar(int x, int y);
+
 	void clickMove();
-	void setPosition();
-	void interact();
+	void setPosition(double newX, double newY);
+	void interact(double dt);
 	void resetMovement();
+
+	void toggleGodMode();
+
+	void drawStats();
 
 	bool moveClick;
 	bool interaction;
@@ -54,16 +60,75 @@ public:
 	Crafting* getCraftingSystem();
 	StatusTracker* getStatusTracker();
 
+	bool getCorrectToolSelected();
+	void setCorrectToolSelected(bool tool);
+
+	bool getWithinDarkness();
+	void setWithinDarkness(bool newDarkness);
+
 private:
-	const char* path;
 	Camera* camera;
+	SDL_Texture* healthBar;
+	SDL_Texture* hungerBar;
+	SDL_Texture* thirstBar;
+	SDL_Texture* healthBarContainer;
+	SDL_Texture* thirstBarContainer;
+	SDL_Texture* hungerBarContainer;
+
+	bool healthAlphaFade;
+	bool hungerAlphaFade;
+	bool thirstAlphaFade;
+
+	int healthAlpha;
+	int hungerAlpha;
+	int thirstAlpha;
 
 	//PlayerUpdateTimer* playerTimer;
 	int health, hunger, thirst;
 	long hungerUpdate, hungerUpdateTime;
 	long thirstUpdate, thirstUpdateTime;
+	long healthUpdate, healthUpdateTime;
+	long darknessUpdate, darknessUpdateTime;
+	long quickDeathUpdate, quickDeathUpdateTime;
 
-	double getDistence(int currentX, int currentY, int destX, int destY);
+	#pragma region animation
+	int animationPickUp;
+	int animationPickStartColumn;
+	int animationPickEndColumn;
+
+	int animationChopUp;
+	int animationChopStartColumn;
+	int animationChopEndColumn;
+
+	int animationChopGoldUp;
+	int animationChopGoldStartColumn;
+	int animationChopGoldEndColumn;
+
+	int animationMineUp;
+	int animationMineStartColumn;
+	int animationMineEndColumn;
+
+	int animationMineGoldUp;
+	int animationMineGoldStartColumn;
+	int animationMineGoldEndColumn;
+
+	int animationSpearAttackUp;
+	int animationSpearAttackStartColumn;
+	int animationSpearAttackEndColumn;
+
+	int animationSpearWalkUp;
+	int animationSpearWalkLeft;
+	int animationSpearWalkDown;
+	int animationSpearWalkRight;
+	int animationSpearWalkStartColumn;
+	int animationSpearWalkEndColumn;
+	#pragma endregion animation
+
+	bool godMode;
+
+	bool correctToolSelected;
+
+	double getDistance(int currentX, int currentY, int destX, int destY);
 
 	Inventory* inventory;
 	Crafting* crafting;
@@ -73,5 +138,10 @@ private:
 
 	void setImage(Image* image);
 	void ResetDrawableEntityAndSetChunk();
-	bool checkIntersects(CollidableEntity* collidableEntity);
+
+	bool checkCollision(double newX, double newY);
+
+	void setAnimationType(AnimationEnumType type);
+	
+	bool withinDarkness;
 };

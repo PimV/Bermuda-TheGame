@@ -1,16 +1,16 @@
 #pragma once
 #include <vector>
 #include "Achievement.h"
+#include "AchievementsEnum.h"
 
 class StatusTracker
 {
 public:
 	//methodes
-	void treeCut();
-	void rockMined();
-	void carrotPicked();
-	void applePicked();
+	void addAchievementCount(AchievementsEnum enumIn);
+
 	std::vector<Achievement*> getAllAchievements();
+	void setAllStats(std::vector<int> stats);
 
 	//constructor destructor
 	StatusTracker();

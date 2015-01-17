@@ -1,15 +1,15 @@
 #include "Entity.h"
-#include "MainEntityContainer.h"
+#include "PlayState.h"
 #include <cmath>
 
-#include <iostream>
-
-Entity::Entity(int id, double x, double y, int chunkSize)
+Entity::Entity(int id, double x, double y)
 {
 	this->id = id;
 	this->x = x;
 	this->y = y;
-	this->setChunkSize(chunkSize);
+	this->setEnabled(true);
+	this->setChunks();
+	this->setHighlighted(false);
 }
 
 #pragma region Setters
@@ -25,14 +25,6 @@ void Entity::setZ(double z) {
 	this->z = z;
 }
 
-void Entity::setTempX(double x) {
-	this->tempX = x;
-}
-
-void Entity::setTempY(double y) {
-	this->tempY = y;
-}
-
 void Entity::setWidth(double width) {
 	this->width = width;
 }
@@ -41,22 +33,23 @@ void Entity::setHeight(double height) {
 	this->height = height;
 }
 
-void Entity::setChunkSize(int chunkSize)
-{
-	this->chunkSize = chunkSize;
-	this->setChunks();
-}
-
-void Entity::setMainEntityContainer(MainEntityContainer* mec) {
-	this->mec = mec;
-}
-
 void Entity::setChunks()
 {
-	this->chunkY = floor(this->y / this->chunkSize);
-	this->chunkX = floor(this->x / this->chunkSize);
+	int chunkSize = PlayState::Instance()->getMainEntityContainer()->getChunkSize();
+	this->chunkY = floor(this->y / chunkSize);
+	this->chunkX = floor(this->x / chunkSize);
+}
+
+void Entity::setEnabled(bool enabled)
+{
+	this->enabled = enabled;
+}
+
+void Entity::setHighlighted(bool highlighted) {
+	this->highlighted = highlighted;
 }
 #pragma endregion
+
 #pragma region Getters
 int Entity::getId() {
 	return this->id;
@@ -68,16 +61,6 @@ double Entity::getX() {
 
 double Entity::getY() {
 	return this->y;
-}
-
-double Entity::getTempX()
-{
-	return this->tempX;
-}
-
-double Entity::getTempY()
-{
-	return this->tempY;
 }
 
 double Entity::getZ() {
@@ -92,6 +75,16 @@ double Entity::getHeight() {
 	return this->height;
 }
 
+double Entity::getCenterX()
+{
+	return this->x + this->width / 2;
+}
+
+double Entity::getCenterY()
+{
+	return this->y + this->height / 2;
+}
+
 int Entity::getChunkY()
 {
 	return this->chunkY;
@@ -102,15 +95,14 @@ int Entity::getChunkX()
 	return this->chunkX;
 }
 
-int Entity::getChunkSize()
+bool Entity::getEnabled()
 {
-	return this->chunkSize;
+	return this->enabled;
 }
 
-MainEntityContainer* Entity::getMainEntityContainer() {
-	return this->mec;
+bool Entity::getHighlighted() {
+	return this->highlighted;
 }
-
 #pragma endregion
 
 Entity::~Entity(void)

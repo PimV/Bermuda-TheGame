@@ -1,42 +1,58 @@
 #include "AppleTree.h"
-#include "GameStateManager.h"
+#include "PlayState.h"
 #include "Player.h"
 #include "ItemFactory.h"
 #include "Items.h"
+#include "Overlays.h"
 
-
-AppleTree::AppleTree(int id, double x, double y, int chunkSize, MainEntityContainer* mec, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
-	Entity(id,x,y,chunkSize), 
-	DrawableEntity(id,x,y,chunkSize, treeImage), 
-	InteractableEntity(id,x,y,chunkSize, 14, 80, 68, 48),
-	CollidableEntity(id,x,y,chunkSize, 34, 102, 27, 15), treeImage(treeImage), treeEmptyImage(treeEmptyImage), stumpImage(stumpImage)
+AppleTree::AppleTree(int id, double x, double y, Image* treeImage, Image* treeEmptyImage, Image* stumpImage) :
+	Entity(id,x,y), 
+	DrawableEntity(id,x,y, treeImage), 
+	InteractableEntity(id,x,y, 14, 60, 68, 78),
+	CollidableEntity(id,x,y, 34, 102, 27, 15), treeImage(treeImage), treeEmptyImage(treeEmptyImage), stumpImage(stumpImage)
 {
-	this->setMainEntityContainer(mec);
-	this->getMainEntityContainer()->getInteractableContainer()->add(this);
-	this->getMainEntityContainer()->getDrawableContainer()->add(this);
-	this->getMainEntityContainer()->getCollidableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->add(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->add(this);
 
 	this->destroyed = false;
-	this->respawnTime = 5000;
-	this->interactTime = 500;
-	this->timeSinceDestroy = 0;
-	this->currentInteractTime = 0;
+	this->respawnTime = GameTimer::Instance()->getFullDayLength() * 6;
+	this->interactTime = 6000;
+
+	this->animationType = AnimationEnumType::Pick;
+
+	this->setCanInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::treeRound));
+	this->setCantInteractTexture(PlayState::Instance()->getImageLoader()->getOverLayImage(Overlays::treeRoundCant));
+
+	this->setHighlightTexture(this->getCantInteractTexture());
+}
+
+bool AppleTree::canInteract(Player* player) {
+	if (this->destroyed) {
+		this->setHighlightTexture(this->getCantInteractTexture());
+	} else {
+		this->setHighlightTexture(this->getCanInteractTexture());
+	}
+	return !this->destroyed;
 }
 
 void AppleTree::interact(Player* player) {
-	InteractableEntity::interact(player);
-
-	if (this->trackInteractTimes()) {
-		this->setDestroyedState();
-		player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Apple));
-		player->getStatusTracker()->applePicked();
+	if(!this->destroyed)
+	{
+		InteractableEntity::interact(player);
+		player->setCorrectToolSelected(true);
+		if (this->trackInteractTimes()) {
+			player->setCorrectToolSelected(false);
+			this->setDestroyedState();
+			player->getInventory()->addItem(ItemFactory::Instance()->createItem(Items::Apple));
+			player->getStatusTracker()->addAchievementCount(AchievementsEnum::APPLEPICKED);
+		}
 	}
 }
 
 void AppleTree::update(double dt) {
 	if (destroyed) {
-		this->timeSinceDestroy += GameStateManager::Instance()->getUpdateLength() * dt;
-		if (this->timeSinceDestroy > respawnTime) {
+		if (this->timeDestroyed + this->respawnTime < GameTimer::Instance()->getGameTime()) {
 			this->respawn();
 		}
 	}
@@ -44,33 +60,25 @@ void AppleTree::update(double dt) {
 
 void AppleTree::respawn() {
 	this->destroyed = false;
-	this->timeSinceDestroy = 0;
 	this->setDrawImage(this->treeImage);
-	this->getMainEntityContainer()->getRespawnContainer()->remove(this);
-	this->getMainEntityContainer()->getInteractableContainer()->add(this);
-
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
 }
 
 void AppleTree::setDestroyedState() 
 {
+	this->setHighlighted(false);
+	this->timeDestroyed = GameTimer::Instance()->getGameTime();
 	this->destroyed = true;
 	this->setDrawImage(this->treeEmptyImage);
-	this->getMainEntityContainer()->getRespawnContainer()->add(this);
-	this->getMainEntityContainer()->getInteractableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->add(this);
 	currentInteractTime = 0;
 }
 
 
 AppleTree::~AppleTree()
 {
-	this->getMainEntityContainer()->getDrawableContainer()->remove(this);
-	this->getMainEntityContainer()->getCollidableContainer()->remove(this);
-	if(this->destroyed) 
-	{ 
-		this->getMainEntityContainer()->getRespawnContainer()->remove(this); 
-	}
-	else 
-	{ 
-		this->getMainEntityContainer()->getInteractableContainer()->remove(this); 
-	}
+	PlayState::Instance()->getMainEntityContainer()->getDrawableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getCollidableContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getRespawnContainer()->remove(this);
+	PlayState::Instance()->getMainEntityContainer()->getInteractableContainer()->remove(this);
 }

@@ -1,15 +1,17 @@
 #include "Spawnpoint.h"
-#include "Rabbit.h"
 #include "PlayState.h"
+#include "GameStateManager.h"
+#include "Camera.h"
 #include "NPCFactory.h"
 #include "GameTimer.h"
-#include <iostream>
+#include "NPCType.h"
 
-Spawnpoint::Spawnpoint(int id, double x, double y, int chunkSize, string spawnType, int maxChildren, int walkRange) 
-: Entity(id, x, y, chunkSize)
+Spawnpoint::Spawnpoint(int id, double x, double y, string spawnType, int maxChildren, int walkRange) 
+: Entity(id, x, y)
 {
 	init(spawnType, maxChildren, walkRange);
 	
+	//TODO: pixel word voor elke spawnpoint opnieuw ingeladen.
 	this->spawnpointTexture = IMG_LoadTexture(GameStateManager::Instance()->sdlInitializer->getRenderer(), (RESOURCEPATH + "pixelPurple.png").c_str());
 }
 
@@ -19,9 +21,12 @@ void Spawnpoint::init(string spawnType, int maxChildren, int walkRange)
 	this->curChildren = 0;
 	this->maxChildren = maxChildren;
 	this->spawnType = spawnType;
-	this->spawnInterval = 90000; //1,5 minuten
+
+	this->spawnInterval = 90000; // ~ 1,5 min
+
 	this->walkRange = walkRange;
-	spawnMob();
+	this->lastSpawnTime = 0;
+	this->spawnMob();
 }
 
 void Spawnpoint::drawSpawnpointArea()
@@ -40,26 +45,47 @@ void Spawnpoint::spawnMob()
 {
 	if (curChildren < maxChildren)
 	{
+		bool npcSpawned = false;
 		if (spawnType == "rabbit")
 		{
-			NPCFactory::Instance()->createRabbit(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Rabbit, this);
 		}
-		if (spawnType == "wasp")
+		else if (spawnType == "wasp")
 		{
-			NPCFactory::Instance()->createWasp(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wasp, this);
 		}
-		if (spawnType == "bat")
+		else if (spawnType == "bat")
 		{
-			NPCFactory::Instance()->createBat(this);
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Bat, this);
 		}
-		this->curChildren++;
+		else if (spawnType == "wolf")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Wolf, this);
+		}		
+		else if (spawnType == "scorpion")
+		{
+			npcSpawned = NPCFactory::Instance()->createNPC(NPCType::Scorpion, this);
+		}
+
+		if(npcSpawned)
+		{
+			++this->curChildren;
+		}
+
 		this->lastSpawnTime = GameTimer::Instance()->getGameTime();
 	}
 }
 
 void Spawnpoint::decreaseChildren()
 {
-	this->curChildren--;
+	if (this->curChildren > 0)
+	{
+		--this->curChildren;
+	}
+	else
+	{
+		this->curChildren = 0;
+	}
 }
 
 int Spawnpoint::getWalkRange()
@@ -69,13 +95,14 @@ int Spawnpoint::getWalkRange()
 
 void Spawnpoint::update()
 {
-	if(GameTimer::Instance()->getGameTime() > lastSpawnTime + spawnInterval)
+	// cheack for a new spawn
+	if(GameTimer::Instance()->getGameTime() > this->lastSpawnTime + this->spawnInterval)
 	{
-		spawnMob();
+		this->spawnMob();
 	}
 }
 
 Spawnpoint::~Spawnpoint()
 {
-	SDL_DestroyTexture(spawnpointTexture);
+	SDL_DestroyTexture(this->spawnpointTexture);
 }

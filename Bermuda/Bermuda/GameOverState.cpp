@@ -11,6 +11,7 @@ GameOverState::GameOverState()
 }
 
 void GameOverState::init(GameStateManager* gsm) {
+	this->cleanup();
 	this->gsm = gsm;
 
 	backgroundTexture = IMG_LoadTexture(gsm->sdlInitializer->getRenderer(), (RESOURCEPATH + "Textures/gameover_Background.png").c_str());
@@ -47,7 +48,9 @@ void GameOverState::init(GameStateManager* gsm) {
 	continueMessageRect.w = continueMessageSurface->w;
 
 	SDL_FreeSurface(gameOverMessageSurface);
+	SDL_FreeSurface(continueMessageSurface);
 	TTF_CloseFont(staryDarzyLarge);
+	TTF_CloseFont(staryDarzySmall);
 }
 
 void GameOverState::cleanup()
@@ -71,6 +74,7 @@ void GameOverState::handleEvents(SDL_Event mainEvent){
 	case SDL_KEYDOWN:
 		switch (mainEvent.key.keysym.sym){
 		case SDLK_RETURN:
+		case SDLK_KP_ENTER:
 			this->gsm->changeGameState(MenuState::Instance());
 			break;
 		}
@@ -89,5 +93,5 @@ void GameOverState::draw(){
 
 GameOverState::~GameOverState()
 {
-	cleanup();
+	this->cleanup();
 }

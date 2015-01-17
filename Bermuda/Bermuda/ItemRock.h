@@ -1,7 +1,6 @@
 #pragma once
 #include "item.h"
 #include "Image.h"
-enum class Items;
 
 class ItemRock :
 	public virtual Item
